@@ -1,5 +1,49 @@
-\documentclass{article}
+\documentclass[11pt]{article}
+
+\input{../common/preamble}
+
+\title{Rounding off a corner}
+
+\author{John Gowers}
 
 \begin{document}
+
+\maketitle
+
+\begin{abstract}
+  In \cite{laird02}, Laird introduces the concept of a \emph{sequoidal category}, a certain extension of a monoidal category and gives an example constructed using game semantics.  As noted in \cite{martinsthesis}, cofree commutative comonoids can be constructed coalgebraically in any sequoidal category subject to certain extra hypotheses.  In the first part of this note, we review the coalgebraic construction of cofree commutative comonoids in sequoidal categories.  In the second part, we shall show that the extra hypotheses are necessary as well as sufficient and we shall use transfinite game semantics to construct a sequoidal category in which these hypotheses do not hold.
+\end{abstract}
+
+\section{Sequoidal categories}
+
+\subsection{Game semantics and the sequoidal operator}
+
+We shall present a form of game semantics in the style of \cite{hyland1997games} and \cite{abramskyjagadeesangames}.  A game will be given by a tuple
+\[
+  A = (M_A, \lambda_A, b_A, P_A)
+  \]
+where
+\begin{itemize}
+  \item $M_A$ is a set of moves.
+  \item $\lambda_A\from M_A\to\OP$ is a function designating each move as either an \emph{$O$-move} or a \emph{$P$-move}.
+  \item $b_A\in\OP$ is a choice of starting player.
+  \item $P_A\subset M_A^*$ is a prefix-closed set of alternating plays - so if $sab\in P_A$ then $\lambda_A(a)=\neg\lambda_A(b)$.
+\end{itemize}
+
+We call $sa\in P_A$ a \emph{$P$-position} if $a$ is a $P$-move and an \emph{$O$-position} if $a$ is an $O$-move.
+
+Note that plays in $P_A$ do not have to start with a $b_A$-move, so there might be some positions in $P_A$ that can never actually arise when playing the game.
+
+A \emph{strategy} for player $P$ for a game $A$ is identified with the set of positions that may arise when playing according to that strategy.  Namely, it is a non-empty prefix-closed subset $\sigma\subset P_A$ satisfying the three conditions:
+\begin{description}
+  \item[(s$\emptyplay$)] If $a\in\sigma$ is a $1$-move play, then $\lambda_A(a)=b_A$.
+  \item[(sO)] If $s\in\sigma$ is a $P$-position and $a$ is an $O$-move such that $sa\in P_A$, then $sa\in\sigma$.
+  \item[(sP)] If $sa,sb\in\sigma$ are $P$-positions, then $a=b$.
+\end{description}
+
+We shall now concentrate on 
+
+\bibliographystyle{alpha}
+\bibliography{../common/phd_bibliography}
 
 \end{document}

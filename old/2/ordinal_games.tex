@@ -1,0 +1,669 @@
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)\prefix\t$.
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{mathtools} % for the all important \coloneqq symbol
+\usepackage{url} % for \url
+\usepackage{IEEEtrantools} % for \IEEEeqnarray
+\usepackage{pbox} % for \pbox
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%% Font things %%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{cmll} % Linear logic symbols!
+
+%% Lists %%
+\usepackage{enumerate}
+
+%% Graphics %%
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+%% Theorems! %%
+\usepackage{amsthm}
+\theoremstyle{plain} % Theorems, lemmas, propositions etc.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{definition} % Definitions etc.  Remarks too, because I don't like the way the 'remark' style looks.
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+
+%% Exercises and answers %%
+\usepackage{answers}
+
+\newtheoremstyle{exercisestyle}% name
+  {6pt}   % ABOVESPACE
+  {6pt}   % BELOWSPACE
+  {\itshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {3pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\theoremstyle{exercisestyle}
+\newtheorem{exercise}{Exercise}
+\newtheorem{answerthm}{Exercise}
+
+\Newassociation{answer}{answerthm}{answers}
+\newcommand{\answerthmparams}{}
+
+%% Changes to enumerate things so they look better %%
+
+\makeatletter
+\def\enumfix{%
+\if@inlabel
+ \noindent \par\nobreak\vskip-\topsep\hrule\@height\z@
+\fi}
+
+\let\olditemize\itemize
+\def\itemize{\enumfix\olditemize}
+\let\oldenumerate\enumerate
+\def\enumerate{\enumfix\oldenumerate}
+
+%% Random crap %%
+\usepackage{xifthen}
+
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+\makeatother
+
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\Rings}{\catname{CRing}}
+\newcommand{\CAT}{\catname{CAT}}
+\newcommand{\Top}{\catname{Top}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Cont}{\catname{Cont}}
+\newcommand{\Sch}{\catname{Sch}}
+\newcommand{\Mod}[1][]{\ifthenelse{\isempty{#1}}{\catname{Mod}}{#1\catname{mod}}}
+\DeclareMathOperator{\sh}{Sh}
+\newcommand{\Sh}[1][]{\ifthenelse{\isempty{#1}}{\sh}{\sh(#1)}}
+\newcommand{\map}[3]{#2\xrightarrow{#1} #3}
+\newcommand*\from{\colon}
+\newcommand{\cmap}[3]{#1\from{}#2\to{}#3}
+\newcommand\oppcat[1]{#1^{\mathrm{op}}}
+\DeclareRobustCommand{\vmap}[3] {\begin{tikzcd} #2 \arrow[d, "#1"] \\ #3 \end{tikzcd}}
+\newcommand{\partref}[1]{(\ref{#1})}
+\newcommand{\intgrpd}[4] {#1 \xrightrightarrows[#3]{#4} #2}
+\DeclareRobustCommand{\bigintgrpd}[4] {\begin{tikzcd}[ampersand replacement=\&] #1 \arrow[r, shift left=0.5ex, "#3"] \arrow[r, shift right=0.5ex, "#4"'] \& #2 \end{tikzcd}}
+
+\usepackage{xspace}
+
+\newcommand{\etale}{\'{e}tale\xspace}
+\newcommand{\Etale}{\'{E}tale\xspace}
+
+\def \inv {^{-1}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\pre}{{pre}}
+\DeclareMathOperator{\et}{{\acute{e}t}}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Spec}{Spec}
+
+\DeclareMathOperator{\ol}{ol}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+\def\presub#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}_{#1}%
+   \kern-\scriptspace%
+   #2}
+
+%% Our things %%
+
+\newcommand{\neggame}[1]{\presuper{\perp}{#1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\sequoid}{\oslash}
+\newcommand{\varsequoid}{\vartriangleleft}
+\renewcommand{\implies}{\multimap}
+\newcommand{\comp}[2]{#1 \circ #2}
+\newcommand{\cprd}{\sqcup}
+\newcommand{\G}{\mathcal G}
+\newcommand{\suchthat}{\;\colon\;}
+\newcommand{\varsuchthat}{\;\mid\;}
+\newcommand{\OP}{\{O,P\}}
+\renewcommand{\L}{\mathcal L}
+\newcommand{\s}{\mathfrak s}
+\renewcommand{\t}{\mathfrak t}
+\newcommand{\emptyplay}{\epsilon}
+\newcommand{\bracketed}[1]{\left({#1}\right)}
+\newcommand{\bneggame}[1]{\bracketed{\neggame{#1}}}
+\newcommand{\prefix}{\sqsubseteq}
+\renewcommand{\ss}{\mathbf{s}}
+\newcommand{\pfun}{\rightharpoonup}
+
+%%% END Article customizations
+
+\begin{document}
+
+\section{Introduction}
+
+These are games with ordinal sequences of moves.
+
+TODO: Talk about what they are and why we are interested, being careful to point out that our $\omega+1$ games correspond to games with winning conditions.
+
+\section{Our starting category of games}
+
+Before studying games with transfinite sequences of moves, we shall illustrate some of the choices we have made by defining a category of games with finite sequences of moves.  We have chosen these definitions because they extend particularly well to the transfinite case.  
+
+\subsection{Games and strategies}
+
+We shall use the notation introduced in \cite{abramskyjagadeesangames} to describe games.  All our games $A$ will have, at their heart, the following three pieces of information:
+\begin{itemize}
+  \item A set $M_A$ of possible moves
+  \item A function $\cmap{\lambda_A}{M_A}{\OP}$ assigning to each move the player who is allowed to make that move
+  \item A prefix-closed set $P_A\subset M_A^*$ of finite sequences of moves.
+\end{itemize}
+We shall normally insist on an \emph{alternating condition} on $P_A$:
+\begin{description}
+  \item[Alternating condition] If $a,b\in M_A$ are moves and $s\in M_A^*$ is a sequence of moves such that $sa, sab\in P_A$, then $\lambda_A(a)=\neg\lambda_A(b)$.
+\end{description}
+
+As in \cite{abramskyjagadeesangames}, we identify a \emph{strategy} for a game $A$ with the set of sequences of moves that can occur when player $P$ is playing according to that strategy so that a typical definition of a (partial) strategy might be a set $\sigma\subset P_A$ such that (for all $s\in M_A^*, a,b\in M_A$):
+\begin{itemize}
+  \item $\emptyplay\in\sigma$ (ensures that $\sigma$ is non-empty)
+  \item If $sa\in\sigma$, $\lambda_A(a)=P$ and $sab\in P_A$ then $sab\in\sigma$ ($\sigma$ contains all legal replies by player $O$)
+  \item If $s,sa,sb\in\sigma$ and $\lambda_A(a)=P$ then $a=b$ ($\sigma$ contains at most one legal reply by player $P$)
+\end{itemize}
+
+We can impose additional constraints on $\sigma$ that will ensure that $\sigma$ is total, strict, history free and so on.  The definition given immediately above is not the only definition of a strategy found in the literature, however.  For example, the games described in \cite{abramskyjagadeesangames} have the curious property that the set $P_A$ may contain plays that cannot actually occur when $A$ is being played; in particular, all plays must start with a move by player $O$, but the set $P_A$ may contain positions that start with a $P$-move.  These plays do not affect the strategies for $A$, but they might come into play if we perform operations on $A$ such as forming the negation $\neg A$ or the implication $A\implies B$.  
+
+This behaviour is made implicit in Abramsky and Jagadeesan's definitions, which do not impose any conditions upon the set $P_A$ beyond the basic alternation condition given above, but which mandate that any play occurring \emph{in a strategy} must begin with an $O$-move.  For the sake of clarity, we adopt a different, but completely equivalent, approach.  For a game $A$, we define a set $L_A$, regarded as the set of \emph{legal plays} occurring in $P_A$.  In some games models, such as that found in \cite{blassgames}, $L_A$ may be defined to be the whole of $P_A$, while in \cite{abramskyjagadeesangames} it is defined to be that subset of $P_A$ consisting of plays that begin with an $O$-move.
+
+The point of specifying $L_A$ separately is that it allows us to unify the definitionn of a \emph{strategy}, while making clearer the behaviour observed above, whereby certain plays in $P_A$ may not occur `in normal play'; this behaviour was previously only implicit in the definition of a strategy.  Our unified definition then becomes:
+
+\begin{definition}
+  If $A=(M_A,\lambda_A,P_A)$ is a game and $L_A$ is its associated set of legal plays (in a particular games model) then a (partial) \emph{strategy} for $A$ is a subset $\sigma\subset L_A$ such that for all $s\in L_A$ and all $a, b\in M_A$:
+  \begin{itemize}
+    \item $\emptyplay\in\sigma$
+    \item If $s\in\sigma$ and $a$ is an $O$-move, and if $sa\in L_A$, then $sa\in\sigma$
+    \item If $s\in\sigma$ and $a,b$ are $P$-moves, and if $sa,sb\in\sigma$, then $a=b$
+  \end{itemize}
+\end{definition}
+
+\subsection{Positive and negative games, ownership of plays and connectives}
+
+Abramsky-Jagadeesan games, as described in \cite{abramskyjagadeesangames}, may admit both plays that start with a $P$-move and plays that start with an $O$-move.  Other games models, such as those found in \cite{blassgames} and \cite{curiengames}, are more restrictive.  The games in \cite{curiengames} only contain plays starting with an $O$-move.  The plays in \cite{blassgames} may start with either a $P$-move or an $O$-move, but a play starting with a $P$-move and a play starting with an $O$-move may not occur in the same game.
+
+\begin{definition}
+  We say that a game $A=(M_A,\lambda_A,P_A)$ is \emph{positive} if every play in $P_A$ begins with a $P$-move.
+  We say that $A$ is \emph{negative} if every play in $P_A$ begins with an $O$-move.
+\end{definition}
+
+So the Curien model found in \cite{curiengames} admits only negative games, the Blass model in \cite{blassgames} admits positive and negative games, while the Abramsky-Jagadeesan model found in \cite{abramskyjagadeesangames} admits not only positive and negative games, but also games that are neither negative nor positive.  We shall now examine the reasons for and drawbacks of each of these choices.
+
+The earliest games model, found in \cite{conwaygames}, did not include a definition of which player is to move at a given position; rather, games are defined recursively as pairs of games $\{L|R\}$, where $L$ represents the positions that the left player may move into, while $R$ represents the positions that the rigth player may move into.  Blass's definition departs completely from this tradition; now, at every position $s$ only one of the two players is allowed to move; extending this logic on to the empty position $\emptyplay$, it follows that all games are either positive or negative.  This property means that we may freely define $L_A=P_A$, since there is never any question about whose turn it is to play.  By contrast, if we were to define $L_A=P_A$ for Abramsky-Jagadeesan games, then a strategy might end up containing two branches, one of plays beginning with an $O$-move and one of plays beginning with a $P$-move, which is undesirable.  The alternative definition of $L_A$ avoids this problem.
+
+In the case of a Blass game $A$, we may define a function $\zeta_A\colon P_A\to\OP$ that says which player owns each play; the idea is that if we are in position $s$, then the next player to move is given by $\neg\zeta_A(s)$; i.e., the opposing player to the player who has just made the move.  One might want to define $\zeta_A$ by setting $\zeta_A(sa)=\lambda_A(a)$, so that ownership of a play is decided by who has made the last move in the play, but this definition does not extend in an obvious way to the empty position $\emptyplay$ (and, as we shall see in the next chapter, it does not extend to plays over limit ordinals).  In this case, $\zeta_A(\emptyplay)$ is part of the game's data, and it determines whether the game is positive or negative: if $\zeta_A(\emptyplay) = P$ then all plays must start with an $O$-move, and the game is negative -- and vice versa.
+
+An important question then arises: how should we extend the function $\zeta_A$ to games formed from connectives?  The solution adopted by Blass is to use binary conjunctions to deduce the ownership of a play from the ownership of the restrictions of that play to the two component games.  In the case of the tensor product $A\tensor B$ of two games $A$ and $B$, we define $\cmap{\zeta_{A\tensor B}}{P_{A\tensor B}}{\OP}$ by setting
+\[
+  \zeta_{A\tensor B}(s) = (\zeta_A(s\vert_A) \wedge \zeta_B(s\vert_B))
+  \]
+where $\cmap{\wedge}{\OP\times \OP}{\OP}$ is as in Figure \ref{truthtables}.
+
+\begin{figure}[h]
+  \begin{center}
+    $\begin{array}{cc|c}
+      a & b & a \wedge b \\
+      \hline
+      O & O & O \\
+      O & P & O \\
+      P & O & O \\
+      P & P & P
+    \end{array}$
+    \quad
+    $\begin{array}{cc|c}
+      a & b & a \vee b \\
+      \hline
+      O & O & O \\
+      O & P & P \\
+      P & O & P \\
+      P & P & P
+    \end{array}$
+    \quad
+    $\begin{array}{cc|c}
+      a & b & a \Rightarrow b \\
+      \hline
+      O & O & P \\
+      O & P & P \\
+      P & O & O \\
+      P & P & P
+    \end{array}$
+    \caption{Truth tables for binary conjunctions on $\OP$}
+    \label{truthtables}
+  \end{center}
+\end{figure}
+
+Similarly, we may extend $\zeta$ to the implication $A\implies B$ and the par $A\parr B$ by setting
+\begin{align*}
+  \zeta_{A\implies B}(s)=(s\vert_A\Rightarrow s\vert_B)\\
+  \zeta_{A\parr B}(s) = (s\vert_A \vee s\vert_B)
+\end{align*}
+
+Note that if we use these definitions then the owner $\zeta_C(sa)$ of a play $sa$ might not correspond to the player $\lambda_C(a)$ who played the last move $a$.  For example, let $A,B$ be two positive games and form their tensor product $A\tensor B$.  Then we have
+\[
+  \zeta_{A\tensor B}(\emptyplay) = (\zeta_A(\emptyplay) \wedge \zeta_B(\emptyplay)) = O \wedge O = O
+  \]
+and so $A\tensor B$ is a positive game.  Player $P$ plays an opening move in one of the two games - let us say she plays the move $a$ in the game $A$.  But then we have
+\[
+  \zeta_{A\tensor B}(a) = (\zeta_A(a) \wedge \zeta_B(\emptyplay)) = P \wedge O = O
+  \]
+In other words, it is still player $P$'s turn to play!  Blass embrace this possibility and allows player $P$ to make these two moves.  In his paper, he introduces the notions of \emph{strict} and \emph{relaxed} games, where the strict games are the objects of study but the relaxed games are often used since they allow more manipulations.  In this case, the game $A\tensor B$ is defined as a relaxed game that might not satisfy the alternating condition; in the process of converting it into a strict game, these two opening moves by player $P$ are combined into a single move.
+
+This `double move' can only occur at the start of the game, and Blass treats it as a special case in his proofs.  Perhaps unsurprisingly, this inconsistency causes major problems if we try to compose strategies.  We do not get an associative composition of strategies for $A\implies B$ with strategies for $B\implies C$ and so we do not get a categorical semantics.  An example of the failure of associativity in Blass's games model is given towards the end of \cite{abramskyjagadeesangames}.
+
+By contrast, Abramsky-Jagadeesan games may admit moves by both players at the same position (specifically, at the beginning of the game, before any moves have been played), but this does not cause problems since we insist that our legal plays start with an $O$-move and be strictly alternating.  The authors of \cite{abramskyjagadeesangames} note that their model can be considered as an intermediate between Conway's games, where the position tells you nothing about which player is to move, and Blass games, where the position completely determines which player is to move.  In Abramsky-Jagadeesan games, one can deduce which player is to move (by looking at which player made the last move) in every position except the empty starting position.
+
+In the Abramsky-Jagadeesan model, a positive game is an immediate win to player $P$, since player $O$ has no legal move to start the game off.  As we noted before, this does not mean that the content of a positive game is meaningless, since we can use connectives to `unlock' these illegal plays.  For example, if $Q$ is a positive game and $N$ is a negative game then $Q\parr N$ is a negative game, and the possible positions in $Q$ are now all achievable.  
+
+Curien's game model (\cite{curiengames}) is similar to Abramsky's and Jagadeesan's, but involves only negative games.  The only slight problem is that negative Abramsky-Jagadeesan games are not closed under implication: if $N,L$ are negative games then $N\implies L$ may be neither negative nor positive.  We may fix this by modifying the definition of $N\implies L$ so that we delete from $P_{N\implies L}$ all plays that start with a $P$-move - or, equivalently, by requiring that all plays start in $L$.  This is the approach taken in \cite{martinsthesis}, where it fits well with the paper's treatment of the \emph{sequoid} operator $\sequoid$, which is a version of the tensor product that has been modified so that play is required to start in the left-hand game.
+
+We shall adopt elements of both the Blass and the Abramsky-Jagadeesan games models; specifically, we shall use Blass's games and Abramsky-Jagadeesan's strategies.  This means that our games model will be more restrictive than either the Blass or the Abramsky-Jagadeesan models, but this lack of flexibility will be just what we need in order to extend these games over the transfinite ordinals.  We will later consider ways we can relax our model to recover Abramsky and Jagadeesan's games model.
+
+\subsection{Our definition of games and strategies}
+
+\begin{definition}
+  A \emph{game} is a triple $(M_A,\lambda_A,\zeta_A,P_A)$ where
+  \begin{itemize}
+    \item $M_A$ is a set of moves,
+    \item $\cmap{\lambda_A}{M_A}{\OP}$ is a function that assigns a player to each move,
+    \item $P_A\subset M_A^*$ is a non-empty prefix-closed set of plays that can occur in the game and
+    \item $\cmap{\zeta_A}{P_A}{\OP}$ is a function that assigns a player to each position
+  \end{itemize}
+  such that
+  \begin{itemize}
+    \item If $a\in M_A$ and $sa\in P_A$ then $\zeta_A(sa)=\lambda_A(a)$.
+    \item If $a\in M_A$ and $sa\in P_A$ then $\zeta_A(s)=\neg\zeta_A(sa)$.
+  \end{itemize}
+\end{definition}
+
+\begin{remark}[Notes on the definition]
+  Given a game $A=(M_A,\lambda_A,\zeta_A,P_A)$, define $b_A=\neg\zeta_A(\emptyplay)$.  Then every play in $P_A$ must start with a $b_A$-move, so $A$ is either positive or negative.
+
+  Note that $\zeta_A$ is now completely specified by $\lambda_A$ and $b_A$, so we could have specified our games mor efficiently by replacing $\zeta_A$ with $b_A$ in our definition, as done in \cite{martinsthesis}.  The slightly more unwieldy $\zeta_A$ will be useful when we come to extend our games over the ordinals, though, so we retain it.
+
+  If $a\in M_A$ then we may recover $\lambda_A(a)$ from $\zeta_A$ so long as $a$ occurs in some play in $P_A$.  Since moves that can never be played do not affect the game at all, we do not really need $\lambda_A$ in our definition, but we keep it to make the connection to earlier work clearer.
+
+  If $a\in M_A$ and $\lambda_A(a)=O$, we call $a$ an \emph{$O$-move}.  If $\lambda_A(a)=P$, we call $a$ a \emph{$P$-move}.  If $s\in P_A$ and $\zeta_A(s)=O$, we call $s$ an \emph{$O$-play} or \emph{$O$-position}.  If $\zeta_A(s)=P$, we call $s$ a \emph{$P$-play} or \emph{$P$-position}.
+
+\end{remark}
+
+We give the usual definition of a strategy as an appropriate subset of $P_A$, where we have identified the strategy with the set of all plays that can arise when player $P$ plays according to that strategy:
+
+\begin{definition}
+  Let $A=(M_A,\lambda_A,\zeta_A,P_A)$ be a game.  A \emph{strategy} for $A$ is a non-empty prefix-closed subset $\sigma\subset P_A$ such that:
+  \begin{itemize}
+    \item If $a\in P_A$ is an $O$-move and $s\in\sigma$ is a $P$-position such that $sa\in P_A$, then $sa\in\sigma$.
+    \item If $s\in\sigma$ is an $O$-position and $a,b\in M_A$ are $P$-moves such that $sa,sb\in\sigma$, then $a=b$.
+  \end{itemize}
+\end{definition}
+
+The definition above will be the most technically useful, but it is also convenient to give a strategy by a partial function that tells player $P$ which move to make in each $O$-position.  If we write $P_A^-=\zeta_A\inv(\{O\})$ for the set of all $O$-positions and $M_A^+=\lambda_A\inv(\{P\})$ for the set of all $P$-moves, then the strategy $\sigma$ above gives rise to a partial function $\hat\sigma\from P_A^-\pfun M_A^+$ given by:
+\[
+  \hat\sigma(s)=
+  \begin{cases}
+    a & \textrm{if $a\in M_A^+$ and $sa\in P_A$}\\
+    \textrm{undefined} & \textrm{if $sb\not\in P_A$ for all $b\in M_A^+$}
+  \end{cases}
+  \]
+The second condition on strategies tells us that this is well defined.  Going in the other direction, if we are given a partial function $f\from P_A^-\pfun M_A^+$  then we can define a strategy $\overline{f}$ by
+\[
+  \overline f = \{s\in M_A^*\suchthat \textrm{for all $ta\prefix s$ with $\zeta_A(t)=O$, $f(t)$ is defined and equal to $a$}\}
+  \]
+
+\subsection{Connectives}
+
+Our definitions of connectives on games are as in \cite{blassgames}.
+
+\begin{definition}
+  Let $A=(M_A,\lambda_A,\zeta_A,P_A)$ be a game.  The negation of $A$, $\neggame{A}$, is the game formed by interchanging the roles of the two players.
+  \begin{itemize}
+    \item $M_{\bneggame A}=M_A$
+    \item $\lambda_{\bneggame A} = \comp\neg{\lambda_A}$
+    \item $\zeta_{\bneggame A} = \comp\neg{\zeta_A}$
+    \item $P_{\bneggame A} = P_A$
+  \end{itemize}
+\end{definition}
+
+It follows immediately from the definitions that $\neggame A$ is a well formed game.
+
+We now define the tensor product $A\tensor B$, the par $A\parr B$ and the linear implication $A\implies B$ of two games.  All these games are obtained by playing $A$ and $B$ in parallel, so they all have the same set of moves:
+\[
+  M_{A\tensor B} = M_{A\parr B} = M_{A\implies B} = M_A \cprd M_B
+  \]
+
+Ownership of moves is decided via the obvious copairing functions:
+\begin{IEEEeqnarray*}{c}
+  \lambda_{A\tensor B} = \lambda_{A\parr B} = \lambda_A \cprd \lambda_B\\
+  \lambda_{A\implies B} = (\neg\circ\lambda_A) \cprd \lambda_B
+\end{IEEEeqnarray*}
+
+We define the set $P_A\|P_B$ to be the set of all plays in $(M_A \cprd M_B)^*$ whose $M_A$-component is a play from $P_A$ and whose $M_B$-component is a play from $P_B$:
+\[
+  P_A\|P_B = \{s\in (M_A\cprd M_B)^*\suchthat s\vert_A\in P_A,\; s\vert_B\in P_B\}
+  \]
+
+We are now in a position to define $\zeta_{A\tensor B},\zeta_{A\parr B},\zeta_{A\implies B}$ as functions $P_A\|P_B\to\OP$:
+\begin{IEEEeqnarray*}{rCl}
+  \zeta_{A\tensor B}(s) & = & \zeta_A(s\vert_A) \wedge \zeta_B(s\vert_B) \\
+  \zeta_{A\parr B}(s) & = & \zeta_A(s\vert_A) \vee \zeta_B(s\vert_B) \\
+  \zeta_{A\implies B}(s) & = & \zeta_A(s\vert_A) \Rightarrow \zeta_B(s\vert_B)
+\end{IEEEeqnarray*}
+
+(Here, $\wedge$, $\vee$ and $\Rightarrow$ are as in Figure \ref{truthtables}.)
+
+As things stand, $P_A\|P_B$ is not a valid set of plays for our $\lambda$ and $\zeta$ functions.  The first problem is that $P_A\|P_B$ contains plays which are not alternating with respect to $\zeta_{A\tensor B},\zeta_{A\parr B},\zeta_{A\implies B}$.  The second problem is that the $\zeta$ and $\lambda$ functions do not always agree with one another.  For example, suppose that $Q,R$ are two positive games.  So we have $\zeta_Q(\emptyplay) = \zeta_R(\emptyplay) = O$.  Then $\zeta_{Q\tensor R}(\emptyplay) = O\wedge O = O$.  But now suppose that player $P$ can make an opening move $q$ in $Q$.  Then we have
+\[
+  \zeta_{Q\tensor R}(q) = \zeta_Q(q) \wedge \zeta_R(\emptyplay) = P \wedge O = O
+  \]
+but $\lambda_{Q\tensor R}(q) = P$.  
+
+Our solution is to throw away some plays from $P_A\| P_B$ so that what remains satisfies the alternating condition and the condition on the $\lambda$ and $\zeta$ functions.
+
+\begin{definition}
+  Let $M$ be a set, let $P\subset M^*$ be prefix closed and let $\cmap{\lambda}{M}{\OP},\cmap{\zeta}{P}{\OP}$ be functions.  If $s\in P$, we say that $s$ is \emph{alternating with respect to $\zeta$} if the set of prefixes of $s$ satisfies the alternating condition: if $t,ta\prefix s$, then $\zeta(t) = \neg\zeta(ta)$.
+
+  We say that $s$ is \emph{well formed with respect to $\lambda,\zeta$} if $s = \emptyplay$ or if $s=s'a$ and $\zeta(s)=\lambda(a)$.
+
+  Now let $A,B$ be games.  We define:
+  \begin{IEEEeqnarray*}{rCl}
+    P_{A\tensor B} & = & \left\{s\in P_A\|P_B \;\middle|\; \mbox{\pbox{\textwidth}{$s$ is alternating with respect to $\zeta_{A\tensor B}$ \\ $s$ is well formed with respect to $\zeta_{A\tensor B},\lambda_{A\tensor B}$}}\right\} \\
+    P_{A\parr B} & = & \left\{s\in P_A\|P_B \;\middle|\; \mbox{\pbox{\textwidth}{$s$ is alternating with respect to $\zeta_{A\parr B}$ \\ $s$ is well formed with respect to $\zeta_{A\parr B},\lambda_{A\parr B}$}}\right\} \\
+    P_{A\implies B} & = & \left\{s\in P_A\|P_B \;\middle|\; \mbox{\pbox{\textwidth}{$s$ is alternating with respect to $\zeta_{A\implies B}$ \\ $s$ is well formed with respect to $\zeta_{A\implies B},\lambda_{A\implies B}$}}\right\}
+  \end{IEEEeqnarray*}
+\end{definition}
+
+\begin{definition}
+  We define:
+  \begin{IEEEeqnarray*}{cCc}
+    A\tensor B & = & (M_{A\tensor B}, \lambda_{A\tensor B}, \zeta_{A\tensor B}, P_{A\tensor B}) \\
+    A\parr B & = & (M_{A\parr B}, \lambda_{A\parr B}, \zeta_{A\parr B}, P_{A\parr B}) \\
+    A\implies B & = & (M_{A\implies B}, \lambda_{A\implies B}, \zeta_{A\implies B}, P_{A\implies B})
+  \end{IEEEeqnarray*}
+\end{definition}
+
+\begin{proposition}
+  $A\tensor B$,$A\parr B$,$A\implies B$ are well formed games.  Moreover, $P_{A\tensor B}$ is the largest subset of $P_A\|P_B$ such that $(M_{A\tensor B}, \lambda_{A\tensor B}, \zeta_{A\tensor B}, P_{A\tensor B})$ is a well formed game and similarly for the connectives $\parr$ and $\implies$.  
+  \begin{proof}
+    We will prove the proposition for $A\tensor B$; the other two cases are entirely similar.  Alternatively, observe that $A\parr B=\neggame{(\neggame A \tensor \neggame B)}$ and $A\implies B = \neggame A \parr B$.
+
+    For $A\tensor B$, it suffices to show that $P_{A\tensor B}$ is alternating with respect to $\zeta_{A\tensor B}$, since every $s\in P_{A\tensor B}$ is well-formed by definition.  Suppose $s,sa\in P_{A\tensor B}$; then $s,sa\prefix sa$; since $sa$ is alternating with respect to $\zeta_{A\tensor B}$, it follows that $\zeta_{A\tensor B}(s) = \neg\zeta_{A\tensor B}(sa)$.
+
+    For the second part of the proposition, suppose that $V\subset P_A\|P_B$ is prefix-closed and satisfies the alternating condition with respect to $\zeta_{A\tensor B}$ and that every $s\in V$ is well-formed with respect to $\lambda_{A\tensor B},\zeta_{A\tensor B}$.  We need to show that $V\subset P_{A\tensor B}$, for which it will suffice to show that every $s\in V$ is alternating.  This is easy to see: since $V$ is prefix closed, the set of all prefixes of $s$ is a subset of $V$, and so it satisfies the alternating condition with respect to $\zeta_{A\tensor B}$.  
+  \end{proof}
+\end{proposition}
+
+A design feature of the connectives $\tensor,\parr,\implies$ is that only player $O$ may switch games in $A\tensor B$, while only player $P$ may switch games in $A\parr B$ and $A\implies B$.  The $\implies$ case follows immediately from the $\parr$ case by noting that $A\implies B = \neggame A\parr B$, and the $\parr$ case then follows from the $\tensor$ case by observing that $A\parr B=\neggame{(\neggame A \tensor \neggame B)}$.  Thus, it will suffice to prove the following proposition for the tensor product:
+
+\begin{proposition}
+  \label{WhoSwitchesGames}
+  Let $A,B$ be games.  Suppose $s\in P_{A\implies B}$, $a\in M_A$ and $b\in M_B$.  Then:
+
+  i) If $sab\in P_{A\tensor B}$ then $\lambda_{A\tensor B}(b)=O$
+
+  ii) If $sba\in P_{A\tensor B}$ then $\lambda_{\tensor B}(a)=O$.  
+
+  \begin{proof}
+
+    (i): $\begin{aligned}[t]
+      \lambda_{A\tensor B}(b) & = \zeta_{A\tensor B}(sab) \\
+       & = \zeta_{A\tensor B}(s\vert_A a) \wedge \zeta_{A\tensor B}(s\vert_B b) \\
+       & = \lambda_{A\tensor B}(a) \wedge \lambda_{A\tensor B}(b)
+    \end{aligned}$
+
+    By alternation, either $\lambda_{A\tensor B}(a)=O$ or $\lambda_{A\tensor B}(b)=O$, so this last expression must be equal to $O$.
+    
+    (ii): \noindent$\begin{aligned}[t]
+      \lambda_{A\tensor B}(a) & = \zeta_{A\tensor B}(sba) \\
+       & = \zeta_{A\tensor B}(s\vert_A a) \wedge \zeta_{A\tensor B}(s\vert_B b) \\
+       & = \lambda_{A\tensor B}(a) \wedge \lambda_{A\tensor B}(b) = O\textrm{ (by the same argument)} && \quad\;\qedhere
+    \end{aligned}$
+  \end{proof}
+\end{proposition}
+
+\subsection{A category of games and partial strategies}
+
+Following \cite{joyalgames} and \cite{abramskyjagadeesangames}, we define a category $\G$ whose objects are games where the morphisms from a game $A$ to a game $B$ are strategies for $A\implies B$.  For the sake of simplicity, and to avoid varioius technical issues, we shall require that the games in our category be \emph{negative} - namely, they should start with an opponent move.  In our language, we call a game $A$ \emph{negative} if $\zeta_A(\emptyplay)=P$ (and we call it positive if $\zeta_A(\emptyplay)=O$).  The equations
+\begin{gather*}
+  P \wedge P = P \\
+  P \Rightarrow P = P
+\end{gather*}
+tell us that the class of negative games is closed under $\tensor$ and $\implies$ (since $P\vee P=P$, it is also closed under $\parr$, but the par of two negative games has no legal moves in our presentation, so it does not give a good model of the $\parr$ connective in linear logic and we will not consider it).
+
+In order to get a category, we need a way to compose a strategy for $A\implies B$ with a strategy for $B\implies C$.  We do this in the standard way (see \cite{joyalgames} or \cite{martinsthesis}, for example).  
+
+Given negative games $A,B,C$ and strategies $\sigma$ for $A\implies B$ and $\tau$ for $B\implies C$, define
+\[
+  \sigma\|\tau = \{\s\in(M_A\cprd M_B\cprd M_C)^*\suchthat \s\vert_{A,B}\in \sigma,\;\s\vert_{B,C}\in\tau\}
+  \]
+We then define
+\[
+  \comp\tau\sigma = \{\s\vert_{A,C}\suchthat\s\in\sigma\|\tau\}
+  \]
+Before proving that this is indeed a strategy for $A\implies C$, we first record a nice property of negative games that will make things particularly easy for us:
+
+\begin{proposition}
+  Let $A,B$ be negative games and suppose that $s\in P_A\|P_B$ is alternating with respect to $\zeta_{A\tensor B}$.  Then:
+  \begin{enumerate}[i)]
+    \item Either $\zeta_{A}(s\vert_A)=P$ or $\zeta_{B}(s\vert_B)=P$.  
+    \item $s$ is well formed with respect to $\zeta_{A\tensor B},\lambda_{A\tensor B}$.  
+  \end{enumerate}
+  Furthermore, (i) and (ii) hold if we replace $\tensor$ with $\implies$ throughout and if we replace (i) by the statement that either $\zeta_A(s\vert_A)=P$ or $\zeta_B(s\vert_B)=O$.
+  \label{nice-negative-games}
+\end{proposition}
+
+We gave an example earlier in which a play $sa$ in $P_A\|P_B$ was not well formed with respect to $\zeta_{A\tensor B},\lambda_{A\tensor B}$.  The crucial thing that made that example work was that we had $\zeta_A(s\vert_A)=\zeta_B(s\vert_B)=O$.  This then meant that $\zeta_{A\tensor B}(sa)=O$ even when $\lambda_{A\tensor B}=P$.  Part (i) of the proposition above tells us that this situation never occurs, and part (ii) tells us that this is enough to ensure that we never get any alternating sequences that are not well formed.
+
+\begin{proof}[Proof of Proposition \ref{nice-negative-games}]
+  We proceed by induction on the length $n$ of $s$.  If $n=0$ then $s=\emptyplay$ and so $\zeta_A(s\vert_A)=\zeta_A(\emptyplay)=P$ and similarly for $B$, since $A,B$ are negative games.  Now suppose that $n>0$ - so $s=tm$ for some $t\in P_{A\tensor B},m\in M_{A\tensor B}$.  By induction, either $t\vert_A=P$ or $t\vert_B=P$, so there are three cases:
+  \begin{description}
+    \item[Case 1:] $\zeta_A(t\vert_A)=P$ and $\zeta_B(t\vert_B)=P$. Then either $tm\vert_A=t\vert_A$ (if $m$ is a $B$-move) or $tm\vert_B=t\vert_B$ (if $m$ is an $A$-move).  This proves part (i).  For part (ii), note that in this case we have $\zeta_{A\tensor B}(t)=P$, so $\zeta_{A\tensor B}(tm)=O$, since $tm$ is alternating.  If $m$ is an $A$-move, it means that $\zeta_B(tm\vert_B)=\zeta_B(t\vert_B)$, so we must have $\zeta_A(tm\vert_A)=O$.  Then
+      \[
+        \lambda_{A\tensor B}(m)=\lambda_A(m)=\zeta_A(t\vert_Am)=O=\zeta_{A\tensor B}(tm)
+        \]
+      If $m$ is a $B$-move, the argument is similar.
+    \item[Case 2:] $\zeta_A(t\vert_A)=P$ and $\zeta_B(t\vert_B)=O$.  For part (i), it will suffice to show that $m$ is a $B$-move - so $tm\vert_A=t\vert_A$.  Indeed, we have $\zeta_{A\tensor B}(t)=O$, so $\zeta_{A\tensor B}(tm)=P$, since $tm$ is alternating with respect to $\zeta_{A\tensor B}$.  In particular, $\zeta_B(tm\vert_B)=P$, so we must have $tm\vert_B\ne t\vert_B$ and therefore $m$ is a $B$-move.  For part (ii), we have:
+      \begin{gather*}
+        \lambda_{A\tensor B}(m)=\lambda_B(m)=\zeta_B(t\vert_Bm)=\neg\zeta_B(t\vert_B)=\neg O = P \\
+        \zeta_{A\tensor B}(tm)=\neg\zeta_{A\tensor B}(t)=t = \neg O = P = \lambda_{A\tensor B}
+      \end{gather*}
+    \item[Case 3:] $\zeta_A(t\vert_A)=O$ and $\zeta_B(t\vert_B)=P$.  Similar to Case 2.
+  \end{description}
+
+  Finally, note that the $\tensor$ result implies the $\implies$ result after writing $A\implies B=\neggame{A}\parr B = \neggame{(A\tensor \neggame{B})}$.
+\end{proof}
+
+A corollary of our result is that we have:
+\begin{align*}
+  P_{A\tensor B} & = \{s\in P_A\|P_B\suchthat \textrm{$s$ is alternating with respect to $\zeta_{A\tensor B}$}\} \\
+  P_{A\implies B} & = \{s\in P_A\|P_B\suchthat \textrm{$s$ is alternating with respect to $\zeta_{A\implies B}$}\}
+\end{align*}
+if $A,B$ are negative games.  In other words, we can ignore the well-formedness condition on plays if we are dealing with only negative games.
+
+This proposition allows us to prove the following useful fact:
+
+\begin{lemma}
+  \label{alternatingsequenceslemma}
+  Let $A,B,C$ be negative games, and let $\s\in (M_A\cprd M_B\cprd M_C)^*$.  If any two of the following statements are true, then so is the third:
+  \begin{gather*}
+    \s\vert_{A,B}\in P_{A\implies B}\\
+    \s\vert_{A,C}\in P_{A\implies C}\\
+    \s\vert_{B,C}\in P_{B\implies C}
+  \end{gather*}
+  \begin{proof}
+    By symmetry, it will suffice to prove that if $\s\vert_{A,B}\in P_{A\implies B}$ and $\s\vert_{B,C}\in P_{B\implies C}$ then $\s\vert_{A,C}\in P_{A\implies C}$.  If $X,Y$ are negative games, then sequences $t\in P_{X\implies Y}$ are specified by the following properties - $t\vert_X\in P_X$, $t\vert_Y\in P_Y$, if $t$ has even length, then $\zeta_{X\implies Y}(t)=P$ and if $t$ has odd length then $\zeta_{X\implies Y}(t)=O$.  We need to show that these properties holds if $X=A$, $Y=C$ and $t=\s\vert_{A,C}$.  
+
+    Certainly, $\s\vert_{A,C}\vert_A=\s\vert_A=\s\vert_{A,B}\vert_A\in P_A$ and similarly $\s\vert_{A,C}\vert_C\in P_C$.  
+
+    If $\s\vert_{A,C}$ has even length, it means that the lengths of $\s\vert_A$ and $\s\vert_C$ have the same parity, and therefore that the lengths of $\s\vert_{A,B}$ and $\s\vert_{B,C}$ have the same parity.  Since $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$, it follows that $\zeta_{A\implies B}(\s\vert_{A,B})=\zeta_{B\implies C}(\s\vert_{B,C})$.  If $\zeta_B(\s\vert_B)=P$ then $\zeta_{A\implies B}(\s\vert_{A,B})=P$ and if $\zeta_B(\s\vert_B)=O$ then $\zeta_{B\implies C}(\s\vert_{B,C})=P$, so we must have $\zeta_{A\implies B}(\s\vert_{A,B})=\zeta_{B\implies C}(\s\vert_{B,C})=P$.  By transitivity of $\Rightarrow$, it follows that $\zeta_{A\implies C}(\s\vert_{A,C})=P$.  
+
+    If $\s\vert_{A,C}$ has odd length, it means that the lengths of $\s\vert_A$ and $\s\vert_C$ has opposite parities and therefore that the lengths of $\s\vert_{A,B}$ and $\s\vert_{B,C}$ have opposite parities.  So it follows that $\zeta_{A\implies B}(\s\vert_{A,B})=\neg\zeta_{B\implies C}(\s\vert_{B,C})$.  Suppose that $\zeta_{A\implies B}(\s\vert_{A,B})=O$.  Then $\zeta_A(\s\vert_A)=P$ and $\zeta_B(\s\vert_B)=O$.  By Proposition \ref{nice-negative-games} above applied to $\s\vert_{B,C}$, we must have $\zeta_C(\s\vert_C)=O$ and therefore $\zeta_{A\implies C}(\s\vert_{A,C})=(P\Rightarrow O)=O$.  
+
+    If instead we have $\zeta_{B\implies C}(\s\vert_{B,C})=O$, then $\zeta_B(\s\vert_B)=P$ and $\zeta_C(\s\vert_C)=O$.  By Proposition \ref{nice-negative-games} applied to $\s\vert_{A,B}$, we must have $\zeta_A(\s\vert_A)=P$ and so $\zeta_{A\implies C}(\s\vert_{A,C})=(P\Rightarrow O) = O$.  
+  \end{proof}
+\end{lemma}
+
+We can use this fact to prove that the composition of two strategies is a well-defined strategy.
+
+\begin{proposition}
+  \label{WellDefinedComposition}
+  Let $A,B,C$ be negative games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  Then $\comp\tau\sigma$ as defined above is a strategy for $A\implies C$.
+  \begin{proof}
+    We have $\emptyplay\in\comp\tau\sigma$, so $\comp\tau\sigma$ is non-empty.  Let $\s\in\sigma\|\tau$, and suppose that $t\prefix\s\vert_{A,C}$.  Let $m$ be the last move of $t$, and let $\t$ be the prefix of $\s$ consisting of all moves up to and including $m$.  Then $\t\vert_{A,C}=t$.  Since $\sigma\|\tau$ is clearly prefix closed, it follows that $t\in\comp\tau\sigma$.  This shows that $\comp\tau\sigma$ is prefix closed.  
+    
+    Since $\sigma\subset P_{A\implies B}$ and $\tau\subset P_{B\implies C}$, Lemma \ref{alternatingsequenceslemma} tells us that $\s\vert_{A,C}\in P_{A\implies C}$.  
+
+    We now show that the two strategy properties hold for $\comp\tau\sigma$.  Suppose $\s\in\sigma\|\tau$ and that $\zeta_{A\implies C}(\s\vert_{A,C})=P$.  Suppose also that $a\in M_A$ and that $\s\vert_{A,C}a\in P_{A\implies C}$.  We claim that $\s a\in\sigma\|\tau$.  Since $\s a\vert_{B,C}=\s\vert_{B,C}\in \tau$, it will suffice to show that $\s a\vert_{A,B}\in \sigma$.
+
+    We have $\s a\vert_{A,C}=\s\vert_{A,C}a\in P_{A\implies C}$ and $\s a\vert_{B,C}=\s\vert_{B,C}\in P_{B\implies C}$ so, by Lemma \ref{alternatingsequenceslemma}, $\s a\vert_{A,B}=\s\vert_{A,B}a\in P_{A\implies B}$.  Now $\zeta_{A\implies C}(\s\vert_{A,C})=P$ and so $\lambda_A(a)=P$, since $\s\vert_{A,C}a\in P_{A\implies C}$.  Since $\s\vert_{A,B}a\in P_{A\implies B}$, it follows that $\zeta_{A\implies B}(\s\vert_{A,B}a)=P$.  Since $\s\vert_{A,B}\in\sigma$ and $\sigma$ is a strategy, it follows that $\s\vert_{A,B}a\in\sigma$.  Therefore, $\s a\in\sigma\|\tau$, so $\s\vert_{A,C}a=\s a\vert_{A,C}\in\comp\tau\sigma$.
+
+    An identical argument tells us that if $c\in M_C$ and $\s\vert_{A,C}c\in P_{A\implies C}$ then $\s\vert_{A,C}c\in\comp\tau\sigma$.  
+
+    Now suppose that $s\in\comp\tau\sigma$ is such that $\zeta_{A\implies C}(s)=O$ and that $m_1,m_2\in M_{A\implies C}$ are such that $sm_1,sm_2\in\comp\tau\sigma$.  We wish to show that $m_1=m_2$.  
+
+    We shall use the argument given in \cite{abramskyjagadeesangames}.  Given a sequence $s\in\comp\tau\sigma$, we say that $\s\in\sigma\|\tau$ \emph{covers} $s$ if $s\prefix\s\vert_{A,C}$.  By definition, every sequence in $\comp\tau\sigma$ is covered by some sequence in $\comp\tau\sigma$.  
+
+    We claim that if $s\in\comp\tau\sigma$ then there is a sequence $\s$ that is minimal among sequences that cover $s$ (with respect to the prefix ordering).  In such a case, we must clearly have $\s\vert_{A,C}=s$.
+
+    We shall use the partial-function definition of strategies for the sake of clarity.  Recall that our strategies $\sigma$ and $\tau$ give us partial functions:
+    \begin{gather*}
+      \hat\sigma\from P_{A\implies B}^-\to M_{A\implies B}^+\\
+      \hat\tau\from P_{B\implies C}^-\to M_{B\implies C}^+
+    \end{gather*}
+    It will be helpful to define one more partial function using our sequence $s$.  We define
+    \[
+      \hat s(t) =
+      \begin{cases}
+        a & \textrm{if $ta\prefix s$} \\
+        \textrm{undefined} & \textrm{if $ta\not\prefix s$ for all $a\in M_{A\implies C}$}
+      \end{cases}
+      \]
+    So if we are given some prefix of $s$, $\hat{s}$ tells us what the next move is.  We shall be interested in $\hat s$ as a partial function $P_{A\implies C}^+\pfun M_{A\implies C}^-$: by Proposition \ref{WhoSwitchesGames}, the $O$-reply to a $P$-play in $A\implies C$ is always in the same game as the last move by player $P$, so $\hat s\from P_{A\implies C}^+\pfun M_{A\implies C}^-$ maps plays ending in an $A$-move to $A$-moves and maps plays ending in a $C$-move to $C$-moves.
+
+    We can now define a map $F\colon \sigma\|\tau\to M_A\cprd M_B\cprd M_C$ by
+    \[
+      F(\s) =
+      \begin{cases}
+        \hat s(\t\vert_{A,C}) & \textrm{if $\t=\emptyplay$ or if $\t$ ends with an $O$-move in $A$ or a $P$-move in $C$} \\
+        \hat \sigma(\t\vert_{A,B}) & \textrm{if $\t$ ends with a $P$-move in $A$ or an $O$-move in $B$} \\
+        \hat \tau(\t\vert_{B,C}) & \textrm{if $\t$ ends with a $P$-move in $B$ or an $O$-move in $C$}
+      \end{cases}
+      \]
+    Note that any of the partial functions $\hat s,\hat\sigma,\hat\tau$ may be undefined at $\t$, so $F$ is only a \emph{partial} function.
+
+    We claim that if $\t\in\sigma\|\tau$ and $F(\t)$ is defined then $\t F(\t)\in\sigma\|\tau$.  In the first case, if $\t=\emptyplay$ or if $\t$ ends with an $O$-move in $A$ or a $P$-move in $C$, then $\zeta_{A\implies C}(\t\vert_{A,C})=P$.  If $\t=\emptyplay$ then $F(\t)$ is the first move in $s$, which must be the first move in $\tau$.  Otherwise, suppose that $\t$ ends with an $O$-move in $A$.  We have $\t F(\t)\vert_{A,C}\prefix s$, so $\t F(t)\vert_{A,C}\in P_{A\implies C}$, while $\t F(\t)\vert_{B,C}=\t\vert_{B,C}\in P_{B\implies C}$, so $\t F(\t)\vert_{A,B}\in P_{A\implies B}$, by Lemma \ref{alternatingsequenceslemma}.  Moreover, $\zeta_{A\implies B}(\t)=P$, and therefore $\t F(\t)\vert_{A,B}\in\sigma$.  Similarly, if $\t$ ends with a $P$-move in $C$, we have $\zeta_{B\implies C}(\t)=P$ which tells us that $\t F(\t)\vert_{B,C}\in\tau$.  In either case, $\t F(\t)\in\sigma\|\tau$.
+
+    If $\t$ ends with a $P$-move in $A$ or an $O$-move in $B$, then we have $\t\vert_{A,B}\in \sigma\cap P_{A\implies B}^-$.  Then $\t F(\t)\vert_{A,B}\in\sigma$ by the definition of $\hat\sigma$.  If $F(\t)$ is an $A$-move, then $\t F(\t)\vert_{B,C}=\t\vert_{B,C}\in\tau$ automatically.  If instead $F(\t)$ is a $B$-move, we note that $\lambda_{B\implies C}(F(t))=\neg\lambda_{A\implies B}(F(t))=\neg P=O$ and therefore $\t\vert_{B,C} F(\t)\in\tau$ by the definition of a strategy and the argument used in the first case above.
+
+    The third case is similar to the second.
+    
+    We construct $\s$ as follows: start with the empty sequence $\emptyplay$ and repeatedly apply the map $\t\mapsto \t F(\t)$ until we reach a point where $F(\t)$ is undefined.  This will produce either a finite or an infinite sequence.  If there are trailing $B$-moves then we remove them to produce our sequence $\s$.  We claim that $\s$ is finite and covers $s$ and moreover that it is minimal among all sequences covering $s$.  
+
+    Let $\s'$ be a sequence covering $s$.  We wish to show that $\s'\prefix\s$, so we show by induction on $n$ that $\s_n'=\s_n$ for all $n$ up to the length of $\s$.  For the induction step, we need to show that if $\s_i'=\s_i$ for $i=1,\dots,k$ then $\s_{k+1}'=F(\s_1\s_2\dots\s_k)$.  We shall show simultaneously that $\s\vert_{A,C}=s$.
+
+    Observe that if $b\in M_B$ then either $\lambda_{A\implies B}(b)=O$ or $\lambda_{B\implies C}(b)=O$, so $\s'$ cannot start with a $B$-move.  Therefore, the first move in $\s'$ must be the first move in $s$, which is $F(\emptyplay)$.  
+
+    Now assume that $\s_i'=\s_i$ for $i=1,\dots,k$ and write $\t=\s_1\s_2\dots\s_k$.  If $\t$ ends with an $O$-move in $A$ or a $P$-move in $C$ then $\zeta_{A\implies C}(\t\vert_{A,C})=P$, so $F(\s)=\hat s(\t\vert_{A,C})$ must be an $O$-reply in the same game as the previous $P$-move, so it is therefore a move in $A$ or $C$.  Therefore, $\t F(\t)\vert_{A,C}=\t\vert_{A,C} F(\t)\prefix s$.  Now $\s_{k+1}'$ is an $O$-reply in $A$ or $C$ by the same argument, and $\t\s_{k+1}'\vert_{A,C}$ is also a prefix of $s$, since $\s'$ covers $s$.  Therefore, we must have $F(\t)=\s_{k+1}'$.
+
+    
+  \end{proof}
+\end{proposition}
+
+Now that we have a working composition of strategies, we are ready to make the collection of games into a category.  The identity morphism $A\to A$ is given by the copycat strategy on $A\implies A$:
+\[
+  \id_A = \left\{s\in P_{A\implies A}\suchthat \textrm{for all even-length $t\prefix s$, $t\vert_{\neggame{A}}=t\vert_A$}\right\}
+  \]
+\begin{proposition}
+  Let $\G$ denote the class of games as defined above.  If we define a morphism from a game $A$ to a game $B$ to be a strategy for $A\implies B$, then the identity morphism and notion of composition given above make $\G$ into a category.
+  \begin{proof}
+    We need to show that composition is associative and that $\id_A$ is the identity morphism on $A$.  For associativity of composition, we claim that if $A\xrightarrow{\sigma}\map{\tau}{B}{C}\xrightarrow{\upsilon}D$ are morphisms then $\comp{(\comp\upsilon\tau)}{\sigma}=S$, where
+    \[
+      S = \{\ss\vert_{A,D}\suchthat \ss\in(M_A\cprd M_B\cprd M_C\cprd M_D)^*,\;\ss\vert_{A,B}\in\sigma,\;\ss\vert_{B,C}\in\tau,\;\ss\vert_{C,D}\in\upsilon\}
+      \]
+
+    Certainly, if $\ss\vert_{A,D}\in S$, then $\ss\vert_{A,D}\in\comp{(\comp\upsilon\tau)}\sigma$: we have $\ss\vert_{B,C,D}\in\tau\|\upsilon$, so $\ss\vert_{B,D}\in\comp\upsilon\tau$.  Then $\ss\vert_{A,B,D}\in\sigma\|(\comp\upsilon\tau)$, so $\ss\vert_{A,D}\in\comp{(\comp\upsilon\tau)}{\sigma}$.   
+
+    Conversely, suppose $s\in\comp{(\comp\upsilon\tau)}{\sigma}$.  Then there exists $\s\in\sigma\|(\comp\upsilon\tau)$ such that $\s\vert_{A,D}=s$.  Then the definition of $\comp\upsilon\tau$ tells us that there exists $\t\in\tau\|\upsilon$ such that $\s\vert_{B,D}=\t\vert_{B,D}$.  We may assume that $\s,\t$ are the minimal covering sequences constructed in Proposition \ref{WellDefinedComposition}.
+
+    Note that we have $\s\in(M_A\cprd M_B\cprd M_D)^*$ and $\t\in(M_B\cprd M_C\cprd M_D)^*$.  We inductively construct a sequence $\ss\in(M_A\cprd M_B\cprd M_C\cprd M_D)^*$ such that for each inductively-constructed subsequence $\ss'$, we have $\ss'\vert_{A,B,D}\prefix\s$ and $\ss'\vert_{B,C,D}\prefix\t$.
+
+    If $a\in M_A,b\in M_B,c\in M_C$, then we have $\lambda_{A\implies B}(a)=\lambda_{B\implies C}(b)=\lambda_{C\implies D}(c)=P$.  Therefore, $\s$ and $\t$ must start with a $D$-move, and these $D$-moves must be equal, since $\s\vert_{B,D}=\t\vert_{B,D}$.  This $D$-move - call it $d$ - is the first move of $\ss$, and it is clear that $d\vert_{A,B,D}\prefix\s$ and $d\vert_{B,C,D}\prefix\t$.
+
+    Now suppose we have constructed a non-empty sequence $\ss'm$ such that $\ss'm\vert_{A,B,D}\prefix\s$ and $\ss'm\vert_{B,C,D}\prefix\t$.  
+
+    \begin{description}
+      \item[Case A:] If $m=a\in M_A$, then $\ss'a\vert_{A,B,D}$ is a prefix of $\s$ ending with $a$.  If $\ss'a\vert_{A,B,D}=\s$, then we set $\ss=\ss'a$ and terminate.  Otherwise, $\ss'\vert_{A,B,D}ap\prefix\s$ for some move $p$.  Extend the sequence $\ss'a$ to $\ss'ap$.  
+
+      We already have $\ss'ap\vert_{A,B,D}\prefix\s$, so we need to show that $\ss'ap\vert_{B,C,D}=\ss'p\vert_{B,C,D}\prefix\t$.  If $p\in M_A$, then this is automatic by induction, so suppose that $p\in M_B\cprd M_D$.  If $\lambda_{A\implies B}(a)=P$, then $p\in M_A$ by the proof of Proposition \ref{WellDefinedComposition}, so we may assume that $\lambda_{A\implies B}(a)=O$.  
+    \end{description}
+
+  \end{proof}
+\end{proposition}
+
+\bibliographystyle{alpha}
+\bibliography{ordinal_games}
+
+\end{document}

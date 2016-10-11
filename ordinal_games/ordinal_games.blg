@@ -2,7 +2,7 @@ This is BibTeX, Version 0.99d (TeX Live 2016/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: ordinal_games.aux
 The style file: alpha.bst
-Database file #1: ordinal_games.bib
+Database file #1: ../common/phd_bibliography.bib
 Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
 while executing---line 1185 of file alpha.bst
 Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
@@ -13,7 +13,7 @@ Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry long
 while executing---line 1250 of file alpha.bst
 You've used 27 entries,
             2543 wiz_defined-function locations,
-            735 strings with 8463 characters,
+            736 strings with 8489 characters,
 and the built_in function-call counts, 9844 in all, are:
 = -- 1005
 > -- 367
