@@ -1,0 +1,205 @@
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{mathtools} % for the all important \coloneqq symbol
+\usepackage{url} % for \url
+\usepackage{IEEEtrantools} % for \IEEEeqnarray
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%% Font things %%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{cmll} % Linear logic symbols!
+
+%% Lists %%
+\usepackage{enumerate}
+
+%% Graphics %%
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+%% Theorems! %%
+\usepackage{amsthm}
+\theoremstyle{plain} % Theorems, lemmas, propositions etc.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{definition} % Definitions etc.  Remarks too, because I don't like the way the 'remark' style looks.
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+
+%% Exercises and answers %%
+\usepackage{answers}
+
+\newtheoremstyle{exercisestyle}% name
+  {6pt}   % ABOVESPACE
+  {6pt}   % BELOWSPACE
+  {\itshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {3pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\theoremstyle{exercisestyle}
+\newtheorem{exercise}{Exercise}
+\newtheorem{answerthm}{Exercise}
+
+\Newassociation{answer}{answerthm}{answers}
+\newcommand{\answerthmparams}{}
+
+%% Changes to enumerate things so they look better %%
+
+\makeatletter
+\def\enumfix{%
+\if@inlabel
+ \noindent \par\nobreak\vskip-\topsep\hrule\@height\z@
+\fi}
+
+\let\olditemize\itemize
+\def\itemize{\enumfix\olditemize}
+\let\oldenumerate\enumerate
+\def\enumerate{\enumfix\oldenumerate}
+
+%% Random crap %%
+\usepackage{xifthen}
+
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+\makeatother
+
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\Rings}{\catname{CRing}}
+\newcommand{\CAT}{\catname{CAT}}
+\newcommand{\Top}{\catname{Top}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Cont}{\catname{Cont}}
+\newcommand{\Sch}{\catname{Sch}}
+\newcommand{\Mod}[1][]{\ifthenelse{\isempty{#1}}{\catname{Mod}}{#1\catname{mod}}}
+\DeclareMathOperator{\sh}{Sh}
+\newcommand{\Sh}[1][]{\ifthenelse{\isempty{#1}}{\sh}{\sh(#1)}}
+\newcommand{\map}[3]{#2\xrightarrow{#1} #3}
+\newcommand*\from{\colon}
+\newcommand{\cmap}[3]{#1\from{}#2\to{}#3}
+\newcommand\oppcat[1]{#1^{\mathrm{op}}}
+\DeclareRobustCommand{\vmap}[3] {\begin{tikzcd} #2 \arrow[d, "#1"] \\ #3 \end{tikzcd}}
+\newcommand{\partref}[1]{(\ref{#1})}
+\newcommand{\intgrpd}[4] {#1 \xrightrightarrows[#3]{#4} #2}
+\DeclareRobustCommand{\bigintgrpd}[4] {\begin{tikzcd}[ampersand replacement=\&] #1 \arrow[r, shift left=0.5ex, "#3"] \arrow[r, shift right=0.5ex, "#4"'] \& #2 \end{tikzcd}}
+
+\usepackage{xspace}
+
+\newcommand{\etale}{\'{e}tale\xspace}
+\newcommand{\Etale}{\'{E}tale\xspace}
+
+\def \inv {^{-1}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\pre}{{pre}}
+\DeclareMathOperator{\et}{{\acute{e}t}}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Spec}{Spec}
+
+\DeclareMathOperator{\ol}{ol}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+\def\presub#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}_{#1}%
+   \kern-\scriptspace%
+   #2}
+
+%% Our things %%
+
+\newcommand{\neggame}[1]{\presuper{\perp}{#1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\sequoid}{\oslash}
+\newcommand{\varsequoid}{\vartriangleleft}
+\renewcommand{\implies}{\multimap}
+\newcommand{\comp}[2]{#1 \circ #2}
+\newcommand{\cprd}{\sqcup}
+\newcommand{\G}{\mathcal G}
+\newcommand{\suchthat}{\;\colon\;}
+\newcommand{\varsuchthat}{\;\mid\;}
+\newcommand{\OP}{\{O,P\}}
+\renewcommand{\L}{\mathcal L}
+
+%%% END Article customizations
+
+\begin{document}
+
+\section{Weakenings}
+
+Let $A=(M_A,\lambda_A,P_A)$ be an Abramsky-Jagadeesan game.  We give two different notions of a \emph{weakening} of $A$ (informally, a game that is `easier' than $A$ from the point of view of Player $P$):
+
+\begin{enumerate}
+  \item We call a game $B=(M_B,\lambda_B,P_B)$ an \emph{antecedent weakening} if $M_B=M_A$, $\lambda_B=\lambda_A$ and $P_B\subset P_A$ such that whenever is is Player $P$'s turn to move in $B$, she has all the options available that she had in $A$:
+
+    For all $s\in P_B$ ending in an $O$-move, and for all $a\in M_A$ such that $sa\in P_A$, we have $sa\in P_B$.
+
+  \item We call a game $C=(M_C,\lambda_C,P_C)$ a \emph{precedent strengthening} if $M_C=M_A$, $\lambda_C=\lambda_A$ and $P_A\subset P_C$ such that for any $P$-play in $C$ that also occurred in $A$, 
+
+\end{enumerate}
+
+\end{document}

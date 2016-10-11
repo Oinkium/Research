@@ -1,0 +1,45 @@
+\enlargethispage {35mm}
+\contentsline {section}{\numberline {1}Introduction}{2}
+\contentsline {subsection}{\numberline {1.1}Original contribution}{7}
+\contentsline {subsection}{\numberline {1.2}Conventions}{7}
+\contentsline {subsection}{\numberline {1.3}Acknowledgements}{7}
+\contentsline {section}{\numberline {2}Our starting category of games}{8}
+\contentsline {subsection}{\numberline {2.1}Games and strategies}{8}
+\contentsline {subsection}{\numberline {2.2}Positive and negative games, ownership of plays and connectives}{10}
+\contentsline {subsection}{\numberline {2.3}Our definition of games and strategies}{13}
+\contentsline {subsection}{\numberline {2.4}Connectives}{15}
+\contentsline {subsection}{\numberline {2.5}A category of games and partial strategies}{18}
+\contentsline {subsection}{\numberline {2.6}Total strategies and winning conditions}{24}
+\contentsline {section}{\numberline {3}Transfinite games}{28}
+\contentsline {subsection}{\numberline {3.1}Transfinite Games and Strategies}{29}
+\contentsline {subsection}{\numberline {3.2}Connectives}{30}
+\contentsline {subsection}{\numberline {3.3}Categories of transfinite games and strategies}{34}
+\contentsline {subsubsection}{\numberline {3.3.1}Completely negative and almost completely negative $\alpha $-games}{35}
+\contentsline {subsubsection}{\numberline {3.3.2}Interleavings and the functor into ${\normalfont \textbf {Rel}}$}{38}
+\contentsline {subsubsection}{\numberline {3.3.3}Symmetric monoidal structure}{47}
+\contentsline {subsubsection}{\numberline {3.3.4}Symmetric monoidal closed structure}{54}
+\contentsline {subsubsection}{\numberline {3.3.5}A digression}{61}
+\contentsline {subsubsection}{\numberline {3.3.6}The completely negative linear implication $A\overset {\cn }{\multimap }B$}{62}
+\contentsline {subsubsection}{\numberline {3.3.7}Win-games and winning strategies}{66}
+\contentsline {section}{\numberline {4}Exponentials}{66}
+\contentsline {subsection}{\numberline {4.1}Products in $\mathcal G(\alpha )$}{69}
+\contentsline {subsection}{\numberline {4.2}The exponential as a final coalgebra}{70}
+\contentsline {subsection}{\numberline {4.3}The sequoidal exponential gives a cofree commutative comonoid}{79}
+\contentsline {section}{\numberline {5}The final sequence}{83}
+\contentsline {subsection}{\numberline {5.1}The rank of a transfinite sequence of natural numbers}{84}
+\contentsline {subsection}{\numberline {5.2}Classification of the final sequence for $A\oslash \blank $}{92}
+\contentsline {section}{\numberline {6}Further Directions}{95}
+\setcounter {tocdepth}{1}
+\contentsline {section}{\numberline {A}Proofs}{97}
+\contentsline {subsection}{\numberline {A.1}Proof of Proposition 2.11\hbox {}}{98}
+\contentsline {subsection}{\numberline {A.2}Proof of Proposition 2.12\hbox {}}{98}
+\contentsline {subsection}{\numberline {A.3}Proof of Proposition 2.14\hbox {}, Proposition 3.14\hbox {}}{99}
+\contentsline {subsection}{\numberline {A.4}Proof of Lemma 2.15\hbox {}}{100}
+\contentsline {subsection}{\numberline {A.5}Proof of Proposition 2.21\hbox {}}{102}
+\contentsline {section}{\numberline {B}Weakenings}{103}
+\contentsline {subsection}{\numberline {B.1}Weakenings}{103}
+\contentsline {subsection}{\numberline {B.2}The weakening monad of a game}{105}
+\contentsline {subsubsection}{\numberline {B.2.1}Weakening pullback of a game}{105}
+\contentsline {subsection}{\numberline {B.3}The weakening monad}{106}
+\contentsline {subsection}{\numberline {B.4}Lax weakening morphisms}{110}
+\contentsline {section}{References}{114}

@@ -1,0 +1,24 @@
+\frametitle{The final sequence}
+  Let $\C$ be a category and $\cmap{\F}{\C}{\C}$ be an endofunctor.
+  \[
+    \begin{tikzcd}
+      1
+        & \F(1) \arrow[l]
+          & \F^2(1) \arrow[l]
+            & \F^3(1) \arrow[l]
+              & \cdots \arrow[l] \\
+      \F^\omega(1) \arrow[u] \arrow[ur] \arrow[urr] \arrow [urrr] \arrow[urrrr, phantom, xshift=5.0ex, yshift=-0.5ex, "\cdots"]
+        & \F^{\omega+1}(1) \arrow[l]
+          & \F^{\omega+2}(1) \arrow[l]
+            & \F^{\omega+3}(1) \arrow[l]
+              & \cdots \arrow[l] \\
+      \F^{\omega2}(1) \arrow[u] \arrow[ur] \arrow[urr] \arrow [urrr] \arrow[urrrr, phantom, xshift=5.0ex, yshift=-0.5ex, "\cdots"]
+        & \cdots \arrow[l]
+          &
+            & \\
+      \arrow[u, phantom, "\vdots"]
+    \end{tikzcd}
+    \]
+
+  If a final coalgebra for $\F$ exists, then it occurs as $\F^\alpha(1)$ \\
+  for some $\alpha$ and the sequence stabilizes thereafter.

@@ -1,0 +1,634 @@
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{mathtools} % for the all important \coloneqq symbol
+\usepackage{url} % for \url
+\usepackage{IEEEtrantools} % for \IEEEeqnarray
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%% Font things %%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{cmll} % Linear logic symbols!
+
+%% Lists %%
+\usepackage{enumerate}
+
+%% Graphics %%
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+%% Theorems! %%
+\usepackage{amsthm}
+\theoremstyle{plain} % Theorems, lemmas, propositions etc.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{definition} % Definitions etc.  Remarks too, because I don't like the way the 'remark' style looks.
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+
+%% Exercises and answers %%
+\usepackage{answers}
+
+\newtheoremstyle{exercisestyle}% name
+  {6pt}   % ABOVESPACE
+  {6pt}   % BELOWSPACE
+  {\itshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {3pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\theoremstyle{exercisestyle}
+\newtheorem{exercise}{Exercise}
+\newtheorem{answerthm}{Exercise}
+
+\Newassociation{answer}{answerthm}{answers}
+\newcommand{\answerthmparams}{}
+
+%% Changes to enumerate things so they look better %%
+
+\makeatletter
+\def\enumfix{%
+\if@inlabel
+ \noindent \par\nobreak\vskip-\topsep\hrule\@height\z@
+\fi}
+
+\let\olditemize\itemize
+\def\itemize{\enumfix\olditemize}
+\let\oldenumerate\enumerate
+\def\enumerate{\enumfix\oldenumerate}
+
+%% Random crap %%
+\usepackage{xifthen}
+
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+\makeatother
+
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\Rings}{\catname{CRing}}
+\newcommand{\CAT}{\catname{CAT}}
+\newcommand{\Top}{\catname{Top}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Cont}{\catname{Cont}}
+\newcommand{\Sch}{\catname{Sch}}
+\newcommand{\Rel}{\catname{Rel}}
+\newcommand{\Mod}[1][]{\ifthenelse{\isempty{#1}}{\catname{Mod}}{#1\catname{mod}}}
+\DeclareMathOperator{\sh}{Sh}
+\newcommand{\Sh}[1][]{\ifthenelse{\isempty{#1}}{\sh}{\sh(#1)}}
+\newcommand{\map}[3]{#2\xrightarrow{#1} #3}
+\newcommand*\from{\colon}
+\newcommand{\cmap}[3]{#1\from{}#2\to{}#3}
+\newcommand\oppcat[1]{#1^{\mathrm{op}}}
+\DeclareRobustCommand{\vmap}[3] {\begin{tikzcd} #2 \arrow[d, "#1"] \\ #3 \end{tikzcd}}
+\newcommand{\partref}[1]{(\ref{#1})}
+\newcommand{\intgrpd}[4] {#1 \xrightrightarrows[#3]{#4} #2}
+\DeclareRobustCommand{\bigintgrpd}[4] {\begin{tikzcd}[ampersand replacement=\&] #1 \arrow[r, shift left=0.5ex, "#3"] \arrow[r, shift right=0.5ex, "#4"'] \& #2 \end{tikzcd}}
+
+\usepackage{xspace}
+
+\newcommand{\etale}{\'{e}tale\xspace}
+\newcommand{\Etale}{\'{E}tale\xspace}
+
+\def \inv {^{-1}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\pre}{{pre}}
+\DeclareMathOperator{\et}{{\acute{e}t}}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Spec}{Spec}
+
+\DeclareMathOperator{\ol}{ol}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2} \def\presub#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}_{#1}%
+   \kern-\scriptspace%
+   #2}
+
+%% Our things %%
+
+\newcommand{\neggame}[1]{\presuper{\perp}{#1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\sequoid}{\oslash}
+\newcommand{\varsequoid}{\vartriangleleft}
+\renewcommand{\implies}{\multimap}
+\newcommand{\comp}[2]{#1 \circ #2}
+\newcommand{\cprd}{\sqcup}
+\newcommand{\G}{\mathcal G}
+\newcommand{\suchthat}{\;\colon\;}
+\newcommand{\varsuchthat}{\;\mid\;}
+\newcommand{\esuchthat}{\;.\;}
+\newcommand{\OP}{\{O,P\}}
+\newcommand{\F}{\mathcal F}
+\renewcommand{\L}{\mathcal L}
+\DeclareMathOperator{\wk}{wk}
+\DeclareMathOperator{\weak}{weak}
+\DeclareMathOperator{\str}{str}
+\newcommand{\s}{\mathfrak{s}}
+\renewcommand{\t}{\mathfrak{t}}
+\newcommand{\grel}[1]{\underline{#1}}
+\newcommand{\prefix}{\sqsubseteq}
+
+%% Isomorphism arrows on commutative diagrams %%
+\tikzset{Isom/.style={every to/.append style={edge node={node [sloped, above, allow upside down, auto=false]{$\cong$}}}},
+         Isom'/.style={every to/.append style={edge node={node [sloped, above, allow upside down, auto=false, rotate=180]{$\cong$}}}},
+         Sim/.style={every to/.append style={edge node={node [sloped, above, allow upside down, auto=false]{$\sim$}}}},
+         Sim'/.style={every to/.append style={edge node={node [sloped, above, allow upside down, auto=false, rotate=180]{$\sim$}}}}}
+
+%%% END Article customizations
+
+\begin{document}
+
+\section{The Hyland-Schalk functor $\G\to\Rel$}
+\label{hylandschalke}
+
+Let $\G$ denote an appropriate category of games and strategies, and let $\Rel$ denote the category of sets and relations.  It is known (Hyland, Schalk, 1996) that the following define a functor $\cmap{\F}{\G}{\Rel}$:
+
+\begin{IEEEeqnarray*}{CCC}
+  \F(A) & = & P_A \\
+  \F\left(\map{\sigma}{A}{B}\right) & = & \{(\s\vert_A, \s\vert_B)\suchthat \s\in\sigma\textrm{ is a $P$-play}\}
+\end{IEEEeqnarray*}
+
+It can be shown that this functor $\F$ is faithful (see Calderon and McCusker, 2010 for a proof).  This surprising fact will be very useful for us: if we want to show that a particular diagram commutes in $\G$, we can normally do so more easily by applying the functor $\F$ to the diagram and showing that the resulting diagram commutes in $\Rel$.
+
+\begin{notation}
+  We shall simplify our notation by writing $P_A$ rather than $\F(A)$ and writing $\grel{\sigma}$ rather than $\F(\sigma)$.
+\end{notation}
+
+\section{Weakenings}
+
+Let $A=(M_A,\lambda_A,P_A)$ be a game.  Then we have two notions of a \emph{weakening} of $A$ - informally, a game that is \emph{easier} than $A$, from the player $P$'s point of view.  
+
+\begin{enumerate}
+  \item An \emph{antecedent weakening} of $A$ is a game $A'=(M_A,\lambda_A,P_{A'})$, where $P_{A'}\subset P_{A}$ such that for every $O$-play $s$ occurring in both $P_A$ and $P_{A'}$, the set of $P$-responses to $s$ in $A'$ is precisely the set of $P$-responses to $s$ in $A$ and for every $P$-play $t$ occurring in both $P_A$ and $P_{A'}$, the set of $O$-responses to $t$ in $A'$ is a subset of the set of $O$-responses to $t$ in $A$.  
+  \item A \emph{precedent strengthening} of $A$ is a game $A''=(M_A,\lambda_A,P_{A''})$ where $P_A\subset P_{A''}$ such that for every $O$-play $s$ occurring in both $P_A$ and $P_{A''}$, the set of player responses to $s$ in $A$ is a subset of the set of $P$-responses to $s$ in $A''$, and such that for every $P$-play $t$ occurring in both $P_A$ and $P_{A''}$ the set of $O$-responses to $t$ in $A$ is precisely the set of $O$-responses to $t$ in $A''$.  
+\end{enumerate}
+
+In other words, a precedent strengthening of $A$ is a game in which the player has more choices at each move, but the opponent has the same choices, while an antecedent weakening of $A$ is a game in which the player has the same choices at each move, but the opponent has fewer choices.  
+
+We can express the definition of an antecedent weakening more compactly as follows: $(M_A, \lambda_A, P_{A'})$ is an antecedent weakening of $(M_A, \lambda_A, P_A)$ if $P_{A'}\subset P_A$ and the following condition holds: whenever $s\in P_{A'}$ is an $O$-play and $a\in M_A$ is a $P$-move such that $sa\in P_A$, then $sa\in P_{A'}$.  This condition says that player $P$ has all the moves available to her in $A'$ that she had in $P_A$ - the other conditions mentioned above follow automatically from the fact that $P_{A'}\subset P_A$.
+
+The important fact about both types of weakening is that we have copycat morphisms $A\to A',A\to A''$.  
+
+From here on, we will use the term \emph{weakening} to refer to an antecedent weakening.  If $A'$ is a weakening of $A$, we will write $\cmap{\wk}{A}{A'}$ for the copycat morphism.  
+
+\begin{proposition}
+  Let $A'$ be a weakening of $A$.  Then $\cmap{\wk}{A}{A'}$ has a right inverse.  
+
+  \begin{proof}
+    The inverse for $\wk$ is the partial strategy $\cmap{\str}{A'}{A}$.  This is also constructed as a copycat strategy; the only difference is that if $O$ makes a move in $A$ that does not occur in $P_{A'}$ then the player $P$ has no reply.  We now claim that $\comp\wk\str=\id_{A'}$.  
+
+    Formally:
+    \begin{IEEEeqnarray*}{rCl}
+      \wk & = & \left\{s\in P_{A\implies A'}\suchthat\textrm{if $|s|$ is even, then $s\vert_A=s\vert_{A'}$}\right\} \\
+      \str & = & \left\{s\in P_{A'\implies A}\suchthat\textrm{if $|s|$ is even, then $s\vert_A'=s\vert_{A}$}\right\}
+    \end{IEEEeqnarray*}
+
+    We wish to show that $\comp\wk\str=\id_{A'}$.  In the style of section \ref{hylandschalke}, we shall show that $\comp{\grel\wk}{\grel\str}=\Delta_{P_{A'}}$ in $\Rel$.
+
+    It is easy to see that
+    \begin{IEEEeqnarray*}{rCl}
+      \grel\wk & = & \{(s, s)\suchthat s\in P_{A'}\}\subset P_A\times P_{A'} \\
+      \grel\str & = & \{(s, s)\suchthat s\in P_{A'}\}\subset P_{A'}\times P_A
+    \end{IEEEeqnarray*}
+
+    It is then easy to see that $\comp\wk\str=\Delta_{A'}\subset P_{A'}\times P_{A'}$, as we wanted.  As a sanity check, if we try to take the composition the other way round then we get $\Delta_{A'}\subset P_A\times P_A$, which is not the identity unless $P_{A'}=P_A$.
+  \end{proof}
+\end{proposition}
+
+\section{The weakening monad of a game}
+
+\subsection{Weakening pullback of a game}
+
+Let $A$ be a game.  Suppose $B$ is a game and $\cmap{\sigma}{B}{A}$ is a morphism.  Define
+\[
+  P_{B'}=\{\s\vert_B\suchthat \s\in\sigma\}
+  \]
+$P_{B'}$ is prefix closed, since $\sigma$ is, so $B'=(M_B, \lambda_B, P_{B'})$ is a well-formed game.  We claim that $B'$ is a weakening of $B$.  Indeed, suppose $s\in P_{B'}$ is an $O$-play and $sa\in P_B$.  By the definition of $P_{B'}$, there must be some $\s\in\sigma$ such that $\s\vert_B=s$; choosing $\s$ minimal, we may assume that the last move in $\s$ coincides with the last move of $s$.  Since $s$ is an $O$-play, this last move is an $O$-move in $B$ and therefore a $P$-move in $B\implies A$.  Therefore, $\s a\in \sigma$ since $\sigma$ is a strategy and so $sa=\s a\vert_B\in P_{B'}$.  We call $B'$ the \emph{weakening pullback} of $A$ along the morphism $\sigma$.
+
+Next, we define a morphism $\cmap{\sigma'}{B'}{A}$.  As sets, $\sigma'=\sigma$ (noting that, by definition, $\sigma\subset P_{B'\implies A}$).  We claim that
+\[
+  \begin{tikzcd}
+    B \arrow[r, "\wk"] \arrow[dr, "\sigma"']
+      & B' \arrow[d, "\sigma'"] \\
+    %
+      & A
+  \end{tikzcd}
+  \]
+commutes.
+
+Once again, we check this in $\Rel$.  If we note that $\grel\wk=\Delta_{P_{B'}}\subset P_B\times P_{B'}$ and that $\grel\sigma=\grel{\sigma'}$ as sets, then it is clear that $\comp{\grel{\sigma'}}{\grel\wk}=\grel\sigma$ in $\Rel$, and so $\comp{\sigma'}{\wk}=\sigma$ in $\G$.
+
+The weakening $B'$ and the morphism $\sigma'$ satisfy a universal property - namely, if $B''$ is a weakening of $B$ and $\cmap{\sigma''}{B''}{A}$ is a morphism such that
+\begin{equation}
+  \label{pullback.b.double.prime}
+  \begin{tikzcd}
+    B \arrow[r, "\wk"] \arrow[dr, "\sigma"']
+      & B'' \arrow[d, "\sigma''"] \\
+    %
+      & A
+  \end{tikzcd}
+\end{equation}
+commutes, then $B'$ is a weakening of $B''$ and 
+\begin{equation}
+  \label{pullback.b.prime}
+  \begin{tikzcd}
+    B'' \arrow[r, "\wk"] \arrow[dr, "\sigma''"']
+      & B' \arrow[d, "\sigma'"] \\
+    %
+      & A
+  \end{tikzcd}
+\end{equation}
+commutes.  Indeed, working in $\Rel$ again, diagram \eqref{pullback.b.double.prime} tells us that $\grel\sigma=\grel{\sigma''}$ as sets, which implies that $\sigma\subset P_{B''}\times P_A$.  Noting the definition of $P_{B'}$, it follows that $\map{\sigma'}{B'}{A}$ is the weakening pullback of $A$ along $\sigma''$, and so diagram \eqref{pullback.b.prime} commutes.
+
+\subsection{The weakening monad}
+
+We shall want to prove various useful properties of these weakening pullbacks, notably a functoriality condition: if $C\xrightarrow{\tau}\map{\sigma}{B}{A}$ are morphisms, then we get a morphism $\cmap{\tau'}{C'}{B'}$ such that $(\comp\sigma\tau)'=\comp{\sigma'}{\tau'}$.  This and other useful facts are brought together in the following theorem:
+
+\begin{theorem}
+  Let $A$ be a game.  Then we have a functor $\cmap{\weak_A}{\G/A}{\G/A}$ that sends a morphism $\map{\sigma}{B}{A}$ to the pullback weakening $\map{\sigma'}{B'}{A}$ and that gives rise to an idempotent monad on $\G/A$.
+
+  \begin{proof}
+    In order to complete the definition of the functor $\weak_A$, we need to define its action on morphisms.  Let $C\xrightarrow{\tau}\map{\sigma}{B}{A}$ be morphisms in $\G$ (so $\tau$ gives us a morphism from $\map{\comp\sigma\tau}{C}{A}$ to $\map{\sigma}{B}{A}$ in $\G/A$).  We define a morphism $\cmap{\tau'}{C'}{B'}$ by $\tau'=\tau\cap P_{C'\implies B'}$.
+
+    It is easy to see that $\tau'$ is a strategy, so we need to check that $\comp{\sigma'}{\tau'}=(\comp\sigma\tau)'$.  As usual, we perform this check in $\Rel$.
+
+    Since $(\comp\sigma\tau)'$ is created according to the pullback recipe given above, we have $\grel{(\comp\sigma\tau)'}=\grel{\comp\sigma\tau}$ as sets.  So, as subsets of $P_{C'}\times P_A$, we have:
+    \begin{align*}
+      \grel{(\comp\sigma\tau)'} & = \grel{\comp\sigma\tau} \\
+                                & = \comp{\grel\sigma}{\grel\tau} \\
+                                & = \{(s, t)\in P_{C'}\times P_{A}\suchthat \exists u\in P_B \esuchthat (s,u)\in\grel\tau, (u,t)\in\grel\sigma\}
+    \end{align*}
+
+    Meanwhile, as sets we have $\grel{\sigma'}=\grel\sigma$ and $\grel{\tau'}=\grel\tau\cap (P_{C'}\times P_{B'})$.  So, as subsets of $P_{C'}\times P_A$, we have:
+    \begin{align*}
+      \comp{\grel{\sigma'}}{\grel{\tau'}} & = \{(s, t)\in P_{C'}\times P_A\suchthat \exists u\in P_{B'} \esuchthat (s,u)\in\grel\tau, (u,t)\in\grel\sigma\}
+    \end{align*}
+
+     - in other words, the same thing, but with $P_{B'}$ instead of $P_B$.  It is clear then that $\comp{\grel{\sigma'}}{\grel{\tau'}}\subset\grel{(\comp\sigma\tau)'}$.  In the other direction, suppose $(s,t)\in P_{C'}\times P_A$ and that there exists $u\in P_B$ such that $(s,u)\in\grel\tau$ and $(u,t)\in\grel\sigma$.  But now, since $(u,t)\in\grel\sigma$, we must have $u\in P_{B'}$ by the definition of $P_{B'}$ and therefore $(u,t)\in \comp{\grel{\sigma'}}{\grel{\tau'}}$.
+
+     So far what we have done is show that the morphism $\tau'$ does indeed give us a morphism in $\G/A$ from $\map{(\comp\sigma\tau)'}{C'}{A}$ to $\map{\sigma'}{B'}{A}$.  We still need to prove that what we have defined respects composition and so gives us a functor $\G/A\to \G/A$.
+
+     This means proving the following statement: suppose $\map{\upsilon}{D}{C}\xrightarrow{\tau}\map{\sigma}{B}{A}$ are morphisms in $\G$.  This gives us morphisms $\upsilon,\tau$ in $\G/A$ as pictured in the diagram below:
+    \[
+      \begin{tikzcd}
+        D \arrow[r, "\upsilon"] \arrow[drr, "\comp{\sigma}{\comp{\tau}{\upsilon}}"']
+          & C \arrow[r, "\tau"] \arrow[dr, "\comp\sigma\tau"]
+            & B \arrow[d, "\sigma"] \\
+        %
+          &
+            & A
+      \end{tikzcd}
+      \]
+    We have $\cmap{\upsilon'}{D'}{C'}$ given by $\upsilon'=\upsilon\cap P_{D'\implies C'}$ and $\cmap{\tau'}{C'}{B'}$ given by $\tau'=\tau\cap P_{C'\implies B'}$, as before.  We also have a morphism $\cmap{(\comp\tau\upsilon)'}{D'}{B'}$ given by $(\comp\tau\upsilon)'=(\comp\tau\upsilon)\cap P_{D'\implies B'}$.  We need to show that $(\comp\tau\upsilon)'=\comp{\tau'}{\upsilon'}$.
+
+    We have $(\comp\tau\upsilon)'=(\comp\tau\upsilon)\cap P_{D'\implies B'}$, so:
+    \begin{align*}
+      \grel{(\comp\tau\upsilon)'} & = \grel{(\comp\tau\upsilon)}\cap(P_{D'}\times P_{B'}) \\
+       & = (\comp{\grel\tau}{\grel\upsilon}) \cap (P_{D'}\times P_{B'}) \\
+       & = \{(s,t)\in P_{D'}\times P_{B'} \suchthat \exists u\in P_C \esuchthat (s,u) \in \grel\upsilon\;, (u,t) \in \grel\tau \}
+    \end{align*}
+
+    Meanwhile, $\grel{\tau '} = \grel\tau \cap P_{D'}$ and $\grel{\upsilon '} = \grel\upsilon \cap P_{B'}$, so
+    \[
+      \comp{\grel{\tau '}}{\grel{\upsilon '}} = \{(s,t) \in P_{D'}\times P_{B'} \suchthat \exists u\in P_{C'} \esuchthat (s,u) \in \grel\upsilon\; (u,t)\in \grel\tau \}
+      \]
+    which is the same thing, but with $P_{C'}$ rather than $P_C$.  
+
+    Clearly, $\comp{\grel{\tau '}}{\grel{\upsilon '}} \subseteq \grel{(\comp\tau\upsilon)'}$.  In the other direction, suppose that $s\in P_{D'}, t\in P_{B'}$ and that $u\in P_C$ such that $(s,u)\in \grel\upsilon,(u,t)\in\grel\tau$.  It will suffice to show that $u\in P_{C'}$.  Now note that $C'$ is pullback of $A$ along $\comp\sigma\tau$ and that $B'$ is pullback of $A$ along $\sigma$.  Therefore:
+    \begin{align*}
+      P_{C'} & = \{\s\vert_C\suchthat \s\in\comp\sigma\tau\} \\
+      P_{B'} & = \{\t\vert_B\suchthat \t\in\sigma\}
+    \end{align*}
+    Since $t\in P_{B'}$, there must be some $\t\in \sigma$ such that $\t\vert_B=t$.  Put another way, there must be some $v\in P_A$ such that $(t,v)\in\grel\sigma$.  We have $(u,t)\in\grel\tau$, so therefore $(u,v)\in\grel{\comp\sigma\tau}$, and it follows that $u\in P_{C'}$.  
+
+    Therefore, we have that $\grel{\comp{\tau'}{\upsilon'}}=\comp{\grel{\tau '}}{\grel{\upsilon '}} = \grel{(\comp\tau\upsilon)'}$.  Since the Hyland-Schalk functor is faithful, this means that $\comp{\tau '}{\upsilon '}=(\comp\tau\upsilon)'$.
+
+    This all means that we can define a functor $\cmap{\weak_A}{\G/A}{\G/A}$ by
+    \begin{IEEEeqnarray*}{CCCCC}
+      \map{\sigma}{B}{A} & \quad & \mapsto & \quad & \map{\sigma'}{B'}{A} \\
+      \begin{tikzcd}
+        C \arrow[r, "\tau"] \arrow[dr, "\comp\sigma\tau"']
+         & B \arrow[d, "\sigma"] \\
+        %
+         & A
+      \end{tikzcd}
+      & \quad & \mapsto & \quad &
+      \begin{tikzcd}
+        C' \arrow[r, "\tau'"] \arrow[dr, "\comp{\sigma'}{\tau'}"']
+         & B' \arrow[d, "\sigma'"] \\
+        %
+         & A
+      \end{tikzcd}
+    \end{IEEEeqnarray*}
+
+    We now define the monad structure on $\G/A$.  The unit transformation $\cmap{\eta_A}{\id_{\G/A}}{\weak_A}$ is given by the weakening morphisms $\cmap{\wk}{B}{B'}$ for each object $\map{\sigma}{B}{A}$; we have already shown that the diagrams
+    \[
+      \begin{tikzcd}
+        B \arrow[r, "\wk"] \arrow[dr, "\sigma"']
+         & B' \arrow[d, "\sigma'"] \\
+        %
+         & A
+      \end{tikzcd}
+      \]
+    commute.  To show that this is indeed a natural transformation, we need to show that if we are given some morphism in $\G/A$
+    \[
+      \begin{tikzcd}
+        C \arrow[r, "\tau"] \arrow[dr, "\comp\sigma\tau"']
+          & B \arrow[d, "\sigma"] \\
+        %
+          & A
+      \end{tikzcd}
+      \]
+    then the following square commutes:
+    \[
+      \begin{tikzcd}
+        C \arrow[r, "\wk"] \arrow[d, "\tau"']
+          & C' \arrow[d, "\tau'"] \\
+        B \arrow[r, "\wk"']
+          & B'
+      \end{tikzcd}
+      \]
+    To show this, we work in $\Rel$ again.  On the one hand, we have:
+    \begin{align*}
+      \comp{\grel{\tau'}}{\grel{\wk}} & = \{(s,t)\in P_C\times P_{B'}\suchthat\exists u\in P_{C'}\esuchthat (s,u)\in\grel\wk\;,(u,t)\in\grel{\tau'}\} \\
+       & = \{(s, t)\in P_{C'}\times P_{B'}\suchthat (s,t)\in\grel{\tau'}\} \\
+       & = \grel{\tau'} = \grel{\tau}\cap(P_{C'}\times P_{B'})
+    \end{align*}
+    On the other hand:
+    \begin{align*}
+      \comp{\grel\wk}{\grel\tau} & = \{(s, t)\in P_C\times P_{B'}\suchthat \exists u\in P_B\esuchthat (s,u)\in \grel\tau, (u, t)\in \grel\wk\} \\
+       & = \grel\tau \cap (P_C\times P_{B'})
+    \end{align*}
+    
+    We certainly have $\comp{\grel{\tau'}}{\grel\wk}\subseteq\comp{\grel\wk}{\grel\tau}$.  In the other direction, suppose that $s\in P_C$ and $t\in P_{B'}$ such that $(s,t)\in\grel\tau$.  It will suffice to show that $s\in P_{C'}$.  Indeed, by the definition of $P_{B'}$, there is some $v\in P_A$ such that $(t, v)\in\grel\sigma$.  Therefore, $(s, v)\in\grel{\comp{\sigma}{\tau}}$, and so $s\in P_{C'}$, as required.  
+
+   Before defining the multiplication $\cmap{\mu_A}{\comp{\weak_A}{\weak_A}}{\weak_A}$ in the monad, we look at the identities that this unit transformation $\eta_A$ will have to satisfy.  If $\map{\sigma}{B}{A}$ is an object of $\G/A$ then we want the diagrams
+   \[
+     \begin{tikzcd}
+       B' \arrow[r, "\wk"] \arrow[dr, equals]
+         & B'' \arrow[d, "\mu_A(B)"] \\
+       %
+         & B'
+     \end{tikzcd}
+     \textrm{ and }
+     \begin{tikzcd}
+       B' \arrow[r, "\wk'"] \arrow[dr, equals]
+         & B'' \arrow[d, "\mu_A(B)"] \\
+       %
+         & B'
+     \end{tikzcd}
+     \]
+   to commute.  The arrow $\cmap{\wk}{B'}{B''}$ in the first diagram is the weakening arrow obtained from the object $\map{\sigma'}{B'}{A}$ of $\G/A$ using the natural transformation $\eta_A$, while the arrow $\cmap{\wk'}{B'}{B''}$ in the second diagram is obtained by applying the functor $\weak_A$ to the morphism $\cmap{\wk}{B}{B'}$.  
+
+   In practice, however, there is no need for this distinction: $B''$ is the same game as $B'$ and the arrows $\wk$ and $\wk'$ are the identity.  To see this, recall the definitions of $B'$ and $\sigma'$:
+   \begin{align*}
+     P_{B'} & = \{\s\vert_B\suchthat \s\in\sigma\} \\
+     \sigma' & = \sigma\textrm{ (as sets of plays)}
+   \end{align*}
+   Then we should have $P_{B''} = \{\s\vert_{B'}\suchthat \s\in\sigma'\}$, but since $\sigma'$ is the same set as $\sigma$, this is exactly the same as the definition of $P_{B'}$.  
+
+   Since $\wk,\wk'$ are identity maps, we observe that we have the strict equality $\comp{\weak_A}{\weak_A}=\weak_A$ and we had better define $\mu_A$ to be the identity transformation.  This $\mu_A$ is automatically associative and the unit diagrams above hold (since all maps involved are identity maps).  We end up with an idempotent monad on $\G/A$.
+  \end{proof}
+\end{theorem}
+
+\section{Lax weakening morphisms}
+
+We now introduce a lax version of our notion of weakening morphism that is stable under composition with isomorphisms:
+
+\begin{definition}
+  Let $A,B$ be games.  We say that a morphism $\cmap{\sigma}{B}{A}$ is a \emph{lax weakening} if it is the composition of a weakening morphism and an isomorphism; in other words, if there exists a weakening $B'$ of $B$ and an isomorphism $\cmap{\hat{\sigma}}{B'}{A}$ such that the diagram
+  \[
+    \begin{tikzcd}
+      B \arrow[r, "\wk"] \arrow[dr, "\sigma"']
+        & B' \arrow[d, "\hat\sigma", Sim'] \\
+      %
+        & A
+    \end{tikzcd}
+    \]
+  commutes.
+\end{definition}
+
+\begin{proposition}
+
+  i) If $B'$ is a weakening of $B$, then $\cmap{\wk}{B}{B'}$ is a lax weakening.
+  
+  ii) If $\cmap{\sigma}{B}{A}$ is an isomorphism, then $\sigma$ is a lax weakening.
+
+  iii) If $C\xrightarrow{\tau}\map{\sigma}{B}{A}$ are morphisms such that $\sigma$ and $\tau$ are lax weakenings, then $\cmap{\comp\sigma\tau}{C}{A}$ is a lax weakening.
+
+  \begin{proof}
+    (i) and (ii) are both obvious.  For part (iii), note that we have the diagram
+    \[
+      \begin{tikzcd}
+        C \arrow[r, "\wk"] \arrow[dr, "\tau"']
+          & C' \arrow[d, "\hat\tau", Sim']
+            & \\
+        %
+          & B \arrow[r, "\wk"] \arrow[dr, "\sigma"']
+            & B' \arrow[d, "\hat\sigma", Sim'] \\
+        %
+          &
+            & A
+      \end{tikzcd}
+      \]
+    It will suffice to find a weakening $C''$ of $C'$ and an isomorphism $\cmap{\hat{\hat\tau}}{C''}{B'}$ making the following diagram commute:
+    \[
+      \begin{tikzcd}
+        C \arrow[r, "\wk"] \arrow[dr, "\tau"']
+          & C' \arrow[d, "\hat\tau", Sim'] \arrow[r, "\wk"]
+            & C'' \arrow[d, "\hat{\hat\tau}", Sim'] \\
+        %
+          & B \arrow[r, "\wk"] \arrow[dr, "\sigma"']
+            & B' \arrow[d, "\hat\sigma", Sim'] \\
+        %
+          &
+            & A
+      \end{tikzcd}
+      \]
+    Therefore, it will suffice to prove the lemma which follows.
+  \end{proof}
+\end{proposition}
+
+\begin{lemma}[Lifting of weakenings along isomorphisms]
+  Let $B,C$ be games and let $\cmap{\tau}{C}{B}$ be an isomorphism.  Let $B'$ be a weakening of $B$.  Then there is a weakening $C'$ of $C$ and an isomorphism $\cmap{\tau'}{C'}{B'}$ such that the following diagram commutes:
+  \[
+    \begin{tikzcd}
+      C \arrow[r, "\wk"] \arrow[d, "\tau"', Sim]
+        & C' \arrow[d, "\tau'"', Sim] \\
+      B \arrow[r, "\wk"'] 
+        & B'
+    \end{tikzcd}
+    \]
+\end{lemma}
+
+We shall give two proofs of this lemma - one direct proof using the Hyland-Schalk functor and one proof using the idempotent monad structure described in the previous section.  
+
+\begin{proof}[First proof]
+  We know that $\cmap{\tau}{C}{B}$ is an isomorphism; therefore, its image $\grel\tau\subset P_C\times P_B$ under the Hyland-Schalk functor is an isomorphism in $\Rel$.  It is well-known (and easy to show) that the isomorphisms in $\Rel$ are precisely those relations that are the graphs of bijective functions.  Therefore, we have a bijection $\cmap{\grel\tau}{P_C}{P_B}$ with the property that
+
+  i) For all $s\in P_C$ there exists a $P$-play $\s\in\tau$ such that $\s\vert_C=s$ and $\s\vert_B=\grel\tau(s)$
+
+  ii) For all $P$-plays $\s\in\tau$, $\s\vert_B=\grel\tau\left(\s\vert_C\right)$.
+
+  Let $P_{C'}=\grel\tau\inv(P_{B'})\subseteq P_C$.  We claim that $P_{C'}$ is prefix-closed.  Let $s\in P_{C'}$ and let $t\prefix s$.  By the definition of $P_{C'}$, $\tau(s)\in P_{B'}$.  Since $P_{B'}$ is prefix-closed, it will suffice to show that $\grel\tau(t)\prefix\grel\tau(s)$.
+
+  By (i), we know that there exists a $P$-play $\s\in\tau$ such that $\s\vert_C = s$ and $\s\vert_B = \grel\tau(s)$.  Since $t\prefix s$, there is some prefix $\t\prefix\s$ such that $\t\vert_C = t$.  Then, by (ii), we must have $\grel\tau(t)=\t\vert_B\prefix\s\vert_B$.
+
+  Therefore, $C'=(M_C,\lambda_C, P_{C'})$ is a well-formed game.  We claim that it is a weakening of $C$.  
+
+  Indeed, suppose $s\in P_{C'}$ is an $O$-play and that $sc$ is a $P$-reply in $P_C$.  We need to show that $sc\in P_{C'}$.  
+
+  By the definition of $P_{C'}$, we know that $\grel\tau(s)\in P_{B'}$.  By (i) we know that there exists some $P$-play $\s\in\tau$ such that $\s\vert_C=s$ and $\s\vert_B=\grel\tau(s)$; since $\s$ is a $P$-play, we can deduce that $s$ and $\grel\tau(s)$ have the same sign, and so $\grel\tau(s)$ is an $O$-play in $P_{B'}$.  Examining (i) and (ii) above, we can see that $\grel\tau(sc)=\grel\tau(s)b$ for some $b\in P_B$.  Therefore, since $B'$ is a weakening of $B$, we have $\grel\tau(sc)\in P_{B'}$ and so $sc\in P_{C'}$ as desired.
+
+  Lastly, we define $\tau'$ to be given by the set $\tau \cap P_{C\implies B}$, and we claim that the diagram
+  \[
+    \begin{tikzcd}
+      C \arrow[r, "\wk"] \arrow[d, "\tau"', Sim]
+        & C' \arrow[d, "\tau'"'] \\
+      B \arrow[r, "\wk"'] 
+        & B'
+    \end{tikzcd}
+    \]
+  commutes.  This is most easily checked by applying the faithful functor
+  \[
+    \G \xrightarrow{\F} \Rel \xrightarrow{\dagger} \oppcat{\Rel}
+    \]
+  where $\cmap{\dagger}{\Rel}{\oppcat{\Rel}}$ is the identity on objects and flips a relation $R\subset A\times B$ to give a relation $R^\dagger\subset B\times A$.  If $\cmap{\wk}{A}{A'}$ is a weakening morphism in $\G$ then its image $\grel\wk$ under this functor is the graph of the inclusion $P_{A'}\hookrightarrow P_A$.  Meanwhile, the image of $\tau$ under this functor is the graph of the function $\cmap{\grel\tau\inv}{P_B}{P_C}$.  By the definition of $P_{C'}$, the image of $\tau'$ under this functor is the graph of the function $\cmap{\grel\tau\inv\vert_{P_{B'}}}{P_{B'}}{P_{C'}}$.  It is then easy to check that the resulting diagram commutes in $\Rel$:
+  \[
+    \begin{tikzcd}
+      P_C
+        & P_{C'} \arrow[l, hook', "\grel\wk"'] \\
+      P_B \arrow[u, "\grel\tau\inv"]
+        & P_{B'} \arrow[u, "\grel\tau\inv\vert_{P_{B'}}"'] \arrow[l, hook', "\grel\wk"]
+    \end{tikzcd}
+    \]
+
+  The last thing that we need to do is to check that $\tau'$ is an isomorphism.  If we apply exactly the same argument to $\map{\wk}{C}{C'}$ and the isomorphism $\cmap{\tau\inv}{B}{C}$ then we get a weakening $B''$ of $B$ and an isomorphism $\cmap{(\tau\inv)'}{B''}{C'}$ making the following diagram commute:
+  \[
+    \begin{tikzcd}
+      B \arrow[r, "\wk"] \arrow[d, "\tau\inv"', Sim]
+        & B'' \arrow[d, "(\tau\inv)'"] \\
+      C \arrow[r, "\wk"']
+        & C'
+    \end{tikzcd}
+    \]
+  Now note that $P_{B''}$ is defined to be $\grel\tau(P_{C'})$.  Since $\grel\tau$ is a bijection and $P_C$ was defined to be $\grel\tau\inv(P_{B'})$, we get that $B''=B'$.  We now get:
+  \begin{align*}
+    B \xrightarrow{\wk} B' \xrightarrow{(\tau\inv)'} C' \xrightarrow{\tau'} B'
+    & = B \xrightarrow{\tau\inv} C \xrightarrow{\wk} C' \xrightarrow{\tau'} B' \\
+    & = B \xrightarrow{\tau\inv} C \xrightarrow{\tau} B \xrightarrow{\wk} B' \\
+    & = B \xrightarrow{\wk} B'
+  \end{align*}
+  Since $\wk$ is an epimorphism, it follows that $\comp{\tau'}{(\tau\inv)'}=\id_{B'}$.  An identical argument shows that $\comp{(\tau\inv)'}{\tau'}=\id_{C'}$.  So $\tau'$ is an isomorphism.
+\end{proof}
+
+\begin{proof}[Second proof]
+  We start off with the diagram
+  \[
+    \begin{tikzcd}
+      C \arrow[d, "\tau"', Sim]
+        & \\
+      B \arrow[r, "\wk"]
+        & B'
+    \end{tikzcd}
+    \]
+
+  We use the monad on the category $\G/B'$.  Let $C'$ be the pullback of $B'$ along the morphism $\cmap{\comp\wk\tau}{C}{B'}$.  This gives us the diagram
+  \[
+    \begin{tikzcd}
+      C \arrow[d, "\tau"', Sim] \arrow[r, "\wk"]
+        & C' \arrow[d, "(\comp\wk\tau)'"] \\
+      B \arrow[r, "\wk"]
+        & B'
+    \end{tikzcd}
+    \]
+  It remains to show that $(\comp\wk\tau)'$ is an isomorphism.  
+
+  To show this, let us rearrange the original diagram a bit to make the monadic structure explicit:
+  \[
+    \begin{tikzcd}
+      C \arrow[r, "\tau", Sim'] \arrow[dr, "\comp\wk\tau"']
+        & B \arrow[d, "\wk"] \\
+      %
+        & B'
+    \end{tikzcd}
+    \]
+  When we apply the functor $\weak_{B'}$ to this diagram, we get
+  \[
+    \begin{tikzcd}
+      C' \arrow[r, "\tau'"] \arrow[dr, "(\comp\wk\tau)'"']
+        & B' \arrow[d, "\wk'"] \\
+      %
+        & B'
+    \end{tikzcd}
+    \]
+  By definition, $\cmap{\wk=\eta_B}{B}{B'}$, and so $\wk'=(\eta_B)'$.  Since our monad is idempotent, $(\eta_B)'$ is an isomorphism.  $\tau'$ is an isomorphism by functoriality and therefore $(\comp\wk\tau)'$ is an isomorphism, as desired.
+\end{proof}
+
+\end{document}

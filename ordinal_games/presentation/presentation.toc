@@ -1,0 +1,10 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {2}{Preliminaries}{3}{0}{1}
+\beamer@subsectionintoc {2}{1}{Our starting point - the Abramsky-Jagadeesan Games Model}{3}{0}{1}
+\beamer@subsectionintoc {2}{2}{Exponentials and the sequoid operator}{4}{0}{1}
+\beamer@subsectionintoc {2}{3}{Coalgebras and the final sequence}{6}{0}{1}
+\beamer@sectionintoc {3}{Stabilization ordinals for categories of games}{7}{0}{2}
+\beamer@sectionintoc {4}{Games with ordinal sequences of moves}{11}{0}{3}
+\beamer@subsectionintoc {4}{1}{What we end up with}{11}{0}{3}
+\beamer@subsectionintoc {4}{2}{Brief outline of the construction}{12}{0}{3}
+\beamer@subsectionintoc {4}{3}{Stabilization ordinals}{13}{0}{3}

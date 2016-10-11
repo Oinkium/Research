@@ -1,0 +1,354 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{mathtools} % for the all important \coloneqq symbol
+\usepackage{url} % for \url
+\usepackage{IEEEtrantools} % for \IEEEeqnarray
+
+%% Font things %%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{cmll} % Linear logic symbols!
+
+%% Lists %%
+\usepackage{enumerate}
+
+%% Graphics %%
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+%% Changes to enumerate things so they look better %%
+
+\makeatletter
+\def\enumfix{%
+\if@inlabel
+ \noindent \par\nobreak\vskip-\topsep\hrule\@height\z@
+\fi}
+
+\let\olditemize\itemize
+\def\itemize{\enumfix\olditemize}
+\let\oldenumerate\enumerate
+\def\enumerate{\enumfix\oldenumerate}
+
+%% Random crap %%
+\usepackage{xifthen}
+
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+\makeatother
+
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\Rings}{\catname{CRing}}
+\newcommand{\CAT}{\catname{CAT}}
+\newcommand{\Top}{\catname{Top}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Cont}{\catname{Cont}}
+\newcommand{\Sch}{\catname{Sch}}
+\newcommand{\Mod}[1][]{\ifthenelse{\isempty{#1}}{\catname{Mod}}{#1\catname{mod}}}
+\DeclareMathOperator{\sh}{Sh}
+\newcommand{\Sh}[1][]{\ifthenelse{\isempty{#1}}{\sh}{\sh(#1)}}
+\newcommand{\map}[3]{#2\xrightarrow{#1} #3}
+\newcommand*\from{\colon}
+\newcommand{\cmap}[3]{#1\from{}#2\to{}#3}
+\newcommand\oppcat[1]{#1^{\mathrm{op}}}
+\DeclareRobustCommand{\vmap}[3] {\begin{tikzcd} #2 \arrow[d, "#1"] \\ #3 \end{tikzcd}}
+\newcommand{\partref}[1]{(\ref{#1})}
+\newcommand{\intgrpd}[4] {#1 \xrightrightarrows[#3]{#4} #2}
+\DeclareRobustCommand{\bigintgrpd}[4] {\begin{tikzcd}[ampersand replacement=\&] #1 \arrow[r, shift left=0.5ex, "#3"] \arrow[r, shift right=0.5ex, "#4"'] \& #2 \end{tikzcd}}
+
+\usepackage{xspace}
+
+\newcommand{\etale}{\'{e}tale\xspace}
+\newcommand{\Etale}{\'{E}tale\xspace}
+
+\def \inv {^{-1}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\pre}{{pre}}
+\DeclareMathOperator{\et}{{\acute{e}t}}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Spec}{Spec}
+
+\DeclareMathOperator{\ol}{ol}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+\def\presub#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}_{#1}%
+   \kern-\scriptspace%
+   #2}
+
+%% Our things %%
+
+\newcommand{\neggame}[1]{\presuper{\perp}{#1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\sequoid}{\oslash}
+\newcommand{\varsequoid}{\vartriangleleft}
+\renewcommand{\implies}{\multimap}
+\newcommand{\comp}[2]{#1 \circ #2}
+\newcommand{\cprd}{\sqcup}
+\newcommand{\G}{\mathcal G}
+\newcommand{\C}{\mathcal C}
+\newcommand{\F}{\mathcal F}
+\newcommand{\suchthat}{\;\colon\;}
+\newcommand{\varsuchthat}{\;\mid\;}
+\newcommand{\OP}{\{O,P\}}
+\renewcommand{\L}{\mathcal L}
+
+\newcommand{\nsb}{N\sequoid\underline{\hspace{1.5ex}}\;}
+
+%%% END Article customizations
+
+\title{Games with ordinal sequence of moves}
+
+\author{John Gowers and James Laird}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section*{Outline}
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+\section{Preliminaries}
+
+\subsection{Our starting point - the Abramsky-Jagadeesan Games Model}
+
+\begin{frame}
+  \frametitle{Our starting point - the Abramsky-Jagadeesan Games Model}
+
+  We start off with a few simple categories of games:
+
+  \begin{itemize}
+    \item Games with a winning condition:
+      \[
+        A=(M_A,\lambda_A,b_A,P_A,W_A)
+        \]
+      The winning condition prevents infinite internal chattering.
+    \item Games without a winning condition:
+      \[
+        A=(M_A,\lambda_A,b_A,P_A)
+        \]
+      We have no winning condition, so we have to use \\
+      partial strategies or require that our games be bounded.
+    \item We have the tensor product ($\tensor$) and implication ($\implies$) \\
+      given by interleaving games and a categorical semantics $\G$\\
+      where a morphism from $A$ to $B$ is a strategy for $A\implies B$.
+  \end{itemize}
+
+\end{frame}
+
+\subsection{Exponentials and the sequoid operator}
+
+\begin{frame}
+  \frametitle{Construction of an exponential for our game model}
+
+  $N$ is a negative game ($b_N=O$).
+
+  \[
+    !N=(M_N\times\mathbb N,\lambda_N\circ\pr_1,O,P_{!N})
+    \]
+
+  $!N$ is made up of countably many copies of the game $N$,\\
+  indexed by $\mathbb N$ and played in parallel, with the opponent\\
+  switching games.  
+
+  $!N$ has the structure of the cofree commutative comonoid\\
+  generated by $N$:
+  \[
+    !N\implies !N\tensor !N
+    \]
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{The sequoid operator on games}
+
+  \begin{itemize}
+    \item $N\sequoid L$ is a weakening of $N\tensor L$ in which the opponent must make the first move in the game $N$.
+    \item It induces a monoidal category action of $\G$ on \\
+      (a modified version of) itself:
+      \[
+        L \sequoid (M \tensor N) \cong (L \sequoid M) \sequoid N
+        \]
+      This is the basis of the definition of a \emph{sequoidal category}.
+    \item Then the exponential $!N$ arises as the final coalgebra \\
+      for the `sequoid on the left by $N$' functor $\nsb$
+      \[
+        !N\implies N\sequoid !N
+        \]
+  \end{itemize}
+
+\end{frame}
+
+\subsection{Coalgebras and the final sequence}
+
+\begin{frame}[fragile]
+  \frametitle{The final sequence}
+  Let $\C$ be a category and $\cmap{\F}{\C}{\C}$ be an endofunctor.
+  \[
+    \begin{tikzcd}
+      1
+        & \F(1) \arrow[l]
+          & \F^2(1) \arrow[l]
+            & \F^3(1) \arrow[l]
+              & \cdots \arrow[l] \\
+      \F^\omega(1) \arrow[u] \arrow[ur] \arrow[urr] \arrow [urrr] \arrow[urrrr, phantom, xshift=5.0ex, yshift=-0.5ex, "\cdots"]
+        & \F^{\omega+1}(1) \arrow[l]
+          & \F^{\omega+2}(1) \arrow[l]
+            & \F^{\omega+3}(1) \arrow[l]
+              & \cdots \arrow[l] \\
+      \F^{\omega2}(1) \arrow[u] \arrow[ur] \arrow[urr] \arrow [urrr] \arrow[urrrr, phantom, xshift=5.0ex, yshift=-0.5ex, "\cdots"]
+        & \cdots \arrow[l]
+          &
+            & \\
+      \arrow[u, phantom, "\vdots"]
+    \end{tikzcd}
+    \]
+
+  If a final coalgebra for $\F$ exists, then it occurs as $\F^\alpha(1)$ \\
+  for some $\alpha$ and the sequence stabilizes thereafter.
+\end{frame}
+
+\section{Stabilization ordinals for categories of games}
+
+\begin{frame}
+  \frametitle{Stabilization ordinals for sequoidal categories of games}
+
+  \begin{itemize}
+    \item If $N$ is an object in the category $\G$ of games without \\
+      a winning condition, then the final sequence for $\nsb$ \\
+      stabilizes by $\omega$.
+      \pause
+    \item If $N$ is an object in the category $\mathcal W$ of games with \\
+      a winning condition, then the final sequence for $\nsb$ \\
+      stabilizes by $\omega2$.
+      \pause
+    \item If $\C$ is a sequoidal category, do the final sequences \\
+      corresponding to `sequoid on the left' functors \\
+      always stabilize by $\omega2$?  (No.)
+      \pause
+    \item Can we replace $\omega2$ by some other ordinal to give us a recipe \\
+      for constructing the exponential in any sequoidal category?
+  \end{itemize}
+\end{frame}
+
+\section{Games with ordinal sequences of moves}
+
+\subsection{What we end up with}
+
+\begin{frame}
+  \frametitle{Idea of transfinite games}
+
+  \begin{itemize}
+    \item For games without a winning condition, we may have a move \\
+      at time $n$ for every $n\in\omega$.  
+    \item For games with a winning condition, we have things happening \\
+      at time $\omega$ as well.  
+    \item We now take things further, and construct a category $\G(\alpha)$ \\
+      for every ordinal $\alpha$.  
+    \item We will get $\G\cong\G(\omega)$ and $\mathcal W\cong\G(\omega+1)$.
+    \item There is a connection between the ordinal $\alpha$ and the \\
+      stabilization ordinals for functors of the form
+      \[
+        \cmap{\nsb}{\G(\alpha)}{\G(\alpha)}
+        \]
+  \end{itemize}
+\end{frame}
+
+\subsection{Brief outline of the construction}
+
+\begin{frame}
+  \frametitle{A brief outline of the construction of the category of games played over the ordinal $\alpha$}
+
+  Fix an ordinal $\alpha$.  We construct a sequoidal category of \\
+  games of length $\alpha$ by mimicking the Abramsky-Jagadeesan \\
+  construction:
+  \[
+    N=(M_N, \lambda_N, \zeta_N, P_N)
+    \]
+
+  \begin{itemize}
+    \item $M_N$ is a set of moves.
+    \item $\cmap{\lambda_N}{M_N}{\OP}$ is a function saying which player each \\
+      move belongs to.
+    \item $P_N$ is a prefix closed set of ordinal length sequences (plays) \\
+      that take values in $M_N$ and are indexed by ordinals $<\alpha$
+    \item $\cmap{\zeta_N}{P_N}{\OP}$ assigns a player to each play.
+  \end{itemize}
+
+\end{frame}
+
+\subsection{Stabilization ordinals}
+
+\begin{frame}
+  \frametitle{The stabilization ordinal of the category $\G(\alpha)$}
+
+  \begin{itemize}
+    \item The behaviour of the stabilization ordinal for functors \\
+      of the form $\nsb$ in the category $\G(\alpha)$ is complicated \\
+      in general.
+    \item However, the final sequence for such functors never stabilizes \\
+      before $\alpha$.
+    \item Therefore, we have constructed sequoidal categories of games \\
+      with arbitrarily high stabilization ordinals: there is no \\
+      general recipe for constructing this exponential using only \\
+      the application of the functor and passing to small limits.
+  \end{itemize}
+\end{frame}
+
+\end{document}

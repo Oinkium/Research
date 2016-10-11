@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ordinal_games.aux
+The style file: alpha.bst
+Database file #1: ordinal_games.bib
+Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
+while executing---line 1185 of file alpha.bst
+Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
+while executing---line 1185 of file alpha.bst
+Warning--empty year in LairdCofCommCom
+Warning--can't use both author and editor fields in MelliesCofCommCom
+Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
+while executing---line 1250 of file alpha.bst
+You've used 27 entries,
+            2543 wiz_defined-function locations,
+            735 strings with 8463 characters,
+and the built_in function-call counts, 9844 in all, are:
+= -- 1005
+> -- 367
+< -- 23
++ -- 117
+- -- 113
+* -- 638
+:= -- 1586
+add.period$ -- 86
+call.type$ -- 27
+change.case$ -- 146
+chr.to.int$ -- 27
+cite$ -- 29
+duplicate$ -- 429
+empty$ -- 771
+format.name$ -- 156
+if$ -- 2061
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 23
+newline$ -- 137
+num.names$ -- 81
+pop$ -- 156
+preamble$ -- 1
+purify$ -- 178
+quote$ -- 0
+skip$ -- 364
+stack$ -- 0
+substring$ -- 524
+swap$ -- 77
+text.length$ -- 23
+text.prefix$ -- 16
+top$ -- 0
+type$ -- 204
+warning$ -- 2
+while$ -- 90
+width$ -- 30
+write$ -- 356
+(There were 3 error messages)

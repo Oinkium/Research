@@ -1,0 +1,151 @@
+\begin{thebibliography}{BDER97}
+
+\bibitem[AJ13]{abramskyjagadeesangames}
+Samson Abramsky and Radha Jagadeesan.
+\newblock Games and full completeness for multiplicative linear logic.
+\newblock {\em CoRR}, abs/1311.6057, 2013.
+
+\bibitem[AJM00]{ajmPcf}
+Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
+\newblock Full abstraction for {PCF}.
+\newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
+
+\bibitem[AM99]{AMConcurrent}
+Samson Abramsky and Paul-Andr{\'e} Melli\`{e}s.
+\newblock Concurrent games and full completeness.
+\newblock In {\em Proceedings of the 14th Annual IEEE Symposium on Logic in
+  Computer Science}, LICS '99, pages 431--, Washington, DC, USA, 1999. IEEE
+  Computer Society.
+
+\bibitem[BDER97]{bion}
+P.~Baillot, V.~Danos, T.~Ehrhard, and L.~Regnier.
+\newblock Believe it or not, {AJM}'s games model is a model of classical linear
+  logic.
+\newblock In {\em Proceedings of the 12th Annual IEEE Symposium on Logic in
+  Computer Science}, LICS '97, pages 68--, Washington, DC, USA, 1997. IEEE
+  Computer Society.
+
+\bibitem[Bla92]{blassgames}
+Andreas Blass.
+\newblock A game semantics for linear logic.
+\newblock {\em Annals of Pure and Applied Logic}, 56(1–3):183 -- 220, 1992.
+
+\bibitem[Chr03]{juliuszthesis}
+Juliusz Chroboczek.
+\newblock {\em Game Semantics and Subtyping}.
+\newblock PhD thesis, University of Edinburgh, 2003.
+
+\bibitem[CLM13]{martinsthesis}
+Martin Churchill, Jim Laird, and Guy McCusker.
+\newblock Imperative programs as proofs via game semantics.
+\newblock {\em CoRR}, abs/1307.2004, 2013.
+
+\bibitem[CM10]{CalderonMcCusker}
+Ana~C. Calderon and Guy McCusker.
+\newblock Understanding game semantics through coherence spaces.
+\newblock {\em Electron. Notes Theor. Comput. Sci.}, 265:231--244, September
+  2010.
+
+\bibitem[Con76]{conwaygames}
+John~H. Conway.
+\newblock {\em On Numbers and Games}, volume~6 of {\em London Mathematical
+  Society Monographs}.
+\newblock Academic Press, London, 1976.
+
+\bibitem[Cur92]{curiengames}
+Pierre-Louis Curien.
+\newblock Concrete data structures, sequential algorithms and linear logic.
+\newblock Email communication on types mailing list, 1992.
+
+\bibitem[HO93]{HylandOngGames}
+J.M.E. Hyland and C.-H.~L. Ong.
+\newblock Fair games and full completeness for multiplicative linear logic
+  without the {MIX}-rule, 1993.
+
+\bibitem[HO00]{hoPcf}
+J.M.E. Hyland and C.-H.L. Ong.
+\newblock On full abstraction for {PCF}: {I}, {II}, and {III}.
+\newblock {\em Information and Computation}, 163(2):285 -- 408, 2000.
+
+\bibitem[HS02]{hylandschalkgames}
+Martin Hyland and Andrea Schalk.
+\newblock Games on graphs and sequentially realizable functionals. extended
+  abstract.
+\newblock In {\em Logic in Computer Science, 2002. Proceedings. 17th Annual
+  IEEE Symposium on}, pages 257--264. IEEE, 2002.
+
+\bibitem[Hyl97]{hyland1997games}
+Martin Hyland.
+\newblock Game semantics.
+\newblock {\em Semantics and logics of computation}, 14:131, 1997.
+
+\bibitem[Joy77]{joyalgames}
+Andr\'{e} Joyal.
+\newblock Remarques sur la th\'{e}orie des jeux \`{a} deux personnes.
+\newblock {\em Gazette des sciences mathematiques de Quebec}, 1(4), 1977.
+
+\bibitem[Laf88]{LafontCofCommCom}
+Yves Lafont.
+\newblock {\em Logiques, categori\'{es} et machines}.
+\newblock PhD thesis, Universit\'{e} Paris 7, 1988.
+
+\bibitem[Lai]{LairdCofCommCom}
+James Laird.
+\newblock Functional programs as coroutines: A semantic analysis.
+\newblock {\em Logical methods in computer science}.
+\newblock To appear.
+
+\bibitem[Lai02]{laird02}
+J.~Laird.
+\newblock A categorical semantics of higher-order store.
+\newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
+
+\bibitem[Lai15]{LairdOrdinalGames}
+J.~Laird.
+\newblock Sequential algorithms for unbounded nondeterminism.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 319:271 --
+  287, 2015.
+
+\bibitem[Lam92]{lamarchegames}
+Fran\c{c}ois Lamarche.
+\newblock Sequential algorithms, games and linear logic.
+\newblock Unpublished Lecture, 1992.
+
+\bibitem[Lor67]{lorenzengames}
+P.~Lorenzen.
+\newblock Ein dialogisches konstruktivitatskriterium.
+\newblock {\em Journal of Symbolic Logic}, 32(4):516--516, 1967.
+
+\bibitem[MTT09]{MelliesCofCommCom}
+Paul-Andr{\'e} Melli{\`e}s, Nicolas Tabareau, and Christine Tasson.
+\newblock {\em An Explicit Formula for the Free Exponential Modality of Linear
+  Logic}, pages 247--260.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2009.
+
+\bibitem[Ne04]{longgamesbook}
+Itay Neeman and Inc. ebrary.
+\newblock {\em The determinacy of long games}.
+\newblock De Gruyter series in logic and its applications ;. Walter de
+  Gruyter,, Berlin ;, c2004.
+
+\bibitem[Nic94]{nickauPcf}
+Hanno Nickau.
+\newblock Hereditarily sequential functionals.
+\newblock In {\em International Symposium on Logical Foundations of Computer
+  Science}, pages 253--264. Springer, 1994.
+
+\bibitem[Sch01]{Schalk2001GsNotes}
+Andrea Schalk.
+\newblock Games for semantics: An introduction, March 2001.
+\newblock (In draft form).
+
+\bibitem[Sch04]{SchalkWhatIs}
+Andrea Schalk.
+\newblock What is a categorical model for linear logic?, October 2004.
+
+\bibitem[Wor05]{finalseq}
+James Worrell.
+\newblock On the final sequence of a finitary set functor.
+\newblock {\em Theoretical Computer Science}, 338(1):184 -- 199, 2005.
+
+\end{thebibliography}

@@ -1,0 +1,327 @@
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{mathtools} % for the all important \coloneqq symbol
+\usepackage{url} % for \url
+\usepackage{IEEEtrantools} % for \IEEEeqnarray
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%% Font things %%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{cmll} % Linear logic symbols!
+
+%% Lists %%
+\usepackage{enumerate}
+
+%% Graphics %%
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+%% Theorems! %%
+\usepackage{amsthm}
+\theoremstyle{plain} % Theorems, lemmas, propositions etc.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{definition} % Definitions etc.  Remarks too, because I don't like the way the 'remark' style looks.
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+
+%% Exercises and answers %%
+\usepackage{answers}
+
+\newtheoremstyle{exercisestyle}% name
+  {6pt}   % ABOVESPACE
+  {6pt}   % BELOWSPACE
+  {\itshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {3pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\theoremstyle{exercisestyle}
+\newtheorem{exercise}{Exercise}
+\newtheorem{answerthm}{Exercise}
+
+\Newassociation{answer}{answerthm}{answers}
+\newcommand{\answerthmparams}{}
+
+%% Changes to enumerate things so they look better %%
+
+\makeatletter
+\def\enumfix{%
+\if@inlabel
+ \noindent \par\nobreak\vskip-\topsep\hrule\@height\z@
+\fi}
+
+\let\olditemize\itemize
+\def\itemize{\enumfix\olditemize}
+\let\oldenumerate\enumerate
+\def\enumerate{\enumfix\oldenumerate}
+
+%% Random crap %%
+\usepackage{xifthen}
+
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+\makeatother
+
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\Rings}{\catname{CRing}}
+\newcommand{\CAT}{\catname{CAT}}
+\newcommand{\Top}{\catname{Top}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Cont}{\catname{Cont}}
+\newcommand{\Sch}{\catname{Sch}}
+\newcommand{\Rel}{\catname{Rel}}
+\newcommand{\Mod}[1][]{\ifthenelse{\isempty{#1}}{\catname{Mod}}{#1\catname{mod}}}
+\DeclareMathOperator{\sh}{Sh}
+\newcommand{\Sh}[1][]{\ifthenelse{\isempty{#1}}{\sh}{\sh(#1)}}
+\newcommand{\map}[3]{#2\xrightarrow{#1} #3}
+\newcommand*\from{\colon}
+\newcommand{\cmap}[3]{#1\from{}#2\to{}#3}
+\newcommand\oppcat[1]{#1^{\mathrm{op}}}
+\DeclareRobustCommand{\vmap}[3] {\begin{tikzcd} #2 \arrow[d, "#1"] \\ #3 \end{tikzcd}}
+\newcommand{\partref}[1]{(\ref{#1})}
+\newcommand{\intgrpd}[4] {#1 \xrightrightarrows[#3]{#4} #2}
+\DeclareRobustCommand{\bigintgrpd}[4] {\begin{tikzcd}[ampersand replacement=\&] #1 \arrow[r, shift left=0.5ex, "#3"] \arrow[r, shift right=0.5ex, "#4"'] \& #2 \end{tikzcd}}
+
+\usepackage{xspace}
+
+\newcommand{\etale}{\'{e}tale\xspace}
+\newcommand{\Etale}{\'{E}tale\xspace}
+
+\def \inv {^{-1}}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\pre}{{pre}}
+\DeclareMathOperator{\et}{{\acute{e}t}}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Spec}{Spec}
+
+\DeclareMathOperator{\ol}{ol}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+\def\presub#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}_{#1}%
+   \kern-\scriptspace%
+   #2}
+
+%% Our things %%
+
+\newcommand{\neggame}[1]{\presuper{\perp}{#1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\sequoid}{\oslash}
+\newcommand{\varsequoid}{\vartriangleleft}
+\renewcommand{\implies}{\multimap}
+\newcommand{\comp}[2]{#1 \circ #2}
+\newcommand{\cprd}{\sqcup}
+\newcommand{\G}{\mathcal G}
+\newcommand{\suchthat}{\;\colon\;}
+\newcommand{\varsuchthat}{\;\mid\;}
+\newcommand{\OP}{\{O,P\}}
+\newcommand{\F}{\mathcal F}
+\renewcommand{\L}{\mathcal L}
+\DeclareMathOperator{\wk}{wk}
+\DeclareMathOperator{\str}{str}
+\newcommand{\s}{\mathfrak{s}}
+\renewcommand{\t}{\mathfrak{t}}
+
+%%% END Article customizations
+
+\begin{document}
+
+\section{Weakenings}
+
+Let $A=(M_A,\lambda_A,P_A)$ be a game.  Then we have two notions of a \emph{weakening} of $A$ - informally, a game that is \emph{easier} than $A$, from the player $P$'s point of view.  
+
+\begin{enumerate}
+  \item An \emph{antecedent weakening} of $A$ is a game $A'=(M_A,\lambda_A,P_{A'})$, where $P_{A'}\subset P_{A}$ such that for every $O$-play $s$ occuring in both $P_A$ and $P_{A'}$, the set of $P$-responses to $s$ in $A'$ is precisely the set of $P$-responses to $s$ in $A$ and for every $P$-play $t$ occurring in both $P_A$ and $P_{A'}$, the set of $O$-responses to $t$ in $A'$ is a subset of the set of $O$-responses to $t$ in $A$.  
+  \item A \emph{precedent strengthening} of $A$ is a game $A''=(M_A,\lambda_A,P_{A''})$ where $P_A\subset P_{A''}$ such that for every $O$-play $s$ occuring in both $P_A$ and $P_{A''}$, the set of player responses to $s$ in $A$ is a subset of the set of $P$-responses to $s$ in $A''$, and such that for every $P$-play $t$ occuring in both $P_A$ and $P_{A''}$ the set of $O$-responses to $t$ in $A$ is precisely the set of $O$-responses to $t$ in $A''$.  
+\end{enumerate}
+
+In other words, a precedent strengthening of $A$ is a game in which the player has more choices at each move, but the opponent has the same choices, while an antecedent weakening of $A$ is a game in which the player has the same choices at each move, but the opponent has fewer choices.  
+
+The important fact about both these types of weakening is that we have copycat morphisms $A\to A',A\to A''$.  
+
+From here on, we will use the term \emph{weakening} to refer to an antecedent weakening.  If $A'$ is a weakening of $A$, we will write $\cmap{\wk}{A}{A'}$ for the copycat morphism.  
+
+\begin{proposition}
+  Let $A'$ be a weakening of $A$.  Then $\cmap{\wk}{A}{A'}$ has a right inverse.  
+
+  \begin{proof}
+    The inverse for $\wk$ is the partial strategy $\cmap{\str}{A'}{A}$.  This is also constructed as a copycat strategy; the only difference is that if $O$ makes a move in $A$ that does not occur in $P_{A'}$ then the player $P$ has no reply.  We now claim that $\comp\wk\str=\id_{A'}$.  
+
+    Formally:
+    \begin{IEEEeqnarray*}{rCl}
+      \wk & = & \left\{s\in P_{A\implies A'}\suchthat\textrm{if $|s|$ is even, then $s\vert_A=s\vert_{A'}$}\right\} \\
+      \str & = & \left\{s\in P_{A'\implies A}\suchthat\textrm{if $|s|$ is even, then $s\vert_A'=s\vert_{A}$}\right\}
+    \end{IEEEeqnarray*}
+
+    To show that $\comp\wk\str=\id_{A'}$, it suffices to show that player $P$'s response, under $\comp\wk\str$, to an $O$-move in the left-hand copy of $A'$ is to copy that move into the right-hand copy of $A'$ and that her response to an $O$-move in the right hand copy is to copy that move into the left hand copy.  This is fairly straightforward to show inductively, using the narrative definition of composition: if $O$ makes a move in the left-hand copy of $A'$, then Player $P$'s response under $\str$ is to copy that move across into $A$.  Then, by $\wk$, Player $P$ copies the move over into the right-hand copy of $A'$, completing her move.  
+
+    To go in the other direction, if Player $O$ plays in the right hand copy of $A'$, then Player $P$'s response under $\wk$ is to copy that move into $A$.  Now, since that move came from $A'$ originally, she is able to copy it over into the left-hand copy of $A'$.  Therefore, Player $P$'s overall strategy is the copycat strategy on $A'$.
+  \end{proof}
+
+\end{proposition}
+
+
+Our main result will tell us that is in fact a characterization of weakenings, in the sense that every strategy with a right inverse is \emph{equivalent} to some weakening strategy.  Explicitly, if $\cmap{\sigma}{A}{B}$ has a right inverse, then there is a weakening $A'$ of $A$ and an isomorphism $\cmap{\hat{\sigma}}{B}{A'}$ such that
+\[
+  \begin{tikzcd}
+    A \arrow[r, "\sigma"] \arrow[dr, "\wk"']
+      & B \arrow[d, "\rotatebox{90}{\(\sim\)}"', "\hat{\sigma}"] \\
+    %
+      & A'
+  \end{tikzcd}
+  \]
+commutes.
+
+\section{The functor $\G\to\Rel$}
+
+Let $\G$ denote an appropriate category of games and strategies, and let $\Rel$ denote the category of sets and relations.  It is known (Hyland, 1996) that the following define a functor $\cmap{\F}{\G}{\Rel}$:
+
+\begin{IEEEeqnarray*}{CCC}
+  \F(A) & = & P_A \\
+  \F\left(\map{\sigma}{A}{B}\right) & = & \left\{(s,t)\in P_A\times P_B\suchthat \textrm{for some }\mathfrak{s}\in\sigma, \mathfrak{s}\vert_A=s\textrm{ and }\mathfrak{s}\vert_B=t\right\}
+\end{IEEEeqnarray*}
+
+In fact, this functor is known to be faithful, but we will not use this fact here.  
+
+\section{Split epimorphisms in $\Rel$}
+
+Our last ingredient will be a result characterizing the split epimorphisms - that is, the morphisms that admit a right inverse - in the category $\Rel$ of sets and relations.  
+
+\begin{proposition}
+  \label{split.epis.in.rel}
+  Let $X,Y$ be sets and let $R\subset X\times Y$ be a relation between $X$ and $Y$.  Then $R$ admits a left inverse (i.e., a relation $S\subset Y\times X$ such that $R\circ S=\Delta_Y$) if and only if there exists a subset $X_0\subset X$ such that $R\vert_{X_0\times Y}$ is the graph of a surjective function $\cmap{f}{X_0}{Y}$.  
+  
+  \begin{proof}
+    \begin{description}
+      \item[Only if:] Suppose $R$ has a left inverse $S\subset Y\times X$.  So
+        \[
+          \comp RS=\{(y_1,y_2)\in Y\times Y\suchthat \textrm{$y_1Sx$ and $xRy_2$ for some $x\in X$}\}=\Delta_Y
+          \]
+        Unpacking this a bit, we see that:
+
+        i) For all $y\in Y$, there exists $x\in X$ such that $xRy$ and $ySx$.
+
+        ii) For all $y,y'\in Y,x\in X$, if $ySx$ and $xRy'$ then $y=y'$.
+
+        Define $X_0$ to be the set of all $x\in X$ such that $xRy$ and $ySx$ for some $y\in Y$, and if $x$ and $y$ are as just described, write $y=f(x)$.  By (ii), this gives us a well-defined function $\cmap{f}{X_0}{Y}$ and, by (i), this function $f$ is surjective.
+
+        We claim that $R\vert_{X_0\times Y}$ is the graph of $f$.  Certainly, $xRf(x)$ for all $x\in X_0$.  Conversely, suppose that $x\in X_0$ and $xRy$.  We have $f(x)Sx$ by the definition of $f$, and therefore $y=f(x)$, by (ii).
+
+      \item[If:] Let $R\subset X\times Y$ be a relation and suppose that there is a subset $X_0\subset X$ and a surjection $\cmap{f}{X}{Y}$ such that $R\vert_{X_0\times Y}$ is the graph of $f$.  Define a relation $S\subset Y\times X$ by $S=\{(f(x),x)\suchthat x\in X_0\}$.  We claim that $\comp R S=\Delta_Y$.  
+
+        Indeed, suppose $y\in Y$.  By surjectivity of $f$, there is $x\in X_0$ such that $y=f(x)$.  So $ySx$.  Then, since $R\vert_{X_0\times Y}$ is the graph of $f$, we must have $xRy$.  Therefore, $y(\comp RS)y$.  So certainly $\Delta_Y\subset\comp RS$.
+
+        In the other direction, if $y,y'\in Y$ and $x\in X$ such that $ySx$ and $xRy'$, then we must have $x\in X_0$ and $y=f(x)$.  Since $x\in X_0$, we ust also have $y'=f(x)$.  So $y=y'$, and the result follows.
+    \end{description}
+  \end{proof}
+
+\end{proposition}
+
+\section{Main result}
+
+\begin{proposition}
+  Let $A,B$ be games, and let $\cmap{\sigma}{A}{B}$ be a morphism.  The following are equivalent: 
+  
+  i) $\sigma$ has a right inverse.  
+
+  ii) $\F(\sigma)\subset P_A\times P_B$ has a right inverse in $\Rel$.  
+
+  iii) There exists a subset $P_A'\subset P_A$ and a surjective function $\cmap{f}{P_A'}{P_B}$ such that
+
+  \setlength{\parindent}{0.5cm}
+
+    \indent a) For all $s\in P_A'$ there exists $\s\in \sigma$ such that $\s\vert_A=s$ and $\s\vert_B=f(s)$.
+
+    b) If $\s\in \sigma$ and $\s\vert_A\in P_A'$, then $\s\vert_B=f(\s\vert_A)$
+
+  \noindent iv) There exists a weakening $A'$ of $A$ and an isomorphism $\cmap{\hat\sigma}{B}{A'}$ such that
+  \[
+    \begin{tikzcd}
+      A \arrow[r, "\sigma"] \arrow[dr, "\wk"']
+        & B \arrow[d, "\rotatebox{90}{\(\sim\)}"', "\hat{\sigma}"] \\
+      %
+        & A'
+    \end{tikzcd}
+    \]
+  commutes.
+
+  \begin{proof}
+
+    (i) $\Rightarrow$ (ii): If $\cmap{\tau}{B}{A}$ is a right inverse for $\sigma$, then $\mathcal F(\tau)$ is a right inverse for $\mathcal F(\sigma)$.
+
+    (ii) $\Rightarrow$ (iii): This is nothing more than the application of Proposition \ref{split.epis.in.rel}.
+
+    (iii) $\Rightarrow$ (iv): Let $A'=(M_A,\lambda_A,P_A')$.  We claim that $A'$ is a weakening of $A$.
+  \end{proof}
+\end{proposition}
+
+\end{document}
