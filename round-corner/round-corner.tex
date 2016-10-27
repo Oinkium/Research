@@ -27,21 +27,172 @@ where
   \item $M_A$ is a set of moves.
   \item $\lambda_A\from M_A\to\OP$ is a function designating each move as either an \emph{$O$-move} or a \emph{$P$-move}.
   \item $b_A\in\OP$ is a choice of starting player.
-  \item $P_A\subset M_A^*$ is a prefix-closed set of alternating plays - so if $sab\in P_A$ then $\lambda_A(a)=\neg\lambda_A(b)$.
+  \item $P_A\subset M_A^*$ is a prefix-closed set of alternating plays (so if $sab\in P_A$ then $\lambda_A(a)=\neg\lambda_A(b)$) such that if $as\in P_A$ then $\lambda_A(a)=b_A$.
 \end{itemize}
 
 We call $sa\in P_A$ a \emph{$P$-position} if $a$ is a $P$-move and an \emph{$O$-position} if $a$ is an $O$-move.
 
-Note that plays in $P_A$ do not have to start with a $b_A$-move, so there might be some positions in $P_A$ that can never actually arise when playing the game.
-
-A \emph{strategy} for player $P$ for a game $A$ is identified with the set of positions that may arise when playing according to that strategy.  Namely, it is a non-empty prefix-closed subset $\sigma\subset P_A$ satisfying the three conditions:
+A \emph{strategy} for player $P$ for a game $A$ is identified with the set of positions that may arise when playing according to that strategy.  Namely, it is a non-empty prefix-closed subset $\sigma\subset P_A$ satisfying the two conditions:
 \begin{description}
-  \item[(s$\emptyplay$)] If $a\in\sigma$ is a $1$-move play, then $\lambda_A(a)=b_A$.
   \item[(sO)] If $s\in\sigma$ is a $P$-position and $a$ is an $O$-move such that $sa\in P_A$, then $sa\in\sigma$.
   \item[(sP)] If $sa,sb\in\sigma$ are $P$-positions, then $a=b$.
 \end{description}
 
-We shall now concentrate on 
+We shall now concentrate on games $A$ for which $b_A=O$, called \emph{negative games}.  We shall informally describe the standard connectives on negative games:
+
+\begin{description}
+  \item[Product] If $A$ and $B$ are negative games then the \emph{product} $A\times B$ is the game given by placing the game trees for $A$ and $B$ side by side: that is, player $O$ may play his first move either in $A$ or in $B$.  Thereafter, play continues in the game that player $O$ has chosen.
+  \item[Tensor Product] The tensor product $A\tensor B$ is also played by playing the games $A$ and $B$ in parallel, but this time player $O$ may elect to switch games whenever it is his turn and continue play in the game he has switched to.
+  \item[Linear implication] The implication $A\implies B$ is played by playing the game $B$ in parallel with the \emph{negation} of $A$ - that is, the game formed by switching the roles of players $P$ and $O$ in $A$.  Since play in the negation of $A$ starts with a $P$-move, player $O$ is forced to make his first move in the game $B$.  Thereafter, player $P$ may switch games whenever it is her turn.
+\end{description}
+
+If $A,B,C$ are negative games, $\sigma$ is a strategy for $A\implies B$ and $\tau$ is a strategy for $B\implies C$, then we may form a strategy $\comp\tau\sigma$ for $A\implies C$ by setting
+\[
+  \sigma\|\tau = \{\s\in (M_A\cprd M_B\cprd M_C)^*\suchthat \s\vert_{A,B}\in\sigma,\;s\vert_{B,C}\in\tau\}
+  \]
+and then defining
+\[
+  \comp\tau\sigma = \{\s\vert_{A,C}\suchthat\s\in\comp\tau\sigma\}
+  \]
+It is well known (see, for example, \cite{abramskyjagadeesangames}) that $\comp\tau\sigma$ is indeed a strategy for $A\implies C$ and that this form of composition is associative and has an identity.  It is also well known that the resulting category $\G$ of games and strategies has products given by the operator $\times$ and a symmetric monoidal closed structure given by the operations $\tensor$ and $\implies$.  
+
+We turn now to the non-standard \emph{sequoid} connective $\sequoid$.  If $A$ and $B$ are negative games, then the sequoid $A\sequoid B$ is similar to the tensor product $A\tensor B$, but with the restriction that player $O$'s first move must take place in the game $A$.  We observe immediately that we have structural isomorphisms
+\begin{gather*}
+  \dist\from A\tensor B\toisom (A\sequoid B)\times(B\sequoid A)\\
+  \dec\from(A\times B)\sequoid C\toisom (A\sequoid C)\times (B\sequoid C)\\
+  \passoc\from (A\sequoid B)\sequoid C\toisom A\sequoid (B\tensor C)
+\end{gather*}
+
+One further question to ask is: does the sequoid operator give rise to a functor $\blank\sequoid\blank\from\G\times\G\to\G$, as the tensor operator does?  The answer is no: indeed, let $A,B,C,D$ be negative games, let $\sigma$ be a strategy for $A\implies C$ and let $\tau$ be a strategy for $B\implies D$.  Our aim is to construct a natural strategy $\sigma\sequoid\tau$ for $(A\sequoid B)\implies (C\sequoid D)$.  There is an obvious way to try and do this: player $P$ should play according to the strategy $\sigma$ whenever player $O$'s last move was in $A$ or $C$, and according to $\tau$ whenever player $O$'s last move was in $B$ or $D$.
+
+We show that this does not in general give us a strategy for $(A\sequoid B)\implies (C\sequoid D)$.  Suppose that $\sigma$ is such that player $P$'s response to some opening move in $C$ is another move in $C$ and suppose that $\tau$ is such that player $P$'s response to some opening move in $D$ is a move in $B$ (for example, $\tau$ is a copycat strategy).  Then we end up with the following sequence of events in the game $(A\sequoid B)\implies(C\sequoid D)$  :
+\begin{enumerate}
+  \item Player $O$ starts with a move in $C$ (as he must).
+  \item Player $P$ responds according to $\sigma$ with another move in $C$.
+  \item Player $O$ decides to switch games and play a move in $D$.
+  \item Player $P$ responds according to $\tau$ with a move in $B$.
+\end{enumerate}
+
+But now player $P$'s last move is not a legal move in $(A\sequoid B)\implies(C\sequoid D)$, since no moves have been played in $A$ yet.
+
+We get round this problem by requiring that the strategy $\sigma$ be \emph{strict} -- that is, whatever player $O$'s opening move in $C$ is, player $P$'s reply must be a move in $A$.  
+
+\begin{definition}
+  Let $N,L$ be negative games and let $\sigma$ be a strategy for $N\implies L$.  We say that $\sigma$ is \emph{strict} if player $P$'s reply to an opening move in $L$ is always a move in $N$.  
+\end{definition}
+
+Identity strategies are strict and the composition of two strict strategies is strict, so we get a full-on-objects subcategory $\G_s$ of $\G$ where the morphisms are strict strategies.  Then the sequoid operator gives rise to a functor:
+\[
+  \blank\sequoid\blank\from \G_s\times\G\to\G_s
+  \]
+
+\subsection{Sequoidal categories}
+
+We now have the motivation required to give the definition of a \emph{sequoidal category} from \cite{laird02}.  
+
+\begin{definition}
+  A \emph{sequoidal category} consists of the following data:
+  \begin{itemize}
+    \item A symmetric monoidal category $\C$ with monoidal product $\tensor$ and tensor unit $I$, associators $\assoc_{A,B,C}\from(A\tensor B)\tensor C\toisom A\tensor(B\tensor C)$, unitors $\runit_A\from A\tensor I\toisom A$ and $\lunit_A\from I\tensor A\toisom A$ and braiding $\sym_{A,B}\from A\tensor B\to B\tensor A$.
+    \item A category $\C_s$
+    \item A right monoidal category action of $\C$ on the category $\C_s$.  That is, a functor
+      \[
+        \blank\sequoid\blank\from\C_s\times\C\to\C_s
+        \]
+      together natural isomorphisms
+      \[
+        \passoc_{A,B,C}\from A\sequoid(B\tensor C)\to (A\sequoid B)\sequoid C
+        \]
+      and
+      \[
+        \run_A\from A\sequoid I\toisom A
+        \]
+      subject to the following coherence conditions:
+      \begin{longdiagram}
+        \begin{tikzcd}
+          A\sequoid(B\tensor(C\tensor D)) \arrow[r, "\passoc_{A,B,C\tensor D}" yshift=0.3em] \arrow[d, "\id_A\sequoid \assoc_{B,C,D}"']
+            & (A \sequoid B) \sequoid (C\tensor D) \arrow[r, "\passoc_{A\sequoid B,C,D}" yshift=0.3em]
+              & ((A\sequoid B)\sequoid C) \sequoid D \\
+          A\sequoid((B\tensor C)\tensor D) \arrow[r, "\passoc_{A,B\tensor C,D}"' yshift=-0.3em]
+            & (A\sequoid (B\tensor C)) \sequoid D \arrow[ur, "\passoc_{A,B,C}\sequoid\id_D"']
+              &
+        \end{tikzcd}
+      \end{longdiagram}
+      \begin{longdiagram}
+        \begin{tikzcd}
+          A \sequoid (I\tensor B) \arrow[r, "\passoc_{A,I,B}" yshift=0.3em] \arrow[d, "\id_A\sequoid\lunit_B"']
+            & (A\sequoid I)\sequoid B \arrow[dl, "\run_A"] \\
+          A \sequoid B
+            &
+        \end{tikzcd}
+        \quad
+        \begin{tikzcd}
+          A \sequoid (B\tensor I) \arrow[r, "\passoc_{A,B,I}" yshift=0.3em] \arrow[d, "\id_A\sequoid\runit_B"']
+            & (A\sequoid B) \sequoid I \arrow[dl, "\run_{A\sequoid B}"] \\
+          A\sequoid B
+            &
+        \end{tikzcd}
+      \end{longdiagram}
+
+      \item A functor $J\from \C_s\to\C$ (in the games example, this is the inclusion functor $\G_s\to\G$)
+
+      \item A natural transformation $\wk_{A,B}\from J(A)\tensor B\to J(A\sequoid B)$ satisfying the coherence conditions:
+      \begin{longdiagram}
+        \begin{tikzcd}
+          A \tensor I \arrow[r, "\runit_A" yshift=0.3em] \arrow[d, "\wk_{A,I}"']
+            & A \\
+          A \sequoid I \arrow[ur, "J(\run_A)"']
+            &
+        \end{tikzcd}
+        \quad
+        \begin{tikzcd}
+          (A \tensor B) \tensor C \arrow[r, "\wk_{A,B}\tensor\id_C" yshift=0.3em] \arrow[d, "\assoc_{A,B,C}"']
+            & (A \sequoid B) \tensor C \arrow[r, "\wk_{A\sequoid B, C}" yshift=0.3em]
+              & (A \sequoid B) \sequoid C\\
+          A \tensor (B \tensor C) \arrow[r, "\wk_{A,B\tensor C}"']
+            & A \sequoid (B \tensor C) \arrow[ur, "J(\passoc_{A,B,C})"']
+              &
+        \end{tikzcd}
+      \end{longdiagram}
+  \end{itemize}
+\end{definition}
+
+Our category of games satisfies further conditions:
+
+\begin{definition}
+  Let $\C=(\C,\C_s,J,\wk)$ be a sequoidal category.  We say that $\C$ is an \emph{inclusive sequoidal category} if $\C_s$ is a full-on-objects subcategoryof $\C$ containing the monoidal isomorphisms and the morphisms $\wk_{A,B}$, $J$ is the inclusion functor and $J$ reflects isomorphisms.
+
+  If $\C$ is an inclusive sequoidal category, we say that $\C$ is \emph{Cartesian} if $\C_s$ has all products and these are preserved by $J$.  In that case, we say that $\C$ is \emph{decomposable} if the natural transformations
+  \begin{gather*}
+    \dec_{A,B} = \langle \wk_{A,B}, \comp{\wk_{A,B}}{\sym_{A,B}}\rangle\from A\tensor B\to (A\sequoid B)\times (B\sequoid A) \\
+    \dec^0 \from I \to 1
+  \end{gather*}
+  are isomorphisms and we say that $\C$ is \emph{distributive} if the natural transformations
+  \begin{gather*}
+    \dist_{A,B,C} = \langle \pr_1\sequoid \id_C,\pr_2\sequoid\id_C\rangle\from (A\times B)\sequoid C\to (A\sequoid C)\times (B\sequoid C) \\
+    \dist_{A,0}\from 1\sequoid A\to 1
+  \end{gather*}
+  are isomorphisms.
+\end{definition}
+
+We have one further piece of structure available to us:
+
+\begin{definition}
+  Let $\C=(\C,\C_s,J,\wk)$ be an inclusive sequoidal category.  We say that $\C$ is a \emph{sequoidal closed category} if $\C$ is monoidal closed (with internal hom $\implies$ and currying $\Lambda_{A,B,C}\from \C(A\tensor B,C)\toisom \C(A,B\implies C)$) and if the map $f\mapsto\Lambda(\comp{f}{\wk})$ gives rise to a natural transformation
+  \[
+    \Lambda_{A,B,C,s}\from \C_s(A\sequoid B, C) \to \C_s(A,B\implies C)
+    \]
+\end{definition}
+
+It can be shown (see for example \cite{martinsthesis}) that our category $\G$ of games has all this structure.
+
+\begin{theorem}
+  If $A,B$ are games, let $J$ be the inclusion functor $\G_s\to\G$ and let $\wk_{A,B}\from A\tensor B\to A\sequoid B$ be the natural copycat strategy.  Then
+  \[
+    (\G,\G_s,J,\wk)
+    \]
+  is an inclusive, Cartesian, decomposable, distributive sequoidal closed category.
+\end{theorem}
 
 \bibliographystyle{alpha}
 \bibliography{../common/phd_bibliography}
