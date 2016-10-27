@@ -1,0 +1,18 @@
+\begin{thebibliography}{AJM00}
+
+\bibitem[AJM00]{ajmPcf}
+Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
+\newblock Full abstraction for {PCF}.
+\newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
+
+\bibitem[Hyl97]{hyland1997games}
+Martin Hyland.
+\newblock Game semantics.
+\newblock {\em Semantics and logics of computation}, 14:131, 1997.
+
+\bibitem[Lai02]{laird02}
+J.~Laird.
+\newblock A categorical semantics of higher-order store.
+\newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
+
+\end{thebibliography}
