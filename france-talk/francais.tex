@@ -1,8 +1,12 @@
 \documentclass[11pt]{article}
 
 \usepackage[french]{babel}
+\usepackage[T1]{fontenc}
 
 \input{../common/preamble}
+
+\renewcommand{\OP}{\{O, J\}}
+\newcommand{\OJ}{\OP}
 
 \title{Les jeux transfinis et l'exponentialle sequo\"{i}dale}
 
@@ -13,8 +17,166 @@
 \maketitle
 
 \begin{abstract}
-  Laird \cite{laird02} introduit la notion d'une \emph{cat\'{e}gorie sequo\"{i}dale} -- un augmentation d'une cat\'{e}gorie mono\"{i}dale par un nouveau connecteur $\sequoid$ (le \emph{sequo\"{i}de}) dont il y a un mod\`{e}le naturel construit par utilisation de la s\'{e}mantique des jeux.  On peut utiliser le connecteur sequo\"{i}dale dansce mod\`{e}le pour pr\'{e}senter le connecteur exponentiel $A\mapsto\oc A$ de \cite{hyland1997games} et \cite{ajmPcf} comme coalg\`{e}bre finale.  En supposant des autres hypoth\`{e}ses, on peut d\'{e}montrer que cette coalg\`{e}bre finale $\oc A$
+  Laird \cite{laird02} introduit la notion d'une \emph{cat\'{e}gorie sequo\"{i}dale} -- un augmentation d'une cat\'{e}gorie mono\"{i}dale par un nouveau connecteur $\sequoid$ (le \emph{sequo\"{i}de}) dont il y a un mod\`{e}le naturel construit par utilisation de la s\'{e}mantique des jeux.  On peut utiliser le connecteur sequo\"{i}dal dans ce mod\`{e}le pour pr\'{e}senter le connecteur exponentiel $A\mapsto\oc A$ de \cite{hyland1997games} et \cite{ajmPcf} comme coalg\`{e}bre finale.  En supposant des autres hypoth\`{e}ses, on peut d\'{e}montrer que cette coalg\`{e}bre finale $\oc A$ a la structure d'un comono\"{i}de commutatif libre sur $A$, et est donc un mod\`{e}le appropri\'{e} pour le connecteur exponential de la logique lin\'{e}aire.  Les auteurs de \cite{martinsthesis} r\'{e}marquent que il ne semble pas possible de construire les comono\"{i}des commutatifs libres en n'utilisant que la th\'{e}orie axiomatique des cat\'{e}gories sequo\"{i}dales.  Je montrerai que ceci est en effet impossible, par pr\'{e}senter une cat\'{e}gorie sequo\"{i}dale dans laquelle la coalg\`{e}bre finale $\oc A$ n'admet pas la structure d'un comono\"{i}de commutatif libre.  Je parlerai des fa\c{c}ons dont ce mod\`{e}le transfini peut inspirer l'\'{e}tude du mod\`{e}le finitaire habituel.
 \end{abstract}
+
+\section{La s\'{e}mantique des jeux pour la logique lin\'{e}aire}
+
+Je commence par examiner la s\'{e}mantique des jeux.  Nos jeux seront jou\'{e}s par deux joueurs - la Joueuse ($J$) et l'Opposant ($O$).  Les jeux qui nous consid\'{e}rons seront tr\`{e}s g\'{e}n\'{e}rals: chaque joueur a un ensemble de coups et les deux joueurs prennent des tours en construisant une partie -- c'est \`{a} dire, une s\'{e}quence des coups -- selon les r\`{e}gles du jeu qui disent quels coups sont authoris\'{e}s dans une position particuli\`{e}re, et quel joueur a gagn\'{e} au fin du jeu.  Normalement, l'Opposant fait le premier coup.
+
+On peut aussi faire la d\'{e}finition d'une strat\'{e}gie pour un jeu, pour la Joueuse ou pour l'Opposant.  
+
+Nous construisons les nouveaux jeux des vieux selons les \emph{connecteurs} de la s\'{e}mantique des jeux: le produit tensoriel $\tensor$ et l'implication lin\'{e}aire $\implies$.  Le jeu $A\tensor B$ se compose d'une copie du jeu $A$ et une copie du jeu $B$, qui sont jou\'{e}s en parall\`{e}le.  L'Opposant peut choisir de jouer dans l'un jeu ou dans l'autre, mais il faut que la Joueuse fasse son coup dans le jeu dans lequel l'Opposant vient de jouer.  
+
+Le jeu $A\implies B$ se compose aussi d'une copie du jeu $A$ et d'une copie du jeu $B$, qui sont jou\'{e}s en parall\`{e}le, sauf que dans le jeu $A$, les joueurs jouent les r\^{o}les opposites -- c'est \`{a} dire, l'Opposant joue comme joueuse et la joueuse joue comme Opposant.  Cette fois, c'est la Joueuse qui peut choisir dans quel jeu elle veut jouer, et l'Opposant qui doit suivre dans le m\^{e}me jeu.  
+
+On peut maintenant construire une cat\'{e}gorie dont les objets sont les jeux et dont les fl\`{e}ches entre les jeux $A$ et $B$ sont les strat\'{e}gies pour la Joueuse pour le jeu $A\implies B$.  Il y a un notion naturel de composer une strat\'{e}gie pour $A\implies B$ avec une strat\'{e}gie pour $B\implies C$, et cette composition est associative.  
+
+Ensuite, le connecteur tensoriel nous donne la structure d'une categorie monoi\"{i}dale et le connecteur implicative nous donne la structure d'une categorie mono\"{i}dale ferm\'{e}e.
+
+On appel cette cat\'{e}gorie $\G$.  
+
+Soit $A,B$ des jeux et soit $\sigma$ une strat\'{e}gie pour $A\implies B$.  On dit que $\sigma$ est une strat\'{e}gie \emph{stricte} si la Joueuse, apr\`{e}s le premier coup de l'Opposant dans $B$, doit faire son premier coup dans $A$.  Alors, si on compose deux strat\'{e}gies strictes, la composition est stricte aussi, et \c{c}a nous donne une autre cat\'{e}gorie $\G_s$.  
+
+\section{L'exponentielle de Hyland}
+
+Je commence par examiner la s\'{e}mantique des jeux pour le connecteur exponentiel dans la logique lin\'{e}aire.  Il y a plusieurs versions de l'exponentielle dans la s\'{e}mantique des jeux, mais je vais me concentrer sur l'exponentielle de Hyland et de AJM.  \`{A} partir d'un jeu $A$, on forme le jeu $\oc A$ qui se compose d'une infinit\'{e} de copies de $A$ - $A_0, A_1, A_2, \dots$, jou\'{e}es en parall\`{e}le, et il est inderdit de jouer dans le jeu $A_{n+1}$ si personne n'a pas encore jou\'{e} dans le jeu $A_n$.  
+
+Pour pr\'{e}senter ce jeu comme mod\`{e}le pour l'exponentielle, il suffit de montre qu'il a la structure du comono\"{i}de commutatif libre sur $A$.  Le comultiplication
+\[
+  \oc A \to \oc A \tensor \oc A
+  \]
+est la strat\'{e}gie \flqq{}copycat\frqq{} dans laquelle la Joueuse ouvre une copie de $A$ sur la gauche pour chaque copie de $A$ qui l'Opposant ouvre sur la gauche.  \`{A} la suite de la restriction sur l'ordre dans lequel on peut ouvrir les copies de $A$, il n'y a qu'une copie de $A$ sur la gauche que la Joueuse peut choisir ; donc, ce comultiplication est associatif.  
+
+Certaines recherches par Melli\`{e}s, Tabareau et Tasson \cite{MelliesCofCommCom} font construire cette exponentielle, dans un contexte plus g\'{e}n\'{e}ral th\'{e}oriques de cat\'{e}gorie, comme limite du syst\`{e}me projectif :
+\[
+  1 \leftarrow A \leftarrow \bigotimes_2^{\sim} A \leftarrow \bigotimes_3^{\sim} A \leftarrow \cdots
+  \]
+o\`{u} 
+\[
+  \bigotimes_n^\sim A
+  \]
+est le produit tensoriel symmetris\'{e} -- le co\'{e}galiseur de l'action du groupe $S_n$ sur le produit tensoriel iter\'{e}
+\[
+  \underbrace{A \tensor \cdots \tensor A}_{n}
+  \]
+
+\section{Le connecteur s\'{e}quo\"{i}dal}
+
+Je vais examiner une autre approche, lanc\'{e}e par Jim Laird \cite{laird02}.  Au lieu de prendre le co\'{e}galiseur du produit tensoriel iter\'{e} sous l'action de $S_n$, on introduit un nouveau connecteur non-standard -- le connecteur \emph{s\'{e}quo\"{i}dal} $\sequoid$.  Ce connecteur
+\[
+  A \sequoid B \quad \textit{\flqq{}$A$ s\'{e}quo\"{i}de $B$\frqq{}}
+  \]
+fonctionne presque exactement comme le produit tensoriel, sauf que l'Opposant doit jouer le premier coup dans le jeu $A$ sur la gauche.  Soit $\G$ la cat\'{e}gorie des jeux.  Le connecteur s\'{e}quo\"{i}dale donne naissance pas \`{a} un foncteur
+\[
+  \G\times\G\to\G
+  \]
+mais \`{a} un foncteur
+\[
+  \G_s\times\G\to\G_s
+  \]
+Ici, $\G_s$ est la cat\'{e}gorie dont les objets sont les jeux et dont les fl\`{e}ches sont les strat\'{e}gies \emph{strictes}
+\[
+  \sigma\from A\implies B
+  \]
+dans lesquelles la Joueuse, apr\`{e}s le premier coup de l'Opposant dans $B$, doit faire son premier coup dans $A$.  
+
+Maintenant, soit $A$ un jeu fixe.  On arrive \`{a} un endofoncteur
+\[
+  A\sequoid\blank \from \G \to \G
+  \]
+et on r\'{e}cup\`{e}re l'exponentielle $\oc A$ comme coalg\`{e}bre finale de cet endofoncteur.  
+
+\section{Les cat\'{e}gories s\'{e}quo\"{i}dales}
+
+On veut g\'{e}n\'{e}raliser tout \c{c}a, en pr\'{e}sentant la d\'{e}finition d'une cat\'{e}gorie s\'{e}quo\"{i}dale, dont la cat\'{e}gorie des jeux est le prototype.  On commence avec l'identit\'{e}
+\[
+  (A \sequoid B) \sequoid C \cong A \sequoid (B \tensor C)
+  \]
+qui vaut dans la cat\'{e}gorie des jeux.  En fait, c'est un action de la cat\'{e}gorie mono\"{i}dale $\G$ sur la cat\'{e}gorie $\G_s$.  
+
+On pr\'{e}sente la d\'{e}finition : une cat\'{e}gorie s\'{e}quo\"{i}dale se compose d'une cat\'{e}gorie mono\"{i}dale $(\C, \tensor, I)$, d'une cat\'{e}gorie $\C_s$ et d'une action \`{a} droite de $\C_s$ sur $\C$:
+\[
+  \passoc \from (A\sequoid B)\sequoid C \to A\sequoid(B\tensor C)
+  \]
+On a besoin aussi d'un foncteur
+\[
+  J \from \C_s \to \C
+  \]
+(dans la cat\'{e}orie de jeux, c'est l'injection canonique.  Enfin, on a besoin d'une transformation naturelle
+\[
+  \wk \from J(A)\tensor B \to J(A\sequoid B)
+  \]
+qui satisfait une condition suppl\'{e}mentaire de compatibilit\'{e}.
+
+\`{A} partir de maintenant, nous consid\'{e}rons que $C_s$ est une sous-cat\'{e}gorie de $\C$, pleine sur les objets, qui contient les isomorphisms mono\"{i}dals, que $J$ est l'injection canonique et que $J$ est un foncteur conservatif.
+
+Soit $\C=(\C,\C_s)$ une cat\'{e}gorie s\'{e}quo\"{i}dale.  On dit que $\C$ est \emph{Cart\'{e}sienne} si $\C_s$ a tous les produits et qui $J$ pr\'{e}serve ces produits.  En outre, on dit que $\C$ est \emph{d\'{e}composable} si on peut d\'{e}composer le produit tensoriel comme
+\[
+  A\tensor B \cong A\sequoid B \times B\sequoid A
+  \]
+et que $\C$ est \emph{distributive} si le produit distribue sur le s\'{e}quo\"{i}de:
+\[
+  (A \times B) \sequoid C \cong (A \sequoid C) \times (B \sequoid C)
+  \]
+
+\section{Le comono\"{i}de commutatif libre dans les cat\'{e}gories s\'{e}quo\"{i}dales}
+
+Enfin, on suppose que l'endofoncteur
+\[
+  A\sequoid\blank \from \C \to \C
+  \]
+admet une coalg\`{e}bre finale, qui nous appelerons $\oc A$.  On veut construire la structure d'un comono\"{i}de commutatif sur $\oc A$, et montrer que ce comono\"{i}de est le comono\"{i}de commutatif libre sur $A$.  
+
+Il s'av\`{e}re que si on suppose aussi que la fl\`{e}che naturelle
+\[
+  \oc A \tensor \oc B \to \oc(A\times B)
+  \]
+est une isomorphisme, alors on peut construire la structure d'un comono\"{i}de
+\[
+  \oc A \to \oc A \tensor \oc A
+  \]
+\`{a} partir de la fl\`{e}che diagonale
+\[
+  A \xrightarrow{\Delta} A \times A
+  \]
+et on peut montrer que ce comono\"{i}de est libre sur $A$.  
+
+Sans cette hypoth\`{e}se, est-ce qu'on peut construire le comono\"{i}de commutatif libre ?
+
+\section{Les jeux transfinis}
+
+La r\'{e}ponse est non.  J'ai construit une cat\'{e}gorie s\'{e}quo\"{i}dale dont les objets sont les jeux \emph{transfinis}, dans lesquels les parties peuvent posseder une longueur transfinie.  Dans ces cat\'{e}gories, on peut construire le foncteur $A\sequoid\blank$, et ce foncteur admet une coalg\`{e}bre finale $\oc A$, qui peut \^{e}tre construit comme dans le cas finitaire: $\oc A$ se compose des jeux $A_0, A_1, \dots$, index\'{e}s par l'ordinal $\omega$.  
+
+Pourtant, dans les cat\'{e}gories des jeux transfinis, ce jeu n'a pas la structure naturelle d'un comono\"{i}de.  Examinez la strat\'{e}gie pour le jeu
+\[
+  \oc A \implies \oc A \tensor \oc A
+  \]
+o\`{u} la Joueuse essaie \`{a} copier les coups de l'Opposant sur la droite dans les copies de $A$ sur la gauche.  Supposons que l'Opposant ouvre tous les copies de $A$ dans la copie de $\oc A$ sur la gauche du produit tensoriel $\oc A \tensor \oc A$.  Au temps $\omega$, l'Opposant aurait pu ouvert tous ces copies du jeu $A$.  
+
+Ensuite, on d\'{e}passe l'ordinal $\omega$, et l'Opposant d\'{e}cide d'ouvrir une copie de $A$ \`{a} l'extr\^{e}me droite.  Mais maintenant, il n'y a pas de copies de $A$ sur la gauche pour la Joueuse.  
+
+On peut aussi v\'{e}rifier que l'identit\'{e}
+\[
+  \oc A \tensor \oc B \cong \oc(A\times B)
+  \]
+est faux pour les jeux transfinis.
+
+\section{Que faire?}
+
+Je veux voir si il y a une autre hypoth\`{e}se sur les cat\'{e}ories s\'{e}quo\"{i}dales, dans laquelle on peut d\'{e}monstrer que la coalg\`{e}bre finale $\oc A$ a la structure d'un comono\"{i}de commutatif libre sur $A$.  J'esp\`{e}re que cette hypoth\`{e}se puisse se pr\'{e}senter en fonction des connecteurs tensoriel $\tensor$ et s\'{e}quo\"{i}dale $\sequoid$, et pas sous forme de la coalg\`{e}bre finale elle-m\^{e}me.  
+
+Bien s\^{u}r, cette hypoth\`{e}se sera n\'{e}cessairement faux dans les cat\'{e}gories des jeux transinis.  J'esp\`{e}re que cela nous aidera \`{a} la chercher.  
+
+\section{La s\'{e}quence finale}
+
+J'ai aussi \'{e}tudi\'{e} la s\'{e}quence finale pour l'endofoncteur $A\sequoid\blank$.  Rappelons que si $\C$ est une cat\'{e}gorie et si $\F\from\C\to\C$ est un endofoncteur, alors on peut counstruire une s\'{e}quence d'objects de $\C$, index\'{e}e par les ordinals, par appliquer cet endofoncteur et prendre les limites.  
+
+On construit ainsi un foncteur
+\[
+  \FS_\F\from\oppcat\Ord\to\C
+  \]
+Si 
 
 \bibliographystyle{alpha}
 \bibliography{../common/phd_bibliography}

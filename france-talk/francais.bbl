@@ -1,9 +1,14 @@
-\begin{thebibliography}{AJM00}
+\begin{thebibliography}{MTT09}
 
 \bibitem[AJM00]{ajmPcf}
 Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
 \newblock Full abstraction for {PCF}.
 \newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
+
+\bibitem[CLM13]{martinsthesis}
+Martin Churchill, Jim Laird, and Guy McCusker.
+\newblock Imperative programs as proofs via game semantics.
+\newblock {\em CoRR}, abs/1307.2004, 2013.
 
 \bibitem[Hyl97]{hyland1997games}
 Martin Hyland.
@@ -14,5 +19,11 @@ Martin Hyland.
 J.~Laird.
 \newblock A categorical semantics of higher-order store.
 \newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
+
+\bibitem[MTT09]{MelliesCofCommCom}
+Paul-Andr{\'e} Melli{\`e}s, Nicolas Tabareau, and Christine Tasson.
+\newblock {\em An Explicit Formula for the Free Exponential Modality of Linear
+  Logic}, pages 247--260.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2009.
 
 \end{thebibliography}
