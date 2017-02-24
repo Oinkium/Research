@@ -572,9 +572,98 @@ We also need to show that the tensor product respects composition.  This is easy
   \end{proof}
 \end{proposition}
 
-The associators, unitors and braiding for this 
+The associators, unitors and braiding for this tensor product are the usual (deterministic, compact, non-divergent) copycat strategies.  It is straightforward to show that they are natural transformations, using the same argument we used to show that $\id_A$ is an identity, and that the appropriate coherence diagrams are satisfied.  
+
+Closedness follows immediately from the structural isomorphism
+\[
+  (A \tensor B) \implies C \cong A \implies (B \implies C)
+  \]
+for all games $A,B,C$, together with the definition of morphisms as strategies on the linear implication.
+
+\subsection{Exponentials}
+
+Let $A$ be a game.  We define a game $\oc A$ in which the opponent may at any point open a new copy of the game $A$:
+\[
+  \oc A = (M_{\oc A}, \lambda_{\oc A}, \zeta_{\oc A}, P_{\oc A})
+  \]
+where
+\begin{itemize}
+  \item $M_{\oc A} = \omega \times M_A$
+  \item $\lambda_{\oc A} = \lambda_A \circ \pr_2$
+\end{itemize}
+
+Given some sequence $s\in \seqs{M_{\oc A}}$, we write $s\vert_n$ for the projection on to the second component of the subsequence of $s$ consisting of those moves of the form $(n, a)$.  We define
+\[
+  \oc P_A = \{s\in\seqs{M_{\oc A}} \suchthat s\vert_n\in P_A \textrm{ for all $n\in\omega$}\}
+  \]
+We define $\zeta_{\oc A}\from \oc P_A\to\OP$ by
+\[
+  \zeta_{\oc A}(s) = \bigwedge_{n\in\omega}\zeta_A(s\vert_n)
+  \]
+Lastly, we define $P_{\oc A}$ to be the subset of $\oc P_A$ consisting of all those terms that are alternating with respect to $\zeta_{\oc A}$ and that satisfy the following criterion on the order in which copies of $A$ may be opened:
+\begin{description}
+  \item[Ordering criterion] If the move $(n + 1, a)$ occurs in $s$, for $n\ge 0$, then there must be some move $b$ such that $(n, b)$ occurs earlier in the sequence $s$ than $(n + 1, a)$.  
+\end{description}
+
+This criterion says that player $O$ must open the copies of $A$ in sequence: he is not allowed to play in game $n+1$ till he has made a move in game $n$.
+
+\begin{proposition}
+  $\oc A$ is a well formed game.
+  \begin{proof}
+    Exactly the same argument as in Proposition \ref{TensorImpliesWellFormed}.  We need to prove a version of Lemma \ref{signProfilesLemma} which will tell us that if $s\in P_{\oc A}$ then either $\zeta_A(s\vert_n)=O$ for at most one value of $n$.  
+  \end{proof}
+\end{proposition}
+
+Just like the tensor product, the exponential $\oc A$ has the property that only player $O$ may switch games.  
+
+The exponential connective gives rise to a functor $\G\to\G$, where the operation on morphisms $\sigma\from A\implies B$ is given by:
+\[
+  \oc\sigma = \{s\in P_{\oc A\implies \oc B}\suchthat s\vert_{A_n,B_n}\in\sigma\textrm{ for all $n\in\omega$}\}
+  \]
+The proof that $\oc(\cdot)$ preserves composition is the same as for the tensor product.
+
+$\oc(\cdot)$ gives rise to a \emph{linear exponential comonad} on $\G$ (see \cite{hyland1997games}, for example).  The relevant natural transformations, including the comultiplication $\mult\from\oc A\to \oc\oc A$, which opens a copy of $A$ on the left for every copy of $A$ opened on the right, are all deterministic, compact, non-divergent strategies.  We only have to show that they are natural transformations.  For illustration, we shall do this in the case of the comultiplication.
+
+\begin{proposition}
+  Let $A,B$ be games, and let $\sigma$ be a strategy for $A\implies B$.  Then the following diagram commutes:
+  \[
+    \begin{tikzcd}
+      \oc A \arrow[r, "\mult"] \arrow[d, "\oc \sigma"']
+        & \oc \oc A \arrow[d, "\oc \oc \sigma"] \\
+      \oc B \arrow[r, "\mult"']
+        & \oc \oc B
+    \end{tikzcd}
+    \]
+  \begin{proof}
+    Both branches of the diagram are strategies that play as $\sigma$ in each copy of $B$ in $\oc \oc B$, opening a copy of $A$ in $\oc A$ as required.  The ordering condition means that there is only one possible order in which to open the copies of $A$ in $\oc A$, so both strategies must behave the same way.
+
+    A divergence occurs in either branch if an only if a divergence arises in $\sigma$ in one of the $A-B$ pairs.  So both branches have the same divergence sets.
+  \end{proof}
+\end{proposition}
+
+We may now form the co-Kleisli category $\G^{\oc}$.  The objects of $\G^{\oc}$ are games $A$ and a morphism from $A$ to $B$ is given by a strategy for
+\[
+  A \iimpl B \coloneqq \oc A \implies B
+  \]
+We compose two morphisms $\sigma\from A\iimpl B$ and $\tau\from B\iimpl C$ by setting:
+\[
+  \icomp{\tau}{\sigma} = \oc A \xrightarrow{\mult} \oc \oc A \xrightarrow{\oc \sigma} \oc B \xrightarrow{\tau} C
+  \]
+where composition on the right is in the category $\G$.
+
+A standard property of the linear exponential comonad is:
+
+\begin{theorem}
+  The category $\G^{\oc}$ is Cartesian closed with $\tensor$ as the Cartesian product and $\iimpl$ as the internal Hom.
+\end{theorem}
 
 \section{Denotational Semantics for Fair PCF}
+
+Our base PCF type $\bN$ will be denoted by the game $\bN$ defined above, while the product and function types will be interpreted by the connectives $\tensor$ and $\iimpl$.  It remains to give the denotation of each of the terms of Fair PCF as a strategy for the appropriate game.
+
+The numerals $\underline{n}$ will each be interpreted as the strategy for $\bN$ that always returns the value $n$.  The nondeterministic oracle $?$ will be interpreted as the strategy $?$ given at the level of trace sets by $?=P_{\bN}$.  None of these strategies have any divergent positions.
+
+The other PCF terms all have obvious strategies that they correspond to.  The only difficult one is the combinator $\Y_T$.  
 
 \subsection{Soundness}
 
