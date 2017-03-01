@@ -2,6 +2,11 @@
 
 \input{../common/preamble}
 
+\newcommand{\stle}{{\;\le_s\;}}
+\newcommand{\exle}{\sqsubseteq}
+\newcommand{\exlub}{\bigsqcup}
+\newcommand{\dv}{{\text{\lightning}}}
+
 \title{Transfinite Games for Countable Nondeterminism}
 
 \begin{document}
@@ -71,36 +76,51 @@ We are interested in soundness and adequacy for the `must-converge' relation, si
   Note that the negativity rule and the alternation rule between them imply that all starting moves are made by player $O$.  
 \end{definition}
 
+We shall write $P_A^P=\zeta_A\inv(\{P\})$ for the set of $P$-positions in $A$ and $P_A^O=\zeta\inv(\{O\})$ for the set of $O$-positions in $A$.
+
 \subsection{Strategies}
 
+A (nondeterministic) \emph{strategy} for a game $A$ will be given by a pair $\sigma=(T_\sigma, D_\sigma)$, where
+\begin{itemize}
+  \item $T_\sigma$ is the set of \emph{traces} of the strategy; i.e., the set of positions that can occur when player $P$ plays according to the strategy.  That is, $T_\sigma$ is a non-empty prefix-closed subset of $P_A$ that is closed under $O$-replies to $P$-positions: whenever $s\in T_\sigma$ is a $P$-position and $a\in M_A$ is an $O$-move such that $sa\in P_A$, then $sa\in T_\sigma$.  We call such a set $T_\sigma$ a \emph{trace set}.
+
+  \item $D_\sigma\subset T_\sigma$ denotes the set of \emph{divergences} in $T_\sigma$; that is, the set of those $O$-positions in $T_\sigma$ for which Player $P$ may elect to diverge rather than respond.  Accordingly, $\zeta_A(s)=O$ for all $s\in D_\sigma$.  If a trace has a divergent prefix, then it is divergent, so we shall follow Roscoe and insist that $D_\sigma$ be postfix-closed in $P_A^O$ (\cite{RoscoeCspInfinite}, cited in \cite{mcCHFiniteND}).
+\end{itemize}
+
 \begin{definition}
-  Let $A=(M_A,\lambda_A,\zeta_A,P_A)$ be a game.  A (nondeterministic) \emph{strategy} for $A$ is a pair $\sigma=(T_\sigma, D_\sigma)$, where
+  Let $A=(M_A,\lambda_A,\zeta_A,P_A)$ be a game.  Then a \emph{strategy} for $A$ is a pair $\sigma=(T_\sigma,D_\sigma)$ such that
   \begin{itemize}
-    \item $T_\sigma$ is the set of \emph{traces} of the strategy; i.e., the set of positions that can occur when player $P$ plays according to the strategy.  That is, $T_\sigma$ is a non-empty prefix-closed subset of $P_A$ that is closed under $O$-replies to $P$-positions: whenever $s\in T_\sigma$ is a $P$-position and $a\in M_A$ is an $O$-move such that $sa\in P_A$, then $sa\in T_\sigma$.  We call such a set $T_\sigma$ a \emph{trace set}.
-      
-      We will often identify $T_\sigma$ with $\sigma$, and write $s\in\sigma$ instead of $s\in T_\sigma$.
-
-      We say that $T_\sigma$ is \emph{compact} if it satisfies the compactness criterion given above for games: if $s\in M_A^\omega$ is an infinite sequence such that $t\in T_\sigma$ for all finite prefixes $t\ppprefix s$, then $t\in T_\sigma$.  
-
-      We require $T_\sigma$ to satisfy the following criterion:
-      \begin{description}
-        \item[Local compactness] For any $s\in T_\sigma$, there exists some compact trace set $T_s$ such that $s\in T_s\subset T_\sigma$.
-      \end{description}
-
-    \item $D_\sigma\subset T_\sigma$ denotes the set of \emph{divergences} in $T_\sigma$; that is, the set of those $O$-positions in $T_\sigma$ for which Player $P$ may elect to diverge rather than respond.  Accordingly, $\zeta_A(s)=O$ for all $s\in D_\sigma$.  
+    \item $T_\sigma\subset P_A$ is a prefix-closed subset such that whenever $s\in T_\sigma$ is a $P$-position and $sa\in P_A$ for some move $a$, then $sa\in P_A$.
+    \item $D_\sigma\subset P_A^O$ is a postfix-closed subset.
   \end{itemize}
 
-  $T_\sigma$ and $D_\sigma$ are required to satisfy the following divergence axiom:
+  $T_\sigma$ and $D_\sigma$ are required to satisfy the following totality axioms:
   \begin{description}
-    \item[Diverge-or-reply] If $s\in T_\sigma$ is an $O$-position then either $sa\in T_\sigma$ for some $P$-move $a$ or there exists $t\prefix s$ such that $t\in D_\sigma$.  
+    \item[Diverge-or-reply] If $s\in T_\sigma$ is an $O$-position then either $sa\in T_\sigma$ for some $P$-move $a$ or $s\in D_\sigma$.  
   \end{description}
+
+  The diverge-or-reply rule tells us that a function must either return a value or go into an infinite loop, and corresponds to the absence of an error constant in our language.  
 
   A consequence of the diverge-or-reply rule is that if $s\in \sigma$ is an infinite $O$-position, then there exists $t\prefix s$ such that $t\in D_\sigma$ (since it is impossible for player $P$ to reply to it, positions of length $\omega+1$ or greater being disallowed).  This works well for our purposes; it captures our intuition that divergence should arise from some infinite behaviour, but it excludes those cases where Player $O$ is `to blame' for the infinite behaviour (passing, for example, a divergent function into the non-divergent strategy $\lambda f.f$).  
 \end{definition}
 
+We will need one extra condition on the definition of a strategy in order to make sure that the composition of two strategies satisfies the diverge-or-reply rule.
+
+\begin{definition}
+  We say a strategy $\sigma$ is \emph{compact} if it satisfies the compactness criterion given above for games: if $s\in M_A^\omega$ is an infinite sequence such that $t\in T_\sigma$ for all finite prefixes $t\ppprefix s$, then $t\in T_\sigma$.  
+\end{definition}
+
+Compactness is too strong a condition for our purposes: we shall later see that it is not preserved by composition.  We shall use the following local version instead:
+
+\begin{definition}
+  We say a strategy $\sigma$ is \emph{locally compact} if whenever $s\in T_\sigma$ there is some compact strategy $\sigma'$ such that $s\in T_{\sigma'}\subset T_\sigma$ and $D_\sigma\subset D_{\sigma'}$.
+\end{definition}
+
+From now on, we shall use the word \emph{strategy} to mean \emph{locally compact strategy}.
+
 \subsection{Multiplicatives}
 
-Let $A,B$ be games.  If $s\in \seqs{M_A\cprd M_B}$ then we write $s\vert_A$ for the subsequence of $s$ consisting of all moves from $A$ and $s\vert_B$ for the subsequence of $s$ consisting of all moves from $B$.  We write $P_A\|P_B$ for the set of all such sequences $s$ such that $s\vert_A\in P_A$ and $s\vert_B\in P_B$.  
+Let $A,B$ be games.  If $s\in \seqs{(M_A\cprd M_B)}$ then we write $s\vert_A$ for the subsequence of $s$ consisting of all moves from $A$ and $s\vert_B$ for the subsequence of $s$ consisting of all moves from $B$.  We write $P_A\|P_B$ for the set of all such sequences $s$ such that $s\vert_A\in P_A$ and $s\vert_B\in P_B$.  
 
 \begin{definition}
   Let $A,B$ be games.  Then the \emph{tensor product} of $A$ and $B$ is the game $A\tensor B=(M_{A\tensor B}, \lambda_{A\tensor B}, \zeta_{A\tensor B}, P_{A\tensor B})$ where we define $M_{A\tensor B}$, $\lambda_{A\tensor B}$, $\zeta_{A\tensor B}$, $P_{A\tensor B}$ as follows:
@@ -202,7 +222,7 @@ We need to prove that $T_{\comp\tau\sigma}\subset P_{A\implies B}$.  If $\s\in\s
   \end{proof}
 \end{proposition}
 
-To complete the proof that $T_{\comp\tau\sigma}$ is a legal trace set for a strategy, we need to show that $T_{\comp\tau\sigma}$ is closed under opponent replies and that it is locally compact.
+To complete the proof that $T_{\comp\tau\sigma}$ is a legal trace set for a strategy, we need to show that $T_{\comp\tau\sigma}$ is closed under opponent replies.
 
 \begin{proposition}
   Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  Suppose $s\in\comp\tau\sigma$ is a $P$-position such that $sa\in P_{A\implies C}$ for some $O$-move $a$.  Then $sa\in\comp\tau\sigma$.
@@ -211,86 +231,6 @@ To complete the proof that $T_{\comp\tau\sigma}$ is a legal trace set for a stra
     Write $s=\s\vert_{A,C}$, for $\s\in\sigma\|\tau$.  We show that $\s a\in\sigma\|\tau$: so $sa = \s a\vert_{A,C}\in\comp\tau\sigma$.  
 
     Since $s$ is a $P$-position, the sign profile of $\s$ must be $PPP$ or $OOO$.  It follows that $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$ are both $P$-positions.  Since $a$ is a $P$-move in $A\implies C$, it must be either a $P$-move in $A\implies B$ or a $P$-move in $B\implies C$, by straightforward analysis of the definitions of the $\lambda$ functions.  It follows that either $s\vert_{A,B}a\in\sigma$ (if $a$ is a move in $A$) or that $s\vert_{B,C}a\in\tau$ (if $a$ is a move in $C$).  In either case, we have $\s a\in\sigma\|\tau$, as desired.
-  \end{proof}
-\end{proposition}
-
-\begin{proposition}\label{locallyCompactComposition}
-  Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  Then $\comp\tau\sigma$ is locally compact.
-\end{proposition}
-
-In order to prove that the composition of locally compact strategies is locally compact, we are going to need some facts about deterministic strategies.
-
-\begin{definition}
-  We say a strategy $\sigma$ is \emph{deterministic} if whenever $s\in\sigma$ is an $O$-position and $a,b$ are moves such that $sa,sb\in\sigma$, then $a=b$.
-\end{definition}
-
-Deterministic strategies have the following nice technical property:
-
-\begin{proposition}
-  Let $A,B,C$ be games, let $\sigma$ be a deterministic strategy for $A\implies B$ and let $\tau$ be a deterministic strategy for $B\implies C$.  Then $\comp\tau\sigma$ is a deterministic strategy.  Moreover, for any $s\in\comp\tau\sigma$, there is a unique minimal $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=s$.
-  \begin{proof}
-    The idea behind the proof is that determinism of $\sigma$ and $\tau$ mean that the play in the intermediate game $B$ is completely determined (since every move played in $B$ is either a $P$-move in $A\implies B$ or a $P$-move in $B\implies C$.  For full details, see \cite{abramskyjagadeesangames}.
-  \end{proof}
-\end{proposition}
-
-We can use this to prove the following:
-
-\begin{proposition}
-  Let $A,B,C$ be games and let $\sigma\from A\implies B$ and $\tau\from B\implies C$ be compact deterministic strategies.  Then $\comp\tau\sigma$ is compact.
-  \begin{proof}
-    Let $s\in M_{A\implies C}^\omega$ be an infinite sequence such that $t\in\comp\tau\sigma$ for all finite prefixes $t\ppprefix s$.  For each finite prefix $t$ of $s$, there is a unique minimal sequence $\t\in\sigma\|\tau$ such that $\t\vert_{A,C}=t$.  Writing $s$ as the limit of its finite prefixes
-    \[
-      t_1 \prefix t_2 \prefix t_3 \prefix \dots
-      \]
-    we build up a sequence
-    \[
-      \t_1 \prefix \t_2 \prefix \t_3 \prefix \dots
-      \]
-    where $\t_i$ is the unique minimal sequence in $\sigma\|\tau$ such that $\t_i\vert_{A,C}=t_i$.  We have $\t_i\prefix\t_{i+1}$ because if we remove the last move from $\t_{i+1}$ then the resulting sequence $\u_i$ satisfies $\u_i\vert_{A,C}=t_i$ and therefore $\t_i\prefix\u_i\prefix\t_{i+1}$ by minimality of $\t_i$.  
-
-    Then the limit of the sequences $\t_i\vert_{A,B}$ must be contained in $\sigma$, since $\sigma$ is compact, and similarly the limit of the sequences $\t_i\vert_{B,C}$ must be contained in $\tau$, since $\tau$ is compact.  It follows that the limit $\t$ of the sequences $\t_i$ is contained in $\sigma\|\tau$, and therefore that $\t\vert_{A,C}=s\in\comp\tau\sigma$.
-  \end{proof}
-\end{proposition}
-
-Note that the limit of compact nondeterministic strategies need not be compact.
-
-\begin{example}
-  Let the games $I$ and $\st$ be defined as before, and let the game $\Sigma$ be the game with a unique opponent starting move and a unique player reply:
-  \[
-    \Sigma = (\{q,a\}, \{q\mapsto o, a\mapsto p\}, \{\epsilon\mapsto p,q\mapsto o,qa\mapsto p\}, \{\epsilon, q, qa\}\}
-    \]
-  Let $\bN$ be the game where the opponent asks the player to choose a natural number:
-  \[
-    \bN = \left(\{q\} \cup \bN, \{q\mapsto O, n\mapsto P\}, \{\epsilon\mapsto P,q\mapsto O,qn\mapsto P\}, \{\epsilon, q\} \cup \{qn\suchthat n\in\bN\}\right)
-    \]
-  We have a (deterministic) strategy $\sigma$ for $\bN\implies (\st\implies\Sigma)$ in which the player asks the opponent for a number $n$ and then calls the argument of $\st$ $n$ times before returning.  For example, a play in $\sigma$ might look like this:
-  \[
-    \begin{array}{ccc}
-      \bN & \st & \Sigma \\
-      & & q \\
-      q & & \\
-      2 & & \\
-      & q & \\
-      & a & \\
-      & q & \\
-      & a & \\
-      & & a
-    \end{array}
-    \]
-  $\sigma$ is compact because there are no infinite chains of positions; indeed, the length of a play in $\sigma$ is already determined by the third move.  
-
-  We have a nondeterministic strategy $?$ for $\bN\cong I\implies\bN$ where the player nondeterministically chooses any number - so $? = P_{\bN}$ as sets of positions.  $?$ is compact because all plays in $?$ have length at most $2$.  
-
-  When we compose these strategies, the resulting strategy $\comp\sigma?$ contains the infinite chain of positions $q,qqa,qqaqa,qqaqaqa,\dots$, but does not contain any limiting plays.  So it is not compact.  It is, however, locally compact, since it is the union of compact strategies $\sigma_n$, where $\sigma_n$ has the unique maximal play
-  \[
-    q\underbrace{qa\dots qa}_{\textrm{$n$ times}}a
-    \]
-\end{example}
-
-\begin{proposition}
-  Let $A,B,C$ be games and let $\sigma\from A\implies B$ and $\tau\from B\implies C$ be (nondeterministic, locally compact) strategies.  Then $\comp\tau\sigma$ is locally compact.
-  \begin{proof}
-    Let $s\in T_{\comp\tau\sigma}$.  Then there is some sequence $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=s$.  We have $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$, so, by local compactness for $\sigma$ and $\tau$, there are compact strategies $\sigma'\from A\implies B$ and $\tau'\from B\implies C$ such that $\s\vert_{A,B}\in\sigma'$ and $\s\vert_{B,C}\in\tau'$.  After removing positions from $\sigma'$ and $\tau'$, we may assume that they are deterministic (and still compact).  Then $\comp{\tau'}{\sigma'}$ is compact and we have $\s\vert_{A,C}\in\comp{\tau'}{\sigma'}\subset\comp\tau\sigma$.
   \end{proof}
 \end{proposition}
 
@@ -350,11 +290,92 @@ Before we consider the definition of $D_{\comp\tau\sigma}$, we show that composi
 At the moment, we have an associative composition at the level of trace sets.  We now define composition at the level of divergences.
 
 \begin{definition}
-  Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  We define the divergences of $\comp\tau\sigma$ as follows:
+  Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  We define the divergences of $\comp\tau\sigma$ as follows: first we define
   \[
-    D_{\comp\tau\sigma} = \{\s\vert_{A,C}\suchthat\s\in\sigma\|\tau\textrm{ and either $\s\vert_{A,B}\in D_\sigma$ or $\s\vert_{B,C}\in D_\tau$}\}
+    \sigma\dv\tau = \left\{\s\in\seqs{(M_A\cprd M_B\cprd M_C)}\;\middle|\; \mbox{\pbox{\textwidth}{\flushRight either $\s\vert_{A,B}\in D_\sigma$ and $s\vert_{B,C}\in T_\tau$ \\ or $\s\vert_{A,B}\in T_\sigma$ and $s\vert_{B,C}\in D_\tau$}}\right\}
+    \]
+  \[
+    D_{\comp\tau\sigma} = \{\s\vert_{A,C}\suchthat\s\in\sigma\dv\tau\}
     \]
 \end{definition}
+
+We need to show that this composition satisfies the diverge-or-reply and local compactness rules.  
+
+In order to prove that the composition of locally compact strategies is locally compact, we are going to need some facts about deterministic strategies.
+
+\begin{definition}
+  We say a strategy $\sigma$ is \emph{deterministic} if whenever $s\in\sigma$ is an $O$-position and $a,b$ are moves such that $sa,sb\in\sigma$, then $a=b$.
+\end{definition}
+
+Deterministic strategies have the following nice technical property:
+
+\begin{proposition}
+  Let $A,B,C$ be games, let $\sigma$ be a deterministic strategy for $A\implies B$ and let $\tau$ be a deterministic strategy for $B\implies C$.  Then $\comp\tau\sigma$ is a deterministic strategy.  Moreover, for any $s\in\comp\tau\sigma$, there is a unique minimal $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=s$.
+  \begin{proof}
+    The idea behind the proof is that determinism of $\sigma$ and $\tau$ mean that the play in the intermediate game $B$ is completely determined (since every move played in $B$ is either a $P$-move in $A\implies B$ or a $P$-move in $B\implies C$.  For full details, see \cite{abramskyjagadeesangames}.
+  \end{proof}
+\end{proposition}
+
+We can use this to prove the following:
+
+\begin{proposition}
+  Let $A,B,C$ be games and let $\sigma\from A\implies B$ and $\tau\from B\implies C$ be compact deterministic strategies.  Then $\comp\tau\sigma$ is compact.
+  \begin{proof}
+    Let $s\in M_{A\implies C}^\omega$ be an infinite sequence such that $t\in\comp\tau\sigma$ for all finite prefixes $t\ppprefix s$.  For each finite prefix $t$ of $s$, there is a unique minimal sequence $\t\in\sigma\|\tau$ such that $\t\vert_{A,C}=t$.  Writing $s$ as the limit of its finite prefixes
+    \[
+      t_1 \prefix t_2 \prefix t_3 \prefix \dots
+      \]
+    we build up a sequence
+    \[
+      \t_1 \prefix \t_2 \prefix \t_3 \prefix \dots
+      \]
+    where $\t_i$ is the unique minimal sequence in $\sigma\|\tau$ such that $\t_i\vert_{A,C}=t_i$.  We have $\t_i\prefix\t_{i+1}$ because if we remove the last move from $\t_{i+1}$ then the resulting sequence $\u_i$ satisfies $\u_i\vert_{A,C}=t_i$ and therefore $\t_i\prefix\u_i\prefix\t_{i+1}$ by minimality of $\t_i$.  
+
+    Then the limit of the sequences $\t_i\vert_{A,B}$ must be contained in $\sigma$, since $\sigma$ is compact, and similarly the limit of the sequences $\t_i\vert_{B,C}$ must be contained in $\tau$, since $\tau$ is compact.  It follows that the limit $\t$ of the sequences $\t_i$ is contained in $\sigma\|\tau$, and therefore that $\t\vert_{A,C}=s\in\comp\tau\sigma$.
+  \end{proof}
+\end{proposition}
+
+Note that the composition of compact nondeterministic strategies need not be compact.
+
+\begin{example}
+  Let the games $I$ and $\st$ be defined as before, and let the game $\Sigma$ be the game with a unique opponent starting move and a unique player reply:
+  \[
+    \Sigma = (\{q,a\}, \{q\mapsto o, a\mapsto p\}, \{\epsilon\mapsto p,q\mapsto o,qa\mapsto p\}, \{\epsilon, q, qa\}\}
+    \]
+  Let $\bN$ be the game where the opponent asks the player to choose a natural number:
+  \[
+    \bN = \left(\{q\} \cup \bN, \{q\mapsto O, n\mapsto P\}, \{\epsilon\mapsto P,q\mapsto O,qn\mapsto P\}, \{\epsilon, q\} \cup \{qn\suchthat n\in\bN\}\right)
+    \]
+  We have a (deterministic) strategy $\sigma$ for $\bN\implies (\st\implies\Sigma)$ in which the player asks the opponent for a number $n$ and then calls the argument of $\st$ $n$ times before returning.  For example, a play in $\sigma$ might look like this:
+  \[
+    \begin{array}{ccc}
+      \bN & \st & \Sigma \\
+      & & q \\
+      q & & \\
+      2 & & \\
+      & q & \\
+      & a & \\
+      & q & \\
+      & a & \\
+      & & a
+    \end{array}
+    \]
+  $\sigma$ is compact because there are no infinite chains of positions; indeed, the length of a play in $\sigma$ is already determined by the third move.  
+
+  We have a nondeterministic strategy $?$ for $\bN\cong I\implies\bN$ where the player nondeterministically chooses any number - so $? = P_{\bN}$ as sets of positions.  $?$ is compact because all plays in $?$ have length at most $2$.  
+
+  When we compose these strategies, the resulting strategy $\comp\sigma?$ contains the infinite chain of positions $q,qqa,qqaqa,qqaqaqa,\dots$, but does not contain any limiting plays.  So it is not compact.  It is, however, locally compact, since it is the union of compact strategies $\sigma_n$, where $\sigma_n$ has the unique maximal play
+  \[
+    q\underbrace{qa\dots qa}_{\textrm{$n$ times}}a
+    \]
+\end{example}
+
+\begin{proposition}
+  Let $A,B,C$ be games and let $\sigma\from A\implies B$ and $\tau\from B\implies C$ be (nondeterministic, locally compact) strategies.  Then $\comp\tau\sigma$ is locally compact.
+  \begin{proof}
+    Let $s\in T_{\comp\tau\sigma}$.  Then there is some sequence $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=s$.  We have $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$, so, by local compactness for $\sigma$ and $\tau$, there are compact strategies $\sigma'\from A\implies B$ and $\tau'\from B\implies C$ such that $\s\vert_{A,B}\in\sigma'$ and $\s\vert_{B,C}\in\tau'$.  After removing positions from (and possibly adding divergences to) $\sigma'$ and $\tau'$, we may assume that they are deterministic (and still compact).  Then $\comp{\tau'}{\sigma'}$ is compact and we have $\s\vert_{A,C}\in\comp{\tau'}{\sigma'}\subset\comp\tau\sigma$ and $D_{\comp\tau\sigma}\subset D_{\comp{\tau'}{\sigma'}}$.
+  \end{proof}
+\end{proposition}
 
 \begin{remark}
   Since $D_\sigma$ and $D_\tau$ consist of $O$-positions, any $\s\in\sigma\|\tau$ such that $\s\vert_{A,B}\in D_\sigma$ or $\s\vert_{B,C}\in D_\tau$ must have sign profile $POO$ or $PPO$, by Lemma \ref{signProfilesLemma}, and therefore $\s\vert_{A,C}$ must be an $O$-position.  It follows that $D_{\comp\tau\sigma}$ consists of $O$-positions.
@@ -406,9 +427,9 @@ This example is at the heart of the proof that the composition of strategies sat
   \begin{proof}
     Suppose that $s\in\comp\tau\sigma$ is an $O$-position and that $s\not\in D_{\comp\tau\sigma}$.  Let $\s\in\sigma\|\tau$ be such that $\s\vert_{A,C}=s$.  By local compactness of $\sigma$ and $\tau$, there must be compact strategies $\sigma'\from A\implies B$ and $\tau'\from B\implies C$ such that $\s\vert_{A,C}\in\sigma'$ and $\s\vert_{B,C}\in\tau'$.  
     
-    Let $\s'\in\sigma'\|\tau'$ be maximal such that $\s'\vert_{A,C}=s$.  We know that such a maximal sequence must exist: if $\s_i$ are a chain of sequences from $\sigma'\|\tau'$ such that $\s_i\vert_{A,C}=s$ then their limit $\s$ (which is contained in $\sigma'\|\tau'$ by compactness of $\sigma'$ and $\tau'$) must satisfy $\s\vert_{A,C}=\s$.  Since $s\not\in D_{\comp\tau\sigma}$, we must have $\s\vert_{A,B}\not\in D_\sigma$ and $\s\vert_{B,C}\not\in D_\tau$.  
+    Let $\s'\in\sigma'\|\tau'$ be maximal such that $\s'\vert_{A,C}=s$.  We know that such a maximal sequence must exist: if $\s_i$ are a chain of sequences from $\sigma'\|\tau'$ such that $\s_i\vert_{A,C}=s$ then their limit $\s$ (which is contained in $\sigma'\|\tau'$ by compactness of $\sigma'$ and $\tau'$) must satisfy $\s\vert_{A,C}=\s$.  Since $s\not\in D_{\comp\tau\sigma}$, we must have $\s\vert_{A,B}\not\in D_\sigma\subset D_{\sigma'}$ and $\s\vert_{B,C}\not\in D_\tau\subset D_{\tau'}$.  
     
-    Since $s$ is an $O$-position, one of $\s\vert_{A,B}$ and $\s\vert_{B,C}$ must be an $O$-position (by transitivity of $\Rightarrow$).  Suppose without loss of generality that $\s\vert_{A,B}$ is an $O$-position.  Since $\s\vert_{A,B}\not\in D_\sigma$, there must be some move $x$ such that $\s\vert_{A,B}x\in\sigma$, since $\sigma$ satisfies the diverge-or-reply rule.  Then we have $\s x\vert_{A,B}\in\sigma$.  Moreover, Lemma \ref{signProfilesLemma} tells us that $\s\vert_{B,C}$ must be a $P$-position, so $\s x\vert_{B,C}\in\tau$, since $\tau$ is closed under opponent replies.  Therefore, $\s x\in\sigma\|\tau$.  By maximality of $\s$, $x$ must be a move in $A$ and therefore we have $sx\in\comp\sigma\tau$.
+    Since $s$ is an $O$-position, one of $\s\vert_{A,B}$ and $\s\vert_{B,C}$ must be an $O$-position (by transitivity of $\Rightarrow$).  Suppose without loss of generality that $\s\vert_{A,B}$ is an $O$-position.  Since $\s\vert_{A,B}\not\in D_{\sigma'}$, there must be some move $x$ such that $\s\vert_{A,B}x\in\sigma'$, since $\sigma'$ satisfies the diverge-or-reply rule.  Then we have $\s x\vert_{A,B}\in\sigma'$.  Moreover, Lemma \ref{signProfilesLemma} tells us that $\s\vert_{B,C}$ must be a $P$-position, so $\s x\vert_{B,C}\in\tau'$, since $\tau'$ is closed under opponent replies.  Therefore, $\s x\in\sigma'\|\tau'$.  By maximality of $\s$, $x$ must be a move in $A$ and therefore we have $sx\in\comp{\tau'}{\sigma'}\subset\comp\tau\sigma$.
   \end{proof}
 \end{proposition}
 
@@ -467,7 +488,7 @@ We make the category $\G$ into a symmetric monoidal closed category with tensor 
   \]
 The divergences for $\sigma\tensor\tau$ are defined using the divergences for $\sigma$ and $\tau$:
 \[
-  D_{\sigma\tensor\tau} = \left\{s\in P_{(A\tensor B)\implies (C\tensor D)}\suchthat s\vert_{A,C}\in D_\sigma,\;s\vert_{B,D}\in D_\tau\right\}
+  D_{\sigma\tensor\tau} = \left\{s\in P_{(A\tensor B)\implies (C\tensor D)}\suchthat s\vert_{A,C}\in D_\sigma\textrm{ or }s\vert_{B,D}\in D_\tau\right\}
   \]
 \begin{proposition}
   $\sigma\tensor\tau$ is a valid strategy for $(A\tensor B)\implies (C\tensor D)$
@@ -620,6 +641,10 @@ The exponential connective gives rise to a functor $\G\to\G$, where the operatio
 \[
   \oc\sigma = \{s\in P_{\oc A\implies \oc B}\suchthat s\vert_{A_n,B_n}\in\sigma\textrm{ for all $n\in\omega$}\}
   \]
+with divergences
+\[
+  D_{\oc\sigma} = \{s \in \oc\sigma\suchthat s\vert_{A_n,B_n}\in D_\sigma\textrm{ for some $n\in\omega$}\}
+  \]
 The proof that $\oc(\cdot)$ preserves composition is the same as for the tensor product.
 
 $\oc(\cdot)$ gives rise to a \emph{linear exponential comonad} on $\G$ (see \cite{hyland1997games}, for example).  The relevant natural transformations, including the comultiplication $\mult\from\oc A\to \oc\oc A$, which opens a copy of $A$ on the left for every copy of $A$ opened on the right, are all deterministic, compact, non-divergent strategies.  We only have to show that they are natural transformations.  For illustration, we shall do this in the case of the comultiplication.
@@ -664,6 +689,63 @@ Our base PCF type $\bN$ will be denoted by the game $\bN$ defined above, while t
 The numerals $\underline{n}$ will each be interpreted as the strategy for $\bN$ that always returns the value $n$.  The nondeterministic oracle $?$ will be interpreted as the strategy $?$ given at the level of trace sets by $?=P_{\bN}$.  None of these strategies have any divergent positions.
 
 The other PCF terms all have obvious strategies that they correspond to.  The only difficult one is the combinator $\Y_T$.  
+
+As usual, we shall use fixed point theorems from domain theory to define the denotation of $\Y$.  The main ideas come from \cite{LairdOrdinalGames}.
+
+\subsection{The stable order on strategies}
+
+We start by defining an order on strategies.  This is the order given in \cite{mcCHFiniteND}.
+
+\begin{definition}
+  Let $A$ be a game and let $\sigma,\tau$ be strategies for $A$.  We say that $\sigma\stle\tau$ if:
+
+  \begin{enumerate}[1)]
+    \item $T_\sigma\subset T_\tau$
+    \item $D_\tau\subset D_\sigma$
+    \item $T_\tau\subset T_\sigma \cup D_\sigma$
+  \end{enumerate}
+\end{definition}
+
+To show that this is an order, the only non-trivial part is to show that property (3) is transitive.  Suppose that $\sigma\stle\tau\stle\upsilon$ are strategies and that $s\in T_\upsilon\setminus T_\tau$.  If $s\in T_\tau$, then there exists $s\in D_\sigma$, since $\sigma\stle\tau$ and if $s\not\in T_\tau$, then $s\in D_\tau\subset D_\sigma$, since $\tau\stle\upsilon$.  Therefore, $\sigma\stle\upsilon$.
+
+\begin{proposition}
+  Let $A,B,C$ be games, let $\sigma,\sigma'$ be strategies for $A\implies B$ and let $\tau,\tau'$ be strategies for $B\implies C$.  Suppose that $\sigma\stle\sigma'$ and $\tau\stle\tau'$.  Then:
+  \[
+    \comp\tau\sigma\stle\comp{\tau'}{\sigma'}
+    \]
+  \begin{proof}
+    Since $T_\sigma\subset T_{\sigma'}$ and $T_\tau\subset T_{\tau'}$, we have $\sigma\|\tau\subset\sigma'\|\tau'$ and therefore $T_{\comp\tau\sigma}\subset T_{\comp{\tau'}{\sigma'}}$.  
+
+    Now suppose that $e\in D_{\comp{\tau'}{\sigma'}}$.  We want to show that there is some $d\in D_{\comp\tau\sigma}$ such that $d\prefix e$.  
+
+    We know that there exists some $\e\in\sigma'\|\tau$ such that $\e\vert_{A,C}=e$ and either $\e\vert_{A,B}\in D_{\sigma'}$ or $\e\vert_{B,C}\in D_\tau$.  Suppose first that $\e\vert_{A,B}\in\sigma$, so $\e\in\sigma\|\tau$.  Then we have either $\e\vert_{A,B}\in D_{\sigma'}\subset D_\sigma$ or $\e\vert_{A,B}\in D_\tau$, so $\e\vert_{A,C}=e\in D_{\comp\tau\sigma}$.  
+
+    Suppose instead that $\e\vert_{A,B}\not\in\sigma$.  We have $\e\vert_{A,B}\in\sigma'$ and $\sigma\stle\sigma'$, so there exists $d\in D_\sigma$ such that $d\prefix\e\vert_{A,B}$.  Let $\d$ be a prefix of $\e$ such that $\d\vert_{A,B}=d$.  Then we have $\d\vert_{A,B}\in D_\sigma$ and $\d\vert_{B,C}\in\tau$, so $\d\vert{A,C}\in\comp\tau\sigma$ and $\d\vert_{A,C}\prefix e$.  
+
+    Lastly, suppose that $s\in T_{\comp\tau{\sigma'}}\setminus T_{\comp\tau\sigma}$.  Write $s=\s\vert_{A,C}$, where $\s\in\comp\tau{\sigma'}$.  Then $\s\vert_{A,B}\in\sigma'\setminus\sigma$, and therefore there exists $d\in D_\sigma$ such that $d\prefix\s\vert_{A,B}$.  Let $\d\prefix\s$ be a prefix such that $\d\vert_{A,B}=d$.  Then $\d\vert_{A,C}\in D_{\comp\tau\sigma}$ and $\d\vert_{A,C}\prefix s$.
+
+    A similar argument works in the case that $\sigma=\sigma'$.  Therefore, the result follows by transitivity of $\stle$.
+  \end{proof}
+\end{proposition}
+
+We want to get a similar result for composition in the category $\G^{\oc}$.  To do that it will suffice to prove the following result:
+
+\begin{proposition}
+  Let $A,B$ be games and let $\sigma,\tau$ be strategies for $A\implies B$ such that $\sigma\stle\tau$.  Then $\oc\sigma\stle\oc\tau$ as strategies for $\oc A\implies \oc B$.
+  \begin{proof}
+    If $s\in\oc\sigma$, then $s\vert_{A_n,B_n}\in\sigma$ for all $n$ and therefore $s\vert_{A_n,B_n}\in\sigma'$ for all $n$.  It follows that $\sigma\subset\tau$.
+
+    If $e\in\oc{\tau}$, then, since $\sigma\stle\tau$, for all $n$ either $e\vert_{A_n,B_n}\in\sigma$ or there exists $d_n\in D_\sigma$ such that $d_n\prefix e\vert_{A_n,B_n}$.  If $e\in D_{\oc\tau}$, then $e\vert_{A_n,B_n}\in D_\tau$ for some $n$, so there is at least one $d_n$.  We may choose a prefix $e'$ of $e$ such that $e\vert_{A_n,B_n}\prefix d_n$ whenever $d_n$ is defined and $d_n=e\vert_{A_n,B_n}$ for at least one $n$ (if at least one $d_n$ is finite, then one of the $d_n$ finishes first in $e$, and we let $e'$ be a minimal prefix of $e$ that restricts to $d_n$; if all the $d_n$ are infinite, let $e'=e$).  Since $D_\sigma\subset\sigma$, we see that $e'\in T_{\oc \sigma}$, and since $e'\vert_{A_n,B_n}=d_n$, we have $e'\in D_{\oc\sigma}$.
+
+    Lastly, If $s\in \oc\tau\setminus\oc\sigma$, then there exists some $n$ such that $s\vert_{A_n,B_n}\in\tau\setminus\sigma$.  Therefore, $d_n$ is defined for at least one $n$ and it follows that we may construct $e'\in D_{\oc\sigma}$ as before such that $e'\prefix s$.
+  \end{proof}
+\end{proposition}
+
+Let $A$ be a game and let $F$ be a set of strategies for $A$.  We define a strategy $\exlub F$ for $F$ by setting
+\begin{gather*}
+  T_{\exlub F} = \bigcup_{\sigma\in F}T_\sigma \\
+  D_{\exlub F} = \bigcap_{\sigma\in F}D_\sigma
+\end{gather*}
 
 \subsection{Soundness}
 
