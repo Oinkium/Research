@@ -6,6 +6,7 @@
 \newcommand{\exle}{\sqsubseteq}
 \newcommand{\exlub}{\bigsqcup}
 \newcommand{\dv}{{\text{\lightning}}}
+\DeclareMathOperator{\pocl}{pocl}
 
 \title{Transfinite Games for Countable Nondeterminism}
 
@@ -80,21 +81,21 @@ We shall write $P_A^P=\zeta_A\inv(\{P\})$ for the set of $P$-positions in $A$ an
 
 \subsection{Strategies}
 
-A (nondeterministic) \emph{strategy} for a game $A$ will be given by a pair $\sigma=(T_\sigma, D_\sigma)$, where
+A nondeterministic \emph{strategy} for a game $A$ will be given by a pair $\sigma=(T_\sigma, D_\sigma)$, where
 \begin{itemize}
   \item $T_\sigma$ is the set of \emph{traces} of the strategy; i.e., the set of positions that can occur when player $P$ plays according to the strategy.  That is, $T_\sigma$ is a non-empty prefix-closed subset of $P_A$ that is closed under $O$-replies to $P$-positions: whenever $s\in T_\sigma$ is a $P$-position and $a\in M_A$ is an $O$-move such that $sa\in P_A$, then $sa\in T_\sigma$.  We call such a set $T_\sigma$ a \emph{trace set}.
 
-  \item $D_\sigma\subset T_\sigma$ denotes the set of \emph{divergences} in $T_\sigma$; that is, the set of those $O$-positions in $T_\sigma$ for which Player $P$ may elect to diverge rather than respond.  Accordingly, $\zeta_A(s)=O$ for all $s\in D_\sigma$.  If a trace has a divergent prefix, then it is divergent, so we shall follow Roscoe and insist that $D_\sigma$ be postfix-closed in $P_A^O$ (\cite{RoscoeCspInfinite}, cited in \cite{mcCHFiniteND}).
+  \item $D_\sigma\subset T_\sigma$ denotes the set of \emph{divergences} in $T_\sigma$; that is, the set of those $O$-positions in $T_\sigma$ for which Player $P$ may elect to diverge rather than respond.  Accordingly, $\zeta_A(s)=O$ for all minimal $s\in D_\sigma$.  If a trace has a divergent prefix, then it is divergent, so we shall follow Roscoe and insist that $D_\sigma$ be postfix-closed in $P_A^O$ (\cite{RoscoeCspInfinite}, cited in \cite{mcCHFiniteND}).
 \end{itemize}
 
 \begin{definition}
-  Let $A=(M_A,\lambda_A,\zeta_A,P_A)$ be a game.  Then a \emph{strategy} for $A$ is a pair $\sigma=(T_\sigma,D_\sigma)$ such that
+  Let $A=(M_A,\lambda_A,\zeta_A,P_A)$ be a game.  Then a (nondeterministic) \emph{strategy} for $A$ is a pair $\sigma=(T_\sigma,D_\sigma)$ such that
   \begin{itemize}
     \item $T_\sigma\subset P_A$ is a prefix-closed subset such that whenever $s\in T_\sigma$ is a $P$-position and $sa\in P_A$ for some move $a$, then $sa\in P_A$.
-    \item $D_\sigma\subset P_A^O$ is a postfix-closed subset.
+    \item $D_\sigma\subset P_A$ is a postfix-closed subset such that all of the minimal positions in $D_\sigma$ are $O$-positions contained in $T_\sigma$.  In other words, if $s\in D_\sigma$, then there is some $O$-position $t\prefix s$ such that $t\in T_\sigma\cap D_\sigma$.
   \end{itemize}
 
-  $T_\sigma$ and $D_\sigma$ are required to satisfy the following totality axioms:
+  $T_\sigma$ and $D_\sigma$ are required to satisfy the following totality axiom:
   \begin{description}
     \item[Diverge-or-reply] If $s\in T_\sigma$ is an $O$-position then either $sa\in T_\sigma$ for some $P$-move $a$ or $s\in D_\sigma$.  
   \end{description}
@@ -289,15 +290,31 @@ Before we consider the definition of $D_{\comp\tau\sigma}$, we show that composi
 
 At the moment, we have an associative composition at the level of trace sets.  We now define composition at the level of divergences.
 
+Given a game $A$ and a subset $S\subset P_A$, we write $\pocl_A(S)$ for the postfix closure of $S$ in $P_A$; i.e.:
+\[
+  \pocl_A(S) = \{s\in P_A\suchthat t\prefix s\textrm{ for some $t\in S$}\}
+  \]
+
 \begin{definition}
   Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  We define the divergences of $\comp\tau\sigma$ as follows: first we define
   \[
     \sigma\dv\tau = \left\{\s\in\seqs{(M_A\cprd M_B\cprd M_C)}\;\middle|\; \mbox{\pbox{\textwidth}{\flushRight either $\s\vert_{A,B}\in D_\sigma$ and $s\vert_{B,C}\in T_\tau$ \\ or $\s\vert_{A,B}\in T_\sigma$ and $s\vert_{B,C}\in D_\tau$}}\right\}
     \]
   \[
-    D_{\comp\tau\sigma} = \{\s\vert_{A,C}\suchthat\s\in\sigma\dv\tau\}
+    D_{\comp\tau\sigma} = \pocl_{A\implies C}\left(\{\s\vert_{A,C}\suchthat\s\in\sigma\dv\tau\}\right)
     \]
 \end{definition}
+
+\begin{proposition}
+  $D_{\comp\tau\sigma}$ is a well-defined divergence set.
+  \begin{proof}
+    $D_{\comp\tau\sigma}$ alternating by the same argument we used for $T_{\comp\tau\sigma}$, and is postfix-closed by definition.  Now let $s\in D_{\comp\tau\sigma}$ and suppose that $\s\vert_{A,C}\prefix s$, where $\s\in \sigma\dv\tau$.  We need to show that there is some $O$-position $t\prefix s$ such that $t\in T_{\comp\tau\sigma}\cap D_{\comp\tau\sigma}$.  
+
+    Suppose first that $\s\vert_{A,B}\in D_\sigma$ and $\s\vert_{B,C}\in T_\tau$.  Then there is some $O$-position $r\prefix \s\vert_{A,B}$ such that $r\in T_\sigma\cap D_\sigma$.  Let $\t\prefix\s$ be some prefix such that $\t\vert_{A,B}=r$.  Then $\t\in\sigma\|\tau\cap\sigma\dv\tau$ and so $t\coloneqq\t\vert_{A,C}\in T_{\comp\tau\sigma}\cap D_{\comp\tau\sigma}$.  Certainly $t\prefix s$, and $t$ is an $O$-position since $r$ is, by examination of sign profiles.
+
+    The case where $\s\vert_{A,B}\in T_\sigma$ and $\s\vert_{B,C}\in D_\tau$ is similar.
+  \end{proof}
+\end{proposition}
 
 We need to show that this composition satisfies the diverge-or-reply and local compactness rules.  
 
@@ -377,10 +394,6 @@ Note that the composition of compact nondeterministic strategies need not be com
   \end{proof}
 \end{proposition}
 
-\begin{remark}
-  Since $D_\sigma$ and $D_\tau$ consist of $O$-positions, any $\s\in\sigma\|\tau$ such that $\s\vert_{A,B}\in D_\sigma$ or $\s\vert_{B,C}\in D_\tau$ must have sign profile $POO$ or $PPO$, by Lemma \ref{signProfilesLemma}, and therefore $\s\vert_{A,C}$ must be an $O$-position.  It follows that $D_{\comp\tau\sigma}$ consists of $O$-positions.
-\end{remark}
-
 Unlike \cite{mcCHFiniteND}, we do not need to change the definition of $D_{\comp\tau\sigma}$ to reflect divergence arising from infinite chattering.  The following example shows that it arises naturally from existing definition of $D_{\comp\tau\sigma}$.
 
 \begin{example}[Infinite chattering]
@@ -422,7 +435,7 @@ Unlike \cite{mcCHFiniteND}, we do not need to change the definition of $D_{\comp
 This example is at the heart of the proof that the composition of strategies satisfies the diverge-or-reply rule.  This is the point at which we need local compactness.
 
 \begin{proposition}
-  Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  Then $D_{\comp\tau\sigma}$ satisfies the diverge-or-reply rule.
+  Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  Then $T_{\comp\tau\sigma}, D_{\comp\tau\sigma}$ satisfy the diverge-or-reply rule.
 
   \begin{proof}
     Suppose that $s\in\comp\tau\sigma$ is an $O$-position and that $s\not\in D_{\comp\tau\sigma}$.  Let $\s\in\sigma\|\tau$ be such that $\s\vert_{A,C}=s$.  By local compactness of $\sigma$ and $\tau$, there must be compact strategies $\sigma'\from A\implies B$ and $\tau'\from B\implies C$ such that $\s\vert_{A,C}\in\sigma'$ and $\s\vert_{B,C}\in\tau'$.  
@@ -441,19 +454,39 @@ We now have a working definition of composition.  It remains to prove that it is
     D_{\comp\upsilon{(\comp\tau\sigma)}} = D_{\comp{(\comp\upsilon\tau)}\sigma}
     \]
   \begin{proof}
-    We claim that
+    Let
     \[
-      D_{\comp\upsilon{(\comp\tau\sigma)}} = \{\s\vert_{A,D}\suchthat\s\in\sigma\|\tau\|\upsilon\textrm{ and either $\s\vert_{A,B}\in D_\sigma$ or $\s\vert_{B,C}\in D_\tau$ or $\s\vert_{C,D}\in D_\upsilon$}\}
+      D = \left\{\s\in \seqs{(M_A \cprd M_B \cprd M_C \cprd M_D)} \;\middle|\;\mbox{\pbox{\textwidth}{\flushRight
+        either \textbf{1} $\s\vert_{A,B}\in D_\sigma$, $\s\vert_{B,C}\in T_\tau$ and $\s\vert_{C,D}\in T_\upsilon$ \\
+        or \textbf{2} $\s\vert_{A,B}\in T_\sigma$, $\s\vert_{B,C}\in D_\tau$ and $\s\vert_{C,D}\in T_\upsilon$ \\
+        or \textbf{3} $\s\vert_{A,B}\in T_\sigma$, $\s\vert_{B,C}\in T_\tau$ and $\s\vert_{C,D}\in D_\upsilon$
+      }}\right\}
       \]
-    The same claim will hold for $D_{\comp{(\comp\upsilon\tau)}\sigma}$ by symmetry, completing the proof.
+    We claim that $D_{\comp\upsilon{(\comp\tau\sigma)}}=\pocl_{A\implies D}\left(\{\s\vert_{A,D}\suchthat\s\in D\}\right)$.  The same claim will hold for $D_{\comp{(\comp\upsilon\tau)}\sigma}$ by symmetry, completing the proof.
 
-    Let $\s\in\sigma\|\tau\|\upsilon$ be such that either $\s\vert_{A,B}\in D_\sigma$ or $\s\vert_{B,C}\in D_\tau$ or $\s\vert_{C,D}\in D_\upsilon$.  Then either $\s\vert_{A,C}\in D_{\comp\tau\sigma}$ or $\s\vert_{B,C}\in D_\upsilon$ and therefore $\s\vert_{A,D}\in D_{\comp\upsilon{(\comp\tau\sigma)}}$.  
+    Let $\s\in D$.  In cases \textbf{1} and \textbf{2}, we must have $\s\vert_{A,C}\in D_{\comp\tau\sigma}$ and $\s\vert_{C,D}\in T_\upsilon$.  In case \textbf{3}, we have $\s\vert_{C,D}\in D_\upsilon$ and $\s\vert_{A,C}\in T_{\comp\tau\sigma}$.  In either case, we must have $\s\vert_{A,D}\in D_{\comp\upsilon{(\comp\tau\sigma)}}$.
 
-    Conversely, suppose that $s\in D_{\comp\upsilon{(\comp\tau\sigma)}}$.  By the definition of $D_{\comp\upsilon{(\comp\tau\sigma)}}$, there must be some sequence $\s\in(\comp\tau\sigma)\|\upsilon$ such that $\s\vert_{A,D}=s$ and either $\s\vert_{A,C}\in D_{\comp\tau\sigma}$ or $\s\vert_{C,D}\in D_\upsilon$.  
+    Conversely, suppose that $s\in D_{\comp\upsilon{(\comp\tau\sigma)}}$.  Then there must be some $\t\in \seqs{(M_A\cprd M_C\cprd M_D)}$ such that $\t\vert_{A,D}\prefix s$ and either
+    \[
+      \t\vert_{A,C}\in D_{\comp\tau\sigma}\textrm{ and }\t\vert_{C,D}\in T_\upsilon
+      \]
+    or
+    \[
+      \t\vert_{A,C}\in T_{\comp\tau\sigma}\textrm{ and }\t\vert_{C,D}\in D_\upsilon
+      \]
+    In the first case, we then get a sequence $\u\in \seqs{(M_A\cprd M_B \cprd M_C)}$ such that $\u\vert_{A,C}\prefix\t\vert_{A,C}$ and either
+    \[
+      \u\vert_{A,B}\in D_\sigma\textrm{ and }\u\vert_{B,C}\in T_\tau
+      \]
+    or
+    \[
+      \u\vert_{A,B}\in T_\sigma\textrm{ and }\u\vert_{B,C}\in D_\tau
+      \]
+    By passing to a suitable prefix of $\t$, we may assume that $\u\vert_{A,C}=\t\vert_{A,C}$ (since $T_\upsilon$ is prefix-closed).
 
-    We now know that there is a sequence $\t\in\sigma\|\tau$ such that $\t\vert_{A,C}=\s\vert_{A,C}$.  If $\s\vert_{A,C}\in D_{\comp\tau\sigma}$ then either $\t\vert_{A,B}\in D_\sigma$ or $\t\vert_{B,C}\in D_\tau$.  
+    In the second case, we get a sequence $\u\in\sigma\|\tau$ such that $\u\vert_{A,C}=\t\vert_{A,C}$.  
 
-    We now have the sequences $\s$ and $\t$ and we know that either $\t\vert_{A,B}\in D_\sigma$ or $\t\vert_{B,C}\in D_\tau$ or $\s\vert_{C,D}\in D_\upsilon$.  By the proof of Proposition \ref{traceAssociativity}, we are able to interleave the sequences $\s$ and $\t$ to get a sequence $\u\in\sigma\|\tau\|\upsilon$ such that $\u\vert_{A,C,D}=\s$ and $\u\vert_{A,B,C}=\t$.  Now we have either $\u\vert_{A,B}=\t\vert_{A,B}\in D_\sigma$ or $\u\vert_{B,C}=\t\vert_{B,C}\in D_\tau$ or $\u\vert_{C,D}=\s\vert_{C,D}\in D_\upsilon$.  Moreover, $\u\vert_{A,D}=\s\vert_{A,D}=s$ and therefore $s$ is contained in the set on the right, which completes the proof.
+    By the argument from Proposition \ref{traceAssociativity}, we may interleave these two sequences $\t$ and $u$ to form a sequence $\s\in\seqs{(M_A\cprd M_B\cprd M_C\cprd M_D)}$ such that $\s\vert_{A,B,C}=\u$ and $\s\vert_{A,C,D}=\t$.  Then it is clear that $\s\in D$ in all cases and we have $\s\vert_{A,D}=\t\vert_{A,D}\prefix s$.
   \end{proof}
 \end{proposition}
 
@@ -461,12 +494,12 @@ In order to show that we have a category, it remains to define the identity morp
 \[
   \id_A = \{s\in P_{A_1\implies A_2}\suchthat\textrm{for all even length $t\prefix s$, $t\vert_{A_1}=t\vert_{A_2}$}\}
   \]
-(Here, we consider infinite plays to have even length).
+(Here, we consider infinite positions to have even length).
 
 The divergence set $D_{\id_A}$ is empty: note that infinite positions in $\id_A$ are always $P$-positions.
 
 \begin{theorem}
-  There is a category $\G$ where the objects are games as defined above, morphisms from a game $A$ to a game $B$ are given by nondeterministic strategies $(T_\sigma, D_\sigma)$ for $A\implies B$ and the composition and identity morphisms are as defined above.
+  Th re is a category $\G$ where the objects are games as defined above, morphisms from a game $A$ to a game $B$ are given by nondeterministic strategies $(T_\sigma, D_\sigma)$ for $A\implies B$ and the composition and identity morphisms are as defined above.
   \begin{proof}
     All that is left to do is to show that $\id_A$ really is an identity morphism.  We shall show that if $A$ and $B$ are games and $\sigma$ is a strategy for $A\implies B$ then $\comp\sigma{\id_A}=\sigma$; it will follow by a symmetrical argument that $\comp{\id_B}\sigma = \sigma$.
 
@@ -474,7 +507,7 @@ The divergence set $D_{\id_A}$ is empty: note that infinite positions in $\id_A$
 
     Conversely, suppose that $s\in\sigma$ is a $P$-position.  There is an obvious sequence $s^2\in\id_A$, given by copying the moves of $s\vert_A$ between copies of $A$, such that $s^2\vert_{A_1}=s^2\vert_{A_2}=s\vert_A$.  Then $s^2\vert_{A_2}=s\vert_{A_2}$, and so the sequences $s^2$ and $s$ may be interleaved as in the proof of Proposition \ref{traceAssociativity} to yield a sequence $\s\in\id_A\|\sigma$ such that $\s\vert_{A_1,B}=\s\vert_{A_2,B}=s$.  
 
-    Now we show that $D_{\comp\sigma{\id_A}}=D_\sigma$.  Suppose $s\in D_{\comp\sigma{\id_A}}$.  Then there is a sequence $\s\in\id_A\|\sigma$ such that $\s\vert_{A_1,B}=s$ and either $\s\vert_{A_1,A_2}\in D_{\id_A}$ or $\s\vert_{A_2,B}\in D_\sigma$.  Since $D_{\id_A}=\emptyset$, we must have $\s\vert_{A_2,B}\in D_\sigma$.  In particular, $\s\vert_{A_2,B}$ is an $O$-position in $A\implies B$ and so $\s\vert_{A_2}$ is a $P$-position in $A$.  It follows by Lemma \ref{signProfilesLemma} that $\s\vert_{A_1,A_2}$ is a $P$-position in $A\implies A$; hence, it is even-length and so $\s\vert_{A_1}=\s\vert_{A_2}$.  It follows that $s=\s\vert_{A_1,B}=\s\vert_{A_2,B}\in D_\sigma$.  So $D_{\comp\sigma{\id_A}}\subset D_\sigma$.  
+    Now we show that $D_{\comp\sigma{\id_A}}=D_\sigma$.  Suppose $s\in D_{\comp\sigma{\id_A}}$.  Since $D_{\id_A}=\emptyset$, there is a sequence $\s\in\seqs{(M_{A_1}\cprd M_{A_2}\cprd M_B)}$ such that $\s\vert_{A_1,B}\prefix s$, $\s\vert_{A_1,B_1}\in\id_A$ and $\s\vert_{A_2,B}\in D_\sigma$.  In particular, $\s\vert_{A_2,B}$ is an $O$-position in $A\implies B$ and so $\s\vert_{A_2}$ is a $P$-position in $A$.  It follows by Lemma \ref{signProfilesLemma} that $\s\vert_{A_1,A_2}$ is a $P$-position in $A\implies A$; hence, it is even-length and so $\s\vert_{A_1}=\s\vert_{A_2}$.  It follows that $\s\vert_{A_1,B}=\s\vert_{A_2,B}\in D_\sigma$, so $s\in D_\sigma$, since $D_\sigma$ is postfix-closed.  Therefore, $D_{\comp\sigma{\id_A}}\subset D_\sigma$.  
 
     Conversely, suppose that $s\in D_\sigma$.  We know already that there is some $\s\in\id_A\|\sigma$ such that $\s\vert_{A_1,A_2}\in\id_A$ and $\s\vert_{A_2,B}\in\sigma$.  Then $\s\vert_{A,C}\in D_{\comp\sigma{\id_A}}$ by definition.
   \end{proof}
@@ -488,7 +521,10 @@ We make the category $\G$ into a symmetric monoidal closed category with tensor 
   \]
 The divergences for $\sigma\tensor\tau$ are defined using the divergences for $\sigma$ and $\tau$:
 \[
-  D_{\sigma\tensor\tau} = \left\{s\in P_{(A\tensor B)\implies (C\tensor D)}\suchthat s\vert_{A,C}\in D_\sigma\textrm{ or }s\vert_{B,D}\in D_\tau\right\}
+  D_{\sigma\tensor\tau} = \pocl\left(\left\{s\in P_{(A\tensor B)\implies (C\tensor D)}\;\middle|\;\mbox{\pbox{\textwidth}{\flushRight
+    either $s\vert_{A,C}\in D_\sigma$ and $s\vert_{B,D}\in T_\tau$ \\
+    or $s\vert_{A,C}\in T_\sigma$ and $s\vert_{B,D}\in D_\tau$
+    }}\right\}\right)
   \]
 \begin{proposition}
   $\sigma\tensor\tau$ is a valid strategy for $(A\tensor B)\implies (C\tensor D)$
@@ -516,11 +552,13 @@ The divergences for $\sigma\tensor\tau$ are defined using the divergences for $\
       \]
     In all three cases, $s\vert_{A,C}$ and $s\vert_{B,D}$ are both $P$-positions.  Since $\sigma$ and $\tau$ are both closed under opponent replies, it follows that one of them must contain the move $x$ as a reply to the current position, and therefore that $sx\in\sigma\tensor\tau$, as desired.
 
+    $D_{\sigma\tensor\tau}$ is postfix-closed by definition.  If $s\in D_{\sigma\tensor\tau}$, we need to find some $O$-position $t\in T_{\sigma\tensor\tau}\cap D_{\sigma\tensor\tau}$ such that $t\prefix s$.  By definition, we know there is some $s'\prefix s$ such that either $s'\vert_{A,C}\in D_\sigma$ and $s'\vert_{B,D}\in T_\tau$ or $s'\vert_{A,C}\in T_\sigma$ and $s'\vert_{B,D}\in D_\tau$.  In the first case, we know that there is some $r\prefix s'\vert_{A,C}$ such that $r$ is an $O$-move in $T_\sigma\cap D_\sigma$; passing to an appropriate prefix $s''$ of $s'$, we get that $s''\vert_{A,C}=r$ and $s''\vert_{B,D}\in T_\tau$.  Therefore, $s''\in T_{\sigma\tensor\tau}\cap D_{\sigma\tensor\tau}$.  Moreover, $s''$ is an $O$-position, since $s''\vert_{A,C}$ is, and the claim follows since $s''\prefix s'\prefix s$.  The proof in the other case is similar.
+
     Now we need to show that $\sigma\tensor\tau$ is locally compact.  We first show that if $\sigma$ and $\tau$ are compact strategies then $\sigma\tensor\tau$ is compact.  Indeed, suppose that $s\in\sigma\tensor\tau$ is an infinite sequence such that $t\in\sigma\tensor\tau$ for all finite prefixes $t\ppprefix s$.  Then $\sigma$ must contain all finite prefixes of $s\vert_{A,C}$, so it must contain $s\vert_{A,C}$, since $\sigma$ is compact.  Similarly, $\tau$ must contain $s\vert_{B,D}$.  Therefore, $s\in\sigma\tensor\tau$.  Since $s$ was arbitrary, it follows that $\sigma\tensor\tau$ is compact.  
 
-    Now suppose that $\sigma$ and $\tau$ are locally compact.  Let $s\in\sigma\tensor\tau$.  Then there exists compact strategies $\sigma'\from A\implies C$ and $\tau'\from B\implies D$ such that $s\vert_{A,C}\in\sigma'$ and $s\vert_{B,C}\in\tau'$.  Then $s\in\sigma'\tensor\tau'$, which is compact.
+    Now suppose that $\sigma$ and $\tau$ are locally compact.  Let $s\in\sigma\tensor\tau$.  Then there exists a compact strategy $\sigma'$ for $A\implies C$ and $\tau'\from B\implies D$ such that $s\vert_{A,C}\in\sigma'\subset\sigma$ and $D_\sigma\subset D_{\sigma'}$ and a compact strategy $\tau'$ for $B\implies C$ such that $s\vert_{B,C}\in\tau'\subset \tau$ and $D_\tau\subset D_{\tau'}$.  Then $s\in\sigma'\tensor\tau'$, which is compact, and we have $\sigma'\tensor\tau'\subset\sigma\tensor\tau$ and $D_{\sigma\tensor\tau}\subset D_{\sigma'\tensor\tau'}$.
 
-    Lastly, we need to show that $D_{\sigma\tensor\tau}$ satisfies diverge-or-reply.  Indeed, suppose that $s\in\sigma\tensor\tau$ is an $O$-position and that $s\not\in D_{\sigma\tensor\tau}$.  Then $s\vert_{A,C}\not\in D_\sigma$ and $s\vert_{B,D}\not\in D_\tau$.  Using Lemma \ref{signProfilesLemma}, we see that $s$ must have one of the following sign profiles:
+    Lastly, we need to show that $\sigma\tensor\tau$ satisfies diverge-or-reply.  Indeed, suppose that $s\in\sigma\tensor\tau$ is an $O$-position and that $s\not\in D_{\sigma\tensor\tau}$.  Then $s\vert_{A,C}\not\in D_\sigma$ and $s\vert_{B,D}\not\in D_\tau$.  Using Lemma \ref{signProfilesLemma}, we see that $s$ must have one of the following sign profiles:
     \[
       \begin{array}{cccc}
         \zeta_A(s\vert_A) & \zeta_B(s\vert_B) & \zeta_C(s\vert_C) & \zeta_D(s\vert_D) \\
@@ -615,7 +653,7 @@ where
 
 Given some sequence $s\in \seqs{M_{\oc A}}$, we write $s\vert_n$ for the projection on to the second component of the subsequence of $s$ consisting of those moves of the form $(n, a)$.  We define
 \[
-  \oc P_A = \{s\in\seqs{M_{\oc A}} \suchthat s\vert_n\in P_A \textrm{ for all $n\in\omega$}\}
+  \oc P_A = \left\{s\in\seqs{M_{\oc A}} \suchthat s\vert_n\in P_A \textrm{ for all $n\in\omega$}\right\}
   \]
 We define $\zeta_{\oc A}\from \oc P_A\to\OP$ by
 \[
@@ -643,7 +681,10 @@ The exponential connective gives rise to a functor $\G\to\G$, where the operatio
   \]
 with divergences
 \[
-  D_{\oc\sigma} = \{s \in \oc\sigma\suchthat s\vert_{A_n,B_n}\in D_\sigma\textrm{ for some $n\in\omega$}\}
+  D_{\oc\sigma} = \pocl_{\oc A}\left(\left\{s \in \oc\sigma\;\middle|\;\mbox{\pbox{\textwidth}{\Centering
+    there exists $n\in\omega$ such that $s\vert_n\in D_\sigma$ \\
+    and for all $m\ne n$, $s\vert_m\in T_\sigma$
+  }}\right\}\right)
   \]
 The proof that $\oc(\cdot)$ preserves composition is the same as for the tensor product.
 
@@ -714,17 +755,22 @@ To show that this is an order, the only non-trivial part is to show that propert
     \comp\tau\sigma\stle\comp{\tau'}{\sigma'}
     \]
   \begin{proof}
-    Since $T_\sigma\subset T_{\sigma'}$ and $T_\tau\subset T_{\tau'}$, we have $\sigma\|\tau\subset\sigma'\|\tau'$ and therefore $T_{\comp\tau\sigma}\subset T_{\comp{\tau'}{\sigma'}}$.  
+    First suppose that $\tau=\tau'$.  
 
-    Now suppose that $e\in D_{\comp{\tau'}{\sigma'}}$.  We want to show that there is some $d\in D_{\comp\tau\sigma}$ such that $d\prefix e$.  
+    Since $T_\sigma\subset T_{\sigma'}$, we have $\sigma\|\tau\subset\sigma'\|\tau$ and therefore $T_{\comp\tau\sigma}\subset T_{\comp{\tau}{\sigma'}}$.  
 
-    We know that there exists some $\e\in\sigma'\|\tau$ such that $\e\vert_{A,C}=e$ and either $\e\vert_{A,B}\in D_{\sigma'}$ or $\e\vert_{B,C}\in D_\tau$.  Suppose first that $\e\vert_{A,B}\in\sigma$, so $\e\in\sigma\|\tau$.  Then we have either $\e\vert_{A,B}\in D_{\sigma'}\subset D_\sigma$ or $\e\vert_{A,B}\in D_\tau$, so $\e\vert_{A,C}=e\in D_{\comp\tau\sigma}$.  
+    Now let $e\in D_{\comp{\tau}{\sigma'}}$.  Suppose $e\prefix\e$, where $\e\in\sigma'\dv\tau$ and suppose first that $\e\vert_{A,B}\in D_{\sigma'}$ and $\e\vert_{B,C}\in T_{\tau}$.  Since $D_{\sigma'}\subset D_\sigma$, we have $\e\vert_{A,B}\in D_\sigma$, so $\e\in\sigma\dv\tau$ and therefore $e$, which is a postfix of $\e\vert_{A,C}$, is contained in $D_{\comp\tau\sigma}$.  
+    
+    Now suppose that $\e\vert_{A,B}\in T_{\sigma'}$ and $\e\vert_{B,C}\in D_{\tau'}$.  Since $\sigma\stle\sigma'$, we have $\e\vert_{A,B}\in T_\sigma\cup D_\sigma$.  If $\e\vert_{B,C}\in T_\sigma$, then we have $\e\in\sigma\dv\tau$ and so $\e\vert_{A,C}\in D_{\comp\tau\sigma}$ and therefore $e\in D_{\comp\tau\sigma}$, since $D_{\comp\tau\sigma}$ is postfix-closed.  
 
-    Suppose instead that $\e\vert_{A,B}\not\in\sigma$.  We have $\e\vert_{A,B}\in\sigma'$ and $\sigma\stle\sigma'$, so there exists $d\in D_\sigma$ such that $d\prefix\e\vert_{A,B}$.  Let $\d$ be a prefix of $\e$ such that $\d\vert_{A,B}=d$.  Then we have $\d\vert_{A,B}\in D_\sigma$ and $\d\vert_{B,C}\in\tau$, so $\d\vert{A,C}\in\comp\tau\sigma$ and $\d\vert_{A,C}\prefix e$.  
+    Otherwise, $\e\vert_{B,C}\in D_\sigma$.  Then $\e\vert_{A,B}$ and $\e\vert_{B,C}$ have prefixes $q\prefix\e\vert_{A,B}$, $r\prefix\e\vert_{B,C}$ such that $q$ and $r$ are $O$-moves, $q\in T_\sigma\cap D_\sigma$ and $r\in T_\tau\cap D_\tau$.  Passing to an appropriate prefix $\e'$ of $\e$, we have either $\e'\vert_{A,B}=q$ and $r\prefix\e'\vert_{B,C}$ or $q\prefix\e'\vert_{A,B}$ and $\e\vert_{B,C}=r$.  In either case, $\e'\in \sigma\dv\tau$ and so $\e'\vert_{A,C}\in D_{\comp\tau\sigma}$.  Then we have $\e'\vert_{A,C}\prefix\e\vert_{A,C}\prefix e$, and so $e\in D_{\comp\tau\sigma}$.  
 
-    Lastly, suppose that $s\in T_{\comp\tau{\sigma'}}\setminus T_{\comp\tau\sigma}$.  Write $s=\s\vert_{A,C}$, where $\s\in\comp\tau{\sigma'}$.  Then $\s\vert_{A,B}\in\sigma'\setminus\sigma$, and therefore there exists $d\in D_\sigma$ such that $d\prefix\s\vert_{A,B}$.  Let $\d\prefix\s$ be a prefix such that $\d\vert_{A,B}=d$.  Then $\d\vert_{A,C}\in D_{\comp\tau\sigma}$ and $\d\vert_{A,C}\prefix s$.
+    Lastly, suppose that $s\in T_{\comp{\tau'}{\sigma'}}\setminus T_{\comp\tau\sigma}$.  Write $s=\s$, where $\s\in\sigma'\|\tau'$.  Since $\s\not\in T_{\comp\tau\sigma}$, we must have $\s\vert_{A,B}\in\sigma'\setminus\sigma$.  It follows that $\s\vert_{A,B}\in D_\sigma$ and therefore $\s\in\sigma\dv\tau$.  Therefore, $s=\s\vert_{A,B}\in D_{\comp\tau\sigma}$.  
 
-    A similar argument works in the case that $\sigma=\sigma'$.  Therefore, the result follows by transitivity of $\stle$.
+    The result follows by a similar argument in the case that $\sigma=\sigma'$.  Therefore, the full result follows from transitivity of $\stle$: if $\sigma\stle\sigma'$ and $\tau\stle\tau'$, then
+    \[
+      \comp\tau\sigma \stle \comp\tau{\sigma'} \stle \comp{\tau'}{\sigma'}
+      \]
   \end{proof}
 \end{proposition}
 
@@ -733,19 +779,34 @@ We want to get a similar result for composition in the category $\G^{\oc}$.  To 
 \begin{proposition}
   Let $A,B$ be games and let $\sigma,\tau$ be strategies for $A\implies B$ such that $\sigma\stle\tau$.  Then $\oc\sigma\stle\oc\tau$ as strategies for $\oc A\implies \oc B$.
   \begin{proof}
-    If $s\in\oc\sigma$, then $s\vert_{A_n,B_n}\in\sigma$ for all $n$ and therefore $s\vert_{A_n,B_n}\in\sigma'$ for all $n$.  It follows that $\sigma\subset\tau$.
+    If $s\in\oc\sigma$, then $s\vert_{A_n,B_n}\in\sigma$ for all $n$ and therefore $s\vert_{A_n,B_n}\in\sigma'$ for all $n$.  It follows that $\oc\sigma\subset\oc\tau$.
 
-    If $e\in\oc{\tau}$, then, since $\sigma\stle\tau$, for all $n$ either $e\vert_{A_n,B_n}\in\sigma$ or there exists $d_n\in D_\sigma$ such that $d_n\prefix e\vert_{A_n,B_n}$.  If $e\in D_{\oc\tau}$, then $e\vert_{A_n,B_n}\in D_\tau$ for some $n$, so there is at least one $d_n$.  We may choose a prefix $e'$ of $e$ such that $e\vert_{A_n,B_n}\prefix d_n$ whenever $d_n$ is defined and $d_n=e\vert_{A_n,B_n}$ for at least one $n$ (if at least one $d_n$ is finite, then one of the $d_n$ finishes first in $e$, and we let $e'$ be a minimal prefix of $e$ that restricts to $d_n$; if all the $d_n$ are infinite, let $e'=e$).  Since $D_\sigma\subset\sigma$, we see that $e'\in T_{\oc \sigma}$, and since $e'\vert_{A_n,B_n}=d_n$, we have $e'\in D_{\oc\sigma}$.
+    If $e\in D_{\oc\tau}$ then there exists some $e'\prefix e$ and some $n\in\omega$ such that $e'\vert_n\in D_\tau$ and $e'\vert_m\in T_\tau$ for all $m\ne n$.  
 
-    Lastly, If $s\in \oc\tau\setminus\oc\sigma$, then there exists some $n$ such that $s\vert_{A_n,B_n}\in\tau\setminus\sigma$.  Therefore, $d_n$ is defined for at least one $n$ and it follows that we may construct $e'\in D_{\oc\sigma}$ as before such that $e'\prefix s$.
+    Since $\sigma\stle\tau$, we have $D_\tau\subset D_\sigma$ and $T_\tau\subset T_\sigma\cup D_\sigma$.  For each $m$, define a subsequence $d_n$ of $e'$ as follows: if $e'\vert_m\in T_\sigma$ then $d_m=e'\vert_m$.  If $e'\vert_m\in D_\sigma$, then there is some prefix of $e'\vert_m$ that is an $O$-position in $T_\sigma\cap D_\sigma$.  Let $d_m$ be the shortest such prefix of $e'\vert_m$.   
+
+    We know that $e'\vert_n\in D_\tau\subset D_\sigma$, so $d_n\in D_\sigma$.  Let $d$ be the shortest prefix of $e'$ such that there exists some $m$ such that $d_m\in D_\sigma$ and $d_m\prefix d$.  We claim that $d\vert_k\in T_\sigma$ for all $k\neq m$.  If $d\vert_k\prefix d_k$, then $d\vert_k\in T_\sigma$, since $d_k\in T_\sigma$.  Otherwise, $d_k\pprefix d\vert_k$.  But this contradicts the minimality of $d$.  
+
+    Therefore, we have $d\in D_{\oc\sigma}$.  It follows that $e\in D_{\oc\sigma}$, since $D_{\oc\sigma}$ is postfix-closed.
+
+    Lastly, if $s\in \oc\tau\setminus\oc\sigma$, then there exists some $s'\prefix s$ and some $n\in\omega$ such that $s'\vert_{A_n,B_n}\in\tau\setminus\sigma$.  Therefore, if we construct the $d_n$ as before, we have $d_n\in D_\sigma$ for at least one $n$ and it follows that we may construct $d\in D_{\oc\sigma}$ as before such that $d\prefix s'$.  It follows that $s\in D_{\oc\sigma}$.  
   \end{proof}
 \end{proposition}
 
-Let $A$ be a game and let $F$ be a set of strategies for $A$.  We define a strategy $\exlub F$ for $F$ by setting
+Let $A$ be a game and let $F$ be a non-empty set of strategies for $A$.  We define a strategy $\exlub F$ for $F$ by setting
 \begin{gather*}
   T_{\exlub F} = \bigcup_{\sigma\in F}T_\sigma \\
   D_{\exlub F} = \bigcap_{\sigma\in F}D_\sigma
 \end{gather*}
+
+\begin{proposition}
+  If $A$ is a game and $F$ is a set of strategies for $A$ then $\exlub F$ is a strategy for $A$.
+  \begin{proof}
+    Certainly $T_{\exlub F}$ is non-empty and prefix-closed and $D_{\exlub F}$ is postfix-closed.  Suppose $s\in T_{\exlub F}$ is a $P$-position.  Then $s\in T_\sigma$ for some $\sigma\in F$.  So if $sa\in P_A$ for some move $a$, then $sa\in T_\sigma$ and therefore $sa\in T_{\exlub F}$.  
+
+    Let $s\in D_{\exlub F}$.  Then $s\in D_\sigma$ for all $\sigma\in F$.  It follows that 
+  \end{proof}
+\end{proposition}
 
 \subsection{Soundness}
 

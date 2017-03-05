@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.12.8)  26 FEB 2017 23:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.12.8)  5 MAR 2017 14:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1016,18 +1016,18 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 ) (./nondeterminism.aux)
 \openout1 = `nondeterminism.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -1096,44 +1096,44 @@ Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 ABD: EveryShipout initializing macros
-LaTeX Font Info:    Try loading font information for U+msa on input line 20.
+LaTeX Font Info:    Try loading font information for U+msa on input line 21.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 20.
+LaTeX Font Info:    Try loading font information for U+msb on input line 21.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+cmllr on input line 20.
+LaTeX Font Info:    Try loading font information for U+cmllr on input line 21.
 
 (/usr/share/texmf-dist/tex/latex/cmll/ucmllr.fd)
-LaTeX Font Info:    Try loading font information for U+wasy on input line 20.
+LaTeX Font Info:    Try loading font information for U+wasy on input line 21.
 
 (/usr/share/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 62.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 63.
  (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 62.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 63.
 [3] [4] [5]
-LaTeX Font Info:    Try loading font information for U+euf on input line 197.
+LaTeX Font Info:    Try loading font information for U+euf on input line 198.
  (/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 ) [6] [7] [8]
 [9]
-Overfull \hbox (3.0796pt too wide) detected at line 348
+Overfull \hbox (3.0796pt too wide) detected at line 365
 \U/msb/m/n/10 N \OT1/cmr/m/n/10 = []
  []
 
 [10]
-Overfull \hbox (32.19292pt too wide) detected at line 390
+Overfull \hbox (32.19292pt too wide) detected at line 403
 [] \OT1/cmr/m/n/10 = (\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 q; a\OMS/cmsy/m/n/10 g
 \OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 q \OMS/cmsy/m/n/10 7! \OM
 L/cmm/m/it/10 O; a \OMS/cmsy/m/n/10 7! \OML/cmm/m/it/10 P\OMS/cmsy/m/n/10 g\OML
@@ -1144,37 +1144,41 @@ cmm/m/it/10 P; sq \OMS/cmsy/m/n/10 7! \OML/cmm/m/it/10 O; sa \OMS/cmsy/m/n/10 7
  v \OML/cmm/m/it/10 qaqa [] \OMS/cmsy/m/n/10 g\OT1/cmr/m/n/10 )
  []
 
-[11]
-Overfull \hbox (22.39851pt too wide) detected at line 447
-\OML/cmm/m/it/10 D[] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 f\U/euf/m/n/10 s\OMS/cm
-sy/m/n/10 j[]  [] []  \U/euf/m/n/10 s \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 ^^[\O
-MS/cmsy/m/n/10 k\OML/cmm/m/it/10 ^^\\OMS/cmsy/m/n/10 k\OML/cmm/m/it/10 ^^][]\OM
-S/cmsy/m/n/10 g
+[11] [12]
+Overfull \hbox (38.41924pt too wide) detected at line 464
+\OML/cmm/m/it/10 D \OT1/cmr/m/n/10 = []
  []
 
-[12] [13] [14]
-Overfull \hbox (39.00584pt too wide) in paragraph at lines 579--579
+
+Overfull \hbox (34.12967pt too wide) in paragraph at lines 469--470
+[]\OT1/cmr/m/n/10 Conversely, sup-pose that $\OML/cmm/m/it/10 s \OMS/cmsy/m/n/1
+0 2 \OML/cmm/m/it/10 D[]$\OT1/cmr/m/n/10 . Then there must be some $\U/euf/m/n/
+10 t \OMS/cmsy/m/n/10 2 []$
+ []
+
+[13] [14] [15]
+Overfull \hbox (39.00584pt too wide) in paragraph at lines 617--617
 [] 
  []
 
-[15] [16]
-Overfull \hbox (1.16698pt too wide) in paragraph at lines 650--651
+[16] [17]
+Overfull \hbox (1.16698pt too wide) in paragraph at lines 691--692
 \OT1/cmr/m/n/10 The rel-e-vant nat-u-ral trans-for-ma-tions, in-clud-ing the co
 -mul-ti-pli-ca-tion $[] [] [] !\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 !
  []
 
-[17]
-Overfull \hbox (14.51904pt too wide) in paragraph at lines 697--698
+[18]
+Overfull \hbox (14.51904pt too wide) in paragraph at lines 738--739
 \OT1/cmr/m/n/10 We start by defin-ing an or-der on strate-gies. This is the or-
 der given in [[]]. 
  []
 
-[18] [19] (./nondeterminism.bbl [20]) [21] (./nondeterminism.aux) ) 
+[19] [20] (./nondeterminism.bbl [21]) [22] (./nondeterminism.aux) ) 
 Here is how much of TeX's memory you used:
- 17492 strings out of 493013
- 338876 string characters out of 6139317
- 399831 words of memory out of 5000000
- 20622 multiletter control sequences out of 15000+600000
+ 17494 strings out of 493013
+ 338885 string characters out of 6139317
+ 400852 words of memory out of 5000000
+ 20624 multiletter control sequences out of 15000+600000
  13991 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,18n,82p,940b,970s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1194,14 +1198,15 @@ ic/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></u
 sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-
 dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbol
-s/msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on nondeterminism.pdf (21 pages, 278784 bytes).
+type1/public/mathabx-type1/mathb10.pfb></usr/share/texmf-dist/fonts/type1/publi
+c/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb
+></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
+Output written on nondeterminism.pdf (22 pages, 286985 bytes).
 PDF statistics:
- 168 PDF objects out of 1000 (max. 8388607)
- 120 compressed objects within 2 object streams
+ 175 PDF objects out of 1000 (max. 8388607)
+ 125 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
