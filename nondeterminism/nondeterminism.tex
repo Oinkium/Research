@@ -83,9 +83,9 @@ We shall write $P_A^P=\zeta_A\inv(\{P\})$ for the set of $P$-positions in $A$ an
 
 A nondeterministic \emph{strategy} for a game $A$ will be given by a pair $\sigma=(T_\sigma, D_\sigma)$, where
 \begin{itemize}
-  \item $T_\sigma$ is the set of \emph{traces} of the strategy; i.e., the set of positions that can occur when player $P$ plays according to the strategy.  That is, $T_\sigma$ is a non-empty prefix-closed subset of $P_A$ that is closed under $O$-replies to $P$-positions: whenever $s\in T_\sigma$ is a $P$-position and $a\in M_A$ is an $O$-move such that $sa\in P_A$, then $sa\in T_\sigma$.  We call such a set $T_\sigma$ a \emph{trace set}.
+  \item $T_\sigma$ is the set of \emph{traces} of the strategy; i.e., the set of positions that can occur when player $P$ plays according to the strategy.  That is, $T_\sigma$ is a non-empty prefix-closed subset of $P_A$ that is closed under $O$-replies to $P$-positions: whenever $s\in T_\sigma$ is a $P$-position and $a\in M_A$ is an $O$-move such that $sa\in P_A$, then $sa\in T_\sigma$.  
 
-  \item $D_\sigma\subset T_\sigma$ denotes the set of \emph{divergences} in $T_\sigma$; that is, the set of those $O$-positions in $T_\sigma$ for which Player $P$ may elect to diverge rather than respond.  Accordingly, $\zeta_A(s)=O$ for all minimal $s\in D_\sigma$.  If a trace has a divergent prefix, then it is divergent, so we shall follow Roscoe and insist that $D_\sigma$ be postfix-closed in $P_A^O$ (\cite{RoscoeCspInfinite}, cited in \cite{mcCHFiniteND}).
+  \item $D_\sigma\subset T_\sigma$ denotes the set of \emph{divergences} in $T_\sigma$; that is, the set of those $O$-positions in $T_\sigma$ for which Player $P$ may elect to diverge rather than respond.  Accordingly, $\zeta_A(s)=O$ for all minimal $s\in D_\sigma$.  If a trace has a divergent prefix, then it is divergent, so we shall follow Roscoe and insist that $D_\sigma$ be postfix-closed in $P_A$ (\cite{RoscoeCspInfinite}, cited in \cite{mcCHFiniteND}).
 \end{itemize}
 
 \begin{definition}
@@ -102,7 +102,7 @@ A nondeterministic \emph{strategy} for a game $A$ will be given by a pair $\sigm
 
   The diverge-or-reply rule tells us that a function must either return a value or go into an infinite loop, and corresponds to the absence of an error constant in our language.  
 
-  A consequence of the diverge-or-reply rule is that if $s\in \sigma$ is an infinite $O$-position, then there exists $t\prefix s$ such that $t\in D_\sigma$ (since it is impossible for player $P$ to reply to it, positions of length $\omega+1$ or greater being disallowed).  This works well for our purposes; it captures our intuition that divergence should arise from some infinite behaviour, but it excludes those cases where Player $O$ is `to blame' for the infinite behaviour (passing, for example, a divergent function into the non-divergent strategy $\lambda f.f$).  
+  A consequence of the diverge-or-reply rule is that if $s\in \sigma$ is an infinite $O$-position, then $s\in D_\sigma$ (since it is impossible for player $P$ to reply to it, positions of length $\omega+1$ or greater being disallowed).  This works well for our purposes; it captures our intuition that divergence should arise from some infinite behaviour, but it excludes those cases where Player $O$ is `to blame' for the infinite behaviour (passing, for example, a divergent function into the non-divergent strategy $\lambda f.f$).  
 \end{definition}
 
 We will need one extra condition on the definition of a strategy in order to make sure that the composition of two strategies satisfies the diverge-or-reply rule.
@@ -735,9 +735,20 @@ As usual, we shall use fixed point theorems from domain theory to define the den
 
 \subsection{The stable order on strategies}
 
-We start by defining an order on strategies.  This is the order given in \cite{mcCHFiniteND}.
+We start by defining some orders on strategies.  Our main ordering, which we shall call the \emph{stable ordering} (following \cite{LairdOrdinalGames}) is the order given in \cite{mcCHFiniteND}.
 
-\begin{definition}
+\begin{definition}[Extensional order]
+  Let $A$ be a game and let $\sigma,\tau$ be strategies for $A$.  We say that $\sigma\exle\tau$ if:
+
+  \begin{enumerate}[1)]
+    \item $T_\sigma\subset T_\tau$
+    \item $D_\sigma\subset D_\tau$
+  \end{enumerate}
+\end{definition}
+
+The extensional order is simple to define, but it is not preserved by composition (see \cite{mcCHFiniteND} for an example).  Instead, we shall prefer the following order:
+
+\begin{definition}[Stable order]
   Let $A$ be a game and let $\sigma,\tau$ be strategies for $A$.  We say that $\sigma\stle\tau$ if:
 
   \begin{enumerate}[1)]
@@ -793,18 +804,49 @@ We want to get a similar result for composition in the category $\G^{\oc}$.  To 
   \end{proof}
 \end{proposition}
 
-Let $A$ be a game and let $F$ be a non-empty set of strategies for $A$.  We define a strategy $\exlub F$ for $F$ by setting
+If $A$ is a game and $S\subset P_A$ is some set, we say that $s\in S$ is \emph{minimal} if $t\not\in S$ for all proper prefixes $t\pprefix s$.  Let $A$ be a game and let $F$ be a non-empty set of strategies for $A$ that is directed under the extensional order: so if $\sigma,\tau\in F$ then there is some $\upsilon\in F$ such that $\sigma,\tau\exle\upsilon$.  Write $D(F) = \bigcap_{\sigma\in F}D_\sigma$.  We define a strategy $\exlub F$ for $F$ by setting
 \begin{gather*}
-  T_{\exlub F} = \bigcup_{\sigma\in F}T_\sigma \\
-  D_{\exlub F} = \bigcap_{\sigma\in F}D_\sigma
+  T_{\exlub F} = \bigcup_{\sigma\in F}T_\sigma \cup \{s\in D(F)\suchthat\textrm{$s$ is an infinite and minimal $O$-position in $D(F)$}\} \\
+  D_{\exlub F} = D(F) \setminus \{s\in D(F)\suchthat\textrm{$s$ is an infinite and minimal $P$-position in $D(F)$}\}
 \end{gather*}
 
 \begin{proposition}
-  If $A$ is a game and $F$ is a set of strategies for $A$ then $\exlub F$ is a strategy for $A$.
+  If $A$ is a game and $F$ is a set of strategies for $A$ that is directed under the extensional order then $\exlub F$ is a strategy for $A$.
   \begin{proof}
-    Certainly $T_{\exlub F}$ is non-empty and prefix-closed and $D_{\exlub F}$ is postfix-closed.  Suppose $s\in T_{\exlub F}$ is a $P$-position.  Then $s\in T_\sigma$ for some $\sigma\in F$.  So if $sa\in P_A$ for some move $a$, then $sa\in T_\sigma$ and therefore $sa\in T_{\exlub F}$.  
+    Certainly $T_{\exlub F}$ is non-empty.  To show that $T_{\exlub F}$ is prefix-closed, suppose $s\in T_{\exlub F}$.  If $s\in T_\sigma$ for some $\sigma\in F$, then $t\in T_{\exlub F}$ for all prefixes $t\prefix s$, since $T_\sigma$ is prefix closed.  Otherwise, suppose $s\in D(F)$ is infinite and that there is some finite prefix $t\pprefix s$ such that $t\not\in T_{\exlub F}$.  We shall show that $s$ is not minimal in $D(F)$.  
 
-    Let $s\in D_{\exlub F}$.  Then $s\in D_\sigma$ for all $\sigma\in F$.  It follows that 
+    We have $s\in D_\sigma$ for all $\sigma\in F$.  So for each $\sigma\in F$, there exists some prefix $t_\sigma\prefix s$ such that $t_\sigma\in T_\sigma\cap D_\sigma$.  If $t\prefix t_\sigma$, then $t\in T_\sigma$, which contradicts $t$ not being in $T_{\exlub F}$, so we must have $t_\sigma\prefix t$.  Therfore, the $t_\sigma$ are finite and have length bounded by the length of $t$.  Let $t_\tau$ be the longest of the $t_\sigma$.  We have $t_\sigma\prefix t_\tau$ for all $\sigma\in F$, and therefore $t_\tau\in D(F)$.  So $s$ is not minimal, proving that $T_{\exlub F}$ is prefix-closed.
+
+    Now we show that $D_{\exlub F}$ is postfix-closed.  Let $s\in D_{\exlub F}$.  Then $s\in D_\sigma$ for all $\sigma$.  Suppose that $s\pprefix t$ for some $t$.  Then $t\in D_\sigma$ for all $\sigma$, so $t\in D(F)$.  Moreover, $t$ is certainly not minimal in $D(F)$, since it has $s$ as a proper prefix.  Therefore, $t\in D_{\exlub F}$.  
+
+    Suppose $s\in T_{\exlub F}$ is a $P$-position and that $sa\in P_A$.  Then $s$ is certainly finite, and so $s\in T_\sigma$ for some $\sigma$.  It follows that $sa\in T_\sigma$, so $sa\in T_{\exlub F}$.  
+
+    Now suppose that $d\in D_{\exlub F}$.  If $d$ is infinite minimal, then $d\in T_{\exlub F}\cap D_{\exlub F}$.  Moreover, $d$ must be an $O$-position.  Otherwise, $d$ must have some finite prefix $d'$ such that $d'\in D(F)$ (if $d$ itself is finite, we can take $d'=d$).  Now $d'\in D_\sigma$ for all $\sigma\in F$, so for each $\sigma\in F$ there is some $O$-position $d_\sigma\prefix d'$ such that $d_\sigma\in T_\sigma\cap D_\sigma$.  The length of the $d_\sigma$ is bounded by the length of $d'$, so there is some $\tau$ such that $d_\sigma\prefix d_\tau$ for all $\sigma\in F$.  Then $D_\tau\in D_\sigma$ for all $\sigma\in F$, so $d_\tau\in T_{\exlub F}\cap D_{\exlub F}$.  
+
+    Next we show that $\exlub F$ satisfies diverge-or-reply.  Suppose that $s\in T_{\exlub F}$ is an $O$-position.  If $s$ is an infinite and minimal $O$-position in $D(F)$, then in particular $s$ is in $D(F)$ and is not a $P$-position, so $s\in D_{\exlub F}$.  Otherwise, $s\in T_\sigma$ for some $\sigma$.  Now suppose that $s\not\in D_{\exlub F}$.  Since $s$ is an $O$-position, this means that $s\not\in D_\tau$ for some $\tau\in F$.  Since $F$ is directed under the extensional order, it means that there exists some $\upsilon\in F$ such that $\sigma,\tau\exle\upsilon$.  In particular, $T_\sigma\subset T_\upsilon$ and $D_\upsilon\subset D_\tau$.  It follows that $s\in T_\upsilon$ but $s\not\in D_\upsilon$; therefore, there exists some $a$ such that $sa\in T_\upsilon$ and so $sa\in T_{\exlub F}$.  
+
+    Lastly, we need to show that $\exlub F$ is locally compact.  Let $s\in T_{\exlub F}$.  If $s\in T_\sigma$ for some $\sigma$ then there exists $\sigma'$ such that $\sigma'\exle\sigma$ and $s\in T_{\sigma'}$.  Then certainly we have $\sigma'\exle\exlub F$.  Otherwise, $s$ is an infinite and minimal $O$-position in $D(F)$.  We may define a strategy $\sigma_s$ by:
+    \begin{gather*}
+      T_{\sigma_s} = \{t\in P_A\suchthat\textrm{for all $P$-positions $u\prefix t$, $u\prefix s$}\} \\
+      D_{\sigma_s} = P_A \setminus \{\emptyplay\}
+    \end{gather*}
+    This is the strategy where player $P$ always tries to play according to the sequence $s$ and diverges if player $O$ ever deviates from that sequence.  It is clear that $\sigma_s$ is a valid strategy.  We just need to show that $\sigma_s\exle \exlub F$.  Suppose $t\in P_A$ is a $P$-position such that $t\prefix s$ and suppose for a contradiction that $t\not\in T_{\exlub F}$.  Since $s$ is an $O$-position, $t$ must be finite.  For each $\sigma\in F$, we know that there is some $O$-position $t_\sigma\prefix s$ such that $t_\sigma\in T_\sigma\cap D_\sigma$.  Then for each $\sigma$, we cannot have $t\prefix t_\sigma$; otherwise, $t$ would be contained in $T_{\exlub F}$.  Therefore, $u_\sigma\prefix t$ for all $\sigma$ and so the $u_\sigma$ are finite and have bounded length.  It follows that there is some $u_\tau$ such that $u_\tau\in T_\sigma$ for all $\sigma\in F$, contradicting minimality of $s$.  It follows that $t\in T_{\exlub F}$.  We then see that $T_{\sigma_f}\subset T_{\exlub F}$, by closure under $O$-replies.
+
+    Lastly, we certainly have $D_{\exlub F}\subset D_{\sigma_s}$, since $D_{\exlub F}$ may only contain non-empty positions.
+  \end{proof}
+\end{proposition}
+
+The surprising fact is that $exlub F$ is a least upper bound for directed sets in the \emph{stable} order; i.e., sets $F$ of strategies such that if $\sigma,\tau\in F$ then there exists $\upsilon\in F$ such that 
+
+\begin{proposition}
+  Let $A$ be a game and let $F$ be a set of strategies that is directed under the extensional order $\exle$.  Then $\exlub F$ is a least upper bound for $F$.
+  \begin{proof}
+    We certainly have $T_\sigma\subset T_{\exlub F}$ and $D_{\exlub F}\subset D_\sigma$ for all $\sigma\in F$.  Now suppose that $\alpha$ is some other strategy for $A$ such that $T_\sigma\subset T_\alpha$ and $D_\alpha\subset D_\sigma$ for all $\sigma\in F$.  Then we have
+    \begin{gather*}
+      \bigcup_{\sigma\in F}T_\sigma\subset T_\alpha \\
+      D_\alpha\subset \bigcap_{\sigma\in F} D_\sigma
+    \end{gather*}
+    Now suppose that $s$ is an infinite $O$-position in $D(F)\setminus T_\alpha$.  We show that $s$ is not minimal in $D(F)$.  Indeed, if $s\in D(F)$ then $s\in D_\sigma$ for all $\sigma\in F$.  Then for each $\sigma\in F$ there exists some $s_\sigma\prefix s$ such that $s\in T_\sigma\cap D_\sigma$.   
   \end{proof}
 \end{proposition}
 
