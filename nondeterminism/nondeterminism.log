@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.12.1)  6 MAR 2017 12:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.12.8)  6 MAR 2017 14:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1123,17 +1123,17 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 63.
 [3] [4] [5]
-LaTeX Font Info:    Try loading font information for U+euf on input line 198.
+LaTeX Font Info:    Try loading font information for U+euf on input line 196.
  (/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 ) [6] [7] [8]
 [9]
-Overfull \hbox (3.0796pt too wide) detected at line 365
+Overfull \hbox (3.0796pt too wide) detected at line 344
 \U/msb/m/n/10 N \OT1/cmr/m/n/10 = []
  []
 
-[10]
-Overfull \hbox (32.19292pt too wide) detected at line 403
+
+Overfull \hbox (32.19292pt too wide) detected at line 382
 [] \OT1/cmr/m/n/10 = (\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 q; a\OMS/cmsy/m/n/10 g
 \OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 q \OMS/cmsy/m/n/10 7! \OM
 L/cmm/m/it/10 O; a \OMS/cmsy/m/n/10 7! \OML/cmm/m/it/10 P\OMS/cmsy/m/n/10 g\OML
@@ -1144,74 +1144,63 @@ cmm/m/it/10 P; sq \OMS/cmsy/m/n/10 7! \OML/cmm/m/it/10 O; sa \OMS/cmsy/m/n/10 7
  v \OML/cmm/m/it/10 qaqa [] \OMS/cmsy/m/n/10 g\OT1/cmr/m/n/10 )
  []
 
-[11] [12]
-Overfull \hbox (38.41924pt too wide) detected at line 464
+[10] [11]
+Overfull \hbox (38.41924pt too wide) detected at line 443
 \OML/cmm/m/it/10 D \OT1/cmr/m/n/10 = []
  []
 
 
-Overfull \hbox (34.12967pt too wide) in paragraph at lines 469--470
+Overfull \hbox (34.12967pt too wide) in paragraph at lines 448--449
 []\OT1/cmr/m/n/10 Conversely, sup-pose that $\OML/cmm/m/it/10 s \OMS/cmsy/m/n/1
 0 2 \OML/cmm/m/it/10 D[]$\OT1/cmr/m/n/10 . Then there must be some $\U/euf/m/n/
 10 t \OMS/cmsy/m/n/10 2 []$
  []
 
-[13] [14] [15]
-Overfull \hbox (39.00584pt too wide) in paragraph at lines 617--617
+[12] [13] [14]
+Overfull \hbox (39.00584pt too wide) in paragraph at lines 575--575
 [] 
  []
 
-[16] [17]
-Overfull \hbox (1.16698pt too wide) in paragraph at lines 691--692
+[15] [16]
+Overfull \hbox (1.16698pt too wide) in paragraph at lines 649--650
 \OT1/cmr/m/n/10 The rel-e-vant nat-u-ral trans-for-ma-tions, in-clud-ing the co
 -mul-ti-pli-ca-tion $[] [] [] !\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 !
  []
 
-[18]
-Overfull \hbox (7.94585pt too wide) in paragraph at lines 738--739
-\OT1/cmr/m/n/10 shall call the \OT1/cmr/m/it/10 sta-ble or-der-ing \OT1/cmr/m/n
-/10 (fol-low-ing [[]]) is the or-der given in [[]]. 
- []
-
-[19] [20]
-Overfull \hbox (32.49979pt too wide) in paragraph at lines 811--811
-[] 
- []
-
-[21] [22] (./nondeterminism.bbl [23]) [24] (./nondeterminism.aux) ) 
+[17] [18] [19] [20] [21] (./nondeterminism.bbl [22]) [23] (./nondeterminism.aux
+) ) 
 Here is how much of TeX's memory you used:
  17494 strings out of 493013
  338885 string characters out of 6139317
- 400852 words of memory out of 5000000
+ 397852 words of memory out of 5000000
  20624 multiletter control sequences out of 15000+600000
  13991 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,18n,82p,1049b,970s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cme
-xtra/cmex7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pf
-b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/font
-s/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></u
-sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/texmf-dist/fonts/
-type1/public/mathabx-type1/mathb10.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
-s/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/
-msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb
-></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on nondeterminism.pdf (24 pages, 296013 bytes).
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/amsfonts/cmextra/cmex7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7
+.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></u
+sr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/te
+xmf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb></usr/share/texmf-dist/fo
+nts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1
+/public/amsfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/am
+sfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/sy
+mbols/msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
+Output written on nondeterminism.pdf (23 pages, 290747 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
- 129 compressed objects within 2 object streams
+ 178 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
