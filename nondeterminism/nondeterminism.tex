@@ -836,17 +836,15 @@ If $A$ is a game and $S\subset P_A$ is some set, we say that $s\in S$ is \emph{m
   \end{proof}
 \end{proposition}
 
-The surprising fact is that $exlub F$ is a least upper bound for directed sets in the \emph{stable} order; i.e., sets $F$ of strategies such that if $\sigma,\tau\in F$ then there exists $\upsilon\in F$ such that 
-
 \begin{proposition}
-  Let $A$ be a game and let $F$ be a set of strategies that is directed under the extensional order $\exle$.  Then $\exlub F$ is a least upper bound for $F$.
+  Let $A$ be a game and let $F$ be a set of strategies that is directed under the extensional order $\exle$.  Then $\exlub F$ is an extensional least upper bound for $F$.
   \begin{proof}
     We certainly have $T_\sigma\subset T_{\exlub F}$ and $D_{\exlub F}\subset D_\sigma$ for all $\sigma\in F$.  Now suppose that $\alpha$ is some other strategy for $A$ such that $T_\sigma\subset T_\alpha$ and $D_\alpha\subset D_\sigma$ for all $\sigma\in F$.  Then we have
     \begin{gather*}
       \bigcup_{\sigma\in F}T_\sigma\subset T_\alpha \\
       D_\alpha\subset \bigcap_{\sigma\in F} D_\sigma
     \end{gather*}
-    Now suppose that $s$ is an infinite $O$-position in $D(F)\setminus T_\alpha$.  We show that $s$ is not minimal in $D(F)$.  Indeed, if $s\in D(F)$ then $s\in D_\sigma$ for all $\sigma\in F$.  Then for each $\sigma\in F$ there exists some $s_\sigma\prefix s$ such that $s\in T_\sigma\cap D_\sigma$.   
+    Now suppose that $s$ is an infinite and minimal $O$-position in $D(F)$.  We show that $s\in T_\alpha$.  Indeed, if $s\in D(F)$ then $s\in D_\sigma$ for all $\sigma\in F$.  Then for each $\sigma\in F$ there exists some $s_\sigma\prefix s$ such that $s_\sigma\in T_\sigma\cap D_\sigma$.  Since $s$ is minimal in $D(F)$, either one of the $s_\sigma$ is equal to $s$ or the $s_\sigma$ are finite but unbounded in length.  In the first case, we immediately see that $s\in T_\sigma\susbet T_\alpha$.  In the second case, 
   \end{proof}
 \end{proposition}
 

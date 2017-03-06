@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.12.8)  6 MAR 2017 11:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.12.1)  6 MAR 2017 12:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1208,7 +1208,7 @@ c/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
 s/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/
 msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb
 ></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on nondeterminism.pdf (24 pages, 294282 bytes).
+Output written on nondeterminism.pdf (24 pages, 296013 bytes).
 PDF statistics:
  181 PDF objects out of 1000 (max. 8388607)
  129 compressed objects within 2 object streams
