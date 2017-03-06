@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  6 MAR 2017 16:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  6 MAR 2017 16:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1103,11 +1103,8 @@ Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 ABD: EveryShipout initializing macros
-
-LaTeX Warning: Citation `abramskyjagadeesangames' on page 1 undefined on input 
-line 20.
-
 LaTeX Font Info:    Try loading font information for U+msa on input line 22.
+
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
@@ -1126,80 +1123,24 @@ LaTeX Font Info:    Try loading font information for U+wasy on input line 22.
 
 (/usr/share/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
-)
+) [1
 
-LaTeX Warning: Citation `mcCHFiniteND' on page 1 undefined on input line 22.
-
-
-LaTeX Warning: Citation `mcCHFiniteND' on page 1 undefined on input line 24.
-
-
-LaTeX Warning: Citation `RusssThesis' on page 1 undefined on input line 26.
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: Citation `TsukadaSheaves' on page 2 undefined on input line 32.
-
-
-LaTeX Warning: Citation `RoscoeCspInfinite' on page 2 undefined on input line 3
-2.
-
-
-LaTeX Warning: Citation `LevyGsInfinite' on page 2 undefined on input line 32.
-
-
-LaTeX Warning: Citation `TsukadaSheaves' on page 2 undefined on input line 32.
-
-
-LaTeX Warning: Citation `LairdOrdinalGames' on page 2 undefined on input line 3
-2.
-
-
-LaTeX Warning: Citation `LairdOrdinalGames' on page 2 undefined on input line 3
-6.
-
-
-LaTeX Warning: Citation `LairdOrdinalGames' on page 2 undefined on input line 4
-0.
-
-[2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 64.
  (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 64.
-
-
-LaTeX Warning: Citation `RoscoeCspInfinite' on page 3 undefined on input line 8
-9.
-
-
-LaTeX Warning: Citation `mcCHFiniteND' on page 3 undefined on input line 89.
-
 [3] [4] [5]
 LaTeX Font Info:    Try loading font information for U+euf on input line 197.
  (/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [6]
-
-LaTeX Warning: Citation `abramskyjagadeesangames' on page 7 undefined on input 
-line 226.
-
-[7] [8]
-
-LaTeX Warning: Citation `abramskyjagadeesangames' on page 9 undefined on input 
-line 312.
-
+) [6] [7] [8]
 [9]
 Overfull \hbox (3.0796pt too wide) detected at line 345
 \U/msb/m/n/10 N \OT1/cmr/m/n/10 = []
  []
-
-
-LaTeX Warning: Citation `mcCHFiniteND' on page 10 undefined on input line 377.
 
 [10]
 Overfull \hbox (32.19292pt too wide) detected at line 383
@@ -1231,69 +1172,50 @@ Overfull \hbox (39.00584pt too wide) in paragraph at lines 576--576
  []
 
 [15] [16]
-
-LaTeX Warning: Citation `hyland1997games' on page 17 undefined on input line 65
-0.
+Overfull \hbox (1.16698pt too wide) in paragraph at lines 650--651
+\OT1/cmr/m/n/10 The rel-e-vant nat-u-ral trans-for-ma-tions, in-clud-ing the co
+-mul-ti-pli-ca-tion $[] [] [] !\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 !
+ []
 
 [17]
+Overfull \hbox (7.94585pt too wide) in paragraph at lines 697--698
+\OT1/cmr/m/n/10 shall call the \OT1/cmr/m/it/10 sta-ble or-der-ing \OT1/cmr/m/n
+/10 (fol-low-ing [[]]) is the or-der given in [[]]. 
+ []
 
-LaTeX Warning: Citation `LairdOrdinalGames' on page 18 undefined on input line 
-693.
-
-
-LaTeX Warning: Citation `LairdOrdinalGames' on page 18 undefined on input line 
-697.
-
-
-LaTeX Warning: Citation `mcCHFiniteND' on page 18 undefined on input line 697.
-
-
-LaTeX Warning: Citation `mcCHFiniteND' on page 18 undefined on input line 708.
-
-[18] [19] [20]
-
-LaTeX Warning: Citation `LairdOrdinalGames' on page 21 undefined on input line 
-799.
-
-(./nondeterminism.bbl [21]) [22] (./nondeterminism.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+[18] [19] [20] (./nondeterminism.bbl [21]) [22] (./nondeterminism.aux) ) 
 Here is how much of TeX's memory you used:
- 17647 strings out of 493013
- 340670 string characters out of 6139318
- 399058 words of memory out of 5000000
- 20766 multiletter control sequences out of 15000+600000
+ 17648 strings out of 493013
+ 340681 string characters out of 6139318
+ 398122 words of memory out of 5000000
+ 20767 multiletter control sequences out of 15000+600000
  14603 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,18n,82p,989b,970s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/cmextra/cmex7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
-pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></us
-r/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/tex
-mf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/ams
-fonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/sym
-bols/msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-</usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb></usr/share/texm
-f-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on nondeterminism.pdf (22 pages, 294855 bytes).
+</usr/s
+hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/cmextra/cmex7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt
+10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/s
+hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr
+/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pf
+b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/t
+exmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/texmf-dist/f
+onts/type1/public/mathabx-type1/mathb10.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/am
+sfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/sym
+bols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm
+7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb></usr/share/texmf-dist/fo
+nts/type1/public/wasy2-ps/wasy10.pfb>
+Output written on nondeterminism.pdf (22 pages, 294443 bytes).
 PDF statistics:
  183 PDF objects out of 1000 (max. 8388607)
  131 compressed objects within 2 object streams
