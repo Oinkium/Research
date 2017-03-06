@@ -27,6 +27,7 @@
 \usepackage{amssymb}
 \usepackage{cmll} % Linear logic symbols!
 \usepackage{bm} % for bold Greek letters
+\usepackage{stmaryrd}
 \usepackage{wasysym} % For left and rigth moons
 
 %% Get the sqsubsetneqq character from the mathabx package
@@ -271,6 +272,9 @@
 \newcommand{\seqs}[1]{{\overline{{#1}^{*}}}}
 \def\flushRight{\leftskip0pt plus 1fill\rightskip0pt}
 \def\Centering{\relax\ifvmode\centering\fi}
+\newcommand{\deno}[1]{\left\llbracket#1\right\rrbracket}
+\newcommand{\nat}{{\texttt{nat}}}
+\newcommand{\mustconverge}{\Downarrow}
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing

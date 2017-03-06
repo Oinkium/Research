@@ -7,6 +7,7 @@
 \newcommand{\exlub}{\bigsqcup}
 \newcommand{\dv}{{\text{\lightning}}}
 \DeclareMathOperator{\pocl}{pocl}
+\newcommand{\opto}{\longrightarrow}
 
 \title{Transfinite Games for Countable Nondeterminism}
 
@@ -358,7 +359,7 @@ Note that the composition of compact nondeterministic strategies need not be com
     \]
   $\sigma$ is compact because there are no infinite chains of positions; indeed, the length of a play in $\sigma$ is already determined by the third move.  
 
-  We have a nondeterministic strategy $?$ for $\bN\cong I\implies\bN$ where the player nondeterministically chooses any number - so $? = P_{\bN}$ as sets of positions.  $?$ is compact because all plays in $?$ have length at most $2$.  
+  We have a nondeterministic strategy $?$ for $\bN\cong I\implies\bN$ where the player nondeterministically chooses any number - so $? = P_{\bN}^P$ as sets of positions.  $?$ is compact because all plays in $?$ have length at most $2$.  
 
   When we compose these strategies, the resulting strategy $\comp\sigma?$ contains the infinite chain of positions $qq,qqaq,qqaqaq,qqaqaqaq,\dots$, but does not contain any limiting plays.  So it is not compact.  It is, however, locally compact, since it is the union of compact strategies $\sigma_n$, where $\sigma_n$ has the unique maximal play
   \[
@@ -510,7 +511,7 @@ The divergences for $\sigma\tensor\tau$ are defined using the divergences for $\
   \begin{proof}
     $\sigma\tensor\tau$ is non-empty and prefix-closed, since $\sigma$ and $\tau$ are.  
     
-    $D_{\sigma\tensor\tau}$ is postfix-closed by definition.  If $s\in D_{\sigma\tensor\tau}$, we need to find some prefix $ta\prefix s$ such that $ta\in D_{\sigma\tensor\tau}$ and $t\in T_{\sigma\tensor\tau}$.  By definition, we know there is some $s'\prefix s$ such that either $s'\vert_{A,C}\in D_\sigma$ and $s'\vert_{B,D}\in T_\tau$ or $s'\vert_{A,C}\in T_\sigma$ and $s'\vert_{B,D}\in D_\tau$.  In the first case, we know that there is some $ra\prefix s'\vert_{A,C}$ such that $ra\in D_\sigma$ and $r\in T_\sigma$; passing to an appropriate prefix $s''$ of $s'$, we get that $s''a\vert_{A,C}=ra$ and $s''\vert_{B,D}\in T_\tau$.  Therefore, $s''a\in D_{\sigma\tensor\tau}$ and $s''\in T_{\sigma\tensor\tau}$.  Moreover, $s''a$ is an $O$-position, since $s''a\vert_{A,C}$ is, and the claim follows since $s''\prefix s'\prefix s$.  The proof in the other case is similar.
+    $D_{\sigma\tensor\tau}$ is postfix-closed by definition.  If $s\in D_{\sigma\tensor\tau}$, we need to find some prefix $t\prefix s$ such that $t\in D_{\sigma\tensor\tau}$ and $u\in T_{\sigma\tensor\tau}$ for all $P$-prefixes $u\prefix t$.  By definition, we know there is some $s'\prefix s$ such that either $s'\vert_{A,C}\in D_\sigma$ and $s'\vert_{B,D}\in T_\tau$ or $s'\vert_{A,C}\in T_\sigma$ and $s'\vert_{B,D}\in D_\tau$.  In the first case, we know that there is some $r\prefix s'\vert_{A,C}$ such that $r\in D_\sigma$ and $q\in T_\sigma$ for all $P$-prefixes $q\prefix r$; passing to an appropriate prefix $s''$ of $s'$, we get that $s''\vert_{A,C}=r$ and $s''\vert_{B,D}\in T_\tau$.  Therefore, $s''\in D_{\sigma\tensor\tau}$ and $t''\in T_{\sigma\tensor\tau}$ for all $P$-positions $t''\prefix s''$.  Moreover, $s''$ is an $O$-position, since $s''\vert_{A,C}$ is, and the claim follows since $s''\prefix s'\prefix s$.  The proof in the other case is similar.
 
     Now we need to show that $\sigma\tensor\tau$ is locally compact.  We first show that if $\sigma$ and $\tau$ are compact strategies then $\sigma\tensor\tau$ is compact.  Indeed, suppose that $s\in\sigma\tensor\tau$ is an infinite sequence such that $t\in T_{\sigma\tensor\tau}\cup D_{\sigma\tensor\tau}$ for all finite prefixes $t\ppprefix s$.  Then $\sigma$ must contain all finite prefixes of $s\vert_{A,C}$, so one of $T_\sigma$ and $D_\sigma$ must contain $s\vert_{A,C}$, since $\sigma$ is compact.  Similarly, one of $T_{\tau}$ and $D_\tau$ must contain $s\vert_{B,D}$.  Therefore, $s\in T_{\sigma\tensor\tau}\cup D_{\sigma\tensor\tau}$.  Since $s$ was arbitrary, it follows that $\sigma\tensor\tau$ is compact.  
 
@@ -683,9 +684,9 @@ A standard property of the linear exponential comonad is:
 
 \section{Denotational Semantics for Fair PCF}
 
-Our base PCF type $\bN$ will be denoted by the game $\bN$ defined above, while the product and function types will be interpreted by the connectives $\tensor$ and $\iimpl$.  It remains to give the denotation of each of the terms of Fair PCF as a strategy for the appropriate game.
+Our base PCF type $\nat$ will be denoted by the game $\bN$ defined above, while the product and function types will be interpreted by the connectives $\tensor$ and $\iimpl$.  It remains to give the denotation of each of the terms of Fair PCF as a strategy for the appropriate game.
 
-The numerals $\underline{n}$ will each be interpreted as the strategy for $\bN$ that always returns the value $n$.  The nondeterministic oracle $?$ will be interpreted as the strategy $?$ given at the level of trace sets by $?=P_{\bN}$.  None of these strategies have any divergent positions.
+The numerals $\underline{n}$ will each be interpreted as the strategy for $\bN$ that always returns the value $n$.  The nondeterministic oracle $?$ will be interpreted as the strategy $?$ given at the level of trace sets by $?=P_{\bN}^P$.  None of these strategies have any divergent positions.
 
 The other PCF terms all have obvious strategies that they correspond to.  The only difficult one is the combinator $\Y_T$.  
 
@@ -693,7 +694,18 @@ As usual, we shall use fixed point theorems from domain theory to define the den
 
 \subsection{The stable order on strategies}
 
-We start by defining some orders on strategies.  Our ordering, which we shall call the \emph{stable ordering} (following \cite{LairdOrdinalGames}) is the order given in \cite{mcCHFiniteND}.
+We start by defining some orders on strategies.  Our main ordering, which we shall call the \emph{stable ordering} (following \cite{LairdOrdinalGames}) is the order given in \cite{mcCHFiniteND}.
+
+\begin{definition}[Extensional order]
+  Let $A$ be a game and let $\sigma,\tau$ be strategies for $A$.  We say that $\sigma\exle\tau$ if:
+  
+  \begin{enumerate}[1)]
+    \item $T_\sigma\subset T_\tau$
+    \item $D_\tau\subset D_\sigma$
+  \end{enumerate}
+\end{definition}
+
+The extensional order is simple to define, but it is not preserved by composition (see \cite{mcCHFiniteND} for an example).  Instead, we shall use the stable order, which is preserved by composition:
 
 \begin{definition}[Stable order]
   Let $A$ be a game and let $\sigma,\tau$ be strategies for $A$.  We say that $\sigma\stle\tau$ if:
@@ -721,7 +733,7 @@ To show that this is an order, the only non-trivial part is to show that propert
     
     Now suppose that $\e\vert_{A,B}\in T_{\sigma'}$ and $\e\vert_{B,C}\in D_{\tau}$.  Since $\sigma\stle\sigma'$, we have $\e\vert_{A,B}\in T_\sigma\cup \pocl_A^O(D_\sigma)$.  If $\e\vert_{B,C}\in T_\sigma$, then we have $\e\in\sigma\dv\tau$ and so $\e\vert_{A,C}\in D_{\comp\tau\sigma}$ and therefore $e\in D_{\comp\tau\sigma}$, since $D_{\comp\tau\sigma}$ is postfix-closed.  
 
-    Otherwise, there exists $d\in D_\sigma$ such that $d\prefix\e\vert_{B,C}$.  Then $\e\vert_{A,B}$ and $\e\vert_{B,C}$ have prefixes $qa\prefix\e\vert_{A,B}$, $rb\prefix\e\vert_{B,C}$ such that $qa\in D_\sigma$, $rb\in D_\tau$, $q\in T_\sigma$ and $r\in T_\tau$.  Passing to an appropriate prefix $\e'$ of $\e$, we have either $\e'\vert_{A,B}=qa$ and $rb\prefix\e'\vert_{B,C}$ or $qa\prefix\e'\vert_{A,B}$ and $\e\vert_{B,C}=rb$.  In either case, $\e'\in \sigma\dv\tau$ and so $\e'\vert_{A,C}\in D_{\comp\tau\sigma}$.  Then we have $\e'\vert_{A,C}\prefix\e\vert_{A,C}\prefix e$, and so $e\in D_{\comp\tau\sigma}$.  
+    Otherwise, there exists $d\in D_\sigma$ such that $d\prefix\e\vert_{B,C}$.  Then $\e\vert_{A,B}$ and $\e\vert_{B,C}$ have prefixes $q\prefix\e\vert_{A,B}$, $r\prefix\e\vert_{B,C}$ such that $q\in D_\sigma$, $r\in D_\tau$ and for all $P$-prefixes $q'\prefix q, r'\prefix r$ we have $q'\in T_\sigma$ and $r'\in T_\tau$.  Passing to an appropriate prefix $\e'$ of $\e$, we have either $\e'\vert_{A,B}=q$ and $r\prefix\e'\vert_{B,C}$ or $q\prefix\e'\vert_{A,B}$ and $\e\vert_{B,C}=r$.  In either case, $\e'\in \sigma\dv\tau$ and so $\e'\vert_{A,C}\in D_{\comp\tau\sigma}$.  Then we have $\e'\vert_{A,C}\prefix\e\vert_{A,C}\prefix e$, and so $e\in D_{\comp\tau\sigma}$.  
 
     Lastly, suppose that $s\in T_{\comp{\tau}{\sigma'}}\setminus T_{\comp\tau\sigma}$.  Write $s=\s$, where $\s\in\sigma'\|\tau$.  Since $\s\not\in T_{\comp\tau\sigma}$, we must have $\s\vert_{A,B}\in\sigma'\setminus\sigma$.  It follows that there exists $d\in D_\sigma$ such that $d\prefix\s\vert_{A,B}$ and therefore $\s\in\sigma\dv\tau$.  Therefore, $d\prefix\s\vert_{A,B} = s$.
 
@@ -741,9 +753,9 @@ We want to get a similar result for composition in the category $\G^{\oc}$.  To 
 
     If $e\in D_{\oc\tau}$ then there exists some $e'\prefix e$ and some $n\in\omega$ such that $e'\vert_n\in D_\tau$ and $e'\vert_m\in T_\tau$ for all $m\ne n$.  
 
-    Since $\sigma\stle\tau$, we have $D_\tau\subset D_\sigma$ and $T_\tau\subset T_\sigma\cup \pocl_A^P(D_\sigma)$.  For each $m$, define a subsequence $d_n$ of $e'$ as follows: if $e'\vert_m\in T_\sigma$ then $d_m=e'\vert_m$.  If $e'\vert_m\in \pocl_A^P(D_\sigma)$, then there is some prefix of $e'\vert_m$ that is an $O$-position in $D_\sigma$ and is a reply to a position in $T_\sigma$.  Let $d_m$ be the shortest such prefix of $e'\vert_m$.
+    Since $\sigma\stle\tau$, we have $D_\tau\subset D_\sigma$ and $T_\tau\subset T_\sigma\cup \pocl_A^P(D_\sigma)$.  For each $m$, define a subsequence $d_n$ of $e'$ as follows: if $e'\vert_m\in T_\sigma$ then $d_m=e'\vert_m$.  If $e'\vert_m\in \pocl_A^P(D_\sigma)$, then there is some prefix of $e'\vert_m$ that is an $O$-position in $D_\sigma$, all of whose $P$-prefixes are in $T_\sigma$.  Let $d_m$ be the shortest such prefix of $e'\vert_m$.
 
-    We know that $e'\vert_n\in D_\tau\subset D_\sigma$, so $d_n\in D_\sigma$.  Let $d$ be the shortest prefix of $e'$ such that there exists some $m$ such that $d_m\in D_\sigma$ and $d_m\prefix d$.  Write $d=d'a$.  We claim that $a$ is the last move in $d_m$ and that $d\vert_k\in T_\sigma$ for all $k\neq m$.  Certainly, $a$ is a move in $d_m$; otherwise, we could remove it and get a shorter sequence that still contains $d_m$ as a subsequence.  If $d\vert_k\prefix d_k$, then $d\vert_k\in T_\sigma$, since $d_k\in T_\sigma$.  Otherwise, $d_k\pprefix d\vert_k$.  But this contradicts the minimality of $d$.  
+    We know that $e'\vert_n\in D_\tau\subset D_\sigma$, so $d_n\in D_\sigma$.  Let $d$ be the shortest prefix of $e'$ such that there exists some $m$ such that $d_m\in D_\sigma$ and $d_m\prefix d$.  Write $d=d'a$.  We claim that $a$ is the last move in $d_m$ and that $d\vert_k\in T_\sigma$ for all $k\neq m$.  Certainly, $a$ is a move in $d_m$; otherwise, we could remove it and get a shorter sequence that still contains $d_m$ as a subsequence.  If $d\vert_k\prefix d_k$, then $d\vert_k\in T_\sigma$, since it is a $P$-position by examination of sign profiles.  Otherwise, $d_k\pprefix d\vert_k$.  But this contradicts the minimality of $d$.  
 
     Therefore, we have $d\in D_{\oc\sigma}$.  It follows that $e\in D_{\oc\sigma}$, since $D_{\oc\sigma}$ is postfix-closed.
 
@@ -760,23 +772,45 @@ If $A$ is a game and $S\subset P_A$ is some set, we say that $s\in S$ is \emph{m
 \begin{proposition}
   If $A$ is a game and $F$ is a set of strategies for $A$ that is directed under the extensional order then $\exlub F$ is a strategy for $A$.
   \begin{proof}
-    $T_{\exlub F}$ is certainly non-empty and prefix-closed in $T_{\exlub F}$.  Similarly, $D_{\exlub F}$ is certainly postfix-closed.  Suppose that $s\in D_{\exlub F}$.  
+    $T_{\exlub F}$ is certainly non-empty and prefix-closed in $T_{\exlub F}$.  Similarly, $D_{\exlub F}$ is certainly postfix-closed.  Suppose that $s\in D_{\exlub F}$.  For each $\sigma\in F$, there exists some prefix $t_\sigma\prefix s$ such that $t_\sigma\in D_\sigma$ and $u\in T_\sigma$ for all $P$-prefixes $u\prefix t_\sigma$.  Let $t$ denote the limit of the $t_\sigma$.  Then $t$ is an $O$-position, since $s$ and the $t_\sigma$ are $O$-positions, so every $P$-prefix of $t$ is a $P$-prefix of one of the $t_\sigma$ and is therefore contained in $T_\sigma\subset T_{\exlub F}$.  Moreover, $t\in D_\sigma$ for all $\sigma$ by postfix closure of the $D_\sigma$.  
+
+    To show that $\exlub F$ satisfies diverge-or-reply, suppose that $s\in T_{\exlub F}$ and that $sa\in P_A$ is such that $sa\not\in D_{\exlub F}$.  Then there exist $\sigma,\tau\in F$ such that $s\in T_\sigma$ and $sa\not\in D_\tau$.  Since $F$ is directed under the extensional order, there exists some strategy $\upsilon\in F$ such that $\sigma,\tau\exle\upsilon$.  In particular, $s\in T_\upsilon$ and $sa\not\in D_\upsilon$.  It follows that $sab\in T_\upsilon\subset T_{\exlub F}$ for some $b$.  Therefore, $\exlub F$ satisfies diverge-or-reply.
+
+    Lastly, we show that $\exlub F$ is locally compact.  Let $s\in T_{\exlub F}$.  Then there is some compact strategy $\sigma'$ such that $s\in T_{\sigma'}$ and $\sigma'\exle\sigma\exle\exlub F$.  
   \end{proof}
 \end{proposition}
 
+$\exlub F$ is clearly a least upper bound for directed sets of strategies under the extensional ordering.  More suprisingly, $\exlub F$ is a least upper bound for directed sets of strategies under the stable ordering.
+
 \begin{proposition}
-  Let $A$ be a game and let $F$ be a set of strategies that is directed under the extensional order $\exle$.  Then $\exlub F$ is an extensional least upper bound for $F$.
+  Let $A$ be a game, and let $F$ be a set of strategies for $A$ that is directed under the stable ordering -- so if $\sigma,\tau\in F$ then there is some strategy $\upsilon\in F$ such that $\sigma,\tau\stle\upsilon$.  Then $\exlub F$ is a least upper bound for $F$ under the ordering $\stle$.
   \begin{proof}
-    We certainly have $T_\sigma\subset T_{\exlub F}$ and $D_{\exlub F}\subset D_\sigma$ for all $\sigma\in F$.  Now suppose that $\alpha$ is some other strategy for $A$ such that $T_\sigma\subset T_\alpha$ and $D_\alpha\subset D_\sigma$ for all $\sigma\in F$.  Then we have
-    \begin{gather*}
-      \bigcup_{\sigma\in F}T_\sigma\subset T_\alpha \\
-      D_\alpha\subset \bigcap_{\sigma\in F} D_\sigma
-    \end{gather*}
-    Now suppose that $s$ is an infinite and minimal $O$-position in $D(F)$.  We show that $s\in T_\alpha$.  Indeed, if $s\in D(F)$ then $s\in D_\sigma$ for all $\sigma\in F$.  Then for each $\sigma\in F$ there exists some $s_\sigma\prefix s$ such that $s_\sigma\in T_\sigma\cap D_\sigma$.  Since $s$ is minimal in $D(F)$, either one of the $s_\sigma$ is equal to $s$ or the $s_\sigma$ are finite but unbounded in length.  In the first case, we immediately see that $s\in T_\sigma\subset T_\alpha$.  In the second case, 
+    First we show that $\exlub F$ is a stable upper bound for $F$.  Let $\sigma\in F$.  Certainly $T_\sigma\subset T_{\exlub F}$ and $D_{\exlub F}\subset D_\sigma$, so it remains to show that $T_{\exlub F}\subset T_\sigma\cup \pocl_A^P(D_\sigma)$.  Suppose $s\in T_{\exlub F}$.  Then $s\in T_\tau$ for some strategy $\tau$.  Since $F$ is stably directed, there exists some strategy $\upsilon\in F$ such that $\sigma,\tau\stle\upsilon$.  In particular:
+    \[
+      s\in T_\upsilon \subset T_\sigma \cup \pocl_A^P(D_\sigma)
+      \]
+
+    Now suppose that $\alpha$ is a stable upper bound for $F$; we need to show that $\exlub F\stle\alpha$.  Since we have $T_\sigma\subset T_\alpha$ and $D_\alpha\subset D_\sigma$ for all $\sigma\in F$, we have $T_{\exlub F}\subset T_\alpha$ and $D_\alpha\subset D_{\exlub F}$.  Now suppose that $s\in T_\alpha\setminus\pocl_A^P(D_{\exlub F})$.  Then there exists some $\sigma\in F$ such that $d\not\prefix s$ for all $d\in D_\sigma$.  It follows that $s\in T_\alpha\setminus\pocl_A^P(D_\sigma)$; since $D_\sigma\stle D_\alpha$, we must have $s\in T_\sigma\subset T_{\exlub F}$. 
   \end{proof}
 \end{proposition}
 
 \subsection{Soundness}
+
+Our proofs for soundness and adequacy follow \cite{LairdOrdinalGames}.
+
+\begin{lemma}
+  \label{jimsLemma}
+  Let $M$ be a reducible program of type $T$.  If $M\opto N$ then $\deno{N}\exle\deno{M}$.
+  \begin{proof}
+    This is easy to show inductively by analysing the reduction rules.
+  \end{proof}
+\end{lemma}
+
+\begin{theorem}[Soundness]
+  Let $M$ be a program of type $\nat$.  If $M\mustconverge$, then $D_{\deno{M}} = \emptyset$.
+  \begin{proof}
+    By Lemma \ref{jimsLemma}, 
+\end{theorem}
 
 \subsection{Adequacy}
 
