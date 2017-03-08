@@ -8,6 +8,11 @@
 \newcommand{\dv}{{\text{\lightning}}}
 \DeclareMathOperator{\pocl}{pocl}
 \newcommand{\opto}{\longrightarrow}
+\newcommand{\n}{{\mathtt{n}}}
+\newcommand{\IfO}{{\mathtt{If0}\;}}
+\newcommand{\suc}{{\mathtt{suc\;}}}
+\newcommand{\0}{{\mathtt{0}}}
+\newcommand{\plot}{\triangleleft}
 
 \title{Transfinite Games for Countable Nondeterminism}
 
@@ -359,9 +364,9 @@ Note that the composition of compact nondeterministic strategies need not be com
     \]
   $\sigma$ is compact because there are no infinite chains of positions; indeed, the length of a play in $\sigma$ is already determined by the third move.  
 
-  We have a nondeterministic strategy $?$ for $\bN\cong I\implies\bN$ where the player nondeterministically chooses any number - so $? = P_{\bN}^P$ as sets of positions.  $?$ is compact because all plays in $?$ have length at most $2$.  
+  We have a nondeterministic strategy $\wn$ for $\bN\cong I\implies\bN$ where the player nondeterministically chooses any number - so $\wn = P_{\bN}^P$ as sets of positions.  $\wn$ is compact because all plays in $\wn$ have length at most $2$.  
 
-  When we compose these strategies, the resulting strategy $\comp\sigma?$ contains the infinite chain of positions $qq,qqaq,qqaqaq,qqaqaqaq,\dots$, but does not contain any limiting plays.  So it is not compact.  It is, however, locally compact, since it is the union of compact strategies $\sigma_n$, where $\sigma_n$ has the unique maximal play
+  When we compose these strategies, the resulting strategy $\comp\sigma\wn$ contains the infinite chain of positions $qq,qqaq,qqaqaq,qqaqaqaq,\dots$, but does not contain any limiting plays.  So it is not compact.  It is, however, locally compact, since it is the union of compact strategies $\sigma_n$, where $\sigma_n$ has the unique maximal play
   \[
     q\underbrace{qa\dots qa}_{\textrm{$n$ times}}a
     \]
@@ -686,7 +691,7 @@ A standard property of the linear exponential comonad is:
 
 Our base PCF type $\nat$ will be denoted by the game $\bN$ defined above, while the product and function types will be interpreted by the connectives $\tensor$ and $\iimpl$.  It remains to give the denotation of each of the terms of Fair PCF as a strategy for the appropriate game.
 
-The numerals $\underline{n}$ will each be interpreted as the strategy for $\bN$ that always returns the value $n$.  The nondeterministic oracle $?$ will be interpreted as the strategy $?$ given at the level of trace sets by $?=P_{\bN}^P$.  None of these strategies have any divergent positions.
+The numeral $\0$ will each be interpreted as the strategy for $\bN$ that always returns the value $0$, and the function $\suc$ will be the strategy for $\bN\iimpl\bN$ that interrogates its argument and then returns a value that is one greater.  The nondeterministic oracle $\wn$ will be interpreted as the strategy $\wn$ given at the level of trace sets by $\wn=P_{\bN}^P$.  None of these strategies have any divergent positions.
 
 The other PCF terms all have obvious strategies that they correspond to.  The only difficult one is the combinator $\Y_T$.  
 
@@ -720,6 +725,7 @@ The extensional order is simple to define, but it is not preserved by compositio
 To show that this is an order, the only non-trivial part is to show that property (3) is transitive.  Suppose that $\sigma\stle\tau\stle\upsilon$ are strategies and that $s\in T_\upsilon\setminus T_\tau$.  If $s\in T_\tau$, then there exists $d\in D_\sigma$ such that $d\prefix s$, since $\sigma\stle\tau$ and if $s\not\in T_\tau$, then there exists $d\in D_\tau\subset D_\sigma$ such that $d\prefix s$, since $\tau\stle\upsilon$.  Therefore, $\sigma\stle\upsilon$.
 
 \begin{proposition}
+  \label{compositionMonotonicSO}
   Let $A,B,C$ be games, let $\sigma,\sigma'$ be strategies for $A\implies B$ and let $\tau,\tau'$ be strategies for $B\implies C$.  Suppose that $\sigma\stle\sigma'$ and $\tau\stle\tau'$.  Then:
   \[
     \comp\tau\sigma\stle\comp{\tau'}{\sigma'}
@@ -747,6 +753,7 @@ To show that this is an order, the only non-trivial part is to show that propert
 We want to get a similar result for composition in the category $\G^{\oc}$.  To do that it will suffice to prove the following result:
 
 \begin{proposition}
+  \label{exponentiationMonotonicSO}
   Let $A,B$ be games and let $\sigma,\tau$ be strategies for $A\implies B$ such that $\sigma\stle\tau$.  Then $\oc\sigma\stle\oc\tau$ as strategies for $\oc A\implies \oc B$.
   \begin{proof}
     If $s\in\oc\sigma$, then $s\vert_{A_n,B_n}\in\sigma$ for all $n$ and therefore $s\vert_{A_n,B_n}\in\sigma'$ for all $n$.  It follows that $\oc\sigma\subset\oc\tau$.
@@ -794,28 +801,92 @@ $\exlub F$ is clearly a least upper bound for directed sets of strategies under 
   \end{proof}
 \end{proposition}
 
-\subsection{Soundness}
+Now let $A$ be a game and let $\tau$ be a strategy for $A\iimpl A$.  The set $\Strat(A)$ of strategies for $A$ is directed-complete under the stable ordering $\stle$ and map $\tau_*\from\Strat(A)\to\Strat(A)$ given by $\sigma\mapsto\icomp\tau\sigma$ is monotone with respect to $\stle$, by Propositions \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO}.  Therefore, by the Bourbaki-Witt theorem, there is a $\stle$-least fix-point of $\tau_*$, which we shall call $\fix_\tau$.
+
+Let $T$ be a PCF term with denotation $A$ and let $\chi_A$ be the strategy for $((A \iimpl A) \iimpl A) \iimpl ((A \iimpl A) \iimpl A)$ corresponding to the $\lambda$-term $\lambda F.\lambda f. f(F f)$.  We define
+\[
+  \deno{\Y_T} = \fix_{\chi_A}
+  \]
+
+\subsection{Soundness and adequacy}
 
 Our proofs for soundness and adequacy follow \cite{LairdOrdinalGames}.
 
 \begin{lemma}
   \label{jimsLemma}
-  Let $M$ be a reducible program of type $T$.  If $M\opto N$ then $\deno{N}\exle\deno{M}$.
+  Let $M$ be a reducible program of type $T$.  Let $F_M = \{N\suchthat M\opto N\}$.  Then $T_{\deno{M}}\subset\bigcup_{N\in F_M} T_{\deno{N}}$ and $D_{\deno{M}}\subset \bigcup_{N\in F_M} D_{\deno{N}}$.
   \begin{proof}
-    This is easy to show inductively by analysing the reduction rules.
+    Structural induction on $M$.  If $M=\wn$, then $F_M$ is the set of numerals, and we have $T_\wn = \bigcup_{n\in \omega} \{\emptyplay, qn\}$ and $D_\wn=\emptyset$.  Otherwise, write $M = FN$ for some term $L$ of type $S\to T$ and some term $N$ of type $T$.  Write $A=\deno{S}$, $B=\deno{T}$, $\sigma=\deno{N}$ and $\tau=\deno{F}$.  So $\sigma$ is a strategy for $A$ and $\tau$ is a strategy for $A\iimpl B = \oc A \implies B$.  If $FN$ is reducible via one of the rules
+    \[
+      \begin{tabular}{cc}
+        \inferrule{ }{(\lambda x.M)N\opto M[N/x]}
+          & \inferrule{ }{\Y M \opto M(\Y M)} \\
+        \inferrule{ }{\IfO \0 \opto \lambda x.\lambda y.x}
+          & \inferrule{ }{\IfO (\suc\n) \opto \lambda x.\lambda y.y(\n)}
+      \end{tabular}
+      \]
+    then $FN$ is not reducible via any other rule; moreover, in all of these cases, the terms on either side of the $\opto$ arrow have the same denotations (by structural induction in the case of the $\beta$-reduction).  Now suppose that $FN$ is reducible by one of the rules
+    \[
+      \begin{tabular}{cc}
+        \inferrule{M\opto M'}{\suc M\opto \suc M'}
+          & \inferrule{M\opto M'}{\IfO M \opto \IfO M'}
+      \end{tabular}
+      \]
+    Let $s\in T_{\comp\tau\sigma}$, and write $s=\s\vert_B$, where $\s\in\sigma\|\tau$.  By structural induction, there is some term $N'$, having denotation $\sigma'$, such that $N\to N'$ and $\s\vert_A\in T_{\sigma'}$.  Then we have $s=\s\vert_B\in T_{\comp\tau{\sigma'}}$.
+
+    Now suppose that $d\in D_{\comp\tau\sigma}$.  Then there is some $\d\in \oc\sigma\dv\tau$ such that $\d\vert_B\prefix d$.  Since the denotations for $\IfO$ and $\suc$ do not contain any divergences, we must have $\d\in T_\sigma$ and $\d\vert_{\oc A}\in D_{\oc \sigma}$.  Moreover, the denotations of $\IfO$ and $\suc$ only interrogate their argument once.  So $\d\vert_{A_0}\in D_\sigma$ and $\d\vert_{A_n}=\emptyplay$ for $n\ne 0$.  By structural induction there is some $N'$, having denotation $\sigma'$, such that $N\opto N'$ and $\d\vert_{A_0}\in D_{\sigma'}$, and therefore we have $\d\vert_A\in D_{\oc\sigma'}$.  It follows that $\d\in D_{\icomp{\tau}{\sigma'}}$.  
+
+    Lastly, suppose that $F N$ is reducible by the rule
+    \[
+      \begin{tabular}{c}
+        \inferrule{M\opto M'}{M N\opto M' N}
+      \end{tabular}
+      \]
+    Let $s\in T_{\comp\tau\sigma}$ and write $s=\s\vert_B$, where $\s\in\sigma\|\tau$.  In particular, $\s\in T_\tau$.  By structural induction, there is some term $F'$, having denotation $\tau'$, such that $F\to F'$ and $\s\in T_{\tau'}$.  Then $s=\s\vert_B\in T_{\comp{\tau'}{\sigma}}$.  
+
+    Now suppose that $d\in D_{\comp\tau\sigma}$.  Then there is some $\d\in\oc\sigma\dv\tau$ such that $\d\vert_B\prefix d$.  Suppose first that $\d\vert_A\in D_{\oc\sigma}$ and that $\d\in T_\tau$.  By structural induction, there is some $F'$, having denotation $\tau'$, such that $F\to F'$ and $\d\in T_{\tau'}$.  Then $\d\in\oc\sigma\dv\tau'$, so $\d\vert_B\in D_{\comp{\tau'}\sigma}$.
+
+    Suppose instead that $\d\vert_A\in T_{\oc\sigma}$ and that $\d\in D_\tau$.  By structural induction, there is some $F'$, having denotation $\tau'$, such that $F\to F'$ and $\d\in D_{\tau'}$.  Then $\d\in\oc\sigma\dv\tau'$, so $\d\vert_B\in D_{\tau'}$.  
   \end{proof}
 \end{lemma}
 
-\begin{theorem}[Soundness]
+\begin{theorem}[Consistency]
   Let $M$ be a program of type $\nat$.  If $M\mustconverge$, then $D_{\deno{M}} = \emptyset$.
   \begin{proof}
-    By Lemma \ref{jimsLemma}, 
+    Suppose $d\in D_{\deno M}$.  The only irreducible programs of type $\nat$ are the numerals, whose denotations do not contain any divergences, so $M$ must be reducible.  Therefore, by Lemma \ref{jimsLemma}, there exists some $M_1$ such that $M\to M_1$ and $d\in D_{\deno {M_1}}$.  So $M_1$ is reducible and we may apply Lemma \ref{jimsLemma} again to get a term $M_2$ such that $M_1\to M_2$ and $d\in D_{\deno {M_2}}$.  We keep on applying Lemma \ref{jimsLemma} and build up a sequence $M\to M_1\to M_2\to M_3\to\cdots$.  Therefore, $M\not\mustconverge$.
   \end{proof}
 \end{theorem}
 
-\subsection{Adequacy}
+To prove computational adequacy, we define Plotkin-style approximation relations (\cite{PlotkinApRels}, cited in \cite{LairdOrdinalGames}).  
 
-I don't think I'll have a full abstraction result yet, but I could add a section explaining how this model gives us some progress towards full abstraction.  
+\begin{definition}
+  For each PCF type $T$, we define a relation $\plot_T$ between strategies for $\deno{T}$ and closed terms of type $T$:
+
+  \begin{itemize}
+    \item $\sigma \plot_\nat M$ if $M\not\mustconverge$ implies that $q\in D_\sigma$ and $qn\in T_\sigma$ implies that $M\opto^* \n$.
+    \item $\tau \plot_{S\to T} P$ if $\sigma\plot_S N$ implies that $\comp\tau\sigma \plot_T P N$
+  \end{itemize}
+\end{definition}
+
+\begin{lemma}
+  \begin{enumerate}[i)]
+    \item If $M$ is a term of type $\nat$ such that $M\opto N$ for some unique term $N$, and if $\sigma\plot_\nat N$, then $\sigma\plot_\nat M$
+    \item If $M$ is a term of type $T$ and $\sigma,\tau$ are strategies for $\deno{M}$ such that $\sigma\stle\tau$, and if $\tau\plot_TM$, then $\sigma\plot_TM$.
+    \item If $M$ is a term of type $T$ and $F$ is a stably directed set of strategies for $\deno{M}$ such that $\sigma\plot_TM$ for all $\sigma\in F$, then $\exlub F\plot_TM$.  
+  \end{enumerate}
+  \begin{proof}
+    \begin{enumerate}[(i):]
+      \item Suppose $M\opto N$ for some unique term $N$ and suppose that $\sigma\plot_\nat N$.  Then, if $M\not\mustconverge$, we must have $N\not\mustconverge$.  Therefore, $q\in D_\sigma$.  Suppose $qn\in T_\sigma$.  Then $N\opto^*\n$, so $N\opto^*\n$.
+      \item Structural induction on $T$.  let $M$ be a term of type $\nat$.  Suppose $\sigma,\tau$ are strategies for $\bN$, that $\sigma\stle\tau$ and that $\tau\plot_T M$.  If $M\not\mustconverge$, then $q\in D_\tau$, so $q\in D_\sigma$.  If $qn\in T_\sigma$, then $qn\in T_\tau$, so $M\opto^*\n$.
+
+        Now let $P$ be a term of type $S\to T$.  Write $A=\deno{S}$ and $B=\deno{T}$.  Suppose that $\tau,\tau'$ are strategies for $A\iimpl B$ such that $\tau\stle\tau'$ and such that $\tau'\plot_{S\to T}P$.  Suppose that $\sigma\plot_SN$ for some term $N$ of type $S$.  Then $\icomp{\tau'}{\sigma}\plot_TPN$.  Since $\tau\stle\tau'$, $\icomp{\tau}{\sigma}\stle\icomp{\tau'}{\sigma}$, by Propositions \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO}.  Therefore, by structural induction, we have $\icomp{\tau}{\sigma}\plot_TPN$.  Since $\sigma,N$ were abitrary, it follows that $\tau\plot_{S\to T}P$.
+      \item Structural induction on $T$.  Let $M$ be a term of type $\nat$ and let $F$ be a stably directed set of strategies for $\bN$ such that $\sigma\plot_TM$ for all $\sigma\in F$.  Suppose $M\not\mustconverge$.  Then $q\in D_\sigma$ for all $\sigma\in F$, so $q\in D_{\exlub F}$.  Now suppose that $qn\in T_{\exlub F}$.  Then $qn\in T_\sigma$ for some $\sigma\in F$, and so $M\opto^*\n$.
+
+        Now let $P$ be a term of type $S\to T$.  Write $A=\deno{S}$ and $B=\deno{T}$.  Suppose that $F$ is a stably directed set of strategies for $A\iimpl B$ such that $\tau\plot_{S\to T}P$ for all $\tau\in F$.  Let $N$ be a term of type $S$ and let $\sigma$ be a strategy for $A$ such that $\sigma\plot_SN$.  Then $\icomp\tau\sigma\plot_TPN$ for all $\tau\in F$.  By structural induction, $\exlub_{\tau\in F}(\icomp\tau\sigma)\plot_TPN$.  Now 
+        \qedhere
+    \end{enumerate}
+  \end{proof}
+\end{lemma}
 
 \bibliographystyle{alpha}
 \bibliography{../common/phd_bibliography}

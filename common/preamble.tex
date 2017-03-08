@@ -16,6 +16,7 @@
 \usepackage{pbox} % for \pbox
 \usepackage{multirow,bigdelim} % for \multirow
 \usepackage{lettrine} % For the drop cap
+\usepackage{mathpartir} % for \inferrule
 
 %%% ToC (table of contents) APPEARANCE
 \usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
@@ -247,15 +248,15 @@
 \newcommand{\impliescn}{\protect\overset{\cn}{\implies}}
 \newcommand{\C}{{\mathcal{C}}}
 \DeclareMathOperator{\ev}{ev}
-\newcommand{\der}{{\texttt{der}}}
-\newcommand{\mult}{{\texttt{mult}}}
+\newcommand{\der}{{\mathtt{der}}}
+\newcommand{\mult}{{\mathtt{mult}}}
 \DeclareMathOperator{\eq}{eq}
 \DeclareMathOperator{\wk}{wk}
 \newcommand{\toisom}{{\xrightarrow{\cong}}}
-\newcommand{\passoc}{{\texttt{passoc}}}
-\newcommand{\pcomm}{{\texttt{pcomm}}}
-\newcommand{\run}{{\texttt{r}}}
-\newcommand{\lun}{{\texttt{l}}}
+\newcommand{\passoc}{{\mathtt{passoc}}}
+\newcommand{\pcomm}{{\mathtt{pcomm}}}
+\newcommand{\run}{{\mathtt{r}}}
+\newcommand{\lun}{{\mathtt{l}}}
 \newcommand{\fcoal}[1]{{\leftmoon #1 \rightmoon}}
 \DeclareMathSymbol{\co}{\mathord}{operators}{"3C}
 \newcommand{\T}{\mathfrak{T}}
@@ -263,8 +264,8 @@
 \newcommand{\Ord}{\catname{Ord}}
 \newcommand{\FS}{\mathcal{FS}}
 \DeclareMathOperator{\rank}{rank}
-\newcommand{\dist}{{\texttt{dist}}}
-\newcommand{\dec}{{\texttt{dec}}}
+\newcommand{\dist}{{\mathtt{dist}}}
+\newcommand{\dec}{{\mathtt{dec}}}
 \DeclareMathOperator{\str}{str}
 \DeclareMathOperator{\weak}{weak}
 \DeclareMathOperator{\Strat}{Strat}
@@ -273,8 +274,9 @@
 \def\flushRight{\leftskip0pt plus 1fill\rightskip0pt}
 \def\Centering{\relax\ifvmode\centering\fi}
 \newcommand{\deno}[1]{\left\llbracket#1\right\rrbracket}
-\newcommand{\nat}{{\texttt{nat}}}
+\newcommand{\nat}{{\mathtt{nat}}}
 \newcommand{\mustconverge}{\Downarrow}
+\DeclareMathOperator{\fix}{fix}
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
