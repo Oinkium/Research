@@ -1,36 +1,6 @@
 This is BibTeX, Version 0.99d (TeX Live 2016/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: nondeterminism.aux
-Case mismatch error between cite keys mcCHFiniteND and mccHFiniteND
----line 22 of file nondeterminism.aux
- : \citation{mcCHFiniteND
- :                       }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys mcCHFiniteND and mccHFiniteND
----line 29 of file nondeterminism.aux
- : \citation{mcCHFiniteND
- :                       }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys mcCHFiniteND and mccHFiniteND
----line 46 of file nondeterminism.aux
- : \citation{mcCHFiniteND
- :                       }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys mcCHFiniteND and mccHFiniteND
----line 55 of file nondeterminism.aux
- : \citation{mcCHFiniteND
- :                       }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys mcCHFiniteND and mccHFiniteND
----line 61 of file nondeterminism.aux
- : \citation{mcCHFiniteND
- :                       }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys mcCHFiniteND and mccHFiniteND
----line 63 of file nondeterminism.aux
- : \citation{mcCHFiniteND
- :                       }
-I'm skipping whatever remains of this command
 The style file: entcs.bst
 Database file #1: phd_bibliography.bib
 Warning--empty institution in RusssThesis
@@ -75,4 +45,4 @@ warning$ -- 1
 while$ -- 31
 width$ -- 10
 write$ -- 86
-(There were 6 error messages)
+(There was 1 warning)

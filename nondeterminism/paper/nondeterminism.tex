@@ -42,13 +42,14 @@
   \title{A sound and adequate game semantics for PCF with countable nondeterminism} \author{John
     Gowers\thanksref{ALL}\thanksref{myemail}}
   \address{Department of Computer Science \\ University of Bath \\
-    Bath, United Kingdom} \thanks[ALL]{The author is indebted to
+    Bath, United Kingdom} \thanks[ALL]{Research supported by an
+    EPSRC-SCI-DTA grant.  The author is indebted to
     his supervisor, Jim Laird, without whose research and guidance
     this paper could not have been written.} \thanks[myemail]{Email:
     \href{mailto:wjg27@bath.ac.uk} {\texttt{\normalshape
         W.J.Gowers@bath.ac.uk}}} 
 \begin{abstract} 
-  We give a sound and adequate game semantics for a simple extension of PCF with countable nondeterminism, given in \cite{LairdOrdinalGames}.  The model is based on the model of idealized Algol with finite nondeterminism given by Harmer and McCusker \cite{mccHFiniteND} with extra information about infinite plays in order to accommodate infinite nondeterminism.  Our proof of soundness for the model is standard, but the proof of adequacy makes use of a new technique that is linked to the possibly transfinite complexity of evaluation trees in the presence of countable nondeterminism.
+  We give a sound and adequate game semantics for a simple extension of PCF with countable nondeterminism, given in \cite{LairdOrdinalGames}.  The model is based on the model of idealized Algol with finite nondeterminism given by Harmer and McCusker \cite{mcCHFiniteND} with extra information about infinite plays in order to accommodate infinite nondeterminism.  Our proof of soundness for the model is standard, but the proof of adequacy makes use of a new technique that is linked to the possibly transfinite complexity of evaluation trees in the presence of countable nondeterminism.
 \end{abstract}
 \begin{keyword}
   Game semantics, countable nondeterminism, ordinal complexity
@@ -1059,7 +1060,11 @@ We now have the technical machinery ready to prove Lemma \ref{jimY}.
 \begin{proof*}{Proof of Lemma \ref{jimY}}
   Recall that we constructed $\deno{\Y_T}$ as the $\stle$-least fixed point of the strategy $\chi_A$ for $((A\iimpl A)\iimpl A)\iimpl((A\iimpl A)\iimpl A)$ corresponding to the lambda term $\lambda F.\lambda f.f(F f)$, where $A=\deno T$.  This fixed point exists because the set of strategies for $((A\iimpl A)\iimpl A)$ is directed complete.  
 
-  Let $S$ denote the set of multistrategies for $(A\iimpl A)\iimpl A$ such that $S\plot_{(T\to T)\to T}\Y_T$.  By Lemma \ref{multijims2ndLemma}, part (iii), $S$ is directed complete with respect to $\stle$.  Write $\Chi_A$ for the multistrategy $\chi_A$.  We first claim that.
+  Let $S$ denote the set of multistrategies for $(A\iimpl A)\iimpl A$ such that $S\plot_{(T\to T)\to T}\Y_T$.  By Lemma \ref{multijims2ndLemma}, part (iii), $S$ is directed complete with respect to $\stle$.  Write $\Chi_A$ for the multistrategy $\{\chi_A\}$.  We first claim that if $\Sigma\in S$ then $\comp{\Chi_A}{\Sigma}\in S$.
+
+  Write $T=T_1\to\dots\to T_k\to\nat$.  Let $N\from T\to T,N_1\from T_1,\dots,N_k\from T_k$ be terms and let $\tau\from\deno{T\to T},\sigma_1\from\deno{T_1},\dots,\sigma_k\from\deno{T_k}$ be strategies such that $\sigma_i\plot_{T_i}N_i$ for $i=1,\dots,k$.  
+
+  We have $\Sigma\in S$, so for all $\sigma\in\Sigma$ we have $\comp{\comp\sigma\tau}{\comp{\sigma_1}{\comp{\cdots}{\sigma_k}}}\plot_\nat\Y_TNN_1\dots N_k$.
 \end{proof*}
 
 \bibliographystyle{entcs}
