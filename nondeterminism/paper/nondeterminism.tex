@@ -1,12 +1,29 @@
-\documentclass{article}
+\documentclass{entcs} \usepackage{prentcsmacro}
+\sloppy
+% The following is enclosed to allow easy detection of differences in
+% ascii coding.
+% Upper-case    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+% Lower-case    a b c d e f g h i j k l m n o p q r s t u v w x y z
+% Digits        0 1 2 3 4 5 6 7 8 9
+% Exclamation   !           Double quote "          Hash (number) #
+% Dollar        $           Percent      %          Ampersand     &
+% Acute accent  '           Left paren   (          Right paren   )
+% Asterisk      *           Plus         +          Comma         ,
+% Minus         -           Point        .          Solidus       /
+% Colon         :           Semicolon    ;          Less than     <
+% Equals        =3D           Greater than >          Question mark ?
+% At            @           Left bracket [          Backslash     \
+% Right bracket ]           Circumflex   ^          Underscore    _
+% Grave accent  `           Left brace   {          Vertical bar  |
+% Right brace   }           Tilde        ~
 
-\input{../common/preamble}
+\input{preamble}
 
 \newcommand{\stle}{{\;\le_s\;}}
 \newcommand{\steq}{{\;=_s\;}}
 \newcommand{\exle}{\sqsubseteq}
 \newcommand{\exlub}{\bigsqcup}
-\newcommand{\dv}{{\text{\lightning}}}
+\newcommand{\dv}{{\lightning}}
 \DeclareMathOperator{\pocl}{pocl}
 \newcommand{\opto}{\longrightarrow}
 \newcommand{\n}{{\mathtt{n}}}
@@ -17,10 +34,26 @@
 \newcommand{\shad}{\mathfrak{S}}
 \newcommand{\tree}{\mathfrak{T}}
 \newcommand{\Tau}{T}
+\newcommand{\Chi}{X}
 
-\title{Transfinite Games for Countable Nondeterminism}
-
+\def\lastname{Gowers}
 \begin{document}
+\begin{frontmatter}
+  \title{A sound and adequate game semantics for PCF with countable nondeterminism} \author{John
+    Gowers\thanksref{ALL}\thanksref{myemail}}
+  \address{Department of Computer Science \\ University of Bath \\
+    Bath, United Kingdom} \thanks[ALL]{The author is indebted to
+    his supervisor, Jim Laird, without whose research and guidance
+    this paper could not have been written.} \thanks[myemail]{Email:
+    \href{mailto:wjg27@bath.ac.uk} {\texttt{\normalshape
+        W.J.Gowers@bath.ac.uk}}} 
+\begin{abstract} 
+  We give a sound and adequate game semantics for a simple extension of PCF with countable nondeterminism, given in \cite{LairdOrdinalGames}.  The model is based on the model of idealized Algol with finite nondeterminism given by Harmer and McCusker \cite{mccHFiniteND} with extra information about infinite plays in order to accommodate infinite nondeterminism.  Our proof of soundness for the model is standard, but the proof of adequacy makes use of a new technique that is linked to the possibly transfinite complexity of evaluation trees in the presence of countable nondeterminism.
+\end{abstract}
+\begin{keyword}
+  Game semantics, countable nondeterminism, ordinal complexity
+\end{keyword}
+\end{frontmatter}
 
 \section{Introduction}
 
@@ -172,14 +205,14 @@ First, we will prove a useful lemma.
     \end{array}
     \]
   If $s\in P_{A\tensor B}$ is a finite position, then $s$ cannot have sign profile $OO$.  If $s\in P_{A\implies B}$ is a finite position then $s$ cannot have sign profile $OP$.  
-  \begin{proof}
-    By negativity, the empty sequence $\epsilon$ always has sign profile $PP$.  Otherwise, $s=s'a$ for some sequence $s'$ and some move $a$.  If $s\in P_{A\tensor B}$ and $s$ has sign profile $OO$, then $s$ is an $O$-position in $A\tensor B$.  Therefore, $s'$ is a $P$-position in $A\tensor B$ and so $s'$ must have sign profile $PP$, by the definition of $\zeta_{A\tensor B}$.  But this is impossible, as the move $a$ can only change the sign profile in one of the two components.  
-
-    The proof for the linear implication is entirely similar.
-  \end{proof}
 \end{lemma}
+\begin{proof}
+  By negativity, the empty sequence $\epsilon$ always has sign profile $PP$.  Otherwise, $s=s'a$ for some sequence $s'$ and some move $a$.  If $s\in P_{A\tensor B}$ and $s$ has sign profile $OO$, then $s$ is an $O$-position in $A\tensor B$.  Therefore, $s'$ is a $P$-position in $A\tensor B$ and so $s'$ must have sign profile $PP$, by the definition of $\zeta_{A\tensor B}$.  But this is impossible, as the move $a$ can only change the sign profile in one of the two components.  
 
-\begin{proof}[Proof of Proposition \ref{TensorImpliesWellFormed}]
+  The proof for the linear implication is entirely similar.
+\end{proof}
+
+\begin{proof*}{Proof of Proposition \ref{TensorImpliesWellFormed}}
   Alternation is part of the definition and negativity is implied by the equations $P\wedge P = P$ and $P\Rightarrow P = P$.  The only tricky part is proving consistency of the $\lambda$ and $\zeta$ functions.  Since consistency applies only to positions with a last move, we may ignore the infinite plays in $A$ and $B$.  
 
   Suppose $sa\in P_{A\tensor B}$.  We wish to show that $\zeta_{A}(sa)=\lambda_A(a)$.  In the presence of alternation, this is equivalent to showing that $\zeta_A(s) = \neg \lambda_A(a)$.  We show this by cases on the sign profile of $s$.  By Lemma \ref{signProfilesLemma}, $s$ has sign profile $PP$, $OP$ or $PO$.  If $s$ has sign profile $PP$ then $s$ is a $P$-position.  Since $s\vert_A$ and $s\vert_B$ are both $P$-positions, $a$ must be an $O$-move, whether it occurs in $A$ or $B$.  
@@ -189,7 +222,7 @@ First, we will prove a useful lemma.
   For compactness, suppose that $s\in M_{A\tensor B}^\omega$ is an infinite sequence of moves such that $t\in P_{A\tensor B}$ for all finite prefixes $t\ppprefix s$.  Then $s$ is certainly alternating.  Moreover, for all finite prefixes $t\ppprefix s\vert_A$, we have $t\in P_A$, and so therefore $s\vert_A\in P_A$ by compactness for $A$.  Similarly, $s\vert_B\in P_B$, and therefore, $s\in P_{A\tensor B}$.
 
   The proof for the linear implication is similar.
-\end{proof}
+\end{proof*}
 
 Looking at the proof above, we may deduce the following important fact:
 
@@ -213,15 +246,15 @@ We need to prove that $T_{\comp\tau\sigma}\subset P_{A\implies B}$.  $\comp\tau\
 
 \begin{proposition}
   Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  Suppose $s\in\comp\tau\sigma$ is finite.  Then $s$ has even length.
-  \begin{proof}
-    Write $s=\s\vert_{A,C}$, where $\s\in\sigma\|\tau$.  Then we have
-    \begin{align*}
-      \length(s) & = \length(\s) - \length(\s\vert_B) \\
-       & = \length(\s\vert_{A,B}) + \length(\s\vert_{B,C} - 2\length(\s\vert_B)
-    \end{align*}
-    $\s\vert_{A,B}$ and $\s\vert_{B,C}$ both have even length, since they are $P$-positions, so the result follows.
-  \end{proof}
 \end{proposition}
+\begin{proof}
+  Write $s=\s\vert_{A,C}$, where $\s\in\sigma\|\tau$.  Then we have
+  \begin{align*}
+    \length(s) & = \length(\s) - \length(\s\vert_B) \\
+     & = \length(\s\vert_{A,B}) + \length(\s\vert_{B,C} - 2\length(\s\vert_B)
+  \end{align*}
+  $\s\vert_{A,B}$ and $\s\vert_{B,C}$ both have even length, since they are $P$-positions, so the result follows.
+\end{proof}
 
 Before we consider the definition of $D_{\comp\tau\sigma}$, we show that composition is associative at the level of trace sets.  
 
@@ -231,6 +264,7 @@ Before we consider the definition of $D_{\comp\tau\sigma}$, we show that composi
     T_{\comp{\upsilon}{(\comp\tau\sigma)}} = T_{\comp{(\comp\upsilon\tau)}{\sigma}}
     \]
 
+\end{proposition}
   \begin{proof}
     As in \cite{abramskyjagadeesangames}.  Define
     \[
@@ -274,7 +308,6 @@ Before we consider the definition of $D_{\comp\tau\sigma}$, we show that composi
     \end{gather*}
     Lastly, we have $\u\vert_{A,D} = \s\vert_{A,D} = s$, completing the proof.
   \end{proof}
-\end{proposition}
 
 At the moment, we have an associative composition at the level of trace sets.  We now define composition at the level of divergences.
 
@@ -296,6 +329,7 @@ We write $\pocl_A^P(S)$ for $\pocl_A(S)\cap P_A^P$ and $\pocl_A^O(S)$ for $\pocl
 
 \begin{proposition}
   $D_{\comp\tau\sigma}$ is a well-defined divergence set.
+\end{proposition}
   \begin{proof}
     $D_{\comp\tau\sigma}$ alternating by the same argument we used for $T_{\comp\tau\sigma}$, and is postfix-closed in $P_{A\implies C}^O$ by definition.  Now let $s\in D_{\comp\tau\sigma}$ and suppose that $\s\vert_{A,C}\prefix s$, where $\s\in \sigma\dv\tau$.  We need to show that there is some $O$-position $ta\prefix s$ such that $ta\in D_{\comp\tau\sigma}$ and $t\in T_{\comp\tau\sigma}$.
 
@@ -303,7 +337,6 @@ We write $\pocl_A^P(S)$ for $\pocl_A(S)\cap P_A^P$ and $\pocl_A^O(S)$ for $\pocl
 
     The case where $\s\vert_{A,B}\in T_\sigma$ and $\s\vert_{B,C}\in D_\tau$ is similar.
   \end{proof}
-\end{proposition}
 
 We need to show that this composition satisfies the diverge-or-reply and local compactness rules.  
 
@@ -317,15 +350,16 @@ Deterministic strategies have the following nice technical property:
 
 \begin{proposition}
   Let $A,B,C$ be games, let $\sigma$ be a deterministic strategy for $A\implies B$ and let $\tau$ be a deterministic strategy for $B\implies C$.  Then $\comp\tau\sigma$ is a deterministic strategy.  Moreover, for any $s\in\comp\tau\sigma$, there is a unique minimal $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=s$.
+\end{proposition}
   \begin{proof}
     The idea behind the proof is that determinism of $\sigma$ and $\tau$ mean that the play in the intermediate game $B$ is completely determined (since every move played in $B$ is either a $P$-move in $A\implies B$ or a $P$-move in $B\implies C$.  For full details, see \cite{abramskyjagadeesangames}.
   \end{proof}
-\end{proposition}
 
 We can use this to prove the following:
 
 \begin{proposition}
   Let $A,B,C$ be games and let $\sigma\from A\implies B$ and $\tau\from B\implies C$ be compact deterministic strategies.  Then $\comp\tau\sigma$ is compact.
+\end{proposition}
   \begin{proof}
     Let $s\in M_{A\implies C}^\omega$ be an infinite sequence such that $t\in\comp\tau\sigma$ for all finite prefixes $t\ppprefix s$.  For each finite prefix $t$ of $s$, there is a unique minimal sequence $\t\in\sigma\|\tau$ such that $\t\vert_{A,C}=t$.  Writing $s$ as the limit of its finite $P$-prefixes
     \[
@@ -339,7 +373,6 @@ We can use this to prove the following:
 
     Then the limit of the sequences $\t_i\vert_{A,B}$ must be contained in $T_\sigma\cup D_\sigma$, since $\sigma$ is compact, and similarly the limit of the sequences $\t_i\vert_{B,C}$ must be contained in $T_\tau\cup D_\tau$, since $\tau$ is compact.  It follows that the limit $\t$ of the sequences $\t_i$ is contained in $\sigma\|\tau\cup\sigma\dv\tau$, and therefore that $\t\vert_{A,C}=s\in T_{\comp\tau\sigma}\cup D_{\comp\tau\sigma}$.
   \end{proof}
-\end{proposition}
 
 Note that the composition of compact nondeterministic strategies need not be compact.
 
@@ -378,10 +411,10 @@ Note that the composition of compact nondeterministic strategies need not be com
 
 \begin{proposition}
   Let $A,B,C$ be games and let $\sigma\from A\implies B$ and $\tau\from B\implies C$ be (nondeterministic, locally compact) strategies.  Then $\comp\tau\sigma$ is locally compact.
+\end{proposition}
   \begin{proof}
     Let $s\in T_{\comp\tau\sigma}$.  Then there is some sequence $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=s$.  We have $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$, so, by local compactness for $\sigma$ and $\tau$, there are compact strategies $\sigma'\from A\implies B$ and $\tau'\from B\implies C$ such that $\s\vert_{A,B}\in\sigma'$ and $\s\vert_{B,C}\in\tau'$.  After removing positions from (and possibly adding divergences to) $\sigma'$ and $\tau'$, we may assume that they are deterministic (and still compact).  Then $\comp{\tau'}{\sigma'}$ is compact and we have $\s\vert_{A,C}\in\comp{\tau'}{\sigma'}\subset\comp\tau\sigma$ and $D_{\comp\tau\sigma}\subset D_{\comp{\tau'}{\sigma'}}$.
   \end{proof}
-\end{proposition}
 
 Unlike \cite{mcCHFiniteND}, we do not need to change the definition of $D_{\comp\tau\sigma}$ to reflect divergence arising from infinite chattering.  The following example shows that it arises naturally from existing definition of $D_{\comp\tau\sigma}$.
 
@@ -426,6 +459,7 @@ This example is at the heart of the proof that the composition of strategies sat
 \begin{proposition}
   Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  Then $T_{\comp\tau\sigma}, D_{\comp\tau\sigma}$ satisfy the diverge-or-reply rule.
 
+\end{proposition}
   \begin{proof}
     Suppose that $s\in\comp\tau\sigma$, that $sa\in P_{A\implies C}$ and that $s\not\in D_{\comp\tau\sigma}$.  Let $\s\in\sigma\|\tau$ be such that $\s\vert_{A,C}=s$.  By local compactness of $\sigma$ and $\tau$, there must be compact strategies $\sigma'\from A\implies B$ and $\tau'\from B\implies C$ such that $\s\vert_{A,C}\in\sigma'$ and $\s\vert_{B,C}\in\tau'$.  
     
@@ -433,7 +467,6 @@ This example is at the heart of the proof that the composition of strategies sat
     
     Since $sa$ is an $O$-position, one of $\s a\vert_{A,B}$ and $\s a\vert_{B,C}$ must be an $O$-position (by transitivity of $\Rightarrow$).  Suppose without loss of generality that $\s a\vert_{A,B}$ is an $O$-position.  Since $\s a\vert_{A,B}\not\in D_{\sigma'}$, there must be some move $b$ such that $\s a\vert_{A,B}b\in\sigma'$, since $\sigma'$ satisfies the diverge-or-reply rule.  Then we have $\s ab\vert_{A,B}\in\sigma'$.  Moreover, Lemma \ref{signProfilesLemma} tells us that $\s a\vert_{B,C}$ must be a $P$-position, so $\s ab\vert_{B,C}=\s\vert_{B,C}\in\tau'$.  Therefore, $\s ab\in\sigma'\|\tau'$.  By maximality of $\s a$, $b$ must be a move in $A$ and therefore we have $sab\in\comp{\tau'}{\sigma'}\subset\comp\tau\sigma$.
   \end{proof}
-\end{proposition}
 
 We now have a working definition of composition.  It remains to prove that it is associative at the level of divergences:
 
@@ -442,6 +475,7 @@ We now have a working definition of composition.  It remains to prove that it is
   \[
     D_{\comp\upsilon{(\comp\tau\sigma)}} = D_{\comp{(\comp\upsilon\tau)}\sigma}
     \]
+\end{proposition}
   \begin{proof}
     Let
     \[
@@ -477,7 +511,6 @@ We now have a working definition of composition.  It remains to prove that it is
 
     By the argument from Proposition \ref{traceAssociativity}, we may interleave these two sequences $\t$ and $u$ to form a sequence $\s\in\seqs{(M_A\cprd M_B\cprd M_C\cprd M_D)}$ such that $\s\vert_{A,B,C}=\u$ and $\s\vert_{A,C,D}=\t$.  Then it is clear that $\s\in D$ in all cases and we have $\s\vert_{A,D}=\t\vert_{A,D}\prefix s$.
   \end{proof}
-\end{proposition}
 
 In order to show that we have a category, it remains to define the identity morphisms.  These are given by the usual copycat strategies:
 \[
@@ -489,6 +522,7 @@ The divergence set $D_{\id_A}$ is empty: note that infinite positions in $\id_A$
 
 \begin{theorem}
   There is a category $\G$ where the objects are games as defined above, morphisms from a game $A$ to a game $B$ are given by nondeterministic strategies $(T_\sigma, D_\sigma)$ for $A\implies B$ and the composition and identity morphisms are as defined above.
+\end{theorem}
   \begin{proof}
     All that is left to do is to show that $\id_A$ really is an identity morphism.  We shall show that if $A$ and $B$ are games and $\sigma$ is a strategy for $A\implies B$ then $\comp\sigma{\id_A}=\sigma$; it will follow by a symmetrical argument that $\comp{\id_B}\sigma = \sigma$.
 
@@ -500,7 +534,6 @@ The divergence set $D_{\id_A}$ is empty: note that infinite positions in $\id_A$
 
     Conversely, suppose that $s\in D_\sigma$.  We know already that there is some $\s\in\id_A\|\sigma$ such that $\s\vert_{A_1,A_2}\in\id_A$ and $\s\vert_{A_2,B}\in\sigma$.  Then $\s\vert_{A,C}\in D_{\comp\sigma{\id_A}}$ by definition.
   \end{proof}
-\end{theorem}
 
 \subsection{Symmetric monoidal closed structure}
 
@@ -517,6 +550,7 @@ The divergences for $\sigma\tensor\tau$ are defined using the divergences for $\
   \]
 \begin{proposition}
   $\sigma\tensor\tau$ is a valid strategy for $(A\tensor B)\implies (C\tensor D)$
+\end{proposition}
   \begin{proof}
     $\sigma\tensor\tau$ is non-empty and prefix-closed, since $\sigma$ and $\tau$ are.  
     
@@ -537,7 +571,6 @@ The divergences for $\sigma\tensor\tau$ are defined using the divergences for $\
       \]
     It follows that one of $sa\vert_{A,C}$ and $sa\vert_{B,D}$ must be an $O$-position.  Suppose without loss of generality that $sa\vert_{A,C}$ is an $O$-position.  Since $sa\vert_{A,C}\not\in D_\sigma$, there must be some move $b$ such that $sab\in\sigma$, since $\sigma$ satisfies diverge-or-reply.  Then we have $sab\in\sigma\tensor\tau$.
   \end{proof}
-\end{proposition}
 
 We also need to show that the tensor product respects composition.  This is easy.
 
@@ -546,6 +579,7 @@ We also need to show that the tensor product respects composition.  This is easy
   \[
     \comp{(\sigma\tensor\tau)}{(\sigma'\tensor\tau')} = (\comp\sigma{\sigma'})\tensor(\comp\tau{\tau'})
     \]
+\end{proposition}
   \begin{proof}
     At the level of trace sets, we have:
     \begin{gather*}
@@ -597,7 +631,6 @@ We also need to show that the tensor product respects composition.  This is easy
       \]
     using a similar argument.
   \end{proof}
-\end{proposition}
 
 The associators, unitors and braiding for this tensor product are the usual (deterministic, compact, non-divergent) copycat strategies.  It is straightforward to show that they are natural transformations, using the same argument we used to show that $\id_A$ is an identity, and that the appropriate coherence diagrams are satisfied.  
 
@@ -636,10 +669,10 @@ This criterion says that player $O$ must open the copies of $A$ in sequence: he 
 
 \begin{proposition}
   $\oc A$ is a well formed game.
+\end{proposition}
   \begin{proof}
     Exactly the same argument as in Proposition \ref{TensorImpliesWellFormed}.  We need to prove a version of Lemma \ref{signProfilesLemma} which will tell us that if $s\in P_{\oc A}$ then either $\zeta_A(s\vert_n)=O$ for at most one value of $n$.  
   \end{proof}
-\end{proposition}
 
 Just like the tensor product, the exponential $\oc A$ has the property that only player $O$ may switch games.  
 
@@ -668,12 +701,12 @@ $\oc(\cdot)$ gives rise to a \emph{linear exponential comonad} on $\G$ (see \cit
         & \oc \oc B
     \end{tikzcd}
     \]
+\end{proposition}
   \begin{proof}
     Both branches of the diagram are strategies that play as $\sigma$ in each copy of $B$ in $\oc \oc B$, opening a copy of $A$ in $\oc A$ as required.  The ordering condition means that there is only one possible order in which to open the copies of $A$ in $\oc A$, so both strategies must behave the same way.
 
     A divergence occurs in either branch if an only if a divergence arises in $\sigma$ in one of the $A-B$ pairs.  So both branches have the same divergence sets.
   \end{proof}
-\end{proposition}
 
 We may now form the co-Kleisli category $\G^{\oc}$.  The objects of $\G^{\oc}$ are games $A$ and a morphism from $A$ to $B$ is given by a strategy for
 \[
@@ -734,6 +767,7 @@ To show that this is an order, the only non-trivial part is to show that propert
   \[
     \comp\tau\sigma\stle\comp{\tau'}{\sigma'}
     \]
+\end{proposition}
   \begin{proof}
     First suppose that $\tau=\tau'$.  
 
@@ -752,13 +786,13 @@ To show that this is an order, the only non-trivial part is to show that propert
       \comp\tau\sigma \stle \comp\tau{\sigma'} \stle \comp{\tau'}{\sigma'}
       \]
   \end{proof}
-\end{proposition}
 
 We want to get a similar result for composition in the category $\G^{\oc}$.  To do that it will suffice to prove the following result:
 
 \begin{proposition}
   \label{exponentiationMonotonicSO}
   Let $A,B$ be games and let $\sigma,\tau$ be strategies for $A\implies B$ such that $\sigma\stle\tau$.  Then $\oc\sigma\stle\oc\tau$ as strategies for $\oc A\implies \oc B$.
+\end{proposition}
   \begin{proof}
     If $s\in\oc\sigma$, then $s\vert_{A_n,B_n}\in\sigma$ for all $n$ and therefore $s\vert_{A_n,B_n}\in\sigma'$ for all $n$.  It follows that $\oc\sigma\subset\oc\tau$.
 
@@ -772,7 +806,6 @@ We want to get a similar result for composition in the category $\G^{\oc}$.  To 
 
     Lastly, if $s\in \oc\tau\setminus\oc\sigma$, then there exists some $s'\prefix s$ and some $n\in\omega$ such that $s'\vert_{A_n,B_n}\in\tau\setminus\sigma$.  Therefore, if we construct the $d_n$ as before, we have $d_n\in D_\sigma$ for at least one $n$ and it follows that we may construct $d\in D_{\oc\sigma}$ as before such that $d\prefix s'$.  It follows that $s\in D_{\oc\sigma}$.  
   \end{proof}
-\end{proposition}
 
 If $A$ is a game and $S\subset P_A$ is some set, we say that $s\in S$ is \emph{minimal} if $t\not\in S$ for all proper prefixes $t\pprefix s$.  Let $A$ be a game and let $F$ be a non-empty set of strategies for $A$ that is directed under the extensional order: so if $\sigma,\tau\in F$ then there is some $\upsilon\in F$ such that $\sigma,\tau\exle\upsilon$.  We define a strategy $\exlub F$ for $F$ by setting
 \begin{gather*}
@@ -782,6 +815,7 @@ If $A$ is a game and $S\subset P_A$ is some set, we say that $s\in S$ is \emph{m
 
 \begin{proposition}
   If $A$ is a game and $F$ is a set of strategies for $A$ that is directed under the extensional order then $\exlub F$ is a strategy for $A$.
+\end{proposition}
   \begin{proof}
     $T_{\exlub F}$ is certainly non-empty and prefix-closed in $T_{\exlub F}$.  Similarly, $D_{\exlub F}$ is certainly postfix-closed.  Suppose that $s\in D_{\exlub F}$.  For each $\sigma\in F$, there exists some prefix $t_\sigma\prefix s$ such that $t_\sigma\in D_\sigma$ and $u\in T_\sigma$ for all $P$-prefixes $u\prefix t_\sigma$.  Let $t$ denote the limit of the $t_\sigma$.  Then $t$ is an $O$-position, since $s$ and the $t_\sigma$ are $O$-positions, so every $P$-prefix of $t$ is a $P$-prefix of one of the $t_\sigma$ and is therefore contained in $T_\sigma\subset T_{\exlub F}$.  Moreover, $t\in D_\sigma$ for all $\sigma$ by postfix closure of the $D_\sigma$.  
 
@@ -789,12 +823,13 @@ If $A$ is a game and $S\subset P_A$ is some set, we say that $s\in S$ is \emph{m
 
     Lastly, we show that $\exlub F$ is locally compact.  Let $s\in T_{\exlub F}$.  Then there is some compact strategy $\sigma'$ such that $s\in T_{\sigma'}$ and $\sigma'\exle\sigma\exle\exlub F$.  
   \end{proof}
-\end{proposition}
 
 $\exlub F$ is clearly a least upper bound for directed sets of strategies under the extensional ordering.  More suprisingly, $\exlub F$ is a least upper bound for directed sets of strategies under the stable ordering.
 
 \begin{proposition}
+  \label{exlubIsStlub}
   Let $A$ be a game, and let $F$ be a set of strategies for $A$ that is directed under the stable ordering -- so if $\sigma,\tau\in F$ then there is some strategy $\upsilon\in F$ such that $\sigma,\tau\stle\upsilon$.  Then $\exlub F$ is a least upper bound for $F$ under the ordering $\stle$.
+\end{proposition}
   \begin{proof}
     First we show that $\exlub F$ is a stable upper bound for $F$.  Let $\sigma\in F$.  Certainly $T_\sigma\subset T_{\exlub F}$ and $D_{\exlub F}\subset D_\sigma$, so it remains to show that $T_{\exlub F}\subset T_\sigma\cup \pocl_A^P(D_\sigma)$.  Suppose $s\in T_{\exlub F}$.  Then $s\in T_\tau$ for some strategy $\tau$.  Since $F$ is stably directed, there exists some strategy $\upsilon\in F$ such that $\sigma,\tau\stle\upsilon$.  In particular:
     \[
@@ -803,7 +838,6 @@ $\exlub F$ is clearly a least upper bound for directed sets of strategies under 
 
     Now suppose that $\alpha$ is a stable upper bound for $F$; we need to show that $\exlub F\stle\alpha$.  Since we have $T_\sigma\subset T_\alpha$ and $D_\alpha\subset D_\sigma$ for all $\sigma\in F$, we have $T_{\exlub F}\subset T_\alpha$ and $D_\alpha\subset D_{\exlub F}$.  Now suppose that $s\in T_\alpha\setminus\pocl_A^P(D_{\exlub F})$.  Then there exists some $\sigma\in F$ such that $d\not\prefix s$ for all $d\in D_\sigma$.  It follows that $s\in T_\alpha\setminus\pocl_A^P(D_\sigma)$; since $D_\sigma\stle D_\alpha$, we must have $s\in T_\sigma\subset T_{\exlub F}$. 
   \end{proof}
-\end{proposition}
 
 Now let $A$ be a game and let $\tau$ be a strategy for $A\iimpl A$.  The set $\Strat(A)$ of strategies for $A$ is directed-complete under the stable ordering $\stle$ and map $\tau_*\from\Strat(A)\to\Strat(A)$ given by $\sigma\mapsto\icomp\tau\sigma$ is monotone with respect to $\stle$, by Propositions \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO}.  Therefore, by the Bourbaki-Witt theorem, there is a $\stle$-least fix-point of $\tau_*$, which we shall call $\fix_\tau$.
 
@@ -814,11 +848,12 @@ Let $T$ be a PCF term with denotation $A$ and let $\chi_A$ be the strategy for $
 
 \subsection{Consistency}
 
-Our proofs for soundness and adequacy follow \cite{LairdOrdinalGames}.
+Our proofs for soundness and adequacy follow \cite{LairdOrdinalGames}.  However, we are forced to use a new technique to prove adequacy, because unlike the model given in \cite{LairdOrdinalGames}, our model does not have the property that function application is continuous with respect to functions in the stable order.
 
 \begin{lemma}
   \label{jimsLemma}
   Let $M$ be a reducible program of type $T$.  Let $F_M = \{N\suchthat M\opto N\}$.  Then $T_{\deno{M}}\subset\bigcup_{N\in F_M} T_{\deno{N}}$ and $D_{\deno{M}}\subset \bigcup_{N\in F_M} D_{\deno{N}}$.
+\end{lemma}
   \begin{proof}
     Structural induction on $M$.  If $M=\wn$, then $F_M$ is the set of numerals, and we have $T_\wn = \bigcup_{n\in \omega} \{\emptyplay, qn\}$ and $D_\wn=\emptyset$.  Otherwise, write $M = FN$ for some term $L$ of type $S\to T$ and some term $N$ of type $T$.  Write $A=\deno{S}$, $B=\deno{T}$, $\sigma=\deno{N}$ and $\tau=\deno{F}$.  So $\sigma$ is a strategy for $A$ and $\tau$ is a strategy for $A\iimpl B = \oc A \implies B$.  If $FN$ is reducible via one of the rules
     \[
@@ -852,150 +887,56 @@ Our proofs for soundness and adequacy follow \cite{LairdOrdinalGames}.
 
     Suppose instead that $\d\vert_A\in T_{\oc\sigma}$ and that $\d\in D_\tau$.  By structural induction, there is some $F'$, having denotation $\tau'$, such that $F\to F'$ and $\d\in D_{\tau'}$.  Then $\d\in\oc\sigma\dv\tau'$, so $\d\vert_B\in D_{\tau'}$.  
   \end{proof}
-\end{lemma}
 
 \begin{theorem}[Consistency]
   Let $M$ be a program of type $\nat$.  If $M\mustconverge$, then $D_{\deno{M}} = \emptyset$.
+\end{theorem}
   \begin{proof}
     Suppose $d\in D_{\deno M}$.  The only irreducible programs of type $\nat$ are the numerals, whose denotations do not contain any divergences, so $M$ must be reducible.  Therefore, by Lemma \ref{jimsLemma}, there exists some $M_1$ such that $M\to M_1$ and $d\in D_{\deno {M_1}}$.  So $M_1$ is reducible and we may apply Lemma \ref{jimsLemma} again to get a term $M_2$ such that $M_1\to M_2$ and $d\in D_{\deno {M_2}}$.  We keep on applying Lemma \ref{jimsLemma} and build up a sequence $M\to M_1\to M_2\to M_3\to\cdots$.  Therefore, $M\not\mustconverge$.
   \end{proof}
-\end{theorem}
 
-\subsection{The language OBFPCF}
-
-To prove computational adequacy, our first step is to modify our language.  We remove the recursion combinator $\Y_T^\alpha$ and replace it with a set of constants $\Y_T^\alpha$ of type $(T\to T)\to T$, where $\alpha$ ranges over the ordinals.
-
-The operational semantics of the operators $\Y_T^\alpha$ is as follows:
-\[
-  \begin{tabular}{cc}
-    $\inferrule*[right=$\alpha<\beta$]{ }{\Y_T^\beta M \opto M(\Y_T^\alpha M)}$
-      & $\inferrule*[right=]{ }{\Y_T^0 M \opto \Omega}$
-  \end{tabular}
-  \]
-Thus, $\Y_T^n$ denotes a recursion that can take at most $n$ steps, $\Y_T^\omega$ denotes a recursion that can take $n$ steps, where $n$ is a number chosen at the start of the evaluation, and so on.  We call this new language \emph{Ordinal Bounded Fair PCF}, or OBFPCF.
-
-Note, however, that it will not be sufficient to define must-convergence for the new language directly from the operational semantics.  Take the factorial function $\nat\to\nat$, for instance, which is usually defined as $\Y F$, where $F=\lambda f.\lambda n.\IfO n (\suc \0) (\lambda m.n\times(f m))$.  The number of recursion steps is unbounded, but is always known at the start of evaluation.  Thus, we should expect to be able to define the factorial function as $\Y_{\nat\to\nat}^\omega F$.  However, if we try to evaluate, say, $1!$, we end up with the following possible evaluation sequence:
-\[
-  \Y_{\nat\to\nat}^\omega F 1 \opto F (\Y_{\nat\to\nat}^0 F) \;1 \opto \Y_{\nat\to\nat}^0 F\;0\opto\Omega \to \cdots
-  \]
-which is infinite.  The problem is that we have passed immediately down to $\Y^0$, when we could have completed the evaluation by passing down to $\Y^1$.
+To prove computational adequacy, we define Plotkin-style approximation relations (\cite{PlotkinApRels}, cited in \cite{LairdOrdinalGames}).  
 
 \begin{definition}
-  Let $M$ be a term of OBFPCF.  We define the \emph{shadow} $\shad M$ of $M$ to be the FPCF term formed by replacing every instance of $\Y_T^\alpha$ with $\Y_T$ for all $\alpha$.
+  For each PCF type $T$, we define a relation $\plot_T$ between strategies for $\deno{T}$ and closed terms of type $T$:
 
-  If $M$ is a term in some programming language, we define an \emph{evaluation tree} to be a rooted tree $T$ with vertices $v$ labelled by terms $T(v)$ of that language such that:
   \begin{itemize}
-    \item The root is labelled with $M$
-    \item If $v$ is a vertex with label $N$ and $w$ is a child of $v$ with label $P$ then $N\opto P$
-    \item Distinct children of the same vertex have distinct labels
-  \end{itemize}
-  For any term $M$, there is clearly a unique maximal such tree, which we denote by $\tree_M$.
-
-  If $M$ is a term of FPCF, we define a \emph{decoration} of $\tree_M$ to be an evaluation tree $T$ in OBFPCF together with a (depth-preserving) homomorphism of rooted trees $\phi\from T\to\tree_M$ such that for all vertices $v$ in $T$, the label of $\phi(v)$ is the shadow of the label of $v$:
-  \[
-    \tree_M(\phi(v)) = \shad(T(v))
-    \]
-  If $M$ is a term of OBFPCF, we say that $M$ \emph{must converge}, and write $M\mustconverge$, if:
-  \begin{itemize}
-    \item $\shad M\mustconverge$
-    \item There is a decoration $T$ of $\tree_{\shad M}$ such that the root of $T$ is labelled with $M$.
+    \item $\sigma \plot_\nat M$ if $M\not\mustconverge$ implies that $q\in D_\sigma$ and $qn\in T_\sigma$ implies that $M\opto^* \n$.
+    \item $\tau \plot_{S\to T} P$ if $\sigma\plot_S N$ implies that $\icomp\tau\sigma \plot_T P N$
   \end{itemize}
 \end{definition}
 
 \begin{lemma}
-  Let $M$ be a term of FPCF such that $M\mustconverge$.  Then there exists some term $M'$ of OBFPCF such that $M=\shad M'$ and $M'\mustconverge$.  Moreover, for every instance of a constant $\Y_T^\alpha$ in $M'$, we have $\alpha<\omega_1$.
-  \begin{proof}
-    Since $M\mustconverge$, $\tree_M$ is a well-founded tree.  We need to define a decoration of $\tree_M$.  We do this using the standard definition of the ordinal depth of a tree.  Let $T$ have the same vertices as $\tree_M$.  Then we recursively tag the vertices of $T$ with ordinals as follows: we tag a vertex $v$ with $\alpha$ if $v$ is a leaf of the tree formed by removing all vertices that have been tagged with $\beta<\alpha$.  Since $T$ is well-founded, this process must terminate.  Thus, a vertex $v$ is tagged with the supremum of the successors of the tags of its children.  Since there are at most countably many children of any vertex, we inductively show that the tag on each vertex is the supremum of countably many countable ordinals, so it is countable.
+  \label{jims2ndLemma}
+  i) If $M$ is a term of type $\nat$ such that $M\opto N$ for some unique term $N$, and if $\sigma\plot_\nat N$, then $\sigma\plot_\nat M$
 
-    We then relabel the vertices $v$ of $T$ inductively as follows: first, we go through the tree and decorate every instance of $\Y$ on a vertex $v$ with the tag of $v$.  Presently, this is not a valid evaluation tree, since if a term contains an instance of $\Y$ but does not reduce via the rule
-    \[
-      \inferrule{ }{\Y_T M \opto M(\Y_T M)}
-      \]
-    then we are not allowed to decorate the instances of $\Y$ in the child with different ordinals from the instances in the parent.  In this case, redecorate the instances of $\Y$ in the child to match those in the parent.  We continue by induction over the depth of the tree and end up with a valid decoration $\tree_M$.
+  ii) If $M$ is a term of type $T$ and $\sigma,\tau$ are strategies for $\deno{M}$ such that $\sigma\stle\tau$, and if $\tau\plot_TM$, then $\sigma\plot_TM$.
+\end{lemma}
+  \begin{proof}
+    (i): Suppose $M\opto N$ for some unique term $N$ and suppose that $\sigma\plot_\nat N$.  Then, if $M\not\mustconverge$, we must have $N\not\mustconverge$.  Therefore, $q\in D_\sigma$.  Suppose $qn\in T_\sigma$.  Then $N\opto^*\n$, so $N\opto^*\n$.
+
+    (ii): Structural induction on $T$.  let $M$ be a term of type $\nat$.  Suppose $\sigma,\tau$ are strategies for $\bN$, that $\sigma\stle\tau$ and that $\tau\plot_T M$.  If $M\not\mustconverge$, then $q\in D_\tau$, so $q\in D_\sigma$.  If $qn\in T_\sigma$, then $qn\in T_\tau$, so $M\opto^*\n$.
+
+        Now let $P$ be a term of type $S\to T$.  Write $A=\deno{S}$ and $B=\deno{T}$.  Suppose that $\tau,\tau'$ are strategies for $A\iimpl B$ such that $\tau\stle\tau'$ and such that $\tau'\plot_{S\to T}P$.  Suppose that $\sigma\plot_SN$ for some term $N$ of type $S$.  Then $\icomp{\tau'}{\sigma}\plot_TPN$.  Since $\tau\stle\tau'$, $\icomp{\tau}{\sigma}\stle\icomp{\tau'}{\sigma}$, by Propositions \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO}.  Therefore, by structural induction, we have $\icomp{\tau}{\sigma}\plot_TPN$.  Since $\sigma,N$ were abitrary, it follows that $\tau\plot_{S\to T}P$.
   \end{proof}
+
+In order to prove adequacy, it will suffice to show that $\deno{M}\plot_TM$ for all terms $M$ of type $T$.  In most cases, this is a simple induction.  The only tricky part will be showing that it is true for the recursion combinator.
+
+\begin{lemma}
+  \label{jimY}
+  Let $T$ be a PCF type.  Then $\deno{\Y_T}\plot_{(T\to T)\to T}\Y_T$.
 \end{lemma}
 
-\begin{remark}
-  One way to think of must-convergence in OBFPCF is as follows: given an OBFPCF term $M$, we define a two-player game as follows: if $M$ reduces to a unique term $N$, then replace $M$ with $N$ and start again.  Otherwise, if $M$ reduces according to the rule:
-  \[
-    \inferrule*[right=$n$]{ }{\wn\opto\n}
-    \]
-  then Player I chooses the value of $n$ to replace $\wn$ with and we go back to the beginning.  If $M$ reduces according to the rule
-  \[
-    \inferrule*[right=$\alpha<\beta$]{ }{\Y_T^\beta M \opto M (\Y_T^\alpha M)}
-    \]
-  then Player II chooses an ordinal $\alpha<\beta$ and applies the rule, and we start again.  If we converge, then we say that Player II wins.  Otherwise, we say that Player I wins.  We say that $M\mustconverge$ if and only if Player II has a winning strategy for this game.
-\end{remark}
+  In order to show this, we would like to be able to say that if $F$ is a stably directed set of strategies for $\deno{T}$ such that $\sigma\plot_T M$ for all $\sigma\in F$, then $\exlub F\plot_TM$, but it seems difficult to prove this, since function application is not continuous with respect to functions.  Instead, we shall pass to a slightly finer class of strategies, in which composition is continuous with respect to functions (but not to arguments).  We shall then be able to pass back to our original model and get our proof of Lemma \ref{jimY}.
 
-\begin{example}
-  We illustrate the capabilities of this new language with a small example.  In FPCF, we have a term of type $\nat\to\nat$ given by:
-  \[
-    \Y_{\nat\to\nat}(\lambda f.\lambda n.\IfO n\;\0\;f)
-    \]
-  that returns $\0$ for all inputs.
-
-  Given a term $M$ of type $T\to T$ and a natural number $n$, we may inductively define $\Y_T^n M$ up to observational equivalence within PCF as:
-  \begin{align*}
-    &\Y_T^0 M = \Omega \\
-    &\Y_T^{n+1} M = M (\Y_T^n M)
-  \end{align*}
-  In this case, we see that $\Y_{\nat\to\nat}^n(\lambda f.\lambda n.\IfO n\;\0\;f)$ evaluates to $\0$ if it is passed a number that is less than $n$ and diverges otherwise.  Thus:
-  \[
-    \Y_{\nat\to\nat}^n(\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn
-    \]
-  may diverge for all $n$, while $\Y_{\nat\to\nat}(\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn$ converges.  This is reflected in our game semantics: the denotation of $\Y_{\nat\to\nat}^n(\cdots)$ converges for inputs less than $n$ and diverges otherwise; if we pass to the stable least upper bound, then the resulting function converges for all inputs.  Composing the functions with $\wn$ shows us that composition is not continuous with respect to the stable order $\stle$.
-
-  Now consider the following term of OBFPCF:
-  \[
-    \Y^\omega (\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn
-    \]
-  A typical evaluation of this term might look like this:
-  \begin{align*}
-    & \Y^\omega (\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn \\
-    \opto\quad & (\lambda f.\lambda n.\IfO n\;\0\;f) \Y^m (\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn \\
-    \opto\quad & (\lambda n.\IfO n \;\0 \;\Y^m (\lambda f.\lambda n.\IfO n\;\0\;f))\;\wn \\
-    \opto\quad & \IfO \wn\;\0\;\Y^m(\lambda f.\lambda n.\IfO\;n\;\0\;f) \\
-    \opto\quad & \IfO (m+1)\;\0\;\Y^m(\lambda f.\lambda n.\IfO n\;\0\;f) \\
-    \opto\quad & \Y^m(\lambda f.\lambda n.\IfO n\;\0\;f) \;m
-  \end{align*}
-  which diverges, as we saw above.  The important point is that whatever value of $m$ we choose to decorate $\Y$ with in the second line, there is a possibility that we will nondeterministically choose a value for $\wn$ that is greater than or equal to $m$ and so causes the program to diverge.  Therefore:
-  \[
-    \Y^\omega (\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn\not\mustconverge
-    \]
-  Now, if we repace $\omega$ with $\omega+1$, we arrive at the original behaviour: we can replace the $\omega+1$ with $\omega$ in the first line so we arrive at:
-  \begin{align*}
-    & \Y^{\omega+1} (\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn \\
-    \opto\quad & (\lambda f.\lambda n.\IfO n\;\0\;f) \Y^\omega (\lambda f.\lambda n.\IfO n\;\0\;f)\;\wn \\
-    \opto\quad & \cdots \\
-    \opto\quad & \Y^\omega(\lambda f.\lambda n.\IfO n\;\0\;f) \;m \\
-    \opto\quad & (\lambda f.\lambda n.\IfO n\;\0\;f) \Y^{m+1}(\lambda f.\lambda n.\IfO n\;\0\;f) \;m \\
-    \opto\quad & \cdots \\
-    \opto\quad & \0
-  \end{align*}
-
-Here, we are able to choose which natural number to decay to after the value for $\wn$ has been chosen, so this term must converge.
-
-Note that although $\Y^{\omega+1}(\lambda f.\lambda n.\IfO n\;\0\;f)$ is operationally equivalent to $\Y(\lambda f.\lambda n.\IfO n\;\0\;f)$, $\Y^\omega(\lambda f.\lambda n.\IfO n\;\0\;f)$ has no equivalent in FPCF.  Thus, OBFPCF allows us to discern levels of convergence that are invisible in FPCF.
-
-  Importantly, notice that function application \emph{is} now continuous: $\Y^\omega(\cdots)$ is the limit of the $\Y^n(\cdots)$, and $\Y^\omega(\cdots)\;\wn$ may diverge just as $\Y^n(\cdots)\;\wn$ may.
-
-  At the moment, our game semantics is unable to model terms such as $\Y^\omega(\lambda f.\lambda n.\IfO n\;\0\;f)$.  We will need to modify it.
-\end{example}
-
-\subsection{Game semantics for OBFCPF}
+\subsection{Multistrategies}
 
 \begin{definition}
   Let $A$ be a game.  A \emph{multistrategy} for $A$ is a stably directed set $\Sigma$ of strategies for $A$ such that for all $\sigma,\tau\in \Sigma$ we have $T_\sigma=T_\tau$.
 
   Given a multistrategy $\Sigma$, we write $T_\Sigma$ for the unique value of $T_\sigma$, where $\sigma\in\Sigma$.
 
-  We compose multistrategies in the obvious way: let $A,B,C$ be games, let $\Sigma$ be a multistrategy for $A\iimpl B$ and let $\Tau$ be a multistrategy for $B\iimpl C$.  Then we define:
-  \[
-    \icomp\Tau\Sigma = \{\icomp\tau\sigma\suchthat\sigma\in\Sigma,\;\tau\in\Tau\}
-    \]
-  By Lemmas \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO}, this is still stably directed.
-
-  We also extend the stable order to multistrategies.  This time, $\stle$ is a preorder rather than being a full order.
+  We can extend the stable order to multistrategies.  This time, $\stle$ is a preorder rather than being a full order.
 
   Let $A$ be a game, and let $\Sigma,\Tau$ be multistrategies for $A$.  We say that $\Sigma\stle\Tau$ if for all $\tau\in\Tau$ there exists $\sigma\in\Sigma$ such that $\sigma\stle\tau$.
 
@@ -1004,10 +945,10 @@ Note that although $\Y^{\omega+1}(\lambda f.\lambda n.\IfO n\;\0\;f)$ is operati
 
 \begin{lemma}
   Let $A$ be a game, let $\sigma$ be a strategy for $A$ and let $\Sigma$ be a multistrategy for $A$ such that $\{\sigma\}\steq\Sigma$.  Then $\sigma\in\Sigma$ and is a $\stle$-least element of $\Sigma$.
+\end{lemma}
   \begin{proof}
     Since $\Sigma\stle\{\sigma\}$, we know that $\tau\stle\sigma$ for all $\tau\in\Sigma$.  Since $\{\sigma\}\stle\Sigma$, we know that $\sigma\stle\tau$ for some $\tau\in\Tau$ and hence by antisymmetry that $\sigma\in\Sigma$.
   \end{proof}
-\end{lemma}
 
 Conversely, if $\Sigma$ is a strategy with a $\stle$-greatest element $\sigma$, then $\{\sigma\}\steq\Sigma$.
 
@@ -1020,66 +961,108 @@ Conversely, if $\Sigma$ is a strategy with a $\stle$-greatest element $\sigma$, 
 
 \begin{proposition}
   $\exlub F$ is a valid multistrategy for $A$.
+\end{proposition}
   \begin{proof}
     We need to show that for all $\Sigma\in F$ and for all $\sigma\in\Sigma$, $\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)$ satisfies the diverge-or-reply rule.  Let $\Sigma\in F$ and let $\sigma\in\Sigma$.  Suppose that $s\in T_\Tau$ for some $\Tau\in F$, that $sa\in P_A$ and that $sa\not\in D_\sigma$.  Since $F$ is stably directed, there exists some multistrategy $\Upsilon\in F$ such that $\Sigma,\Tau\stle\Upsilon$.  Let $\tau\in\Tau$.  Then there are $\upsilon_1,\upsilon_2\in\Upsilon$ such that $\sigma\stle\upsilon_1$ and $\tau\stle\upsilon_2$.  Then, since $\Upsilon$ is stably directed, there is some $\upsilon\in\Upsilon$ such that $\upsilon_1,\upsilon_2\stle\upsilon$.  In particular, $s\in T_\upsilon$ and $sa\not\in D_\upsilon$.  Therefore, $sab\in T_\upsilon$ for some $b$ and so $sab\in\bigcup_{\Sigma\in F}T_\Sigma$.
   \end{proof}
-\end{proposition}
 
 \begin{proposition}
+  \label{multiExlubIsStlub}
   $\exlub F$ is a $\stle$-least upper bound for $F$.
 
+\end{proposition}
   \begin{proof}
     Let $\Sigma\in F$ and let $\sigma\in\Sigma$.  Then we have $\sigma\stle\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)\in\exlub F$.  So $\exlub F$ is a $\stle$-upper bound for $F$.
 
     Now suppose that $\Xi$ is some other $\stle$-upper bound for $F$.  Then for all $\Sigma\in F$ we must have $T_\Sigma\subset T_\Xi$ and so $\bigcup_{\Sigma\in F}T_\Sigma\subset T_\Xi$.  Now suppose that $\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)$ is some element of $\exlub F$, where $\Sigma\in F$ and $\sigma\in\Sigma$.  We have $\Sigma\stle\Xi$, so there exists some $\xi\in\Xi$ such that $\sigma\stle\xi$.  We have $\xi = (T_\Xi, D_\xi)$, where $D_\xi\subset D_\sigma$.  Therefore, $\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)\stle\xi$.  It follows that $\exlub F\stle\Xi$.
   \end{proof}
-\end{proposition}
-
-Now let $A$ be a game and let $\Sigma$ be a multistrategy for $A\iimpl A$.  We inductively define an ordinal-indexed sequence of multistrategies $\Sigma^\alpha$ for $A\iimpl A$ as follows:
-\begin{itemize}
-  \item $\Sigma^0 = \{\bot\}$
-  \item $\Sigma^{\alpha+1} = \icomp{\Sigma}{\Sigma^\alpha}$
-  \item $\Sigma^{\lambda} = \exlub_{\alpha<\lambda}\Sigma^\alpha$ if $\lambda$ is a limit ordinal
-\end{itemize}
-
-This chain is increasing and so, by Hartogs' Lemma, it must stabilize: there will be some $\Sigma^\mu$ such that $\Sigma^\mu\steq\icomp\Sigma{\Sigma^\mu}$; this will be a $\stle$-least fixed point of the map $\Tau\mapsto\icomp\Sigma\Tau$ on $\steq$-equivalence classes of multistrategies for $A$.
-
-Now suppose that $\Sigma = \{\sigma\}$, where $\sigma$ is some strategy for $A$.
-
-$\cdots$
-
-To prove computational adequacy, we define Plotkin-style approximation relations (\cite{PlotkinApRels}, cited in \cite{LairdOrdinalGames}).  
 
 \begin{definition}
-  For each PCF type $T$, we define a relation $\plot_T$ between strategies for $\deno{T}$ and closed terms of type $T$:
-
-  \begin{itemize}
-    \item $\sigma \plot_\nat M$ if $M\not\mustconverge$ implies that $q\in D_\sigma$ and $qn\in T_\sigma$ implies that $M\opto^* \n$.
-    \item $\tau \plot_{S\to T} P$ if $\sigma\plot_S N$ implies that $\comp\tau\sigma \plot_T P N$
-  \end{itemize}
+  Let $A,B,C$ be games, let $\Sigma$ be a multistrategy for $A\iimpl B$ and let $\Tau$ be a multistrategy for $B\iimpl C$.  Then we define:
+  \[
+    \icomp\Tau\Sigma = \left\{\icomp\tau{\left(\exlub_{\sigma\in\Sigma}\sigma\right)}\;\middle|\;\tau\in\Tau\right\}
+    \]
+  By Lemmas \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO} and Proposition \ref{exlubIsStlub}, this is still stably directed.
 \end{definition}
 
+Note that composition of multistrategies is \emph{not} necessarily associative and does not satisfy the rules for the identity, even up to $\steq$.  The reason for this is the failure of composition of strategies to be continuous.  It is possible that we could modify the model to make it associative, but we will not need associativity.
+
+What is clear is that composition is monotonic with respect to the stable ordering on multistrategies.  In fact, we it is even continuous with respect to functions (up to $\steq$).
+
+\begin{proposition}
+  \label{RareContinuityResult}
+  i) Let $A,B,C$ be games, let $\Sigma,\Sigma'$ be multistrategies for $A\implies B$ and let $\Tau,\Tau'$ be multistrategies for $B\implies C$ such that $\Sigma\stle\Sigma'$ and $\Tau\stle\Tau'$.  Then $\icomp\Tau\Sigma\stle\icomp{\Tau'}{\Sigma'}$.  
+
+  ii) Let $A,B,C$ be games, let $\Sigma$ be a multistrategy for $A\implies B$ and let $F$ be a stably directed set of multistrategies for $B\implies C$.  Then
+      \[
+        \icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma \steq \exlub_{\Tau\in F}(\icomp\Tau\Sigma)
+        \]
+\end{proposition}
+\begin{proof}
+  (i): We have $\Sigma\stle\Sigma'$ and it follows that $\exlub_{\sigma\in\Sigma}\sigma\stle\exlub_{\sigma\in\Sigma'}\sigma$ by Proposition \ref{exlubIsStlub} and the definition of $\stle$ for multistrategies.  Then, if $\icomp\tau{\left(\exlub_{\sigma\in\Sigma}\right)}$ is an arbitrary element of $\icomp\Tau\Sigma$, we know that there exists some $\tau'\in \Tau'$ such that $\tau\stle\tau'$.  Now we have
+  \[
+    \icomp\tau{\left(\exlub_{\sigma\in\Sigma}\sigma\right)}\le\icomp{\tau'}{\left(\exlub_{\sigma\in\Sigma'}\sigma\right)}\in\icomp{\Tau'}{\Sigma'}
+    \]
+  by Proposition \ref{compositionMonotonicSO}.
+
+  (ii): By part (i), $\icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma$ is an upper bound for $\{\icomp\Tau\Sigma\suchthat \Tau\in F\}$ and therefore we have
+  \[
+    \exlub_{\Tau\in F}(\icomp\Tau\Sigma)\stle\icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma
+    \]
+  by Proposition \ref{exlubIsStlub}.  For the other direction, we may write:
+  \begin{align*}
+    \icomp{\left(\exlub_{\Tau\in F}\Tau\right)}{\Sigma} & = \left\{\icomp\tau{\exlub_{\sigma\in\Sigma}\sigma}\;\middle|\;\tau\in\exlub_{\Tau\in F}\Tau\right\} \\
+      & = \left\{\icomp{\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)}{\exlub_{\sigma\in\Sigma}\sigma}\;\middle|\;\textrm{$\tau\in\Tau$ for some $\Tau\in F$}\right\}
+  \end{align*}
+  while we have 
+  \begin{align*}
+    \exlub_{\Tau\in F}(\icomp\Tau\Sigma) & = \exlub_{\Tau\in F}\left\{\icomp\tau{\exlub_{\sigma\in\Sigma}\sigma}\;\middle|\;\tau\in\Tau\right\} \\
+      & = \left\{\left(\bigcup_{\Tau\in F}T_{\icomp{\Tau}{\exlub \Sigma}},D_{\icomp\tau{\exlub\Sigma}}\right)\;\middle|\;\textrm{$\tau\in\Tau$ for some $\Tau\in F$}\right\}
+  \end{align*}
+  Write $\tau_*$ for $\icomp{\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)}{\exlub_{\sigma\in\Sigma}\sigma}$ and $\tau^*$ for $\left(\bigcup_{\Tau\in F}T_{\icomp{\Tau}{\exlub \Sigma}},D_{\icomp\tau{\exlub\Sigma}}\right)$.  We want to show that $\tau_*\stle\tau^*$ for all $\tau$ such that $\tau\in \Tau$ for some $\Tau\in F$, which will complete the proof.
+
+  We first claim that $T_{\tau_*}=T_{\tau^*}$.  Indeed, if $s\in T_{\tau_*}$ then $s=\s\vert_{A,C}$, where $\s\vert_{A,B}\in\bigcup_{\Tau\in F}T_\Tau$ and $\s\vert_{B,C}\in T_{\exlub\Sigma}$.  It follows that $s\in\bigcup_{\Tau\in F}T_{\icomp{\Tau}{\exlub\Sigma}}$.  Conversely, if $s\in\bigcup_{\Tau\in F} T_{\icomp{\Tau}{\exlub\Sigma}}$, then we have $s\in\icomp{\Tau'}\Sigma$ for some $\Tau'\in F$, so $s\in T_{\tau_*}$.  
+
+  Now all we need to show is that $D_{\tau^*}\subset D_{\tau_*}$.  We have $D_{\tau^*}=D_{\icomp{\tau}{\exlub\Sigma}}$.  So if $d\in D_{\tau^*}$ then there is some $\d\in\left(\exlub_{\sigma\in\Sigma}\sigma\right)\dv\tau$ such that $\d\vert_{A,C}\prefix d$.  If $\d\vert_{A,B}\in T_{\exlub \Sigma}$ and $\d\vert_{B,C}\in D_\tau$ then certainly $\d\in \left(\exlub_{\sigma\in\Sigma}\sigma\right)\dv\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)$.  Otherwise, $\d\vert_{A,B}\in D_{\exlub \Sigma}$ and $\d\vert_{B,C}\in T_\tau$.  But now, since $T_\tau\subset \bigcup_{\Tau\in F}T_\Tau$, we again have $\d\in \left(\exlub_{\sigma\in\Sigma}\sigma\right)\dv\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)$.  Therefore, $d\in D_{\tau_*}$.  
+\end{proof}
+
+Note that our definition of composition $\icomp\Tau\Sigma$ is not necessarily continuous with respect to $\Sigma$.  
+
+\subsection{Adequacy}
+
+We now extend the definition of the predicates $\plot_T$ to multistrategies.  
+
+\begin{definition}
+  For each PCF type $T$, we define a relation $\plot_T$ between multistrategies for $\deno{T}$ and closed terms of type $T$: we say that $\Sigma\plot_TM$ if $\sigma\plot_TM$ for all $\sigma\in\Sigma$.  
+\end{definition}
+
+We now prove a stronger version of Lemma \ref{jims2ndLemma} that holds for multistrategies.  
+
 \begin{lemma}
-  \begin{enumerate}[i)]
-    \item If $M$ is a term of type $\nat$ such that $M\opto N$ for some unique term $N$, and if $\sigma\plot_\nat N$, then $\sigma\plot_\nat M$
-    \item If $M$ is a term of type $T$ and $\sigma,\tau$ are strategies for $\deno{M}$ such that $\sigma\stle\tau$, and if $\tau\plot_TM$, then $\sigma\plot_TM$.
-    \item If $M$ is a term of type $T$ and $F$ is a stably directed set of strategies for $\deno{M}$ such that $\sigma\plot_TM$ for all $\sigma\in F$, then $\exlub F\plot_TM$.  
-  \end{enumerate}
-  \begin{proof}
-    \begin{enumerate}[(i):]
-      \item Suppose $M\opto N$ for some unique term $N$ and suppose that $\sigma\plot_\nat N$.  Then, if $M\not\mustconverge$, we must have $N\not\mustconverge$.  Therefore, $q\in D_\sigma$.  Suppose $qn\in T_\sigma$.  Then $N\opto^*\n$, so $N\opto^*\n$.
-      \item Structural induction on $T$.  let $M$ be a term of type $\nat$.  Suppose $\sigma,\tau$ are strategies for $\bN$, that $\sigma\stle\tau$ and that $\tau\plot_T M$.  If $M\not\mustconverge$, then $q\in D_\tau$, so $q\in D_\sigma$.  If $qn\in T_\sigma$, then $qn\in T_\tau$, so $M\opto^*\n$.
+  \label{multijims2ndLemma}
+  i) If $M$ is a term of type $\nat$ such that $M\opto N$ for some unique term $N$, and if $\Sigma\plot_\nat N$, then $\Sigma\plot_\nat M$
 
-        Now let $P$ be a term of type $S\to T$.  Write $A=\deno{S}$ and $B=\deno{T}$.  Suppose that $\tau,\tau'$ are strategies for $A\iimpl B$ such that $\tau\stle\tau'$ and such that $\tau'\plot_{S\to T}P$.  Suppose that $\sigma\plot_SN$ for some term $N$ of type $S$.  Then $\icomp{\tau'}{\sigma}\plot_TPN$.  Since $\tau\stle\tau'$, $\icomp{\tau}{\sigma}\stle\icomp{\tau'}{\sigma}$, by Propositions \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO}.  Therefore, by structural induction, we have $\icomp{\tau}{\sigma}\plot_TPN$.  Since $\sigma,N$ were abitrary, it follows that $\tau\plot_{S\to T}P$.
-      \item Structural induction on $T$.  Let $M$ be a term of type $\nat$ and let $F$ be a stably directed set of strategies for $\bN$ such that $\sigma\plot_TM$ for all $\sigma\in F$.  Suppose $M\not\mustconverge$.  Then $q\in D_\sigma$ for all $\sigma\in F$, so $q\in D_{\exlub F}$.  Now suppose that $qn\in T_{\exlub F}$.  Then $qn\in T_\sigma$ for some $\sigma\in F$, and so $M\opto^*\n$.
+  ii) If $M$ is a term of type $T$ and $\Sigma,\Tau$ are multistrategies for $\deno{M}$ such that $\Sigma\stle\Tau$, and if $\Tau\plot_TM$, then $\Sigma\plot_TM$.
 
-        Now let $P$ be a term of type $S\to T$.  Write $A=\deno{S}$ and $B=\deno{T}$.  Suppose that $F$ is a stably directed set of strategies for $A\iimpl B$ such that $\tau\plot_{S\to T}P$ for all $\tau\in F$.  Let $N$ be a term of type $S$ and let $\sigma$ be a strategy for $A$ such that $\sigma\plot_SN$.  Then $\icomp\tau\sigma\plot_TPN$ for all $\tau\in F$.  By structural induction, $\exlub_{\tau\in F}(\icomp\tau\sigma)\plot_TPN$.  Now 
-        \qedhere
-    \end{enumerate}
-  \end{proof}
+  iii) If $M$ is a term of type $T$ and $F$ is a stably directed set of multistrategies for $\deno{T}$ such that $\Sigma\plot_TM$ for all $\Sigma\in F$, then $\exlub F\plot_TM$.
 \end{lemma}
+\begin{proof}
+  (i) and (ii) follow immediately from Lemma \ref{jims2ndLemma} and the definition of $\stle$ for multistrategies.
 
-\bibliographystyle{alpha}
-\bibliography{../common/phd_bibliography}
+  (iii): Structural induction on $T$.  If $T=\nat$ and $M\not\mustconverge$, then $q\in D_\sigma$ for all $\sigma$ such that $\sigma\in\Sigma$ for some $\Sigma\in F$.  Thus, $q\in D_\sigma$ for all $\sigma\in\exlub F$.  If $qn\in T_{\exlub F}$ then $qn\in T_\Sigma$ for some $\Sigma\in F$.  Then, since $\Sigma\plot_\nat M$, we have $M\opto^*\n$.  
+
+  Now suppose that $T=Q\to R$ and that $M$ is a term of type $Q\to R$ such that $\Tau\plot_{Q\to R}M$ for all $\Tau\in F$.  Write $A=\deno{Q}$ and $B=\deno{R}$.  Let $\sigma$ be a strategy for $A$ such that $\sigma\plot_QN$ and write $\Sigma$ for the multistrategy $\{\sigma\}$.  For each $\Tau\in F$, we have $\icomp\Tau\Sigma = \{\icomp\tau\sigma\suchthat\tau\in\Tau\}$.  We have $\icomp\tau\sigma\plot_RMN$ for each $\tau$, so $\icomp\Tau\Sigma\plot_RMN$ for each $\Tau\in F$.  By structural induction, we must have $\exlub_{\Tau\in F}(\icomp\Tau\Sigma)\plot_RMN$.  Now, by Proposition \ref{RareContinuityResult}, we have $\exlub_{\Tau\in F}(\icomp\Tau\Sigma)=\icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma$ and therefore $\icomp\tau\sigma\plot_RMN$ for each $\tau\in\exlub_{\Tau\in F}\Tau$.  Since $\sigma, N$ were arbitrary, it follows that $\exlub F\plot_{Q\to R}M$.  
+\end{proof}
+
+We now have the technical machinery ready to prove Lemma \ref{jimY}.
+
+\begin{proof*}{Proof of Lemma \ref{jimY}}
+  Recall that we constructed $\deno{\Y_T}$ as the $\stle$-least fixed point of the strategy $\chi_A$ for $((A\iimpl A)\iimpl A)\iimpl((A\iimpl A)\iimpl A)$ corresponding to the lambda term $\lambda F.\lambda f.f(F f)$, where $A=\deno T$.  This fixed point exists because the set of strategies for $((A\iimpl A)\iimpl A)$ is directed complete.  
+
+  Let $S$ denote the set of multistrategies for $(A\iimpl A)\iimpl A$ such that $S\plot_{(T\to T)\to T}\Y_T$.  By Lemma \ref{multijims2ndLemma}, part (iii), $S$ is directed complete with respect to $\stle$.  Write $\Chi_A$ for the multistrategy $\chi_A$.  We first claim that.
+\end{proof*}
+
+\bibliographystyle{entcs}
+\bibliography{phd_bibliography}
 
 \end{document}
