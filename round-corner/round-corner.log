@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.10.6)  27 OCT 2016 15:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  19 MAR 2017 21:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -401,7 +401,7 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \backup@length=\skip44
 )
 (/usr/share/texmf-dist/tex/latex/paralist/paralist.sty
-Package: paralist 2015/12/30 v2.5 Extended list environments
+Package: paralist 2016/08/07 v2.6 Extended list environments
 \pltopsep=\skip45
 \plpartopsep=\skip46
 \plitemsep=\skip47
@@ -581,21 +581,28 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 \pb@xlen=\skip62
 )
 (/usr/share/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2016/10/11 v2.1 Span multiple rows of a table
+\multirow@colwidth=\skip63
+\multirow@cnta=\count123
+\multirow@cntb=\count124
+\multirow@dima=\skip64
 \bigstrutjot=\dimen162
 )
-(/usr/share/texmf-dist/tex/latex/multirow/bigdelim.sty)
+(/usr/share/texmf-dist/tex/latex/multirow/bigdelim.sty
+Package: bigdelim 2016/10/11 v2.1 Create big delimiters in tabular or array
+)
 (/usr/share/texmf-dist/tex/latex/lettrine/lettrine.sty
 File: lettrine.sty 2015/08/31 v1.9 (Daniel Flipo)
-\c@DefaultLines=\count123
-\c@DefaultDepth=\count124
+\c@DefaultLines=\count125
+\c@DefaultDepth=\count126
 \DefaultFindent=\dimen163
 \DefaultNindent=\dimen164
 \DefaultSlope=\dimen165
 \DiscardVskip=\dimen166
 \L@lbox=\box28
 \L@tbox=\box29
-\c@L@lines=\count125
-\c@L@depth=\count126
+\c@L@lines=\count127
+\c@L@depth=\count128
 \L@Pindent=\dimen167
 \L@Findent=\dimen168
 \L@Nindent=\dimen169
@@ -611,6 +618,16 @@ File: lettrine.sty 2015/08/31 v1.9 (Daniel Flipo)
 
 Loading lettrine.cfg
 (/usr/share/texmf-dist/tex/latex/lettrine/lettrine.cfg))
+(/usr/share/texmf-dist/tex/latex/mathpartir/mathpartir.sty
+Package: mathpartir 2016/02/24 version 1.3.2 Math Paragraph for Typesetting Inf
+erence Rules
+\mpr@andskip=\skip65
+\mpr@lista=\toks27
+\mpr@listb=\toks28
+\mpr@hlist=\box30
+\mpr@vlist=\box31
+\mpr@right=\box32
+)
 (/usr/share/texmf-dist/tex/latex/tocbibind/tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
 Package tocbibind Info: The document has section divisions on input line 50.
@@ -621,43 +638,43 @@ Package tocbibind Note: Using section or other style headings.
 ) (/usr/share/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2013/05/02 v2.3f parameterised ToC, etc., typesetting
 Package tocloft Info: The document has section divisions on input line 44.
-\cftparskip=\skip63
-\cftbeforetoctitleskip=\skip64
-\cftaftertoctitleskip=\skip65
-\cftbeforepartskip=\skip66
-\cftpartnumwidth=\skip67
-\cftpartindent=\skip68
-\cftbeforesecskip=\skip69
-\cftsecindent=\skip70
-\cftsecnumwidth=\skip71
-\cftbeforesubsecskip=\skip72
-\cftsubsecindent=\skip73
-\cftsubsecnumwidth=\skip74
-\cftbeforesubsubsecskip=\skip75
-\cftsubsubsecindent=\skip76
-\cftsubsubsecnumwidth=\skip77
-\cftbeforeparaskip=\skip78
-\cftparaindent=\skip79
-\cftparanumwidth=\skip80
-\cftbeforesubparaskip=\skip81
-\cftsubparaindent=\skip82
-\cftsubparanumwidth=\skip83
-\cftbeforeloftitleskip=\skip84
-\cftafterloftitleskip=\skip85
-\cftbeforefigskip=\skip86
-\cftfigindent=\skip87
-\cftfignumwidth=\skip88
-\cftbeforelottitleskip=\skip89
-\cftafterlottitleskip=\skip90
-\cftbeforetabskip=\skip91
-\cfttabindent=\skip92
-\cfttabnumwidth=\skip93
-\cftbeforesubfigskip=\skip94
-\cftsubfigindent=\skip95
-\cftsubfignumwidth=\skip96
-\cftbeforesubtabskip=\skip97
-\cftsubtabindent=\skip98
-\cftsubtabnumwidth=\skip99
+\cftparskip=\skip66
+\cftbeforetoctitleskip=\skip67
+\cftaftertoctitleskip=\skip68
+\cftbeforepartskip=\skip69
+\cftpartnumwidth=\skip70
+\cftpartindent=\skip71
+\cftbeforesecskip=\skip72
+\cftsecindent=\skip73
+\cftsecnumwidth=\skip74
+\cftbeforesubsecskip=\skip75
+\cftsubsecindent=\skip76
+\cftsubsecnumwidth=\skip77
+\cftbeforesubsubsecskip=\skip78
+\cftsubsubsecindent=\skip79
+\cftsubsubsecnumwidth=\skip80
+\cftbeforeparaskip=\skip81
+\cftparaindent=\skip82
+\cftparanumwidth=\skip83
+\cftbeforesubparaskip=\skip84
+\cftsubparaindent=\skip85
+\cftsubparanumwidth=\skip86
+\cftbeforeloftitleskip=\skip87
+\cftafterloftitleskip=\skip88
+\cftbeforefigskip=\skip89
+\cftfigindent=\skip90
+\cftfignumwidth=\skip91
+\cftbeforelottitleskip=\skip92
+\cftafterlottitleskip=\skip93
+\cftbeforetabskip=\skip94
+\cfttabindent=\skip95
+\cfttabnumwidth=\skip96
+\cftbeforesubfigskip=\skip97
+\cftsubfigindent=\skip98
+\cftsubfignumwidth=\skip99
+\cftbeforesubtabskip=\skip100
+\cftsubtabindent=\skip101
+\cftsubtabnumwidth=\skip102
 )
 (/usr/share/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
@@ -684,29 +701,36 @@ Package: bm 2016/07/07 v1.2b Bold Symbol Support (DPC/FMi)
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 142.
 LaTeX Info: Redefining \bm on input line 208.
 )
+(/usr/share/texmf-dist/tex/latex/stmaryrd/stmaryrd.sty
+Package: stmaryrd 1994/03/03 St Mary's Road symbol package
+\symstmry=\mathgroup11
+LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
+(Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
+)
 (/usr/share/texmf-dist/tex/latex/wasysym/wasysym.sty
 Package: wasysym 2003/10/30 v2.0 Wasy-2 symbol support package
-\symwasy=\mathgroup11
+\symwasy=\mathgroup12
 LaTeX Font Info:    Overwriting symbol font `wasy' in version `bold'
 (Font)                  U/wasy/m/n --> U/wasy/b/n on input line 90.
+LaTeX Font Info:    Redeclaring math symbol \ocircle on input line 240.
 )
-\symmathb=\mathgroup12
+\symmathb=\mathgroup13
 
 (/usr/share/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
-\@enLab=\toks27
+\@enLab=\toks29
 )
 (/usr/share/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/share/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/share/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks28
+\pgfutil@everybye=\toks30
 \pgfutil@tempdima=\dimen179
 \pgfutil@tempdimb=\dimen180
 
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.tex))
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box30
+\pgfutil@abb=\box33
 
 (/usr/share/texmf-dist/tex/latex/ms/everyshi.sty
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
@@ -722,11 +746,11 @@ Package: pgf 2015/08/07 v3.0.1a (rcs-revision 1.15)
 Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks29
-\pgfkeys@temptoks=\toks30
+\pgfkeys@pathtoks=\toks31
+\pgfkeys@temptoks=\toks32
 
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
-\pgfkeys@tmptoks=\toks31
+\pgfkeys@tmptoks=\toks33
 ))
 \pgf@x=\dimen181
 \pgf@y=\dimen182
@@ -738,13 +762,13 @@ Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 \pgf@yc=\dimen188
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count127
-\c@pgf@countb=\count128
-\c@pgf@countc=\count129
-\c@pgf@countd=\count130
-\t@pgf@toka=\toks32
-\t@pgf@tokb=\toks33
-\t@pgf@tokc=\toks34
+\c@pgf@counta=\count129
+\c@pgf@countb=\count130
+\c@pgf@countc=\count131
+\c@pgf@countd=\count132
+\t@pgf@toka=\toks34
+\t@pgf@tokb=\toks35
+\t@pgf@tokc=\toks36
 
 (/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
@@ -759,8 +783,8 @@ File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
 )))
 (/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
-\pgfsyssoftpath@smallbuffer@items=\count131
-\pgfsyssoftpath@bigbuffer@items=\count132
+\pgfsyssoftpath@smallbuffer@items=\count133
+\pgfsyssoftpath@bigbuffer@items=\count134
 )
 (/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
@@ -790,11 +814,11 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen189
-\pgfmath@count=\count133
-\pgfmath@box=\box31
-\pgfmath@toks=\toks35
-\pgfmath@stack@operand=\toks36
-\pgfmath@stack@operation=\toks37
+\pgfmath@count=\count135
+\pgfmath@box=\box34
+\pgfmath@toks=\toks37
+\pgfmath@stack@operand=\toks38
+\pgfmath@stack@operation=\toks39
 )
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex)
@@ -807,7 +831,7 @@ x) (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics
 .code.tex))) (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count134
+\c@pgfmathroundto@lastzeros=\count136
 )) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
 \pgf@picminx=\dimen190
@@ -836,10 +860,10 @@ File: pgfcorepathusage.code.tex 2014/11/02  (rcs-revision 1.24)
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
-\pgfpic=\box32
-\pgf@hbox=\box33
-\pgf@layerbox@main=\box34
-\pgf@picture@serial@count=\count135
+\pgfpic=\box35
+\pgf@hbox=\box36
+\pgf@layerbox@main=\box37
+\pgf@picture@serial@count=\count137
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2014/11/02  (rcs-revision 1.12)
@@ -867,14 +891,14 @@ File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
 \pgf@max=\dimen269
-\pgf@sys@shading@range@num=\count136
+\pgf@sys@shading@range@num=\count138
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
 
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
 File: pgfcoreexternal.code.tex 2014/07/09  (rcs-revision 1.21)
-\pgfexternal@startupbox=\box35
+\pgfexternal@startupbox=\box38
 ))
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
 File: pgfcorelayers.code.tex 2013/07/18  (rcs-revision 1.7)
@@ -886,7 +910,7 @@ File: pgfcorepatterns.code.tex 2013/11/07  (rcs-revision 1.5)
 )))
 (/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
 File: pgfmoduleshapes.code.tex 2014/03/21  (rcs-revision 1.35)
-\pgfnodeparttextbox=\box36
+\pgfnodeparttextbox=\box39
 )
 (/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
 File: pgfmoduleplot.code.tex 2015/08/03  (rcs-revision 1.13)
@@ -910,8 +934,8 @@ Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
 \pgffor@iter=\dimen272
 \pgffor@skip=\dimen273
-\pgffor@stack=\toks38
-\pgffor@toks=\toks39
+\pgffor@stack=\toks40
+\pgffor@toks=\toks41
 ))
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
@@ -919,7 +943,7 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 (/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.te
 x
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
-\pgf@plot@mark@count=\count137
+\pgf@plot@mark@count=\count139
 \pgfplotmarksize=\dimen274
 )
 \tikz@lastx=\dimen275
@@ -928,21 +952,21 @@ File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
 \tikz@lastysaved=\dimen278
 \tikzleveldistance=\dimen279
 \tikzsiblingdistance=\dimen280
-\tikz@figbox=\box37
-\tikz@figbox@bg=\box38
-\tikz@tempbox=\box39
-\tikz@tempbox@bg=\box40
-\tikztreelevel=\count138
-\tikznumberofchildren=\count139
-\tikznumberofcurrentchild=\count140
-\tikz@fig@count=\count141
+\tikz@figbox=\box40
+\tikz@figbox@bg=\box41
+\tikz@tempbox=\box42
+\tikz@tempbox@bg=\box43
+\tikztreelevel=\count140
+\tikznumberofchildren=\count141
+\tikznumberofcurrentchild=\count142
+\tikz@fig@count=\count143
  (/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
-\pgfmatrixcurrentrow=\count142
-\pgfmatrixcurrentcolumn=\count143
-\pgf@matrix@numberofcolumns=\count144
+\pgfmatrixcurrentrow=\count144
+\pgfmatrixcurrentcolumn=\count145
+\pgf@matrix@numberofcolumns=\count146
 )
-\tikz@expandcount=\count145
+\tikz@expandcount=\count147
 
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 topaths.code.tex
@@ -977,23 +1001,23 @@ calc.code.tex
 File: tikzlibrarycalc.code.tex 2013/07/15 v3.0.1a (rcs-revision 1.9)
 ) (/usr/share/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2015/03/04 v2.20.2
-\thm@style=\toks40
-\thm@bodyfont=\toks41
-\thm@headfont=\toks42
-\thm@notefont=\toks43
-\thm@headpunct=\toks44
-\thm@preskip=\skip100
-\thm@postskip=\skip101
-\thm@headsep=\skip102
-\dth@everypar=\toks45
+\thm@style=\toks42
+\thm@bodyfont=\toks43
+\thm@headfont=\toks44
+\thm@notefont=\toks45
+\thm@headpunct=\toks46
+\thm@preskip=\skip103
+\thm@postskip=\skip104
+\thm@headsep=\skip105
+\dth@everypar=\toks47
 )
-\c@theorem=\count146
+\c@theorem=\count148
 
 (/usr/share/texmf-dist/tex/latex/answers/answers.sty
 Package: answers 2014/08/24 v2.16 Production of solution sheets in LaTeX2e
 )
-\c@exercise=\count147
-\c@answerthm=\count148
+\c@exercise=\count149
+\c@answerthm=\count150
 
 WARNING: environment answerthm already in use
 (/usr/share/texmf-dist/tex/latex/xifthen/xifthen.sty
@@ -1005,36 +1029,36 @@ Package: ifmtarg 2009/09/02 v1.2a check for an empty argument
 (/usr/share/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-\overlongequation=\box41
+\overlongequation=\box44
 ) (./round-corner.aux)
 \openout1 = `round-corner.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count149
+\scratchcounter=\count151
 \scratchdimen=\dimen285
-\scratchbox=\box42
-\nofMPsegments=\count150
-\nofMParguments=\count151
-\everyMPshowfont=\toks46
-\MPscratchCnt=\count152
+\scratchbox=\box45
+\nofMPsegments=\count152
+\nofMParguments=\count153
+\everyMPshowfont=\toks48
+\MPscratchCnt=\count154
 \MPscratchDim=\dimen286
-\MPnumerator=\count153
-\makeMPintoPDFobject=\count154
-\everyMPtoPDFconversion=\toks47
+\MPnumerator=\count155
+\makeMPintoPDFobject=\count156
+\everyMPtoPDFconversion=\toks49
 ) (/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -1089,66 +1113,94 @@ Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 ABD: EveryShipout initializing macros
-LaTeX Font Info:    Try loading font information for U+msa on input line 11.
+LaTeX Font Info:    Try loading font information for U+msa on input line 13.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 11.
+LaTeX Font Info:    Try loading font information for U+msb on input line 13.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+cmllr on input line 11.
+LaTeX Font Info:    Try loading font information for U+cmllr on input line 13.
 
 (/usr/share/texmf-dist/tex/latex/cmll/ucmllr.fd)
-LaTeX Font Info:    Try loading font information for U+wasy on input line 11.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 13.
+
+(/usr/share/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
+LaTeX Font Info:    Try loading font information for U+wasy on input line 13.
 
 (/usr/share/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 27.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 29.
 
 (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 27.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for U+euf on input line 51.
+LaTeX Font Info:    Try loading font information for U+euf on input line 53.
  (/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 )
-[2] [3] [4] [5] (./round-corner.bbl) [6] (./round-corner.aux) ) 
+[2] [3] [4] [5] [6]
+
+LaTeX Font Warning: Font shape `U/wasy/m/it' undefined
+(Font)              using `U/wasy/m/n' instead on input line 260.
+
+[7]
+Overfull \hbox (0.6417pt too wide) in paragraph at lines 274--274
+[]\OT1/cmr/bx/n/12 Constructing cofree com-mu-ta-tive comonoids in se-quoidal
+ []
+
+
+Overfull \hbox (97.95645pt too wide) detected at line 293
+[]
+ []
+
+
+Overfull \hbox (41.96085pt too wide) detected at line 309
+[]
+ []
+
+[8] (./round-corner.bbl [9]) [10] (./round-corner.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
 Here is how much of TeX's memory you used:
- 17620 strings out of 493013
- 342563 string characters out of 6139317
- 403242 words of memory out of 5000000
- 20743 multiletter control sequences out of 15000+600000
- 19205 words of font info for 78 fonts, out of 8000000 for 9000
+ 18298 strings out of 493013
+ 354704 string characters out of 6139318
+ 407488 words of memory out of 5000000
+ 21406 multiletter control sequences out of 15000+600000
+ 20021 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,21n,82p,716b,1062s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/sha
-re/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
-/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on round-corner.pdf (6 pages, 186313 bytes).
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
+sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/sh
+are/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf
+-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
+Output written on round-corner.pdf (10 pages, 218085 bytes).
 PDF statistics:
- 94 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+ 116 PDF objects out of 1000 (max. 8388607)
+ 84 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

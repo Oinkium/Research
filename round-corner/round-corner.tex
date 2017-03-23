@@ -2,6 +2,8 @@
 
 \input{../common/preamble}
 
+\renewcommand{\int}{{\mathtt{int}}}
+
 \title{Rounding off a corner}
 
 \author{John Gowers}
@@ -193,6 +195,136 @@ It can be shown (see for example \cite{martinsthesis}) that our category $\G$ of
     \]
   is an inclusive, Cartesian, decomposable, distributive sequoidal closed category.
 \end{theorem}
+
+\subsection{The sequoidal exponential}
+
+There are several ways to add exponentials to the basic category of games.  We shall use the definition based on countably many copies of the base game (see \cite{laird02}, for example):
+
+\begin{definition}
+  Let $A$ be a negative game.  The \emph{exponential} of $A$ is the game $\oc A = (M_{\oc A}, \lambda_{\oc A}, b_{\oc A}, P_{\oc A})$, where $M_{\oc A}, \lambda_{\oc A}, b_{\oc A}, P_{\oc A}$ are defined as follows:
+  \begin{itemize}
+    \item $M_{\oc A} = M_A \times \omega$
+    \item $\lambda_{\oc A} = \lambda_A \circ \pr_1$
+    \item $b_{\oc A} = O$
+    \item Given a sequence $s\in M_{\oc A}^\omega$, we write $s\vert_n$ for the largest sequence $a_1a_2\dots a_k\in M_A^*$ such that $(a_1,n),(a_2,n),\dots(a_k,n)$ is a subsequence of $s$.  Then $P_{\oc A}$ is the set of all sequence $s\in M_{\oc A}^\omega$ that are alternating with respect to $\lambda_{\oc A}$, such that $s\vert_n\in P_A$ for all $n$ and such that if $m<n$ and $(a,n)$ occurs in $s$ then $(b,m)$ must occur earlier in $s$ for some move $b$: in other words, player $O$ can start infinitely many copies of the game $A$, but he must start them in order.
+  \end{itemize}
+\end{definition}
+
+This last condition on the order in which games may be opened is very important, as it allows us to define morphisms that give $\oc A$ the semantics of the exponential from linear logic.  For example, we have a natural morphism $\mu\from\oc A\to\oc A\tensor\oc A$, given by the copycat strategy that starts a new copy of $A$ on the left whenever one is started on the right.  Because of the condition on the order in which copies of $A$ may be started, there is a unique way to do this.
+
+\begin{proposition}
+  $\mu$ exhibits $\oc A$ as a comonoid in the monoidal category $(\G, \tensor, I)$.  
+\end{proposition}
+\begin{proof}
+  $\mu$ shall be the comultiplication in our comonoid.  The counit is given by the empty strategy $\eta\from\oc A\to I$.  We just need to check that $\mu$ is associative and that $\eta$ is a counit for $\mu$.  
+
+  For associativity, we need to show that the following diagram commutes:
+  \[
+    \begin{tikzcd}
+      \oc A \arrow[rr, "\mu"] \arrow[d, "\mu"']
+        &
+          & \oc A \tensor \oc A \arrow[d, "\id_{\oc A}\tensor\mu"] \\
+      \oc A \tensor \oc A \arrow[r, "\mu\tensor\id_{\oc A}"' yshift=-0.4em]
+        & (\oc A \tensor \oc A) \tensor \oc A \arrow[r, "\assoc_{\oc A,\oc A,\oc A}"' yshift=-0.4em]
+          & \oc A \tensor (\oc A \tensor \oc A)
+    \end{tikzcd}
+    \]
+  This is easy to see when we notice that both branches of the square are copycat strategies on $\oc A\implies\oc A\tensor(\oc A\tensor \oc A)$; since copies of $A$ in $\oc A$ must be started in sequence, there is a unique such strategy, and so the square commutes.
+
+  For the counit, we need to show that the follosing two diagrams commute:
+  \[
+    \begin{tikzcd}
+      \oc A \arrow[r, "\mu"] \arrow[dr, "\runit_A\inv"']
+        & \oc A \tensor \oc A \arrow[d, "\id_{\oc A}\tensor \eta"] \\
+      %
+        & \oc A \tensor I
+    \end{tikzcd}
+    \quad\quad\quad
+    \begin{tikzcd}
+      \oc A \arrow[r, "\mu"] \arrow[dr, "\lunit_A\inv"']
+        & \oc A \tensor \oc A \arrow[d, "\eta\tensor\id_{\oc A}"] \\
+      %
+        & I \tensor \oc A
+    \end{tikzcd}
+    \]
+  Once again, these diagrams commute because both branches are copycat strategies for $\oc A\implies\oc A\tensor I$ or $\oc A\implies I\tensor\oc A$ and there is a unique such strategy in each case.
+\end{proof}
+
+We shall later show that $(\oc A, \mu, \eta)$ is in fact the \emph{cofree commutative comonoid} on $A$ in the monoidal category $(\G, \tensor, I)$.  
+
+We shall call the exponential $\oc A$ the \emph{sequoidal exponential}.  The following proposition explains the name:
+
+\begin{proposition}
+  Let $A$ be a negative game.  Then we get an endofunctor $A\sequoid\blank$ on $\G$ given by sending $B$ to $A\sequoid B$.  
+
+  The sequoidal exponential $\oc A$, together with the obvious copycat strategy $\alpha\from\oc A\to A\sequoid\oc A$, is the final coalgebra for the endofunctor $A\sequoid\blank$.  In other words, if $B$ is a negative game and $\sigma\from B\to A\sequoid B$ is a morphism then there is a unique morphism $\fcoal{\sigma}\from B\to \oc A$ such that the following diagram commutes:
+  \[
+    \begin{tikzcd}
+      B \arrow[r, "\sigma"] \arrow[d, "\fcoal{\sigma}"']
+        & A \sequoid B \arrow[d, "\id_A\sequoid\fcoal{\sigma}"] \\
+      \oc A \arrow[r, "\alpha"']
+        & A \sequoid \oc A
+    \end{tikzcd}
+    \]
+\end{proposition}
+\begin{proof}
+  See \cite{martinsthesis}.  We shall shortly give a proof in the more general case.
+\end{proof}
+
+\subsection{Constructing cofree commutative comonoids in sequoidal categories}
+
+We want to deduce the fact that $\oc A\xrightarrow{\mu}\oc A\tensor\oc A$ is the cofree commutative comonoid on $A$ from the fact that $\oc A$ is the final coalgebra for $A\sequoid\blank$.  It turns out that we shall need one more fact about the category of games to prove this.
+
+\begin{definition}
+  Let $A,B$ be objects of an inclusive, Cartesian, distributive sequoidal category with final coalgebras $\oc A\xrightarrow{\alpha_A} A\sequoid\oc A$ for all endofunctors of the form $A\sequoid\blank$.  Then we have morphisms:
+  \[
+    \begin{tikzcd}
+      \oc A \tensor \oc B \arrow[r, "\alpha_A\tensor\id_{\oc B}"] \arrow[d, "\sym"]
+        & (A \sequoid\oc A)\tensor \oc B \arrow[r, "\wk"]
+          & (A\sequoid\oc A)\sequoid\oc B \arrow[r, "\passoc"]
+            & A \sequoid (\oc A \tensor\oc B)
+              & \\
+      \oc B \tensor \oc A \arrow[r, "\alpha_B\tensor\id_{\oc A}"]
+        & (B\sequoid\oc B)\tensor\oc A \arrow[r, "\wk"]
+          & (B\sequoid\oc B)\sequoid \oc A \arrow[r, "\passoc"]
+            & B \sequoid (\oc B\tensor\oc A) \arrow[r, "\id_B\sequoid\sym"]
+              & B \sequoid (\oc A\tensor\oc B)
+    \end{tikzcd}
+    \]
+inducing a morphism
+\[
+  \oc A\tensor \oc B \to (A \sequoid(\oc A\tensor\oc B)) \times (B \sequoid(\oc A\tensor \oc B)) \xrightarrow{\dist\inv}
+    (A\times B)\sequoid(\oc A\tensor\oc B)
+    \]
+  Remembering that our category has a final coalgebra $\oc(A\times B)$ for the functor $(A\times B)\sequoid\blank$, we write $\int_{A,B}$ for the unique morphism $\oc A\tensor\oc B\to \oc(A\times B)$ making the following diagram commute
+  \[
+    \begin{tikzcd}
+      \oc A\tensor\oc B \arrow[r] \arrow[d, "\int_{A,B}"']
+        & (A\sequoid(\oc A\tensor\oc B))\times(B\sequoid(\oc A\tensor\oc B))\arrow[r,"\dist\inv"]
+          & (A\times B)\sequoid(\oc A\tensor\oc B) \arrow[d, "\id_{A\times B}\sequoid\int_{A,B}"] \\
+      \oc(A\times B) \arrow[rr, "\alpha_{A\times B}"']
+        &
+          & (A\times B)\sequoid\oc(A\times B)
+    \end{tikzcd}
+    \]
+\end{definition}
+
+\begin{proposition}
+  In the category of games, the morphism $\int_{A,B}$ is an isomorphism for all negative games $A,B$.
+\end{proposition}
+\begin{proof}
+  Observe that the morphism $\int_{A,B}$ is the copycat strategy on $\oc A\tensor\oc B\implies \oc (A\times B)$ that starts a copy of $A$ on the left whenever a copy of $A$ is started on the right and starts a copy of $B$ on the left whenever a copy of $B$ is started on the right (indeed, the morphisms in the diagram above are all copycat morphisms, so the copycat strategy we have just described must make that diagram commute.  Since there are infinitely many copies of both $A$ and $B$ available in $\oc (A\times B)$, and since a new copy of $A$ or $B$ may be started at any time, we may define an inverse copycat strategy on $\oc(A\times B)\implies \oc A\tensor\oc B$.
+\end{proof}
+
+Our main result for this section will be the following:
+\begin{theorem}
+  Let $(\C,\C_s,J)$ be an inclusive, Cartesian, distributive and decomposable sequoidal category with a final coalgebra $\oc A\xrightarrow{\alpha_A}A\sequoid\oc A$ for each endofunctor of the form $A\sequoid\blank$.  Suppose further that the morphism $\int_{A,B}$ as defined above is an isomorphism for all objects $A,B$.  Then $\oc A$ is the carrier of a cofree commutative comonoid over $A$ in the monoidal category $(\C,\tensor,I)$.  
+\end{theorem}
+
+The first step will be to define the comultiplication and counits for our comonoid over $\oc A$.  For the comultiplication, note that we have a morphism
+\[
+  \oc A \xrightarrow{\alpha_A} A \sequoid \oc A \xrightarrow{\Delta} (A\sequoid\oc A)\times (A\sequoid\oc A)\xrightarrow{\dist\inv} (A\times A)\sequoid\oc A
+  \]
 
 \bibliographystyle{alpha}
 \bibliography{../common/phd_bibliography}

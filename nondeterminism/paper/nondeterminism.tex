@@ -933,9 +933,7 @@ In order to prove adequacy, it will suffice to show that $\deno{M}\plot_TM$ for 
 \subsection{Multistrategies}
 
 \begin{definition}
-  Let $A$ be a game.  A \emph{multistrategy} for $A$ is a stably directed set $\Sigma$ of strategies for $A$ such that for all $\sigma,\tau\in \Sigma$ we have $T_\sigma=T_\tau$.
-
-  Given a multistrategy $\Sigma$, we write $T_\Sigma$ for the unique value of $T_\sigma$, where $\sigma\in\Sigma$.
+  Let $A$ be a game.  A \emph{multistrategy} for $A$ is a stably directed set $\Sigma$ of strategies for $A$.  (So the set of multistrategies for $A$ is the free directed-completion of the set of strategies for $A$).
 
   We can extend the stable order to multistrategies.  This time, $\stle$ is a preorder rather than being a full order.
 
@@ -954,18 +952,11 @@ In order to prove adequacy, it will suffice to show that $\deno{M}\plot_TM$ for 
 Conversely, if $\Sigma$ is a strategy with a $\stle$-greatest element $\sigma$, then $\{\sigma\}\steq\Sigma$.
 
 \begin{definition}
-  Let $A$ be a game and let $F$ be a set of multistrategies for $A$ that is directed with respect to $\stle$.  We define a strategy $\exlub F$ given by
+  Let $A$ be a game and let $F$ be a set of multistrategies for $A$ that is directed with respect to $\stle$.  The least upper bound of $F$ is given by the union of the multistrategies contained in $F$:
   \[
-    \exlub F = \left\{\left(\bigcup_{\Sigma\in F} T_\Sigma, D_\sigma\right)\;\middle|\;\textrm{$\sigma\in\Sigma$ for some $\Sigma\in F$}\right\}
+    \exlub F = \bigcup_{\Sigma\in F}\Sigma
     \]
 \end{definition}
-
-\begin{proposition}
-  $\exlub F$ is a valid multistrategy for $A$.
-\end{proposition}
-  \begin{proof}
-    We need to show that for all $\Sigma\in F$ and for all $\sigma\in\Sigma$, $\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)$ satisfies the diverge-or-reply rule.  Let $\Sigma\in F$ and let $\sigma\in\Sigma$.  Suppose that $s\in T_\Tau$ for some $\Tau\in F$, that $sa\in P_A$ and that $sa\not\in D_\sigma$.  Since $F$ is stably directed, there exists some multistrategy $\Upsilon\in F$ such that $\Sigma,\Tau\stle\Upsilon$.  Let $\tau\in\Tau$.  Then there are $\upsilon_1,\upsilon_2\in\Upsilon$ such that $\sigma\stle\upsilon_1$ and $\tau\stle\upsilon_2$.  Then, since $\Upsilon$ is stably directed, there is some $\upsilon\in\Upsilon$ such that $\upsilon_1,\upsilon_2\stle\upsilon$.  In particular, $s\in T_\upsilon$ and $sa\not\in D_\upsilon$.  Therefore, $sab\in T_\upsilon$ for some $b$ and so $sab\in\bigcup_{\Sigma\in F}T_\Sigma$.
-  \end{proof}
 
 \begin{proposition}
   \label{multiExlubIsStlub}
@@ -973,22 +964,20 @@ Conversely, if $\Sigma$ is a strategy with a $\stle$-greatest element $\sigma$, 
 
 \end{proposition}
   \begin{proof}
-    Let $\Sigma\in F$ and let $\sigma\in\Sigma$.  Then we have $\sigma\stle\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)\in\exlub F$.  So $\exlub F$ is a $\stle$-upper bound for $F$.
-
-    Now suppose that $\Xi$ is some other $\stle$-upper bound for $F$.  Then for all $\Sigma\in F$ we must have $T_\Sigma\subset T_\Xi$ and so $\bigcup_{\Sigma\in F}T_\Sigma\subset T_\Xi$.  Now suppose that $\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)$ is some element of $\exlub F$, where $\Sigma\in F$ and $\sigma\in\Sigma$.  We have $\Sigma\stle\Xi$, so there exists some $\xi\in\Xi$ such that $\sigma\stle\xi$.  We have $\xi = (T_\Xi, D_\xi)$, where $D_\xi\subset D_\sigma$.  Therefore, $\left(\bigcup_{\Sigma\in F}T_\Sigma,D_\sigma\right)\stle\xi$.  It follows that $\exlub F\stle\Xi$.
+    Let $\Sigma\in F$.  Then for each $\sigma\in\Sigma$, we have $\sigma\stle\sigma\in \exlub F$.  So $\Sigma\stle\exlub F$.  Conversely, suppose that $\Xi$ is some other upper bound for $\Sigma$.  Let $\sigma\in \exlub F$.  Then $\sigma\in \Sigma$ for some $\Sigma\in F$.  Therefore, since $\Sigma\stle\Xi$, there is some $\xi\in \Xi$ such that $\sigma\stle\xi$.  Therefore, $\exlub F\stle\Xi$.
   \end{proof}
 
 \begin{definition}
   Let $A,B,C$ be games, let $\Sigma$ be a multistrategy for $A\iimpl B$ and let $\Tau$ be a multistrategy for $B\iimpl C$.  Then we define:
   \[
-    \icomp\Tau\Sigma = \left\{\icomp\tau{\left(\exlub_{\sigma\in\Sigma}\sigma\right)}\;\middle|\;\tau\in\Tau\right\}
+    \icomp\Tau\Sigma = \left\{\exlub_{\sigma\in\Sigma}(\icomp\tau\sigma)\suchthat\tau\in\Tau\right\}
     \]
   By Lemmas \ref{compositionMonotonicSO} and \ref{exponentiationMonotonicSO} and Proposition \ref{exlubIsStlub}, this is still stably directed.
 \end{definition}
 
-Note that composition of multistrategies is \emph{not} necessarily associative and does not satisfy the rules for the identity, even up to $\steq$.  The reason for this is the failure of composition of strategies to be continuous.  It is possible that we could modify the model to make it associative, but we will not need associativity.
+Note that composition of multistrategies is \emph{not} necessarily associative and does not satisfy the rules for the identity, even up to $\steq$.  The reason for this is the failure of composition of strategies to be continuous.  However, we can show that $\icomp{\{\upsilon\}}{(\icomp\Tau\Sigma)}=\icomp{(\icomp{\{\upsilon\}}\Tau)}\Sigma$ for all multistrategies $\Sigma,\Tau$ and all strategies $\upsilon$.  Similarly, $\icomp{\{\id\}}{\{\sigma\}}=\{\sigma\}$ and $\icomp{\Sigma}{\{\id\}}=\{\Sigma\}$ for all strategies $\sigma$ and multistrategies $\Sigma$.  We will not use these facts directly here, but it might be useful for future work to work out what the principles are behind our argument.
 
-What is clear is that composition is monotonic with respect to the stable ordering on multistrategies.  In fact, we it is even continuous with respect to functions (up to $\steq$).
+What is clear is that composition is monotonic with respect to the stable ordering on multistrategies.  Our main point of interest is that $\comp\Tau\Sigma$ is now continuous with respect to $\Tau$.
 
 \begin{proposition}
   \label{RareContinuityResult}
@@ -996,38 +985,25 @@ What is clear is that composition is monotonic with respect to the stable orderi
 
   ii) Let $A,B,C$ be games, let $\Sigma$ be a multistrategy for $A\implies B$ and let $F$ be a stably directed set of multistrategies for $B\implies C$.  Then
       \[
-        \icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma \steq \exlub_{\Tau\in F}(\icomp\Tau\Sigma)
+        \icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma = \exlub_{\Tau\in F}(\icomp\Tau\Sigma)
         \]
 \end{proposition}
 \begin{proof}
-  (i): We have $\Sigma\stle\Sigma'$ and it follows that $\exlub_{\sigma\in\Sigma}\sigma\stle\exlub_{\sigma\in\Sigma'}\sigma$ by Proposition \ref{exlubIsStlub} and the definition of $\stle$ for multistrategies.  Then, if $\icomp\tau{\left(\exlub_{\sigma\in\Sigma}\right)}$ is an arbitrary element of $\icomp\Tau\Sigma$, we know that there exists some $\tau'\in \Tau'$ such that $\tau\stle\tau'$.  Now we have
+  (i): We have $\Sigma\stle\Sigma'$ and it follows that $\exlub_{\sigma\in\Sigma}\sigma\stle\exlub_{\sigma\in\Sigma'}\sigma$ by Proposition \ref{exlubIsStlub} and the definition of $\stle$ for multistrategies.  Then, if $\exlub_{\sigma\in\Sigma}\icomp\tau\sigma$ is an arbitrary element of $\icomp\Tau\Sigma$, we know that there exists some $\tau'\in \Tau'$ such that $\tau\stle\tau'$.  Now we have
   \[
-    \icomp\tau{\left(\exlub_{\sigma\in\Sigma}\sigma\right)}\le\icomp{\tau'}{\left(\exlub_{\sigma\in\Sigma'}\sigma\right)}\in\icomp{\Tau'}{\Sigma'}
+    \exlub_{\sigma\in\Sigma}\icomp\tau\sigma\stle\exlub_{\sigma\in\Sigma}\icomp{\tau'}{\sigma}
     \]
-  by Proposition \ref{compositionMonotonicSO}.
+  by Proposition \ref{compositionMonotonicSO}, together with usual properties of least upper bounds.
 
-  (ii): By part (i), $\icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma$ is an upper bound for $\{\icomp\Tau\Sigma\suchthat \Tau\in F\}$ and therefore we have
-  \[
-    \exlub_{\Tau\in F}(\icomp\Tau\Sigma)\stle\icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma
-    \]
-  by Proposition \ref{exlubIsStlub}.  For the other direction, we may write:
+  (ii): We have:
   \begin{align*}
-    \icomp{\left(\exlub_{\Tau\in F}\Tau\right)}{\Sigma} & = \left\{\icomp\tau{\exlub_{\sigma\in\Sigma}\sigma}\;\middle|\;\tau\in\exlub_{\Tau\in F}\Tau\right\} \\
-      & = \left\{\icomp{\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)}{\exlub_{\sigma\in\Sigma}\sigma}\;\middle|\;\textrm{$\tau\in\Tau$ for some $\Tau\in F$}\right\}
+    \icomp{\left(\exlub_{\Tau\in F}\Tau\right)}\Sigma & = \left\{\exlub_{\sigma\in\Sigma}(\icomp\tau\sigma)\suchthat\tau\in\bigcup_{\Tau\in F}\Tau\right\} \\
+      & = \bigcup_{\Tau\in F}\left\{\exlub_{\sigma\in \Sigma}(\icomp\tau\sigma)\suchthat\tau\in\Tau\right\} \\
+      & = \exlub_{\Tau\in F}\left(\icomp\Tau\Sigma\right)
   \end{align*}
-  while we have 
-  \begin{align*}
-    \exlub_{\Tau\in F}(\icomp\Tau\Sigma) & = \exlub_{\Tau\in F}\left\{\icomp\tau{\exlub_{\sigma\in\Sigma}\sigma}\;\middle|\;\tau\in\Tau\right\} \\
-      & = \left\{\left(\bigcup_{\Tau\in F}T_{\icomp{\Tau}{\exlub \Sigma}},D_{\icomp\tau{\exlub\Sigma}}\right)\;\middle|\;\textrm{$\tau\in\Tau$ for some $\Tau\in F$}\right\}
-  \end{align*}
-  Write $\tau_*$ for $\icomp{\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)}{\exlub_{\sigma\in\Sigma}\sigma}$ and $\tau^*$ for $\left(\bigcup_{\Tau\in F}T_{\icomp{\Tau}{\exlub \Sigma}},D_{\icomp\tau{\exlub\Sigma}}\right)$.  We want to show that $\tau_*\stle\tau^*$ for all $\tau$ such that $\tau\in \Tau$ for some $\Tau\in F$, which will complete the proof.
-
-  We first claim that $T_{\tau_*}=T_{\tau^*}$.  Indeed, if $s\in T_{\tau_*}$ then $s=\s\vert_{A,C}$, where $\s\vert_{A,B}\in\bigcup_{\Tau\in F}T_\Tau$ and $\s\vert_{B,C}\in T_{\exlub\Sigma}$.  It follows that $s\in\bigcup_{\Tau\in F}T_{\icomp{\Tau}{\exlub\Sigma}}$.  Conversely, if $s\in\bigcup_{\Tau\in F} T_{\icomp{\Tau}{\exlub\Sigma}}$, then we have $s\in\icomp{\Tau'}\Sigma$ for some $\Tau'\in F$, so $s\in T_{\tau_*}$.  
-
-  Now all we need to show is that $D_{\tau^*}\subset D_{\tau_*}$.  We have $D_{\tau^*}=D_{\icomp{\tau}{\exlub\Sigma}}$.  So if $d\in D_{\tau^*}$ then there is some $\d\in\left(\exlub_{\sigma\in\Sigma}\sigma\right)\dv\tau$ such that $\d\vert_{A,C}\prefix d$.  If $\d\vert_{A,B}\in T_{\exlub \Sigma}$ and $\d\vert_{B,C}\in D_\tau$ then certainly $\d\in \left(\exlub_{\sigma\in\Sigma}\sigma\right)\dv\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)$.  Otherwise, $\d\vert_{A,B}\in D_{\exlub \Sigma}$ and $\d\vert_{B,C}\in T_\tau$.  But now, since $T_\tau\subset \bigcup_{\Tau\in F}T_\Tau$, we again have $\d\in \left(\exlub_{\sigma\in\Sigma}\sigma\right)\dv\left(\bigcup_{\Tau\in F}T_\Tau,D_\tau\right)$.  Therefore, $d\in D_{\tau_*}$.  
 \end{proof}
 
-Note that our definition of composition $\icomp\Tau\Sigma$ is not necessarily continuous with respect to $\Sigma$.  
+Note that our definition of composition $\icomp\Tau\Sigma$ is not necessarily continuous with respect to $\Sigma$.  For example, if $\Tau=\{\tau\}$ is a singleton strategy and $F$ is a set of multistrategies composable with $\Tau$, then $\exlub_{\Sigma\in F}(\icomp{\{\tau\}}\Sigma$ may contain multiple elements, but $\icomp{\{\tau\}}{\left(\exlub_{\Sigma\in F}\Sigma\right)}$ is always a singleton.
 
 \subsection{Adequacy}
 
@@ -1064,7 +1040,19 @@ We now have the technical machinery ready to prove Lemma \ref{jimY}.
 
   Write $T=T_1\to\dots\to T_k\to\nat$.  Let $N\from T\to T,N_1\from T_1,\dots,N_k\from T_k$ be terms and let $\tau\from\deno{T\to T},\sigma_1\from\deno{T_1},\dots,\sigma_k\from\deno{T_k}$ be strategies such that $\sigma_i\plot_{T_i}N_i$ for $i=1,\dots,k$.  
 
-  We have $\Sigma\in S$, so for all $\sigma\in\Sigma$ we have $\comp{\comp\sigma\tau}{\comp{\sigma_1}{\comp{\cdots}{\sigma_k}}}\plot_\nat\Y_TNN_1\dots N_k$.
+  We have $\Sigma\in S$, so for all $\sigma\in\Sigma$ we have $\comp{\comp\sigma\tau}{\comp{\sigma_1}{\comp{\cdots}{\sigma_k}}}\plot_\nat\Y_TNN_1\dots N_k$.  By a standard argument, $\chi_A\plot_{((T\to T)\to T)\to(T\to T)\to T}\lambda F.\lambda f.f(F f)$ and so we have
+  \[
+    \icomp{\chi_A}{\icomp{\sigma}{\icomp{\tau}{\icomp{\sigma_1}{\icomp{\dots}{\sigma_k}}}}}\plot_{\nat}(\lambda F.\lambda f.f(F f))\Y_T N N_1\dots N_k
+    \]
+  Therefore:
+  \[
+    \icomp{\chi_A}{\icomp{\sigma}{\icomp{\tau}{\icomp{\sigma_1}{\icomp{\dots}{\sigma_k}}}}}\plot_{\nat}N(\Y_T) N N_1\dots N_k
+    \]
+  Therefore, by part Lemma \ref{jims2ndLemma}, part (i), we have
+  \[
+    \icomp{\chi_A}{\icomp{\sigma}{\icomp{\tau}{\icomp{\sigma_1}{\icomp{\dots}{\sigma_k}}}}}\plot_{\nat}\Y_T N N_1\dots N_k
+    \]
+  Since $N,N_1,\dots,N_k,\tau,\sigma_1,\dots,\sigma_k$ were arbitrary, we see that $\icomp{\chi_A}{\sigma}\plot_{(T\to T)\to T}\Y_T$.
 \end{proof*}
 
 \bibliographystyle{entcs}
