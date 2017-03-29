@@ -6,10 +6,10 @@ Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
 Reallocated global_strs (elt_size=20001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-Database file #1: ../../../common/phd_bibliography.bib
+Database file #1: bibliography.bib
 You've used 4 entries,
             2849 wiz_defined-function locations,
-            643 strings with 5585 characters,
+            643 strings with 5565 characters,
 and the built_in function-call counts, 1577 in all, are:
 = -- 165
 > -- 52

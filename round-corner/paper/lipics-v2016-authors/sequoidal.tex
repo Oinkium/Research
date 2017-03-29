@@ -44,7 +44,7 @@
 \ArticleNo{23}
 % Editor-only macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Author macros and packages
+% Additional packages and macros
 \usepackage{IEEEtrantools} % for \IEEEeqnarray
 \usepackage{pbox} % for \pbox
 \usepackage{cmll} % Linear logic symbols!
@@ -338,7 +338,7 @@ We have one further piece of structure available to us:
 It can be shown (see for example \cite{martinsthesis}) that our category $\G$ of games has all this structure.
 
 \begin{theorem}
-  If $A,B$ are games, let $J$ be the inclusion functor $\G_s\to\G$ and let $\wk_{A,B}\from A\tensor B\to A\sequoid B$ be the natural copycat strategy.  Then
+  Let $J$ be the inclusion functor $\G_s\to\G$.  If $A,B$ are games, let $\wk_{A,B}\from A\tensor B\to A\sequoid B$ be the natural copycat strategy.  Then
   \[
     (\G,\G_s,J,\wk)
     \]
@@ -546,19 +546,35 @@ where $\F$ is the forgetful functor.
 
 Let $A$ be an object of $\C$.  Since $(\C, \times, 1)$ is Cartesian, the diagonal map $\Delta\from A\to A\times A$ is the cofree commutative comonoid over $A$ in $(\C,\times,1)$.  
 
-\begin{proposition}
-  $\CCom(\oc)\left(A\xrightarrow{\Delta}A\times A\right) = \oc A \xrightarrow{\mu_A} \oc A \tensor \oc A$
+\begin{proposition}\label{itsMu}
+  $\CCom(\oc)\left(A\xrightarrow{\Delta}A\times A\right)$ has comultiplication given by $\mu_A\from\oc A \to \oc A\tensor\oc A$ and counit given by the unique morphism $\eta_A\from \oc A \to I$.
 \end{proposition}
 \begin{proof}
-  By the (standard) construction of the functor $\CCom(\oc)$, the comultiplication in $\CCom(\oc)\left(A\xrightarrow{\Delta}A\times A\right)$ is given by the composite
-  \[
-    \begin{tikzcd}
-      \oc A \arrow[r, "\oc\Delta"]
-        & \oc (A\times A) \arrow[r, "\int_{A,A}\inv"]
-          & \oc A \tensor \oc A
-    \end{tikzcd}
-    \]
+  See appendix.
 \end{proof}
+
+In particular, this proves that the comultiplication $\mu_A$ is associative and that the counit $\eta_A$ is a valid counit for $\mu_A$.
+
+We can now state our second main result from this section.
+
+\begin{theorem}
+  \label{Coalgebra__CoCoCo}
+  Let $(\C,\C_s,J,\wk)$ be a sequoidal category satisfying all the conditions from Theorem \ref{StrongMonoidalFunctor}.  Let $A$ be an object of $\C$ (equivalently, of $\C_s$).  Then $\oc A$, together with the comultiplication $\mu_A$ and counit $\eta_A$, is the cofree commutative comonoid over $A$.
+\end{theorem}
+
+\appendix
+
+\section{Proofs}
+
+\subsection{Proof of Proposition \ref{StrongMonoidalFunctorActual}}
+
+\begingroup
+\def\thetheorem{\ref{StrongMonoidalFunctorActual}}
+\begin{proposition}
+  $\sigma\mapsto\oc\sigma$ respects composition, so $\oc$ is a functor.  Moreover, $\oc$ is a strong symmetric monoidal functor from the Cartesian category $(\C, \times, 1)$ to the symmetric monoidal category $(\C, \tensor, I)$, witnessed by $\int$ and $\dec^0$.
+\end{proposition}
+\addtocounter{theorem}{-1}
+\endgroup
 
 In order to show that $\sigma\mapsto\oc\sigma$ respects composition, we need the following lemma:
 
@@ -795,18 +811,13 @@ We now want to show that $\oc$ has the structure of a strong symmetric monoidal 
   \]
 By hypothesis, these are both isomorphisms.  We just need to show that the appropriate coherence diagrams commute.
 
-\begin{theorem}
-  \label{Coalgebra__CoCoCo}
-  Let $(\C,\C_s,J,\wk)$ be a sequoidal category satisfying all the conditions from Theorem \ref{StrongMonoidalFunctor}.  Let $A$ be an object of $\C$ (equivalently, of $\C_s$).  Then $\oc A$ is the carrier for the cofree commutative comonoid over $A$.
-\end{theorem}
-
 %%
 %% Bibliography
 %%
 
 %% Either use bibtex (recommended), 
 
-\bibliography{../../../common/phd_bibliography}
+\bibliography{bibliography}
 
 %% .. or use the thebibliography environment explicitely
 
