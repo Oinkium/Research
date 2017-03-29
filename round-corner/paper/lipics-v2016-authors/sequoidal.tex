@@ -1,21 +1,168 @@
-\documentclass[11pt]{article}
+\documentclass[a4paper,UKenglish]{lipics-v2016}
+%This is a template for producing LIPIcs articles. 
+%See lipics-manual.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+% for section-numbered lemmas etc., use "numberwithinsect"
+ 
+\usepackage{microtype}%if unwanted, comment out or use option "draft"
 
-\input{../common/preamble}
+%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
 
+\bibliographystyle{plainurl}% the recommended bibstyle
+
+% Author macros::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Sequoidal Categories and Transfinite Games: Towards a Coalgebraic Approach to Linear Logic\footnote{This work was partially supported by [TODO: find the appropriate grant codes]}}
+\titlerunning{Sequoidal Categories and Transfinite Games} %optional, in case that the title is too long; the running title should fit into the top page column
+
+%% Please provide for each author the \author and \affil macro, even when authors have the same affiliation, i.e. for each author there needs to be the  \author and \affil macros
+\author[1]{William John Gowers}
+\author[2]{James Laird}
+\affil[1]{Department of Computer Science, University of Bath, Claverton Down, Bath.  BA2 7AY.  United Kingdom\\
+  \texttt{W.J.Gowers@bath.ac.uk}}
+\affil[2]{Department of Computer Science, University of Bath, Claverton Down, Bath.  BA2 7AY.  United Kingdom\\
+  \texttt{jiml@cs.bath.ac.uk}}
+\authorrunning{W.\,J. Gowers and J. Laird} %mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et. al.'
+
+\Copyright{William John Gowers and James Laird}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+\subjclass{F3.2.2 Denotational Semantics}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
+\keywords{Game semantics, Linear logic, Transfinite games, Sequoid operator, Exponentials}% mandatory: Please provide 1-5 keywords
+% Author macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{John Q. Open and Joan R. Acces}
+\EventNoEds{2}
+\EventLongTitle{42nd Conference on Very Important Topics (CVIT 2016)}
+\EventShortTitle{CVIT 2016}
+\EventAcronym{CVIT}
+\EventYear{2016}
+\EventDate{December 24--27, 2016}
+\EventLocation{Little Whinging, United Kingdom}
+\EventLogo{}
+\SeriesVolume{42}
+\ArticleNo{23}
+% Editor-only macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Author macros and packages
+\usepackage{IEEEtrantools} % for \IEEEeqnarray
+\usepackage{pbox} % for \pbox
+\usepackage{cmll} % Linear logic symbols!
+\usepackage{wasysym} % For left and rigth moons
+\usepackage{mathtools}
+
+%% Graphics %%
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
 \usetikzlibrary{decorations.pathmorphing}
 
+%% Get the sqsubsetneqq character from the mathabx package
+\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathb}{m}{n}{
+      <5> <6> <7> <8> <9> <10> gen * mathb
+      <10.95> mathb10 <12> <14.4> <17.28> <20.74> <24.88> mathb12
+      }{}
+\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
+
+\DeclareMathSymbol{\sqsubsetneq}    {3}{mathb}{"88}
+\DeclareMathSymbol{\varsqsubsetneq} {3}{mathb}{"8A}
+\DeclareMathSymbol{\varsqsubsetneqq}{3}{mathb}{"92}
+\DeclareMathSymbol{\sqsubsetneqq}   {3}{mathb}{"90}
+
+%% Theorems %%
+\theoremstyle{plain}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{notation}[theorem]{Notation}
+
+%% Other macros
+\newcommand*\from{\colon}
+\def \inv {^{-1}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\pr}{pr}
+\newcommand{\tensor}{\otimes}
+\newcommand{\sequoid}{\oslash}
+\renewcommand{\implies}{\multimap}
+\newcommand{\comp}[2]{#1 \circ #2}
+\newcommand{\cprd}{\sqcup}
+\newcommand{\bigcprd}{\bigsqcup}
+\newcommand{\C}{\mathcal C}
+\newcommand{\F}{\mathcal F}
+\newcommand{\G}{\mathcal G}
+\newcommand{\suchthat}{\;\colon\;}
+\newcommand{\varsuchthat}{\;\mid\;}
+\newcommand{\OP}{\{O,P\}}
+\newcommand{\emptyplay}{\epsilon}
+\newcommand{\prefix}{\sqsubseteq}
+\newcommand{\pprefix}{\sqsubsetneqq}
+\newcommand{\ppprefix}{\sqsubset}
+\DeclareMathOperator{\assoc}{assoc}
+\DeclareMathOperator{\lunit}{lunit}
+\DeclareMathOperator{\runit}{runit}
+\DeclareMathOperator{\sym}{sym}
+\newcommand{\braid}{\sym}
+\newcommand{\blank}{\;\underline{\hspace{1.5ex}}\;}
+\newcommand{\der}{{\mathtt{der}}}
+\newcommand{\mult}{{\mathtt{mult}}}
+\DeclareMathOperator{\wk}{wk}
+\newcommand{\toisom}{{\xrightarrow{\cong}}}
+\newcommand{\passoc}{{\mathtt{passoc}}}
+\newcommand{\pcomm}{{\mathtt{pcomm}}}
+\newcommand{\run}{{\mathtt{r}}}
+\newcommand{\lun}{{\mathtt{l}}}
+\newcommand{\fcoal}[1]{{\leftmoon #1 \rightmoon}}
+\renewcommand{\subset}{\subseteq}
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+\newcommand{\s}{\mathfrak{s}}
+\newcommand{\dist}{{\mathtt{dist}}}
+\newcommand{\dec}{{\mathtt{dec}}}
 \renewcommand{\int}{{\mathtt{int}}}
+\DeclareMathOperator{\CCom}{CCom}
 
-\title{Rounding off a corner}
+%% Constant width xrightarrows
+\newlength{\arrow}
+\settowidth{\arrow}{\scriptsize$1000$}
+\newcommand*{\constantwidthxrightarrow}[1]{\xrightarrow{\mathmakebox[\arrow]{#1}}}
 
-\author{John Gowers}
+%% Landscape pages
+\usepackage{everypage}
+\usepackage{environ}
+\usepackage{pdflscape}
+\newcounter{abspage}
+
+\makeatletter
+\newcommand{\newSFPage}[1]% #1 = \theabspage
+  {\global\expandafter\let\csname SFPage@#1\endcsname\null}
+
+\NewEnviron{SidewaysFigure}{\begin{figure}[p]
+\protected@write\@auxout{\let\theabspage=\relax}% delays expansion until shipout
+  {\string\newSFPage{\theabspage}}%
+\ifdim\textwidth=\textheight
+  \rotatebox{90}{\parbox[c][\textwidth][c]{\linewidth}{\BODY}}%
+\else
+  \rotatebox{90}{\parbox[c][\textwidth][c]{\textheight}{\BODY}}%
+\fi
+\end{figure}}
+
+\AddEverypageHook{% check if sideways figure on this page
+  \ifdim\textwidth=\textheight
+    \stepcounter{abspage}% already in landscape
+  \else
+    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 0}}%
+    \stepcounter{abspage}%
+    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 90}}%
+  \fi}
+\makeatother
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-  In \cite{laird02}, Laird introduces the concept of a \emph{sequoidal category}, a certain extension of a monoidal category, and gives an example constructed using game semantics.  As noted in \cite{martinsthesis}, cofree commutative comonoids can be constructed coalgebraically in any sequoidal category subject to certain extra hypotheses.  In the first part of this note, we review the coalgebraic construction of cofree commutative comonoids in sequoidal categories.  In the second part, we shall show that the extra hypotheses are necessary as well as sufficient and we shall use transfinite game semantics to construct a sequoidal category in which these hypotheses do not hold.
+  In \cite{laird02}, Laird introduces the concept of a \emph{sequoidal category} as a formalization of causality in game semantics.  A sequoidal category is like a monoidal category with an extra connective, $\sequoid$, that allows one to construct an exponential object as a final coalgebra \cite{martinsthesis},  Under a further hypothesis, it is possible to show that this final coalgebra allows one to construct cofree commutative comonoids in the category, giving us a model of the exponential connective $\oc$ from linear logic.  In the first part of this note, we review the coalgebraic arguments for constructing the cofree commutative comonoid, which are known but do not yet appear in print.  In the second part, we show that the extra hypotheses are necessary by outlining a definition of \emph{transfinite game}, in which the carriers of the sequoidal coalgebra and the cofree commutative comonoid do not coincide.
 \end{abstract}
 
 \section{Sequoidal categories}
@@ -112,7 +259,7 @@ We now have the motivation required to give the definition of a \emph{sequoidal 
         \run_A\from A\sequoid I\toisom A
         \]
       subject to the following coherence conditions:
-      \begin{longdiagram}
+      \begin{equation*}
         \begin{tikzcd}
           A\sequoid(B\tensor(C\tensor D)) \arrow[r, "\passoc_{A,B,C\tensor D}" yshift=0.3em] \arrow[d, "\id_A\sequoid \assoc_{B,C,D}"']
             & (A \sequoid B) \sequoid (C\tensor D) \arrow[r, "\passoc_{A\sequoid B,C,D}" yshift=0.3em]
@@ -121,8 +268,8 @@ We now have the motivation required to give the definition of a \emph{sequoidal 
             & (A\sequoid (B\tensor C)) \sequoid D \arrow[ur, "\passoc_{A,B,C}\sequoid\id_D"']
               &
         \end{tikzcd}
-      \end{longdiagram}
-      \begin{longdiagram}
+      \end{equation*}
+      \begin{equation*}
         \begin{tikzcd}
           A \sequoid (I\tensor B) \arrow[r, "\passoc_{A,I,B}" yshift=0.3em] \arrow[d, "\id_A\sequoid\lunit_B"']
             & (A\sequoid I)\sequoid B \arrow[dl, "\run_A\sequoid\id_B"] \\
@@ -136,12 +283,12 @@ We now have the motivation required to give the definition of a \emph{sequoidal 
           A\sequoid B
             &
         \end{tikzcd}
-      \end{longdiagram}
+      \end{equation*}
 
       \item A functor $J\from \C_s\to\C$ (in the games example, this is the inclusion functor $\G_s\to\G$)
 
       \item A natural transformation $\wk_{A,B}\from J(A)\tensor B\to J(A\sequoid B)$ satisfying the coherence conditions:
-      \begin{longdiagram}
+      \begin{equation*}
         \begin{tikzcd}
           A \tensor I \arrow[r, "\runit_A" yshift=0.3em] \arrow[d, "\wk_{A,I}"']
             & A \\
@@ -157,7 +304,7 @@ We now have the motivation required to give the definition of a \emph{sequoidal 
             & A \sequoid (B \tensor C) \arrow[ur, "J(\passoc_{A,B,C})"']
               &
         \end{tikzcd}
-      \end{longdiagram}
+      \end{equation*}
   \end{itemize}
 \end{definition}
 
@@ -282,26 +429,25 @@ We want to deduce the fact that $\oc A\xrightarrow{\mu}\oc A\tensor\oc A$ is the
 \end{notation}
 
 \begin{definition}
-  Let $A,B$ be objects of an inclusive, Cartesian, distributive sequoidal category with final coalgebras $\oc A\xrightarrow{\alpha_A} A\sequoid\oc A$ for all endofunctors of the form $A\sequoid\blank$.  Then we have a composite:
+  Let $A,B$ be objects of an inclusive, Cartesian, distributive sequoidal category $(\C,\C_s,J,\wk)$ with final coalgebras $\oc A\xrightarrow{\alpha_A} A\sequoid\oc A$ for all endofunctors of the form $A\sequoid\blank$.  Let $A,B$ be objects of $C$.  Then we have a composite $\kappa_{A,B}\from\oc A \tensor\oc B\to(A\times B)\sequoid(\oc A\tensor \oc B)$:
   \settowidth{\arrow}{\scriptsize$\id_{A\sequoid(\oc A\tensor\oc B)}\times (\id_B\sequoid\sym_{\oc B,\oc A})$}
   \begin{IEEEeqnarray*}{RCL}
-    \oc A \tensor \oc B & \constantwidthxrightarrow{\langle\id_{\oc A\tensor\oc B},\; \sym_{\oc A,\oc B}\rangle} & (\oc A \tensor \oc B) \times (\oc B \tensor \oc A) \\
+    \kappa_{A,B}=\oc A \tensor \oc B & \constantwidthxrightarrow{\langle\id_{\oc A\tensor\oc B},\; \sym_{\oc A,\oc B}\rangle} & (\oc A \tensor \oc B) \times (\oc B \tensor \oc A) \\
     \cdots & \constantwidthxrightarrow{(\alpha_A\tensor\id_{\oc B})\times(\alpha_B\tensor\id_{\oc A})} & ((A \sequoid \oc A) \tensor \oc B) \times ((B \sequoid \oc B) \tensor \oc A) \\
     \cdots  & \constantwidthxrightarrow{\wk_{A\sequoid\oc A,\oc B}\times\wk_{B\sequoid\oc B,\oc A}} & ((A \sequoid \oc A) \sequoid \oc B) \times ((B \sequoid \oc B) \sequoid \oc A) \\
       \cdots & \constantwidthxrightarrow{\passoc_{A,\oc A,\oc B}\inv\times\passoc_{B,\oc B,\oc A}\inv} & (A \sequoid (\oc A \tensor \oc B)) \times (B \sequoid (\oc B \tensor \oc A) \\
-      \cdots & \constantwidthxrightarrow{\id_{A\sequoid(\oc A\tensor\oc B)}\times (\id_B\sequoid\sym_{\oc B,\oc A})} & (A \sequoid (\oc A \tensor \oc A)) \times (B \sequoid (\oc A \tensor \oc B)) \\
-      \cdots & \constantwidthxrightarrow{\dist_{A,B,\oc A\tensor\oc B}\inv} & (A \times B) \sequoid (\oc A \tensor \oc B)
+      \cdots & \constantwidthxrightarrow{\id_{A\sequoid(\oc A\tensor\oc B)}\times (\id_B\sequoid\sym_{\oc B,\oc A})} & (A \sequoid (\oc A \tensor \oc B)) \times (B \sequoid (\oc A \tensor \oc B))
   \end{IEEEeqnarray*}
 inducing a morphism
 \[
-  \oc A\tensor \oc B \to (A \sequoid(\oc A\tensor\oc B)) \times (B \sequoid(\oc A\tensor \oc B)) \xrightarrow{\dist\inv}
+  \oc A\tensor \oc B \xrightarrow{\kappa_{A,B}} (A \sequoid(\oc A\tensor\oc B)) \times (B \sequoid(\oc A\tensor \oc B)) \xrightarrow{\dist\inv}
     (A\times B)\sequoid(\oc A\tensor\oc B)
     \]
   Remembering that our category has a final coalgebra $\oc(A\times B)$ for the functor $(A\times B)\sequoid\blank$, we write $\int_{A,B}$ for the unique morphism $\oc A\tensor\oc B\to \oc(A\times B)$ making the following diagram commute
   \begin{equation}\label{definitionOfInt}
     \begin{tikzcd}
-      \oc A \tensor \oc B \arrow[r] \arrow[d, "\int_{A,B}"']
-        & \cdots \arrow[r]
+      \oc A \tensor \oc B \arrow[r, "\kappa_{A,B}"] \arrow[d, "\int_{A,B}"']
+        & (A\sequoid(\oc A \tensor \oc B) \times (B \sequoid (\oc A \tensor \oc B)) \arrow[r, "\dist\inv"]
           & (A \times B) \sequoid (\oc A \tensor \oc B) \arrow[d, "\id_{A\times B}\sequoid\int_{A,B}"] \\
       \oc(A\times B) \arrow[rr, "\alpha_{A\times B}"']
         &
@@ -317,16 +463,11 @@ inducing a morphism
   Observe that the morphism $\int_{A,B}$ is the copycat strategy on $\oc A\tensor\oc B\implies \oc (A\times B)$ that starts a copy of $A$ on the left whenever a copy of $A$ is started on the right and starts a copy of $B$ on the left whenever a copy of $B$ is started on the right (indeed, the morphisms in the diagram above are all copycat morphisms, so the copycat strategy we have just described must make that diagram commute.  Since there are infinitely many copies of both $A$ and $B$ available in $\oc (A\times B)$, and since a new copy of $A$ or $B$ may be started at any time, we may define an inverse copycat strategy on $\oc(A\times B)\implies \oc A\tensor\oc B$.
 \end{proof}
 
-Our main result for this section will be the following:
+Our first main result for this section will be the following:
 \begin{theorem}
   \label{StrongMonoidalFunctor}
   Let $(\C,\C_s,J,\wk)$ be an inclusive, Cartesian, distributive and decomposable sequoidal category with a final coalgebra $\oc A\xrightarrow{\alpha_A}A\sequoid\oc A$ for each endofunctor of the form $A\sequoid\blank$.  Suppose further that the morphism $\int_{A,B}$ as defined above is an isomorphism for all objects $A,B$.  $A\mapsto\oc A$ gives rise to a strong symmetric monoidal functor from the monoidal category $(\C, \times, 1)$ to the monoidal category $(\C, \tensor, I)$.  
 \end{theorem}
-
-As a corollary, we will have
-\begin{corollary}
-  Let $(\C,\C_s,J,\wk)$ be a sequoidal category satisfying all the conditions from Theorem \ref{StrongMonoidalFunctor}.  Let $A$ be an object of $\C$ (equivalently, of $\C_s$).  Then $\oc A$ is the carrier for the cofree commutative comonoid over $A$.
-\end{corollary}
 
 We start off by defining a morphism $\mu\from\oc A\to\oc A\tensor\oc A$.  This will turn out to be the comultiplication for the cofree commutative comonoid over $A$.  First, we note that we have the following composite:
 \[
@@ -382,6 +523,43 @@ There is therefore a unique morphism $\oc\sigma\from\oc A \to\oc B$ making the f
             & B \sequoid \oc B
   \end{tikzcd}
   \]
+
+\begin{proposition}\label{StrongMonoidalFunctorActual}
+  $\sigma\mapsto\oc\sigma$ respects composition, so $\oc$ is a functor.  Moreover, $\oc$ is a strong symmetric monoidal functor from the Cartesian category $(\C, \times, 1)$ to the symmetric monoidal category $(\C, \tensor, I)$, witnessed by $\int$ and $\dec^0$.
+\end{proposition}
+\begin{proof}
+  See Appendix.
+\end{proof}
+
+This completes the proof of Theorem \ref{StrongMonoidalFunctor}.
+
+Since $\oc$ is a strong monoidal functor, it induces a functor $\CCom(\oc)$ from the category $\CCom(\C,\times,1)$ of comonoids over $(\C, \times, 1)$ to the category $\CCom(\C,\tensor,I)$ of comonoids over $(\C, \tensor, I)$ making the following diagram commute:
+\[
+  \begin{tikzcd}
+    \CCom(\C,\times,1) \arrow[r, "\F"] \arrow[d, "\CCom(\oc)"']
+      & (\C, \times, 1) \arrow[d, "\oc"] \\
+    \CCom(\C, \tensor, I) \arrow[r, "\F"]
+      & (\C, \tensor, I)
+  \end{tikzcd}
+  \]
+where $\F$ is the forgetful functor.
+
+Let $A$ be an object of $\C$.  Since $(\C, \times, 1)$ is Cartesian, the diagonal map $\Delta\from A\to A\times A$ is the cofree commutative comonoid over $A$ in $(\C,\times,1)$.  
+
+\begin{proposition}
+  $\CCom(\oc)\left(A\xrightarrow{\Delta}A\times A\right) = \oc A \xrightarrow{\mu_A} \oc A \tensor \oc A$
+\end{proposition}
+\begin{proof}
+  By the (standard) construction of the functor $\CCom(\oc)$, the comultiplication in $\CCom(\oc)\left(A\xrightarrow{\Delta}A\times A\right)$ is given by the composite
+  \[
+    \begin{tikzcd}
+      \oc A \arrow[r, "\oc\Delta"]
+        & \oc (A\times A) \arrow[r, "\int_{A,A}\inv"]
+          & \oc A \tensor \oc A
+    \end{tikzcd}
+    \]
+\end{proof}
+
 In order to show that $\sigma\mapsto\oc\sigma$ respects composition, we need the following lemma:
 
 \begin{lemma}\label{aFormulaForAlpha}
@@ -398,46 +576,46 @@ In order to show that $\sigma\mapsto\oc\sigma$ respects composition, we need the
 
 \begin{proof}
   We may paste together diagrams \eqref{definitionOfInt} and \eqref{definitionOfSigma} to form the following diagram (where we shall omit subscripts where there is no ambiguity):
-  \begin{longdiagram}
+  \begin{equation*}
     \begin{tikzcd}[cramped]
       \oc A \arrow[r, "\alpha"] \arrow[d, "\sigma_A"']
         & A \sequoid \oc A \arrow[r, "\Delta"]
-          & (A \sequoid \oc A) \times (A \sequoid \oc A) \arrow[r, "\dist\inv"]
+          &[-24pt] (A \sequoid \oc A) \times (A \sequoid \oc A) \arrow[r, "\dist\inv"]
             & (A \times A) \sequoid \oc A \arrow[d, "\id_{A\times A}\sequoid\sigma_A"] \\
       \oc(A\times A) \arrow[rrr, "\alpha"]
         &
           &
             & (A \times A) \sequoid \oc(A\times A) \\
-      \oc A \tensor \oc A \arrow[r] \arrow[u, "\int_A"]
-        & \cdots \arrow[r]
+      \oc A \tensor \oc A \arrow[rr, "\kappa_{A,A}"] \arrow[u, "\int_A"]
+        &
           & (A \sequoid (\oc A \tensor \oc A)) \times (A \sequoid (\oc A \tensor \oc A)) \arrow[r, "\dist\inv"]
             & (A\times A)\sequoid(\oc A \tensor \oc A) \arrow[u, "\id_{A\times A}\sequoid\int_A"']
     \end{tikzcd}
-  \end{longdiagram}
+  \end{equation*}
   where we observe that the composites down the left and right hand sides (after inverting the lower arrows) are $\mu_A$ and $\id_{A\times A}\sequoid\mu_A$.
 
   Now note that we have the following commutative square:
   \[
     \begin{tikzcd}
-      (A \sequoid \oc A) \times (A \sequoid \oc A) \arrow[d, "{\langle\comp{\id\sequoid\mu_A}{\pr_1},\;\comp{\id\sequoid\mu_A}{\pr_2}\rangle}"']
-        & (A \times A) \sequoid \oc A \arrow[l, "{\dist\;=\;\langle\pr_1\sequoid\id,\;\pr_2\sequoid\id\rangle}"' yshift=0.6em] \arrow[d, "\id_{A\times A}\sequoid\mu_A"] \\
-      (A \sequoid (\oc A \tensor \oc A)) \times (A \sequoid (\oc A \tensor \oc A)
-        & (A \times A) \sequoid (\oc A \tensor \oc A) \arrow[l, "{\dist\;=\;\langle\pr_1\sequoid\id,\;\pr_2\sequoid\id\rangle}" yshift=-0.3em]
+      (A \times A) \sequoid \oc A \arrow[r, "\dist"] \arrow[d, "\id_{A\times A}\sequoid\mu_A"']
+        & (A \sequoid \oc A) \times (A \sequoid \oc A) \arrow[d, "(\id\sequoid\mu)\times(\id\sequoid\mu)"] \\
+      (A \times A) \sequoid (\oc A \tensor \oc A) \arrow[r, "\dist"']
+        & (A \sequoid (\oc A \tensor \oc A)) \times (A \sequoid (\oc A \tensor \oc A)
     \end{tikzcd}
     \]
 
-  Putting this together with the diagram above, we get the following commutative diagram:
+  (using the definition of $\dist$).  Putting this together with the diagram above, we get the following commutative diagram:
   \[
     \begin{tikzcd}
       \oc A \arrow[r, "\alpha"] \arrow[d, "\mu_A"']
         & A \sequoid \oc A \arrow[r, "\Delta"]
           & (A \sequoid \oc A) \times (A \sequoid \oc A) \arrow[d, "\id\sequoid\mu_A\times\id\sequoid\mu_A"] \\
-      \oc A \tensor \oc A \arrow[r]
+      \oc A \tensor \oc A \arrow[rr, "\kappa_{A,A}"]
         & \cdots \arrow[r]
           & (A \sequoid (\oc A \tensor \oc A)) \times (A \sequoid (\oc A \tensor \oc A))
     \end{tikzcd}
     \]
-  We now expand the morphisms we have elided and take the projections on to the first and second components, yielding the following two commutative diagrams:
+  We now expand the definition of $\kappa_{A,A}$  and take the projections on to the first and second components, yielding the following two commutative diagrams:
   \[
     \begin{tikzcd}\label{firstProjectionDiagram}
       \oc A \arrow[rrr, "\alpha"] \arrow[d, "\mu_A"']
@@ -451,22 +629,20 @@ In order to show that $\sigma\mapsto\oc\sigma$ respects composition, we need the
     \end{tikzcd}\tag{\textbf{1}}
     \]
 
-  \begin{longdiagram}\label{secondProjectionDiagram}
+  \begin{equation*}\label{secondProjectionDiagram}
     \begin{tikzcd}[cramped]
-     \oc A \arrow[rrrrr, "\alpha"] \arrow[d, "\mu_A"']
+     \oc A \arrow[rrrr, "\alpha"] \arrow[d, "\mu_A"']
         &
           &
             &
-              &
-                & A \sequoid \oc A \arrow[d, "\id\sequoid\mu_A"] \\
+              & A \sequoid \oc A \arrow[d, "\id\sequoid\mu_A"] \\
       \oc A \tensor \oc A \arrow[r, "\sym"']
-        & \oc A \tensor \oc A \arrow[r, "\alpha\tensor\id"]
-          & (A \sequoid \oc A) \tensor \oc A \arrow[r, "\wk"]
-            & (A \sequoid \oc A) \sequoid \oc A \arrow[r, "\passoc\inv"]
-              & A \sequoid (\oc A \tensor \oc A) \arrow[r, "\id\sequoid\sym"']
-                & A \sequoid (\oc A \tensor \oc A)
+        & \oc A \tensor \oc A \arrow[r, "\alpha\tensor\id" yshift=0.4em]
+          & (A \sequoid \oc A) \tensor \oc A \arrow[r, "\comp{\passoc\inv}{\wk}" yshift=0.4em]
+            & A \sequoid (\oc A \tensor \oc A) \arrow[r, "\id\sequoid\sym"']
+              & A \sequoid (\oc A \tensor \oc A)
     \end{tikzcd}\tag{\textbf{2}}
-  \end{longdiagram}
+  \end{equation*}
 
   From diagram \eqref{firstProjectionDiagram}, we construct the following commutative diagram:
   \[
@@ -503,7 +679,7 @@ In order to show that $\sigma\mapsto\oc\sigma$ respects composition, we need the
   We now observe that the composite of the three squiggly arrows is the composite we are trying to show is equal to $\alpha$; we have $\alpha$ along the top, so it will suffice to show that the composite
   \[
     \begin{tikzcd}
-      \xi\;=\;\oc A \arrow[r, "\mu_A"]
+      \xi_A\;=\;\oc A \arrow[r, "\mu_A"]
         & \oc A \tensor \oc A \arrow[r, "*\tensor\id"]
           & I \tensor \oc A \arrow[r, "\lunit"]
             & \oc A
@@ -547,7 +723,7 @@ In order to show that $\sigma\mapsto\oc\sigma$ respects composition, we need the
     }\label{hugeDiagram1}
   \end{SidewaysFigure}
 
-  Now observe that the composite $\xi$ is running along the left hand side of Figure \ref{hugeDiagram1}, while $\id\sequoid\xi$ is running along the right.  Since we have $\alpha$ along the bottom, it follows by the uniqueness of $\fcoal{\cdot}$ that $\xi=\fcoal{\alpha}=\id_{\oc A}$.  
+  Now observe that the composite $\xi_A$ is running along the left hand side of Figure \ref{hugeDiagram1}, while $\id\sequoid\xi$ is running along the right.  Since we have $\alpha$ along the bottom, it follows by the uniqueness of $\fcoal{\cdot}$ that $\xi=\fcoal{\alpha}=\id_{\oc A}$.  
 \end{proof}
 
 Now we are ready to show that $\sigma\mapsto\oc \sigma$ respects composition.  Let $A,B,C$ be objects, let $\sigma$ be a morphism from $A$ to $B$ and let $\tau$ be a morphism from $B$ to $C$.   Using Lemma \ref{aFormulaForAlpha} and the definition of $\oc\sigma$, $\oc\tau$, we may construct a commutative diagram:
@@ -575,7 +751,7 @@ Now we are ready to show that $\sigma\mapsto\oc \sigma$ respects composition.  L
             & C \sequoid \oc C
   \end{tikzcd}
   \]
-Here, the outermost (solid) shapes commute by the definition of $\oc\sigma$, $\oc\tau$ (after we have replaced $\alpha_B$, $\alpha_C$ with the composite from Lemma \ref{aFormulaForAlpha}.  The smaller squares on the right hand side commute because $\wk$ is a natural transformation.  Now observe that we may write $\wk_{X,Y}=\comp{\pr_1}\dec_{X,Y}$ as the composite of epimorphisms, and therefore that $\wk_{X,Y}$ is an epimorphism for all $X,Y$.  It follows that the two rectangles on the left commute as well.
+Here, the outermost (solid) shapes commute by the definition of $\oc\sigma$, $\oc\tau$ (after we have replaced $\alpha_B$, $\alpha_C$ with the composite from Lemma \ref{aFormulaForAlpha}).  The smaller squares on the right hand side commute because $\wk$ is a natural transformation.  Now observe that $\wk_{X,Y}=\comp{\pr_1}{\dec_{X,Y}}$ is the composition of epimorphisms, so is an epimorphism for all $X,Y$.  It follows that the two rectangles on the left commute as well.
 
 Throwing away the right hand squares and adding some new arrows at the right, we arrive at the following commutative diagram:
 \[
@@ -619,7 +795,19 @@ We now want to show that $\oc$ has the structure of a strong symmetric monoidal 
   \]
 By hypothesis, these are both isomorphisms.  We just need to show that the appropriate coherence diagrams commute.
 
-\bibliographystyle{alpha}
-\bibliography{../common/phd_bibliography}
+\begin{theorem}
+  \label{Coalgebra__CoCoCo}
+  Let $(\C,\C_s,J,\wk)$ be a sequoidal category satisfying all the conditions from Theorem \ref{StrongMonoidalFunctor}.  Let $A$ be an object of $\C$ (equivalently, of $\C_s$).  Then $\oc A$ is the carrier for the cofree commutative comonoid over $A$.
+\end{theorem}
+
+%%
+%% Bibliography
+%%
+
+%% Either use bibtex (recommended), 
+
+\bibliography{../../../common/phd_bibliography}
+
+%% .. or use the thebibliography environment explicitely
 
 \end{document}

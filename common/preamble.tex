@@ -281,6 +281,41 @@
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
 
+%% Constant width xrightarrows
+\newlength{\arrow}
+\settowidth{\arrow}{\scriptsize$1000$}
+\newcommand*{\constantwidthxrightarrow}[1]{\xrightarrow{\mathmakebox[\arrow]{#1}}}
+
+%% Landscape pages
+\usepackage{everypage}
+\usepackage{environ}
+\usepackage{pdflscape}
+\newcounter{abspage}
+
+\makeatletter
+\newcommand{\newSFPage}[1]% #1 = \theabspage
+  {\global\expandafter\let\csname SFPage@#1\endcsname\null}
+
+\NewEnviron{SidewaysFigure}{\begin{figure}[p]
+\protected@write\@auxout{\let\theabspage=\relax}% delays expansion until shipout
+  {\string\newSFPage{\theabspage}}%
+\ifdim\textwidth=\textheight
+  \rotatebox{90}{\parbox[c][\textwidth][c]{\linewidth}{\BODY}}%
+\else
+  \rotatebox{90}{\parbox[c][\textwidth][c]{\textheight}{\BODY}}%
+\fi
+\end{figure}}
+
+\AddEverypageHook{% check if sideways figure on this page
+  \ifdim\textwidth=\textheight
+    \stepcounter{abspage}% already in landscape
+  \else
+    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 0}}%
+    \stepcounter{abspage}%
+    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 90}}%
+  \fi}
+\makeatother
+
 %% PCF Things
 
 \newcommand{\Y}{\mathbf{Y}}
