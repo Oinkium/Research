@@ -121,6 +121,10 @@
 \newcommand{\dec}{{\mathtt{dec}}}
 \renewcommand{\int}{{\mathtt{int}}}
 \DeclareMathOperator{\CCom}{CCom}
+\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Ord}{\catname{Ord}}
+\newcommand\oppcat[1]{#1^{\mathrm{op}}}
 
 %% Constant width xrightarrows
 \newlength{\arrow}
@@ -561,6 +565,160 @@ We can now state our second main result from this section.
   \label{Coalgebra__CoCoCo}
   Let $(\C,\C_s,J,\wk)$ be a sequoidal category satisfying all the conditions from Theorem \ref{StrongMonoidalFunctor}.  Let $A$ be an object of $\C$ (equivalently, of $\C_s$).  Then $\oc A$, together with the comultiplication $\mu_A$ and counit $\eta_A$, is the cofree commutative comonoid over $A$.
 \end{theorem}
+
+\begin{proof}
+  See Appendix.
+\end{proof}
+
+\section{Transfinite Games}
+
+Of the conditions that we used to construct the cofree commutative comonoid in sequoidal categories, the requirement that $\int_{A,B}$ be an isomorphism stands out as the least satisfactory.  All the other conditions are `finitary', and relate directly to the connectives we have introduced, whereas the morphism $\int_{A,B}$ can only be constructed using the final coalgebra property for the exponential connective $\oc$.  For this reason, we might wonder whether we can do without the condition that $\int_{A,B}$ be an isomorphism.  In this section, we shall give a negative answer to that question: we shall construct an inclusive, distributive, decomposable sequoidal closed category with final coalgebras $\oc A$ for all functors of the form $A\sequoid\blank$, and shall show that $\oc A$ does not have a natural comonoid structure.  In doing this, we hope to shed some light upon alternative algebraic or coalgebraic constructions for the cofree commutative comonoid that work in a purely `finitary' manner.
+
+Our sequoidal category will be closely modelled upon the category of games we have just considered: the objects will be games, with the modification that sequences of moves may now have transfinite length.  This is a natural construction, occurring in the study of determinacy by Mycielski \cite{mycielskiChoice}, Blass \cite{blassChoice} and Weiss \cite{longgamesbook}, and it appears to be present in the semantic context in the work of Roscoe \cite{RoscoeCspInfinite}, Levy \cite{LevyGsInfinite} and Laird \cite{LairdOrdinalGames}.  
+
+The general idea is as follows: we will show that the definition of the final coalgebra for the sequoid functor in a category of transfinite games is largely unchanged from the definition in the category of games with finite-length plays: $\oc A$ is the game formed from a countably infinite number of copies of $A$, indexed by $\omega$, with the proviso that player $O$ must open them in order.  We observe that the copycat strategy $\int_{A,B}\from\oc A\tensor\oc B\to \oc(A\times B)$ is not an isomorphism, and that we cannot construct the comultiplication $\oc A \to \oc A \tensor \oc A$ in a sensible way.  Moreover, we cannot construct the comonad $\oc A \to \oc \oc A$, so $\oc$ does not give us a model of linear logic in even the most general sense.  In all three cases, the reason why the construction fails is that we might run out of copies of the game $A$ (or $B$) on the left hand side before we have run out of copies on the right hand side.  In the finite-plays setting, it is impossible to run out of copies of a subgame, because there are infinitely many copies, so it is impossible to play in all of them in a finite-length play.  In the transfinite setting, however, we cannot guarantee this: consider, for example, a position in $\oc A_0 \implies \oc A_1 \tensor \oc A_2$ (with indices given so we can refer to the different copies of $A$) in which player $O$ has opened all the copies of $A$ in $\oc A_1$.  Since player $P$ is playing by copycat, she must have opened all of the copies of $A$ in $\oc A_0$.  If, at time $\omega+1$, player $O$ now plays in $\oc A_2$, player $P$ will have no reply to him.
+
+The `correct' definition of $\oc A$ in the transfinite game category is one in which there is an unlimited number of copies of $A$ to open (rather than $\omega$-many), but this is not the final coalgebra for the functor $A\sequoid\blank$.  [TODO: discuss ways to construct this object]
+
+\subsection{Transfinite Games}
+
+We give a brief summary of the construction of the category of transfinite games.  Full details may be found in Appendix \ref{TransfiniteGamesConstructionInFull}.
+
+We shall fix an additively indecomposable ordinal $\alpha = \omega^\beta$ throughout, which will be a bound on the ordinal length of positions in our game.  So, for example, the original category of games is the case $\alpha=\omega$.  If $X$ is a set, we write $X^{*<\alpha}$ for the set of transfinite sequences of elements of $X$ of length less than $\alpha$.
+
+\begin{definition}
+  A \emph{game} or a \emph{game over $\alpha$} or an \emph{$\alpha$-game} is a tuple $A=(M_A,\lambda_A,\zeta_A,P_A)$, where:
+  \begin{itemize}
+    \item $M_A$ is a set of moves
+    \item $\lambda_A\from M_A\to\OP$ designates each move as an \emph{$O$-move} or a \emph{$P$-move}
+    \item $P_A\subset M_A^{*<\alpha}$ is a non-empty prefix-closed set of transfinite sequences of moves from $M_A$, called \emph{positions}.  We say that $s$ is a \emph{successor position} if the length of $s$ is a successor ordinal and we say that $s$ is a \emph{limiting} position if the length of $s$ is a limit ordinal.
+    \item $\zeta_A\from P_A\to\OP$ designates each position as an \emph{$O$-position} or a \emph{$P$-position}.
+  \end{itemize}
+  such that:
+  \begin{description}
+    \item[Consistency] If $sa\in P_A$ is a successor position, then $\zeta_A(sa) = \lambda_A(a)$
+    \item[Alternation] If $s,sa\in P_A$, then $\zeta_A(s) = \neg\zeta_A(sa)$
+    \item[Limit closure] If $s\in M_A^{*<\alpha}$ is a limiting position such that $t\in P_A$ for all proper prefixes $t\pprefix s$, then $s\in P_A$.
+  \end{description}
+
+  We say that a game $A$ is \emph{positive} if $\zeta_A(\emptyplay)=O$ and \emph{negative} if $\zeta_A(\emptyplay) = P$.  We say that $A$ is \emph{completely negative} if $\zeta_A(s)=P$ for all limiting plays $s$.  
+\end{definition}
+
+Apart from the possibly transfinite length of sequences of moves, the only new thing in this definition is the function $\zeta_A$.  Thanks to the consistency condition, $\zeta_A$ gives us no new information for successor positions; it is necessary in order to tell us which player is to move at limiting positions.
+
+\begin{definition}
+  A \emph{strategy} for an $\alpha$-game $A$ is a non-empty prefix-closed subset $\sigma\subset P_A$ satisfying the following conditions:
+  \begin{description}
+    \item[Closure under $O$-replies] If $s\in\sigma$ is a $P$-position and $sa\in P_A$, then $sa\in\sigma$.
+    \item[Determinism] If $sa,sb\in\sigma$ are $P$-positions, then $a=b$.
+  \end{description}
+\end{definition}
+
+Given games $A$ and $B$, we may form their product $A\times B$, tensor product $A\tensor B$, linear implication $A\implies B$ and sequoid $A\sequoid B$ in roughly the same way that we construct these connectives for finite-length games.  The only point we need to take care of is the behaviour of the $\zeta$-functions at limit ordinals.  We do this according to the following formulae:
+\begin{gather*}
+  \zeta_{A\times B}(s) = \zeta_A(s) \wedge \zeta_B(s) \\
+  \zeta_{A\tensor B}(s) = \zeta_A(s) \wedge \zeta_B(s) \\
+  \zeta_{A\implies B}(s) = \zeta_A(s) \Rightarrow \zeta_B(s) \\
+  \zeta_{A\sequoid B}(s) = \zeta_A(s) \wedge \zeta_B(s)
+\end{gather*}
+Here, $\wedge$ and $\Rightarrow$ are the usual propositional connectives on $\{T,F\}$, but with $T$ replaced by $P$ and $F$ replaced by $O$.
+
+Once we have defined our connectives, we may define a \emph{morphism} from $A$ to $B$ to be a strategy for $A\implies B$ and we may define composition of morphisms in the usual way: given games $A$, $B$ and $C$, and strategies $\sigma$ for $A\implies B$ and $\tau$ for $B\implies C$, we define
+\[
+  \sigma\|\tau = \{\s\in (M_A \cprd M_B \cprd M_C)^{*<\alpha}\suchthat \s\vert_{A,B}\in\sigma,\;\s\vert_{B,C}\in\tau\}
+  \]
+and then we define
+\[
+  \comp\tau\sigma = \{\s\vert_{A,C}\suchthat\s\in\sigma\|\tau\}
+  \]
+\begin{remark}
+  Since $\alpha$ is additively decomposable, the interleaving of two sequences of length less than $\alpha$ must itself have length less than $\alpha$.  This is important: if we allow $\alpha$ to be an additively decomposable ordinal, then it is possible to construct two strategies whose composite is not closed under $O$-replies because a particular reply in the interleaving of two sequences occurs at time later than $\alpha$ and so is not included.
+\end{remark}
+
+We can show that this composition is associative and moreover that we obtain an inclusive, distributive, decomposable sequoidal category.  We call this category $\G(\alpha)$ and call the corresponding strict subcategory $\G_s(\alpha)$.  The hardest part of this is showing that the category is monoidal closed, because the linear implication of completely negative games is not necessarily completely negative.  
+
+\subsection{The final sequence for the sequoidal exponential}
+
+We now want to show that $\G(\alpha)$ has final coalgebras for the functor $A\sequoid\blank$, given by the transfinite game $\oc A$, which is defined as follows:
+\begin{itemize}
+  \item $M_{\oc A} = M_A \times \omega$
+  \item $\lambda_{\oc A} = \lambda_A \circ \pr_1$
+\end{itemize}
+We define $\oc P_A$ to be the set of all sequences $s\in M_{\oc A}^{*<\alpha}$ such that $s\vert_n\in P_A$ for all $n$.  Then we define $\zeta_{\oc A}\from\oc P_A\to\OP$ by
+\[
+  \zeta_{\oc A}(s) = \bigwedge_{n\in\omega}\zeta_A(s\vert_n)
+  \]
+In other words, $\zeta_{\oc A}(s)=P$ if and only if $\zeta_A(s\vert_n)=P$ for all $n$.
+
+There is a natural copycat strategy $\alpha_A\from \oc A \to A \sequoid \oc A$, just as in the finite plays case.  We want to show that this is the final coalgebra for $A\sequoid\blank$.  The proof for the finite case found in \cite{martinsthesis} will not work in this case, since it implicitly uses the fact that $\oc A$ is the limit of the sequence
+\[
+  I \leftarrow A \leftarrow A \sequoid A \leftarrow A \sequoid (A \sequoid A) \leftarrow \cdots
+  \]
+(cf. also \cite{MelliesCofCommCom}).  In the transfinite categories, this is no longer the case.  
+
+While it is possible to prove that $\alpha_A\from \oc A\to A\sequoid \oc A$ is the final coalgebra for $A\sequoid\blank$ directly, we shall instead give a proof by extending the sequence given above to an ordinal-indexed sequence.  This is the \emph{final sequence}, familiar in coalgebra \cite{finalseq}.  Specifically, we construct a functor $\F\from\oppcat{\Ord}\to\G(\alpha)$, where $\Ord$ is the order category of the ordinals, writing
+\begin{gather*}
+  \F(\gamma)=A^{\sequoid\gamma}\\
+  \F(\gamma\le\delta)=j_\gamma^\delta\from A^{\sequoid\delta}\to A^{\sequoid\gamma}
+\end{gather*}
+according to the following inductive recipe:
+\begin{itemize}
+  \item $A^{\sequoid 0} = 1$
+  \item $A^{\sequoid (\gamma + 1)} = A \sequoid A^{\sequoid\gamma}$
+  \item If $\mu$ is a limit ordinal, then $A^{\sequoid\mu}$ is the limit of the diagram formed by the $A^{\sequoid\gamma}$ for $\gamma<\mu$, together with the morphisms $j_\gamma^\delta$, for $\gamma\le\delta<\mu$.
+  \item $j_0^\gamma=*$
+  \item $j_\gamma^\lambda$ is the morphism in the limiting cone
+  \item $j_\gamma^{\delta+1} = \comp{j_\delta^{\delta+1}}{j_\gamma^\delta}$
+  \item If we write $C_\lambda$ for the limiting cone for $\lambda$ over the $A^{\sequoid\gamma}$ for $\gamma<\mu$, then we may form a cone $A\sequoid C_\lambda$ over the same diagram by applying the functor $A\sequoid\blank$ to $C_\lambda$ and then extending the cone to $1$ in the only possible way.  Then $j_\lambda^{\lambda+1}$ is the unique morphism from $A^{\sequoid(\lambda+1)}$ to $A^{\sequoid\lambda}$ inducing a morphism of cones from $A\sequoid C_\lambda$ to $C_\lambda$.
+\end{itemize}
+
+It is well known (see \cite{finalseq}, for instance) that if $j_\delta^{\delta+1}$ is an isomorphism for some $\delta$, then $j_\delta^{\delta+1}\inv\from A^{\sequoid\delta}\to A\sequoid A^{\sequoid\delta}$ is the final coalgebra for the functor $A\sequoid\blank$.  In this case, we say that the sequence \emph{stabilizes at $\delta$}.  Our proof strategy is therefore to show that the sequence stabilizes at some $\delta$, and to show that $A^{\sequoid\delta}$ is isomorphic to $\oc A$.
+
+We do this by giving a classification of the games $A^{\sequoid\gamma}$.  Let $s\in\omega^{*<\alpha}$ be any transfinite sequence of natural numbers.  We define the \emph{derivative} $\Delta s$ of $s$ to be the sequence given by removing all instances of $0$ from $s$ and subtracting $1$ from all other terms.  In other words, if $s\from\gamma\to\omega$, for $\gamma<\alpha$, then we have:
+\[
+  \Delta s = s\inv(\omega\setminus\{0\})\xrightarrow{s}\omega\setminus\{0\}\xrightarrow{-1}\omega
+  \]
+(where $s\inv(\omega\setminus\{0\})$ carries the induced order).  We now define predicates $\blank\le\gamma$ on sequences $s\in \omega^{*<\alpha}$ as follows:
+\begin{itemize}
+  \item $\emptyplay\le 0$
+  \item If $\Delta s\le\gamma$, then $s\le\gamma+1$
+  \item If $\mu$ is a limit ordinal and $s\in\omega^{*<\alpha}$ is such that for all successor-length prefixes $t\prefix s$ we have $t\le\gamma$ for some $\gamma<\mu$, then $s\le\mu$.  In other words, $\{s\in \omega^{*<\alpha}\suchthat s\le\mu\}$ is the limit-closure of the union of the sets $\{s\in\omega^{*<\alpha}\suchthat s\le\gamma\}$ for $\gamma<\mu$.
+\end{itemize}
+
+We can prove some basic results about these predicates:
+\begin{proposition}\label{basicResultsAboutRank}
+  i) If $s\le\gamma$ and $t$ is any subsequence of $s$ (not necessarily an initial prefix), then $t\le\gamma$.
+  
+  ii) If $s\le\gamma$, then $\Delta s\le\gamma$
+
+  iii) If $s\le\gamma$ and $\gamma\le\delta$, then $s\le\delta$
+
+  iv) If $s\in\omega^{*<\alpha}$ has length $\mu$, where $\mu$ is a limit ordinal, then $s\le\mu$.  If $s$ has length $\mu+n$ for some $n\in\omega$, then $s\le\mu+\omega$.  In particular, $s\le\alpha$ for all $s\in \omega^{*<\alpha}$.  
+\end{proposition}
+
+\begin{proof}
+  See Appendix.
+\end{proof}
+
+Our classification result for the final sequence then becomes:
+\begin{theorem}\label{finalseqClassification}
+  Let $A$ be any game.  Then $A^{\sequoid\gamma}\cong(M_{\oc A}, \lambda_{\oc A}, \zeta_{\oc A}, P_{\oc A,\gamma})$, where
+  \[
+    P_{\oc A,\gamma} = \{s\in P_{\oc A}\suchthat \pr_2\circ s\le\gamma\}
+    \]
+  The morphism $j_\gamma^\delta$ is the copycat strategy.
+\end{theorem}
+
+\begin{proof}
+  See Appendix.
+\end{proof}
+
+\begin{corollary}
+  The final sequence for $A\sequoid\blank$ stabilizes at $\alpha$ and we have $A^{\sequoid\alpha}=\oc A$.
+\end{corollary}
+\begin{proof}
+  By Proposition \ref{basicResultsAboutRank}(iv), $\pr_2\circ s\le\alpha$ for all $s\in P_{\oc A}$ and so $\pr_2\circ s\le(\alpha+1)$, by Proposition \ref{basicResultsAboutRank}(iii).  It follows, by Theorem \ref{finalseqClassification}, that $A^{\sequoid\alpha}=\oc A$ and that the morphism $A^{\sequoid\alpha}\to A^{\sequoid(\alpha+1)}$ is the morphism $\alpha_A$.
+\end{proof}
 
 \appendix
 

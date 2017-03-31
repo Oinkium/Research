@@ -1,10 +1,17 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{abramskyjagadeesangames}
 Samson Abramsky and Radha Jagadeesan.
 \newblock Games and full completeness for multiplicative linear logic.
 \newblock {\em CoRR}, abs/1311.6057, 2013.
 \newblock URL: \url{http://arxiv.org/abs/1311.6057}.
+
+\bibitem{blassChoice}
+Andreas Blass.
+\newblock Equivalence of two strong forms of determinacy.
+\newblock {\em Proceedings of the American Mathematical Society},
+  52(1):373--376, 1975.
+\newblock URL: \url{http://www.jstor.org/stable/2040166}.
 
 \bibitem{martinsthesis}
 Martin Churchill, Jim Laird, and Guy McCusker.
@@ -21,5 +28,65 @@ Martin Hyland.
 J.~Laird.
 \newblock A categorical semantics of higher-order store.
 \newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
+
+\bibitem{LairdOrdinalGames}
+J.~Laird.
+\newblock Sequential algorithms for unbounded nondeterminism.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 319:271 --
+  287, 2015.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S1571066115000845},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.entcs.2015.12.017}
+  {\path{doi:http://dx.doi.org/10.1016/j.entcs.2015.12.017}}.
+
+\bibitem{LevyGsInfinite}
+Paul~Blain Levy.
+\newblock Infinite trace equivalence.
+\newblock {\em Annals of Pure and Applied Logic}, 151(2):170 -- 198, 2008.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0168007207000887},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.apal.2007.10.007}
+  {\path{doi:http://dx.doi.org/10.1016/j.apal.2007.10.007}}.
+
+\bibitem{MelliesCofCommCom}
+Paul-Andr{\'e} Melli{\`e}s, Nicolas Tabareau, and Christine Tasson.
+\newblock {\em An Explicit Formula for the Free Exponential Modality of Linear
+  Logic}, pages 247--260.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2009.
+\newblock URL: \url{http://dx.doi.org/10.1007/978-3-642-02930-1_21}, \href
+  {http://dx.doi.org/10.1007/978-3-642-02930-1_21}
+  {\path{doi:10.1007/978-3-642-02930-1_21}}.
+
+\bibitem{mycielskiChoice}
+Jan Mycielski.
+\newblock On the axiom of determinateness.
+\newblock {\em Fundamenta Mathematicae}, 53(2):205--224, 1964.
+\newblock URL: \url{http://eudml.org/doc/213736}.
+
+\bibitem{longgamesbook}
+Itay Neeman and Inc. ebrary.
+\newblock {\em The determinacy of long games}.
+\newblock De Gruyter series in logic and its applications ;. Walter de
+  Gruyter,, Berlin ;, c2004.
+\newblock URL: \url{http://site.ebrary.com/lib/strathmore/Doc?id=10197224}.
+
+\bibitem{RoscoeCspInfinite}
+A.~W. ROSCOE.
+\newblock Unbounded non-determinism in {CSP}.
+\newblock {\em Journal of Logic and Computation}, 3(2):131, 1993.
+\newblock URL: \url{+ http://dx.doi.org/10.1093/logcom/3.2.131}, \href
+  {http://arxiv.org/abs//oup/backfile/Content_public/Journal/logcom/3/2/10.1093_logcom_3.2.131/1/3-2-131.pdf}
+  {\path{arXiv:/oup/backfile/Content_public/Journal/logcom/3/2/10.1093_logcom_3.2.131/1/3-2-131.pdf}},
+  \href {http://dx.doi.org/10.1093/logcom/3.2.131}
+  {\path{doi:10.1093/logcom/3.2.131}}.
+
+\bibitem{finalseq}
+James Worrell.
+\newblock On the final sequence of a finitary set functor.
+\newblock {\em Theoretical Computer Science}, 338(1):184 -- 199, 2005.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0304397504008023},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.tcs.2004.12.009}
+  {\path{doi:http://dx.doi.org/10.1016/j.tcs.2004.12.009}}.
 
 \end{thebibliography}

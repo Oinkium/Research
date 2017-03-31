@@ -7,44 +7,50 @@ Reallocated global_strs (elt_size=20001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: bibliography.bib
-You've used 4 entries,
+Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
+while executing---line 1404 of file plainurl.bst
+Warning--can't use both author and editor fields in MelliesCofCommCom
+Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
+while executing---line 1446 of file plainurl.bst
+You've used 12 entries,
             2849 wiz_defined-function locations,
-            643 strings with 5565 characters,
-and the built_in function-call counts, 1577 in all, are:
-= -- 165
-> -- 52
-< -- 1
-+ -- 19
-- -- 14
-* -- 68
-:= -- 257
-add.period$ -- 15
-call.type$ -- 4
-change.case$ -- 19
+            718 strings with 7611 characters,
+and the built_in function-call counts, 5387 in all, are:
+= -- 596
+> -- 139
+< -- 2
++ -- 51
+- -- 36
+* -- 305
+:= -- 775
+add.period$ -- 48
+call.type$ -- 12
+change.case$ -- 52
 chr.to.int$ -- 0
-cite$ -- 4
-duplicate$ -- 49
-empty$ -- 152
-format.name$ -- 14
-if$ -- 411
+cite$ -- 13
+duplicate$ -- 165
+empty$ -- 541
+format.name$ -- 36
+if$ -- 1423
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 4
-newline$ -- 25
-num.names$ -- 8
-pop$ -- 30
+int.to.str$ -- 12
+missing$ -- 14
+newline$ -- 73
+num.names$ -- 24
+pop$ -- 89
 preamble$ -- 1
-purify$ -- 15
+purify$ -- 42
 quote$ -- 0
-skip$ -- 128
+skip$ -- 408
 stack$ -- 0
-substring$ -- 30
-swap$ -- 6
-text.length$ -- 1
+substring$ -- 236
+swap$ -- 36
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 16
-warning$ -- 0
-while$ -- 9
-width$ -- 5
-write$ -- 51
+type$ -- 44
+warning$ -- 1
+while$ -- 34
+width$ -- 14
+write$ -- 163
+(There were 2 error messages)
