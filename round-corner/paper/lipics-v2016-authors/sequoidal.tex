@@ -672,7 +672,7 @@ according to the following inductive recipe:
   \item If we write $C_\lambda$ for the limiting cone for $\lambda$ over the $A^{\sequoid\gamma}$ for $\gamma<\mu$, then we may form a cone $A\sequoid C_\lambda$ over the same diagram by applying the functor $A\sequoid\blank$ to $C_\lambda$ and then extending the cone to $1$ in the only possible way.  Then $j_\lambda^{\lambda+1}$ is the unique morphism from $A^{\sequoid(\lambda+1)}$ to $A^{\sequoid\lambda}$ inducing a morphism of cones from $A\sequoid C_\lambda$ to $C_\lambda$.
 \end{itemize}
 
-It is well known (see \cite{finalseq}, for instance) that if $j_\delta^{\delta+1}$ is an isomorphism for some $\delta$, then $j_\delta^{\delta+1}\inv\from A^{\sequoid\delta}\to A\sequoid A^{\sequoid\delta}$ is the final coalgebra for the functor $A\sequoid\blank$.  In this case, we say that the sequence \emph{stabilizes at $\delta$}.  Our proof strategy is therefore to show that the sequence stabilizes at some $\delta$, and to show that $A^{\sequoid\delta}$ is isomorphic to $\oc A$.
+It is well known (see \cite{finalseq}, for instance) that if $j_\delta^{\delta+1}$ is an isomorphism for some $\delta$, then ${j_\delta^{\delta+1}}\inv\from A^{\sequoid\delta}\to A\sequoid A^{\sequoid\delta}$ is the final coalgebra for the functor $A\sequoid\blank$.  In this case, we say that the sequence \emph{stabilizes at $\delta$}.  Our proof strategy is therefore to show that the sequence stabilizes at some $\delta$, and to show that $A^{\sequoid\delta}$ is isomorphic to $\oc A$.
 
 We do this by giving a classification of the games $A^{\sequoid\gamma}$.  Let $s\in\omega^{*<\alpha}$ be any transfinite sequence of natural numbers.  We define the \emph{derivative} $\Delta s$ of $s$ to be the sequence given by removing all instances of $0$ from $s$ and subtracting $1$ from all other terms.  In other words, if $s\from\gamma\to\omega$, for $\gamma<\alpha$, then we have:
 \[
@@ -967,7 +967,168 @@ We now want to show that $\oc$ has the structure of a strong symmetric monoidal 
   \quad
   \dec^0\from I\to 1
   \]
-By hypothesis, these are both isomorphisms.  We just need to show that the appropriate coherence diagrams commute.
+By hypothesis, these are both isomorphisms.  We just need to show that the appropriate coherence diagrams commute.  That is, for any games $A,B,C$, we need to show that the following diagrams commute:
+\[
+  \begin{tikzcd}
+    (\oc A \tensor \oc B) \tensor \oc C \arrow[r, "\assoc_{A,B,C}"] \arrow[d, "\int_{A,B}\tensor\id_{\oc C}"]
+      & \oc A \tensor (\oc B \tensor \oc C) \arrow[d, "\id_{\oc A}\tensor\int_{B,C}"] \\
+    \oc (A \times B) \tensor \oc C \arrow[d, "\int_{A\times B,C}"]
+      & \oc A \tensor \oc(B \times C) \arrow[d, "\int_{A,B\times C}"] \\
+    \oc ((A \times B) \times C) \arrow[r, "\oc\assoc_{\times,A,B,C}"]
+      & \oc (A \times (B \times C))
+  \end{tikzcd}
+  \]
+
+We first prove a small lemma, which gives us a simpler way to compute $\oc \sigma$ in the case that $\sigma$ is a morphism in $\C_s$.  
+
+\begin{lemma}\label{ocStrict}
+  Let $A,B$ be objects of $\C_s$ and let $\sigma$ be a morphism from $A$ to $B$ in $\C_s$.  Then the following diagram commutes:
+  \[
+    \begin{tikzcd}
+      \oc A \arrow[r, "\alpha_A"] \arrow[d, "\oc \sigma"']
+        & A \sequoid \oc A \arrow[r, "\sigma\sequoid\id"]
+          & B \sequoid \oc A \arrow[d, "\id\sequoid\oc\sigma"] \\
+      \oc B \arrow[rr, "\alpha_B"]
+        &
+          & B \sequoid \oc B
+    \end{tikzcd}
+    \]
+\end{lemma}
+
+\begin{proof}
+  By the definition of $\oc \sigma$, we have the following commutative diagram:
+  \[
+    \begin{tikzcd}
+      \oc A \arrow[r, "\mu_A"] \arrow[d, "\oc \sigma"']
+        & \oc A \tensor \oc A \arrow[r, "\der\tensor\id"]
+          & A \tensor \oc A \arrow[r, "\sigma\tensor\id"]
+            & B \tensor \oc A \arrow[r, "\wk"]
+              & B \sequoid \oc A \arrow[d, "\id_B\sequoid\oc\sigma"] \\
+      \oc B \arrow[rrrr, "\alpha_B"]
+        &
+          &
+            &
+              & B \sequoid \oc B
+    \end{tikzcd}
+    \]
+  Therefore, it will suffice to show that the following diagram (solid lines) commutes:
+  \[
+    \begin{tikzcd}
+      \oc A \arrow[r, "\alpha_A"] \arrow[d, "\mu_A"']
+        & A \sequoid \oc A \arrow[r, "\sigma\sequoid\id"]
+          & B \sequoid \oc A \\
+      \oc A \tensor \oc A \arrow[r, "\der\tensor\id"]
+        & A \tensor \oc A \arrow[u, dotted, "\wk"] \arrow[r, "\sigma\tensor\id"]
+          & B \tensor \oc A \arrow[u, "\wk"]
+    \end{tikzcd}
+    \]
+  The left hand square commutes by Lemma \ref{aFormulaForAlpha}.  The right hand square commutes because $\wk$ is a natural transformation.
+\end{proof}
+
+To show that the first coherence diagram commutes, we define a composite $\eta_{A,B,C}$:
+  \settowidth{\arrow}{\scriptsize$\id_{A\sequoid(\oc A\tensor\oc B)}\times (\id_B\sequoid\sym_{\oc B,\oc A})$}
+  \begin{gather*}
+    (\oc A \tensor \oc B) \tensor \oc C \constantwidthxrightarrow{\langle\id,\; \sym\rangle} ((\oc A \tensor \oc B) \tensor \oc C) \times (\oc C \tensor (\oc A \tensor \oc B)) \\
+    \hspace{6pt}\cdots \constantwidthxrightarrow{((\comp{\dist\inv}{\kappa_{A,B}})\tensor\id)\times(\alpha_C\tensor\id)} (((A \times B) \sequoid (\oc A \tensor \oc B)) \tensor \oc C) \times ((C \sequoid \oc C) \tensor (\oc A \tensor \oc B)) \\
+    \hspace{6pt}\cdots \constantwidthxrightarrow{\wk\times\wk} (((A \times B) \sequoid (\oc A \tensor \oc B)) \sequoid \oc C) \times ((C \sequoid \oc C) \sequoid (\oc A \tensor \oc B)) \\
+    \hspace{6pt}\cdots \constantwidthxrightarrow{\passoc\inv\times\passoc\inv} ((A \times B) \sequoid ((\oc A \tensor \oc B) \tensor \oc C)) \times (C \sequoid (\oc C \tensor (\oc A \tensor \oc B))) \\
+    \hspace{6pt}\cdots \constantwidthxrightarrow{\id\times(\id\sequoid\sym)} ((A \times B) \sequoid ((\oc A \tensor \oc B) \tensor \oc C)) \times (C \sequoid ((\oc A \tensor \oc B) \tensor \oc C))
+  \end{gather*}
+
+  Observe the similarity between the definition of $\eta_{A,B,C}$ and that of $\kappa_{A\times B,C}$.  Indeed, it may be easily verified that the following diagram commutes, using the definition of $\int_{A,B}$ as the anamorphism for $\comp{\dist\inv}{\kappa_{A,B}}$ and the fact that $\wk$, $\passoc$ and $\sym$ are natural transformations:
+  \[
+    \begin{tikzcd}
+      ((\oc A \tensor \oc B) \tensor \oc C) \arrow[r, "\eta_{A,B,C}"] \arrow[d, "\int_{A,B}\tensor\id"']
+        & ((A \times B) \sequoid ((\oc A \tensor \oc B) \tensor \oc C)) \times (C \sequoid ((\oc A \tensor \oc B) \tensor \oc C)) \arrow[d, "(\id\sequoid(\int\tensor\id))\times (\id\sequoid(\int\tensor\id))"] \\
+      \oc (A \times B) \tensor \oc C \arrow[r, "\kappa_{A\times B,C}"]
+        & ((A \times B) \sequoid (\oc (A \times B))) \times (C \sequoid (\oc (A \times B) \tensor \oc C))
+    \end{tikzcd}
+    \]
+
+\begin{lemma}\label{assocCoherenceBigCommutes}
+  The diagrams in Figure \ref{assocCoherenceBig} commute.
+\end{lemma}
+\begin{proof}
+  First, observe the diagram in Figure \ref{ThisWorksForA}.  Setting, $X=A$, $Y=B$ and $Z=C$, this gives us diagram \eqref{Aexpansion} immediately.
+\end{proof}
+
+\begin{SidewaysFigure}
+  \begin{equation}\label{Aexpansion}
+    \begin{tikzcd}[ampersand replacement=\&]
+      (\oc A \tensor \oc B) \tensor \oc C \arrow[r, "(\alpha_A\tensor\id)\tensor\id" yshift=0.4em] \arrow[d, "\assoc"']
+        \& ((A \sequoid \oc A) \tensor \oc B) \tensor \oc C \arrow[r, "(\comp{\passoc\inv}{\wk})\tensor\id" yshift=0.4em]
+          \& (A \sequoid (\oc A \tensor \oc B)) \tensor \oc C \arrow[r, "\comp{\passoc\inv}{\wk}" yshift=0.4em]
+            \& A \sequoid ((\oc A \tensor \oc B) \tensor \oc C) \arrow[d, "\id\sequoid\assoc"] \\
+      \oc A \tensor (\oc B \tensor \oc C) \arrow[r, "\alpha_A\tensor\id"]
+        \& (A \sequoid \oc A) \tensor (\oc B \tensor \oc C) \arrow[r, "\wk"]
+            \& (A \sequoid \oc A) \sequoid (\oc B \tensor \oc C) \arrow[r, "\passoc\inv"]
+                \& A \sequoid (\oc A \tensor (\oc B \tensor \oc C))
+    \end{tikzcd}\tag{\textbf{A}}
+  \end{equation}\vspace{24pt}
+  \begin{equation}\label{Bexpansion}
+    \begin{tikzcd}[row sep=36pt, column sep=12pt, cramped, ampersand replacement=\&]
+      (\oc A \tensor \oc B) \tensor \oc C \arrow[r, "\sym" yshift=0.4em] \arrow[d, "\assoc"']
+        \& (\oc B \tensor \oc A) \tensor \oc C \arrow[r, "(\alpha_B\tensor\id)\tensor\id" yshift=0.4em]
+          \& ((B \sequoid \oc B) \tensor \oc A) \tensor \oc C \arrow[r, "(\comp{\passoc\inv}{\wk})\tensor\id" yshift = 0.4em]
+            \& (B \sequoid (\oc B \tensor \oc A)) \tensor \oc C \arrow[r, "\comp{\passoc\inv}{\wk}" yshift=0.4em]
+              \& B \sequoid ((\oc B \tensor \oc A) \tensor \oc C) \arrow[r, "\id\sequoid(\sym\tensor\id)" yshift=0.4em]
+                \& B \sequoid ((\oc A \tensor \oc B) \tensor \oc C) \arrow[d, "\id\sequoid\assoc"] \\
+      \oc A \tensor (\oc B \tensor \oc C) \arrow[r, "\sym" yshift=0.4em]
+        \& (\oc B \tensor \oc C) \tensor \oc A \arrow[r, "(\alpha_B\tensor\id)\tensor\id" yshift=0.4em]
+          \& ((B \sequoid \oc B) \tensor \oc C) \tensor \oc A \arrow[r, "(\comp{\passoc\inv}{\wk})\tensor\id" yshift=0.4em]
+            \& (B \sequoid (\oc B \tensor \oc C)) \tensor \oc A \arrow[r, "\comp{\passoc\inv}{\wk}" yshift=0.4em]
+              \& B \sequoid ((\oc B \tensor \oc C) \tensor \oc A) \arrow[r, "\id\sequoid\sym" yshift=0.4em]
+                \& B \sequoid (\oc A \tensor (\oc B \tensor \oc C))
+    \end{tikzcd}\tag{\textbf{B}}
+  \end{equation}\vspace{36pt}
+  \begin{equation}\label{Cexpansion}
+    \begin{tikzcd}[row sep=36pt, column sep=12pt, cramped, ampersand replacement=\&]
+      (\oc A \tensor \oc B) \tensor \oc C \arrow[r, "\sym" yshift=0.4em] \arrow[d, "\assoc"']
+        \& \oc C \tensor (\oc A \tensor \oc B) \arrow[r, "\alpha_C\tensor\id" yshift=0.4em]
+          \& (C \sequoid \oc C) \tensor (\oc A \tensor \oc B) \arrow[r, "\wk" yshift=0.4em]
+            \& (C \sequoid \oc C) \sequoid (\oc A \tensor \oc B) \arrow[r, "\passoc\inv" yshift=0.4em]
+              \& C \sequoid (\oc C \tensor (\oc A \tensor \oc B)) \arrow[r, "\id\sequoid\sym" yshift=0.4em]
+                \& C \sequoid ((\oc A \tensor \oc B) \tensor \oc C) \arrow[d, "\id\sequoid\assoc"] \\
+      \oc A \tensor (\oc B \tensor \oc C) \arrow[r, "\comp{(\sym\tensor\id)}{\sym}" yshift=0.4em]
+        \& (\oc C \tensor \oc B) \tensor \oc A \arrow[r, "(\alpha_C\tensor\id)\tensor\id" yshift=0.4em]
+          \& ((C \sequoid \oc C) \tensor \oc B) \tensor \oc A \arrow[r, "(\comp{\passoc\inv}{\wk})\tensor\id" yshift=0.4em]
+            \& (C \sequoid (\oc C \tensor \oc B)) \tensor \oc A \arrow[r, "\comp{\passoc\inv}{\wk}" yshift=0.4em]
+              \& C \sequoid ((\oc C \tensor \oc B) \tensor \oc A) \arrow[r, "\id\sequoid(\comp{(\sym\tensor\id)}{\sym})" yshift=0.4em]
+                \& C \sequoid (\oc A \tensor (\oc B \tensor \oc C))
+    \end{tikzcd}\tag{\textbf{C}}
+  \end{equation}\vspace{24pt}
+  \caption{Lemma \ref{assocCoherenceBigCommutes} asserts that these diagrams commute.}\label{assocCoherenceBig}
+\end{SidewaysFigure}
+
+\begin{SidewaysFigure}
+  \[
+    \begin{tikzcd}[row sep=36pt, cramped, ampersand replacement=\&]
+      (\oc X \tensor \oc Y) \tensor \oc Z \arrow[r, "(\alpha\tensor\id)\tensor\id" yshift=0.4em] \arrow[dd, "\assoc"']
+      \arrow[phantom, ddr, "\textbf{a}"]
+        \& ((X \sequoid \oc X) \tensor \oc Y) \tensor \oc Z \arrow[r, "\wk\tensor\id" yshift=0.4em] \arrow[dd, "\assoc"']
+      \arrow[phantom, ddr, "\textbf{c}"]
+          \& ((X \sequoid \oc X) \sequoid \oc Y) \tensor \oc Z \arrow[r, "\passoc\inv\tensor\id" yshift=0.4em] \arrow[d, "\wk"']
+      \arrow[phantom, dr, "\textbf{b}"]
+            \& (X \sequoid (\oc X \tensor \oc Y)) \tensor \oc Z \arrow[d, "\wk"]
+              \& \\
+      %
+        \&
+          \& ((X \sequoid \oc X) \sequoid \oc Y) \sequoid \oc Z \arrow[r, "\passoc\inv\sequoid\id" yshift=0.4em] \arrow[d, "\passoc\inv"]
+      \arrow[phantom, drr, "\textbf{d}"]
+            \& (X \sequoid (\oc X \tensor \oc Y)) \sequoid \oc Z \arrow[r, "\passoc\inv" yshift=0.4em]
+              \& X \sequoid ((\oc X \tensor \oc Y) \tensor \oc Z) \arrow[d, "\id\sequoid\assoc"] \\
+      \oc X \tensor (\oc Y \tensor \oc Z) \arrow[r, "\alpha_X\tensor\id"]
+        \& (X \sequoid \oc X) \tensor (\oc Y \tensor \oc Z) \arrow[r, "\wk"]
+          \& (X \sequoid \oc X) \sequoid (\oc Y \tensor \oc Z) \arrow[rr, "\passoc\inv"]
+            \& 
+              \& X \sequoid (\oc X \tensor (\oc Y \tensor \oc Z)
+    \end{tikzcd}
+    \]
+  \caption{
+    \textbf{a} commutes because $\assoc$ is a natural transformation.  \textbf{b} commutes because $\wk$ is a natural transformation. \\[\baselineskip]
+    \textbf{c} commutes by the coherence condition for $\wk$.  \textbf{d} commutes by the coherence condition for $\passoc$.
+  }\label{ThisWorksForA}
+\end{SidewaysFigure}
 
 %%
 %% Bibliography
