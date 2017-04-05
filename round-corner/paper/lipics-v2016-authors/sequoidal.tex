@@ -74,6 +74,7 @@
 %% Theorems %%
 \theoremstyle{plain}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{exercise}[theorem]{Exercise}
 \theoremstyle{definition}
 \newtheorem{notation}[theorem]{Notation}
 
@@ -119,12 +120,19 @@
 \newcommand{\s}{\mathfrak{s}}
 \newcommand{\dist}{{\mathtt{dist}}}
 \newcommand{\dec}{{\mathtt{dec}}}
-\renewcommand{\int}{{\mathtt{int}}}
+\renewcommand{\int}{{\mathtt{coh}}}
+\renewcommand{\coh}{\int}
 \DeclareMathOperator{\CCom}{CCom}
 \newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
 \newcommand{\Set}{\catname{Set}}
 \newcommand{\Ord}{\catname{Ord}}
 \newcommand\oppcat[1]{#1^{\mathrm{op}}}
+\newcommand{\bN}{{\mathbb{N}}}
+\newcommand{\OK}{{\mathtt{OK}}}
+\newcommand{\zero}{{\mathtt{zero}}}
+\renewcommand{\succ}{{\mathtt{succ}}}
+
+%%OUR
 
 %% Constant width xrightarrows
 \newlength{\arrow}
@@ -173,7 +181,7 @@
 
 \subsection{Game semantics and the sequoidal operator}
 
-We shall present a form of game semantics in the style of \cite{hyland1997games} and \cite{abramskyjagadeesangames}.  A game will be given by a tuple
+To get around the problems caused by the non-commutativity of the comonoid in the sets-and-relations model, we shall consider a game semantics model, in which we will be able to construct cofree commutative comonoids.  We shall present a form of game semantics in the style of \cite{hyland1997games} and \cite{abramskyjagadeesangames}.  A game will be given by a tuple
 \[
   A = (M_A, \lambda_A, b_A, P_A)
   \]
@@ -419,12 +427,78 @@ We shall call the exponential $\oc A$ the \emph{sequoidal exponential}.  The fol
         & A \sequoid \oc A
     \end{tikzcd}
     \]
+  We call $\fcoal{\sigma}$ the \emph{anamorphism} of $\sigma$.
 \end{proposition}
 \begin{proof}
   See \cite{martinsthesis}.  We shall shortly give a proof in the more general case.
 \end{proof}
 
-\subsection{Constructing cofree commutative comonoids in sequoidal categories}
+\subsection{Imperative programs as anamorphisms}
+
+Let $\Sigma$ be the game
+\[
+  (\{q,a\},\{q\mapsto O,a\mapsto P\},O,\{\emptyplay,q,qa\})
+  \]
+and let $\bN$ be the game
+\[
+  \{q\}\cup\bN,\{q\mapsto O,\;n\mapsto P\},O,\{\emptyplay,q\}\cup\{qn\suchthat n\in\bN\})
+  \]
+That is, $\Sigma$ is the game where player $O$ makes the move $q$ and player $P$ must then reply with the move $a$, while $\bN$ is the game where player $O$ plays the move $q$ and then player $P$ must choose a natural number $n$ to play.  We model a simple stateful program as a history sensitive strategy on $\oc(\Sigma\times\bN)$: the program interface will consist of a button that can be pressed, and a display that can be activated to display the number of times that the button has been pressed.  As a strategy on $\oc(\Sigma\times\bN)$, whenever player $O$ plays $q$ in $\Sigma$, player $P$ responds with the move $a$.  Whenever he plays $q$ in $\bN$, she responds with the number of times we have played in $\Sigma$ so far.
+
+We can construct this strategy using nothing more than the sequoidal structure on $\G$ that we have described and some very basic strategies on the games $\bN$ and $\Sigma$; namely:
+\begin{gather*}
+  \OK \from I \to \Sigma \\
+  \succ \from \bN \to \bN \\
+  \zero \from I \to \bN
+\end{gather*}
+Here, $\OK$ is the strategy that replies $a$ to player $O$'s initial move $q$, $\zero$ is the strategy that replies $0$ to player $O$'s initial move $q$ and $\succ$ is the strategy that queries its argument and then returns the number one greater (so maximal plays in $\succ$ are of the form $qqn(n+1)$ for $n\in\bN$).  
+
+We first define a morphism $\mathtt{press}$ from $\oc \bN$ to $\Sigma\sequoid\oc \bN$ as the composite:
+\[
+  \begin{tikzcd}
+    \oc\bN \arrow[r, "\lunit"]
+      & I \tensor \oc \bN \arrow[r, "\OK\tensor\oc\succ"]
+        &[24pt] \Sigma\tensor\oc\bN \arrow[r, "\wk"]
+          & \Sigma \sequoid \oc \bN
+  \end{tikzcd}
+  \]
+In this strategy, the player responds to the initial move $q$ in $\Sigma$ with $a$; from then on, she copies from the $\oc\bN$ to $\oc\bN$, increasing each argument by $1$ before playing it on the right.  This strategy models the effect of a single button press.
+
+We now define a morphism from $\oc\bN$ to $(\bN\times\Sigma)\sequoid\oc \bN$ by the composite:
+\[
+  \begin{tikzcd}
+    \oc \bN \arrow[r, "\Delta"]
+      & \oc \bN \times \oc \bN \arrow[r, "\alpha\times\mathtt{press}"]
+        &[20pt] \bN \sequoid \oc \bN \;\times\; \Sigma \sequoid \oc \bN \arrow[r, "\dist\inv"]
+          &[12pt] (\bN \times \Sigma) \sequoid \oc \bN
+  \end{tikzcd}
+  \]
+In this strategy, if player $O$ starts with a move in $\bN$, then player $P$ copies plays in $\oc \bN$ on the left and copies over the response.  From then on, she continues to copy numbers from the left over to the right.  If player $O$ starts by playing in $\Sigma$, then player $P$ responds with the move $a$.  From then on, she copies numbers from the left over to the right, but now she increases the numbers by $1$ each time.  
+
+This strategy represents a single user interaction (either pressing the button or checking how many times it has been pressed), together with the change of state (represented by the game $\oc \bN$) that takes place after that interaction has taken place.  We now take the anamorphism of this strategy, giving us a unique morphism $\mathtt{count}$ from $\oc \bN$ to $\oc (\bN\times\Sigma)$ making the following diagram commute:
+\[
+  \begin{tikzcd}
+    \oc \bN \arrow[r, "\Delta"] \arrow[d, "\mathtt{count}"']
+      & \oc \bN \times \oc \bN \arrow[r, "\alpha\times\mathtt{press}"]
+        &[20pt] \bN \sequoid \oc \bN \;\times\; \Sigma \sequoid \oc \bN \arrow[r, "\dist\inv"]
+          &[12pt] (\bN \times \Sigma) \sequoid \oc \bN \arrow[d, "\id\sequoid\mathtt{count}"] \\
+    \oc (\bN\times\Sigma) \arrow[rrr, "\alpha"]
+      &
+        &
+          & (\bN \times \Sigma) \sequoid \oc (\bN \times \Sigma)
+  \end{tikzcd}
+  \]
+In the strategy $\mathtt{count}$, if player $O$ plays $q$ in a copy of $\Sigma$, then player $P$ responds with $a$ and adds $1$ to an (invisible) counter variable.  If player $O$ plays $q$ in a copy of $\bN$, then player $P$ queries the argument on the left and returns that value, plus her count, on the right.  If we now substitute in the initial value of the state by forming the composite $\comp{\mathtt{count}}{\oc\zero}$, then we end up with the desired behaviour.
+
+Note that the strategies we started with -- $\OK$, $\succ$ and $\zero$ -- are all history free strategies.  The history-sensitive, stateful behaviour only arose when we passed to the anamorphism.  
+
+\begin{exercise}
+  Let $X$ be a set, let $X$ be the game with maximal plays $qx$ for $x\in X$ and let $X_\bot$ be the game with maximal plays $qx$ for $x\in X$ and $q*$, where $*$ is a special error symbol not contained in $X$.  Consider a history-sensitive strategy on $\oc((X\implies\Sigma)\times X)$ representing a simple stack with $\mathtt{push(x)}$ and $\mathtt{pop()}$ methods.  The $\mathtt{push(x)}$ method should add the argument of a function $X\implies\Sigma$ on to the stack, while the $\mathtt{pop()}$ method should return the top element of the stack, removing it from the stack in the process, or return $*$ if the stack is empty.  Show that this strategy may be constructed from the strategy $\OK$ on $\Sigma$, using only the sequoidal structure of $\G$.  
+
+  Consider how we might add a $\mathtt{size()}$ method, of type $\bN$, to this stack, returning the number of elements currently on the stack.
+\end{exercise}
+
+\section{Constructing cofree commutative comonoids in Cartesian sequoidal categories}
 
 We want to deduce the fact that $\oc A\xrightarrow{\mu}\oc A\tensor\oc A$ is the cofree commutative comonoid on $A$ from the fact that $\oc A$ is the final coalgebra for $A\sequoid\blank$.  It turns out that we shall need one more fact about the category of games to prove this.
 
