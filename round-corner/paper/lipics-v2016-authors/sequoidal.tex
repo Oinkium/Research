@@ -561,6 +561,21 @@ The second step in the construction, is to form, for each object $A$, the \emph{
   \]
 where $A^{\tensor n} = \underbrace{A\tensor\cdots\tensor A}_n$.  Here, the `$\le$' is because, thanks to our affine structure, we are free to ignore (weaken) any one of the copies of $A$.
 
+We claim that, in a decomposable sequoidal category, the object $A^{\le n}$ always exists and is isomorphic to the game $A^{\sequoid n}$, defined inductively by:
+\begin{gather*}
+  A^{\sequoid 0} = I \\
+  A^{\sequoid (n+1)} = A \sequoid A^{\sequoid n}
+\end{gather*}
+Indeed, by decomposability, the morphisms $\wk,\comp{\wk}{\sym}\from A\tensor A\to A\sequoid A$ exhibit $A\tensor A$ as a product of $A\sequoid A$ with $A\sequoid A$.  Using the coherence conditions, we may generalize this to higher products: write $\wk^n\from A^{\tensor n}\to A^{\sequoid n}$ for the natural morphism
+\[
+  \wk^n = \comp{\id\sequoid(\cdots\sequoid(\id\sequoid\wk)\cdots)}{\comp{\cdots}{\wk}}
+  \]
+and for $\pi\in S_n$, write $\sym^\pi$ for the corresponding symmetry $A^{\tensor n}\to A^{\tensor n}$.  We can show that the morphisms $\comp{\wk^n}{\sym^\pi}$ for $\pi\in S_n$ exhibit $A^{\tensor n}$ as the product of $n!$ copies of $A^{\sequoid n}$.  
+
+Now the morphism $\langle\id,\dots,\id\rangle\from A^{\sequoid n}\to (A^{\sequoid n})^{n!}$ induces a morphism $e$ from $A^{\sequoid n}$ to $A^{\tensor n}$ that equalizes the morphisms $\comp{\wk^n}{\sym^pi}$ and therefore equalizes the morhpisms $\sym^\pi$ (since $\wk^n$ is an epimorphism).  We claim that $e$ is the equalizer of the $\sym^\pi$.  
+
+Suppose $B$ is an object of the category and that $f\from B\to A^{\tensor n}$ is a morphism equalizing the $\sym^\pi$.  
+
 ---
 
 We want to deduce the fact that $\oc A\xrightarrow{\mu}\oc A\tensor\oc A$ is the cofree commutative comonoid on $A$ from the fact that $\oc A$ is the final coalgebra for $A\sequoid\blank$.  It turns out that we shall need one more fact about the category of games to prove this.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  5 APR 2017 23:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  6 APR 2017 12:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1652,34 +1652,53 @@ Package microtype Info: Loading generic settings for font family
 LaTeX Font Warning: Font shape `U/wasy/m/it' undefined
 (Font)              using `U/wasy/m/n' instead on input line 426.
 
-[5] [6] [7] [8] [9]pdfTeX warning (ext4): destination with the same identifier 
-(name{equation.2.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.618 \begin{equation}
-                      \label{definitionOfSigma} [10] [11]
-
-LaTeX Warning: Reference `TransfiniteGamesConstructionInFull' on page 12 undefi
-ned on input line 722.
-
-
-LaTeX Font Warning: Font shape `U/wasy/b/n' in size <7> not available
-(Font)              Font shape `U/wasy/m/n' tried instead on input line 749.
-
-
-LaTeX Font Warning: Font shape `U/wasy/b/n' in size <5> not available
-(Font)              Font shape `U/wasy/m/n' tried instead on input line 749.
-
-[12] [13] [14] [15pdfTeX warning (ext4): destination with the same identifier (
-name{theorem.A.21}) has been already used, duplicate ignored
+[5] [6] [7] [8] [9] [10pdfTeX warning (ext4): destination with the same identif
+ier (name{equation.2.1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.928     \]
+l.647 W
+       e also define a morphism $\der_A\from \oc A \to A$.  Note that since ...
+] [11]
+
+LaTeX Warning: Reference `TransfiniteGamesConstructionInFull' on page 12 undefi
+ned on input line 737.
+
+[12]
+
+LaTeX Font Warning: Font shape `U/wasy/b/n' in size <7> not available
+(Font)              Font shape `U/wasy/m/n' tried instead on input line 764.
+
+
+LaTeX Font Warning: Font shape `U/wasy/b/n' in size <5> not available
+(Font)              Font shape `U/wasy/m/n' tried instead on input line 764.
+
+[13] [14] [15]
+Underfull \vbox (badness 2735) has occurred while \output is active []
+
+ [16pdfTeX warning (ext4): destination with the same identifier (name{theorem.A
+.21}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.993     \]
             ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 1035.
- [16] [17] [18] [19] (./sequoidal.bbl
+(Font)              <9> on input line 1050.
+ [17] [18] [19] (./sequoidal.bbl [20] [21pdfTeX warning (ext4): destination wit
+h the same identifier (name{equation.A.1}) has been already used, duplicate ign
+ored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.39 
+     pdfTeX warning (ext4): destination with the same identifier (name{equation
+.A.1}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.39 
+     ] [22]
 Underfull \hbox (badness 6001) in paragraph at lines 41--49
 \T1/lmtt/m/n/9.5 com / science / article / pii / S1571066115000845$[]\T1/lmr/m/
 n/9.5 , []$\T1/lmtt/m/n/9.5 doi : http : / / dx . doi . org / 10 . 1016 / j .
@@ -1693,24 +1712,12 @@ Underfull \hbox (badness 4229) in paragraph at lines 82--90
 
 ) 
 AED: lastpage setting LastPage
-[20] [21pdfTeX warning (ext4): destination with the same identifier (name{equat
-ion.A.1}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1280 \end{document}
-                     pdfTeX warning (ext4): destination with the same identifie
-r (name{equation.A.1}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1280 \end{document}
-                     ] [22]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1280.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1280.
+[23]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1295.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1295.
  (./sequoidal.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1280.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1280.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1295.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1295.
 
 Package rerunfilecheck Info: File `sequoidal.out' has not changed.
 (rerunfilecheck)             Checksum: 1C804DD4C620C14E7FA0876BA422151D;904.
@@ -1725,13 +1732,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1280.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1295.
  ) 
 Here is how much of TeX's memory you used:
- 28120 strings out of 493013
- 537255 string characters out of 6139318
- 681582 words of memory out of 5000000
- 30779 multiletter control sequences out of 15000+600000
+ 28122 strings out of 493013
+ 537271 string characters out of 6139318
+ 684823 words of memory out of 5000000
+ 30780 multiletter control sequences out of 15000+600000
  189239 words of font info for 276 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  59i,22n,108p,1643b,1187s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1763,10 +1770,10 @@ lic/lm/lmtt9.pfb></usr/share/texmf-dist/fonts/type1/public/mathabx-type1/mathb1
 sr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist
 /fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on sequoidal.pdf (22 pages, 611586 bytes).
+Output written on sequoidal.pdf (23 pages, 614476 bytes).
 PDF statistics:
- 462 PDF objects out of 1000 (max. 8388607)
- 395 compressed objects within 4 object streams
- 88 named destinations out of 1000 (max. 500000)
+ 466 PDF objects out of 1000 (max. 8388607)
+ 398 compressed objects within 4 object streams
+ 89 named destinations out of 1000 (max. 500000)
  47741 words of extra memory for PDF output out of 51595 (max. 10000000)
 
