@@ -12,45 +12,45 @@ while executing---line 1404 of file plainurl.bst
 Warning--can't use both author and editor fields in MelliesCofCommCom
 Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
 while executing---line 1446 of file plainurl.bst
-You've used 12 entries,
+You've used 13 entries,
             2849 wiz_defined-function locations,
-            718 strings with 7611 characters,
-and the built_in function-call counts, 5387 in all, are:
-= -- 596
-> -- 139
+            731 strings with 7893 characters,
+and the built_in function-call counts, 5866 in all, are:
+= -- 651
+> -- 154
 < -- 2
-+ -- 51
-- -- 36
-* -- 305
-:= -- 775
-add.period$ -- 48
-call.type$ -- 12
-change.case$ -- 52
++ -- 56
+- -- 40
+* -- 340
+:= -- 841
+add.period$ -- 52
+call.type$ -- 13
+change.case$ -- 57
 chr.to.int$ -- 0
-cite$ -- 13
-duplicate$ -- 165
-empty$ -- 541
-format.name$ -- 36
-if$ -- 1423
+cite$ -- 14
+duplicate$ -- 178
+empty$ -- 586
+format.name$ -- 40
+if$ -- 1546
 int.to.chr$ -- 0
-int.to.str$ -- 12
-missing$ -- 14
-newline$ -- 73
-num.names$ -- 24
-pop$ -- 89
+int.to.str$ -- 13
+missing$ -- 15
+newline$ -- 79
+num.names$ -- 26
+pop$ -- 96
 preamble$ -- 1
-purify$ -- 42
+purify$ -- 46
 quote$ -- 0
-skip$ -- 408
+skip$ -- 443
 stack$ -- 0
-substring$ -- 236
-swap$ -- 36
+substring$ -- 257
+swap$ -- 39
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 44
+type$ -- 48
 warning$ -- 1
-while$ -- 34
-width$ -- 14
-write$ -- 163
+while$ -- 38
+width$ -- 15
+write$ -- 177
 (There were 2 error messages)

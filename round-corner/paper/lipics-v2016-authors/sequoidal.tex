@@ -74,7 +74,7 @@
 %% Theorems %%
 \theoremstyle{plain}
 \newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{exercise}{Exercise}
 \theoremstyle{definition}
 \newtheorem{notation}[theorem]{Notation}
 
@@ -131,6 +131,10 @@
 \newcommand{\OK}{{\mathtt{OK}}}
 \newcommand{\zero}{{\mathtt{zero}}}
 \renewcommand{\succ}{{\mathtt{succ}}}
+\newcommand{\cell}{{\mathtt{cell}}}
+\newcommand{\Var}{{\mathtt{Var}}}
+\renewcommand{\read}{{\mathtt{read}}}
+\newcommand{\wwrite}{{\mathtt{write}}}
 
 %%OUR
 
@@ -204,8 +208,8 @@ A \emph{strategy} for player $P$ for a game $A$ is identified with the set of po
 We shall now concentrate on games $A$ for which $b_A=O$, called \emph{negative games}.  We shall informally describe the standard connectives on negative games:
 
 \begin{description}
-  \item[Product] If $A$ and $B$ are negative games then the \emph{product} $A\times B$ is the game given by placing the game trees for $A$ and $B$ side by side: that is, player $O$ may play his first move either in $A$ or in $B$.  Thereafter, play continues in the game that player $O$ has chosen.
-  \item[Tensor Product] The tensor product $A\tensor B$ is also played by playing the games $A$ and $B$ in parallel, but this time player $O$ may elect to switch games whenever it is his turn and continue play in the game he has switched to.
+  \item[Product] If $(A_i\suchthat i\in I$ is a collection of negative games, then we write $\prod_{i\in I}A_i$ for the game in which player $O$, on his first move, may play in any of the games $A_i$.  From then on, play continues in $A_i$.  When we have defined the category of games, $\prod_{i\in I}A_i$ will be the category-theoretic product of the $A_i$.  If $A_1,A_2$ are games, we write $A_1\times A_2$ for $\prod_{i=1}^2 A_i$.  
+  \item[Tensor Product] If $A,B$ are negative games,the tensor product $A\tensor B$ is played by playing the games $A$ and $B$ in parallel, where player $O$ may elect to switch games whenever it is his turn and continue play in the game he has switched to.
   \item[Linear implication] The implication $A\implies B$ is played by playing the game $B$ in parallel with the \emph{negation} of $A$ - that is, the game formed by switching the roles of players $P$ and $O$ in $A$.  Since play in the negation of $A$ starts with a $P$-move, player $O$ is forced to make his first move in the game $B$.  Thereafter, player $P$ may switch games whenever it is her turn.
 \end{description}
 
@@ -333,6 +337,7 @@ Our category of games satisfies further conditions:
   are isomorphisms and we say that $\C$ is \emph{distributive} if the natural transformations
   \begin{gather*}
     \dist_{A,B,C} = \langle \pr_1\sequoid \id_C,\pr_2\sequoid\id_C\rangle\from (A\times B)\sequoid C\to (A\sequoid C)\times (B\sequoid C) \\
+    \dist_{(A_i\colon i\in I),C} = \langle (\pr_i\sequoid\id_C\suchthat i\in I)\rangle \from \left(\prod_{i\in I} A_i\right) \sequoid C \to \prod_{i\in I}(A_i\sequoid C) \\
     \dist_{A,0}\from 1\sequoid A\to 1
   \end{gather*}
   are isomorphisms.
@@ -490,15 +495,73 @@ This strategy represents a single user interaction (either pressing the button o
   \]
 In the strategy $\mathtt{count}$, if player $O$ plays $q$ in a copy of $\Sigma$, then player $P$ responds with $a$ and adds $1$ to an (invisible) counter variable.  If player $O$ plays $q$ in a copy of $\bN$, then player $P$ queries the argument on the left and returns that value, plus her count, on the right.  If we now substitute in the initial value of the state by forming the composite $\comp{\mathtt{count}}{\oc\zero}$, then we end up with the desired behaviour.
 
-Note that the strategies we started with -- $\OK$, $\succ$ and $\zero$ -- are all history free strategies.  The history-sensitive, stateful behaviour only arose when we passed to the anamorphism.  
+A more consequential example is the construction of a strategy representing a storage cell.  This is the strategy $\cell$ for $\oc(\Var[X])$ that is used in \cite{SamsonGuyIAPassive} to construct the denotation of the $\mathtt{new}$ term from Idealized Algol.  Using this strategy, it is possible to build the model of Idealized Algol from \cite{SamsonGuyIAPassive} and hence construct a wealth of other stateful objects.  The benefit of constructing $\cell$ in this way, rather than directly, is that we can now reason about it coalgebraically, rather than by direct combinatorial arguments on the strategy.
+
+Let $(X,*)$ be a pointed set and write $X$ for the game with maximal plays $qx$ for $x\in X$.  Recall that in Idealized Algol we represent $\Var[X]$, the type of variables taking values in $X$, by the game $\Sigma^X\times X$, where $\Sigma$ denotes the command type $\mathtt{com}$ and $\Sigma^X$ is the $X$-fold product of $\Sigma$ with itself.  Here, $\Sigma^X$ represents the act of writing a value into the storage cell (so playing in $\Sigma_x$ means writing the value $x$), while the copy of $X$ represents reading a value from the storage cell.  
+
+We want to construct the strategy $\cell$ for $\oc(\Sigma^X\times X)$ that will remember what value we have written into the cell and will return the value when we request it.  In the case that we request the value in the cell when nothing has been written to it, we return the default value $*$.
+
+We shall represent the state of the storage cell by the game $X$, and we shall construct a state transformer on $X \implies (\Sigma^X\times X)\sequoid X$ that will allow us to recover the $\cell$ strategy as an anamorphism.  
+
+For each $x\in X$, we have a strategy $c_x$ for $I\implies X$ with maximal play $qx$.  Now we construct a morphism $\wwrite(x)$ from $\oc X$ to $\Sigma\sequoid\oc X$ as the composite:
+\[
+  X \xrightarrow{*} 1 \xrightarrow{{(\dec^0)}\inv} I \xrightarrow{\runit_I} I \tensor I \xrightarrow{\OK\tensor c_x} \Sigma \tensor X \xrightarrow{\wk_{\Sigma,X}} \Sigma \sequoid X
+  \]
+This strategy corresponds to filling the cell with the value $x$.  Consequently, we ignore the previous value from the cell (the copy of $X$ on the left) and we respond in the copy of $X$ on the right with $x$.
+
+We get a strategy:
+\[
+  \wwrite \from \oc X \xrightarrow{\langle \wwrite(x)\suchthat x\in X\rangle} (\Sigma \sequoid \oc X)^X \xrightarrow{\dist_{(\Sigma\colon x\in X),\oc X}\inv} \Sigma^X\sequoid\oc X
+  \]
+
+We also want a strategy $\read$ for $X \implies X \sequoid X$.  It doesn't appear to be possible to construct this strategy from the sequoidal axioms, but it is easy enough to say what it is: it is the strategy that returns the value of the state while leaving the state unchanged.  A typical play in $\read$, therefore, might have the following form:
+\[
+  \begin{array}{ccccc}
+    X & \implies & X & \sequoid & X \\
+    && q && \\
+    q &&&& \\
+    x &&&& \\
+    && x && \\
+    &&&& q \\
+    &&&& x
+  \end{array}
+  \]
+Note that the content of the state (the copy of $X$ on the left) is copied into both the output (the first copy of $X$ on the right) and into the new state (the second copy of $X$ on the right).  
+
+We put these strategies together to form our state transformer:
+\[
+  \cell'\from \oc X \xrightarrow{\langle\wwrite,\read\rangle} \Sigma^X\sequoid\oc X \;\times\;X\sequoid\oc X \xrightarrow{\dist_{\Sigma^X,X,\oc X}} (\Sigma^X\times X)\sequoid \oc X
+  \]
+When we take the anamorphism $\fcoal{\cell'}$ of this strategy, we get the strategy $\oc X \to \oc (\Sigma^X\times X)$ that, when player $O$ plays in $\Sigma^X$, stores the appropriate element of $X$ into the (invisible) state.  When player $O$ plays in $X$ on the right, player $P$ responds with the current value held in the state.  In the case that player $O$ plays in $X$ without having first played in $\Sigma^X$, we return the value of $X$ from the left.  Therefore, our desired strategy $\cell$ is given by:
+\[
+  \cell = \comp{\fcoal{\cell'}}{c_*}
+  \]
 
 \begin{exercise}
-  Let $X$ be a set, let $X$ be the game with maximal plays $qx$ for $x\in X$ and let $X_\bot$ be the game with maximal plays $qx$ for $x\in X$ and $q*$, where $*$ is a special error symbol not contained in $X$.  Consider a history-sensitive strategy on $\oc((X\implies\Sigma)\times X)$ representing a simple stack with $\mathtt{push(x)}$ and $\mathtt{pop()}$ methods.  The $\mathtt{push(x)}$ method should add the argument of a function $X\implies\Sigma$ on to the stack, while the $\mathtt{pop()}$ method should return the top element of the stack, removing it from the stack in the process, or return $*$ if the stack is empty.  Show that this strategy may be constructed from the strategy $\OK$ on $\Sigma$, using only the sequoidal structure of $\G$.  
+  Let $(X,*)$ be a pointed set, where $*$ is a designated error element, and write $X$ for the game with maximal plays $qx$ for $x\in X$.  Consider a history-sensitive strategy on $\oc(\Sigma^X\times X)$ representing a simple stack with $\mathtt{push(x)}$ and $\mathtt{pop()}$ methods.  The $\mathtt{push(x)}$ method should add an element $x\in X$ on to the stack, while the $\mathtt{pop()}$ method should return the top element of the stack, removing it from the stack in the process, or return $*$ if the stack is empty.  Show that this strategy may be constructed from the strategy $\OK$ on $\Sigma$ and the strategies $c_x$ on $X$, using only the sequoidal structure of $\G$.  
 
   Consider how we might add a $\mathtt{size()}$ method, of type $\bN$, to this stack, returning the number of elements currently on the stack.
 \end{exercise}
 
 \section{Constructing cofree commutative comonoids in Cartesian sequoidal categories}
+
+\subsection{The Mellies-Tabareau-Tasson construction}
+
+We observed that the exponential $\oc A$ of a game $A$ arises as the final coalgebra for the functor $A\sequoid\blank$.  We also observed that $\oc A$ has the structure of a cofree commutative comonoid on $A$.  In this section, we shall consider various generalizations of this result that hold in sequoidal categories.  
+
+The first generalization we will consider is that given by Mellies, Tabareau and Tasson in \cite{MelliesCofCommCom}.  Their construction is given in a general monoidal category, but we will show how to interpret it sequoidally.  The first step in their construction is to pass from $A$ to the free pointed object $A_\bullet$ on $A$.  In our setting, our category is \emph{affine} -- we have an isomorphism $\dec^0$ between the tensor unit $I$ and the terminal object $1$ -- and so there is no need to carry out this step.  In fact, the affineness assumption is not really necessary to any of our results, though it does greatly simplify them: in the non-affine case, we would need to construct the exponential as the final coalgebra for the functor $(A\sequoid\blank)\times I$, and the construction would become rather more complicated.  In this paper, we will always use the affineness assumption, so we will leave out the first step in the Mellies-Tabareau-Tasson construction.
+
+The second step in the construction, is to form, for each object $A$, the \emph{symmetrized tensor product} $A^{\le n}$, given as the following equalizer:
+\[
+  \begin{tikzcd}
+    A^{\le n} \arrow[r, dotted]
+      & A^{\tensor n} \arrow[r, yshift=0.3em, "\textrm{symmetry}"] \arrow[phantom, r, "\cdots"] \arrow[r, yshift=-0.3em, "\textrm{symmetry}"']
+        &[24pt] A^{\tensor n}
+  \end{tikzcd}
+  \]
+where $A^{\tensor n} = \underbrace{A\tensor\cdots\tensor A}_n$.  Here, the `$\le$' is because, thanks to our affine structure, we are free to ignore (weaken) any one of the copies of $A$.
+
+---
 
 We want to deduce the fact that $\oc A\xrightarrow{\mu}\oc A\tensor\oc A$ is the cofree commutative comonoid on $A$ from the fact that $\oc A$ is the final coalgebra for $A\sequoid\blank$.  It turns out that we shall need one more fact about the category of games to prove this.
 
@@ -544,7 +607,7 @@ inducing a morphism
 Our first main result for this section will be the following:
 \begin{theorem}
   \label{StrongMonoidalFunctor}
-  Let $(\C,\C_s,J,\wk)$ be an inclusive, Cartesian, distributive and decomposable sequoidal category with a final coalgebra $\oc A\xrightarrow{\alpha_A}A\sequoid\oc A$ for each endofunctor of the form $A\sequoid\blank$.  Suppose further that the morphism $\int_{A,B}$ as defined above is an isomorphism for all objects $A,B$.  $A\mapsto\oc A$ gives rise to a strong symmetric monoidal functor from the monoidal category $(\C, \times, 1)$ to the monoidal category $(\C, \tensor, I)$.  
+  Let $(\C,\C_s,J,\wk)$ be a distributive and decomposable sequoidal category with a final coalgebra $\oc A\xrightarrow{\alpha_A}A\sequoid\oc A$ for each endofunctor of the form $A\sequoid\blank$.  Suppose further that the morphism $\int_{A,B}$ as defined above is an isomorphism for all objects $A,B$.  $A\mapsto\oc A$ gives rise to a strong symmetric monoidal functor from the monoidal category $(\C, \times, 1)$ to the monoidal category $(\C, \tensor, I)$.  
 \end{theorem}
 
 We start off by defining a morphism $\mu\from\oc A\to\oc A\tensor\oc A$.  This will turn out to be the comultiplication for the cofree commutative comonoid over $A$.  First, we note that we have the following composite:
@@ -646,7 +709,7 @@ We can now state our second main result from this section.
 
 \section{Transfinite Games}
 
-Of the conditions that we used to construct the cofree commutative comonoid in sequoidal categories, the requirement that $\int_{A,B}$ be an isomorphism stands out as the least satisfactory.  All the other conditions are `finitary', and relate directly to the connectives we have introduced, whereas the morphism $\int_{A,B}$ can only be constructed using the final coalgebra property for the exponential connective $\oc$.  For this reason, we might wonder whether we can do without the condition that $\int_{A,B}$ be an isomorphism.  In this section, we shall give a negative answer to that question: we shall construct an inclusive, distributive, decomposable sequoidal closed category with final coalgebras $\oc A$ for all functors of the form $A\sequoid\blank$, and shall show that $\oc A$ does not have a natural comonoid structure.  In doing this, we hope to shed some light upon alternative algebraic or coalgebraic constructions for the cofree commutative comonoid that work in a purely `finitary' manner.
+Of the conditions that we used to construct the cofree commutative comonoid in sequoidal categories, the requirement that $\int_{A,B}$ be an isomorphism stands out as the least satisfactory.  All the other conditions are `finitary', and relate directly to the connectives we have introduced, whereas the morphism $\int_{A,B}$ can only be constructed using the final coalgebra property for the exponential connective $\oc$.  For this reason, we might wonder whether we can do without the condition that $\int_{A,B}$ be an isomorphism.  In this section, we shall give a negative answer to that question: we shall construct a distributive and decomposable sequoidal closed category with final coalgebras $\oc A$ for all functors of the form $A\sequoid\blank$, and shall show that $\oc A$ does not have a natural comonoid structure.  In doing this, we hope to shed some light upon alternative algebraic or coalgebraic constructions for the cofree commutative comonoid that work in a purely `finitary' manner.
 
 Our sequoidal category will be closely modelled upon the category of games we have just considered: the objects will be games, with the modification that sequences of moves may now have transfinite length.  This is a natural construction, occurring in the study of determinacy by Mycielski \cite{mycielskiChoice}, Blass \cite{blassChoice} and Weiss \cite{longgamesbook}, and it appears to be present in the semantic context in the work of Roscoe \cite{RoscoeCspInfinite}, Levy \cite{LevyGsInfinite} and Laird \cite{LairdOrdinalGames}.  
 
@@ -709,7 +772,7 @@ and then we define
   Since $\alpha$ is additively decomposable, the interleaving of two sequences of length less than $\alpha$ must itself have length less than $\alpha$.  This is important: if we allow $\alpha$ to be an additively decomposable ordinal, then it is possible to construct two strategies whose composite is not closed under $O$-replies because a particular reply in the interleaving of two sequences occurs at time later than $\alpha$ and so is not included.
 \end{remark}
 
-We can show that this composition is associative and moreover that we obtain an inclusive, distributive, decomposable sequoidal category.  We call this category $\G(\alpha)$ and call the corresponding strict subcategory $\G_s(\alpha)$.  The hardest part of this is showing that the category is monoidal closed, because the linear implication of completely negative games is not necessarily completely negative.  
+We can show that this composition is associative and moreover that we obtain a distributive and decomposable sequoidal category.  We call this category $\G(\alpha)$ and call the corresponding strict subcategory $\G_s(\alpha)$.  The hardest part of this is showing that the category is monoidal closed, because the linear implication of completely negative games is not necessarily completely negative.  
 
 \subsection{The final sequence for the sequoidal exponential}
 

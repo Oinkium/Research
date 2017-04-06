@@ -6,6 +6,14 @@ Samson Abramsky and Radha Jagadeesan.
 \newblock {\em CoRR}, abs/1311.6057, 2013.
 \newblock URL: \url{http://arxiv.org/abs/1311.6057}.
 
+\bibitem{SamsonGuyIAPassive}
+Samson Abramsky and Guy McCusker.
+\newblock Full abstraction for idealized algol with passive expressions.
+\newblock {\em Theor. Comput. Sci.}, 227(1-2):3--42, September 1999.
+\newblock URL: \url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}, \href
+  {http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
+  {\path{doi:10.1016/S0304-3975(99)00047-X}}.
+
 \bibitem{blassChoice}
 Andreas Blass.
 \newblock Equivalence of two strong forms of determinacy.
