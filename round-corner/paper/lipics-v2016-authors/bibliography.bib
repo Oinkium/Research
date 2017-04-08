@@ -46,7 +46,7 @@ year = 2002}
 }
 
 @book{longgamesbook,
-	author = {Neeman, Itay, and ebrary, Inc.},
+	author = {Neeman, Itay and ebrary, Inc.},
 	title = {The determinacy of long games},
 	publisher = {Walter de Gruyter,},
 	year = {c2004.},
@@ -185,3 +185,68 @@ author = "James Worrell",
  address = {Essex, UK},
  keywords = {Algol-like languages, full abstraction, game semantics},
 } 
+
+@Article{Lambek,
+author="Lambek, Joachim",
+title="A fixpoint theorem for complete categories",
+journal="Mathematische Zeitschrift",
+year="1968",
+volume="103",
+number="2",
+pages="151--161",
+issn="1432-1823",
+doi="10.1007/BF01110627",
+url="http://dx.doi.org/10.1007/BF01110627"
+}
+
+@inproceedings{jimNonAffine,
+       booktitle = {20th International Conference on Foundations of Software Science and Computation Structures},
+           month = {April},
+           title = {From Qualitative to Quantitative Semantics by Change of Base},
+          author = {James Laird},
+            year = {2017},
+         journal = {20th International Conference on Foundations of Software Science and Computation Structures},
+             url = {http://opus.bath.ac.uk/53626/}
+}
+
+@article{ajmPcf,
+title = "Full Abstraction for {PCF}",
+journal = "Information and Computation",
+volume = "163",
+number = "2",
+pages = "409 - 470",
+year = "2000",
+note = "",
+issn = "0890-5401",
+doi = "http://dx.doi.org/10.1006/inco.2000.2930",
+url = "http://www.sciencedirect.com/science/article/pii/S0890540100929304",
+author = "Samson Abramsky and Radha Jagadeesan and Pasquale Malacaria",
+keywords = "game semantics",
+keywords = "full abstraction",
+keywords = "sequentiality",
+keywords = "PCF",
+keywords = "functional computation",
+keywords = "programming language semantics",
+keywords = "linear logic",
+abstract = "An intensional model for the programming language PCF is described in which the types of PCF are interpreted by games and the terms by certain history-free strategies. This model is shown to capture definability in PCF. More precisely, every compact strategy in the model is definable in a certain simple extension of PCF. We then introduce an intrinsic preorder on strategies and show that it satisfies some striking properties such that the intrinsic preorder on function types coincides with the pointwise preorder. We then obtain an order-extensional fully abstract model of PCF by quotienting the intensional model by the intrinsic preorder. This is the first syntax-independent description of the fully abstract model for PCF. (Hyland and Ong have obtained very similar results by a somewhat different route, independently and at the same time.) We then consider the effective version of our model and prove a universality theorem: every element of the effective extensional model is definable in PCF. Equivalently, every recursive strategy is definable up to observational equivalence."
+}
+
+@article{hoPcf,
+title = "On Full Abstraction for {PCF}: {I}, {II}, and {III}",
+journal = "Information and Computation",
+volume = "163",
+number = "2",
+pages = "285 - 408",
+year = "2000",
+note = "",
+issn = "0890-5401",
+doi = "http://dx.doi.org/10.1006/inco.2000.2917",
+url = "http://www.sciencedirect.com/science/article/pii/S0890540100929171",
+author = "J.M.E. Hyland and C.-H.L. Ong",
+keywords = "higher-type sequential computation",
+keywords = "full abstraction",
+keywords = "",
+keywords = "-calculus",
+keywords = "game semantics",
+abstract = "We present an order-extensional, order (or inequationally) fully abstract model for Scott's language pcf. The approach we have taken is very concrete and in nature goes back to S. C Kleene (1978, in “General Recursion Theory II, Proceedings of the 1977 Oslo Symposium,” North-Holland, Amsterdam) and R. O. Gandy (1993, “Dialogues, Blass Games, Sequentiality for Objects of Finite Type,” unpublished manuscript) in one tradition, and to G. Kahn and G. D. Plotkin (1993, Theoret. Comput. Sci.121, 187–278) and G. Berry and P.-L. Curien (1982, Theoret. Comput. Sci.20, 265–321) in another. Our model of computation is based on a kind of game in which each play consists of a dialogue of questions and answers between two players who observe the following principles of civil conversation: 1.Justification. A question is asked only if the dialogue at that point warrants it. An answer is proffered only if a question expecting it has already been asked. 2.Priority. Questions pending in a dialogue are answered on a last-asked-first-answered basis. This is equivalent to Gandy's no-dangling-question-mark condition. We analyze pcf-style computations directly in terms of partial strategies based on the information available to each player when he or she is about to move. Our players are required to play an innocent strategy: they play on the basis of their view which is that part of the history that interests them currently. Views are continually updated as the play unfolds. Hence our games are neither history-sensitive nor history-free. Rather they are view-dependent. These considerations give expression to what seems to us to be the nub of pcf-style higher-type sequentiality in a (dialogue) game-semantical setting."
+}

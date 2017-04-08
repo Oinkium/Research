@@ -7,50 +7,49 @@ Reallocated global_strs (elt_size=20001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: bibliography.bib
-Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
-while executing---line 1404 of file plainurl.bst
+Warning--I didn't find a database entry for "jacobs"
+Warning--I didn't find a database entry for "Mcsci"
+Warning--I didn't find a database entry for "MTT"
 Warning--can't use both author and editor fields in MelliesCofCommCom
-Name 1 in "Neeman, Itay, and ebrary, Inc." has a comma at the end for entry longgamesbook
-while executing---line 1446 of file plainurl.bst
-You've used 13 entries,
+You've used 15 entries,
             2849 wiz_defined-function locations,
-            731 strings with 7893 characters,
-and the built_in function-call counts, 5866 in all, are:
-= -- 651
-> -- 154
+            753 strings with 8296 characters,
+and the built_in function-call counts, 6706 in all, are:
+= -- 743
+> -- 171
 < -- 2
-+ -- 56
-- -- 40
-* -- 340
-:= -- 841
-add.period$ -- 52
-call.type$ -- 13
-change.case$ -- 57
++ -- 63
+- -- 44
+* -- 386
+:= -- 954
+add.period$ -- 60
+call.type$ -- 15
+change.case$ -- 65
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 178
-empty$ -- 586
-format.name$ -- 40
-if$ -- 1546
+cite$ -- 16
+duplicate$ -- 207
+empty$ -- 680
+format.name$ -- 44
+if$ -- 1770
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 15
-newline$ -- 79
-num.names$ -- 26
-pop$ -- 96
+int.to.str$ -- 15
+missing$ -- 17
+newline$ -- 91
+num.names$ -- 30
+pop$ -- 114
 preamble$ -- 1
-purify$ -- 46
+purify$ -- 52
 quote$ -- 0
-skip$ -- 443
+skip$ -- 506
 stack$ -- 0
-substring$ -- 257
-swap$ -- 39
+substring$ -- 293
+swap$ -- 44
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 48
+type$ -- 56
 warning$ -- 1
-while$ -- 38
-width$ -- 15
-write$ -- 177
-(There were 2 error messages)
+while$ -- 44
+width$ -- 17
+write$ -- 203
+(There were 4 warnings)

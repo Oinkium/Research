@@ -92,6 +92,7 @@
 \newcommand{\C}{\mathcal C}
 \newcommand{\F}{\mathcal F}
 \newcommand{\G}{\mathcal G}
+\newcommand{\W}{\mathcal W}
 \newcommand{\suchthat}{\;\colon\;}
 \newcommand{\varsuchthat}{\;\mid\;}
 \newcommand{\OP}{\{O,P\}}
@@ -123,7 +124,7 @@
 \renewcommand{\int}{{\mathtt{coh}}}
 \renewcommand{\coh}{\int}
 \DeclareMathOperator{\CCom}{CCom}
-\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\catname}[1]{{\mathsf{#1}}}
 \newcommand{\Set}{\catname{Set}}
 \newcommand{\Ord}{\catname{Ord}}
 \newcommand\oppcat[1]{#1^{\mathrm{op}}}
@@ -131,10 +132,17 @@
 \newcommand{\OK}{{\mathtt{OK}}}
 \newcommand{\zero}{{\mathtt{zero}}}
 \renewcommand{\succ}{{\mathtt{succ}}}
-\newcommand{\cell}{{\mathtt{cell}}}
 \newcommand{\Var}{{\mathtt{Var}}}
 \renewcommand{\read}{{\mathtt{read}}}
 \newcommand{\wwrite}{{\mathtt{write}}}
+\newcommand{\Rel}{\catname{Rel}}
+\newcommand{\inr}{{\mathsf{inr}}}
+\newcommand{\inl}{{\mathsf{inl}}}
+\newcommand{{\Na}}{\bN}
+\newcommand{{\cell}}{{\mathsf{cell}}}
+\newcommand{\fix}{{\mathsf{fix}}}
+\newcommand{\eq}{{\mathsf{eq}}}
+\newcommand{\co}{{\textrm{\textexclamdown}}}
 
 %%OUR
 
@@ -178,8 +186,68 @@
 \maketitle
 
 \begin{abstract}
-  In \cite{laird02}, Laird introduces the concept of a \emph{sequoidal category} as a formalization of causality in game semantics.  A sequoidal category is like a monoidal category with an extra connective, $\sequoid$, that allows one to construct an exponential object as a final coalgebra \cite{martinsthesis},  Under a further hypothesis, it is possible to show that this final coalgebra allows one to construct cofree commutative comonoids in the category, giving us a model of the exponential connective $\oc$ from linear logic.  In the first part of this note, we review the coalgebraic arguments for constructing the cofree commutative comonoid, which are known but do not yet appear in print.  In the second part, we show that the extra hypotheses are necessary by outlining a definition of \emph{transfinite game}, in which the carriers of the sequoidal coalgebra and the cofree commutative comonoid do not coincide.
+The non-commutative sequoid operator $\sequoid$ on games was introduced by one of the authors in order to capture algebraically the presence of state in history-sensitive strategies in game semantics.  It imposes a causality relation on to the  tensor product of games, so that coalgebras for the  functor  $A\sequoid\blank$  - i.e. morphisms from $S$ to $A \sequoid S$ may be viewed as state transformers.  If $A\sequoid\blank$ has a final coalgebra, $\oc A$, then the anamorphism of such a state transformer encapsulates its explicit state, so that it is shared only between successive invocations.
+
+We shall study  conditions under which such a final coalgebra $\oc A$ for the functor $A\sequoid\blank$ is the carrier of a cofree commutative comonoid on $A$. That is, it is a model of the exponential of linear logic, but one in which we can construct imperative objects such as reference cells and stacks coalgebraically, and reason about them coinductively, in a game semantics setting.
+ 
+We shall review the definition of a sequoidal category, a category-theoretic formalization of the sequoid operator, and the notion of sequoidal decomposition of a symmetric monoidal category.  We show that given such a decomposition, the final coalgebra !A may be endowed with the structure of the cofree commutative comonoid if it is the bifree algebra for $A\sequoid\blank$, or if it is a limit of sequoidal powers (following the construction  of the cofree commutative comonoid by Melli\'es, Tabareau and Tasson), or if the functor $\oc$ is strong monoidal - for all  $A$ and $B$, the objects $\oc (A \times B)$ and $\oc A \tensor \oc B$ are naturally isomorphic. 
+
+We establish necessity of this final condition  by giving an example of a sequoidally decomposable category of games in which plays will be allowed to have transfinite length. In this category, the final coalgebra for the functor $A\sequoid\blank$ is not the cofree commutative comonoid over $A$: we illustrate this by explicitly contrasting the final sequence for the functor $A\sequoid\blank$ with the chain of sequoidal powers used in the Melli\'es-Tabareau-Tasson construction.
 \end{abstract}
+
+\section{Introduction}
+
+Games models of pure functional programming languages such as PCF (\cite{ajmPcf} and \cite{hoPcf}, for example) tend to include the requirement that strategies be \emph{history-free}: that is, the response to a particular position may depend only upon the last move played, and not upon what has gone before.  This makes sense for stateless languages, where the program should have no `memory' to recall what has gone before.  
+
+If we include history-sensitive strategies in our models, then we can start to recover some stateful behaviour (see \cite{SamsonGuyIAPassive}, for example), since history-sensitive strategies have a built in state.  This concept of state is often hard to work with: since the representation as a strategy is so intensional, there is no object representing the state, and the state of the program must be inferred from the behaviour of the strategy.  
+
+At the other extreme, we have traditional, domain-theoretic semantics, in which stateful programs are represented as \emph{state transformers} -- that is, functions $W\times X \to W\times Y$, where $W$ is an object representing the state.  
+
+State transformers are typically fairly straightforward to reason about, and we would like to have a similar technique available in our games models.  This gap was bridged by one of the authors in \cite{laird02} with the introduction of the new \emph{sequoid} operator $\blank\sequoid\blank$ on games, which the same as the tensor product $\blank\tensor\blank$, except that play is required to start in the left hand game.  We interpret a state transformer as a coalgebra for the functor $A\sequoid\blank$ -- that is, a morphism from $S$ to $A\sequoid S$, so that the state $S$ is only modified after the program $A$ has been consulted.  The benefit of this explicit ordering is that we may model multiple iterations of the state transformer as coalgebras:
+\[
+  S \to A \sequoid (A \sequoid \cdots \sequoid (A \sequoid S)\cdots)
+  \]
+where the copies of $A$ are started in order from left to right.  The state from a previous invocation of $A$ is passed on to the next, until the final modified state finally appears at the right.  
+
+Now we introduce the key part of the construction: suppose that the functor $A\sequoid\blank$ has a final coalgebra $\oc A\to A\sequoid \oc A$.  Then a coalgebra $S\to A\sequoid S$ (i.e., a state transformer) naturally gives rise to a morphism $S \to \oc A$ in which the state is completely encapsulated and we are allowed to invoke the program $A$ as many times as we like.  We will show that we can construct various history-sensitive strategies denoting stateful programs using precisely this strategy; in particular, we will give a coalgebraic construction of the $\cell$ strategy from \cite{SamsonGuyIAPassive}, which is the key to their model for Idealized Algol.  
+
+Even more intriguingly, the game $\oc A$ that arises as the final coalgebra for the functor $A\sequoid\blank$ has the structure of an exponential object in the category of games: it is the cofree commutative comonoid over $A$.  We will spend the rest of the paper examining why this is, and what general conditions we need in order to show that the final coalgebra for $\oc A$ and the cofree commutative comonoid over $A$ coincide.  For this, we will need the abstract definition of a \emph{sequoidal category}, which is an extension of a monoidal category in order to accommodate the sequoid operator.  We will first consider the explicit formula for the cofree commutative comonoid given by Melli\'es, Tabareau and Tasson in \cite{MelliesCofCommCom} and show that it can be given a sequoidal interpretation.  The Melli\'es-Tabareau-Tasson construction works for finite games, but its hypotheses do not hold in the case of the category of games with infinitary winning conditions and winning strategies, even though the final coalgebra for $A\sequoid\blank$ and the cofree commutative comonoid over $A$ still coincide in these categories.  
+
+Instead, we will show that if our sequoidal category has all products then the cofree commutative comonoid structure on $\oc A$ may be constructed directly from the sequoidal structure and the definition of $A\sequoid\blank$ as a final coalgebra for $A\sequoid\blank$, provided that we insist on a further hypothesis: that the functor $\oc$ is monoidal from the Cartesian category to the monoidal category: i.e., if we have an isomorphism between $\oc A \tensor \oc B$ and $\oc(A\times B)$ for all $A,B$.  We show that this hypothesis is automatically satisfied whenever $\oc A$ has the structure of a \emph{bifree algebra} for $A\sequoid\blank$; i.e., when it simultaneously has the structure of final coalgebra and initial algebra.  However, the exponential in the category of win-games is not an initial algebra for $A\sequoid\blank$ \cite{martinsthesis}.
+
+Lastly, we will provide an illuminating counterexample: a category of games in which the final coalgebra for $A\sequoid\blank$ and the cofree commutative comonoid over $A$ do not coincide.  This is the category of games where plays are allowed to have transfinite length.  We will show that the Melli\'es-Tabareau-Tasson construction fails badly in this setting, but that we may still construct the final coalgebra for $A\sequoid\blank$ as the limit of its final sequence.  In this setting, the final coalgebra is the game where we have `only' $\omega$-many copies of the sub-game to play in, whereas in the cofree commutative comonoid we may open transfinite sequences of the subgame.  
+
+\section{Defining Higher-order Stateful Objects, Coalgebraically}
+In this section we motivate the study of the coalgebraically derived cofree comonoid in game semantics by considering a similar but simpler and more familiar phenomenon. A \emph{state-transformer} in a symmetric monoidal category is a morphism $f:A \otimes S \rightarrow B \otimes S$ taking an argument together with an input state to a result together with a input state. A well-studied \cite{jacobs} technique in semantics is to  use an appropriate final coalgebra to \emph{encapsulate} the state in such a transformer, allowing multiple  successive invocations, each of which passes its output state as an input state to the next invocation. 
+
+For example, consider the category $\Rel$ of sets and relations, with symmetric monoidal structure given by the cartesian product (with unit $I$, the singleton set $\{*\}$). This has finite (bi)products given by the disjoint union of sets: define the functor $F(A,S) = (A \otimes S) \oplus I$ 
+
+For any object (set) $A$, let $A^*$ be the set $A^*$ of finite sequences of elements of $A$ (i.e. the carrier of the free monoid on $A$), and $\alpha:A^* \rightarrow F(A,A^*)$ be the morphism $\{(\varepsilon,\inr(*)\}\cup  \{(aw,(\inl(a,w))\ |\ a \in A,w \in A^*\}$   
+\begin{lemma}$(A^*,\alpha_A)$ is a final coalgebra  for $F(A,\_)$.
+\end{lemma}
+\begin{proof}$\Rel$ may be cpo-enriched with the inclusion order: $A^*$ is a \emph{minimal invariant} for $F(A,\_)$ with respect to this order.
+\end{proof}
+Since we have a natural transformation (left injection) $\inl_{A,S}:A \otimes S \rightarrow F(A,S)$, we may encapsulate the state in the  state transformer $f:S \rightarrow A \otimes S$ by taking the \emph{anamorphism} of $f;\inl_{A,B}:S \rightarrow F(A,S)$, --- i.e. the unique $F(A,\_)$-coalgebra morphism from $(S,f;\inl)$ into $(A^*,\alpha_{A})$. This  is  a morphism from an initial state $S$ into $A^*$: by definition, composing it with $\alpha:A \rightarrow F(A,A)$ (which we can think of as  \emph{invoking} our stateful object) returns a copy of $f$ and uses it to update the internal state.   
+
+By distributivity of $\oplus$ over  $\otimes$ we have a natural transformation $t: F(A,S) \otimes S' \rightarrow F(A,S \otimes S')$. We may use this to encapsulate  state transformers of general form: given $f:A \otimes S \rightarrow B \otimes S$, taking the anamorphism of the $F(B,\_)$-colagebra:    
+$$A^* \otimes S  \stackrel{\alpha_A \otimes S}{\longrightarrow} F(A,A^*) \otimes S \stackrel{t}{\longrightarrow} F(A,A^* \otimes S)$$       
+
+ Distributivity of $\oplus$ over $\otimes$ also implies that $F(A \oplus A',S) \cong F(A,S) \oplus F(A',S)$.  This allows state transformers to be aggregated, to construct stateful objects compounded of a series of methods which share access to a common state.
+i.e. given morphisms $f_1:A_1 \otimes S \rightarrow B_1 \otimes S, \ldots , f_n:A_n \otimes S \rightarrow B_n \otimes S$, encapsulating  $\dist;(f_1 \oplus \ldots \oplus f_n);\dist^{-1}$, gives a morphism from $(A_1 \oplus \ldots \oplus A_n)^* \otimes S$ into $(B_1 \oplus \ldots \oplus B_n)^*$.          
+
+For example, we may represent a reference cell storing integer values as a state transformer $\cell:\Na \rightarrow (\Na \oplus \Na) \otimes \Na$, obtained by aggregating two ``methods'' which share access to a state consisting of a single integer, representing the contents of the cell --- returning a ``read'' of the input state (and leaving it unchanged) or accepting a ``write'' of a new value and using it to update the state.   Thus (with appropriate tagging) it is the relation $\{(i, (\read(i),i))\ |\ i \in \Na\} \cup \{(i,{\mathtt{write}}(j),j)\}$.
+The anamorphism of the coalgebra $\cell;\inl:\Na \rightarrow F(\Na \oplus \Na,\Na) $  is the relation from $\Na$ to $(\Na \oplus \Na)^*$ consisting of pairs of the form $(i_1,\read(i_1)^*{\mathtt{write}}(i_2)\read(i_2)^*\ldots)$ Composition with this morphism is precisely the denotation of new variable declaration in the semantics of  Reynolds \emph{Syntactic Control of Interference} (SCI) in $\Rel$ given in \cite{Mcsci}.
+
+Coalgebraic methods thus give us a recipe for constructing and using categorical definitions of stateful semantic objects, avoiding direct definitions which are rather combinatorial to work with.  In order to fully exploit these, however, we may endow $A^*$ with the structure of a \emph{comonoid} by defining morphisms $\delta_A:A^* \rightarrow A^* \otimes A^* = \{(u\cdot v,(u,v))\ |\ u,v \in A^*\}$ and $\epsilon:A \rightarrow I = \{(\varepsilon,*)\}$ 
+
+ In fact, this is the \emph{cofree comonoid} on $A$ --- there is a morphism $\eta_A:A^* \rightarrow A = \{(a,a)\ | \ a \in A\}$ such that for any comonoid $(B,\delta_B,\epsilon_B)$, composition with $\eta_A$ defines an equivalence (natural in $B$)  between the morphisms from $B$ into $A$, and the comonoid morphisms from $(B,\delta_B,\epsilon_B)$ into  $(A^*,\delta_A,\epsilon_A)$.   
+\begin{proposition}$(A^*,\delta,\epsilon)$ is the cofree comonoid on $\Rel$.
+\end{proposition}
+The definitions of $\delta$ and $\epsilon$, and the proof that this is the cofree comonoid  may be derived from the fact that $(A^*,\alpha_A)$ is a \emph{bifree algebra} for $F(\_, A)$  --- i.e. $(A^*,\alpha^{-1})$ is an initial algebra for $F(A,\_)$ ($\alpha$ must be an isomorphism by Lambek's lemma). We leave this as an exercise. 
+
+This structure can be used to interpret procedures which share access to a stateful resource such as a reference cell, the creation of multiple copies of such procedures ($(\_)^*$ is a monoidal comonad)  etc.      
+Its main limitation is that we have not defined a \emph{commutative} monoid --- evidently it is not the case that $\delta_A;\sym_{A,A} = \delta_A$ (where $\sym_{A,B}:A \otimes B \rightarrow B \otimes A$ is the symmetry isomorphism for the tensor) for any non-empty set $A$. Thus we can only model procedures with shared access to the same stateful object if the order in which they are permitted to access it is predetermined. This is precisely the situation in SCI, where the typing system allows sharing between across sequential composition, but not between functions and their arguments. In order to model sharing of state between functions without this constraint (and build a Cartesian closed category), we need to endow our final coalgebra with the structure of a cofree \emph{commutative} comonoid.  
+The category of sets and relations  does not allow this (the cofree commutative comonoid on an object $A$ in $\Rel$ is given by the set of finite multisets of $A$, which is not a final coalgebra). By properly reflecting the interleaving between function calls, game semantics does support a coalgebraic cofree commutative comonoid, leading to models of stateful higher-order languages such as Idealized Algol and core ML. As we shall show by example and counterexample, the richer structure of games also means that the relationship between initial and final coalgebras, and cofree objects is more subtle  (note, for example, that any final coalgebra in $\Rel$ must be bifree, by its self-duality).
 
 \section{Sequoidal categories}
 
@@ -266,7 +334,7 @@ We now have the motivation required to give the definition of a \emph{sequoidal 
       \[
         \blank\sequoid\blank\from\C_s\times\C\to\C_s
         \]
-      together natural isomorphisms
+      together with natural isomorphisms
       \[
         \passoc_{A,B,C}\from A\sequoid(B\tensor C)\to (A\sequoid B)\sequoid C
         \]
@@ -327,7 +395,7 @@ We now have the motivation required to give the definition of a \emph{sequoidal 
 Our category of games satisfies further conditions:
 
 \begin{definition}
-  Let $\C=(\C,\C_s,J,\wk)$ be a sequoidal category.  We say that $\C$ is an \emph{inclusive sequoidal category} if $\C_s$ is a full-on-objects subcategoryof $\C$ containing the monoidal isomorphisms and the morphisms $\wk_{A,B}$, $J$ is the inclusion functor and $J$ reflects isomorphisms.
+  Let $\C=(\C,\C_s,J,\wk)$ be a sequoidal category.  We say that $\C$ is an \emph{inclusive sequoidal category} if $\C_s$ is a full-on-objects subcategoryof $\C$ containing all isomorphisms in $\C$ and the morphisms $\wk_{A,B}$ and $J$ is the inclusion functor.
 
   If $\C$ is an inclusive sequoidal category, we say that $\C$ is \emph{Cartesian} if $\C_s$ has all products and these are preserved by $J$.  In that case, we say that $\C$ is \emph{decomposable} if the natural transformations
   \begin{gather*}
@@ -342,8 +410,26 @@ Our category of games satisfies further conditions:
   \end{gather*}
   are isomorphisms.
 \end{definition}
+\begin{definition}
+  Let $\C=(\C,\C_s,J,\wk)$ be a sequoidal category.  We say that $\C$ is an \emph{inclusive sequoidal category} if $\C_s$ is a full-on-objects subcategory of $\C$ containing all isomorphisms and finite products of $\C$, and the morphisms $\wk_{A,B}$ and $J$ is the inclusion functor.
 
-We have one further piece of structure available to us:
+
+%  If $\C$ is an inclusive sequoidal category, we say that $\C$ is \emph{Cartesian} if $\C_s$ has all products and these are preserved by $J$.
+ We say that $\C$ is \emph{decomposable} if for any $A$ and $B$, the tensor product $A \tensor B$ is a cartesian product of $A \sequoid B$ and $B \sequoid A$, with projections $\wk_{A,B}:A \tensor B \rightarrow A \sequoid B$ and  $\comp{\wk_{A,B}}{\sym_{A,B}}:A \tensor B \rightarrow B \sequoid A$, and if the product $A \times B$ exists, then $(A \times B) \sequoid C$ is the product of $A \sequoid C$ and $B \sequoid C$, with projections $\pr_l \sequoid \id_C,\pr_r \sequoid \id_C$. 
+So if $\C$ has all finite products, 
+the natural transformations
+  \begin{gather*}
+    \dec_{A,B} = \langle \wk_{A,B}, \comp{\wk_{A,B}}{\sym_{A,B}}\rangle\from A\tensor B\to (A\sequoid B)\times (B\sequoid A) \\
+   % \dec^0 \from I \to 1 \\
+    \dist_{A,B,C} = \langle \pr_1\sequoid \id_C,\pr_2\sequoid\id_C\rangle\from (A\times B)\sequoid C\to (A\sequoid C)\times (B\sequoid C) \\
+    \dist_{A,0}\from 1\sequoid A\to 1
+  \end{gather*}
+  are isomorphisms.
+\end{definition}
+
+We shall also use the fact that our category of games is \emph{affine} - so the natural transformation $\dec^0\from I \to 1$ is an isomorphism.  This is not strictly necessary, and techniques are available to obtain similar results in the non-affine case (see \cite{jimNonAffine}, for example), but it will greatly simplify our presentation.
+
+The games model satisfies an analog of monoidal closedness:
 
 \begin{definition}
   Let $\C=(\C,\C_s,J,\wk)$ be an inclusive sequoidal category.  We say that $\C$ is a \emph{sequoidal closed category} if $\C$ is monoidal closed (with internal hom $\implies$ and currying $\Lambda_{A,B,C}\from \C(A\tensor B,C)\toisom \C(A,B\implies C)$) and if the map $f\mapsto\Lambda(\comp{f}{\wk})$ gives rise to a natural transformation
@@ -423,7 +509,7 @@ We shall call the exponential $\oc A$ the \emph{sequoidal exponential}.  The fol
 \begin{proposition}
   Let $A$ be a negative game.  Then we get an endofunctor $A\sequoid\blank$ on $\G$ given by sending $B$ to $A\sequoid B$.  
 
-  The sequoidal exponential $\oc A$, together with the obvious copycat strategy $\alpha\from\oc A\to A\sequoid\oc A$, is the final coalgebra for the endofunctor $A\sequoid\blank$.  In other words, if $B$ is a negative game and $\sigma\from B\to A\sequoid B$ is a morphism then there is a unique morphism $\fcoal{\sigma}\from B\to \oc A$ such that the following diagram commutes:
+  The sequoidal exponential $\oc A$, together with the obvious copycat strategy $\alpha_A\from\oc A\to A\sequoid\oc A$, is the final coalgebra for the endofunctor $A\sequoid\blank$.  In other words, if $B$ is a negative game and $\sigma\from B\to A\sequoid B$ is a morphism then there is a unique morphism $\fcoal{\sigma}\from B\to \oc A$ such that the following diagram commutes:
   \[
     \begin{tikzcd}
       B \arrow[r, "\sigma"] \arrow[d, "\fcoal{\sigma}"']
@@ -438,7 +524,39 @@ We shall call the exponential $\oc A$ the \emph{sequoidal exponential}.  The fol
   See \cite{martinsthesis}.  We shall shortly give a proof in the more general case.
 \end{proof}
 
+We shall use the following standard pieces of theory about final coalgebras.  
+\begin{description}
+  \item[Lambek's Lemma] $\alpha_A$ is an isomorphism, with inverse given by the anamorphism of the map $\id\sequoid\alpha_A\from A\sequoid\oc A\to A \sequoid (A \sequoid \oc A)$ \cite{Lambek}.  In particular, $\alpha_A$ is a morphism in $\G_s$.  In the general case, we deduce that $\alpha_A$ is a morphism in $\C_s$.  
+  \item[Final Sequence] We may construct a transfinite sequence of objects and morphisms between them (in other words, a functor $\Ord\to\G$, where $\Ord$ is the category of ordinals and prefix inclusions:
+    \[
+      \begin{tikzcd}
+        1
+          & A \arrow[l, "*"']
+            & A \sequoid A \arrow[l, "\id\sequoid *"']
+              & A \sequoid (A \sequoid A) \arrow[l, "\id\sequoid(\id\sequoid*)"']
+                & \cdots \arrow[l] \\
+        A^{\sequoid\omega} \arrow[u] \arrow[ur] \arrow[urr] \arrow[urrr] \arrow[phantom, urrrr, "\cdots" xshift=0.6em]
+          & A \sequoid A^{\sequoid\omega} \arrow[l]
+            & A \sequoid (A \sequoid A^{\sequoid\omega}) \arrow[l]
+              & A \sequoid (A \sequoid (A \sequoid A^{\sequoid\omega})) \arrow[l]
+                & \cdots \arrow[l] \\[-24pt]
+        \vdots
+          & \vdots
+            & \vdots
+              & \vdots
+                &
+      \end{tikzcd}
+      \]
+    Here, $A^{\sequoid\omega}$ is the categorical limit of the top line and the morphisms into the top line are the morphisms in the limiting cone.  The morphism from $A\sequoid A^{\sequoid\omega}$ to $A^{\sequoid\omega}$ is constructed as follows: apply the functor $A\sequoid\blank$ to the limiting cone from $A^{\sequoid\omega}$, giving us a cone from $A\sequoid A^{\sequoid\omega}$ over the top line.  The desired morphism is now the unique morphism $A\sequoid A^{\sequoid\omega}\to A^{\sequoid\omega}$ that induces a morphism of cones.  We may continue in this way to build up $A^{\sequoid\gamma}$ for all ordinals $\gamma$, where $A^{\sequoid(\gamma+1)}=A\sequoid A^{\sequoid\gamma}$ and $A^{\sequoid\mu}$ is the limit over the $A^{\sequoid\gamma}$ for $\gamma<\mu$ if $\mu$ is a limit ordinal.
+
+    If the morphism $j_{\gamma}^{\gamma+1}\from A\sequoid A^{\sequoid\gamma}\to A^{\sequoid\gamma}$ is an isomorphism for some $\gamma$, then we say that the final sequence \emph{stabilizes at $\gamma$}.  In this case, ${j_{\gamma}^{\gamma+1}}\inv\from A^{\sequoid\gamma}\to A\sequoid A^{\sequoid\gamma}$ is the final coalgebra for the functor $A\sequoid\blank$ \cite{finalseq}.
+
+    The same is true for any endofunctor on any category with a terminal object and enough limits.
+\end{description}
+
 \subsection{Imperative programs as anamorphisms}
+
+We may use anamorphisms to construct (history-sensitive) strategies corresponding to stateful programs in an entirely coalgebraic way.
 
 Let $\Sigma$ be the game
 \[
@@ -545,53 +663,113 @@ When we take the anamorphism $\fcoal{\cell'}$ of this strategy, we get the strat
 
 \section{Constructing cofree commutative comonoids in Cartesian sequoidal categories}
 
-\subsection{The Mellies-Tabareau-Tasson construction}
+\subsection{A formula for the sequoidal exponential}
 
 We observed that the exponential $\oc A$ of a game $A$ arises as the final coalgebra for the functor $A\sequoid\blank$.  We also observed that $\oc A$ has the structure of a cofree commutative comonoid on $A$.  In this section, we shall consider various generalizations of this result that hold in sequoidal categories.  
 
-The first generalization we will consider is that given by Mellies, Tabareau and Tasson in \cite{MelliesCofCommCom}.  Their construction is given in a general monoidal category, but we will show how to interpret it sequoidally.  The first step in their construction is to pass from $A$ to the free pointed object $A_\bullet$ on $A$.  In our setting, our category is \emph{affine} -- we have an isomorphism $\dec^0$ between the tensor unit $I$ and the terminal object $1$ -- and so there is no need to carry out this step.  In fact, the affineness assumption is not really necessary to any of our results, though it does greatly simplify them: in the non-affine case, we would need to construct the exponential as the final coalgebra for the functor $(A\sequoid\blank)\times I$, and the construction would become rather more complicated.  In this paper, we will always use the affineness assumption, so we will leave out the first step in the Mellies-Tabareau-Tasson construction.
+We shall first consider the formula  given by Melli\'es, Tabareau and Tasson \cite{MelliesCofCommCom}, which does not depend on the presence of cartesian products, but obtains the cofree commutative comonoid as a limit of \emph{symmetric tensor powers}.
+\begin{definition}If $A$ is an object in a symmetric monoidal category, a $n$-fold symmetric tensor power of $A$ is an  \emph{equalizer} $(A^n,\eq)$ for the group $G$ of symmetry automorphisms on $A^{\otimes n}$. A tensor power is preserved by the tensor product if $(B\otimes A^n,\eq \otimes B)$ is an equalizer for the automorphisms $\{B \otimes g\ |\ g \in G\}$.
+\end{definition}
+In any affine category\footnote{This is a special case of the situation considered in  \cite{MelliesCofCommCom}: that $A$ is a ``free pointed object''.} with tensor powers of $A$ we may define a diagram $\Delta(A) = $
+$$I \stackrel{p_0}{\leftarrow} A \stackrel{p_1}{\leftarrow} A^2 \ldots A^i \stackrel{p_i}{\leftarrow} A^{i+1} \ldots$$
+where   
+$p_i:A^{i+1} \rightarrow A^i$ is the unique morphism given by the universal property of the symmetric tensor power,  such that $\comp{\eq_i:A^{i+1}}{p_i} \rightarrow A^{\otimes i} = \eq_{i+1};(A^{\otimes i} \otimes t_A)$. 
 
-The second step in the construction, is to form, for each object $A$, the \emph{symmetrized tensor product} $A^{\le n}$, given as the following equalizer:
-\[
-  \begin{tikzcd}
-    A^{\le n} \arrow[r, dotted]
-      & A^{\tensor n} \arrow[r, yshift=0.3em, "\textrm{symmetry}"] \arrow[phantom, r, "\cdots"] \arrow[r, yshift=-0.3em, "\textrm{symmetry}"']
-        &[24pt] A^{\tensor n}
-  \end{tikzcd}
-  \]
-where $A^{\tensor n} = \underbrace{A\tensor\cdots\tensor A}_n$.  Here, the `$\le$' is because, thanks to our affine structure, we are free to ignore (weaken) any one of the copies of $A$.
+Melli\'es, Tabareau and Tasson \cite{MelliesCofCommCom} have shown that where the limit $(A^\infty, \{p^\infty_i\from A^\infty \rightarrow A^i\}$ for this diagram exists  and commutes with the tensor,  --- i.e. for each object $B$, $B \otimes A^\infty$ is the limit of 
+$$B \otimes I \stackrel{B \otimes p_0}{\leftarrow} B \otimes A  \stackrel{B \otimes p_1}{\leftarrow} B\otimes  A^2 \ldots $$
+then a comultiplication $\mu:A^\infty \rightarrow A^\infty \otimes A^\infty$ may be defined making $(A^\infty,\mu,t_{\oc A})$ the cofree commutative comonoid. Where these conditions are satisfied, we shall call this a MTT-exponential.   
+\begin{proposition}Any sequoidally decomposable category has all symmetric tensor powers, and these are preserved by the tensor.  
+\end{proposition} 
+\begin{proof}
+By sequoidal decomposability, for any $n$, $A^{\otimes (n+1)}$ is the cartesian product $\Pi_{i \leq n} (A \sequoid A^{\otimes n})$ with projections 
+  $\comp{\sym_i}{\wk_{A,A^{\otimes n}}} $, where  $\sym_i: A^{\tensor (n+1)} \rightarrow A^{\tensor (n+1)}$ is the symmetry isomorphism corresponding to the permutation on $n$ which swaps $1$ and $i$. 
 
-We claim that, in a decomposable sequoidal category, the object $A^{\le n}$ always exists and is isomorphic to the game $A^{\sequoid n}$, defined inductively by:
+  We inductively define the sequoid powers $A^{\sequoid n}$ by $A^{\sequoid 1}=A$ and $A^{\sequoid(n+1)}=A\sequoid A^{\sequoid n}$.  Given $n$, we inductively define a morphism $\eq_n\from A^{\sequoid n}\to A^{\tensor n}$ as the diagonal $\langle \id_A\sequoid\eq_{n-1}\rangle$ into the product -- so $\comp{\wk}{\comp{\sym_i}{\eq_n}}=\id\sequoid e_{n-1}$ for each $i$.  
+  
+  If $\pi\in S_n$ is a permutation, we write $\sym^\pi$ for the appropriate symmetry of $A^{\tensor n}$.  We now claim that $\comp{\sym^\pi}{\eq_n}=\eq_n$ for all $\pi\in S_n$ -- so $\eq_n$ equalizes the $\sym^\pi$.  Indeed, let $\pi\in S_n$.  Then we may write $\sym^\pi = \comp{\id_A\tensor\sym^\rho}{\sym_i}$ for some $i$ and some $\rho\in S_{n-1}$.  Now we have:
+  \begin{IEEEeqnarray*}{rClC}
+    \comp{\wk}{\comp{\sym^\pi}{\eq_n}} & = & \comp{\wk}{\comp{\comp{(\id\tensor\sym^\rho)}{\sym_i}}{\eq_n}} & \\
+    & = & \comp{(\id\sequoid\sym^\rho)}{\comp{\wk}{\comp{\sym_i}{\eq_n}}} & \hspace{24pt}\textrm{(by naturality of $\wk$)} \\
+    & = & \comp{(\id\sequoid\sym^\rho)}{(\id\sequoid\eq_{n-1})} & \\
+    & = & \id\sequoid\eq_{n-1}
+  \end{IEEEeqnarray*}
+  Since $\pi$ was arbitrary, it follows that $\comp{\wk}{\comp{\comp{\sym_j}{\sym^{\pi}}}{\eq_n}}=\comp{\comp{\wk}{\sym_j}}{\eq_n}$ for all $j$ and therefore that $\comp{\sym^\pi}{\eq_n}=\eq_n$ for all $\pi$, as desired.
+
+  Now define $\wk^n\from A^{\sequoid n}\to A^{\tensor n}$ inductively by $\wk^n = \comp{\id\sequoid\wk^{n-1}}{\wk}$.  We may show by induction that $\comp{\wk^n}{\eq_n}=\id_{A^{\sequoid n}}$ for all $n$: indeed, we have
+  \begin{IEEEeqnarray*}{rClC}
+    \comp{\wk^n}{\eq_n} & = & \comp{(\id\sequoid\wk^{n-1})}{\comp{\wk}{\eq_n}} & \\
+    & = & \comp{(\id\sequoid\wk^{n-1})}{(\id\sequoid\eq_{n-1})} & \\
+    & = & \id\sequoid \id = \id & \hspace{24pt}\textrm{(by induction)}
+  \end{IEEEeqnarray*}
+  Now let $f\from C \to B \tensor A^{\tensor n}$ be such that $\comp{(\id\tensor\sym^\pi)}{f}=f$ for all $\pi\in S_n$.  It follows from what we have just shown that if $f=\comp{(\id\tensor\eq_n)}{g}$, then $g=\comp{\comp{\id\tensor\wk^n}{\id\tensor\eq_n}}{g}=\comp{\id\tensor\wk^n}{f}$.  So we just need to show that
+  \[
+    f=\comp{(\id\tensor(\comp{\eq_n}{\wk_n}))}{f}
+    \]
+  We first assume that $B=I$, so we have $f\from C\to B\tensor A^{\tensor n}$ and $\comp{\sym^\pi}{f}=f$ for all $\pi\in S_n$ and we are trying to show that $f=\comp{\comp{\eq_n}{\wk^n}}{f}$.  We do this by showing that $\comp{\comp{\wk}{\sym_i}}{\comp{\comp{\eq_n}{\wk^n}}{f}}=\comp{\comp{\wk}{\sym_i}}{f}$ for all $i$.  
+
+  Indeed, we have:
+  \begin{IEEEeqnarray*}{rClC}
+    \comp{\comp{\wk}{\sym_i}}{\comp{\comp{\eq_n}{\wk^n}}{f}} & = & \comp{\comp{(\id\sequoid\eq_{n-1})}{(\id\sequoid\wk^{n-1})}}{\comp{\wk}{f}} & \\
+    & = & \comp{\wk}{\comp{(\id\tensor(\comp{\eq_{n-1}}{\wk^{n-1}}))}{f}} &\hspace{24pt}\textrm{(by naturality of $\wk$)} \\
+    & = & \comp{\wk}{f} &\hspace{2pt}\textrm{(by induction)} \\
+    & = & \comp{\wk}{\comp{\sym_i}{f}}
+  \end{IEEEeqnarray*}
+  
+  Now let $B$ be an arbitary object of the category.  [TODO: finish working this out.]
+\end{proof}
+Thus, in any sequoidally decomposable category, the diagram $\Delta(A)$ exists for any $A$. If a limit for this diagram exists and is preserved by the sequoid, 
+--- i.e. for any $B$, $B \sequoid A^\infty$ is the limit for $B \sequoid \Delta(A)$ --- then it is preserved by the tensor, and is therefore the cofree commutative comonoid. Conversely, we may show that any cofree commutative comonoid which arises as a $\otimes$-preserving limit of symmetric tensor powers is a final coalgebra.  
+\begin{proposition}If a sequoidally decomposable category has a MTT-exponential, then $(A^\infty, \comp{\wk_{A\tensor\oc A}}{\comp{\der_A}{\mu_A}})$ is a final coalgebra for the functor $A \sequoid \_$.    
+\end{proposition}
+\begin{proof}
+  Observe that in a sequoidally decomposable category, the morphism $\wk_{A,A^n}:A \sequoid A^n: \rightarrow A^{n+1}$ is a section (we may define the corresponding retraction inductively from the decomposition of the tensor).   Hence if   the limit $A^\infty$ is preserved by the functor $A \tensor \_$, it is preserved by the sequoid $A \sequoid\_$ --- i.e. $A^\infty$ is the limit of the chain $A \sequoid \Delta = \Delta$. 
+
+  Thus, for  any  $A \sequoid\_$-coalgebra $f\from B \rightarrow A \sequoid B$, we may define a unique coalgebra morphism $\fcoal{f}\from B \rightarrow \oc A$ as the mediating morphism of the cone $\{f_i\from B \rightarrow A^i\ |\ i \in \omega\}$, where  $f_0 = t_B$ and $f_{i+1} = f;(A \sequoid f_i)$.  
+\end{proof}
+
+\subsection{Win-games and winning strategies}
+
+The construction from \cite{MelliesCofCommCom} covers a lot of different cases, but there are some situations in which it does not apply.  One example is that of \emph{win-games}, or games with a winning condition (\cite{abramskyjagadeesangames}, \cite{martinsthesis}).  Given a game $A$, we write $\overline{P_A}$ to be the limit-closure of $P_A$ -- that is, $P_A$ together with the set of infinite sequences, all of whose finite prefixes are in $P_A$.  A \emph{win-game} is a game $A$ together with a function $\zeta_A\from \overline{P_A}\to\OP$ such that:
+\begin{itemize}
+  \item $\zeta_A(\emptyplay) = \neg b_A$
+  \item $\zeta_A(sa) = \lambda_A(a)$
+\end{itemize}
+Thus, $\zeta_A$ is entirely determined on $P_A$, and the only new information is the values that $\zeta_A$ takes on the infinite positions in $\overline{P_A}$.  The reason we bother to define $\zeta_A$ on finite positions at all is so that we can define it on the connectives:
 \begin{gather*}
-  A^{\sequoid 0} = I \\
-  A^{\sequoid (n+1)} = A \sequoid A^{\sequoid n}
+  \zeta_{\prod_{i\in I}A_i}(s) = \bigwedge_{i\in I}\zeta_{A_i}(s\vert_{A_i}) \\
+  \zeta_{A\tensor B}(s) = \zeta_A(s) \wedge \zeta_B(s) \\
+  \zeta_{A\sequoid B}(s) = \zeta_A(s) \wedge \zeta_B(s) \\
+  \zeta_{A \implies B}(s) = \zeta_A(s) \Rightarrow \zeta_B(s) \\
+  \zeta_{\oc A}(s) = \bigwedge_{i\in I}(\zeta_A(s\vert_i))
 \end{gather*}
-Indeed, by decomposability, the morphisms $\wk,\comp{\wk}{\sym}\from A\tensor A\to A\sequoid A$ exhibit $A\tensor A$ as a product of $A\sequoid A$ with $A\sequoid A$.  Using the coherence conditions, we may generalize this to higher products: write $\wk^n\from A^{\tensor n}\to A^{\sequoid n}$ for the natural morphism
-\[
-  \wk^n = \comp{\id\sequoid(\cdots\sequoid(\id\sequoid\wk)\cdots)}{\comp{\cdots}{\wk}}
-  \]
-and for $\pi\in S_n$, write $\sym^\pi$ for the corresponding symmetry $A^{\tensor n}\to A^{\tensor n}$.  We can show that the morphisms $\comp{\wk^n}{\sym^\pi}$ for $\pi\in S_n$ exhibit $A^{\tensor n}$ as the product of $n!$ copies of $A^{\sequoid n}$.  
 
-Now the morphism $\langle\id,\dots,\id\rangle\from A^{\sequoid n}\to (A^{\sequoid n})^{n!}$ induces a morphism $e$ from $A^{\sequoid n}$ to $A^{\tensor n}$ that equalizes the morphisms $\comp{\wk^n}{\sym^pi}$ and therefore equalizes the morhpisms $\sym^\pi$ (since $\wk^n$ is an epimorphism).  We claim that $e$ is the equalizer of the $\sym^\pi$.  
+Here, $\wedge$ and $\Rightarrow$ are the usual propostional connectives on $\{T,F\}$, where we identify $T$ with $P$ and $F$ with $O$.  
 
-Suppose $B$ is an object of the category and that $f\from B\to A^{\tensor n}$ is a morphism equalizing the $\sym^\pi$.  
+We define a \emph{winning strategy} on $(A,\zeta_A)$ to be a total strategy $\sigma$ on $A$ such that $\zeta_A(s)=P$ whenever $s$ is an infinite sequence, all of whose finite prefixes are in $\sigma$.  It is known (see \cite{abramskyjagadeesangames}) that the composition of winning strategies is winning and that we get a decomposable, distributive sequoidal closed category $\W$ with $\oc A$ as the final coalgebra for $A\sequoid\blank$ and the cofree commutative comonoid over $A$ \cite{martinsthesis}.
 
----
+However, in this case, $\oc A$ is not the sequential limit of the symmetrized tensor powers over $A$.  Since $\W$ is a decomposable, distributive sequoidal category, the symmetrized tensor powers of $A$ are given by the sequoidal powers $A^{\sequoid n}$.  But now the limit of these objects is not quite the game $\oc A$; instead, it is the game $A^{\sequoid\omega}=\co A$ in which player $O$ may open an arbitrarily large number of copies of $A$, but not infinitely many.  In the finite case, there was no way to keep track of infinite positions, so we could not make this distinction, but in the win-games case we can: we set $\zeta_{\co A}(s)=\zeta_{\oc A}(s)$, unless $s$ contains moves in infinitely many games, in which case we set $\zeta_{\co A}(s) = P$.  
 
-We want to deduce the fact that $\oc A\xrightarrow{\mu}\oc A\tensor\oc A$ is the cofree commutative comonoid on $A$ from the fact that $\oc A$ is the final coalgebra for $A\sequoid\blank$.  It turns out that we shall need one more fact about the category of games to prove this.
+This limit is not preserved by the functor $A\sequoid\blank$: in the game $A^{\sequoid(\omega+1)}=A\sequoid\co A$, player $O$ wins if he wins either in $A$ or in $\co A$, so he can win even if he plays in infinitely many games, as long as he wins in the first copy of $A$.  Similarly, in the game $A^{\sequoid(\omega+n)}$, player $O$ can win as long as he wins in one of the first $n$ copies of $A$.  Therefore, the limit $A^{\sequoid\omega2} \emph{is}$ the game $\oc A$: the final sequence for $A\sequoid\blank$ stabilizes at $\omega2$.  
+
+We see that the exponential in $\W$ is not an MTT-exponential.  
+
+This example is a special case of our later result on transfinite games.  For now, we examine a coalgebraic approach that will prove that the final coalgebra $\oc A$ for $A\sequoid \blank$ in the category $\W$ of win-games gives us a cofree commutative comonoid.  
+
+\subsection{The coalgebraic construction under the strong monoidal hypothesis}
+
+We will now need to assume that we are in a decomposable, distributive sequoidal category $(\C,\C_s,J,\wk)$ such that $\C_s$ has all products and $J$ preserves them.  However, we will no longer need the MTT assumption that the exponential should be constructed as a limit of sequoidal powers.  The main cost is that we will need to make a further assumption: that a certain naturally defined morphism $\oc A \tensor \oc B\to \oc (A\times B)$ is an isomorphism.  This assumption, broadly corresponding to the demand that the functor $\oc A$ be strong monoidal from the Cartesian category $(\C,\times,1)$ to the monoidal category $(\C,\tensor,I)$, will allow us to construct the comultiplication directly from the Cartesian structure and the definition of $\oc A$ as a final coalgebra.  
 
 \begin{notation}
   We shall sometimes make the monoidal structure of the Cartesian product explicit by writing $\sigma\times\tau$ for $\langle\comp\sigma{\pr_1},\comp\tau{\pr_2}\rangle$.
 \end{notation}
 
 \begin{definition}
-  Let $A,B$ be objects of an inclusive, Cartesian, distributive sequoidal category $(\C,\C_s,J,\wk)$ with final coalgebras $\oc A\xrightarrow{\alpha_A} A\sequoid\oc A$ for all endofunctors of the form $A\sequoid\blank$.  Let $A,B$ be objects of $C$.  Then we have a composite $\kappa_{A,B}\from\oc A \tensor\oc B\to(A\times B)\sequoid(\oc A\tensor \oc B)$:
+  Let $A,B$ be objects of an decomposable, distributive sequoidal category $(\C,\C_s,J,\wk)$ with final coalgebras $\oc A\xrightarrow{\alpha_A} A\sequoid\oc A$ for all endofunctors of the form $A\sequoid\blank$.  Let $A,B$ be objects of $C$.  Then we have a composite $\kappa_{A,B}\from\oc A \tensor\oc B\to(A\times B)\sequoid(\oc A\tensor \oc B)$:
   \settowidth{\arrow}{\scriptsize$\id_{A\sequoid(\oc A\tensor\oc B)}\times (\id_B\sequoid\sym_{\oc B,\oc A})$}
   \begin{IEEEeqnarray*}{RCL}
-    \kappa_{A,B}=\oc A \tensor \oc B & \constantwidthxrightarrow{\langle\id_{\oc A\tensor\oc B},\; \sym_{\oc A,\oc B}\rangle} & (\oc A \tensor \oc B) \times (\oc B \tensor \oc A) \\
-    \cdots & \constantwidthxrightarrow{(\alpha_A\tensor\id_{\oc B})\times(\alpha_B\tensor\id_{\oc A})} & ((A \sequoid \oc A) \tensor \oc B) \times ((B \sequoid \oc B) \tensor \oc A) \\
-    \cdots  & \constantwidthxrightarrow{\wk_{A\sequoid\oc A,\oc B}\times\wk_{B\sequoid\oc B,\oc A}} & ((A \sequoid \oc A) \sequoid \oc B) \times ((B \sequoid \oc B) \sequoid \oc A) \\
-      \cdots & \constantwidthxrightarrow{\passoc_{A,\oc A,\oc B}\inv\times\passoc_{B,\oc B,\oc A}\inv} & (A \sequoid (\oc A \tensor \oc B)) \times (B \sequoid (\oc B \tensor \oc A) \\
+    \kappa_{A,B} = \oc A \tensor \oc B & \constantwidthxrightarrow{\langle\wk_{\oc A,\oc B},\;\comp{\sym_{\oc A,\oc B}}{\wk_{\oc A,\oc B}}} & (\oc A \sequoid \oc B) \times (\oc B \sequoid \oc A) \\
+    \cdots & \constantwidthxrightarrow{(\alpha_A\sequoid\id_{\oc B}) \times (\alpha_B\sequoid\id_{\oc A})} & ((A \sequoid \oc A) \sequoid \oc B) \times ((B \sequoid \oc B) \sequoid \oc A) \\
+    \cdots & \constantwidthxrightarrow{\passoc_{A,\oc A,\oc B}\inv\times\passoc_{B,\oc B,\oc A}\inv} & (A \sequoid (\oc A \tensor \oc B)) \times (B \sequoid (\oc B \tensor \oc A) \\
       \cdots & \constantwidthxrightarrow{\id_{A\sequoid(\oc A\tensor\oc B)}\times (\id_B\sequoid\sym_{\oc B,\oc A})} & (A \sequoid (\oc A \tensor \oc B)) \times (B \sequoid (\oc A \tensor \oc B))
   \end{IEEEeqnarray*}
 inducing a morphism
@@ -683,9 +861,6 @@ There is therefore a unique morphism $\oc\sigma\from\oc A \to\oc B$ making the f
 \begin{proposition}\label{StrongMonoidalFunctorActual}
   $\sigma\mapsto\oc\sigma$ respects composition, so $\oc$ is a functor.  Moreover, $\oc$ is a strong symmetric monoidal functor from the Cartesian category $(\C, \times, 1)$ to the symmetric monoidal category $(\C, \tensor, I)$, witnessed by $\int$ and $\dec^0$.
 \end{proposition}
-\begin{proof}
-  See Appendix.
-\end{proof}
 
 This completes the proof of Theorem \ref{StrongMonoidalFunctor}.
 
@@ -705,9 +880,6 @@ Let $A$ be an object of $\C$.  Since $(\C, \times, 1)$ is Cartesian, the diagona
 \begin{proposition}\label{itsMu}
   $\CCom(\oc)\left(A\xrightarrow{\Delta}A\times A\right)$ has comultiplication given by $\mu_A\from\oc A \to \oc A\tensor\oc A$ and counit given by the unique morphism $\eta_A\from \oc A \to I$.
 \end{proposition}
-\begin{proof}
-  See appendix.
-\end{proof}
 
 In particular, this proves that the comultiplication $\mu_A$ is associative and that the counit $\eta_A$ is a valid counit for $\mu_A$.
 
@@ -718,9 +890,24 @@ We can now state our second main result from this section.
   Let $(\C,\C_s,J,\wk)$ be a sequoidal category satisfying all the conditions from Theorem \ref{StrongMonoidalFunctor}.  Let $A$ be an object of $\C$ (equivalently, of $\C_s$).  Then $\oc A$, together with the comultiplication $\mu_A$ and counit $\eta_A$, is the cofree commutative comonoid over $A$.
 \end{theorem}
 
-\begin{proof}
-  See Appendix.
+We give a broad outline of the proofs of the results in this section in the Appendix.
+
+\subsection{The Sequoidal Exponential as a Bifree Algebra}
+Observe that in our category of games, $(!A,\alpha)$ is in fact a \emph{bifree algebra} for $A\sequoid\blank$ --- the isomorphism $\alpha^{-1}: A \sequoid !A \rightarrow !A$ is an initial algebra for  $A \sequoid \blank$.  We may show that in such cases, the condition that $!$ is strong monoidal --- and thus the cofree exponential ---  always holds\footnote{Without requiring our sequoidally decomposable category to have finite products  we may equip each object $\oc A$ with the structure of a comonoid by defining:   
+$\mu:!A \rightarrow !A  \otimes !A$
+ to be the catamorphism of the $A \sequoid \blank$ algebra:
+$$A \sequoid (!A \otimes !A) %\stackrel{\langle \id, A \sequoid \sym\rangle}{\cong} 
+\cong A \sequoid (!A \otimes !A) \times  A \sequoid (!A \otimes !A) \cong (A \sequoid !A) \sequoid !A \times  (A \sequoid !A) \sequoid !A \cong (!A \sequoid !A) \cong (!A \sequoid !A) \cong (!A \otimes !A)$$     
+This satisfies the further requirements of a \emph{linear category} in the sense of \cite{Bierman}, although it does not appear to be possible to show that it is the cofree commutative comonoid.} :
+we may define an inverse to $\int:!A \otimes !A \rightarrow ! (A \times B)$  as the \emph{catamorphism} of the  $A \sequoid\blank$-algebra:
+$$(A \times B) \sequoid !A \otimes !B \cong (A \sequoid (!A \otimes !B)) \times  (B \sequoid (!A \otimes !B)) \cong (!A \sequoid !B) \times (!B \sequoid !A)$$   
+
+It is not necessary for the final $A \sequoid\_$-coalgebra to be bifree for the exponential to be strong monoidal and thus the cofree commutative comonoid. An example is provided by  the category $\W$ of win-games and winning strategies, which is sequoidal closed and decomposable. To show that the  final $A \sequoid\_$-coalgebra in this category is not bifree, it suffices to observe that from such an algebra, we may derive a  \emph{fixed point} operator $\fix_A:\C(A,A) \rightarrow \C(I,A)$ for each $A$, such that $\fix_A(f);f = \fix(f)$.      
+\begin{proposition}Suppose $\C$ is sequoidal closed and decomposable, and $(!A,\alpha)$ is a bifree $A \sequoid\_$-algebra. Then we may define a fixed point operator on $\C$.  
+\end{proposition}    
+\begin{proof}For any $A$, let  $\Phi_A:!(A \multimap A) \rightarrow A$ be the catamorphism of the counit to the adjunction $A \sequoid\blank \dashv A \multimap$,  $\epsilon_{A,A}: (A \multimap A) \sequoid A \rightarrow A$, which is a  $(A \multimap A) \sequoid \blank$-algebra. For any morphism $f:A \rightarrow A$ we may define $\fix_A(f) = \Lambda(f)^\dag;\Phi_A$, where $\Lambda(f):I \rightarrow (A \multimap A)$ is the ``name'' of $f$.    
 \end{proof}
+As one would expect, it is not possible to define a fixed point operator on the category of games and winning strategies ---  for example, if $\bot$ is the game with a single move then the hom-set $\C(I,\bot)$ is empty and hence there can be no morphism $\fix_\bot(\id_\bot)$. So the final  $A \sequoid \_$-coalgebra is not bifree in this case. 
 
 \section{Transfinite Games}
 
@@ -730,11 +917,11 @@ Our sequoidal category will be closely modelled upon the category of games we ha
 
 The general idea is as follows: we will show that the definition of the final coalgebra for the sequoid functor in a category of transfinite games is largely unchanged from the definition in the category of games with finite-length plays: $\oc A$ is the game formed from a countably infinite number of copies of $A$, indexed by $\omega$, with the proviso that player $O$ must open them in order.  We observe that the copycat strategy $\int_{A,B}\from\oc A\tensor\oc B\to \oc(A\times B)$ is not an isomorphism, and that we cannot construct the comultiplication $\oc A \to \oc A \tensor \oc A$ in a sensible way.  Moreover, we cannot construct the comonad $\oc A \to \oc \oc A$, so $\oc$ does not give us a model of linear logic in even the most general sense.  In all three cases, the reason why the construction fails is that we might run out of copies of the game $A$ (or $B$) on the left hand side before we have run out of copies on the right hand side.  In the finite-plays setting, it is impossible to run out of copies of a subgame, because there are infinitely many copies, so it is impossible to play in all of them in a finite-length play.  In the transfinite setting, however, we cannot guarantee this: consider, for example, a position in $\oc A_0 \implies \oc A_1 \tensor \oc A_2$ (with indices given so we can refer to the different copies of $A$) in which player $O$ has opened all the copies of $A$ in $\oc A_1$.  Since player $P$ is playing by copycat, she must have opened all of the copies of $A$ in $\oc A_0$.  If, at time $\omega+1$, player $O$ now plays in $\oc A_2$, player $P$ will have no reply to him.
 
-The `correct' definition of $\oc A$ in the transfinite game category is one in which there is an unlimited number of copies of $A$ to open (rather than $\omega$-many), but this is not the final coalgebra for the functor $A\sequoid\blank$.  [TODO: discuss ways to construct this object]
+The `correct' definition of $\oc A$ in the transfinite game category is one in which there is an unlimited number of copies of $A$ to open (rather than $\omega$-many), but this is not the final coalgebra for the functor $A\sequoid\blank$.  
 
 \subsection{Transfinite Games}
 
-We give a brief summary of the construction of the category of transfinite games.  Full details may be found in Appendix \ref{TransfiniteGamesConstructionInFull}.
+We give a brief summary of the construction of the category of transfinite games.  Some more details may be found in Appendix \ref{TransfiniteGamesConstructionInFull}.
 
 We shall fix an additively indecomposable ordinal $\alpha = \omega^\beta$ throughout, which will be a bound on the ordinal length of positions in our game.  So, for example, the original category of games is the case $\alpha=\omega$.  If $X$ is a set, we write $X^{*<\alpha}$ for the set of transfinite sequences of elements of $X$ of length less than $\alpha$.
 
@@ -756,7 +943,7 @@ We shall fix an additively indecomposable ordinal $\alpha = \omega^\beta$ throug
   We say that a game $A$ is \emph{positive} if $\zeta_A(\emptyplay)=O$ and \emph{negative} if $\zeta_A(\emptyplay) = P$.  We say that $A$ is \emph{completely negative} if $\zeta_A(s)=P$ for all limiting plays $s$.  
 \end{definition}
 
-Apart from the possibly transfinite length of sequences of moves, the only new thing in this definition is the function $\zeta_A$.  Thanks to the consistency condition, $\zeta_A$ gives us no new information for successor positions; it is necessary in order to tell us which player is to move at limiting positions.
+Apart from the possibly transfinite length of sequences of moves, the only new thing in this definition is the function $\zeta_A$, which we met briefly when defining win-games.  Thanks to the consistency condition, $\zeta_A$ gives us no new information for successor positions; it is necessary in order to tell us which player is to move at limiting positions.
 
 \begin{definition}
   A \emph{strategy} for an $\alpha$-game $A$ is a non-empty prefix-closed subset $\sigma\subset P_A$ satisfying the following conditions:
@@ -802,42 +989,24 @@ We define $\oc P_A$ to be the set of all sequences $s\in M_{\oc A}^{*<\alpha}$ s
   \]
 In other words, $\zeta_{\oc A}(s)=P$ if and only if $\zeta_A(s\vert_n)=P$ for all $n$.
 
-There is a natural copycat strategy $\alpha_A\from \oc A \to A \sequoid \oc A$, just as in the finite plays case.  We want to show that this is the final coalgebra for $A\sequoid\blank$.  The proof for the finite case found in \cite{martinsthesis} will not work in this case, since it implicitly uses the fact that $\oc A$ is the limit of the sequence
-\[
-  I \leftarrow A \leftarrow A \sequoid A \leftarrow A \sequoid (A \sequoid A) \leftarrow \cdots
-  \]
-(cf. also \cite{MelliesCofCommCom}).  In the transfinite categories, this is no longer the case.  
+There is a natural copycat strategy $\alpha_A\from \oc A \to A \sequoid \oc A$, just as in the finite plays case.  We want to show that this is the final coalgebra for $A\sequoid\blank$.  The proof for the finite case found in \cite{martinsthesis} will not work in this case, since it implicitly uses the fact that $\oc A$ is an MTT-exponential.  In the transfinite categories, this is no longer the case.  
 
-While it is possible to prove that $\alpha_A\from \oc A\to A\sequoid \oc A$ is the final coalgebra for $A\sequoid\blank$ directly, we shall instead give a proof by extending the sequence given above to an ordinal-indexed sequence.  This is the \emph{final sequence}, familiar in coalgebra \cite{finalseq}.  Specifically, we construct a functor $\F\from\oppcat{\Ord}\to\G(\alpha)$, where $\Ord$ is the order category of the ordinals, writing
-\begin{gather*}
-  \F(\gamma)=A^{\sequoid\gamma}\\
-  \F(\gamma\le\delta)=j_\gamma^\delta\from A^{\sequoid\delta}\to A^{\sequoid\gamma}
-\end{gather*}
-according to the following inductive recipe:
-\begin{itemize}
-  \item $A^{\sequoid 0} = 1$
-  \item $A^{\sequoid (\gamma + 1)} = A \sequoid A^{\sequoid\gamma}$
-  \item If $\mu$ is a limit ordinal, then $A^{\sequoid\mu}$ is the limit of the diagram formed by the $A^{\sequoid\gamma}$ for $\gamma<\mu$, together with the morphisms $j_\gamma^\delta$, for $\gamma\le\delta<\mu$.
-  \item $j_0^\gamma=*$
-  \item $j_\gamma^\lambda$ is the morphism in the limiting cone
-  \item $j_\gamma^{\delta+1} = \comp{j_\delta^{\delta+1}}{j_\gamma^\delta}$
-  \item If we write $C_\lambda$ for the limiting cone for $\lambda$ over the $A^{\sequoid\gamma}$ for $\gamma<\mu$, then we may form a cone $A\sequoid C_\lambda$ over the same diagram by applying the functor $A\sequoid\blank$ to $C_\lambda$ and then extending the cone to $1$ in the only possible way.  Then $j_\lambda^{\lambda+1}$ is the unique morphism from $A^{\sequoid(\lambda+1)}$ to $A^{\sequoid\lambda}$ inducing a morphism of cones from $A\sequoid C_\lambda$ to $C_\lambda$.
-\end{itemize}
+While it is possible to prove that $\alpha_A\from \oc A\to A\sequoid \oc A$ is the final coalgebra for $A\sequoid\blank$ directly, we shall instead give a proof by extending the MTT sequence to the full final sequence.  We shall give a complete classification of the games $A^{\sequoid\gamma}$ and use it to show that the final sequence for $A\sequoid\blank$ must stabilize at $\oc A$.  
 
-It is well known (see \cite{finalseq}, for instance) that if $j_\delta^{\delta+1}$ is an isomorphism for some $\delta$, then ${j_\delta^{\delta+1}}\inv\from A^{\sequoid\delta}\to A\sequoid A^{\sequoid\delta}$ is the final coalgebra for the functor $A\sequoid\blank$.  In this case, we say that the sequence \emph{stabilizes at $\delta$}.  Our proof strategy is therefore to show that the sequence stabilizes at some $\delta$, and to show that $A^{\sequoid\delta}$ is isomorphic to $\oc A$.
+\begin{definition}
+  Let $s\in\omega^{*<\alpha}$ be any transfinite sequence of natural numbers.  We define the \emph{derivative} $\Delta s$ of $s$ to be the sequence given by removing all instances of $0$ from $s$ and subtracting $1$ from all other terms.  In other words, if $s\from\gamma\to\omega$, for $\gamma<\alpha$, then we have:
+  \[
+    \Delta s = s\inv(\omega\setminus\{0\})\xrightarrow{s}\omega\setminus\{0\}\xrightarrow{-1}\omega
+    \]
+  (where $s\inv(\omega\setminus\{0\})$ carries the induced order).  We now define predicates $\blank\le\gamma$ on sequences $s\in \omega^{*<\alpha}$ as follows:
+  \begin{itemize}
+    \item $\emptyplay\le 0$
+    \item If $\Delta s\le\gamma$, then $s\le\gamma+1$
+    \item If $\mu$ is a limit ordinal and $s\in\omega^{*<\alpha}$ is such that for all successor-length prefixes $t\prefix s$ we have $t\le\gamma$ for some $\gamma<\mu$, then $s\le\mu$.  In other words, $\{s\in \omega^{*<\alpha}\suchthat s\le\mu\}$ is the limit-closure of the union of the sets $\{s\in\omega^{*<\alpha}\suchthat s\le\gamma\}$ for $\gamma<\mu$.
+  \end{itemize}
+\end{definition}
 
-We do this by giving a classification of the games $A^{\sequoid\gamma}$.  Let $s\in\omega^{*<\alpha}$ be any transfinite sequence of natural numbers.  We define the \emph{derivative} $\Delta s$ of $s$ to be the sequence given by removing all instances of $0$ from $s$ and subtracting $1$ from all other terms.  In other words, if $s\from\gamma\to\omega$, for $\gamma<\alpha$, then we have:
-\[
-  \Delta s = s\inv(\omega\setminus\{0\})\xrightarrow{s}\omega\setminus\{0\}\xrightarrow{-1}\omega
-  \]
-(where $s\inv(\omega\setminus\{0\})$ carries the induced order).  We now define predicates $\blank\le\gamma$ on sequences $s\in \omega^{*<\alpha}$ as follows:
-\begin{itemize}
-  \item $\emptyplay\le 0$
-  \item If $\Delta s\le\gamma$, then $s\le\gamma+1$
-  \item If $\mu$ is a limit ordinal and $s\in\omega^{*<\alpha}$ is such that for all successor-length prefixes $t\prefix s$ we have $t\le\gamma$ for some $\gamma<\mu$, then $s\le\mu$.  In other words, $\{s\in \omega^{*<\alpha}\suchthat s\le\mu\}$ is the limit-closure of the union of the sets $\{s\in\omega^{*<\alpha}\suchthat s\le\gamma\}$ for $\gamma<\mu$.
-\end{itemize}
-
-We can prove some basic results about these predicates:
+It is easy to prove some basic results about these predicates:
 \begin{proposition}\label{basicResultsAboutRank}
   i) If $s\le\gamma$ and $t$ is any subsequence of $s$ (not necessarily an initial prefix), then $t\le\gamma$.
   
@@ -848,11 +1017,7 @@ We can prove some basic results about these predicates:
   iv) If $s\in\omega^{*<\alpha}$ has length $\mu$, where $\mu$ is a limit ordinal, then $s\le\mu$.  If $s$ has length $\mu+n$ for some $n\in\omega$, then $s\le\mu+\omega$.  In particular, $s\le\alpha$ for all $s\in \omega^{*<\alpha}$.  
 \end{proposition}
 
-\begin{proof}
-  See Appendix.
-\end{proof}
-
-Our classification result for the final sequence then becomes:
+We can then classify the terms of the final sequence for $A\sequoid\blank$ as follows:
 \begin{theorem}\label{finalseqClassification}
   Let $A$ be any game.  Then $A^{\sequoid\gamma}\cong(M_{\oc A}, \lambda_{\oc A}, \zeta_{\oc A}, P_{\oc A,\gamma})$, where
   \[
@@ -860,10 +1025,6 @@ Our classification result for the final sequence then becomes:
     \]
   The morphism $j_\gamma^\delta$ is the copycat strategy.
 \end{theorem}
-
-\begin{proof}
-  See Appendix.
-\end{proof}
 
 \begin{corollary}
   The final sequence for $A\sequoid\blank$ stabilizes at $\alpha$ and we have $A^{\sequoid\alpha}=\oc A$.

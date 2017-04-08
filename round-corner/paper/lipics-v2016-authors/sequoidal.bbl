@@ -47,6 +47,20 @@ J.~Laird.
   \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.entcs.2015.12.017}
   {\path{doi:http://dx.doi.org/10.1016/j.entcs.2015.12.017}}.
 
+\bibitem{jimNonAffine}
+James Laird.
+\newblock From qualitative to quantitative semantics by change of base.
+\newblock In {\em 20th International Conference on Foundations of Software
+  Science and Computation Structures}, April 2017.
+\newblock URL: \url{http://opus.bath.ac.uk/53626/}.
+
+\bibitem{Lambek}
+Joachim Lambek.
+\newblock A fixpoint theorem for complete categories.
+\newblock {\em Mathematische Zeitschrift}, 103(2):151--161, 1968.
+\newblock URL: \url{http://dx.doi.org/10.1007/BF01110627}, \href
+  {http://dx.doi.org/10.1007/BF01110627} {\path{doi:10.1007/BF01110627}}.
+
 \bibitem{LevyGsInfinite}
 Paul~Blain Levy.
 \newblock Infinite trace equivalence.
