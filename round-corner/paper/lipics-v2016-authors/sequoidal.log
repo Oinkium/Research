@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  8 APR 2017 02:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  8 APR 2017 02:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1792,15 +1792,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1456.
  ) 
 Here is how much of TeX's memory you used:
  28421 strings out of 493013
- 542851 string characters out of 6139318
- 685899 words of memory out of 5000000
+ 542849 string characters out of 6139318
+ 686900 words of memory out of 5000000
  30993 multiletter control sequences out of 15000+600000
  250102 words of font info for 334 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1835,7 +1832,7 @@ pe1/public/lm/lmtt9.pfb></usr/share/texmf-dist/fonts/type1/public/mathabx-type1
 pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/
 share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/tex
 mf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on sequoidal.pdf (29 pages, 697211 bytes).
+Output written on sequoidal.pdf (29 pages, 697016 bytes).
 PDF statistics:
  561 PDF objects out of 1000 (max. 8388607)
  483 compressed objects within 5 object streams
