@@ -6,6 +6,15 @@ Samson Abramsky and Radha Jagadeesan.
 \newblock {\em CoRR}, abs/1311.6057, 2013.
 \newblock URL: \url{http://arxiv.org/abs/1311.6057}.
 
+\bibitem{ajmPcf}
+Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
+\newblock Full abstraction for {PCF}.
+\newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0890540100929304},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1006/inco.2000.2930}
+  {\path{doi:http://dx.doi.org/10.1006/inco.2000.2930}}.
+
 \bibitem{SamsonGuyIAPassive}
 Samson Abramsky and Guy McCusker.
 \newblock Full abstraction for idealized algol with passive expressions.
@@ -13,6 +22,14 @@ Samson Abramsky and Guy McCusker.
 \newblock URL: \url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}, \href
   {http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
   {\path{doi:10.1016/S0304-3975(99)00047-X}}.
+
+\bibitem{BerardiTransfiniteGames}
+Stefano Berardi and Ugo de'Liguoro.
+\newblock {\em Total Functionals and Well-Founded Strategies}, pages 54--68.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 1999.
+\newblock URL: \url{http://dx.doi.org/10.1007/3-540-48959-2_6}, \href
+  {http://dx.doi.org/10.1007/3-540-48959-2_6}
+  {\path{doi:10.1007/3-540-48959-2_6}}.
 
 \bibitem{blassChoice}
 Andreas Blass.
@@ -26,6 +43,15 @@ Martin Churchill, Jim Laird, and Guy McCusker.
 \newblock Imperative programs as proofs via game semantics.
 \newblock {\em CoRR}, abs/1307.2004, 2013.
 \newblock URL: \url{http://arxiv.org/abs/1307.2004}.
+
+\bibitem{hoPcf}
+J.M.E. Hyland and C.-H.L. Ong.
+\newblock On full abstraction for {PCF}: {I}, {II}, and {III}.
+\newblock {\em Information and Computation}, 163(2):285 -- 408, 2000.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0890540100929171},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1006/inco.2000.2917}
+  {\path{doi:http://dx.doi.org/10.1006/inco.2000.2917}}.
 
 \bibitem{hyland1997games}
 Martin Hyland.
