@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  11 APR 2017 12:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  11 APR 2017 12:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1618,7 +1618,7 @@ File: cc-by.pdf Graphic file (type pdf)
 Package pdftex.def Info: cc-by.pdf used on input line 199.
 (pdftex.def)             Requested size: 39.74274pt x 14.0pt.
 
-<lipics-logo-bw.pdf, id=95, 591.44762pt x 144.42657pt>
+<lipics-logo-bw.pdf, id=94, 591.44762pt x 144.42657pt>
 File: lipics-logo-bw.pdf Graphic file (type pdf)
 
 <use lipics-logo-bw.pdf>
@@ -1713,7 +1713,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1317.
 Here is how much of TeX's memory you used:
  28417 strings out of 493013
  543380 string characters out of 6139318
- 731015 words of memory out of 5000000
+ 731007 words of memory out of 5000000
  31001 multiletter control sequences out of 15000+600000
  240814 words of font info for 318 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1749,10 +1749,10 @@ usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share
 t/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/wasy2-ps/wasy10.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2
 -ps/wasy9.pfb>
-Output written on sequoidal.pdf (29 pages, 703876 bytes).
+Output written on sequoidal.pdf (29 pages, 701992 bytes).
 PDF statistics:
- 602 PDF objects out of 1000 (max. 8388607)
- 522 compressed objects within 6 object streams
+ 601 PDF objects out of 1000 (max. 8388607)
+ 521 compressed objects within 6 object streams
  111 named destinations out of 1000 (max. 500000)
  66237 words of extra memory for PDF output out of 74296 (max. 10000000)
 
