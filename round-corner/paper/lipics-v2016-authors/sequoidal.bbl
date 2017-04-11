@@ -3,7 +3,7 @@
 \bibitem{abramskyjagadeesangames}
 Samson Abramsky and Radha Jagadeesan.
 \newblock Games and full completeness for multiplicative linear logic.
-\newblock {\em CoRR}, abs/1311.6057, 2013.
+\newblock {\em The Journal of Symbolic Logic}, 59(2):543--574, 1994.
 \newblock URL: \url{http://arxiv.org/abs/1311.6057}.
 
 \bibitem{ajmPcf}
@@ -58,6 +58,11 @@ Martin Hyland.
 \newblock Game semantics.
 \newblock {\em Semantics and logics of computation}, 14:131, 1997.
 
+\bibitem{LafontCofCommCom}
+Yves Lafont.
+\newblock {\em Logiques, categori\'{es} et machines}.
+\newblock PhD thesis, Universit\'{e} Paris 7, 1988.
+
 \bibitem{laird02}
 J.~Laird.
 \newblock A categorical semantics of higher-order store.
@@ -72,6 +77,12 @@ J.~Laird.
   \url{http://www.sciencedirect.com/science/article/pii/S1571066115000845},
   \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.entcs.2015.12.017}
   {\path{doi:http://dx.doi.org/10.1016/j.entcs.2015.12.017}}.
+
+\bibitem{LairdCofCommCom}
+James Laird.
+\newblock Functional programs as coroutines: A semantic analysis.
+\newblock {\em Logical methods in computer science}.
+\newblock To appear.
 
 \bibitem{jimNonAffine}
 James Laird.
