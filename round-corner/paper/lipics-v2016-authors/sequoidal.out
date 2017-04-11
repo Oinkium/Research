@@ -1,19 +1,20 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Defining Higher-order Stateful Objects, Coalgebraically}{}% 2
-\BOOKMARK [1][-]{section.3}{Sequoidal categories}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Game semantics and the sequoidal operator}{section.3}% 4
-\BOOKMARK [2][-]{subsection.3.2}{Sequoidal categories}{section.3}% 5
-\BOOKMARK [2][-]{subsection.3.3}{The sequoidal exponential}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.4}{Imperative programs as anamorphisms}{section.3}% 7
-\BOOKMARK [1][-]{section.4}{Constructing cofree commutative comonoids in Cartesian sequoidal categories}{}% 8
-\BOOKMARK [2][-]{subsection.4.1}{A formula for the sequoidal exponential}{section.4}% 9
-\BOOKMARK [2][-]{subsection.4.2}{Win-games and winning strategies}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.3}{The coalgebraic construction under the strong monoidal hypothesis}{section.4}% 11
-\BOOKMARK [2][-]{subsection.4.4}{The Sequoidal Exponential as a Bifree Algebra}{section.4}% 12
-\BOOKMARK [1][-]{section.5}{Transfinite Games}{}% 13
-\BOOKMARK [2][-]{subsection.5.1}{Transfinite Games}{section.5}% 14
-\BOOKMARK [2][-]{subsection.5.2}{The final sequence for the sequoidal exponential}{section.5}% 15
-\BOOKMARK [1][-]{appendix.A}{Proofs}{}% 16
-\BOOKMARK [2][-]{subsection.A.1}{Proof of Proposition 13}{appendix.A}% 17
-\BOOKMARK [2][-]{subsection.A.2}{Proof of Proposition 14}{appendix.A}% 18
-\BOOKMARK [2][-]{subsection.A.3}{Proof of Theorem 15}{appendix.A}% 19
+\BOOKMARK [2][-]{subsection.1.1}{Defining Higher-order Stateful Objects, Coalgebraically}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{The cofree commutative comonoid as a final colagebra}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Sequoidal categories}{}% 4
+\BOOKMARK [2][-]{subsection.2.1}{Game semantics and the sequoidal operator}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Sequoidal categories}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.3}{The sequoidal exponential}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.4}{Imperative programs as anamorphisms}{section.2}% 8
+\BOOKMARK [1][-]{section.3}{Constructing cofree commutative comonoids in Cartesian sequoidal categories}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{A formula for the sequoidal exponential}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Win-games and winning strategies}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{The coalgebraic construction under the strong monoidal hypothesis}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.4}{The Sequoidal Exponential as a Bifree Algebra}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Transfinite Games}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Transfinite Games}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{The final sequence for the sequoidal exponential}{section.4}% 16
+\BOOKMARK [1][-]{appendix.A}{Proofs}{}% 17
+\BOOKMARK [2][-]{subsection.A.1}{Proof of Proposition 13}{appendix.A}% 18
+\BOOKMARK [2][-]{subsection.A.2}{Proof of Proposition 14}{appendix.A}% 19
+\BOOKMARK [2][-]{subsection.A.3}{Proof of Theorem 15}{appendix.A}% 20
