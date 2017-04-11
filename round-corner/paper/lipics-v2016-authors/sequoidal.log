@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  11 APR 2017 01:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  11 APR 2017 01:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1788,11 +1788,11 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1439.
  ) 
 Here is how much of TeX's memory you used:
- 28700 strings out of 493013
- 549704 string characters out of 6139318
- 735436 words of memory out of 5000000
+ 28702 strings out of 493013
+ 549724 string characters out of 6139318
+ 735437 words of memory out of 5000000
  31259 multiletter control sequences out of 15000+600000
- 251147 words of font info for 340 fonts, out of 8000000 for 9000
+ 251230 words of font info for 341 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  59i,23n,108p,1643b,1187s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf-dis
@@ -1827,7 +1827,7 @@ public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/am
 sfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/sym
 bols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb><
 /usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy9.pfb>
-Output written on sequoidal.pdf (32 pages, 721167 bytes).
+Output written on sequoidal.pdf (32 pages, 720857 bytes).
 PDF statistics:
  620 PDF objects out of 1000 (max. 8388607)
  535 compressed objects within 6 object streams

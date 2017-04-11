@@ -992,26 +992,26 @@ Now we are ready to show that $\sigma\mapsto\oc \sigma$ respects composition.  L
     \oc A \arrow[r, "\mu"] \arrow[d, "\oc\sigma"']
       & \oc A \tensor \oc A \arrow[r, "\der\tensor\id"]
         & A \tensor \oc A \arrow[r, "\sigma\tensor\id"]
-          & B \tensor \oc A \arrow[r, "\wk"] \arrow[d, dotted, "\id\tensor\oc\sigma"]
-            & B \sequoid \oc A \arrow[d, "\id\sequoid\oc\sigma"] \\
+          & B \tensor \oc A \arrow[r, "\dec"] \arrow[d, dotted, "\id\tensor\oc\sigma"]
+            & B \sequoid \oc A \;\times\; \oc A \sequoid B \arrow[d, "\id\sequoid\oc\sigma\;\times\;\oc\sigma\sequoid\id"] \\
     \oc B \arrow[r, "\mu"] \arrow[dd, "\oc \tau"']
       & \oc B \tensor \oc B \arrow[rr, "\der\tensor\id"]
         &
-          & B \tensor \oc B \arrow[r, "\wk"] \arrow[d, "\tau\tensor\id"]
-            & B \sequoid \oc B \\
+          & B \tensor \oc B \arrow[r, "\dec"] \arrow[d, "\tau\tensor\id"]
+            & B \sequoid \oc B \;\times\; \oc B \sequoid B \\
     %
       &
         &
-          & C \tensor \oc B \arrow[r, "\wk"] \arrow[d, dotted, "\id\tensor\oc\tau"']
-            & C \sequoid \oc B \arrow[d, "\id\sequoid\oc\tau"] \\
+          & C \tensor \oc B \arrow[r, "\dec"] \arrow[d, dotted, "\id\tensor\oc\tau"']
+            & C \sequoid \oc B \;\times\; \oc B \sequoid C \arrow[d, "\id\sequoid\oc\tau\;\times\oc\tau\sequoid\id"] \\
     \oc C \arrow[r, "\mu"]
       & \oc C \tensor \oc C \arrow[rr, "\der\tensor\id"]
         &
-          & C \tensor \oc C \arrow[r, "\wk"]
-            & C \sequoid \oc C
+          & C \tensor \oc C \arrow[r, "\dec"]
+            & C \sequoid \oc C \;\times \oc C \sequoid C
   \end{tikzcd}
   \]
-Here, the outermost (solid) shapes commute by the definition of $\oc\sigma$, $\oc\tau$ (after we have replaced $\alpha_B$, $\alpha_C$ with the composite from Lemma \ref{aFormulaForAlpha}).  The smaller squares on the right hand side commute because $\wk$ is a natural transformation.  Now observe that $\wk_{X,Y}=\comp{\pr_1}{\dec_{X,Y}}$ is the composition of epimorphisms, so is an epimorphism for all $X,Y$.  It follows that the two rectangles on the left commute as well.
+Here, the outermost (solid) shapes are the product of shapes that commute by the definition of $\oc\sigma$, $\oc\tau$ (after we have replaced $\alpha_B$, $\alpha_C$ with the composite from Lemma \ref{aFormulaForAlpha}).  The smaller squares on the right hand side commute because $\dec$ is a natural transformation.  Since $\dec$ is an isomorphism, the two rectangles on the left commute as well.
 
 Throwing away the right hand squares and adding some new arrows at the right, we arrive at the following commutative diagram:
 \[
