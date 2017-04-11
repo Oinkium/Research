@@ -458,50 +458,24 @@ $$I \stackrel{p_0}{\leftarrow} A \stackrel{p_1}{\leftarrow} A^2 \ldots A^i \stac
 where   
 $p_i:A^{i+1} \rightarrow A^i$ is the unique morphism given by the universal property of the symmetric tensor power,  such that $\comp{\eq_i:A^{i+1}}{p_i} \rightarrow A^{\otimes i} = \eq_{i+1};(A^{\otimes i} \otimes t_A)$. 
 
-Melli\'es, Tabareau and Tasson \cite{MelliesCofCommCom} have shown that where the limit $(A^\infty, \{p^\infty_i\from A^\infty \rightarrow A^i\}$ for this diagram exists  and commutes with the tensor,  --- i.e. for each object $B$, $B \otimes A^\infty$ is the limit of 
-$$B \otimes I \stackrel{B \otimes p_0}{\leftarrow} B \otimes A  \stackrel{B \otimes p_1}{\leftarrow} B\otimes  A^2 \ldots $$
-then a comultiplication $\mu:A^\infty \rightarrow A^\infty \otimes A^\infty$ may be defined making $(A^\infty,\mu,t_{\oc A})$ the cofree commutative comonoid. Where these conditions are satisfied, we shall call this a MTT-exponential.   
-\begin{proposition}Any sequoidally decomposable category has all symmetric tensor powers, and these are preserved by the tensor.  
+Melli\'es, Tabareau and Tasson \cite{MelliesCofCommCom} have shown that where the limit $(A^\infty, \{p^\infty_i\from A^\infty \rightarrow A^i\}$ for this diagram exists  and commutes with the tensor,  --- i.e. for each object $B$, $B \tensor A^\infty$ is the limit of 
+$$B \tensor I \stackrel{B \tensor p_0}{\leftarrow} B \tensor A  \stackrel{B \tensor p_1}{\leftarrow} B\tensor  A^2 \ldots $$
+then a comultiplication $\mu:A^\infty \rightarrow A^\infty \tensor A^\infty$ may be defined making $(A^\infty,\mu,t_{\oc A})$ the cofree commutative comonoid. Where these conditions are satisfied, we shall call this a MTT-exponential.   
+
+In the category of games, the morphisms $\id\sequoid\pr_1$ and $\id\sequoid\pr_2 \from A \sequoid (B\times C)\to (A \sequoid B) \times (A \sequoid C)$ are jointly monomorphic.  If a distributive sequoidal category satisfies the same property, we say that it is \emph{strong distributive}.
+\begin{proposition}Any strong distributive decomposabe sequoidal category has all symmetric tensor powers, and these are preserved by the tensor.  
 \end{proposition} 
 \begin{proof}
-By sequoidal decomposability, for any $n$, $A^{\otimes (n+1)}$ is the cartesian product $\Pi_{i \leq n} (A \sequoid A^{\otimes n})$ with projections 
-  $\comp{\sym_i}{\wk_{A,A^{\otimes n}}} $, where  $\sym_i: A^{\tensor (n+1)} \rightarrow A^{\tensor (n+1)}$ is the symmetry isomorphism corresponding to the permutation on $n$ which swaps $1$ and $i$. 
+By sequoidal decomposability, for any $n$, $A^{\tensor (n+1)}$ is the cartesian product $\Pi_{i \le n} (A \sequoid A^{\tensor n})$ with projections 
+$\sym_i;\wk_{A,A^{\tensor n}} $, where  $\sym_i: A^{\tensor (n+1)} \rightarrow A^{\tensor (n+1)}$ is the symmetry isomorphism corresponding to the permutation on $n$ which swaps $1$ and $i$. 
 
-  We inductively define the sequoid powers $A^{\sequoid n}$ by $A^{\sequoid 1}=A$ and $A^{\sequoid(n+1)}=A\sequoid A^{\sequoid n}$.  Given $n$, we inductively define a morphism $\eq_n\from A^{\sequoid n}\to A^{\tensor n}$ as the diagonal $\langle \id_A\sequoid\eq_{n-1}\rangle$ into the product -- so $\comp{\wk}{\comp{\sym_i}{\eq_n}}=\id\sequoid e_{n-1}$ for each $i$.  
-  
-  If $\pi\in S_n$ is a permutation, we write $\sym^\pi$ for the appropriate symmetry of $A^{\tensor n}$.  We now claim that $\comp{\sym^\pi}{\eq_n}=\eq_n$ for all $\pi\in S_n$ -- so $\eq_n$ equalizes the $\sym^\pi$.  Indeed, let $\pi\in S_n$.  Then we may write $\sym^\pi = \comp{\id_A\tensor\sym^\rho}{\sym_i}$ for some $i$ and some $\rho\in S_{n-1}$.  Now we have:
-  \begin{IEEEeqnarray*}{rClC}
-    \comp{\wk}{\comp{\sym^\pi}{\eq_n}} & = & \comp{\wk}{\comp{\comp{(\id\tensor\sym^\rho)}{\sym_i}}{\eq_n}} & \\
-    & = & \comp{(\id\sequoid\sym^\rho)}{\comp{\wk}{\comp{\sym_i}{\eq_n}}} & \hspace{24pt}\textrm{(by naturality of $\wk$)} \\
-    & = & \comp{(\id\sequoid\sym^\rho)}{(\id\sequoid\eq_{n-1})} & \\
-    & = & \id\sequoid\eq_{n-1}
-  \end{IEEEeqnarray*}
-  Since $\pi$ was arbitrary, it follows that $\comp{\wk}{\comp{\comp{\sym_j}{\sym^{\pi}}}{\eq_n}}=\comp{\comp{\wk}{\sym_j}}{\eq_n}$ for all $j$ and therefore that $\comp{\sym^\pi}{\eq_n}=\eq_n$ for all $\pi$, as desired.
+  Define  $\wk^n: A^{\tensor n}\rightarrow A^{\sequoid n}$ by $\wk^{n+1} = \wk_{A, A^{\tensor n}}; (A \sequoid \wk^n)$.  We show (by induction on $n$) that for any $n$, the morphisms $\comp{\wk_n}{\sym^\pi}$ are jointly monomorphic, where $\sym^\pi$ ranges over all of the permutation isomorphisms  on $A^{\tensor n}$. 
 
-  Now define $\wk^n\from A^{\sequoid n}\to A^{\tensor n}$ inductively by $\wk^n = \comp{\id\sequoid\wk^{n-1}}{\wk}$.  We may show by induction that $\comp{\wk^n}{\eq_n}=\id_{A^{\sequoid n}}$ for all $n$: indeed, we have
-  \begin{IEEEeqnarray*}{rClC}
-    \comp{\wk^n}{\eq_n} & = & \comp{(\id\sequoid\wk^{n-1})}{\comp{\wk}{\eq_n}} & \\
-    & = & \comp{(\id\sequoid\wk^{n-1})}{(\id\sequoid\eq_{n-1})} & \\
-    & = & \id\sequoid \id = \id & \hspace{24pt}\textrm{(by induction)}
-  \end{IEEEeqnarray*}
-  Now let $f\from C \to B \tensor A^{\tensor n}$ be such that $\comp{(\id\tensor\sym^\pi)}{f}=f$ for all $\pi\in S_n$.  It follows from what we have just shown that if $f=\comp{(\id\tensor\eq_n)}{g}$, then $g=\comp{\comp{\id\tensor\wk^n}{\id\tensor\eq_n}}{g}=\comp{\id\tensor\wk^n}{f}$.  So we just need to show that
-  \[
-    f=\comp{(\id\tensor(\comp{\eq_n}{\wk_n}))}{f}
-    \]
-  We first assume that $B=I$, so we have $f\from C\to B\tensor A^{\tensor n}$ and $\comp{\sym^\pi}{f}=f$ for all $\pi\in S_n$ and we are trying to show that $f=\comp{\comp{\eq_n}{\wk^n}}{f}$.  We do this by showing that $\comp{\comp{\wk}{\sym_i}}{\comp{\comp{\eq_n}{\wk^n}}{f}}=\comp{\comp{\wk}{\sym_i}}{f}$ for all $i$.  
-
-  Indeed, we have:
-  \begin{IEEEeqnarray*}{rClC}
-    \comp{\comp{\wk}{\sym_i}}{\comp{\comp{\eq_n}{\wk^n}}{f}} & = & \comp{\comp{(\id\sequoid\eq_{n-1})}{(\id\sequoid\wk^{n-1})}}{\comp{\wk}{f}} & \\
-    & = & \comp{\wk}{\comp{(\id\tensor(\comp{\eq_{n-1}}{\wk^{n-1}}))}{f}} &\hspace{24pt}\textrm{(by naturality of $\wk$)} \\
-    & = & \comp{\wk}{f} &\hspace{2pt}\textrm{(by induction)} \\
-    & = & \comp{\wk}{\comp{\sym_i}{f}}
-  \end{IEEEeqnarray*}
-  
-  Now let $B$ be an arbitary object of the category.  [TODO: finish working this out.]
+  The equalizer $\eq_n:A^n \rightarrow A^{\tensor n}$ is defined inductively by $\eq_n=\langle \id\sequoid\eq_{n-1}$, using the identification of $A\sequoid n$ as a product given above.  We may show inductively that $\comp{\wk^n}{\comp{\sym^\pi}{\eq_n}}=\id$ for all permutations $\pi\in S_n$.  
+  Given any $f:C \rightarrow A^{\tensor n} \tensor B$ such that $\comp{(\theta \tensor B)}{f} = f$ for any permutation symmetry $\theta$, taking $\comp{(\wk^n \tensor B)}{f}:C \rightarrow A^{\sequoid n} \tensor B$ gives the unique morphism such that $\comp{(\eq_n\tensor \id_B)}{\comp{(\wk^n\tensor \id_B)}{f}} = f$.  Indeed, for all permutations $\pi\in S_n$ we have $\comp{\wk^n\tensor\id_B}{\comp{\sym^\pi\tensor\id_B}{\comp{\eq_n\tensor\id_B}{\comp{(\wk^n\tensor\id_B}{f}}}}=\comp{(\wk^n\tensor\id_B)}{f}=\comp{(\wk^n\tensor\id_B)}{\comp{\sym^\pi}{f}}$.  Hence, $\comp{(\eq_n\tensor \id_B)}{\comp{(\wk^n\tensor \id_B)}{f}} = f$ (by decomposability and strong distributivity, the joint monomorphism property is preserved by the tensor product).  For uniqueness, use the fact that $\eq_n$ is a left inverse for $\wk^n$. 
 \end{proof}
 Thus, in any sequoidally decomposable category, the diagram $\Delta(A)$ exists for any $A$. If a limit for this diagram exists and is preserved by the sequoid, 
---- i.e. for any $B$, $B \sequoid A^\infty$ is the limit for $B \sequoid \Delta(A)$ --- then it is preserved by the tensor, and is therefore the cofree commutative comonoid. Conversely, we may show that any cofree commutative comonoid which arises as a $\otimes$-preserving limit of symmetric tensor powers is a final coalgebra.  
+--- i.e. for any $B$, $B \sequoid A^\infty$ is the limit for $B \sequoid \Delta(A)$ --- then it is preserved by the tensor, and is therefore the cofree commutative comonoid. Conversely, we may show that any cofree commutative comonoid which arises as a $\tensor$-preserving limit of symmetric tensor powers is a final coalgebra.  
 \begin{proposition}If a sequoidally decomposable category has a MTT-exponential, then $(A^\infty, \comp{\wk_{A\tensor\oc A}}{\comp{\der_A}{\mu_A}})$ is a final coalgebra for the functor $A \sequoid \_$.    
 \end{proposition}
 \begin{proof}
