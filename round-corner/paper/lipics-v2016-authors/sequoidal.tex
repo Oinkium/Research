@@ -1329,6 +1329,82 @@ By Lemma \ref{aFormulaForAlpha}, the morphism along the bottom is equal to $\alp
 
 We expand briefly on the construction of transfinite games.  
 
-Fix an additively indecomposable ordinal $\alpha=\omega^\beta$.  
+Fix an additively indecomposable ordinal $\alpha=\omega^\beta$.  If $X$ is a set, write $X^{*<\alpha}$ for the set of sequences of elements of $X$ of length less than $\alpha$.  Define a \emph{game over $\alpha$} to be a tuple $(M_A,\lambda_A,\zeta_A,P_A)$, where
+\begin{itemize}
+  \item $M_A$ is a set of moves
+  \item $\lambda_A\from M_A\to\OP$ designates each move as an \emph{$O$-move} or a \emph{$P$-move}
+  \item $P_A\subset M_A^{*<\alpha}$ is a prefix-closed set of positions
+  \item $\zeta_A\from P_A\to\OP$ designates each position as either an \emph{$O$-position} or a \emph{$P$-position}.  
+\end{itemize}
+
+We require that a position ending in a $P$-move be a $P$-position and that a position ending in an $O$-move be an $O$-position.  We require also that the sequences in $P_A$ be \emph{alternating}: if $sa\in P_A$, then $\zeta_A(s)=\neg\zeta_A(sa)$.  Lastly, we require that $P_A$ be \emph{limit-closed}: if $s\in M_A^{*<\alpha}$ has length a limit ordinal, and if $t\in P_A$ for all proper prefixes $t\pprefix s$, then $s\in P_A$.  
+
+We say that a game $A$ is \emph{completely negative} if all plays of limit-ordinal length are $P$-positions.  
+
+A \emph{strategy} for a game $A$ is a non-empty prefix-closed subset of $P_A$ such that if $sa\in P_A$ is an $O$-position and $s\in\sigma$, then $sa\in\sigma$.  A strategy is \emph{deterministic} if whenever $sa,sb\in\sigma$ are $P$-positions, we have $a=b$.  
+
+Let $A,B$ be completely negative games.  We write $P_A\|P_B$ for the set of interleavings of sequences from $P_A$ with sequences from $P_B$: that is, sequences $s\in (M_A\sqcup M_B)^{*<\alpha}$ such that $s\vert_A\in P_A$ and $s\vert_B\in P_B$.  We write $\oc P_A$ for the set of interleavings of countably many copies of $A$.  We may then define functions $\zeta_{A\tensor B},\zeta_{A\implies B},\zeta_{A\sequoid B}\from P_A\|P_B\to\OP$:
+\begin{gather*}
+  \zeta_{A\tensor B}(s) = \zeta_{A\sequoid B}(s) = \zeta_A(s)\wedge\zeta_B(s)\\
+  \zeta_{A\implies B}(s) = \zeta_A(s) \Rightarrow \zeta_B(s)
+\end{gather*}
+and $\zeta_{\oc A}\from \oc P_A\to \OP$:
+\[
+  \zeta_{\oc A}(s) = \bigwedge_{n\in\omega}\zeta_A(s\vert_n)
+  \]
+This allows us to define the connectives:
+\begin{gather*}
+  A \tensor B = (M_A \cprd M_B, \lambda_A \cprd \lambda_B, \zeta_{A\tensor B}, P_{A\tensor B})\\
+  A \sequoid B = (M_A \cprd M_B, \lambda_A \cprd \lambda_B, \zeta_{A\sequoid B}, P_{A\sequoid B})\\
+  A \implies B = (M_A \cprd M_B, (\neg\circ\lambda_A) \cprd \lambda_B, \zeta_{A\implies B}, P_{A\implies B})\\
+  \oc A = (M_A\times \omega, \lambda_A \circ \pr_1, \zeta_{\oc A}, P_{\oc A})
+\end{gather*}
+
+Here, $P_{A\tensor B}$ and $P_{A\implies B}$ are the largest subsets of $P_A\|P_B$ that satisfy the alternating condition with respect to $\zeta_{A\tensor B}$ and $\zeta_{A\implies B}$.  $P_{A\sequoid B}$ is the subset of $P_{A\tensor B}$ consisting of those positions that start with a move in $A$.  $P_{\oc A}$ is the largest subset of $\oc A$ that is alternating with respect to $\zeta_{\oc A}$.  
+
+We may also define products in the same way we define them for win-games.  
+
+The following lemma is important for proving that composition works.  
+
+\begin{lemma}\label{signProfileLemma}
+  Let $A$ be a completely negative game and let $B$ be an arbitrary game.  Let $s\in P_{A\implies B}$.  Then $s$ satisfies one of the following \emph{sign profiles}:
+  \[
+    \begin{array}{cc}
+      \zeta_A(s\vert_A) & \zeta_B(s\vert_B)\\
+      \hline
+      O & O \\
+      P & P \\
+      P & O
+    \end{array}
+    \]
+\end{lemma}
+\begin{proof}
+  Induction on the length of $s$.  Suppose first that $s=s'a$.  If $a$ is an $O$-move, then $s'a$ is an $O$-position, so $s'a$ must have sign profile $PO$, by the definition of $\zeta_{A\implies B}$.  Otherwise, $s'$ must be an $O$-position, so it must have sign profile $PO$.  Since the sign profile of $s'a$ can only differ from that of $s'$ in one place, it must have one of the other two sign profiles in the table.  
+
+  Now suppose that $s$ is a limiting-length position.  If $s\vert_A$ has limiting length, we win immediately, since $A$ is completely negative.  Otherwise, $s\vert_A$ has successor length.  Let $t\prefix s$ be the shortest prefix of s containing $s\vert_A$ as a subsequence.  Then $t$ is has successor length, so is a proper prefix of $s$.  We therefore have $tb\pprefix s$, where $b$ is a move in $B$.  By induction, $t$ and $tb$ have distinct sign profiles drawn from the table above; the only possibility is that one has sign profile $PO$ and the other has sign profile $PP$.  Therefore, $s\vert_A$ is a $P$-position and we win.
+\end{proof}
+
+Let $A,B$ be completely negative games and let $C$ be an arbitrary game.  Let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  We define:
+\[
+  \sigma\|\tau = \{\s\in (M_A\cprd M_B \cprd M_C)^{*<\alpha}\suchthat \s\vert_{A,B}\in\sigma,\;\s\vert_{B,C}\in\tau\}
+  \]
+and then define
+\[
+  \comp\tau\sigma = \{\s\vert_{A,C}\suchthat\s\in\sigma\|\tau\}
+  \]
+We use Lemma \ref{signProfileLemma} to show that $\comp\tau\sigma$ is alternating.  Note first that if $\s\in\sigma\|\tau$, then $\s$ must have one of the following sign profiles:
+\[
+  \begin{array}{ccc}
+    \zeta_A(\s\vert_A) & \zeta_B(\s\vert_B) & \zeta_C(\s\vert_C) \\
+    \hline
+    P & P & P \\
+    P & P & O \\
+    P & O & O \\
+    O & O & O
+  \end{array}
+  \]
+By alternation in $\sigma$ and $\tau$, we may only move between adjacent rows as we step through $\sigma$.  The sign profile of $\s\vert_{A,C}$ is given by the outer two columns; we see that as we step through $\s\vert_{A,C}$, this sign profile must also be alternating.  
+
+Now we show that $\comp\tau\sigma$ is a valid strategy.  Suppose that $s\in\comp\tau\sigma$ is a $P$-position and that $sa\in P_{A\implies C}$.  Then we have $s=\s\vert_{A,C}$, where $\s\in\sigma\|\tau$.  We claim that $\s a\in\sigma\|\tau$.  Assume that $a$ is a move in $A$.  Then $\s\vert_{A,C}$ must have sign profile $OO$ and so $\s$ must have sign profile $OOO$.  It follows that $\s\vert_{A,B}$ has sign profile $OO$ and so $a$ is a legal reply in $A\implies B$.  Therefore, $\s a\in\sigma\|\tau$ and so 
 
 \end{document}
