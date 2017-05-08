@@ -7,7 +7,10 @@
 %%% PACKAGES
 \usepackage{booktabs} % for much better looking tables
 \usepackage{array} % for better arrays (eg matrices) in maths
+\ifx\BEAMER 1
+\else
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)\prefix\t$.
+\fi
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 \usepackage{mathtools} % for the all important \coloneqq symbol
@@ -18,18 +21,26 @@
 \usepackage{lettrine} % For the drop cap
 \usepackage{mathpartir} % for \inferrule
 
+\ifx\NOTARTICLE 1
+\else
+
 %%% ToC (table of contents) APPEARANCE
 \usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
 \usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
+\fi
+
 %% Font things %%
 \usepackage{amssymb}
 \usepackage{cmll} % Linear logic symbols!
+\ifx\FEWFONTS 1
+\else
 \usepackage{bm} % for bold Greek letters
-\usepackage{stmaryrd}
 \usepackage{wasysym} % For left and rigth moons
+\fi
+\usepackage{stmaryrd}
 
 %% Get the sqsubsetneqq character from the mathabx package
 \DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
@@ -53,6 +64,9 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{calc}
 
+\ifx\BEAMER 1
+\else
+
 %% Theorems! %%
 \usepackage{amsthm}
 \theoremstyle{plain} % Theorems, lemmas, propositions etc.
@@ -73,6 +87,8 @@
 \newtheoremstyle{note} {3pt} {3pt} {\itshape} {} {\itshape} {:} {.5em} {} % For short notes
 \theoremstyle{note}
 \newtheorem{note}[theorem]{Note}
+
+\fi
 
 %% Exercises and answers %%
 \usepackage{answers}
@@ -257,8 +273,12 @@
 \newcommand{\pcomm}{{\mathtt{pcomm}}}
 \newcommand{\run}{{\mathtt{r}}}
 \newcommand{\lun}{{\mathtt{l}}}
+\ifx\FEWFONTS 1
+\else
 \newcommand{\fcoal}[1]{{\leftmoon #1 \rightmoon}}
+\fi
 \DeclareMathSymbol{\co}{\mathord}{operators}{"3C}
+\DeclareMathSymbol{\nw}{\mathord}{operators}{"3E}
 \newcommand{\T}{\mathfrak{T}}
 \renewcommand{\subset}{\subseteq}
 \newcommand{\Ord}{\catname{Ord}}
@@ -277,6 +297,8 @@
 \newcommand{\nat}{{\mathtt{nat}}}
 \newcommand{\mustconverge}{\Downarrow}
 \DeclareMathOperator{\fix}{fix}
+\newcommand{\Iflt}{\mathtt{If{<}\;}}
+\newcommand{\Ifgt}{\mathtt{If{>}\;}}
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
@@ -291,6 +313,10 @@
 \usepackage{environ}
 \usepackage{pdflscape}
 \newcounter{abspage}
+
+\if 1\NOTARTICLE
+
+\else
 
 \makeatletter
 \newcommand{\newSFPage}[1]% #1 = \theabspage
@@ -316,9 +342,33 @@
   \fi}
 \makeatother
 
+\fi
+
 %% PCF Things
 
 \newcommand{\Y}{\mathbf{Y}}
+\newcommand{\opto}{\longrightarrow}
+\newcommand{\n}{{\mathtt{n}}}
+\newcommand{\IfO}{{\mathtt{If0}\;}}
+\newcommand{\suc}{{\mathtt{suc\;}}}
+\newcommand{\0}{{\mathtt{0}}}
+
+\newcommand{\rec}{{\mathtt{iter}}}
+\newcommand{\iter}{\rec}
+
+%% Flexible strategy things
+
+\newcommand{\stle}{{\;\le_s\;}}
+\newcommand{\steq}{{\;=_s\;}}
+\newcommand{\exle}{\sqsubseteq}
+\newcommand{\exlub}{\bigsqcup}
+\newcommand{\dv}{{\text{\lightning}}}
+\DeclareMathOperator{\pocl}{pocl}
+\newcommand{\plot}{\triangleleft}
+\newcommand{\shad}{\mathfrak{S}}
+\newcommand{\tree}{\mathfrak{T}}
+\newcommand{\Tau}{T}
+\newcommand{\sw}{\triangleleft}
 
 %% Our
 

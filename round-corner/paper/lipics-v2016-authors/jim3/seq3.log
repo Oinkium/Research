@@ -1,0 +1,922 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.3.6)  11 APR 2017 12:00
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**seq3
+(./seq3.tex
+LaTeX2e <2016/03/31> patch level 3
+Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
+
+! LaTeX Error: File `lipics-v2016.cls' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: cls)
+
+Enter file name: q
+
+! LaTeX Error: File `q.cls' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: cls)
+
+Enter file name: 
+(/usr/share/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2016/05/14 v2.6a Micro-typographical refinements (RS)
+
+(/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+\MT@toks=\toks15
+\MT@count=\count79
+LaTeX Info: Redefining \textls on input line 774.
+\MT@outer@kern=\dimen102
+LaTeX Info: Redefining \textmicrotypecontext on input line 1310.
+\MT@listname@count=\count80
+
+(/usr/share/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2016/05/14 v2.6a Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 916.
+LaTeX Info: Redefining \lslig on input line 916.
+\MT@outer@space=\skip41
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+(/usr/share/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2016/05/14 v2.6a microtype main configuration file (RS)
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74    }
+         
+? 
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.74    }
+         
+? q
+OK, entering \batchmode...
+
+Package microtype Warning: Could not parse font size `normalsize'
+(microtype)                in font set `basicmath' on input line 74.
+
+
+Package microtype Warning: Could not parse font size `footnotesize'
+(microtype)                in font set `basicmath' on input line 74.
+
+
+Package microtype Warning: Could not parse font size `small'
+(microtype)                in font set `basicmath' on input line 74.
+
+
+Package microtype Warning: Could not parse font size `large'
+(microtype)                in font set `basicmath' on input line 74.
+
+! Extra }, or forgotten \endgroup.
+\MT@clist@function ...,footnotesize,small,large}}}
+                                                  
+l.74    }
+         
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+Package microtype Warning: Could not parse font size `ex'
+(microtype)                in font set `basicmath' on input line 74.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.74    }
+         
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74    }
+         
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 74.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 74.
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.74    }
+         
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing { inserted.
+<to be read again> 
+                   \begingroup 
+l.74    }
+         
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+
+Package microtype Warning: Could not parse font size `sp'
+(microtype)                in font set `basicmath' on input line 74.
+
+
+Package microtype Warning: Could not parse font size `kn'
+(microtype)                in font set `basicmath' on input line 74.
+
+
+Package microtype Warning: Could not parse font size `tr'
+(microtype)                in font set `basicmath' on input line 74.
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.81    }
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.81    }
+         
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package microtype Warning: Could not parse font size `normalsize'
+(microtype)                in font set `basictext' on input line 81.
+
+
+Package microtype Warning: Could not parse font size `footnotesize'
+(microtype)                in font set `basictext' on input line 81.
+
+
+Package microtype Warning: Could not parse font size `small'
+(microtype)                in font set `basictext' on input line 81.
+
+
+Package microtype Warning: Could not parse font size `large'
+(microtype)                in font set `basictext' on input line 81.
+
+! Extra }, or forgotten \endgroup.
+\MT@clist@function ...,footnotesize,small,large}}}
+                                                  
+l.81    }
+         
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+Package microtype Warning: Could not parse font size `ex'
+(microtype)                in font set `basictext' on input line 81.
+
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.81    }
+         
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing { inserted.
+<to be read again> 
+                   \begingroup 
+l.81    }
+         
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+
+Package microtype Warning: Could not parse font size `sp'
+(microtype)                in font set `basictext' on input line 81.
+
+
+Package microtype Warning: Could not parse font size `kn'
+(microtype)                in font set `basictext' on input line 81.
+
+
+Package microtype Warning: Could not parse font size `tr'
+(microtype)                in font set `basictext' on input line 81.
+
+
+Package microtype Warning: Could not parse font size `small'
+(microtype)                in font set `footnotesize' on input line 91.
+
+
+Package microtype Warning: Could not parse font size `small'
+(microtype)                in font set `footnotesize' on input line 91.
+
+
+Package microtype Warning: Could not parse font size `small'
+(microtype)                in font set `footnotesize' on input line 91.
+
+
+Package microtype Warning: Could not parse font size `small'
+(microtype)                in font set `footnotesize' on input line 91.
+
+
+Package microtype Warning: Could not parse font size `small'
+(microtype)                in font set `footnotesize' on input line 91.
+
+
+Package microtype Warning: Could not parse font size `footnotesize'
+(microtype)                in font set `scriptsize' on input line 96.
+
+
+Package microtype Warning: Could not parse font size `footnotesize'
+(microtype)                in font set `scriptsize' on input line 96.
+
+
+Package microtype Warning: Could not parse font size `footnotesize'
+(microtype)                in font set `scriptsize' on input line 96.
+
+
+Package microtype Warning: Could not parse font size `footnotesize'
+(microtype)                in font set `scriptsize' on input line 96.
+
+
+Package microtype Warning: Could not parse font size `footnotesize'
+(microtype)                in font set `scriptsize' on input line 96.
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99    { font = */*/*/*/* }
+                            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.99    { font = */*/*/*/* }
+                            
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package microtype Warning: Could not parse font size `*'
+(microtype)                in font set `normalfont' on input line 99.
+
+! Extra }, or forgotten \endgroup.
+\MT@clist@function ...normalfont}{font=*/*/*/*/*}}
+                                                  
+l.99    { font = */*/*/*/* }
+                            
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+Package microtype Warning: family axis is empty in font specification
+(microtype)                `ex////'. Using `cmr' instead on input line 99.
+
+
+Package microtype Warning: series axis is empty in font specification
+(microtype)                `ex////'. Using `m' instead on input line 99.
+
+
+Package microtype Warning: shape axis is empty in font specification
+(microtype)                `ex////'. Using `n' instead on input line 99.
+
+
+Package microtype Warning: size axis is empty in font specification
+(microtype)                `ex////'. Using `\normalsize' instead on input line 
+99.
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99    { font = */*/*/*/* }
+                            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.99    { font = */*/*/*/* }
+                            
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package microtype Warning: Could not parse font size `*'
+(microtype)                in font set `normalfont' on input line 99.
+
+
+Package microtype Warning: family axis is empty in font specification
+(microtype)                `sp////'. Using `cmr' instead on input line 99.
+
+
+Package microtype Warning: series axis is empty in font specification
+(microtype)                `sp////'. Using `m' instead on input line 99.
+
+
+Package microtype Warning: shape axis is empty in font specification
+(microtype)                `sp////'. Using `n' instead on input line 99.
+
+
+Package microtype Warning: size axis is empty in font specification
+(microtype)                `sp////'. Using `\normalsize' instead on input line 
+99.
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99    { font = */*/*/*/* }
+                            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.99    { font = */*/*/*/* }
+                            
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package microtype Warning: Could not parse font size `*'
+(microtype)                in font set `normalfont' on input line 99.
+
+
+Package microtype Warning: family axis is empty in font specification
+(microtype)                `kn////'. Using `cmr' instead on input line 99.
+
+
+Package microtype Warning: series axis is empty in font specification
+(microtype)                `kn////'. Using `m' instead on input line 99.
+
+
+Package microtype Warning: shape axis is empty in font specification
+(microtype)                `kn////'. Using `n' instead on input line 99.
+
+
+Package microtype Warning: size axis is empty in font specification
+(microtype)                `kn////'. Using `\normalsize' instead on input line 
+99.
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99    { font = */*/*/*/* }
+                            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.99    { font = */*/*/*/* }
+                            
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package microtype Warning: Could not parse font size `*'
+(microtype)                in font set `normalfont' on input line 99.
+
+
+Package microtype Warning: family axis is empty in font specification
+(microtype)                `tr////'. Using `cmr' instead on input line 99.
+
+
+Package microtype Warning: series axis is empty in font specification
+(microtype)                `tr////'. Using `m' instead on input line 99.
+
+
+Package microtype Warning: shape axis is empty in font specification
+(microtype)                `tr////'. Using `n' instead on input line 99.
+
+
+Package microtype Warning: size axis is empty in font specification
+(microtype)                `tr////'. Using `\normalsize' instead on input line 
+99.
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99    { font = */*/*/*/* }
+                            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+\MT@get@size ... \def \MT@val {##2}}\@tempa \@nil 
+                                                  \fi \MT@ifdimen \MT@val {\...
+l.99    { font = */*/*/*/* }
+                            
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package microtype Warning: Could not parse font size `*'
+(microtype)                in font set `normalfont' on input line 99.
+
+
+! Package microtype Error: The expansion set `basictext' is not declared.
+(microtype)                Cannot make it the default set. Using set
+(microtype)                `all' instead.
+
+See the microtype package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.105 ...icrotypeSetDefault[expansion] {basictext}
+                                                  
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+
+! Package microtype Error: The spacing set `basictext' is not declared.
+(microtype)                Cannot make it the default set. Using set
+(microtype)                `all' instead.
+
+See the microtype package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.106 ...icrotypeSetDefault[spacing]   {basictext}
+                                                  
+(That was another \errmessage.)
+
+))
+! Missing $ inserted.
+<inserted text> 
+                $
+l.9 
+    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.9 
+    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (21.0pt too wide) in paragraph at lines 74--9
+[]$[]$ 
+ []
+
+! Undefined control sequence.
+l.16 \titlerunning
+                  {Sequoidal Categories and Transfinite Games} %optional, in...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.16 \titlerunning{S
+                    equoidal Categories and Transfinite Games} %optional, in...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.21 \affil
+           [1]{Department of Computer Science, University of Bath, Claverton...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.23 \affil
+           [2]{Department of Computer Science, University of Bath, Claverton...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.25 \authorrunning
+                   {W.\,J. Gowers and J. Laird} %mandatory. First: Use abbre...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.27 \Copyright
+               {William John Gowers and James Laird}%mandatory, please use f...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.29 \subjclass
+               {F3.2.2 Denotational Semantics}% mandatory: Please choose ACM...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.30 \keywords
+              {Game semantics, Linear logic, Transfinite games, Sequoid oper...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.34 \EventEditors
+                  {}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.35 \EventNoEds
+                {}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.36 \EventLongTitle
+                    {7th Conference on Algebra and Coalgebra in Computer Sci...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.37 \EventShortTitle
+                     {CALCO 2017}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.38 \EventAcronym
+                  {CALCO}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.39 \EventYear
+               {2017}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.40 \EventDate
+               {June13 --16, 2017}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.41 \EventLocation
+                   {Ljubljana, Slovenia}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.42 \EventLogo
+               {}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.43 \SeriesVolume
+                  {}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.44 \ArticleNo
+               {}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+(/usr/share/texmf-dist/tex/latex/IEEEtran/IEEEtrantools.sty
+Package: IEEEtrantools 2015/08/26V1.5byMichaelShell
+--Seethe"IEEEtrantools_doc.txt"manualforusageinformation.
+--http://www.michaelshell.org/tex/ieeetran/tools/
+\@IEEEtrantmpdimenA=\dimen103
+\@IEEEtrantmpdimenB=\dimen104
+\@IEEEtrantmpdimenC=\dimen105
+\@IEEEtrantmpcountA=\count81
+\@IEEEtrantmpcountB=\count82
+\@IEEEtrantmpcountC=\count83
+\@IEEEtrantmptoksA=\toks16
+\IEEEnormaljot=\dimen106
+\IEEEquantizedlength=\dimen107
+\IEEEquantizedlengthdiff=\dimen108
+\IEEEquantizedtextheightdiff=\dimen109
+\IEEEilabelindentA=\dimen110
+\IEEEilabelindentB=\dimen111
+\IEEEilabelindent=\dimen112
+\IEEEelabelindent=\dimen113
+\IEEEdlabelindent=\dimen114
+\IEEElabelindent=\dimen115
+\IEEEiednormlabelsep=\dimen116
+\IEEEiedmathlabelsep=\dimen117
+\IEEEiedtopsep=\skip42
+\c@IEEEsubequation=\count84
+\@IEEEeqnnumcols=\count85
+\@IEEEeqncolcnt=\count86
+\@IEEEsubeqnnumrollback=\count87
+\IEEEPARstartletwidth=\dimen118
+) (/usr/share/texmf-dist/tex/latex/pbox/pbox.sty
+Package: pbox 2011/12/07v1.2Dynamicparboxes
+ (/usr/share/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2014/10/28v4.3Infixarithmetic(KKT,FJ)
+\calc@Acount=\count88
+\calc@Bcount=\count89
+\calc@Adimen=\dimen119
+\calc@Bdimen=\dimen120
+\calc@Askip=\skip43
+\calc@Bskip=\skip44
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count90
+\calc@Cskip=\skip45
+) (/usr/share/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29v1.1cStandardLaTeXifthenpackage(DPC)
+)
+\pb@xlen=\skip46
+) (/usr/share/texmf-dist/tex/latex/cmll/cmll.sty
+Package: cmll 2010/04/20LinearLogicsymbolsforComputerModern
+\symllsymbols=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `llsymbols' in version `bold'
+(Font)                  U/cmllr/m/n --> U/cmllr/bx/n on input line 49.
+) (/usr/share/texmf-dist/tex/latex/wasysym/wasysym.sty
+Package: wasysym 2003/10/30v2.0Wasy-2symbolsupportpackage
+\symwasy=\mathgroup5
+LaTeX Font Info:    Overwriting symbol font `wasy' in version `bold'
+(Font)                  U/wasy/m/n --> U/wasy/b/n on input line 90.
+)
+(/usr/share/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2015/11/12v1.18mathematicaltypesettingtools
+ (/usr/share/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2010/01/21v1.2aprogrammingsetup(MH)
+! Improper alphabetic constant.
+<to be read again> 
+                   \relax 
+l.51 \MHInternalSyntaxOn
+                        
+A one-character control sequence belongs after a ` mark.
+So I'm essentially inserting \0 here.
+
+)
+! Improper alphabetic constant.
+<to be read again> 
+                   \relax 
+l.36 \MHInternalSyntaxOn
+                        
+A one-character control sequence belongs after a ` mark.
+So I'm essentially inserting \0 here.
+
+! Use of \boolean_fixamsmath_false: doesn't match its definition.
+<argument> ...euse {boolean_fixamsmath_false:}\fi 
+                                                  \fi 
+l.88 \MH_new_boolean:n {fixamsmath}
+                                   
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence n

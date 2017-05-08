@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: sequoidal.aux
+The style file: plainurl.bst
+Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=8) to 20 items from 10.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Database file #1: bibliography.bib
+Warning--can't use both author and editor fields in BerardiTransfiniteGames
+Warning--can't use both author and editor fields in Bierman
+Warning--empty year in LairdCofCommCom
+Warning--can't use both author and editor fields in MelliesCofCommCom
+You've used 23 entries,
+            2849 wiz_defined-function locations,
+            812 strings with 9909 characters,
+and the built_in function-call counts, 10164 in all, are:
+= -- 1121
+> -- 250
+< -- 7
++ -- 93
+- -- 64
+* -- 558
+:= -- 1426
+add.period$ -- 92
+call.type$ -- 23
+change.case$ -- 94
+chr.to.int$ -- 0
+cite$ -- 27
+duplicate$ -- 331
+empty$ -- 1040
+format.name$ -- 64
+if$ -- 2698
+int.to.chr$ -- 0
+int.to.str$ -- 23
+missing$ -- 27
+newline$ -- 136
+num.names$ -- 48
+pop$ -- 192
+preamble$ -- 1
+purify$ -- 77
+quote$ -- 0
+skip$ -- 768
+stack$ -- 0
+substring$ -- 423
+swap$ -- 87
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 82
+warning$ -- 4
+while$ -- 71
+width$ -- 25
+write$ -- 305
+(There were 4 warnings)
