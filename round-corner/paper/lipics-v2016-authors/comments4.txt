@@ -1,0 +1,77 @@
+- Lemma 1, cite "Generic Trace Semantics via Coinduction" (Hasuo, Jacobs, Sokolova), LMCS 2007.
+
+- P1, "contensts" should be "contents".
+
+- P2 line -17, they're not isomorphic, although distributivity does give a map F(A,S) oplus F(A',S) --> F(A oplus A',S).
+
+- P2 line -10, does read mean inl and write mean inr?  Even if so, I don't see how this represents a cell.  In any case, the anamorphism of cell;inl (and indeed of f;inl for any f : S --> A otimes S) is the empty relation, not as stated.
+
+- Proposition 2, "on Rel" should be "on A".
+
+- P3, line 7, "for any non-empty set" should be "for any set of size >=2"
+
+- P3, line 8, "Thus" is a big jump (to a vaguely stated conclusion) that is unconvincing.  I imagine the authors have more context in mind.
+
+- Section 2.1, line 6, "We will adopt the rule ... O-move", this sentence should go before "We call a position".
+
+- Section 2.1, line 3, "ends with a P-move", add "or is empty".
+
+- P4, line -5, add the isomorphisms 1 oslash C iso 1, and A iso A oslash I.
+
+- P5, line 1, for clarity, is the player P required to reply to any opening move?  The word "strict" is a poor choice, since it suggests preservation of \bot.
+
+- P5, line 4, and the isomorphism A iso A oslash I.
+
+- P5, diagrams in the middle of the page, missing Js.
+
+- Definition 3, you can say this is a lax map of right monoidal actions.
+
+- Definition 4 and 5 are overlapping, they should be sorted out.
+
+- Definition 4, "subcategoryof" should be "subcategory of".
+
+- Definitions 4 and 5, "full-on-objects", standard terminology is "wide" (or "lluf").
+
+- Distributivity is included in decomposability in Def. 5, not in Def. 4.  However you're arranging it, please assume A x B always exists, and 1 exists and A oslash 1 is terminal.
+
+- Last paragraph of Section 2.2, a fact cannot be unnecessary, only an assumption can be unnecessary. Where the paper assumes a category to be affine, this should be either stated explicitly, or else affineness should be incorporated into other definitions as in Definition 5 (but not Definition 4).
+
+- Section 2.4 is weak and unclear and should be removed.  It claims that "direct combinatorial arguments" are avoided but then they are used for defining OK and read.
+
+- Section 2.4, line 9, "denotes" should be "is denoted by".
+
+- P7, line 20, "state transformer on" should be "strategy on"
+
+- Two lines later, * should be empty tuple.  I confused it with the point of X.
+
+- We're told write(x) goes from !X to Sigma otimes !X, but actually it goes from X to Sigma otimes X.
+
+- Section 3, line 12, "with tensor powers" should be "with symmetric tensor powers".
+
+- Following Proposition 7, "in any sequoidally decomposable category", but more conditions were required in Prop. 7.
+
+- 3 lines after Prop. 7, "then it is preserved by the tensor", why?
+
+- Next line, "Conversely", it's not a converse.
+
+- P9, line -4, what is b_A?
+
+- P10, line 15 "but not infinitely many" should be "but loses if he opens infinitely many".
+
+- P10, line 22, "as long as ... first n copies of A", add "or only opens finitely many copies".
+
+- Top of P11, kappa_{A,B} doesn't have the same type in the first line as in the second.  I suggest you incorporate dist^{-1} into kappa_{A,B}.
+
+- Proposition 11, "negative games", what are they?
+
+- Theorem 12 and Prop. 13, surely epsilon also has to be an isomorphism. (On P21, line after "The relevant morphisms are", epsilon is replaced by dec, but this has the wrong type.)
+
+- Section 3.4, first paragraph, also state that epsilon has an inverse.
+
+- Proposition 16, "on C" should be "on A".
+
+- Section 4, "functionsals" should be "functionals"
+
+- "they appear to be present in" should be "they appear to the authors to be present in".
+
+- "we cannot construct the comultiplication in a sensible way", but perhaps we can construct it in a non-sensible way.  The last sentence of the section removes this qualification wit

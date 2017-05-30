@@ -1,0 +1,94 @@
+
+   == Minor points, typos, questions ==
+
+   p1. "Melliés" -> "Melliès"
+
+   p2. "relating their underlying structure" -> where does "their" point to?
+
+   "This is a morphism from an initial state S into A*" -> unclear, as
+   S is not the state, only its type.
+
+   \alpha should have type A* -> F(A,A*).
+
+   "returns a copy of f and together with [...]" -> remove "and".
+
+   "contensts" -> "contents".
+
+   Generally, I found Section 1.1 quite demanding, while it seems to
+   be meant as a leisurly introduction. I couldn't make sense of it
+   without working on paper in some detail.
+
+   p4. The notion of determinism looks weird: are you sure you got all
+   P's and O's right in this paragraph?
+
+   Also, it would help to be a bit more formal when defining games, as
+   you get back to them later on.
+
+   Suggestion: wrap the definition of the sequoid in a proper
+   definition.
+
+   p5. Definition 3:
+     - "A category Cₛ" -> "A category Cₛ."
+     - Please add a reference for a right monoidal category action.
+
+   "subcategoryof" -> "subcategory of"
+
+   The paragraph from Definition 4 to the three isomomorphisms dec,
+   dist, and dist, is (almost) duplicated. Please make your choice!
+
+   p7. Shouldn't the state transformer have type !X -o (Σ^X x X) / !X?
+   I think there are quite a few !'s missing in the following
+   paragraphs.  It also seems that read should have type !X -o X / !X,
+   in which case it could simply be the canonical isomorphism. Hope
+   I'm not completely off the mark here :)
+
+   p8. "with tensor powers" -> "with symmetric tensor powers".
+
+   "id / pr_1 and id / pr_2 […] are jointly monomorphic": didn't you
+   miss up the type here?
+
+   p9. "identification of A / n" -> "identification of A^{/ n}".
+
+   "([1],[8])" -> [1,8] (see \cite{A,B}).
+
+   Suggestion: state more clearly at the beginning of Section 3.2 that
+   its purpose is to motivate the construction of 3.3
+
+   p11. Proof of Thm 12: can't the action of ! on morphisms be given
+   directly by the anamorphism of !A -> A / !A -(f / !A)-> B / !A?  If
+   so why not define it this way? Would it complicate the rest of the
+   proof?
+
+   p12. l-5: coh has a wrong type.
+
+   l-4: "A" -> "B".
+
+   Please explain, even informally, why the given morphism is an
+   inverse to coh.
+   
+   Footnote: the chain of isomorphisms looks suspicious, if not buggy!
+
+   p13. l5: "fix(f)" -> "fix_A(f)".
+
+   Proof of Prop 16: what is dagger?
+
+   "charactarization" -> "characterization".
+
+   "functionsals" -> "functionals".
+
+   p15. "final coalgebras for the functor" -> "a final coalgebra for each functor".
+
+   "!P_A" -> "P_{!A}" (twice).
+
+   I was expecting some condition on plays in P_{!A} saying that
+   copies should be opened in order. Should it be there or not?
+
+   p16. "idealized algol" -> "Idealized Algol".
+
+   [5] conference/journal/booktitle is missing.
+
+   [11]: "categorié" -> "catégories".
+
+   [21] is severely buggy.
+
+   [22] "ROSCOE" -> "Roscoe".

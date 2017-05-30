@@ -1,0 +1,35 @@
+ In the title, "Coalgebraic" is misspelt.
+
+- Accent on "Mellies" goes the wrong way throughout the paper.
+
+- Page 2, around Lemma 1: I couldn't convince myself that the set A^* of finite sequences was the right thing here - don't we need finite and infinite sequences? I also had a similar worry re the use of A^* in the comonoid structure at the bottom of the page. 
+
+- Two lines after Lemma 1: subscript A,B should be A,S.
+
+- Four lines after Lemma 1: A \rightarrow should be A^* \rightarrow
+
+- Section 1.2, first paragraph, last sentence. A bit ambiguous: would replacing "it is sufficient" by "this is sufficient" make it clearer?
+
+- Section 2.1, product of games: add ) after i \in I. Also the term "negative game" hasn't been introduced.
+
+- Page 4, line 14 from bottom: perhaps say "monoidal closed category" here?
+
+- Page 4, line 2 from bottom: if I understand correctly, it's player P who might first play in C.
+
+- Section 2.2, Definition 3, diagrams for wk_{A,B}. Some J's have been suppressed here. But I don't think this helps the reader, who has to mentally re-insert them in order to check these diagrams.
+
+- Glaring editing glitch: Definitions 4 and 5 are almost identical! Looking at the diffs, neither seems quite right, but some merger of the two is what's wanted. Aside from this, I'm not sure the last sentence says what's intended: surely if C has all finite products *and is decomposable and distributive*, then these natural transformations are isos?
+
+- Last para of 2.2: wasn't sure why you are calling dec^0 a natural transformation rather than just a morphism.
+
+- Section 2.3, first paragraph, last sentence. I think it would be worth expanding this a bit. Firstly, it would be good to recall here the definition of "cofree commutative comonoid" which plays a central role. Secondly, it would be good to explain in what way this makes A a "suitable model for the exponential".
+
+- Section 3.1, Definition 6: should eq \otimes B be reversed?
+
+- Four lines later: I don't remember t_A being introduced. Are we in an affine setting here?
+
+- Sentence before Proposition 8: "Conversely" doesn't seem right here, as final coalgebras aren't mentioned in the preceding sentence.
+
+- Section 3.3, Theorem 12. Would be easier to read if "Then" were inserted at the start of the last sentence.
+
+- Section 4, line 16: misspelling of "characterization" and "functionals"

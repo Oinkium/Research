@@ -1,0 +1,36 @@
+ There are many typos.
+  - unmatched left parentheses
+  - the same definition (Def 4 and Def 5)
+  - ! is missing in the definition of write(x) (page 7)
+  - dist ==> dec (in the definition of cell', page 8)
+  - eq \otimes B ==> B \otimes eq (Def 6)
+  - In the proof of Prop 7
+  -  The equalizer eq:n : A^n --> A^{\otimes n} ...
+     ==> The equalizer eq:n : A^{(/) n} --> A^{\otimes n} ...
+  -  < id (/) eq_{n-1}, using
+     ==> < id (/) eq_{n-1} ,..., id (/) eq_{n-1} >, using
+  - der_A ==> der_A (/) !A (Prop 8)
+  - Prop 13 and Thm 12 are the same.
+  - dec ==> wk (in the bottom diagram, page 19)
+  - Melli\`es
+* It would be interesting to give sequoidal categories
+  that are not from game semantics.
+* Preservation of 1 by sequoidal product is not stated in Def 5.
+* (Section 2.3) There are two ways to understand the definition of !A: 
+  as a final coalgebra of J(A (/) _) in C
+  as a final coalgebra of JA (/) _ in C_s
+* while the authors explains intuition of read : X --o X (/) X
+  in the last paragraph in page 7, read appears as a morphism
+  from X to X (/) !X in the next page.
+* [the proof of Prop 7] 
+  - \prod_{i \leq n} should be \prod_{0 \leq i \leq n}
+  - I could not check that decomposability and strong distributivity
+    implies preservation of joint monos.
+* [Prop 8] sequoidally decomposable category 
+  ==> strongly distributive decomposable sequoidal category?
+      (if we follow Prop 7)
+* [Sect 3.2, page 9] What is "neg b_A"?
+* [Sect 4] Since any linear exponential comonad ! on a smcc with finite
+  products satisfies !(A & B) = !A @ !B, we can not just remove the 
+  condition !(A & B) = !A @ !B. It would be nice if there is some comment
+  about how to capture this situation in the framework of sequoidal category.
