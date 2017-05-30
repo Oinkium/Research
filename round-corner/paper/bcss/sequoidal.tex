@@ -1,185 +1,23 @@
-\documentclass[a4paper,UKenglish]{lipics-v2016}
-%This is a template for producing LIPIcs articles. 
-%See lipics-manual.pdf for further information.
-%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
-%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
-% for section-numbered lemmas etc., use "numberwithinsect"
- 
-\usepackage{microtype}%if unwanted, comment out or use option "draft"
+\documentclass[a4paper,UKenglish]{article}
 
-%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
+\input{../../../common/preamble}
+
+\usepackage{microtype}%if unwanted, comment out or use option "draft"
+\usepackage{hyperref}
+
+\usepackage[margin=0.5in]{geometry}
 
 \bibliographystyle{plainurl}% the recommended bibstyle
 
-% Author macros::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Sequoidal Categories and Transfinite Games: A Coagebraic Approach to Stateful Objects in Game Semantics\footnote{This work was partially supported by UK EPSRC Grant EP/K037633/1}}
-\titlerunning{Sequoidal Categories and Transfinite Games} %optional, in case that the title is too long; the running title should fit into the top page column
-
-%% Please provide for each author the \author and \affil macro, even when authors have the same affiliation, i.e. for each author there needs to be the  \author and \affil macros
-\author[1]{William John Gowers}
-\author[2]{James Laird}
-\affil[1]{Department of Computer Science, University of Bath, Claverton Down, Bath.  BA2 7AY.  United Kingdom\\
-  \texttt{W.J.Gowers@bath.ac.uk}}
-\affil[2]{Department of Computer Science, University of Bath, Claverton Down, Bath.  BA2 7AY.  United Kingdom\\
-  \texttt{jiml@cs.bath.ac.uk}}
-\authorrunning{W.\,J. Gowers and J. Laird} %mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et. al.'
-
-\Copyright{William John Gowers and James Laird}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
-
-\subjclass{F3.2.2 Denotational Semantics}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
-\keywords{Game semantics, Linear logic, Transfinite games, Sequoid operator, Exponentials}% mandatory: Please provide 1-5 keywords
-% Author macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\EventEditors{}
-\EventNoEds{2}
-\EventLongTitle{7th Conference on Algebra and Coalgebra in Computer Science (CALCO 2017)}
-\EventShortTitle{CALCO 2017}
-\EventAcronym{CALCO}
-\EventYear{2017}
-\EventDate{June 12--16, 2017}
-\EventLocation{Ljubljana, Slovenia}
-\EventLogo{}
-\SeriesVolume{xx}
-\ArticleNo{xx}
-% Editor-only macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Additional packages and macros
-\usepackage{IEEEtrantools} % for \IEEEeqnarray
-\usepackage{pbox} % for \pbox
-\usepackage{cmll} % Linear logic symbols!
-\usepackage{wasysym} % For left and rigth moons
-\usepackage{mathtools}
-
-%% Graphics %%
-\usepackage{tikz}
-\usetikzlibrary{cd}
-\usetikzlibrary{patterns}
-\usetikzlibrary{calc}
-\usetikzlibrary{decorations.pathmorphing}
-
-%% Get the sqsubsetneqq character from the mathabx package
-\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
-\DeclareFontShape{U}{mathb}{m}{n}{
-      <5> <6> <7> <8> <9> <10> gen * mathb
-      <10.95> mathb10 <12> <14.4> <17.28> <20.74> <24.88> mathb12
-      }{}
-\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
-
-\DeclareMathSymbol{\sqsubsetneq}    {3}{mathb}{"88}
-\DeclareMathSymbol{\varsqsubsetneq} {3}{mathb}{"8A}
-\DeclareMathSymbol{\varsqsubsetneqq}{3}{mathb}{"92}
-\DeclareMathSymbol{\sqsubsetneqq}   {3}{mathb}{"90}
-
-%% Theorems %%
-\theoremstyle{plain}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{exercise}{Exercise}
-\theoremstyle{definition}
-\newtheorem{notation}[theorem]{Notation}
-
-%% Other macros
-\newcommand*\from{\colon}
-\def \inv {^{-1}}
-\DeclareMathOperator{\id}{id}
-\DeclareMathOperator{\pr}{pr}
-\newcommand{\tensor}{\otimes}
-\newcommand{\sequoid}{\oslash}
-\renewcommand{\implies}{\multimap}
-\newcommand{\comp}[2]{#2 ; #1}
-\newcommand{\cprd}{\sqcup}
-\newcommand{\bigcprd}{\bigsqcup}
-\newcommand{\C}{\mathcal C}
-\newcommand{\F}{\mathcal F}
-\newcommand{\G}{\mathcal G}
-\newcommand{\W}{\mathcal W}
-\newcommand{\suchthat}{\;\colon\;}
-\newcommand{\varsuchthat}{\;\mid\;}
-\newcommand{\OP}{\{O,P\}}
-\newcommand{\emptyplay}{\epsilon}
-\newcommand{\prefix}{\sqsubseteq}
-\newcommand{\pprefix}{\sqsubsetneqq}
-\newcommand{\ppprefix}{\sqsubset}
-\DeclareMathOperator{\assoc}{assoc}
-\DeclareMathOperator{\lunit}{lunit}
-\DeclareMathOperator{\runit}{runit}
-\DeclareMathOperator{\sym}{sym}
-\newcommand{\braid}{\sym}
-\newcommand{\blank}{\;\underline{\hspace{1.5ex}}\;}
-\newcommand{\der}{{\mathtt{der}}}
-\newcommand{\mult}{{\mathtt{mult}}}
-\DeclareMathOperator{\wk}{wk}
-\newcommand{\toisom}{{\xrightarrow{\cong}}}
-\newcommand{\passoc}{{\mathtt{passoc}}}
-\newcommand{\pcomm}{{\mathtt{pcomm}}}
-\newcommand{\run}{{\mathtt{r}}}
-\newcommand{\lun}{{\mathtt{l}}}
-\newcommand{\fcoal}[1]{{\leftmoon #1 \rightmoon}}
-\renewcommand{\subset}{\subseteq}
-\let\oldemptyset\emptyset
-\let\emptyset\varnothing
-\newcommand{\s}{\mathfrak{s}}
-\newcommand{\dist}{{\mathtt{dist}}}
-\newcommand{\dec}{{\mathtt{dec}}}
-\renewcommand{\int}{{\mathtt{coh}}}
-\renewcommand{\coh}{\int}
-\DeclareMathOperator{\CCom}{CCom}
-\newcommand{\catname}[1]{{\mathsf{#1}}}
-\newcommand{\Set}{\catname{Set}}
-\newcommand{\Ord}{\catname{Ord}}
-\newcommand\oppcat[1]{#1^{\mathrm{op}}}
-\newcommand{\bN}{{\mathbb{N}}}
 \newcommand{\OK}{{\mathtt{OK}}}
 \newcommand{\zero}{{\mathtt{zero}}}
 \renewcommand{\succ}{{\mathtt{succ}}}
-\newcommand{\Var}{{\mathtt{Var}}}
 \renewcommand{\read}{{\mathtt{read}}}
 \newcommand{\wwrite}{{\mathtt{write}}}
-\newcommand{\Rel}{\catname{Rel}}
-\newcommand{\inr}{{\mathsf{inr}}}
-\newcommand{\inl}{{\mathsf{inl}}}
-\newcommand{{\Na}}{\bN}
-\newcommand{{\cell}}{{\mathsf{cell}}}
-\newcommand{\fix}{{\mathsf{fix}}}
-\newcommand{\eq}{{\mathsf{eq}}}
-\newcommand{\co}{{\textrm{\textexclamdown}}}
 
-%%OUR
+\title{Sequoidal Categories and Transfinite Games: A Coagebraic Approach to Stateful Objects in Game Semantics\footnote{This work was partially supported by UK EPSRC Grant EP/K037633/1}}
 
-%% Constant width xrightarrows
-\newlength{\arrow}
-\settowidth{\arrow}{\scriptsize$1000$}
-\newcommand*{\constantwidthxrightarrow}[1]{\xrightarrow{\mathmakebox[\arrow]{#1}}}
-
-%% Landscape pages
-\usepackage{everypage}
-\usepackage{environ}
-\usepackage{pdflscape}
-\newcounter{abspage}
-
-\makeatletter
-\newcommand{\newSFPage}[1]% #1 = \theabspage
-  {\global\expandafter\let\csname SFPage@#1\endcsname\null}
-
-\NewEnviron{SidewaysFigure}{\begin{figure}[p]
-\protected@write\@auxout{\let\theabspage=\relax}% delays expansion until shipout
-  {\string\newSFPage{\theabspage}}%
-\ifdim\textwidth=\textheight
-  \rotatebox{90}{\parbox[c][\textwidth][c]{\linewidth}{\BODY}}%
-\else
-  \rotatebox{90}{\parbox[c][\textwidth][c]{\textheight}{\BODY}}%
-\fi
-\end{figure}}
-
-\AddEverypageHook{% check if sideways figure on this page
-  \ifdim\textwidth=\textheight
-    \stepcounter{abspage}% already in landscape
-  \else
-    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 0}}%
-    \stepcounter{abspage}%
-    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 90}}%
-  \fi}
-\makeatother
+\author{William John Gowers and James Laird}
 
 \begin{document}
 

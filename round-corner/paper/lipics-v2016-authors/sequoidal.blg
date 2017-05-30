@@ -7,49 +7,46 @@ Reallocated global_strs (elt_size=20001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: bibliography.bib
-Warning--can't use both author and editor fields in BerardiTransfiniteGames
-Warning--can't use both author and editor fields in Bierman
 Warning--empty year in LairdCofCommCom
-Warning--can't use both author and editor fields in MelliesCofCommCom
-You've used 23 entries,
+You've used 28 entries,
             2849 wiz_defined-function locations,
-            812 strings with 9909 characters,
-and the built_in function-call counts, 10164 in all, are:
-= -- 1121
-> -- 250
-< -- 7
-+ -- 93
-- -- 64
-* -- 558
-:= -- 1426
-add.period$ -- 92
-call.type$ -- 23
-change.case$ -- 94
+            839 strings with 10397 characters,
+and the built_in function-call counts, 12146 in all, are:
+= -- 1323
+> -- 307
+< -- 8
++ -- 115
+- -- 79
+* -- 635
+:= -- 1698
+add.period$ -- 108
+call.type$ -- 28
+change.case$ -- 117
 chr.to.int$ -- 0
-cite$ -- 27
-duplicate$ -- 331
-empty$ -- 1040
-format.name$ -- 64
-if$ -- 2698
+cite$ -- 29
+duplicate$ -- 398
+empty$ -- 1254
+format.name$ -- 79
+if$ -- 3235
 int.to.chr$ -- 0
-int.to.str$ -- 23
-missing$ -- 27
-newline$ -- 136
-num.names$ -- 48
-pop$ -- 192
+int.to.str$ -- 28
+missing$ -- 29
+newline$ -- 162
+num.names$ -- 60
+pop$ -- 248
 preamble$ -- 1
-purify$ -- 77
+purify$ -- 94
 quote$ -- 0
-skip$ -- 768
+skip$ -- 925
 stack$ -- 0
-substring$ -- 423
-swap$ -- 87
-text.length$ -- 7
+substring$ -- 500
+swap$ -- 99
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 82
-warning$ -- 4
-while$ -- 71
-width$ -- 25
-write$ -- 305
-(There were 4 warnings)
+type$ -- 104
+warning$ -- 1
+while$ -- 85
+width$ -- 30
+write$ -- 359
+(There was 1 warning)

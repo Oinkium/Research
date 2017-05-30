@@ -7,7 +7,7 @@
 %%% PACKAGES
 \usepackage{booktabs} % for much better looking tables
 \usepackage{array} % for better arrays (eg matrices) in maths
-\ifx\BEAMER 1
+\ifdefined\BEAMER
 \else
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)\prefix\t$.
 \fi
@@ -21,7 +21,7 @@
 \usepackage{lettrine} % For the drop cap
 \usepackage{mathpartir} % for \inferrule
 
-\ifx\NOTARTICLE 1
+\ifdefined\NOTARTICLE
 \else
 
 %%% ToC (table of contents) APPEARANCE
@@ -35,7 +35,7 @@
 %% Font things %%
 \usepackage{amssymb}
 \usepackage{cmll} % Linear logic symbols!
-\ifx\FEWFONTS 1
+\ifdefined\FEWFONTS
 \else
 \usepackage{bm} % for bold Greek letters
 \usepackage{wasysym} % For left and rigth moons
@@ -63,8 +63,9 @@
 \usetikzlibrary{cd}
 \usetikzlibrary{patterns}
 \usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
 
-\ifx\BEAMER 1
+\ifdefined\BEAMER
 \else
 
 %% Theorems! %%
@@ -224,6 +225,7 @@
 \newcommand{\cprd}{\sqcup}
 \newcommand{\bigcprd}{\bigsqcup}
 \newcommand{\G}{\mathcal G}
+\newcommand{\W}{\mathcal W}
 \newcommand{\suchthat}{\;\colon\;}
 \newcommand{\varsuchthat}{\;\mid\;}
 \newcommand{\esuchthat}{\;.\;}
@@ -266,14 +268,13 @@
 \DeclareMathOperator{\ev}{ev}
 \newcommand{\der}{{\mathtt{der}}}
 \newcommand{\mult}{{\mathtt{mult}}}
-\DeclareMathOperator{\eq}{eq}
 \DeclareMathOperator{\wk}{wk}
 \newcommand{\toisom}{{\xrightarrow{\cong}}}
 \newcommand{\passoc}{{\mathtt{passoc}}}
 \newcommand{\pcomm}{{\mathtt{pcomm}}}
 \newcommand{\run}{{\mathtt{r}}}
 \newcommand{\lun}{{\mathtt{l}}}
-\ifx\FEWFONTS 1
+\ifdefined\FEWFONTS
 \else
 \newcommand{\fcoal}[1]{{\leftmoon #1 \rightmoon}}
 \fi
@@ -296,9 +297,15 @@
 \newcommand{\deno}[1]{\left\llbracket#1\right\rrbracket}
 \newcommand{\nat}{{\mathtt{nat}}}
 \newcommand{\mustconverge}{\Downarrow}
-\DeclareMathOperator{\fix}{fix}
 \newcommand{\Iflt}{\mathtt{If{<}\;}}
 \newcommand{\Ifgt}{\mathtt{If{>}\;}}
+\newcommand{\inr}{{\mathsf{inr}}}
+\newcommand{\inl}{{\mathsf{inl}}}
+\newcommand{{\Na}}{\bN}
+\newcommand{{\cell}}{{\mathsf{cell}}}
+\newcommand{\fix}{{\mathsf{fix}}}
+\newcommand{\eq}{{\mathsf{eq}}}
+\DeclareMathOperator{\CCom}{CCom}
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
@@ -314,7 +321,7 @@
 \usepackage{pdflscape}
 \newcounter{abspage}
 
-\if 1\NOTARTICLE
+\ifdefined\NOTARTICLE
 
 \else
 
@@ -355,6 +362,7 @@
 
 \newcommand{\rec}{{\mathtt{iter}}}
 \newcommand{\iter}{\rec}
+\newcommand{\Var}{{\mathtt{Var}}}
 
 %% Flexible strategy things
 
