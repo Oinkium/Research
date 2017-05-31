@@ -1,0 +1,25 @@
+\frametitle{A state-transformer based approach}
+  \pause
+  The strategy is easy to define, but it is hard to study because the state is \emph{implicit} or \emph{encapsulated}.
+  \pause
+  We want to return to the classical state-transformer approach
+  \pause
+  \tikzset{dotsstyle/.style={draw=none}}
+  \[
+    \begin{tikzpicture}
+      \matrix[matrix of nodes, column sep=36pt, inner xsep=1ex, name=m, nodes={draw=black}] {
+        & in & in & in & & \\
+        $A_0$ & $A_1$ & $A_2$ & $A_3$ & |[dotsstyle]| $\cdots$ \\
+        & out & out & out & & \\};
+      \path[commutative diagrams/.cd, every arrow, every label, labels={font size=tiny}]
+        (m-2-1) edge node {init} (m-2-2)
+        (m-2-2) edge node {state} (m-2-3)
+        (m-2-3) edge node {state} (m-2-4)
+        (m-2-4) edge node {state} (m-2-5);
+    \end{tikzpicture}
+    \]
+  \pause
+  We may construct a state transformer (strategy) $\oc X \implies (\Read[X] \times \Write[X]) \sequoid \oc X$ corresponding to a single invocation of the Java class on the previous slide.
+  \pause
+
+  Using some category-theoretic magic ($\oc A$ is the \emph{final coalgebra} for the endofunctor $A\sequoid\blank$), we can automatically construct our strategy for $\oc X \implies \oc (\Read[X]\times \Write[X])$ from this state transformer.
