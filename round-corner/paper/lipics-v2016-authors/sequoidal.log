@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.4.21)  30 MAY 2017 23:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.4.21)  31 MAY 2017 00:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1617,20 +1617,20 @@ LaTeX Font Warning: Font shape `U/mathb/m/n' in size <9.5> not available
 <cc-by.pdf, id=92, 88.33pt x 31.11626pt>
 File: cc-by.pdf Graphic file (type pdf)
  <use cc-by.pdf>
-Package pdftex.def Info: cc-by.pdf used on input line 212.
+Package pdftex.def Info: cc-by.pdf used on input line 208.
 (pdftex.def)             Requested size: 39.74274pt x 14.0pt.
 
 <lipics-logo-bw.pdf, id=96, 591.44762pt x 144.42657pt>
 File: lipics-logo-bw.pdf Graphic file (type pdf)
 
 <use lipics-logo-bw.pdf>
-Package pdftex.def Info: lipics-logo-bw.pdf used on input line 212.
+Package pdftex.def Info: lipics-logo-bw.pdf used on input line 208.
 (pdftex.def)             Requested size: 64.00354pt x 14.0pt.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./cc-by.pdf> <./lipics-log
 o-bw.pdf>]
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 213
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 209
 .
 
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmss.fd
@@ -1640,7 +1640,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `lmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 219
+LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 215
 .
 
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
@@ -1652,23 +1652,23 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
 
 
-LaTeX Warning: Command \textasciitilde invalid in math mode on input line 220.
+LaTeX Warning: Command \textasciitilde invalid in math mode on input line 216.
 
 
 LaTeX Font Warning: Font shape `U/cmllr/m/n' in size <8.5> not available
-(Font)              size <8> substituted on input line 223.
+(Font)              size <8> substituted on input line 219.
 
 
 LaTeX Font Warning: Font shape `U/cmllr/m/n' in size <4.25> not available
-(Font)              size <5> substituted on input line 223.
+(Font)              size <5> substituted on input line 219.
 
 
 LaTeX Font Warning: Font shape `U/wasy/m/n' in size <8.5> not available
-(Font)              size <8> substituted on input line 223.
+(Font)              size <8> substituted on input line 219.
 
 
 LaTeX Font Warning: Font shape `U/wasy/m/n' in size <4.25> not available
-(Font)              size <5> substituted on input line 223.
+(Font)              size <5> substituted on input line 219.
 
 [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12]
 
@@ -1712,23 +1712,20 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1340.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1340.
 
 Package rerunfilecheck Info: File `sequoidal.out' has not changed.
-(rerunfilecheck)             Checksum: EA4ED6629E3AEDC968AE94C8BAA01238;1583.
+(rerunfilecheck)             Checksum: 65528DE8342613C9397B4F9E52E7CEE9;1584.
 
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.75pt have occurred.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1340.
  ) 
 Here is how much of TeX's memory you used:
- 28474 strings out of 493013
- 544569 string characters out of 6139317
- 731911 words of memory out of 5000000
+ 28480 strings out of 493013
+ 544635 string characters out of 6139317
+ 730916 words of memory out of 5000000
  31050 multiletter control sequences out of 15000+600000
- 239989 words of font info for 316 fonts, out of 8000000 for 9000
+ 240285 words of font info for 319 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  59i,23n,108p,1643b,1187s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf-dist/fo
@@ -1763,10 +1760,10 @@ public/amsfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/ams
 fonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/was
 y10.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy9.pfb></usr/shar
 e/texmf-dist/fonts/type1/public/wasy2-ps/wasyb10.pfb>
-Output written on sequoidal.pdf (29 pages, 729222 bytes).
+Output written on sequoidal.pdf (29 pages, 728217 bytes).
 PDF statistics:
- 636 PDF objects out of 1000 (max. 8388607)
- 554 compressed objects within 6 object streams
+ 635 PDF objects out of 1000 (max. 8388607)
+ 553 compressed objects within 6 object streams
  117 named destinations out of 1000 (max. 500000)
  64701 words of extra memory for PDF output out of 74296 (max. 10000000)
 

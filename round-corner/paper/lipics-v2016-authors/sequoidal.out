@@ -1,5 +1,5 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Defining Higher-order Stateful Objects Coalgebraically}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.1}{Defining Higher-order Stateful Objects, Coalgebraically}{section.1}% 2
 \BOOKMARK [2][-]{subsection.1.2}{The cofree commutative comonoid as a final coalgebra}{section.1}% 3
 \BOOKMARK [1][-]{section.2}{Sequoidal categories}{}% 4
 \BOOKMARK [2][-]{subsection.2.1}{Game semantics and the sequoidal operator}{section.2}% 5
