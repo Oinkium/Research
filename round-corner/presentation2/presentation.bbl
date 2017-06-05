@@ -1,0 +1,37 @@
+\begin{thebibliography}{1}
+
+\bibitem{mcCHFiniteND}
+R.~Harmer and G.~McCusker.
+\newblock A fully abstract game semantics for finite nondeterminism.
+\newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
+  (Cat. No. PR00158)}, pages 422--430, 1999.
+
+\bibitem{RusssThesis}
+Russell~S. Harmer.
+\newblock Games and full abstraction for nondeterministic languages.
+\newblock Technical report, 1999.
+
+\bibitem{LairdOrdinalGames}
+J.~Laird.
+\newblock Sequential algorithms for unbounded nondeterminism.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 319:271 --
+  287, 2015.
+
+\bibitem{LevyGsInfinite}
+Paul~Blain Levy.
+\newblock Infinite trace equivalence.
+\newblock {\em Annals of Pure and Applied Logic}, 151(2):170 -- 198, 2008.
+
+\bibitem{RoscoeCspInfinite}
+A.~W. Roscoe.
+\newblock Unbounded non-determinism in {CSP}.
+\newblock {\em Journal of Logic and Computation}, 3(2):131, 1993.
+
+\bibitem{TsukadaSheaves}
+Takeshi Tsukada and C.~H.~Luke Ong.
+\newblock Nondeterminism in game semantics via sheaves.
+\newblock In {\em Proceedings of the 2015 30th Annual ACM/IEEE Symposium on
+  Logic in Computer Science (LICS)}, LICS '15, pages 220--231, Washington, DC,
+  USA, 2015. IEEE Computer Society.
+
+\end{thebibliography}

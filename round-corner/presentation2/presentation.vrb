@@ -1,0 +1,29 @@
+\frametitle{Final Coalgebras as State Transformers}
+  We can think of a state transformer as a box
+  \[
+    \begin{tikzpicture}
+      \matrix[matrix of nodes, column sep=64pt, inner xsep=1ex, name=m, nodes={draw=black}] {
+        & in & \\
+        $S$ & $A$ & $S$ \\
+        & out & \\};
+      \path[commutative diagrams/.cd, every arrow, every label, labels={font size=tiny}]
+        (m-2-1) edge node {old state} (m-2-2)
+        (m-2-2) edge node {new state} (m-2-3);
+    \end{tikzpicture}
+    \]
+  \pause
+  Then \emph{encapsulation} means plugging an unbounded number of boxes together:
+  \tikzset{dotsstyle/.style={draw=none}}
+  \[
+    \begin{tikzpicture}
+      \matrix[matrix of nodes, column sep=36pt, inner xsep=1ex, name=m, nodes={draw=black}] {
+        & in & in & in & & \\
+        $S$ & $A_1$ & $A_2$ & $A_3$ & |[dotsstyle]| $\cdots$ \\
+        & out & out & out & & \\};
+      \path[commutative diagrams/.cd, every arrow, every label, labels={font size=tiny}]
+        (m-2-1) edge node {init} (m-2-2)
+        (m-2-2) edge node {state} (m-2-3)
+        (m-2-3) edge node {state} (m-2-4)
+        (m-2-4) edge node {state} (m-2-5);
+    \end{tikzpicture}
+    \]
