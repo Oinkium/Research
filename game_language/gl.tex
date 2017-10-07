@@ -253,13 +253,12 @@ We fix some set $\P$ of players throughout.
   \end{itemize}
 \end{definition}
 
-\section{Game Semantics}
+\section{\game{}-Game Semantics}
 
 \subsection{Arenas}
 
 Our basic game semantics will be the one given in \cite{hoPcf}.  
-We first present the Hyland-Ong game semantics.  
-Then, we shall enrich the semantics by appending \game{}s on to strategies.
+The semantics we present will be an enrichment of the Hyland-Ong semantics obtained by attaching \game{}-moves on to a strategy.  
 
 \begin{definition}
   An \emph{arena} is a triple $A=(M_A,\lambda_A,\ts_A)$ where
@@ -279,17 +278,6 @@ Then, we shall enrich the semantics by appending \game{}s on to strategies.
       \end{description}
       We say that a move $a$ is \emph{initial} if $*\ts_A a$.
   \end{itemize}
-\end{definition}
-
-\begin{definition}
-  A \emph{justified play} $s$ in an arena $A$ is given by a (finite or infinite) sequence of moves of $A$, together with a \emph{justification pointer} for each non-initial move $a$ occurring in $s$ back to a previous move $b$ such that $b\ts_A a$.  
-  In that case, we say that $b$ \emph{justifies} $a$.
-  
-  Furthermore, we require that if $s\ne \emptyplay$ then the first move in $s$ is initial.
-\end{definition}
-
-\begin{definition}
-  We say that a move $a$ \emph{hereditarily justifies} a move $b$ if there is a sequence of justification pointers in $J(s)$ that leads from $b$ to $a$.
 \end{definition}
 
 \subsection{Compound arenas}
@@ -316,9 +304,41 @@ The second forms the \emph{function space} $A \iimpl B$ from $A$ to $B$:
 
 \subsection{Strategies}
 
-In order to capture the possibility of divergence, we follow \cite{mcCHFiniteND} and extend the usual definition of a strategy as a set of traces by adding in an extra set of positions designating which plays may lead to a divergence.  
+We now give our notion of a strategy, which will add the \game{}-theoretic data on to the usual definition of a strategy.  
+We fix a set $\P$ of players.
 
-Blah blah blah blah blah.
+\begin{definition}
+  Let $\M$ be a set of \move{}s, and let $\lambda\from\M\to\P$ be a function saying which player makes each move.  We define a function $\lambda\from (M_A+\M)\to\OP\cup \P$ in the obvious way.  
+
+  Let $A$ be an arena.  
+  A \emph{\game{}-play} in $A$ is a sequence
+  \[
+    s \in (M_A + \M)^*
+    \]
+  (where we refer to elements of $M_A$ as $A$-moves and elements of $\M$ as \move{}s) together with a justification pointer from each non-initial $A$-move $a$ to an $A$-move $b$ occurring earlier in the sequence than $a$ such that $b\ts_A a$.  
+  We refer to the sequence $s\vert_{M_A}$ of all the $A$-moves in $s$ as the \emph{shadow} of $s$.
+  Furthermore, we require that $s$ satisfy the following properties:
+  \begin{enumerate}[a)]
+    \item The first move in $s$ is an initial move in $A$ (and therefore an $O$-question).
+    \item If $tab\prefix s$, where $a$ is a $P$-move in $A$, then $b$ is an $O$-move in $A$.
+    \item If $tab\prefix s$, where $a$ is an $O$-move in $A$, then $b$ is either a $P$-move in $A$ or a \move{}.
+    \item If $tma\prefix s$, where $m$ is a \move{}, then $a$ is either a \move{} or an $O$-move in $A$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  A \emph{\game{}-strategy} $\sigma$ for an arena $A$ is a set $M_\sigma$ of moves, a function $\lambda_\sigma\from \M_\sigma\to\P$ and a set $\sigma$ of \game{}-plays in $A$ satisfying the following rules:
+  \begin{enumerate}[a)]
+    \item If $s\in\sigma$ and $sa$ is a \game{}-play in $A$ such that $a$ is either an $O$-move in $A$ or a \move{}, then $sa\in\sigma$.
+  \end{enumerate}
+\end{definition}
+
+  Let $T\subset\P$ be a team of players.  
+  Define a partition of $\OP\cup\P$ into two sets $\F_T$ (`friendly') and $\U_T$ (`unfriendly') by
+  \begin{gather*}
+    \F_T = \{O\} \cup T \\\
+    \U_T = \{P\} \cup (\P \setminus T)
+  \end{gather*}
 
 \subsection{Composition of strategies}
 

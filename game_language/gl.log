@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.18)  7 OCT 2017 13:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.10.7)  7 OCT 2017 19:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -966,7 +966,8 @@ File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
 topaths.code.tex
 File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
 )))
-(/usr/share/texmf-dist/tex/generic/tikz-cd/tikzlibrarycd.code.tex
+(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
+cd.code.tex
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 matrix.code.tex
 File: tikzlibrarymatrix.code.tex 2013/07/12 v3.0.1a (rcs-revision 1.4)
@@ -1041,26 +1042,26 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
 \overlongequation=\box45
 \arrow=\skip106
-LaTeX Font Info:    Try loading font information for U+msa on input line 318.
+LaTeX Font Info:    Try loading font information for U+msa on input line 319.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 318.
+LaTeX Font Info:    Try loading font information for U+msb on input line 319.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+cmllr on input line 318.
+LaTeX Font Info:    Try loading font information for U+cmllr on input line 319.
 
 
 (/usr/share/texmf-dist/tex/latex/cmll/ucmllr.fd)
-LaTeX Font Info:    Try loading font information for U+wasy on input line 318.
+LaTeX Font Info:    Try loading font information for U+wasy on input line 319.
 
 (/usr/share/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for U+stmry on input line 318.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 319.
 
 
 (/usr/share/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
@@ -1201,7 +1202,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 221.
  [5] [6] [7] [8]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 399.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 419.
  [9]
 (./gl.bbl) [10] (./gl.aux)
 
@@ -1209,9 +1210,9 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 18645 strings out of 492990
- 360917 string characters out of 6138688
- 408481 words of memory out of 5000000
+ 18644 strings out of 492990
+ 360925 string characters out of 6138688
+ 408485 words of memory out of 5000000
  21680 multiletter control sequences out of 15000+600000
  38592 words of font info for 120 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1220,38 +1221,38 @@ Here is how much of TeX's memory you used:
 exmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/
 amsfonts/cmextra/cmex9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></
-usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb>
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
-pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmtt9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/eule
-r/eufm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
-pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/
-share/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf-dis
-t/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/p
-ublic/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/
-sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfcc0800.pfb></
-usr/share/texmf-dist/fonts/type1/public/cm-super/sfcc0900.pfb></usr/share/texmf
--dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/cm-super/sfrm0700.pfb></usr/share/texmf-dist/fonts/type1/public/cm-su
-per/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pf
-b></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/t
-exmf-dist/fonts/type1/public/cm-super/sfti0900.pfb></usr/share/texmf-dist/fonts
-/type1/public/cm-super/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/c
-m-super/sfxc1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfxc144
-0.pfb>
-Output written on gl.pdf (10 pages, 460986 bytes).
+m/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></
+usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
+></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.
+pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mtt9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></
+usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share
+/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texmf-dis
+t/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/
+sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></
+usr/share/texmf-dist/fonts/type1/public/cm-super/sfcc0800.pfb></usr/share/texmf
+-dist/fonts/type1/public/cm-super/sfcc0900.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/cm-super/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-su
+per/sfrm0700.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pf
+b></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/t
+exmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts
+/type1/public/cm-super/sfti0900.pfb></usr/share/texmf-dist/fonts/type1/public/c
+m-super/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfxc120
+0.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfxc1440.pfb>
+Output written on gl.pdf (10 pages, 470937 bytes).
 PDF statistics:
- 190 PDF objects out of 1000 (max. 8388607)
- 139 compressed objects within 2 object streams
+ 194 PDF objects out of 1000 (max. 8388607)
+ 142 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
