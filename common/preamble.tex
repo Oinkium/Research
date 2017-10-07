@@ -230,6 +230,7 @@
 \newcommand{\varsuchthat}{\;\mid\;}
 \newcommand{\esuchthat}{\;.\;}
 \newcommand{\OP}{\{O,P\}}
+\newcommand{\QA}{\{Q,A\}}
 \renewcommand{\L}{\mathcal L}
 \newcommand{\F}{\mathcal F}
 \newcommand{\s}{\mathfrak s}
@@ -259,6 +260,7 @@
 \DeclareMathOperator{\assoc}{assoc}
 \DeclareMathOperator{\lunit}{lunit}
 \DeclareMathOperator{\runit}{runit}
+\DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\sym}{sym}
 \newcommand{\braid}{\sym}
 \newcommand{\blank}{\;\underline{\hspace{1.5ex}}\;}
@@ -306,6 +308,7 @@
 \newcommand{\fix}{{\mathsf{fix}}}
 \newcommand{\eq}{{\mathsf{eq}}}
 \DeclareMathOperator{\CCom}{CCom}
+\newcommand{\power}{\mathfrak P}
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
@@ -377,6 +380,29 @@
 \newcommand{\tree}{\mathfrak{T}}
 \newcommand{\Tau}{T}
 \newcommand{\sw}{\triangleleft}
+
+%% Roman numerals
+
+\newcommand{\RN}[1]{%
+  \textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+\newcommand{\RNl}[1]{%
+  \mathrel{\raisebox{1pt}{$\overline{\underline{#1}}$}}
+}
+
+%% Game language things
+
+\newcommand{\ul}[1]{{\underline{#1}}}
+\newcommand{\A}{{\mathcal{A}}}
+\renewcommand{\P}{\mathcal P}
+\newcommand{\M}{\mathcal M}
+\newcommand{\hole}{\blank}
+\newcommand{\Tct}{\xrightarrow{T}t}
+\newcommand{\teamconverge}[2]{\xrightarrow{#1}#2}
+
+%% Inference rule things
+\newcommand{\rulename}[1]{\LeftTirNameStyle{#1}}
+\newcommand{\ts}{{\;\vdash}}
 
 %% Our
 
