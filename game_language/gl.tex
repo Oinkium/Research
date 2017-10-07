@@ -1,0 +1,456 @@
+\documentclass{article}
+
+\input{../common/preamble}
+
+\usepackage[T1]{fontenc}
+
+\newcommand{\game}{\textsc{game}}
+\newcommand{\play}{\textsc{play}}
+\newcommand{\move}{\textsc{move}}
+\newcommand{\team}{\textsc{team}}
+\newcommand{\strategy}{\textsc{strategy}}
+
+\begin{document}
+
+\section{A language of games}
+\label{sec:game-language}
+
+\subsection{Terms}
+
+In this section, we describe a general framework of the language of games.  
+The underlying language we shall normally start with is the simply typed lambda calculus.  
+To this, we fix a finite set $\A$ of countable sets and for each $A\in\A$ we add a type $\ul{A}$ to the language.  The types of the form $\ul{A}$ are called the \emph{ground types}.
+We then add a set of constants to the language.  These take one of two forms:
+\begin{description}
+  \item[Value constants] A \emph{value constant} takes the form $\ul{a}\from\ul{A}$, where $A\in\A$ and $a\in A$.  For our purposes, we shall assume that our language includes a value constant for every element of every set $A\in\A$.
+  \item[Function constants] Given $A\in\A$ and a type $T$, a \emph{function constant} takes the form $\ul{\phi}$, where $\phi$ is some function sending elements of $A$ to terms of type $T$.
+\end{description}
+
+\begin{example}
+  In the usual presentation of PCF, we have a type $\nat=\ul{\bN}$.  Then numerals $\n$ are the value constants $\ul{n}$, while the terms $\suc\from\nat\to\nat$ and $\IfO_T\from\nat\to T\to T\to T$ are function constants corresponding to the functions
+  \begin{gather*}
+    \phi_\suc \from n \mapsto \ul{n + 1} \\
+    \phi_{\IfO} \from n \mapsto \begin{cases}
+      \lambda x . \lambda y . x & \text{if $n=0$} \\
+      \lambda x . \lambda y . y & \text{otherwise}
+    \end{cases}
+  \end{gather*}
+\end{example}
+
+\begin{remark}
+  Function constants may refer to other function constants.  To avoid circular definitions, define a directed graph on the set of function constants by drawing an edge from $\ul{\phi}$ to $\ul{\psi}$ if $\phi(n)$ contains an occurrence of $\ul{\psi}$ for some $n$.  We require that this graph be acyclic (in particular, having no loops) and that it be well-founded in the sense that there is no infinite sequence $\ul{\phi_1} \to \ul{\phi_2} \to \cdots$.
+\end{remark}
+
+This framework is enough to formalize simple deterministic languages such as PCF.  In order to turn it into a language that can model games, we shall add additional constants to our language:
+
+\begin{definition}
+  We fix a finite set $\P$ of \emph{players}.  
+  
+  \begin{description}
+    \item[Move constants] A \emph{move constant} takes the form $S^b\from \ul{A}$, where $S\subset A$ is non-empty and $b\in\mathcal P$.
+  \end{description}
+
+  We read $S^b$ as `Player $b$ chooses a value from $S$'.
+
+  Our language will be given by the tuple $(\A,\F, \M)$, where $\F$ the set of function constants and $\M$ the set of move constants.
+\end{definition}
+
+\begin{example}
+  We can recover the language PCF by setting $\P = \{\RN{1}\}$ and defining numerals by $\n=\ul{n}$, using the function constants $\suc$ and $\IfO$ as defined above.  We can add a nondeterministic oracle to the language by setting $\wn = \bN^\RN{1}$.
+\end{example}
+
+\subsection{Operational semantics}
+
+We define a notion of \emph{evaluation context} in the style of Felleisen:
+
+\[
+  C ::= \hole \mid C\; M\mid\ul{\phi}\;C
+  \]
+Here, $M$ ranges over terms in the language and $\ul{\phi}$ ranges over the function constants in $\F$.  We write $M=C[M']$ if the term $M$ is obtained from $C$ by replacing the unique occurrence of $\hole$ in $C$ with the term $M'$.
+
+We call a program of ground type $\ul{A}$ a \emph{game}.  We call a subset $T\subset\P$ a \emph{team} and a subset $t\subset A$ a \emph{target}.
+
+We now define a predicate $\Tct$ on terms as in Figure \ref{fig:big-step}.  
+\begin{figure}
+  \begin{mathpar}
+    \inferrule*{b\in T \\ \exists a\in S\esuchthat C[\ul{a}]\Tct}{C[S^b]\Tct}
+      \and \inferrule*{b \not\in T \\ \forall a\in S\esuchthat C[\ul{a}]\Tct}{C[S^b]\Tct}
+      \and \inferrule*{C[M[N/x]]\Tct}{C[(\lambda x.M)N]\Tct}
+      \and \inferrule*[right=$\ul{\phi}\in\F$]{C[\phi(a)]\Tct}{C[\ul{\phi}\;\ul{a}]\Tct}
+  \end{mathpar}
+  \caption{Big-step operational semantics for the language $(\A,\F,\M)$}
+  \label{fig:big-step}
+\end{figure}
+To understand this semantics better, let's look at the small-step semantics defined in Figure \ref{fig:small-step}.
+\begin{figure}
+  \begin{mathpar}
+    \inferrule*[left=move,right=$a\in S$]{ }{S^b\opto \ul{a}}
+      \and \inferrule*[left=function]{ }{\ul{\phi}\;\ul{a}\opto\phi(a)}
+      \and \inferrule*[left=beta-reduction]{ }{(\lambda x.M)N \opto M[N/x]}
+      \and \inferrule*[left=context]{M \opto N}{C[M]\opto C[N]}
+  \end{mathpar}
+  \caption{Small-step operational semantics for the language $(\A,\F,\M)$}
+  \label{fig:small-step}
+\end{figure}
+A term $M\from T$ now defines a game between team $T$ and the opposing team $\P\setminus T$ as follows: we evaluate the term step by step.  At each step, the proof that $M\opto M'$ must terminate with one of the three rules \rulename{move}, \rulename{function} or \rulename{beta-reduction}.  In the last two cases, there is a unique choice of reduction to make.  In the first case, there are multiple possibilities, one for each value $a\in S$.  
+
+In such a case, if $b\in T$ then team $T$ are allowed to choose which value $a$ to use.  If $b\not\in T$, then the opposing team $\P\setminus T$ are allowed to choose.  Team $T$ wins if the term eventually converges to a value $\ul{a}$, where $a\in t$ and team $\P\setminus T$ wins if the term converges to $\ul{b}$, where $b\not\in t$.  Then the judgement $M\Tct$ precisely says that team $T$ has a strategy to ensure that the term $M$ ends up in $t$.  
+
+\begin{example}
+  Coming back to our nondeterministic PCF example, if $M\from\nat$ is a term, then the judgement that $M\teamconverge{\emptyset}{\{n\}}$ says that $M$ \emph{must converge} to $n$.  The judgement that $M\teamconverge{\{I\}}{\{n\}}$ says that $M$ \emph{may converge} to $n$.
+\end{example}
+
+We read $M\Tct$ as `Team $T$ can force the term $M$ into the target $t$'.
+
+\begin{definition}[Observational equivalence]
+  We define observational equivalence for a specified set $\T\subset\power(\P)$ of `friendly teams' and a specified set $\t \subset \prod_{A\in\A}\power(A)$ of specified targets.
+
+  If $A\in\A$ and $M,M'\from\ul{A}$, we say that $M\equiv_e M'$ ($M$ is \emph{observationally equivalent to $M'$}) if for all teams $T\in\T$ and for all target sets $t\in\t$ we have $M\xrightarrow{T}t(A)$ if and only if $M'\xrightarrow{T}t(A)$.
+
+  For general terms $M,M'$ of the same type, we say that $M\equiv_e M'$ if for all contexts $C$ such that $C[M],C[M']$ have ground type, $C[M]\equiv_e C[M']$.
+\end{definition}
+
+\begin{definition}[Observational order]
+  Similarly, we say that a term $M$ is \emph{observationally less than or equal to} another term $M'$, and write $M\le_e M'$, if for all $T\in\T$ and for all $t\in\t$, $M\xrightarrow{T}t(A)$ implies $M'\xrightarrow{T}t(A)$.
+
+  For general terms $M,M'$ of the same type, we say that $M\le_e M'$ if for all contexts $C$ such that $C[M],C[M']$ have ground type, $C[M]\le_e C[M']$.
+\end{definition}
+
+\begin{example}
+  PCF with may equivalence is the case corresponding to the set $\T=\{\{\RN{1}\}\}$ and $\t=\{\bN\}$.
+  
+  PCF with must equivalence corresponds to $\T=\{\emptyset\}$ and $\t=\{\bN\}$.
+
+  PCF with may-and-must equivalence corresponds to $\T=\{\emptyset, \{\RN{1}\}\}$ and $\t=\{\bN\}$..
+\end{example}
+
+\begin{lemma}
+  Let $M,M:S$ be such that $M\le_e M'$, and let $F,F':S\to T$ be such that $F\le_e F'$.  
+  Then $F M \le_e F' M'$.
+\end{lemma}
+
+\subsection{Recursion}
+
+In order to recover the full language PCF, we need to add recursion combinators $\Y_T$ to our language, corresponding to the following small-step reduction:
+\[
+  \inferrule*[left=recursion]{ }{\Y_T M \opto M ( \Y_T M )}
+  \]
+giving us the big-step rule
+\[
+  \inferrule{C[M (\Y_T M)] \Tct}{C[\Y_T M] \Tct}
+  \]
+This rule introduces for the first time the possibility of \emph{divergence}, or non-termination.  
+We will assume that a team $T$ never wants the program to diverge.  
+We do not lose anything by making this assumption; indeed, we can model the predicate $M \xrightarrow{T} t \cup \{\bot\}$ (`Team $T$ has a strategy to force the term $M$ into the target $t$ or to make it diverge') as the negation of the predicate $M \xrightarrow{\P\setminus T}\A \setminus t$ (`The opposition to team $T$ has a strategy to force the term $M$ into the complement of the target $t$'): the games we are considering are all \emph{open} in the sense that they terminate after finitely many moves, so exactly one of the two teams has a strategy by the Gale-Stewart theorem.
+
+It turns out that we can also model PCF -- and other languages we have constructed in this section -- as a subset of a larger language that does not involve any special recursion constants, but uses only the function, value and move constants that we have already introduced.  
+The advantage of this is that, since function constants are not self-referential, they are much easier to model in a denotational semantics than recursion, which usually requires some order-theoretic properties of the underlying model.  
+The only innovation we will need to make on the semantics side is to give denotational semantics for the move constants; this will be covered in Section \ref{sec:denotational-semantics}.
+
+As an illustration of our technique, we show how PCF itself can be modelled inside another language.
+First, we introduce a new function constant, $\iter_T\from \nat \to T \to (T \to T) \to T$, corresponding to iteration (realization of natural numbers as Church numerals).  
+$\iter_T$ is defined by $\iter_T=\ul{\iota_T}$, where:
+\[
+  \iota_T(n) = \lambda z.\lambda s.\underbrace{s (s (s \cdots}_{n\text{ times}}z)\cdots))
+    \]
+In order to model divergence, we add special divergence constants $\Omega_T$ for each type $T$.  
+We include no extra rules for these divergence constants; if we end up with $C[\Omega_T]$ for some context $C$, then we consider the term to be `stuck', and to have converged to no value.
+
+Now let $M$ be a general PCF term (possibly involving instances of $\Y_T$ for some types $T$.  Since PCF is a deterministic language, if $M$ converges then it does so in a bounded number of steps $m$.  If we now replace each instance of $\Y_T$ in $M$ with the function
+\[
+  \lambda N.\iter_T\;\ul{m}\;\Omega_T N
+  \]
+then we claim that the term converges to the same value.  Indeed, we observe that $\iter_T\;\ul{m}\;\Omega_T N$ is equivalent to the term
+\[
+  \underbrace{N (N (N \cdots}_{m\text{ times}}\Omega_T)\cdots))
+  \]
+and is therefore itself equivalent to
+\[
+  N(\iter_T (\ul{m-1})\Omega_T N)
+  \]
+The term $\iter_T\;\ul{m}\;\Omega_T N$ therefore has the same behaviour as the term $\Y_T N$, except that the index $m$ decreases by $1$ each time we use the rule.  
+Since the reduction of the term $N$ takes $m$ steps anyway, we will never `run out' of iterations.
+
+However, although this allows us to model \emph{individual programs} in PCF, it does not allow us to model functions that may take an unbounded number of recursion steps depending on their argument.  
+In particular, we cannot model $\Y_T$ itself using iteration alone.  
+In order to do this, we add a nondeterministic oracle $\wn$ to the language, and using may-equivalence as our equivalence relation on terms.  
+In our framework, this corresponds to adding a player so that $\P=\{\RN{1}\}$ and then setting $\wn = \mathbb N^{\RN{1}}$.
+Then we can model $\Y_T$ as the term
+\[
+  \lambda N.\iter_T\;\wn\;\Omega_T N
+  \]
+Because of the may-equivalence, this now has the same operational semantics (within PCF) as our original $\Y_T$: if a PCF term converges, then it converges after $m$ steps for some $m$, and so there is the \emph{possibility} that the oracle $\wn$ will choose a large enough value such that the term must converge.  
+So the term may converge to the same value as the original term with $\Y_T$.  
+On the other hand, if a PCF term diverges, then there is no number we could replace the $\wn$ with that would cause the term to converge.  
+In that case, for every $m$ that the oracle could choose, the term will eventually `run out' and reach the divergence term $\Omega_T$, at which point it will get stuck.
+
+\begin{theorem}
+  There is an embedding of the language
+  \[
+    \text{PCF} = \lambda + \mathbb N + \Y
+    \]
+  into the language
+  \[
+    \text{Nondeterministic iterative PCF} = \lambda + \mathbb N + \iter + \Omega + \wn
+    \]
+  under may-equivalence.  
+  That is to say, there is an structurally-inductive map $r$ from PCF terms/contexts to terms/contexts of nondeterministic iterative PCF such that two PCF programs $M$ and $N$ are observationally equivalent if and only if the corresponding programs in nondeterministic iterative PCF are may-equivalent.
+\end{theorem}
+
+\begin{proof}
+  The mapping $r$ replaces every instance of $\Y_T$ with $(\lambda N.\iter_T\;\wn\;\Omega_T N$).
+
+  Note the following observational equivalence:
+  \[
+    \Y_T \equiv_e \lambda N.\iter\;\ul{m}\;(\Y_T N)\;N
+    \]
+  which holds for any $n$.  
+  This is because both terms may converge 
+\end{proof}
+
+\section{\game{}s}
+
+In this section, we define the notion of a \game, one of our two alternative formulations of our basic intuition of a `game'.
+
+We fix some set $\P$ of players throughout.
+
+\begin{definition}
+  Let $A$ be a set.  
+  A \emph{\game{} $\Gamma$ with result set $A$} is given by a tuple $(\M_\Gamma,P_\Gamma,J_\Gamma)$ where
+  \begin{itemize}
+    \item $\M_\Gamma$ is a set of \move{}s.
+    \item $P_\Gamma$ is a prefix-closed set of finite sequences of pairs of the form $p\from m$, where $p\in\P$ is a player and $m\in\M_\Gamma$ is a move.  We define $T_\Gamma$, the set of \emph{terminal \play{}}s in $P_\Gamma$ to be the set of all $s\in P_\Gamma$ such that $sa\not\in P_\Gamma$ for any $a$.  
+    \item $J_\Gamma\from T_\Gamma\to A$ is a judgement function that says what the result is after a complete sequence of moves.
+  \end{itemize}
+  such that
+  \begin{itemize}
+    \item There is always exactly one player whose turn it is.  
+      Explicitly, if $sa,sb\in P_\Gamma$, then the moves $a$ and $b$ are made by the same player.
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  $\Gamma$ may contain infinitely long chains of sequences of \move{}s.  
+  In that case, there is no result value for the \play{}.
+\end{remark}
+
+\begin{remark}
+  This construction gives rise to a monad $G$ on the category of (possibly large) sets, where a set $A$ is sent to the set $GA$ of games with result set $A$.  
+  The natural transformation $GGA\to GA$ is the one that takes a game whose results are games with result set $A$, and forms a game that plays as follows: the players play through the first game; then, if and when they reach a terminal \play{}, they then play through the resulting game to reach a value in $A$.
+
+  We will not make great use of this monad, but it will be implicit in a lot of what we do.  
+  As we can model the powerset monad using nondeterministic strategies, so our game semantics will allow us to model this game monad.
+\end{remark}
+
+\begin{definition}
+  Let $\Gamma$ be a game with result set $A$.  
+  Let $T\subset \P$ be a team of players.  
+  Then a $T$-strategy $S$ for $\Gamma$ is a prefix-closed subset of $P_\Gamma$ subject to the following rules:
+  \begin{itemize}
+    \item If $s\in S$ and $sa\in P_\Gamma$ is such that the move $a$ is made by a player \emph{not} in $T$, then $sa\in S$.
+    \item If $sa,sb\in S$, and the moves $a,b$ are made by a player in $T$, then $a=b$.
+    \item If $s\in S$ and there exists $sa\in P_\Gamma$ such that the move $a$ is made by a player in $T$, then there exists $b$ such that $sb\in P_\Gamma$.
+  \end{itemize}
+\end{definition}
+
+\section{Game Semantics}
+
+\subsection{Arenas}
+
+Our basic game semantics will be the one given in \cite{hoPcf}.  
+We first present the Hyland-Ong game semantics.  
+Then, we shall enrich the semantics by appending \game{}s on to strategies.
+
+\begin{definition}
+  An \emph{arena} is a triple $A=(M_A,\lambda_A,\ts_A)$ where
+  \begin{itemize}
+    \item $M_A$ is a countable set of \emph{moves}.
+    \item $\lambda_A\from M_A\to\OP\times\QA$ designates each move as either a \emph{$P$-move} or an \emph{$O$-move} and as either a \emph{question} or an \emph{answer}.  
+      We will often split $\lambda_A$ into its two parts
+      \begin{gather}
+        \lambda_A^{OP} = \pr_1\circ\lambda_A\from M_A\to\OP\\
+        \lambda_A^{QA} = \pr_2\circ\lambda_A\from M_A\to\QA
+      \end{gather}
+    \item $\ts_A$ is an \emph{enabling relation} between $M_A+*$ and $M_A$ satisfying:
+      \begin{description}
+        \item[Alternation] If $a \ts_A b$ then $\lambda_A^{OP} (a) = \neg(\lambda_A^{OP}(b))$
+        \item[Initial moves] If $*\ts_A a$ then $\lambda_A(a) = (O,Q)$ and for all $b\in M_A$, $b\not{\ts_A} a$.
+        \item[Answers are enabled by questions] If $a,b\in M_A$ are such that $a \ts_A b$ and $\lambda_A^{QA}(b)=A$ then $\lambda_A^{QA}(a)=Q$.
+      \end{description}
+      We say that a move $a$ is \emph{initial} if $*\ts_A a$.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}
+  A \emph{justified play} $s$ in an arena $A$ is given by a (finite or infinite) sequence of moves of $A$, together with a \emph{justification pointer} for each non-initial move $a$ occurring in $s$ back to a previous move $b$ such that $b\ts_A a$.  
+  In that case, we say that $b$ \emph{justifies} $a$.
+  
+  Furthermore, we require that if $s\ne \emptyplay$ then the first move in $s$ is initial.
+\end{definition}
+
+\begin{definition}
+  We say that a move $a$ \emph{hereditarily justifies} a move $b$ if there is a sequence of justification pointers in $J(s)$ that leads from $b$ to $a$.
+\end{definition}
+
+\subsection{Compound arenas}
+
+Let $A,B$ be arenas.  
+Then there are two main ways to combine $A$ and $B$ to make a new arena.  
+The first forms the \emph{product} $A\times B$ of $A$ and $B$:
+\begin{itemize}
+  \item $M_{A\times B} = M_A + M_B$.
+  \item $\lambda_{A\times B} = [\lambda_A, \lambda_B]$.  
+  \item $x\ts_{A\times B} m$ if and only if $x\ts_A m$ or $x\ts_B m$.
+\end{itemize}
+The second forms the \emph{function space} $A \iimpl B$ from $A$ to $B$:
+\begin{itemize}
+  \item $M_{A\iimpl B} = M_A + M_B$.
+  \item $\lambda_{A\iimpl B} = [(\neg\times\id)\circ\lambda_A,\lambda_B]$.  
+  \item $x\ts_{A\iimpl B} m$ if and only if
+    \begin{description}
+      \item[either] $x\ts_B m$
+      \item[or] $x\ne *$ and $x\ts_A m$
+      \item[or] $*\ts_B x$ and $*\ts_A m$.
+    \end{description}
+\end{itemize}
+
+\subsection{Strategies}
+
+In order to capture the possibility of divergence, we follow \cite{mcCHFiniteND} and extend the usual definition of a strategy as a set of traces by adding in an extra set of positions designating which plays may lead to a divergence.  
+
+Blah blah blah blah blah.
+
+\subsection{Composition of strategies}
+
+Same as usual.
+
+\section{Strategies as \game{}s}
+
+\subsection{\game{}-plays and \game{}-strategies}
+
+We now enrich the structure of strategies by equipping them with certain classes of \game{}s. We fix a set $\P$ of players throughout.
+
+\begin{definition}
+  Let $A$ be an arena and let $\M$ be a set of moves.  
+  Then a \game{}-play over $M_A$ is a (possibly infinite) sequence $s$ of moves that are either:
+  \begin{itemize}
+    \item Moves $a\in M_A$, called \emph{moves} or:
+    \item Moves $p\from m\in \P\times\M$, called \emph{\move{}s}
+  \end{itemize}
+  such that
+  \begin{itemize}
+    \item The first move in $s$ is an $O$-move in $A$.
+    \item If a move of the form $(p\from m)$ is followed by a move $a\in M_A$, then $a$ is a $P$-move.
+    \item Every $P$-move in $A$ is followed immediately (if at all) by an $O$-move in $A$.
+  \end{itemize}
+
+  The \emph{shadow} of a \game{}-play is the sequence formed by removing all moves of the form $p\from m$.  
+  A \emph{justified \game{}-play for $A$} is a \game{}-play $s$ over $A$, together with the structure of a justified play over the shadow of $s$.
+\end{definition}
+
+\begin{definition}
+  A \emph{\game{}-strategy} for an arena $A$ is a set $\M_\sigma$ of moves and a prefix-closed set of \game{}-plays over $\M$ such that when we forget about the \play{}s $\Sigma_s^t$, the resulting collection of justified sequences is a strategy for $A$, and such that if $s.(p\from m),s.(q\from n)\in S$, then $p=q$.
+\end{definition}
+
+\subsection{Composition}
+
+Possibly slightly tricky; the idea is that the process of `hiding' moves concatenates \play{}s together.
+
+\subsection{Ordering strategies}
+
+\begin{definition}
+  Let $\sigma$ be a \game{}-strategy and let $T\subset \P$ be a team of players.
+
+  A $T$-\strategy{} for $\sigma$\footnote{Yes, that is a \strategy{} for a strategy.} is a subset $S$ of $\sigma$ subject to the following rules:
+  \begin{itemize}
+    \item If $s\in S$ and $sa\in\sigma$, where $a$ is either an $O$-move in $M_A$ or a move $(p:m)$, where $m\not\in T$, then $sa\in S$.
+    \item If $sa,sb\in S$, where $a,b$ are $P$-moves in $M_A$, then $a=b$.
+    \item If $s.(p\from m),s.(p\from n)\in S$, and $p\in T$, then $m=n$.
+    \item If $s\in S$ and $sa\in\sigma$, where $a$ is either a $P$-move or a move of the form $(p\from m)$ for $m\in T$, then $sb\in S$ for some $b$.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}
+  Let $\sigma$ be a \game{}-strategy, and let $S$ be a \strategy{} for $\sigma$.  
+  Then, if $s$ is an $O$-play in $A$ that is the shadow of some \game{}-play in $\sigma$, we write $R_S^s$ for the set of moves $a$ such that $sa$ is the shadow of some \game{}-play in $S$.
+
+  We write $R_\sigma^s$ for the set
+  \[
+    \{R_S^s\suchthat \textrm{$S$ is a \strategy{} for $\sigma$ and $s$ is the shadow of a play in $S$}, R_S^s\ne\emptyset\}
+    \]
+\end{definition}
+
+\begin{definition}
+  Let $\sigma,\tau$ be \game{}-strategies.  
+  We say that $\sigma \le_T \tau$ if the shadow of $\sigma$ is a subset of the shadow of $\tau$ and if for all $O$-moves $s$ that are the shadow of a play in $\sigma$, we have $R_\sigma^s\subset R_\tau^s$.
+\end{definition}
+
+\subsection{Example -- one-player \game{}s}
+
+Suppose that $\P=\{\RN{1}\}$.  
+Then there are two possibilities for $T$: $T=\emptyset$ and $T=\{\RN{1}\}$.
+
+We show that these correspond to the may- and must-orderings defined by Harmer and McCusker.
+
+\begin{proposition}
+  Suppose $\{P\}=\{\RN{1}\}$.  Let $A$ be an arena and let $\sigma$ be a strategy for $A$.  
+  Define
+  \begin{itemize}
+    \item $T_\sigma$ to be the shadow of $\sigma$
+    \item $D_\sigma$ to be the set of all $O$-positions $d$ in $T_\sigma$ such that there is either an infinite position in $\sigma$ having shadow $d$ or such that there is a terminal position in $\sigma$ having shadow $d$ and ending with a \move{}.
+  \end{itemize}
+
+  Now let $\sigma,\tau$ be \game{}-strategies for $A$.
+
+  i) $\sigma \le_{\{\RN{1}\}} \tau$ if and only if $T_\sigma \subset T_\tau$.
+  
+  ii) $\sigma \le_\emptyset \tau$ if and only if ...
+\end{proposition}
+
+\begin{proof}
+
+  (i): \textbf{If. }
+  Suppose that $T_\sigma\subset T_\tau$.  
+  We want to show that $\sigma\le_{\{\RN{1}\}}$, for which it suffices to show that for all $O$-positions $s\in T_\sigma$ we have $R_\sigma^s\subset R_\tau^s$.  
+  Let $s\in T_\sigma$ be an $O$-position and let $S$ be a \strategy{} for $\sigma$ such that $s$ is the shadow of some \game{}-play in $S$ and $R_S^s\ne\emptyset$.  
+  Let $a\in R_S^s$.  
+  By the definition of a \strategy{} for $\sigma$, we can see that in fact $R_S^s=\{a\}$.  
+
+  Since $T_\sigma\subset T_\tau$, we know that there is some \game{}-play in $\tau$ whose shadow is $sa$.  
+  Then it is easy to construct a \strategy{} $S'$ for $\tau$ such that $a\in R_{S'}^s$.  
+  Moreover, by the same argument, we see that $R_{S'}^s=\{a\}$.  
+  Therefore, $R_\sigma^s\subset R_\tau^s$.  
+
+  \textbf{Only if. }
+  Suppose that $\sigma\le_{\{\RN{1}\}}\tau$.  
+  Let $sa\in T_\sigma$ be a non-empty $P$-position.  
+  Then $sa$ is the shadow of some position in $\sigma$.  
+  We can construct a \strategy{} $S$ for $\sigma$ such that $sa$ is in the shadow of $S$; moreover, we have $R_S^s=\{a\}$.  
+  Therefore, $\{a\}=R_{S'}^s$ for some \strategy{} $S'$ for $\tau$.  
+  It follows that $sa\in T_\tau$.
+
+  (ii): \textbf{If. }
+  
+
+\end{proof}
+
+\begin{example}
+  Fix two players B (black) and W (white) and a set of moves $\M$ consisting of all legal chess moves.  
+  Then we can model games played on a chess board using the arena given by
+  \[
+    (\{q,ww,dr,bw\}, \{q\mapsto(O,Q),\;ww,dr,bw\mapsto(P,A)\},\{q\ts ww,dr,bw\}, \{q\})
+    \]
+  A justified play over the sequence $q.ww$ is a collection of justification pointers $j$ from $ww$ to $q$, each annotated with a sequence of chess moves carried out by one or other of the two players.  
+  The game of chess itself is then described by three particular justified plays:
+  \begin{itemize}
+    \item One over the sequence $q.ww$, where the labels of the justification pointers from $ww$ to $q$ are precisely those sequences of moves leading to a win for white.
+    \item One over the sequence $q.dr$, where the labels of the justification pointers from $dr$ to $q$ are precisely those sequences of moves leading to a draw.
+    \item One over the sequence $q.bw$, where the labels of the justification pointers from $bw$ to $q$ are precisely those sequences of moves leading to a win for black.
+  \end{itemize}
+\end{example}
+
+
+\bibliographystyle{alpha}
+\bibliography{../common/phd_bibliography}
+
+\end{document}
