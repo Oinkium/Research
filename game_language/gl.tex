@@ -302,7 +302,7 @@ The second forms the \emph{function space} $A \iimpl B$ from $A$ to $B$:
     \end{description}
 \end{itemize}
 
-\subsection{Strategies}
+\subsection{\game{}-strategies}
 
 We now give our notion of a strategy, which will add the \game{}-theoretic data on to the usual definition of a strategy.  
 We fix a set $\P$ of players.
@@ -327,22 +327,135 @@ We fix a set $\P$ of players.
 \end{definition}
 
 \begin{definition}
-  A \emph{\game{}-strategy} $\sigma$ for an arena $A$ is a set $M_\sigma$ of moves, a function $\lambda_\sigma\from \M_\sigma\to\P$ and a set $\sigma$ of \game{}-plays in $A$ satisfying the following rules:
+  A \emph{\game{}-strategy} $\sigma$ for an arena $A$ is a set $M_\sigma$ of moves, a function $\lambda_\sigma\from \M_\sigma\to\P$ and a non-empty prefix-closed set $\sigma$ of \game{}-plays in $A$ satisfying the following rules:
   \begin{enumerate}[a)]
-    \item If $s\in\sigma$ and $sa$ is a \game{}-play in $A$ such that $a$ is either an $O$-move in $A$ or a \move{}, then $sa\in\sigma$.
+    \item If $s\in\sigma$ and $sa$ is a \game{}-play in $A$ such that $a$ is an $O$-move in $A$, then $sa\in\sigma$.
+    \item If $sa,sb\in\sigma$, where $a,b$ are $P$-moves in $A$, then $a=b$.
+    \item If $s\in\sigma$ is non-empty and does not end with a $P$-move then there exists some $a\in M_A+\M_\sigma$ such that $sa\in\sigma$.
+    \item If $sa,sb\in\sigma$, then $\lambda(a)=\lambda(b)$.
   \end{enumerate}
 \end{definition}
 
-  Let $T\subset\P$ be a team of players.  
-  Define a partition of $\OP\cup\P$ into two sets $\F_T$ (`friendly') and $\U_T$ (`unfriendly') by
-  \begin{gather*}
-    \F_T = \{O\} \cup T \\\
-    \U_T = \{P\} \cup (\P \setminus T)
-  \end{gather*}
+\begin{remark}
+  The axiom (b) for a strategy might make it look as though we can only model deterministic strategies, but we can in fact model nondeterministic strategies by using \move{}s.  
+  For example, the denotation for a nondeterministic oracle $\wn$ might be the strategy with maximal plays
+  \[
+    q\textsc{n}n
+    \]
+  for all $n\in\bN$, where $\textsc{n}$ is a \move{} corresponding to the natural number $n$.
+\end{remark}
 
-\subsection{Composition of strategies}
+\begin{definition}
+  Let $\sigma$ be a strategy for an arena $A$.  
+  We write $T_\sigma$, the \emph{trace-set} or \emph{shadow} of $\sigma$, for the set of all shadows of elements of $\sigma$.  
+  It is easy to see that $T_\sigma$ is a nondeterministic strategy for $A$ in the usual sense.  
+\end{definition}
 
-Same as usual.
+\subsection{Ordering \game{}-strategies}
+
+\begin{definition}
+  Let $T\subset \P$ be a team of players.  
+  Let $A$ be an arena and let $\sigma$ be a \game{}-strategy for $A$.  
+  Then a \emph{$T$-\strategy{} for $\sigma$}\footnote{Yes, that is a \strategy{} for a strategy.} is a non-empty prefix-closed subset $S$ of $\sigma$ satisfying the following rules:
+  \begin{enumerate}[a)]
+    \item If $s\in S$ and $sa\in\sigma$ where $a$ is an $O$-move in $A$ or a \move{} made by a player \emph{not} in $T$, then $sa\in S$.  
+    \item If $sa,sb\in S$, where $a,b$ are $P$-moves in $A$ or \move{}s made by a player in $T$, then $a=b$.  
+    \item If $s\in S$ and there exists some $a\in M_A+\M_\sigma$ such that $sa\in \sigma$ then there exists some $b\in M_A+\M_\sigma$ such that $sb\in S$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  As with strategies, if $S$ is a \strategy{} for some \game{}-strategy $\sigma$, we write $T_S$ for the set of all shadows of \game{}-plays in $S$.  
+
+  Once again, it is easy to see that $T_S$ is a strategy for $A$ in the usual sense.  
+\end{definition}
+
+We use $T$-\strategy{}s to define an order on \game{}-strategies.  
+
+\begin{definition}
+  Let $A$ be an arena, let $\sigma$ be a \game{}-strategy for $A$ and let $T\subset\P$ be a team of players.  
+  Given a $T$-\strategy{} $S$ for $\sigma$ and $s\in T_\sigma$ ending with an $O$-move, define
+  \[
+    R_S^s = \{a\in M_A\suchthat sa\in T_S\}
+    \]
+  If $s\in T_\sigma$ is an $O$-position, we say that the \strategy{} $S$ is \emph{good at $s$} if $s$ is not the shadow of some infinite position in the limit of $\sigma$.  
+
+  We define
+  \[
+    R_{\sigma,T}^s = \{R_S^s\suchthat \textrm{$S$ is a $T$-\strategy{} for $\sigma$},\;\textrm{$S$ is good at $s$}\}
+    \]
+
+  Lastly, if $\sigma,\tau$ are \game{}-strategies for $A$, we say that $\sigma\le_T\tau$ if for all $s\in T_\sigma\cap T_\tau$ we have
+  \[
+    R_{\sigma,T}^s\subset R_{\tau,T}^s
+    \]
+  If $\T\subset\power(\P)$ is a set of teams, then we write $\sigma\le_{\T}\tau$ if $\sigma\le_T\tau$ for all $T\in\T$.A
+
+  If $\sigma\le_T\tau$ and $\tau\le_T\sigma$, then we say that $\sigma\equiv_T\tau$.  
+  Similarly, if $\sigma\le_{\T}\tau$ and $\tau\le_{\T}\sigma$, then we say that $\sigma\equiv_{\T}\tau$.  
+\end{definition}
+
+\subsection{Example: one-player games}
+
+In this section we will take $\P=\{\RN{1}\}$, and show that the preorders on strategies correspond to the lower and upper orders defined in \cite{mcCHFiniteND}.
+
+\begin{lemma}
+  \label{lemma:guy}
+  Let $A$ be an arena and let $\sigma$ be a \game{}-strategy for $A$.  
+
+  i) Let $S$ be a $\{\RN{1}\}$-\strategy{} for $\sigma$.  
+  Then $T_S$ is a deterministic sub-strategy of $T_\sigma$.  
+
+  ii) Let $S$ be an $\emptyset$-\strategy{} for $\sigma$.  
+  Then $S=\sigma$.
+\end{lemma}
+
+\begin{proposition}
+  Let $A$ be an arena.  
+  Given a \game{}-strategy $\sigma$ for $A$, define $D_\sigma$ to be the set of all (finite) sequences in $T_\sigma$ that are the shadow of some infinite sequence $s$ in the limit of $\sigma$.  
+  (A play in $D_\sigma$ necessarily ends with an $O$-move, since an $O$-move is always immediately followed by a $P$-move in a \game{}-play.)
+
+  Now let $\sigma,\tau$ be \game{}-strategies for $A$.  
+
+  i) $\sigma \le_{\{\RN{1}\}} \tau$ if and only if $T_\sigma\subset T_\tau$.  
+
+  ii) $\sigma \le_{\emptyset} \tau$ if and only if ....
+\end{proposition}
+
+\begin{proof}
+  (i): By Lemma \ref{lemma:guy}, if $S$ is a $\{\RN{1}\}$-\strategy{} for $\sigma$, then $T_S$ is a deterministic sub-strategy of $T_\sigma$.  
+  It follows that if $S$ is good at a position $s$, then $R_S^s$ is a singleton.  
+  Moreover, if $sa\in T_\sigma$ is a $P$-position, then we can construct some $\{\RN{1}\}$-\strategy{} $S$ for $\sigma$ such that $S$ is good at $s$ and $sa\in T_S$.  
+  
+  Suppose that $\sigma\le_{\{\RN{1}\}}\tau$ and suppose that $s\in T_\sigma\cap T_\tau$ is an $O$-position and that $sa\in T_\sigma$.  
+  Then there is some $\{\RN{1}\}$-\strategy{} $S$ for $\sigma$ such that $S$ is good at $s$ and $sa\in T_S$: so $R_S^s=\{a\}$.  
+  Therefore, there is some $\{\RN{1}\}$-\strategy{} $S'$ for $\tau$ such that $S'$ is good at $s$ and $R_{S'}^s=\{a\}$.  
+  It follows that $sa\in T_\sigma$.  
+  Now, working by induction on the strategy, we can prove that $T_\sigma\subset T_\tau$.  
+
+  Conversely, suppose that $T_\sigma\subset T_\tau$.  
+  Let $s\in T_\sigma$ be an $O$-position.  
+  So $s\in T_\tau$.  
+  Let $S$ be a $\{\RN{1}\}$-\strategy{} for $\sigma$ that is good at $s$.  
+  We know that $R_S^s = \{a\}$ for some move $a$ such that $sa\in T_\sigma$.  
+  Then $sa\in T_\tau$, and we can construct $S'$ such that $R_{S'}^s=\{a\}$.  
+  Therefore, $R_{\sigma,\{\RN{1}\}}^s\subset R_{\tau,\{\RN{1}\}}^s$ and it follows that $\sigma \le_{\{\RN{1}\}}\tau$.  
+
+  (ii): Suppose that $\sigma,\tau$ are \game{}-strategies for $A$ and that $\sigma\le_{\emptyset}\tau$.  
+  Let $s\in T_\sigma\cap T_\tau$ be an $O$-position and suppose that $s\not\in D_\sigma$.  
+  Then it follows that 
+
+\end{proof}
+
+\subsection{Composition of \game{}-strategies}
+
+Let $A,B,C$ be arenas, let $\sigma$ be a \game{}-strategy for $A\iimpl B$ and let $\tau$ be a \game{}-strategy for $B\iimpl C$.  
+We shall construct a strategy $\sigma;\tau$ for $A\iimpl C$, the \emph{composition} of $\sigma$ with $\tau$.  
+
+We first define
+\[
+  \M_{\sigma;\tau}=\M_\sigma + \M_\tau
+  \]
 
 \section{Strategies as \game{}s}
 
