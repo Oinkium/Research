@@ -1,0 +1,414 @@
+\documentclass{beamer}
+
+\let\NOTARTICLE=1
+\let\BEAMER=1
+\let\FEWFONTS=1
+
+\newenvironment{theindex}
+ {\let\item\par
+  %definitions for subitem etc
+  }{}
+\newcommand\indexspace{}
+
+\input{../../common/preamble}
+
+\newtheorem{proposition}{Proposition}
+
+%%% END Article customizations
+
+\title{Games for countable nondeterminism}
+\subtitle{GaLoP 2017, Uppsala}
+
+\author{John Gowers}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section*{Outline}
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+\section{Game Semantics of Nondeterminism}
+
+\renewcommand*{\arraystretch}{3}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Related Work}
+  \nocite{mcCHFiniteND, RusssThesis, TsukadaSheaves, RoscoeCspInfinite, LevyGsInfinite, LairdOrdinalGames}
+  \bibliographystyle{plain}
+  \bibliography{../../common/phd_bibliography}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nondeterministic Strategies}
+  
+  \pause
+  If $A$ is a game with a set $P_A$ of positions, a strategy $\sigma$ for $A$ is a non-empty prefix-closed subset of $P_A^P$ satisfying:
+  \begin{description}
+    \item[Determinism] If $sa,sb\in\sigma$, then $a=b$
+    \item[Totality] If $s\in\sigma$ and $sa\in P_A$, then $sab\in\sigma$ for some $b$
+  \end{description}
+  \pause
+  Relaxing \emph{totality} gives us \emph{partial strategies}.
+  \pause
+
+  Relaxing \emph{determinism} gives us \emph{nondeterministic strategies}.
+  \pause
+
+  Problem: how can we model divergence in nondeterministic strategies?
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Harmer-McCusker model}
+  \pause
+
+  Harmer and McCusker model nondeterminism by equipping each (nondeterministic) strategy with an explicit set of divergent positions.  
+  \pause
+
+  Divergence in a composition of strategies may arise either from a divergence in one of the strategies we are composing, or through \emph{livelock} (infinite chattering).  
+  \pause
+
+  This method only works for finite nondeterminism: if we naively relax the finite branching condition, then composition is not associative.  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Failure of associativity in the presence of infinite branching}
+  \begingroup
+  \renewcommand*{\arraystretch}{1}
+  \[
+    \begin{array}{ccccccccc}
+      \mathbf{I} & & \mathbf{\Sigma^*} & & \mathbf{\bN} & \tensor & \mathbf{\Sigma^*} & & \mathbf{\Sigma} \\
+       & &   & &   & &   & & q \\
+       & &   & & q & &   & &   \\
+       & &   & & 2 & &   & &   \\
+       & &   & &   & & q & &   \\
+       & & q & &   & &   & &   \\
+       & & a & &   & &   & &   \\
+       & &   & &   & & a & &   \\
+       & &   & &   & & q & &   \\
+       & & q & &   & &   & &   \\
+       & & a & &   & &   & &   \\
+       & &   & &   & & a & &   \\
+       & &   & &   & &   & & a
+    \end{array}
+    \]
+  \endgroup
+\end{frame}
+
+\begin{frame}
+  \frametitle{Solution: keep track of infinite sequences of moves}
+  A game $A$ is now given by a tuple $(M_A, \lambda_A, \zeta_A, P_A)$ where
+  \begin{itemize}
+    \item $M_A$ is a set of moves
+    \item $\lambda_A\from M_A\to \OP$ identifies each move as an $O$-move or a $P$-move
+    \item $P_A\subset \seqs{M_A}$ is a set of legal positions
+    \item $\zeta_A\from P_A\to\OP$ designates each position as an $O$-position or a $P$-position
+  \end{itemize}
+  \dots subject to a few rules
+\end{frame}
+
+\begin{frame}
+  \frametitle{Advantages}
+  \pause
+  We can distinguish between computations that diverge and computations that converge, but may take an arbitrarily large number of steps to do so.
+
+  \pause
+  We do not have to check for infinite chattering explicitly when defining the divergences of a composition of strategies.
+
+  \pause
+  Composition is associative.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fair PCF}
+  \[
+    \begin{array}{cc}
+      \inferrule*{ }{(\lambda x.M)N\opto M[N/x]} & \inferrule*{ }{\Y_T M\opto M(\Y_T M)} \\
+      \inferrule*{ }{\IfO \0 \opto \lambda x.\lambda y.x} & \inferrule*{ }{\IfO (\suc \n) \opto \lambda x.\lambda y.(y \n)} \\
+      \inferrule*{M\opto M'}{\suc M\opto\suc M'} & \inferrule*{M\opto M'}{\IfO M\opto \IfO M'} \\
+      \inferrule*{M \opto M'}{M N \opto M' N} & \inferrule*[right=$n\in\bN$]{ }{\wn \opto \n} \\
+    \end{array}
+    \]
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Must-testing for fair PCF}
+  If $M$ is a term of Fair PCF of ground type $\nat$, write $M\mustconverge$ if $M$ has no infinite evaluation paths $M\opto M_1\opto M_2\opto\cdots$.
+
+  \pause
+  Examples:
+  \begin{itemize}
+    \item $\Omega_\nat=\Y_\nat(\lambda x.x)\not\mustconverge$
+      \pause
+    \item $\IfO \wn \;\Omega_\nat \;\0\not\mustconverge$
+      \pause
+    \item $\Y_{\nat\to\nat} (\lambda f.\lambda x.\IfO x\;\0\;f)\wn\mustconverge$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \pause
+  \frametitle{Denotational Semantics for $\Y_T$}
+  Harmer and McCusker define an order $\stle$ on strategies for a game $A$:
+
+  $\sigma\stle\tau$ if
+  \begin{enumerate}
+    \item $\sigma\subset\tau$
+    \item Every divergent position in $\tau$ is divergent in $\sigma$
+    \item Every position in $\tau\setminus\sigma$ is divergent in $\sigma$.  
+  \end{enumerate}
+
+  \pause
+  The order $\stle$ is preserved by composition.  
+
+  \pause
+  If $F$ is a set of strategies that is directed with respect to $\stle$ then $F$ has a least upper bound given by
+  \[
+    \left(\bigcup_{\sigma\in F}\sigma\;,\;\bigcap_{\sigma\in F}D_\sigma\right)
+    \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Denotational semantics for $\Y_T$}
+
+  This means that we can define a strategy $\Y_A$ for $(A\iimpl A) \iimpl A$ to be the least fixed point of the strategy corresponding to the $\lambda$-term
+  \[
+    \lambda F.\lambda f.f(F f)
+    \]
+  \pause
+  However, $\stle$-limits are not preserved by composition (in either direction), so it is hard to prove computational adequacy for this denotation of $\Y_T$.
+\end{frame}
+
+\section{Ordinal-Indexed Recursion}
+
+\begin{frame}
+  \frametitle{Introduction to Ordinal-Indexed Recursion}
+  \pause
+  In languages with no nondeterminism or finite nondeterminism, we can study $\Y_T$ by studying its finite approximants $\Y_T^n$, where:
+  \[
+    \Y_T^n M = \underbrace{M\cdots M}_{n}\Omega_T
+    \]
+  \pause
+  If $Y_T M M_1\dots M_n\mustconverge$, then $\Y_T^n M M_1\dots M_n\mustconverge$ for some $n$ -- since branching is finite, any well-founded evaluation tree is \emph{bounded}.  
+
+  \pause
+  However, in the presence of infinite branching, we may have well-founded evaluation trees that are not bounded.  
+
+  \pause
+  For example, $\Y_{\nat\to\nat}(\lambda f.\lambda x.\IfO x\; \0\; f)\wn\mustconverge$, but $\Y_{\nat\to\nat}^n(\lambda f.\lambda x.\IfO x\; \0\; f)\wn\not\mustconverge$ for all $n$.  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction to Ordinal-Indexed Recursion}
+  We replace $\Y_T$ with a new family of constants $\Y_T^\alpha$, where $\alpha$ ranges over countable ordinals and a formal divergence symbol $\Omega_T$.  $\Y_T^\alpha$ has operational semantics given by:
+  \[
+    \inferrule*[right=$\beta<\alpha$]{ }{\Y_T^\alpha M\opto M(\Y_T^\beta M)}\hspace{24pt}
+    \inferrule*{ }{\Y_T^0M\opto\Omega_{T}}
+    \]
+  \pause
+  If $M\mustconverge$, then the evaluation tree for $M$ is well-founded and hence has complexity given by some countable ordinal $\alpha$.  If we replace $\Y$ with $\Y^\alpha$ in the description of $M$, then we can recover the original evaluation tree.  
+
+  \pause
+  However, the new term will have additional branches, some of which will diverge.  
+
+  \pause
+  We want the choice of ordinal $\beta$ to be `friendly', so that it does not affect the behaviour of $\mustconverge$.  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Big-Step semantics for $\mustconverge$ in Fair PCF}
+
+  We can get round this problem using big step semantics.  
+
+  \pause
+  We add the following rule for $\wn$ to the usual big-step semantics for $\mustconverge$ in PCF:
+  \[
+    \inferrule{\forall n\in\omega\esuchthat M n\mustconverge}{M\wn\mustconverge}
+    \]
+  \pause
+  We then give big-step semantics for the constants $\Y_T^\alpha$:
+  \[
+    \inferrule{\exists \beta<\alpha\esuchthat M(\Y_T^\beta M) M_1\cdots M_n\mustconverge}{\Y_T^\alpha MM_1\cdots M_n\mustconverge}
+    \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{An example}
+  \begin{IEEEeqnarray*}{Cl}
+    &\Y_{\nat\to\nat}^\omega (\lambda f.\lambda x.\IfO x\;\0\;f)\;\wn\\
+    \pause
+    \opto &((\lambda f.\lambda x.\IfO x\;\0\;f) \Y_{\nat\to\nat}^n(\lambda f.\lambda x.\IfO x\;\0\;f))\;\wn\\
+    \pause
+    \opto &\IfO \wn\;\0\;(\Y^n_{\nat\to\nat}(\lambda f.\lambda x.\IfO x\;\0\;f)) \\
+    \pause
+    \opto &\IfO (n+1)\;\0\;(\Y^n_{\nat\to\nat}(\lambda f.\lambda x.\IfO x\;\0\;f))\\
+    \pause
+    \opto &\cdots\opto\Omega_{\nat}
+    \pause
+  \end{IEEEeqnarray*}
+  \begin{IEEEeqnarray*}{Cl}
+    &\Y_{\nat\to\nat}^{\omega+1}(\lambda f.\lambda x.\IfO x\;\0\;f)\;\wn\\
+    \pause
+    \opto &((\lambda f.\lambda x.\IfO x\;\0\;f) \Y_{\nat\to\nat}^\omega(\lambda f.\lambda x.\IfO x\;\0\;f))\;\wn\\
+    \pause
+    \opto &\IfO \wn\;\0\;(\Y^\omega_{\nat\to\nat}(\lambda f.\lambda x.\IfO x\;\0\;f)) \\
+    \pause
+    \opto &\IfO m\;\0\;(\Y^\omega_{\nat\to\nat}(\lambda f.\lambda x.\IfO x\;\0\;f))\\
+    \pause
+    \opto &\Y^\omega_{\nat\to\nat}(\lambda f.\lambda x.\IfO x\;\0\;f)\;m\\
+    \pause
+    \opto &(\lambda f.\lambda x.\IfO x\;\0\;f)\Y_{\nat\to\nat}^{m+1}(\lambda f.\lambda x.\IfO x\;\0\;f)\;m\\
+    \pause
+    \opto&\cdots\opto\0
+  \end{IEEEeqnarray*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Can we model $\Y_T^\alpha$ within the language?}
+  \pause
+  Recall that we could model $\Y_T^n M$ within PCF as
+  \[
+    \underbrace{M\cdots M}_{n}\Omega_T
+    \]
+  \pause
+  We can do this uniformly if we add a recursion constant $\rec_T\from \nat\to T\to(T\to T)\to T$ to the language.  Then we can model
+  \[
+    \Y_T^n = \lambda F.\rec_T n\;\Omega_T\;F
+    \]
+  \pause
+  But how would we model $\Y_T^\omega$?  We need to add friendly choice to the language....
+\end{frame}
+
+\begin{frame}
+  \frametitle{Explicit friendly choice}
+  \pause
+  We add a new constant to our language:
+  \[
+    \nw\from\nat
+    \]
+  \pause
+  We give big-step semantics for $\mustconverge$ corresponding to $\nw$:
+  \[
+    \inferrule{\exists n\in\omega\esuchthat Mn\mustconverge}{M\nw\mustconverge}
+    \]
+  Then we may model $\Y_T^\omega$ as:
+  \[
+    \Y_T^\omega = \lambda F.\rec_T \nw\;\Omega_T\;F
+    \]
+  \pause
+  Going further, we may model $\Y_T^{\omega+1}$ as $\lambda F.F(\rec_T\nw\;\Omega_T\;F)$, and so on.  
+
+  \pause
+  How far can we go?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Defining recursion principles using friendly choice}
+  \pause
+  Suppose that we can define an ordinal $\alpha$ in our language as a Church encoding:
+  \[
+    \alpha_T\from T \to (T \to T) \to ((\nat \to T) \to T) \to T
+    \]
+  \pause
+  Then we can simulate $\Y_T^\alpha$ within our language:
+  \[
+    \Y_T^\alpha\equiv \lambda F.\alpha_T\;\Omega_T\;F\;(\lambda f.f\nw)
+    \]
+  \pause
+  Using  $\rec_T$, it is possible to define Church encodings $\alpha_T$ for all ordinals $\alpha<\epsilon_0$, so we can simulate $\Y_T^\alpha$ for all $\alpha<\epsilon_0$ in PFC - $\Y$ + $\rec$ + $\nw$.
+\end{frame}
+
+\section{Game Semantics for Friendly Choice}
+
+\begin{frame}
+  \frametitle{Friendly vs. unfriendly choice: a 2-player game within the language}
+  \pause
+  Suppose we have a constant
+  \begin{gather*}
+    \Iflt\from\nat\to\nat\to\nat\to\nat\to\nat
+  \end{gather*}
+  in our language with the obvious meaning.
+
+  \pause
+  Consider the terms
+  \begin{gather*}
+    \Iflt \wn\;\nw\;\0\;\Omega_\nat\\
+    \Iflt \nw\;\wn\;\Omega_\nat\;\0
+  \end{gather*}
+  \pause
+  Because of evaluation order, the first term must converge, but the second may diverge.
+
+  \pause
+  With more complicated predicates, we can encode more complicated (bounded) Gale-Stewart games in the language.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Game Semantics for Friendly Choice}
+  \pause
+  We need the ability to make all choices at once, but forget about the bad ones (unless all our choices were bad).  
+
+  \pause
+  If $A$ is a game, then a \emph{flexible strategy} for $A$ is a pair $\Sigma=(\sigma_\Sigma,F_\Sigma)$, where $\sigma_\Sigma$ is a strategy for $A$ and $F_\Sigma\subset\sigma_\Sigma$ is a set of positions in $\sigma_\Sigma$ that are forced.  All other positions in $\sigma$ are optional.
+
+  \pause
+  Then a \emph{switching} for $\Sigma$ is a strategy $\sigma'$ for $A$ such that $\sigma'\subset\sigma_\Sigma$ and such that if $s\in\sigma'$ and $sab\in F_{\Sigma}$ then $sab\in\sigma'$.  In this case, we write $\sigma'\sw\Sigma$.
+
+  \pause
+  Given flexible strategies $\Sigma\from A\to B$ and $\Tau\from B\to C$, we may form the composite:
+  \[
+    \comp{\Tau}{\Sigma} = \exlub_{\substack{\sigma'\sw\Sigma\\\tau'\sw\Tau}}\comp{\tau'}{\sigma'}
+    \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Game semantics for friendly choice}
+  \pause
+  We embed the original game semantics into the flexible game semantics by sending $\sigma\mapsto|\sigma|\coloneqq(\sigma,\sigma)$.  
+
+  \pause
+  So $\wn$ inherits its original semantics as $(\wn, \wn)$.  
+
+  \pause
+  We give $\nw$ an explicitly flexible semantics:
+  \[
+    \deno{\nw} = (\wn, \{\emptyplay\})
+    \]
+  \pause
+  So all the choices of number in $\nw$ are optional.  
+  \pause
+  We get a consistency result:
+  \begin{proposition}
+    If $M$ is a term of PCF - $\Y$ + $\wn$ + $\nw$ of type $\nat$ such that $M\mustconverge$, then there are no divergent positions in $\deno{M}$.  
+  \end{proposition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stable ordering for flexible strategies}
+  \pause
+  We can extend the stable order $\stle$ to flexible strategies.
+
+  \pause
+  We say that $\Sigma\stle\Tau$ if $\sigma_\Sigma\stle\sigma_\Tau$ and $\sigma_\Sigma\cap F_\Tau\subset F_\Sigma$.  
+
+  \pause
+  Then we have least upper bounds for stably-directed sets $X$ of flexible strategies:
+  \begin{gather*}
+    \sigma_{\exlub_{\Sigma\in X}\Sigma} = \exlub_{\Sigma\in X}\sigma_\Sigma \\
+    F_{\exlub_{\Sigma\in X}\Sigma} = \bigcap_{\Sigma\in X}F_\Sigma
+  \end{gather*}
+  \pause
+  $\exlub_{\Sigma\in F}\Sigma$ is a `friendly choice between the $\Sigma\in F$'.  
+
+  \pause
+  We can then construct the $\Y_T^\alpha$ as the elements of the Bourbaki-Witt chain.  
+
+  \pause
+  For suitably large $\alpha$ (conjecturally $\alpha=\epsilon_0$), we get a sound and adequate semantics for $\Y_T$.  
+\end{frame}
+
+\end{document}

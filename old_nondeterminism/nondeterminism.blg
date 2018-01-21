@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: nondeterminism.aux
+The style file: alpha.bst
+Database file #1: ../common/phd_bibliography.bib
+Warning--empty institution in RusssThesis
+You've used 9 entries,
+            2543 wiz_defined-function locations,
+            620 strings with 5832 characters,
+and the built_in function-call counts, 3281 in all, are:
+= -- 335
+> -- 105
+< -- 8
++ -- 31
+- -- 30
+* -- 205
+:= -- 529
+add.period$ -- 28
+call.type$ -- 9
+change.case$ -- 49
+chr.to.int$ -- 9
+cite$ -- 10
+duplicate$ -- 148
+empty$ -- 264
+format.name$ -- 45
+if$ -- 693
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 7
+newline$ -- 48
+num.names$ -- 27
+pop$ -- 42
+preamble$ -- 1
+purify$ -- 57
+quote$ -- 0
+skip$ -- 129
+stack$ -- 0
+substring$ -- 196
+swap$ -- 27
+text.length$ -- 8
+text.prefix$ -- 6
+top$ -- 0
+type$ -- 72
+warning$ -- 1
+while$ -- 30
+width$ -- 11
+write$ -- 120
+(There was 1 warning)

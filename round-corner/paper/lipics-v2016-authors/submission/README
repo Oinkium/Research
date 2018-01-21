@@ -1,0 +1,5 @@
+To compile:
+$ pdflatex sequoidal.tex
+$ bibtex sequoidal.tex
+$ pdflatex sequoidal.tex
+$ pdflated sequoidal.tex

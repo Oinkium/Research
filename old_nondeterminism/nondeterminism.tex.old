@@ -1,0 +1,83 @@
+\documentclass{article}
+
+\input{../common/preamble}
+
+\DeclareMathOperator{\ndprim}{nd}
+\newcommand{\nd}{{\ndprim}}
+\newcommand{\CL}{\mathcal{CL}}
+
+\begin{document}
+
+\section{Nondeterminism}
+
+\subsection{Introduction}
+
+We give a treatment of nondeterminism in the ordinal games setting.  Let $\alpha$ be a large ordinal.  If $A$ is an $\alpha$-game, then a \emph{nondeterministic strategy} for $A$ is a subset $\sigma\subset P_A$ satisfying:
+\begin{itemize}
+  \item For all $P$-positions $s\in\sigma$, if $a$ is an $O$-move such that $sa\in P_A$, then $sa\in\sigma$.
+\end{itemize}
+That is, we drop the condition that $P$-replies to $O$-moves should be unique.  
+
+Since the proof that the (totality of $O$-replies) condition above is preserved by composition did not use the uniqueness of $P$-replies, it follows that nondeterministic strategies may be composed to yield nondeterministic strategies and we get a category $G_\nd(\alpha)$ of games and nondeterministic strategies.
+
+Note that if $A$ is a game, then the collection $\Strat(A)$ of nondeterministic strategies for $A$ forms a complete lattice under set-inclusion; i.e., is is closed under unions and intersections.  
+
+Let $A,B$ be $\alpha$-games.  Then a strategy $\sigma$ for $A\implies B$ induces a map of sets
+\[
+  f_\sigma \from \Strat(A) \to \Strat(B)
+  \]
+by
+\[
+  f_\sigma(\tau) = \{s\vert_B \suchthat s\in\sigma,\;s\vert_A\in\tau\}
+  \]
+If we identify $\Strat(X)$ with the hom-set $\G(\alpha)(I,X)$, then we see that this is nothing more than the action of the functor $\G(\alpha)(I,-)$.  
+
+\begin{proposition}
+  $f_\sigma$ is order preserving and preserves unions and intersections.
+\end{proposition}
+
+Not every function $\Strat(A)\to\Strat(B)$ that preserves unions and intersections arises from a strategy for $A\implies B$, however.  Consider, for example, the map
+\[
+  \oc \from \Strat(A)\to \Strat(\oc A)
+  \]
+where $\oc\sigma$ is the strategy for $\oc A$ in which we play according to $\sigma$ in every copy of $A$; i.e., the strategy formed by applying the exponential functor $\oc$ to $\sigma$, considered as a strategy for $I\implies A$:
+\[
+  \oc\sigma = \{s\in P_{\oc A}\suchthat \forall\beta\esuchthat s\vert_{A_\beta}\in\sigma\}
+  \]
+Of course, there need not be a strategy for $A\implies \oc A$, so $\oc$ will not arise from a strategy in general.
+
+\begin{proposition}
+  $\oc$ is order preserving and preserves unions and intersections.
+\end{proposition}
+
+Let us now compose the two maps we have considered: let $\sigma$ be a strategy for $\oc A\implies B$; then we form the map
+\[
+  f_\sigma^\oc = \Strat(A)\xrightarrow{\oc}\Strat(\oc A)\xrightarrow{f_\sigma}\Strat(B)
+  \]
+or, written out in full:
+\[
+  f_\sigma^\oc(\tau) = \{s\vert_B \suchthat s\in\sigma,\;\forall\beta\esuchthat s\vert_{A_\beta}\in\tau\}
+  \]
+
+$f_\sigma^\oc$ is the composition of order preserving maps that preserve unions and intersections, so it preserves unions and intersections.  We now claim that every such map arises from a strategy for $\oc A\implies B$.  Let $\CL$ denote the category of complete lattices and order-preserving maps that preserve unions and intersections.  Furthermore, let $\G_\nd^\oc(\alpha)$ denote the co-Kleisli category for the exponential comonad on $\G_\nd(\alpha)$.  Then our main result is:
+
+\begin{theorem}
+  The maps $f_\sigma^\oc$ define a fully faithful functor
+  \[
+    \G_\nd^\oc(\alpha)\to\CL
+    \]
+\end{theorem}
+
+\subsection{Functoriality of $f_\sigma^\oc$}
+
+We first establish that $f_\sigma^\oc$ gives rise to a functor $\G_\nd^\oc(\alpha)\to\CL$.  Recall that the objects of $\G_\nd^\oc$ are completely negative $\alpha$-games and that the morphisms from $A$ to $B$ are nondeterministic strategies for $\oc A\implies B$.  Our functor will send a game $A$ to its set of nondeterministic strategies $\Strat(A)$ and it will send a strategy $\sigma \from \oc A \implies B$ to the map $f_\sigma^\oc$.  
+
+Before showing that this is a functor, we shall quickly establish that $f_\sigma$ gives rise to a functor $\G_\nd(\alpha)\to\CL$ by sending a game $A$ to $\Strat(A)$ and a strategy $\sigma$ for $A\implies B$ to $f_\sigma\from \Strat(A)\to\Strat(B)$.  Indeed, as we remarked above, after we have identified $\Strat(X)$ with $\G_\nd(\alpha)(I,X)$, we may identify this with the hom-set functor $\G_\nd(\alpha)(I,-)$, so functoriality is guaranteed by the associativity of composition in $\G_\nd(\alpha)$.  
+
+Now we come to functoriality of the functor defined by $f_\sigma^\oc$.  Recalling the usual definition of a co-Kleisli category, we see that composition in $\G_\nd^\oc(\alpha)$ of strategies $\sigma\from \oc A\implies B$ and $\tau\from \oc B\implies C$ is given by
+\[
+  \comp\tau\sigma = \oc A \xrightarrow{\mult} \oc\oc A \xrightarrow{\oc\sigma} \oc B \xrightarrow{\tau} C
+  \]
+where arrows denote morphisms in $
+
+\end{document}

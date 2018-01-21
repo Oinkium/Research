@@ -1,0 +1,754 @@
+\documentclass{article}
+
+\input{../common/preamble}
+
+\begin{document}
+
+\subsection{Preliminaries}
+
+\subsubsection{Surjective strategies}
+
+Let $A$, $B$ be games.  
+We say that a strategy $\sigma$ for $A\implies B$ is \emph{surjective} if for all positions $b\in P_B$ there exists some $s\in \sigma$ such that $s\vert_B=b$.  
+
+The reason we are interested in surjective strategies from the point of view of nondeterminism is that composition with them preserves $\top$: if $\sigma\from A\implies B$ is surjective, then $\top_A;\sigma=\top_B$.  
+
+A result of Hyland and Schalk \cite{hylandSchalkGames} sheds some further light on this definition:
+
+\begin{proposition}[Hyland-Schalk functor]
+  There is a functor $\G\to\Rel$ given by sending a game $A$ to its set $P_A$ of positions and sending a strategy $\sigma\from A\implies B$ to the set
+  \[
+    \grel{\sigma} = \{(s\vert_A,s\vert_B)\in P_A\times P_B\suchthat s\in^P\sigma\}
+    \]
+  This functor is lax monoidal with respect to the Cartesian product on $\Rel$ and the tensor product $\tensor$ on $\G$ and linearly distributive with respect to the finite multisets comonad $W$ on $\Rel$ and the exponential comonad $\oc$ on $\G$.  
+  Moreover, the composite $\G_{det}\hookrightarrow\G\to\Rel$ is faithful.  
+\end{proposition}
+
+Using this result, we can rephrase our original definition: a strategy $\sigma$ is \emph{surjective} if its image $\grel\sigma$ under the Hyland-Schalk functor is a surjective relation. 
+
+We will principally be interested in surjective strategies that are deterministic and total.  
+If a deterministic surjective strategy $\sigma\from A\implies B$ is not total, then it introduces the possibility of divergence, and so we will no longer have the equation $\top_A;\sigma=\top_B$, since the composite on the left-hand side will contain divergent positions.  
+The problem is that the composition of total strategies is not total in general.  
+In order to get around this definition, we place a small restriction on strategies:
+
+\begin{definition}
+  \label{def:winning}
+  Let $A,B$ be games.  
+  Let $\sigma$ be a strategy for $A\implies B$.  
+  We write $\bar\sigma$ for the closure of $\sigma$ inside $M_{A\implies B}^{\omega}$; i.e., the set of all possibly infinite sequences of moves, all of whose finite prefixes lie in $\sigma$.  
+
+  We say that $\sigma$ is \emph{winning} if $\sigma$ is total and if whenever $s\in\bar\sigma$ is such that $s\vert_A$ is infinite, then $s\vert_B$ is infinite.  
+\end{definition}
+
+\begin{remark}
+  It is then straightforward to prove that the composition of winning strategies is winning.  
+  One way to see this is to observe that our definition says precisely that $\sigma$ is a \emph{winning strategy} in the sense of \cite{abramskyjagadeesangames} in the case that $W_A=P_A$ and $W_B=P_B$.  Then the category of games and winning strategies (in the sense of Definition \ref{def:winning}) is seen to be the full subcategory of the category of games and winning strategies from \cite{abramskyjagadeesangames} consisting of all those games $X$ that satisfy $W_X=P_X$.  
+
+  This subcategory is not monoidal \emph{closed}, but neither is the category of games and surjective strategies, so we do not lose anything by adopting this definition.
+\end{remark}
+
+\begin{remark}
+  Another, perhaps more compact definition of a winning strategy that does not require us to talk about infinite positions is as follows: for every play $s\in\sigma$ ending in an $O$-move from $B$, $s$ is a prefix of some $t\in\sigma$ ending in a $P$-move from $B$.
+\end{remark}
+
+\begin{proposition}
+  There is a sub-monoidal-exponential category $\G_{sw}$ of $\G$ consisting of all those strategies that are deterministic, surjective and winning.
+\end{proposition}
+
+\begin{proof}
+  The first step is to show that the composition of deterministic, surjective and winning strategies is deterministic, surjective and winning.
+
+  \begin{itemize}
+    \item That the composition of deterministic winning strategies is deterministic and winning is shown in \cite{abramskyjagadeesangames}.
+    \item Preservation of surjectivity by composition comes down to the analogous result in $\Rel$, coupled with the functoriality of the Hyland-Schalk construction.
+  \end{itemize}
+
+  Therefore, we have a category (the identity is obviously deterministic, surjective and winning).
+
+  We will ignore `deterministic' from here on, because it is well known that the category of games and deterministic strategies has all the structure we are talking about.  We will write `s.w. strategy' for `surjective winning strategy'.
+
+  Let $A,B,C,D$ be games, let $\sigma$ be a s.w. strategy for $A\implies C$ and let $\tau$ be a s.w. strategy for $B\implies D$.  
+  It is then easy to see that $\sigma\tensor\tau$ is a winning strategy for $A\tensor B\implies C\tensor D$.
+
+  Next, we need to show that $\sigma\tensor\tau$ is surjective.  
+  To do this, we use the monoidality of the Hyland-Schalk functor.  
+  Indeed, we have a commutative diagram
+  \[
+    \begin{tikzcd}
+      P_A \times P_B \arrow[r, "\grel{\sigma}\times\grel{\tau}"] \arrow[d, "m_{A,B}"']
+        & P_C \times P_D \arrow[d, "m_{C,D}"] \\
+      P_{A \tensor B} \arrow[r, "\grel{\sigma\tensor\tau}"]
+        & P_{C \tensor D}
+    \end{tikzcd}
+    \]
+
+  The relation $m_{C,D}$ is the one that relates $(s\vert_C,s\vert_D)$ to $s$ for all $s\in P_{C\tensor D}$.  
+  As such, it is certainly surjective.  
+  Moreover, since $\grel{\sigma}$ and $\grel{\tau}$ are both surjective relations, then their product is surjective.  
+  It follows that $\grel{\sigma\tensor\tau}$ must be surjective, and therefore that $\sigma\tensor\tau$ is a surjective strategy.
+
+  We use an almost identical argument to establish that the bang of a surjective strategy is surjective, this time using the linear distributivity of the Hyland-Schalk functor.  
+  In this case, our argument rests on the fact that the coherence $\lambda_A \from W A \to P_{\oc A}$ is surjective; indeed, this is the relation that, for all plays $s\in P_{\oc A}$, relates $s$ with the finite multiset consisting of the restrictions of $s$ to the various subgames.
+
+%  Let $e\in P_{C\tensor D}$.  
+%  Then, since $\sigma$, $\tau$ are surjective, there exists some $s\in\sigma$, $t\in\tau$ such that $s\vert_C=e\vert_C$ and $t\vert_D=e\vert_D$.  
+%
+%  Moreover, since player $O$ switches games in $C\tensor D$, we know that one out of $e\vert_C$, $e\vert_D$ must end in a $P$-move.
+%  Assume without loss of generality that $e\vert_C$ ends in a $P$-move, and that the final segment of $e$ consists of moves in $D$.
+%  Then we can assume that $s$ ends in a $P$-move.  
+%
+%  We may now write:
+%  \begin{align*}
+%    &s' = c_1 a^*_1 C_1 c_2 a^*_2 C_2 \cdots c_m a^*_m C_m \\
+%    &t' = d_1 b^*_1 D_1 d_2 b^*_2 D_2 \cdots d_n b^*_n D_n?
+%  \end{align*}
+%  where each $c_i$ is an $O$-move in $C$, each $C_i$ a $P$-move in $C$, each $d_j$ an $O$-move in $D$, each $D_j$ a $P$-move in $D$, each $a^*_i$ a (possibly empty) sequence of moves in $A$ and each $b^*_j$ a (possibly empty) sequence of moves in $B$.  
+%  Lastly, the final move $D_n$ of $t'$ may or may not appear.
+%
+%  Now we know that $e$ is made up of some sequence of pairs of the form $c_iC_i$ or $d_jD_j$, in some order, and that it ends with either $d_nD_n$ (if $D_n$ is present) or $d_n$ (if not).  
+%  If we replace each $c_iC_i$ in $e$ with $c_ia^*_iC_i$ and each $d_jD_j$ with $d_jb^*_jD_j$, then we end up with a valid sequence $e'\in\sigma\tensor\tau$, and we have $e'\vert_{C\tensor D} = e$.  
+%  This completes the proof that the tensor product of surjective morphisms is surjective.
+%
+%  A similar argument shows us that if $\sigma$ is a s. w. strategy then its exponential $\oc\sigma$ is surjective and winning.  
+
+  Lastly, we observe that if $A,B$ are games then the comultiplication $\oc A \to \oc\oc A$, dereliction $\oc A \to A$, weakening $\oc A\to I$, contraction $\oc A \to \oc A \tensor \oc A$ and monoidal coherence $\oc A\tensor \oc B \to \oc (A\tensor B)$ are all surjective, winning strategies.
+\end{proof}
+
+\subsubsection{The double category \MonCat}
+
+The natural setting for much of the work we will do is the double category \MonCat, introduced in \cite{AdjointsInDoubleCategories}.  
+A \emph{double category} is an internal category in $\Cat$, but it is more useful to think of it as a new sort of category made up of the following data:
+\begin{itemize}
+  \item It has \emph{objects}.
+  \item It has two classes of \emph{morphisms}: the \emph{horizontal} morphisms and the \emph{vertical} morphisms, which go between objects.  
+    Horizontal morphisms can be composed with other horizontal morphisms, and vertical morphisms with vertical morphisms.
+  \item It has \emph{cells} $\alpha$, which are associated to squares of the form
+    \[
+      \begin{tikzcd}[row sep=large, column sep=large]
+        A \arrow[r, "F", ""'{name=F}] \arrow[d, "g"']
+          & B \arrow[d, "f"] \\
+        C \arrow[r, "G"', ""{name=G}]
+          & D
+        \arrow[Rightarrow, from=F, to=G, "\alpha"]
+      \end{tikzcd}
+      \]
+    The cell $\alpha$ is associated to the square in the same way that an ordinary morphism is associated to its source and target objects, so there may be more than one cell corrseponding to a particular square.  
+    We may compose cells either horizontally or vertically, as long as the squares in question can be pasted together along an edge.  
+    For example, horizontal composition is shown in Figure \ref{fig:horizontal-cell-composition}.
+\end{itemize}
+
+\begin{figure}
+  \begin{mathpar}
+    \begin{tikzcd}[row sep=large, column sep=large]
+      A' \arrow[r, "F", ""'{name=F}] \arrow[d, "g"']
+        & B' \arrow[r, "H", ""'{name=H}] \arrow[d, "f"]
+          & C' \arrow[d, "h"] \\
+      A \arrow[r, "G"', ""{name=G}]
+        & B \arrow[r, "F'"', ""{name=Fprime}]
+          & C
+      \arrow[Rightarrow, from=F, to=G, "\alpha"]
+      \arrow[Rightarrow, from=H, to=Fprime, "\beta"]
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}[row sep=large, column sep=large]
+      A' \arrow[r, "F;H", ""'{name=FH}] \arrow[d, "g"']
+        & C' \arrow[d, "h"] \\
+      A \arrow[r, "G;F'"', ""{name=GFprime}]
+        & C
+      \arrow[Rightarrow, from=FH, to=GFprime, "(\alpha|\beta)"]
+    \end{tikzcd}
+  \end{mathpar}
+  \caption{We can compose cells between compatible squares horizontally or vertically.  
+  Here, we are composing cells horizontally.}
+  \label{fig:horizontal-cell-composition}
+\end{figure}
+
+The particular double category we are going to be interested in is the double category $\MonCat$ of monoidal categories.  
+The objects of $\MonCat$ are monoidal categories, horizontal morphisms are lax monoidal functors and vertical morphisms are oplax monoidal functors.  
+The definition of a cell in $\MonCat$ is a bit less familiar, but appears in \cite{AdjointsInDoubleCategories}.  
+  Let $\C'$,$C'$,$\D'$,$\D$ be monoidal categories, let $f\from\C'\to\C$, $g\from \D'\to \D$ be oplax monoidal functors and let $F\from\D'\to\C'$, $G\from\D\to\C$ be lax monoidal functors, as in Figure \ref{fig:generalized-monoidal-setup}.
+
+  \begin{figure}
+    \[
+      \begin{tikzcd}[row sep=large, column sep=large]
+        \D' \arrow[r, "F", ""'{name=F}] \arrow[d, "g"']
+          & \C' \arrow[d, "f"] \\
+        \D \arrow[r, "G"', ""{name=G}]
+          & \C
+        \arrow[Rightarrow, from=F, to=G, "\phi"]
+      \end{tikzcd}
+      \]
+    \caption{A generalized monoidal natural transformation $\phi$ is a particular sort of natural transformation between composites of lax and oplax monoidal functors.}
+    \label{fig:generalized-monoidal-setup}
+  \end{figure}
+
+We say that a natural transformation $\phi\from fF\bigto Gg$ is a \emph{generalized monoidal natural transformation} if the following two diagrams commute for all objects $X,Y$ of $\D'$:
+\begin{mathpar}
+  \begin{tikzcd}
+    f F X \tensor f F Y \arrow[r, "\phi_X \tensor \phi_Y"]
+      & G g X \tensor G g Y \arrow[d, "m_G"] \\
+    f (F X \tensor F Y) \arrow[u, "m_f"] \arrow[d, "f m_F"']
+      & G (g X \tensor g Y) \\
+    f F (X \tensor Y) \arrow[r, "\phi_{X \tensor Y}"]
+      & G g (X \tensor Y) \arrow[u, "G m_g"']
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}[column sep=small, row sep=small]
+    %
+      & f F I_{\D'} \arrow[rr, "\phi_I"]
+        &[-1.2em]
+          &[-1.2em] G g I_{\D'} \arrow[dr, "G \epsilon_g"]
+            & \\
+    f I_{\C'} \arrow[ur, "f \epsilon_F"] \arrow[drr, "\epsilon_f"]
+      &
+        &
+          &
+            & G I_{\D} \\
+    %
+      &
+        & I_{\C} \arrow[urr, "\epsilon_G"]
+          &
+            &
+  \end{tikzcd}
+\end{mathpar}
+
+We will, in fact, be more interested in the sub-double category $\SymmMonCat$ of $\MonCat$, whose objects are the symmetric monoidal categories, and where the horizontal and vertical morphisms are lax and oplax \emph{symmetric} monoidal functors.  
+The definition of a generalized monoidal natural transformation is unchanged in the symmetric case.
+
+\subsubsection{Multiplicative natural transformations}
+
+We observed that if $\sigma$ is a surjective strategy from a game $A$ to a game $B$, then $\top_A;\sigma=\top_B$.  
+In other words, $\top_A$ defines a natural transformation from $I$ to the inclusion of $\G_{sw}$ into our model of nondeterministic PCF.  
+We shall see that this is in fact a generalized monoidal natural transformation.
+
+Rather than use this natural transformation $I \to j(X)$ directly, however, it will be technically convenient to consider instead the related natural transformation from $A \to j(X) \tensor A$.
+
+\begin{proposition}
+  Let $\C',\C,\C''$ be monoidal categories, let $j$ be an oplax monoidal functor from $\C'$ to $\C$ and let $J$ be a lax monoidal functor from $\C$ to $\C''$.  Let $\phi_X\from I \to JjX$ be a generalized monoidal natural transformation and define a natural transformation $\phi_{X,A}^\infty\from JA \to J (jX \tensor A)$ to be given by the following composite:
+  \[
+    \begin{tikzcd}
+      J A \arrow[r, "\lunit"]
+        & I \tensor J A \arrow[r, "\phi_X\tensor J A"]
+          & J j X \tensor J A \arrow[r, "m_J"]
+            & J (j X \tensor A)
+    \end{tikzcd}\,.
+    \]
+  Then $\phi^\infty$ makes the following diagrams commute:
+  \begin{mathpar}
+    \begin{tikzcd}
+      J A \arrow[r, "\phi^\infty_{X,A}"] \arrow[d, "\phi^\infty_{Y\tensor X,A}"']
+        & J (j X \tensor A) \arrow[r, "\phi^\infty_{Y,j X \tensor A}"]
+          &[24pt] J (jY \tensor (j X \tensor A)) \\
+      J (j (Y \tensor X) \tensor A) \arrow[rr, "J (m_j \tensor A)"]
+        &
+          & J ((j Y \tensor j X) \tensor A) \arrow[u, "J \assoc"']
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      JA \arrow[r, "\phi^\infty_{I,A}"] \arrow[dr, "\lunit"']
+        & J (j I \tensor A) \arrow[d, "J(\epsilon_j\tensor A)"] \\
+      %
+        & I \tensor J A
+    \end{tikzcd}\,.
+  \end{mathpar}
+\end{proposition}
+
+We say that $\phi^\infty$ is a \emph{multiplicative natural transformation}.
+
+\begin{definition}
+  Let $\C',\C$ be monoidal categories and let $j$ be an oplax monoidal functor from $\C'$ to $\C$.  Let $\C''$ be a category and let $J$ be a functor from $\C$ to $\C''$.  
+  Let $\psi_{X,A}\from J A \to J(j X \tensor A)$ be a natural transformation.  
+  We say that $\psi$ is \emph{multiplicative} if the following diagrams commute for all objects $X,Y$ of $\C'$ and all objects $A$ of $\C$:
+\end{definition}
+
+One reason why we are interested in the rather strange-looking definition of a dimonoidal natural transformation is that they give rise to multiplicative natural transformations.
+
+\begin{proposition}
+  Let $\C',\C,\C''$ be monoidal categories, let $j$ be an oplax monoidal functor from $\C'$ to $\C$ and let $J$ be a lax monoidal functor from $\C$ to $\C''$.  
+  Let $\phi_X\from I \to J j X$ be a dimonoidal natural transformation:
+  \[
+    \begin{tikzcd}[row sep=24pt, column sep=36pt]
+      \C' \arrow[r, "j"] \arrow[d, "()"']
+        & \C \arrow[d, "J"] \\
+      I \arrow[r, "I"]
+        \arrow[ur,
+               Rightarrow,
+               start anchor={[xshift=6pt, yshift=4pt]},
+               end anchor={[xshift=-6pt, yshift=-4pt]},
+               "\phi"]
+        & \C''
+    \end{tikzcd}\,.
+    \]
+  Define a natural transformation $\phi^\infty_{X,A}\from J A \to J (j X \tensor A)$ as follows:
+  \[
+    \phi^\infty_{X,A} =
+    \begin{tikzcd}
+      J A \arrow[r, "\lunit\inv"]
+        & I \tensor J A \arrow[r, "\phi_X\tensor J A"]
+          & J j X \tensor J A \arrow[r, "m_J"]
+            & J (j X \tensor A)
+    \end{tikzcd}
+    \]
+  Then $\phi^\infty$ is multiplicative.
+\end{proposition}
+
+We can also diagonally compose a multiplicative natural transformation with a dimonoidal natural transformation.
+
+\begin{proposition}
+  Let $\C'$, $\C$, $\C''$, $\D'$, $\D$ be monoidal categories, let $F'\from \D'\to\C'$, $G \from \D \to \C$ and $J\from \C\to\C''$ be lax monoidal functors and let $g\from D'\to D$ and $j\from \C' \to \C$ be oplax monoidal functors, as in Figure \ref{fig:dimonoidal-multiplicative}.
+
+  \begin{figure}
+    \begin{mathpar}
+      \begin{tikzcd}[row sep=24pt, column sep=36pt]
+        \D' \arrow[r, "g"] \arrow[d, "F"']
+          & \D \arrow[d, "G"] \\
+        \C' \arrow[r, "j"']
+            \arrow[ur,
+                   Rightarrow,
+                   start anchor={[xshift=6pt, yshift=4pt]},
+                   end anchor={[xshift=-6pt, yshift=-4pt]},
+                   "\phi"]
+          & \C
+      \end{tikzcd}
+      \and
+      \begin{tikzcd}[row sep=24pt, column sep=36pt]
+        \C'\times \C \arrow[r, "j\times\id"] \arrow[d, "\pr_2"']
+          & \C \times \C \arrow[r, "\_\tensor\_"]
+            & \C \arrow[d, "J"] \\
+        \C \arrow[rr, "J"']
+           \arrow[urr,
+                  Rightarrow,
+                  start anchor={[xshift=12pt, yshift=8pt]},
+                  end anchor={[xshift=-12pt, yshift=-8pt]},
+                  "\psi"]
+          &
+            & \C''
+      \end{tikzcd}
+    \end{mathpar}
+    \caption{We can compose a multiplicative natural transformation $\psi_{X,A}\from J A \bigto J (j X \tensor A)$ with a dimonoidal natural transformation $\phi \from j F \bigto G g$.}
+    \label{fig:dimonoidal-multiplicative}
+  \end{figure}
+
+  Let $\psi_{X,A}\from J A \bigto J (jX \tensor A)$ be a multiplicative natural transformation and let $\phi\from j F \bigto G g$ be a dimonoidal natural transformation.  
+  Then the natural transformation $(\psi\bbslash\phi)_{X,A}\from J G A \bigto J G (g X \tensor A)$ defined by
+  \[
+    \begin{tikzcd}
+      J G A \arrow[r, "\psi_{F X, G A}"]
+        &[12pt] J (j F X \tensor G A) \arrow[r, "J (\phi_X \tensor G A)"]
+          &[24pt] J (G g X \tensor G A) \arrow[r, "J m_G"]
+            & J G (g X \tensor A)
+    \end{tikzcd}
+    \]
+  is multiplicative.
+\end{proposition}
+
+\begin{remark}
+  In the case that $\psi=(\phi')^\infty$, it is easy to check that 
+  \[
+    \psi\bbslash\phi = (\phi')^\infty \bbslash \phi = (\phi'\bbslash\phi)^\infty\,.
+    \]
+\end{remark}
+
+\subsection{Cones}
+
+\subsubsection{Nondeterminism and deterministic factorization}
+
+In this section, we will write $\G_{ND}$ to refer to a putative model of nondeterministic PCF containing the usual game semantics model of PCF as a sub-linear category.  
+
+We observed that the important feature of surjective winning strategies is that they preserve the nondeterministic oracle $\top$: if $\sigma\from A\implies B$ is surjective, then $\top_A;\sigma = \top_B$.  
+
+Another way of expressing this is that $\top$ is a natural transformation in the following diagram:
+
+\[
+  \begin{tikzcd}
+    \G_{sw} \arrow[r, hook] \arrow[d, "()"']
+      & \G \arrow[d, hook] \\
+    I \arrow[r, "I"'] \arrow[ur, "\top", Rightarrow]
+      & \G_{ND}
+  \end{tikzcd}
+  \]
+
+I.e., $\top$ is a natural transformation from the constant $I$ functor from $\G_{sw}$ to $\G_{ND}$ to the inclusion functor.
+
+We will make one more assumption about the category $\G_{ND}$, which will capture the fact that $\G_{ND}$ is the smallest category obtained by adjoining the nondeterministic strategies $\top$ on to our original category $\G$.  
+
+\begin{definition}[Factorization]
+  Let $\C', \C, \C''$ be monoidal categories, let
+  \[
+    \begin{tikzcd}
+      \C' \arrow[r, "j"]
+        & \C \arrow[r, "J"]
+          & \C''
+    \end{tikzcd}
+    \]
+  be functors, where $J$ is lax monoidal, and let $\phi$ be a natural transformation from $I$ to $J\circ j$.
+
+  Then we say that $\C''$ satisfies $\phi$-\emph{factorization} if:
+  \begin{itemize}
+    \item The functor $J$ is essentially surjective.  
+    \item If $A$, $B$ are objects of $\C$, then every morphism from $JA$ to $JB$ in $\C''$ is of the form
+      \[
+        \begin{tikzcd}
+          JA \arrow[r, "\lunit\inv"]
+            & I \tensor JA \arrow[r, "\phi_X \tensor \id"]
+              & JjX \tensor JA \arrow[r, "m_J"]
+                & J(jX \tensor A) \arrow[r, "Jf"]
+                  & JB
+        \end{tikzcd}
+        \]
+      where $X$ is some object of $\C'$ and $f$ is some morphism in $\G$ from $jX\tensor A$ to $B$.
+  \end{itemize}
+\end{definition}
+
+\begin{example}
+  \begin{enumerate}
+    \item In \cite{mcCHFiniteND}, Harmer and McCusker construct a game semantics model $\G_{fnd}$ of finite nondeterminism and prove that if $A$ is any game in that model, then every nondeterministic strategy $\sigma$ for $A$ can be written as the composition of some strategy $Det(\sigma)\from (\bN\to\bN)\to A$ with a fixed strategy $oracle\from I\to(\bN\to\bN)$.  
+      
+      In our setting, this is the case where $\C'=I$, $\C''$ is the category $\G_{fnd}$ and $\C$ is its subcategory of games and \emph{deterministic} strategies.  
+      In this case, the functor $j$ is the (oplax monoidal) functor sending $I$ to $\bN\to\bN$, and the natural transformation $\phi$ has the strategy $oracle$ as its unique component.
+
+    \item For a model of PCF with \emph{countable} nondeterminism, that is, PCF extended by a `deterministic oracle' $\wn\from\bN$, we might expect our category to satisfy a factorization rule such that every strategy might be written as the composition of some deterministic strategy with the denotation $\top_{\bN}$ of $\wn$.  
+
+      In this case, we have $\C'=I$ again, $\C''$ is our desired model of PCF with countable nondeterminism and $\C$ is its subcategory of deterministic strategies.  
+      The functor $j$ sends $I$ to $\bN$ and the unique component of the natural transformation $\phi$ is the strategy $\top_{\bN}$.  
+
+    \item An example not relating to nondeterminism.  
+      In the paper \cite{SamsonGuyIAPassive}, Abramsky and McCusker create a model of Idealized Algol based upon a category of games and \emph{visible} strategies.  
+      One of the results they prove in the paper is that any visible strategy $\sigma\from I\to A$ may be written as the composition of an \emph{innocent} strategy $\tau\from \oc\Var[X]\implies A$ with the strategy $\cell_{X,x_0}\from I\implies\oc\Var[X]$, where $X$ is some set and $x_0\in X$.
+
+      In this case, $\C'$ is the category of pointed sets, $\C$ is the category of games and innocent strategies and $\C''$ is the category of games and visible strategies.  
+      The functor $J$ sends $(X, x_0)$ to the game $\Var[X]$, while the natural transformation $\phi$ is given by $\phi_{(X, x_0)} = \cell_{X,x_0}$.
+  \end{enumerate}
+\end{example}
+
+We can phrase this factorization definition in terms similar to the ones we used above.
+
+\begin{proposition}
+  Let $\C',\C,\C''$ be monoidal categories and let $j\from \C'\to \C$ and $J\from \C\to \C''$ be functors, where $J$ is lax monoidal.  
+
+  Let $\phi$ be a dimonoidal natural transformation from $I$ to $J\circ j$ and suppose that $\C''$ satisfies $\phi$-factorization.
+
+  Now suppose that $\D$ is some other category and that we have a lax monoidal functor $\H\from \C \to \D$ and a dimonoidal natural transformation $\psi\from I \to \H\circ J$.  
+  Suppose also that we have a lax monoidal functor $\F\from \D\to\C''$ such that $\F\circ I = I$ and $\F\circ\H=J$.
+
+  Then $\F$ is essentially surjective and full.
+\end{proposition}
+
+\subsubsection{Cones}
+
+Let $\C'$, $\C$ be monoidal categories and let $j\from \C'\to \C$ be an oplax monoidal functor.  
+
+\begin{proposition}
+  \label{prop:cone}
+  There is a monoidal category $C_j$ together with a lax monoidal functor $J\from\C \to C_j$ and a dimonoidal natural transformation $\Phi$ from $I$ to $J\circ j$.  
+  Moreover, $C_j$, $J$ and $\Phi$ are universal in the sense that if $\D$, $\H$ and $\psi$ are a similar triple, then there is a functor $\F\from C_j\to \D$ making ... commute.
+\end{proposition}
+
+\begin{proof}
+  We first define the category $C_j$.  
+  The objects of $C_j$ are the objects of $\C$.
+  If $A,B$ are objects of $\C$, then the set of morphisms from $A$ to $B$ is the colimit of the diagram
+  \[
+    \begin{tikzcd}
+      \oppcat{\C'} \arrow[r, "\oppcat j"]
+        & \oppcat\C \arrow[r, "{\C[\blank\tensor A, B]}"]
+          &[24pt] \Set
+    \end{tikzcd}\,.
+    \]
+  That is, a morphism from $A$ to $B$ is a pair $(X, f)$, where $X$ is an object of $\C'$, $f$ is a morphism from $jX \tensor A \to B$ and $(X, f)$ and $(X', f')$ are considered to be equivalent if there is some morphism $h\from X'\to X$ in $\C'$ making the following diagram commute:
+  \[
+    \begin{tikzcd}
+      j X' \tensor A \arrow[r, "f'"] \arrow[d, "j h \tensor A"']
+        & B \\
+      j X \tensor A \arrow[ur, "f"']
+        &
+    \end{tikzcd}\,.
+    \]
+  We define composition as follows: let $A,B,C$ be objects of $\C$, let $X,Y$ be objects of $C'$, and let $f\from X\to A \implies B$, $g\from Y\tensor B\to C$ be morphisms in $\C$, so that $(X,\sigma)$ is a morphism from $A$ to $B$ and $(Y,\tau)$ a morphism from $B$ to $C$ in $C_j$.
+  Then the composition of $\sigma$ with $\tau$ is given by the pair $(Y\tensor X,f;g)$, where $f;g$ is the following composite:
+  \[
+    \begin{tikzcd}[cramped]
+      j(Y\tensor X)\tensor A \arrow[r, "m_j\tensor A"]
+        & (jY \tensor jX) \tensor A \arrow[r, "\assoc"]
+          &[-2pt] jY \tensor (jX \tensor A) \arrow[r, "jY \tensor f"]
+            & jY \tensor B \arrow[r, "g"]
+              &[-10pt] C
+    \end{tikzcd}\,.
+    \]
+  Well-definedness and associativity of this composition are by standard coherence theorems for monoidal categories and lax monoidal functors.
+
+  We will not define the monoidal structure on $C_j$ yet.  
+  Instead, we will first prove its universal property, and then use that to derive the monoidal structure from that of $\C'$ and $\C$.  
+
+  First we define the functor $J\from \C\to C_j$ and the natural transformation $\Phi\from I\Rightarrow J\circ j$.  
+  Given an object $A$ of $\C$, we set $J(A) = A$.  
+  Given a morphism $f\from A \to B$ in $\C$, we set $J(f)$ to be the morphism $(I, \tilde{f})$ in $C_j$, where $\tilde{f}$ is the composite
+  \[
+    \begin{tikzcd}
+      jI\tensor A \arrow[r, "\epsilon_j\tensor A"]
+        & I\tensor A \arrow[r, "\lunit_A"]
+          & A \arrow[r, "f"]
+            & B
+    \end{tikzcd}\,.
+    \]
+
+  If $X$ is an object of $\C'$, then we define a morphism $\Phi_X\from I \to JjX=jX$ to be given by $\Phi_X = (X, \phi_X)$, where $\phi_X$ is the morphism
+  \[
+    \begin{tikzcd}
+      jX \tensor I \arrow[r, "\runit"]
+        & jX
+    \end{tikzcd}\,.
+    \]
+
+  We need to show that $\Phi$ is indeed a natural transformation.  
+  In order to show that, let $X,Y$ be two morphisms and let $f\from X \to Y$ be a morphism.  
+  We need to show that the following diagram commutes:
+  \[
+    \begin{tikzcd}
+      I \arrow[r, "\phi_X"] \arrow[dr, "\phi_Y"']
+        & J j X \arrow[d, "J j f"] \\
+      %
+        & J j Y
+    \end{tikzcd}
+    \]
+
+  Computed inside the category $\C$, the top morphism is equal to the composite
+  \[
+    \begin{tikzcd}
+      j (I \tensor X) \tensor I \arrow[r, "m_j\tensor I"]
+        & (j I \tensor j X) \tensor I \arrow[r, "\assoc"]
+          & j I \tensor (j X \tensor I) \arrow[r, "j I \tensor \runit"]
+            & j I \tensor j X \arrow[r, "\epsilon_j\tensor j X"]
+              & I \tensor j X \arrow[r, "\lunit"]
+                & j X \arrow[r, "j f"]
+                  & j Y
+    \end{tikzcd}
+    \]
+
+  Suppose that we have a monoidal category $\D$, a monoidal functor $\H\from\C\to\D$ and a monoidal natural transformation $\psi\from I \to \H\circ j$.  
+  We define a functor $\F\from C_j\to \D$ as follows: if $A$ is an object of $C_j$ then $A$ is, \emph{a priori}, an object of $\C$.  
+  We set $\F(A) = \H(A)$.  
+
+  Meanwhile, if $f\from jX \tensor A \to B$ is a morphism from $A$ to $B$ in $C_j$, then we set $\F(f)$ to be the composite
+  \[
+    \begin{tikzcd}
+      \H A \arrow[r, "\lunit\inv"]
+        & I \tensor \H A \arrow[r, "\psi_X\tensor \H A"]
+          &[18pt] \H j X \tensor \H A \arrow[r, "m_\H"]
+            & \H(jX\tensor A) \arrow[r, "Hf"]
+              & \H B
+    \end{tikzcd}\,.
+    \]
+  \begin{remark}
+    Here we see the connection with factorization results: the functor $\F$ is, in effect, `substituting in' the special morphisms $\psi_X$ to the arbitrary hole $X$ that we have introduced into the formula.
+  \end{remark}
+
+  \begin{SidewaysFigure}
+    \[
+      \begin{tikzcd}[ampersand replacement=\&, row sep=48pt, column sep=36pt, labels={description}]
+        HjX \tensor HA \arrow[rrr, "m_H"] \arrow[rrd, "\lunit\inv"]
+          \&
+            \&
+              \& H(jX \tensor A) \arrow[r, "Hf"] \arrow[ddd, "\lunit\inv"]
+                \& HB \arrow[ddd, "\lunit\inv"] \\[24pt]
+        %
+          \& I \tensor (I \tensor HA) \arrow[r, "I\tensor(\psi_X\tensor HA)"' auto] \arrow[d, "\assoc\inv"] \arrow[ddr, "\psi_Y\tensor(\psi_X\tensor HA)"]
+            \& I \tensor (HjX \tensor HA) \arrow[dd, "\psi_Y\tensor(HjX\tensor HA)"] \arrow[ddr, "I\tensor m_H"]
+              \&
+                \& \\
+        %
+          \& (I \tensor I) \tensor HA \arrow[d, "(\psi_Y\tensor\psi_X)\tensor HA"]
+            \&
+              \&
+                \& \\
+        I \tensor HA \arrow[uuu, "\psi_X\tensor HA"] \arrow[uur, "\lunit\inv"] \arrow[ur, "\lunit\inv\tensor H_A" description] \arrow[d, "\psi_{Y\tensor X}\tensor HA"] \arrow[dr, phantom, "\kreuz" yshift=6pt]
+          \& (HjY \tensor HjX) \tensor HA \arrow[r, "\assoc"] \arrow[d, "m_H\tensor HA"]
+            \& HjY \tensor (HjX \tensor HA) \arrow[d, "HjY\tensor m_H"]
+              \& I \tensor H(jX \tensor A) \arrow[dl, "\psi_Y\tensor\id"] \arrow[r, "I\tensor Hf" auto]
+                \& I \tensor HB \arrow[dl, "\psi_Y\tensor HB"] \\
+        Hj(Y \tensor X) \tensor HA \arrow[r, "H(m_j)\tensor HA" auto] \arrow[d, "m_H"]
+          \& H(jY \tensor jX) \tensor HA \arrow[d, "m_H"]
+            \& HjY \tensor H(jX \tensor A) \arrow[r, "HjY\tensor Hf" auto] \arrow[d, "m_H"]
+              \& HjY \tensor HB \arrow[d, "m_H"]
+                \& \\
+        H(j(Y \tensor X) \tensor A) \arrow[r, "H(m_j\tensor A)" auto]
+          \& H((jY \tensor jX) \tensor A) \arrow[r, "H(\assoc)" auto]
+            \& H(jY \tensor (jX \tensor A)) \arrow[r, "H(jY\tensor f)" auto]
+              \& H(jY \tensor B)
+                \&
+      \end{tikzcd}
+      \]
+    2q~
+    2t
+    \caption{A diagram showing that the functor $\F$ we defined in the proof of Proposition \ref{prop:cone} preserves composition.  
+    The trapezium marked \kreuz{} commutes because $\psi$ is a dimonoidal natural transformation; commutativity of the other cells comes from the standard monoidal theory.}
+  \end{SidewaysFigure}
+
+  We need to check that $\F\circ J = \H$.  
+  This is certainly the case on objects.  
+  For morphisms, let $A,B$ be objects of $\C$ and let $f\from A\to B$ be a morphism.  
+  Then $\F J(f)$ is the following composite:
+  \[
+    \begin{tikzcd}
+      \H A \arrow[d, "\lunit\inv"']
+        &
+          &
+            & 
+              & \H B \\
+      I\tensor \H A \arrow[r, "\psi_I\tensor\H A"]
+        & \H j I \tensor \H A \arrow[r, "m_\H"]
+          & \H(jI \tensor A) \arrow[r, "\H(jI \tensor A)"]
+            & \H(I \tensor A) \arrow[r, "\H\lunit"]
+              & \H A \arrow[u, "\H f"']
+    \end{tikzcd}\,.
+    \]
+  In order to show that this is in fact equal to $\H f$, it is sufficient to show that the composition of the middle four morphisms is equal to the left unitor $\lunit_{\H A}$:
+  \[
+    \begin{tikzcd}
+      \H A
+        &
+          & \H(I\tensor A) \arrow[ll, "\H(\lunit_A)"', squiggly] \\
+      I \tensor \H A \arrow[u, "\lunit_{\H A}"] \arrow[r, "\epsilon_\H\tensor\H A"] \arrow[dr, "\psi_I\tensor\H A"', squiggly]
+        & \H I \tensor \H A \arrow[ur, "m_\H"]
+          & \\
+      %
+        & \H j I \tensor \H A \arrow[u, "\H\epsilon_j\tensor\H A"'] \arrow[r, "m_\H", squiggly]
+          & \H (jI \tensor A) \arrow[uu, "\H(\epsilon_j\tensor A)"', squiggly]
+    \end{tikzcd}\,.
+    \]
+  Here, commutativity of the two trapezia comes from the fact that $\H$ is a monoidal functor and commutativity of the lower-left triangle is because $\psi$ is a dimonoidal natural transformation.
+
+\end{proof}
+
+\section{Denotational Semantics}
+
+Let $\G$ be our game semantics model of PCF and let $\bN_{sw}$ be the one-object subcategory on the object $\oc \bN$ where the morphisms are the surjective winning strategies $\oc\bN\to\oc\bN$ and the tensor product of strategies is given by their composition.  
+
+Let $j\from \G_{sw}\to\G$ be the functor induced by the comonoid structure on $\oc \bN$.
+
+Then the natural functor $J\from\G\to C_j$ induces a semantics for PCF on $C_j$.  
+
+Now given some term $M\from T$ of nondeterministic PCF, we may write $M$ as $C[\wn]$, where $C$ is a PCF context, where the hole may appear multiple times.  
+We define the denotation $\deno{M}=\deno{C[\wn]}$ to be the following composite in $C_j$:
+\[
+  \deno{C[\wn]} =
+  \begin{tikzcd}
+    I \arrow[r, "\runit"]
+      & I \tensor I \arrow[r, "\Phi_{\oc \bN}\tensor \deno{\lambda n.C[n]}"]
+        &[48pt] \oc \bN \tensor (\oc \bN \implies \deno{T}) \arrow[r, "\text{eval}"]
+          & \deno{T}
+  \end{tikzcd}\,.
+  \]
+In other words, we have taken the denotation of the term $\lambda n.C[n]$ and substituted in the strategy $\Phi_{\oc \bN}$, which is our representation of the nondeterministic choice $\wn$.
+
+$\deno{C[\wn]}$ is a morphism from $I$ to $\deno{T}$ in $C_j$, but it is an equivalence class of morphisms from $\oc N$ to $\deno{T}$ in $\G$.  
+A particular representative of that equivalence class is given by the denotation of the term $\lambda n.C[n]$.  
+We call this representative the \emph{canonical presentation} of $\deno{M}$.  
+
+\begin{lemma}
+  \label{lem:sound-ad-lemma}
+  Let $M=C[\wn]$ be a term of nondeterministic PCF of type $\nat$ and let $\pi$ be some evaluation of $M$.  
+  Let $\sigma_M$ be the canonical presentation of $\deno{M}$; i.e., the denotation of $\lambda n.C[n]$.
+
+  Then there is some total strategy $\sigma_\pi\from \oc\bN$ such that the composite $\sigma_\pi;\sigma_M$ captures the result of the evaluation $\pi$ as follows:
+  \begin{itemize}
+    \item If $\pi$ terminates at some value $m$, then $\sigma_\pi;\sigma_M$ is the strategy for $\bN$ that responds with the value $m$.
+    \item If $\pi$ is infinite, then $\sigma_\pi;\sigma_M$ is the non-total strategy $\bot$ for $\bN$.
+  \end{itemize}
+\end{lemma}
+
+\begin{proof}
+  We use the fact that our base category $\G$ of games gives rise to a sound model for Idealized Algol.  
+  For Hyland-Ong games, this model may be defined so that it is fully abstract \cite{SamsonGuyIAPassive}.  
+  However, we will not require full abstraction for the model, so for Abramsky-Jagadeesan games we can use Laird's semantics for a PCF-like language with coroutines \cite{LairdCofCommCom}, since IA may be faithfully modelled within that language.
+
+  Suppose first that $\pi$ is a finite evaluation.  
+  Then $\pi$ gives rise to a finite sequence $n_1,\cdots, n_k$ of natural numbers corrseponding to the different choices of nondeterminism made during the evaluation of $\pi$.  
+  We can now simulate the behaviour of $\wn$ during this evaluation by creating a (deterministic) device that will return these values in order each time it is called:
+  \begin{align*}
+    &N_{n_1,\cdots,n_k,d} \from (\nat \to \nat) \to \nat \\
+    &N_{n_1,\cdots,n_k,d} = \lambda f . \new (\lambda v.v\coloneqq 0; f(v\coloneqq(\suc\deref v); \case_{k+1}\;\deref v\;\Omega\;n_1\;\cdots\;n_k\;d))\,.
+  \end{align*}
+  Here, $\case_k\;a\;n_0\;\cdots\;n_k\;d$ evaluates to $n_i$ if $a$ evaluates to $i$ and evaluates to $d$ if $a$ evaluates to a value greater than $k$.  
+  This function maintains a new local variable $v$, which it increments each time it is called before looking up the appropriate value in the lookup table.
+
+  By working through the construction of the denotational semantics of $\new$ as in \cite{SamsonGuyIAPassive}, we see that, for any term $F\from\nat\to\nat$, the denotation of $N_{n_1,\cdots,n_k,d}M$ is given by the composite
+  \[
+    I \xrightarrow{\cell_{\bN,0}}
+      \oc \Var[\bN] \xrightarrow{\deno{\lambda v.v\coloneqq (\suc \deref v);\;\case_{k+1}\;\deref v\;\Omega\;n_1\;\cdots\;n_k\;d}}
+        \oc \bN \xrightarrow{\deno{F}}
+          \bN
+    \]
+
+  We write $\sigma_\pi\from I\to \oc\bN$ for the composite of the two arrows on the left.  
+  Here, $d$ is some arbitrary natural number.  
+  Its value does not affect the the composition $\sigma_\pi;\sigma_M$ and it is only included to satisfy the requirement that $\sigma_\pi$ be a total strategy.  
+  Plays in $\sigma_\pi$ take the form
+  \[
+    q\;n_1\;q\;n_2\;\cdots\;q\;n_k\;q\;d\;q\;d\;\cdots
+    \]
+  or some subsequence thereof.  
+
+  Now $\sigma_\pi;\sigma_M$ is the denotation of the term $N_{n_1,\cdots,n_k}(\lambda n.C[n])$, which corresponds to evaluation of the term-in-context
+  \[
+    v\from\Var[\bN]\vdash v\coloneqq 0;\;C[v\coloneqq (\suc\deref v); \case_{k+1}\;\deref v\;\Omega\;n_1\;\cdots\;n_k\;d]\,.
+    \]
+  This term evaluates just as $C[\wn]$ does, except that we use the device we have constructed to simulate the nondeterministic numbers.  
+  By following the evaluation of this term in parallel with the evaluation $\pi$ of $C[\wn]$, we can see that both evaluations have the same behaviour: they either both converge to the same number, or they both diverge.  
+  By Soundness and Computational Adequacy for the model of Idealized Algol, this means that $\sigma_\pi;\sigma_M$ is the strategy for $\bN$ that captures the eventual behaviour of the evaluation path $\pi$.
+
+  \begin{remark}
+    This is the same as the common Software Engineering practice of `mocking' a random number generator for testing purposes by forcing it to always produce the same sequence of numbers.
+  \end{remark}
+
+  In the case that $\pi$ evaluates $\wn$ infinitely many times, producing numbers $n_1,n_2,\cdots$, we define approximants $N_{n_1,\cdots,n_k}$, which produce the numbers $n_1$ up to $n_k$ and then diverge the next time they are called.  
+  We set $\sigma_\pi^{(k)}$ to be the denotation of $N_{n_1,\cdots,n_k,\Omega}$, considered as a strategy $I \to \oc \bN$ as above.  
+  This time, the mocked nondeterminism will answer with $n_k$ each of the first $k$ times it is called, but will diverge on the $(k + 1)$-th time.
+  Since $\pi$ evaluates $\wn$ infinitely many times, this means that $\sigma_\pi^{(k)};\sigma_M=\bot$.
+
+  Set $\sigma_\pi$ to be the supremum of the $\sigma_\pi^{(k)}$, under the inclusion order.  
+  Then, since composition is continuous with respect to inclusion in deterministic Game Semantics, $\sigma_\pi;\sigma_M$ must also be the divergent strategy $\bot$.
+
+  It remains to show that $\sigma_\pi$ is a total strategy.  
+  We can see this combinatorially by observing that each $\sigma_\pi^{(k)}$ has unique maximal play
+  \[
+    q\;n_1\;\cdots\;q\;n_k\;q\,,
+    \]
+  after which point the strategy has no reply.  
+  This means that the supremum $\sigma_\pi$ has unique maximal play
+  \[
+    q\;n_1\;q\;n_2\;\cdots\,,
+    \]
+  which is infinite, and so the strategy is total.
+\end{proof}
+
+From this lemma, we may deduce Soundness and Computational Adequacy for our model.
+
+\begin{proposition}[Soundness]
+  Let $M=C[\wn]\from \nat$ be a term of nondeterministic PCF and let $\sigma\from\oc \bN \to\bN$ be its denotation.  If $M\mustconverge$ then $\sigma$ is a winning strategy.
+\end{proposition}
+
+\begin{proof}
+  Suppose that $\sigma$ is not a winning strategy.  
+  Then there is some play $qs\in\sigma$ such that $qstn\not\in\sigma$ for any sequence $t$ of moves in $\oc\bN$ and any $n\in\bN$.  
+  This sequence $s$ is contained inside some strategy $\sigma_\pi$ for $\oc\bN$, which can be viewed, as in the proof of Lemma \ref{lem:sound-ad-lemma}, as capturing the behaviour of a particular evaluation path $\pi$ of the term $M$.  
+  Clearly, we have $\sigma_\pi;\sigma=\bot$, and so Lemma \ref{lem:sound-ad-lemma} tells us that the evaluation path $\pi$ must diverge.  
+  So $M\not\mustconverge$.
+\end{proof}
+
+\begin{proposition}[Computational Adequacy]
+  Let $M\from \nat$ be a term of nondeterministic PCF and let $\sigma\from\oc \bN \to\bN$ be its denotation.  If $\sigma$ is a winning strategy then $M\mustconverge$.
+\end{proposition}
+
+\begin{proof}
+  Suppose that $\sigma\from\oc \bN\to \bN$ is a winning strategy.  
+  Let $\pi$ be an evaluation path for $M$.  
+  We claim that $\pi$ converges to some value.  
+  Indeed, there is some strategy $\sigma_\pi$ such that $\pi$ converges to a value if and only if $\sigma_\pi;\sigma$ is a winning strategy.  
+  But $\sigma_\pi;\sigma$ is the composition of winning strategies, so it is winning.
+\end{proof}
+
+\bibliographystyle{alpha}
+\bibliography{../common/phd_bibliography}
+
+\end{document}

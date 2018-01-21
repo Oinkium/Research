@@ -1,0 +1,195 @@
+\begin{thebibliography}{10}
+
+\bibitem{abramskyjagadeesangames}
+Samson Abramsky and Radha Jagadeesan.
+\newblock Games and full completeness for multiplicative linear logic.
+\newblock {\em The Journal of Symbolic Logic}, 59(2):543--574, 1994.
+\newblock URL: \url{http://arxiv.org/abs/1311.6057}.
+
+\bibitem{SamsonGuyIAPassive}
+Samson Abramsky and Guy McCusker.
+\newblock Full abstraction for {Idealized Algol} with passive expressions.
+\newblock {\em Theor. Comput. Sci.}, 227(1-2):3--42, September 1999.
+\newblock URL: \url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}, \href
+  {http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
+  {\path{doi:10.1016/S0304-3975(99)00047-X}}.
+
+\bibitem{AMV}
+S.~Abramsky{ and G. McCusker}.
+\newblock Call-by-value games.
+\newblock In M.~Neilsen and W.~Thomas, editors, {\em Proceedings of CSL '97},
+  pages 1--17. Springer-{V}erlag, 1998.
+\newblock \href {http://dx.doi.org/10.1007/BFb0028004}
+  {\path{doi:10.1007/BFb0028004}}.
+
+\bibitem{AHM}
+S.~Abramsky{, K. Honda and G. McCusker}.
+\newblock A fully abstract games semantics for general references.
+\newblock In {\em Proceedings of LICS '98}. IEEE Press, 1998.
+\newblock \href {http://dx.doi.org/10.1109/LICS.1998.705669}
+  {\path{doi:10.1109/LICS.1998.705669}}.
+
+\bibitem{BerardiTransfiniteGames}
+Stefano Berardi and Ugo de'Liguoro.
+\newblock Total functionals and well-founded strategies.
+\newblock In Jean-Yves Girard, editor, {\em Typed Lambda Calculi and
+  Applications: 4th International Conference, TLCA'99 L'Aquila, Italy, April
+  7--9, 1999 Proceedings}, pages 54--68. Springer Berlin Heidelberg, Berlin,
+  Heidelberg, 1999.
+\newblock URL: \url{http://dx.doi.org/10.1007/3-540-48959-2_6}, \href
+  {http://dx.doi.org/10.1007/3-540-48959-2_6}
+  {\path{doi:10.1007/3-540-48959-2_6}}.
+
+\bibitem{Bierman}
+G.~M. Bierman.
+\newblock {\em What is a categorical model of Intuitionistic Linear Logic?},
+  pages 78--93.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 1995.
+\newblock URL: \url{http://dx.doi.org/10.1007/BFb0014046}, \href
+  {http://dx.doi.org/10.1007/BFb0014046} {\path{doi:10.1007/BFb0014046}}.
+
+\bibitem{blassChoice}
+Andreas Blass.
+\newblock Equivalence of two strong forms of determinacy.
+\newblock {\em Proceedings of the American Mathematical Society},
+  52(1):373--376, 1975.
+\newblock URL: \url{http://www.jstor.org/stable/2040166}.
+
+\bibitem{martinsthesis}
+Martin Churchill, Jim Laird, and Guy McCusker.
+\newblock Imperative programs as proofs via game semantics.
+\newblock {\em CoRR}, abs/1307.2004, 2013.
+\newblock URL: \url{http://arxiv.org/abs/1307.2004}.
+
+\bibitem{Clairambault08aremark}
+Pierre Clairambault.
+\newblock A remark on jim laird’s games category for general references,
+  2008.
+
+\bibitem{RoundCorner}
+W.~John Gowers and James Laird.
+\newblock Sequoidal categories and transfinite games: A coalgebraic approach to
+  stateful objects in game semantics.
+\newblock \href {http://arxiv.org/abs/1706.00035} {\path{arXiv:1706.00035}}.
+
+\bibitem{hyland1997games}
+Martin Hyland.
+\newblock Game semantics.
+\newblock {\em Semantics and logics of computation}, 14:131, 1997.
+
+\bibitem{longgamesbook}
+Neeman Itay.
+\newblock {\em The Determinacy of Long Games}.
+\newblock De Gruyter CY, 2008.
+\newblock URL: \url{//www.degruyter.com/view/product/178683}.
+
+\bibitem{jacobs}
+Bart Jacobs.
+\newblock {\em Introduction to Coalgebra: Towards Mathematics of States and
+  Observation}, volume~59 of {\em Cambridge Tracts in Theoretical Computer
+  Science}.
+\newblock Cambridge University Press, 2016.
+
+\bibitem{Actegory}
+G.~Janelidze and G.M. Kelly.
+\newblock A note on actions of a monoidal category.
+\newblock {\em Theory and Applications of Categories [electronic only]},
+  9:61--91, 2001.
+\newblock URL: \url{http://eudml.org/doc/122510}.
+
+\bibitem{LafontCofCommCom}
+Yves Lafont.
+\newblock {\em Logiques, cat\'{e}gories et machines}.
+\newblock PhD thesis, Universit\'{e} Paris 7, 1988.
+
+\bibitem{laird02}
+J.~Laird.
+\newblock A categorical semantics of higher-order store.
+\newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
+
+\bibitem{LairdLbd}
+J.~Laird.
+\newblock Locally boolean domains.
+\newblock {\em Theoretical Computer Science}, 342(1):132 -- 148, 2005.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0304397505003427},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.tcs.2005.06.007}
+  {\path{doi:http://dx.doi.org/10.1016/j.tcs.2005.06.007}}.
+
+\bibitem{LairdOrdinalGames}
+J.~Laird.
+\newblock Sequential algorithms for unbounded nondeterminism.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 319:271 --
+  287, 2015.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S1571066115000845},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.entcs.2015.12.017}
+  {\path{doi:http://dx.doi.org/10.1016/j.entcs.2015.12.017}}.
+
+\bibitem{LairdCofCommCom}
+James Laird.
+\newblock Functional programs as coroutines: A semantic analysis.
+\newblock {\em Logical methods in computer science}.
+\newblock To appear.
+
+\bibitem{Lambek}
+Joachim Lambek.
+\newblock A fixpoint theorem for complete categories.
+\newblock {\em Mathematische Zeitschrift}, 103(2):151--161, 1968.
+\newblock URL: \url{http://dx.doi.org/10.1007/BF01110627}, \href
+  {http://dx.doi.org/10.1007/BF01110627} {\path{doi:10.1007/BF01110627}}.
+
+\bibitem{LevyGsInfinite}
+Paul~Blain Levy.
+\newblock Infinite trace equivalence.
+\newblock {\em Annals of Pure and Applied Logic}, 151(2):170 -- 198, 2008.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0168007207000887},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.apal.2007.10.007}
+  {\path{doi:http://dx.doi.org/10.1016/j.apal.2007.10.007}}.
+
+\bibitem{Mcsci}
+G.~McCusker.
+\newblock A fully abstract relational model of {S}yntactic {C}ontrol of
+  {I}nterference.
+\newblock In {\em Proceedings of Computer Science Logic '02}, number 2471 in
+  LNCS. Springer, 2002.
+
+\bibitem{MelliesCofCommCom}
+Paul-Andr{\'e} Melli{\`e}s, Nicolas Tabareau, and Christine Tasson.
+\newblock {\em An Explicit Formula for the Free Exponential Modality of Linear
+  Logic}, pages 247--260.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2009.
+\newblock URL: \url{http://dx.doi.org/10.1007/978-3-642-02930-1_21}, \href
+  {http://dx.doi.org/10.1007/978-3-642-02930-1_21}
+  {\path{doi:10.1007/978-3-642-02930-1_21}}.
+
+\bibitem{mycielskiChoice}
+Jan Mycielski.
+\newblock On the axiom of determinateness.
+\newblock {\em Fundamenta Mathematicae}, 53(2):205--224, 1964.
+\newblock URL: \url{http://eudml.org/doc/213736}.
+
+\bibitem{RoscoeCspInfinite}
+A.~W. Roscoe.
+\newblock Unbounded non-determinism in {CSP}.
+\newblock {\em Journal of Logic and Computation}, 3(2):131, 1993.
+\newblock URL: \url{http://dx.doi.org/10.1093/logcom/3.2.131}, \href
+  {http://dx.doi.org/10.1093/logcom/3.2.131}
+  {\path{doi:10.1093/logcom/3.2.131}}.
+
+\bibitem{SchalkWhatIs}
+Andrea Schalk.
+\newblock What is a categorical model for linear logic?, October 2004.
+\newblock URL: \url{http://www.cs.man.ac.uk/~schalk/notes/llmodel.pdf}.
+
+\bibitem{finalseq}
+James Worrell.
+\newblock On the final sequence of a finitary set functor.
+\newblock {\em Theoretical Computer Science}, 338(1):184 -- 199, 2005.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0304397504008023},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.tcs.2004.12.009}
+  {\path{doi:http://dx.doi.org/10.1016/j.tcs.2004.12.009}}.
+
+\end{thebibliography}

@@ -1,0 +1,202 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{12}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Abramsky and Jagadeesan}{Abramsky and
+  Jagadeesan}{1994}]%
+        {abramskyjagadeesangames}
+\bibfield{author}{\bibinfo{person}{Samson Abramsky} {and}
+  \bibinfo{person}{Radha Jagadeesan}.} \bibinfo{year}{1994}\natexlab{}.
+\newblock \showarticletitle{Games and Full Completeness for Multiplicative
+  Linear Logic}.
+\newblock \bibinfo{journal}{{\em The Journal of Symbolic Logic\/}}
+  \bibinfo{volume}{59}, \bibinfo{number}{2} (\bibinfo{year}{1994}),
+  \bibinfo{pages}{543--574}.
+\newblock
+\showISSN{00224812}
+\showURL{%
+\url{http://arxiv.org/abs/1311.6057}}
+
+
+\bibitem[\protect\citeauthoryear{Abramsky, Jagadeesan, and Malacaria}{Abramsky
+  et~al\mbox{.}}{2000}]%
+        {ajmPcf}
+\bibfield{author}{\bibinfo{person}{Samson Abramsky}, \bibinfo{person}{Radha
+  Jagadeesan}, {and} \bibinfo{person}{Pasquale Malacaria}.}
+  \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{Full Abstraction for {PCF}}.
+\newblock \bibinfo{journal}{{\em Information and Computation\/}}
+  \bibinfo{volume}{163}, \bibinfo{number}{2} (\bibinfo{year}{2000}),
+  \bibinfo{pages}{409 -- 470}.
+\newblock
+\showISSN{0890-5401}
+\showDOI{%
+\url{https://doi.org/10.1006/inco.2000.2930}}
+
+
+\bibitem[\protect\citeauthoryear{{Grandis} and {Par\'e}}{{Grandis} and
+  {Par\'e}}{1999}]%
+        {LimitsInDoubleCategories}
+\bibfield{author}{\bibinfo{person}{Marco {Grandis}} {and}
+  \bibinfo{person}{Robert {Par\'e}}.} \bibinfo{year}{1999}\natexlab{}.
+\newblock \showarticletitle{{Limits in double categories.}}
+\newblock \bibinfo{journal}{{\em {Cah. Topologie G\'eom. Diff\'er.
+  Cat\'egoriques}\/}} \bibinfo{volume}{40}, \bibinfo{number}{3}
+  (\bibinfo{year}{1999}), \bibinfo{pages}{162--220}.
+\newblock
+\showISSN{0008-0004}
+
+
+\bibitem[\protect\citeauthoryear{Grandis}{Grandis}{2004}]%
+        {AdjointsInDoubleCategories}
+\bibfield{author}{\bibinfo{person}{Pare~Robert Grandis, Marco}.}
+  \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{Adjoint for double categories}.
+\newblock \bibinfo{journal}{{\em Cahiers de Topologie et Géométrie
+  Différentielle Catégoriques\/}} \bibinfo{volume}{45}, \bibinfo{number}{3}
+  (\bibinfo{year}{2004}), \bibinfo{pages}{193--240}.
+\newblock
+\showURL{%
+\url{http://eudml.org/doc/91684}}
+
+
+\bibitem[\protect\citeauthoryear{Harmer and McCusker}{Harmer and
+  McCusker}{1999}]%
+        {mcCHFiniteND}
+\bibfield{author}{\bibinfo{person}{R. Harmer} {and} \bibinfo{person}{G.
+  McCusker}.} \bibinfo{year}{1999}\natexlab{}.
+\newblock \showarticletitle{A fully abstract game semantics for finite
+  nondeterminism}. In \bibinfo{booktitle}{{\em Proceedings. 14th Symposium on
+  Logic in Computer Science (Cat. No. PR00158)}}. \bibinfo{pages}{422--430}.
+\newblock
+\showISSN{1043-6871}
+\showDOI{%
+\url{https://doi.org/10.1109/LICS.1999.782637}}
+
+
+\bibitem[\protect\citeauthoryear{Harmer}{Harmer}{1999}]%
+        {RusssThesis}
+\bibfield{author}{\bibinfo{person}{Russell~S. Harmer}.}
+  \bibinfo{year}{1999}\natexlab{}.
+\newblock \bibinfo{booktitle}{{\em Games and full abstraction for
+  nondeterministic languages}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Hyland and Ong}{Hyland and Ong}{2000}]%
+        {hoPcf}
+\bibfield{author}{\bibinfo{person}{J.M.E. Hyland} {and}
+  \bibinfo{person}{C.-H.L. Ong}.} \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{On Full Abstraction for {PCF}: {I}, {II}, and
+  {III}}.
+\newblock \bibinfo{journal}{{\em Information and Computation\/}}
+  \bibinfo{volume}{163}, \bibinfo{number}{2} (\bibinfo{year}{2000}),
+  \bibinfo{pages}{285 -- 408}.
+\newblock
+\showISSN{0890-5401}
+\showDOI{%
+\url{https://doi.org/10.1006/inco.2000.2917}}
+
+
+\bibitem[\protect\citeauthoryear{Hyland and Schalk}{Hyland and Schalk}{2002}]%
+        {hylandSchalkGames}
+\bibfield{author}{\bibinfo{person}{Martin Hyland} {and} \bibinfo{person}{Andrea
+  Schalk}.} \bibinfo{year}{2002}\natexlab{}.
+\newblock \showarticletitle{Games on graphs and sequentially realizable
+  functionals. Extended abstract}. In \bibinfo{booktitle}{{\em Logic in
+  Computer Science, 2002. Proceedings. 17th Annual IEEE Symposium on}}. IEEE,
+  \bibinfo{pages}{257--264}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Laird}{Laird}{[n. d.]}]%
+        {LairdCofCommCom}
+\bibfield{author}{\bibinfo{person}{James Laird}.} \bibinfo{year}{[n.
+  d.]}\natexlab{}.
+\newblock \showarticletitle{Functional programs as coroutines: A semantic
+  analysis}.
+\newblock \bibinfo{journal}{{\em Logical methods in computer science\/}}
+  (\bibinfo{year}{[n. d.]}).
+\newblock
+\newblock
+\shownote{To appear.}
+
+
+\bibitem[\protect\citeauthoryear{Laird}{Laird}{2015}]%
+        {LairdOrdinalGames}
+\bibfield{author}{\bibinfo{person}{J. Laird}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Sequential Algorithms for Unbounded
+  Nondeterminism}.
+\newblock \bibinfo{journal}{{\em Electronic Notes in Theoretical Computer
+  Science\/}}  \bibinfo{volume}{319} (\bibinfo{year}{2015}),
+  \bibinfo{pages}{271 -- 287}.
+\newblock
+\showISSN{1571-0661}
+\showDOI{%
+\url{https://doi.org/10.1016/j.entcs.2015.12.017}}
+
+
+\bibitem[\protect\citeauthoryear{Levy}{Levy}{2008}]%
+        {LevyGsInfinite}
+\bibfield{author}{\bibinfo{person}{Paul~Blain Levy}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Infinite trace equivalence}.
+\newblock \bibinfo{journal}{{\em Annals of Pure and Applied Logic\/}}
+  \bibinfo{volume}{151}, \bibinfo{number}{2} (\bibinfo{year}{2008}),
+  \bibinfo{pages}{170 -- 198}.
+\newblock
+\showISSN{0168-0072}
+\showDOI{%
+\url{https://doi.org/10.1016/j.apal.2007.10.007}}
+
+
+\bibitem[\protect\citeauthoryear{Roscoe}{Roscoe}{1993}]%
+        {RoscoeCspInfinite}
+\bibfield{author}{\bibinfo{person}{A.~W. Roscoe}.}
+  \bibinfo{year}{1993}\natexlab{}.
+\newblock \showarticletitle{Unbounded Non-determinism in {CSP}}.
+\newblock \bibinfo{journal}{{\em Journal of Logic and Computation\/}}
+  \bibinfo{volume}{3}, \bibinfo{number}{2} (\bibinfo{year}{1993}),
+  \bibinfo{pages}{131}.
+\newblock
+\showDOI{%
+\url{https://doi.org/10.1093/logcom/3.2.131}}
+
+
+\end{thebibliography}

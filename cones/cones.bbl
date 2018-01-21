@@ -1,0 +1,38 @@
+\begin{thebibliography}{Gra04}
+
+\bibitem[AJ94]{abramskyjagadeesangames}
+Samson Abramsky and Radha Jagadeesan.
+\newblock Games and full completeness for multiplicative linear logic.
+\newblock {\em The Journal of Symbolic Logic}, 59(2):543--574, 1994.
+
+\bibitem[AM99]{SamsonGuyIAPassive}
+Samson Abramsky and Guy McCusker.
+\newblock Full abstraction for {Idealized Algol} with passive expressions.
+\newblock {\em Theor. Comput. Sci.}, 227(1-2):3--42, September 1999.
+
+\bibitem[Gra04]{AdjointsInDoubleCategories}
+Pare~Robert Grandis, Marco.
+\newblock Adjoint for double categories.
+\newblock {\em Cahiers de Topologie et Géométrie Différentielle
+  Catégoriques}, 45(3):193--240, 2004.
+
+\bibitem[HM99]{mcCHFiniteND}
+R.~Harmer and G.~McCusker.
+\newblock A fully abstract game semantics for finite nondeterminism.
+\newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
+  (Cat. No. PR00158)}, pages 422--430, 1999.
+
+\bibitem[HS02]{hylandSchalkGames}
+Martin Hyland and Andrea Schalk.
+\newblock Games on graphs and sequentially realizable functionals. extended
+  abstract.
+\newblock In {\em Logic in Computer Science, 2002. Proceedings. 17th Annual
+  IEEE Symposium on}, pages 257--264. IEEE, 2002.
+
+\bibitem[Lai]{LairdCofCommCom}
+James Laird.
+\newblock Functional programs as coroutines: A semantic analysis.
+\newblock {\em Logical methods in computer science}.
+\newblock To appear.
+
+\end{thebibliography}

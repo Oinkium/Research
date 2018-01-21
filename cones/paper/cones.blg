@@ -1,0 +1,78 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Arch Linux)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: cones.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
+Database file #1: ../../common/phd_bibliography.bib
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3085 of file ACM-Reference-Format.bst
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3085 of file ACM-Reference-Format.bst
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3085 of file ACM-Reference-Format.bst
+Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=8) to 20 items from 10.
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3146 of file ACM-Reference-Format.bst
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3146 of file ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3244 of file ACM-Reference-Format.bst
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3244 of file ACM-Reference-Format.bst
+Too many commas in name 1 of "Grandis, Marco, Pare, Robert" for entry AdjointsInDoubleCategories
+while executing---line 3244 of file ACM-Reference-Format.bst
+Warning--empty publisher in mcCHFiniteND
+Warning--empty address in mcCHFiniteND
+Warning--empty institution in RusssThesis
+Warning--empty publisher in hylandSchalkGames
+Warning--empty address in hylandSchalkGames
+Warning--empty year in LairdCofCommCom
+Warning--no number and no volume in LairdCofCommCom
+Warning--page numbers missing in both pages and numpages fields in LairdCofCommCom
+You've used 12 entries,
+            5795 wiz_defined-function locations,
+            1417 strings with 17902 characters,
+and the built_in function-call counts, 15514 in all, are:
+= -- 2298
+> -- 351
+< -- 0
++ -- 110
+- -- 244
+* -- 926
+:= -- 1454
+add.period$ -- 61
+call.type$ -- 12
+change.case$ -- 68
+chr.to.int$ -- 12
+cite$ -- 20
+duplicate$ -- 1266
+empty$ -- 892
+format.name$ -- 164
+if$ -- 3836
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 46
+newline$ -- 159
+num.names$ -- 96
+pop$ -- 424
+preamble$ -- 1
+purify$ -- 169
+quote$ -- 0
+skip$ -- 438
+stack$ -- 0
+substring$ -- 1482
+swap$ -- 146
+text.length$ -- 210
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 234
+warning$ -- 8
+while$ -- 119
+width$ -- 0
+write$ -- 265
+(There were 8 error messages)

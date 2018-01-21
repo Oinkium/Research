@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: sequoidal.aux
+The style file: plainurl.bst
+Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=8) to 20 items from 10.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Database file #1: bibliography.bib
+Warning--empty journal in RoundCorner
+Warning--empty year in RoundCorner
+Warning--empty year in LairdCofCommCom
+You've used 27 entries,
+            2849 wiz_defined-function locations,
+            832 strings with 10203 characters,
+and the built_in function-call counts, 11616 in all, are:
+= -- 1267
+> -- 295
+< -- 7
++ -- 110
+- -- 75
+* -- 621
+:= -- 1632
+add.period$ -- 104
+call.type$ -- 27
+change.case$ -- 112
+chr.to.int$ -- 0
+cite$ -- 30
+duplicate$ -- 369
+empty$ -- 1191
+format.name$ -- 75
+if$ -- 3084
+int.to.chr$ -- 0
+int.to.str$ -- 27
+missing$ -- 28
+newline$ -- 156
+num.names$ -- 58
+pop$ -- 234
+preamble$ -- 1
+purify$ -- 90
+quote$ -- 0
+skip$ -- 882
+stack$ -- 0
+substring$ -- 487
+swap$ -- 88
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 100
+warning$ -- 3
+while$ -- 82
+width$ -- 29
+write$ -- 345
+(There were 3 warnings)

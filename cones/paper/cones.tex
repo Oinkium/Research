@@ -1,0 +1,793 @@
+%% For double-blind review submission, w/o CCS and ACM Reference (max submission space)
+\documentclass[sigplan,10pt,review]{acmart}\settopmatter{printfolios=true,printccs=false,printacmref=false}
+%% For double-blind review submission, w/ CCS and ACM Reference
+%\documentclass[sigplan,10pt,review,anonymous]{acmart}\settopmatter{printfolios=true}
+%% For single-blind review submission, w/o CCS and ACM Reference (max submission space)
+%\documentclass[sigplan,10pt,review]{acmart}\settopmatter{printfolios=true,printccs=false,printacmref=false}
+%% For single-blind review submission, w/ CCS and ACM Reference
+%\documentclass[sigplan,10pt,review]{acmart}\settopmatter{printfolios=true}
+%% For final camera-ready submission, w/ required CCS and ACM Reference
+%\documentclass[sigplan,10pt]{acmart}\settopmatter{}
+
+
+%% Conference information
+%% Supplied to authors by publisher for camera-ready submission;
+%% use defaults for review submission.
+\acmConference[LICS'18]{ACM/IEEE Symposium on Logic in Computer Science}{9-12 July, 2018}{Oxford, UK}
+\acmYear{2018}
+\acmISBN{} % \acmISBN{978-x-xxxx-xxxx-x/YY/MM}
+\acmDOI{} % \acmDOI{10.1145/nnnnnnn.nnnnnnn}
+\startPage{1}
+
+%% Copyright information
+%% Supplied to authors (based on authors' rights management selection;
+%% see authors.acm.org) by publisher for camera-ready submission;
+%% use 'none' for review submission.
+\setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\copyrightyear{2017}           %% If different from \acmYear
+
+%% Bibliography style
+\bibliographystyle{ACM-Reference-Format}
+%% Citation style
+\citestyle{acmauthoryear}  %% For author/year citations
+%\citestyle{acmnumeric}     %% For numeric citations
+%\setcitestyle{nosort}      %% With 'acmnumeric', to disable automatic
+                            %% sorting of references within a single citation;
+                            %% e.g., \cite{Smith99,Carpenter05,Baker12}
+                            %% rendered as [14,5,2] rather than [2,5,14].
+%\setcitesyle{nocompress}   %% With 'acmnumeric', to disable automatic
+                            %% compression of sequential references within a
+                            %% single citation;
+                            %% e.g., \cite{Baker12,Baker14,Baker16}
+                            %% rendered as [2,3,4] rather than [2-4].
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Note: Authors migrating a paper from traditional SIGPLAN
+%% proceedings format to PACMPL format must update the
+%% '\documentclass' and topmatter commands above; see
+%% 'acmart-pacmpl-template.tex'.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% Some recommended packages.
+%\usepackage{booktabs}   %% For formal tables:
+                        %% http://ctan.org/pkg/booktabs
+%\usepackage{subcaption} %% For complex figures with subfigures/subcaptions
+                        %% http://ctan.org/pkg/subcaption
+\let\NOTARTICLE=1
+\let\FEWFONTS=1
+\let\BEAMER=1
+\let\G\undefined
+\let\C\undefined
+\let\W\undefined
+\let\U\undefined
+\let\E\undefined
+\input{../../common/preamble}
+\renewcommand{\dv}{{\lightning}}
+\newcommand{\oracle}{{\textsf{oracle}}}
+
+
+\begin{document}
+
+%% Title information
+\title[Short Title]{Full Title}         %% [Short Title] is optional;
+                                        %% when present, will be used in
+                                        %% header instead of Full Title.
+\titlenote{with title note}             %% \titlenote is optional;
+                                        %% can be repeated if necessary;
+                                        %% contents suppressed with 'anonymous'
+\subtitle{Subtitle}                     %% \subtitle is optional
+\subtitlenote{with subtitle note}       %% \subtitlenote is optional;
+                                        %% can be repeated if necessary;
+                                        %% contents suppressed with 'anonymous'
+
+
+%% Author information
+%% Contents and number of authors suppressed with 'anonymous'.
+%% Each author should be introduced by \author, followed by
+%% \authornote (optional), \orcid (optional), \affiliation, and
+%% \email.
+%% An author may have multiple affiliations and/or emails; repeat the
+%% appropriate command.
+%% Many elements are not rendered, but should be provided for metadata
+%% extraction tools.
+
+%% Author with single affiliation.
+\author{W. J. Gowers}
+\authornote{with author1 note}          %% \authornote is optional;
+                                        %% can be repeated if necessary
+\orcid{0000-0002-4513-9618}             %% \orcid is optional
+\affiliation{
+  \position{PhD Student}
+  \department{Department of Computer Science}              %% \department is recommended
+  \institution{University of Bath}            %% \institution is required
+  \streetaddress{Claverton Down Road}
+  \city{Bath}
+  \postcode{BA2 7QY}
+  \country{United Kingdom}                    %% \country is recommended
+}
+\email{W.J.Gowers@bath.ac.uk}
+
+%% Abstract
+%% Note: \begin{abstract}...\end{abstract} environment must come
+%% before \maketitle command
+\begin{abstract}
+Text of abstract \ldots.
+\end{abstract}
+
+
+%% 2012 ACM Computing Classification System (CSS) concepts
+%% Generate at 'http://dl.acm.org/ccs/ccs.cfm'.
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003752.10010124.10010131.10010133</concept_id>
+<concept_desc>Theory of computation~Denotational semantics</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[300]{Theory of computation~Denotational semantics}
+%% End of generated code
+
+
+%% Keywords
+%% comma separated list
+\keywords{keyword1, keyword2, keyword3}  %% \keywords are mandatory in final camera-ready submission
+
+
+%% \maketitle
+%% Note: \maketitle command must come after title commands, author
+%% commands, abstract environment, Computing Classification System
+%% environment and commands, and keywords command.
+\maketitle
+
+
+\section{Introduction}
+
+Text of paper \ldots
+
+\section{PCF with Countable Nondeterminism}
+
+The language we shall study is similar to that given in \cite{LairdOrdinalGames}.  
+It is the language formed by adding an unbounded natural-number choice primitive on to the base language PCF.  
+That is, it is the language formed by taking the simply-typed $\lambda$-calculus over the ground type $\nat$, and adding the constants:
+\begin{itemize}
+  \item Structural constants $\0\from\nat$, $\suc,\pred\from\nat\to\nat$ and $\IfO \from \nat \to \nat \to \nat \to \nat$ for $\nat$
+  \item Recursion combinators $\Y_T \from (T \to T) \to T$ for each $T$.
+  \item Countable choice $\wn\from\nat$.
+\end{itemize}
+
+A small-step operational semantics for this language, taken from \cite{LairdOrdinalGames}, is given in Figure \ref{fig:op-sem}.
+\begin{figure}
+  \begin{mathpar}
+    \inferrule*{ }{(\lambda x.M) N \opto M[N/x]}
+    \and
+    \inferrule*[right=$n\in\bN$]{ }{\wn\opto\n}
+    \and
+    \inferrule*{ }{\Y M \opto M (\Y M)}
+    \and
+    \inferrule*{ }{\IfO \0\;x\;y \opto x}
+    \and
+    \inferrule*{ }{\IfO (\suc \n)\;x\;y \opto y}
+    \and
+    \inferrule*{M \opto M'}{M N \opto M' N}
+    \and
+    \inferrule*{M \opto M'}{\suc M \opto \suc M'}
+    \and
+    \inferrule*{M \opto M'}{\pred M \opto \pred M'}
+    \and
+    \inferrule*{M \opto M'}{\IfO M \opto \IfO M'}
+  \end{mathpar}
+  \caption{Operational Semantics for a PCF-like language with countable nondeterminism.}
+  \label{fig:op-sem}
+\end{figure}
+Our main task will be to give a Denotational Semantics for this language.
+
+Given a term $M$ of ground type $\nat$, we say that $M$ \emph{must converge}, and write $M\mustconverge$, if every evaluation $\pi$ of $M$ (according to the operational semantics given in Figure \ref{fig:op-sem}) terminates at some numeral value.  
+We write $M \converges \n$ if there exists some evaluation $\pi$ of $M$ that terminates at $\n$.  
+
+Given a type $T$, we define an order on the terms of type $T$, by saying that $M\lmam N$ if for all compatible contexts $C[-]$ of type $\nat$ we have
+\begin{gather*}
+  C[M]\converges\n\Rightarrow C[N]\converges \n \\
+  C[M]\mustconverge\Rightarrow C[N]\mustconverge\,.
+\end{gather*}
+
+We say $M\emam N$ if $M\lmam N$ and $N\lmam M$.
+
+One aspect of the language that makes it particularly difficult to model is that function application is not continuous, either with respect to functions or with respect to arguments.  
+
+For example, it is easy to write a sequence of functions ${<}\!n \from \nat \to \nat$ that return $0$ if their argument is less than $n$ and diverge otherwise:
+
+\begin{align*}
+  &{<}0 = \lambda m.\Omega \\
+  &{<}1 = \lambda m.\IfO m\;\0\;\Omega \\
+  &{<}2 = \lambda m.\IfO m\;\0\;(\IfO (\pred m)\;\0\;\Omega)\\
+  \cdots
+\end{align*}
+It is easy enough to see (for example, by the denotational semantics) that the least upper bound of these functions is the function $\lambda x.\0$.  
+However, it is clear that ${<}n\;\wn\not\mustconverge$ for each $n$, while $\lambda x.\0\;\wn$ must converge to $\0$.  
+Thus, $\lambda x.\0\;\wn$ is not the least upper bound of the ${<}n\;\wn$.
+
+This is a bit of a problem, since continuity often plays an important role in full abstraction proofs -- firstly, for proving Computational Adequacy of the recursion combinator, and, secondly, for deducing full abstraction from compact definability.  
+Semantically, we shall deal with the first problem by adopting a novel approach to Computational Adequacy, and with the second problem by appealing to the stronger \emph{universality} result: namely, that every \emph{recursive} strategy is definable.
+
+\section{The base model}
+
+We will give a model based on Abramsky, Jagadeesan and Malacaria's Game Semantics for PCF \cite{ajmPcf}.  
+We do this partly for the sake of simplicity, and partly to demonstrate the power of our methods -- since AJM games are typically seen as less flexible than the Hyland-Ong games of \cite{hoPcf}.  
+However, we stress that our construction can be carried out just as well in Hyland and Ong's model, and we will keep this model in mind throughout, and mention whenever a slightly modified argument is needed for that model.  
+
+\subsection{Games}
+
+A \emph{game} is a tuple $A=(M_A,\lambda_A,P_A)$, where
+\begin{itemize}
+  \item $M_A$ is a set of \emph{moves},
+  \item $\lambda_A\from M_A \to \OP\times\QA$ is a function that designates each move as either a \emph{$P$-move} or an \emph{$O$-move}, and as either a \emph{question} or an \emph{answer}.
+  \item $P_A$ is a non-empty prefix-closed set of finite sequences of elements of $M_A$ called \emph{positions}, satisfying the following two conditions:
+    \begin{description}
+      \item[Alternation] any non-empty position in $P_A$ starts with an $O$-move, and if $sab\in P_A$ then $a$ and $b$ have opposite signs - one is a $P$-move and the other an $O$-move.  
+      \item[Well-bracketing] If $s\in P_A$, then the corresponding $QA$-sequence of questions and answers is well-bracketed.
+    \end{description}
+\end{itemize}
+
+\subsection{Strategies}
+
+A (deterministic) \emph{strategy} for a game $A$ is a non-empty, prefix-closed subset $sigma\subset P_A^+$ satisfying \emph{determinism}: if $sa,sb\in \sigma$ are both $P$-positions, then $a=b$.  
+Here, $P_A^+$ is the set of $P$-positions in $A$.
+
+We say that a strategy $\sigma$ is \emph{history-free} if whenever $sab,tac\in\sigma$ are both $P$-positions, then $b=c$.  
+Such a strategy can be though of as a partial function $M_A^-\pfun M_A^+$, where $M_A^-$ is the set of $O$-moves and $M_A^+$ the set of $P$-moves in $A$.  
+If this function can be given as a partial recursive function, we say that the strategy $\sigma$ is \emph{recursive}.
+
+\subsection{Connectives}
+
+Given games $A$ and $B$, we can define games $A\times B$, $A\tensor B$ and $A\implies B$ as follows:
+\begin{itemize}
+  \item $M_{A\times B}=M_{A\tensor B}=M_{A\implies B}=M_A+M_B$.  
+  \item $\lambda_{A\times B}=\lambda_{A\tensor B}=[\lambda_A,\lambda_B]$.  
+    $\lambda_{A\implies B}=[\neg\circ\lambda_A,\lambda_B]$, where $\neg\from\OP\times\QA\to\OP\times\QA$ is the function that exchanges $O$ and $P$ and leaves $Q$ and $A$ alone.
+  \item $P_{A\times B}$ is the union of $P_A$ and $P_B$.  
+    $P_{A\tensor B}$ and $P_{A\implies B}$ are defined by the following formula:
+    \[
+      \{s\in (M_A + M_B)^* \suchthat s\vert_A\in P_A,\;s\vert_B\in P_B,\;\text{$s$ is alternating}\}\,.
+    \]
+  Note that this is a different strategy for $P_{A\tensor B}$ and $P_{A\implies B}$, because the definition of an `alternating sequence' depends on the sign function $\lambda$.
+\end{itemize}
+
+\subsection{Composition of strategies}
+
+Given strategies $\sigma\from A\implies B$ and $\tau\from B\implies C$, we define a set
+\[
+  \sigma\|\tau = \{\s\in(M_A+M_B+M_C)^*\suchthat \s\vert_{A,B}\in\sigma,\;\s\vert_{B,C}\in\tau\}\,.
+  \]
+We then define
+\[
+  \sigma;\tau = \{\s\vert_{A,C}\suchthat \s\in\sigma\|\tau\}\,.
+  \]
+It may be proved \cite{ajmPcf} that this notion of composition is associative and has identities given by the obvious copycat strategy for the game $A\implies A$.  
+We therefore end up with a category whose objects are games and where the morphisms from a game $A$ to a game $B$ are the strategies for the game $A\implies B$.  
+
+It can also be shown that the composition of two history-free strategies is history free, and that the composition of two recursive strategies is recursive.  
+Furthermore, the identity strategy is always history-free and recursive.
+
+We write $\G$ for the category of games and strategies, $\G_{hf}$ for the category of games and history-free strategies, and $\G_{rec}$ for the category of games and recursive strategies.
+
+Lastly, it is well-known that the connectives $\tensor$ and $\implies$ exhibit $\G$ as a monoidal closed category (with tensor unit the empty game $I$ with no moves) and that $\times$ gives products in $\G$.  
+All these properties pass on to $\G_{hf}$ and $\G_{rec}$ in the expected way.
+
+\subsection{Exponentials}
+
+Given a game $A$, we define a game $\oc A$ as follows:
+\begin{itemize}
+  \item $M_{\oc A} = M_A\times\omega$.
+  \item $\lambda_{\oc A} = \lambda_A \circ \pr_1$.
+  \item $P_{\oc A} = \{s\in M_{\oc_A}^* \suchthat \text{$s$ is alternating},\;s\vert_n\in P_A\forall n\}$.
+\end{itemize}
+
+It can be shown \cite{ajmPcf} that this construction gives rise to a \emph{linear exponential comonad} on $\G$, and therefore that the co-Kleisli category $\G^{\oc}$ is a Cartesian closed category.  
+
+\subsection{Modelling programming languages}
+
+The results from \cite{ajmPcf} that we will be interested are the following:
+\begin{itemize}
+  \item $\G_{hf}$ is a fully abstract model of PCF.
+  \item $\G_{rec}$ is also a fully abstract model of PCF.  
+    Moreover, it is a \emph{universal} model: every morphism between the denotation of types is the denotation of a PCF term.
+\end{itemize}
+
+We will also be interested in a result of Laird \cite{LairdCofCommCom}, which tells us about the natural language for $\G$ itself:
+\begin{itemize}
+  \item $\G$ is a fully abstract model of $\lambda_{\text{co}}$, an extension of PCF with coroutines.
+    In particular, $\G$ is a sound and adequate model of a stateful language such as Idealized Algol.
+\end{itemize}
+
+This result -- that our model of PCF may be embedded inside a game semantics model of a stateful language -- will be useful when we come to prove Computational Adequacy for our model.  
+It is a result specific to AJM games.  
+For Hyland-Ong games, the category of games and \emph{innocent} strategies, which is our model of PCF, may be embedded into the category of games and \emph{visible} strategies, which is actually a fully abstract model of Idealized Algol.  
+However, we will only need soundness and adequacy, so we can carry out our proof with AJM games as well.
+
+\section{Strategies for Nondeterminism}
+
+The results that we have quoted in the previous section all apply to \emph{deterministic} PCF.  
+For nondeterministic PCF, we follow the approach of Harmer and McCusker \cite{mcCHFiniteND}, who modelled nondeterministic programs using \emph{nondeterministic strategies}; i.e., strategies where we have relaxed the nondeterminism condition.  
+So, for example, if we model the type $\nat$ by the game $\bN$ with maximal positions $qn$ for $n\in\bN$, where $q$ is a fixed opening move, then we can model the term $\wn$ by the strategy $\top_\nat$ that is the whole of $P_{\bN}$.  
+
+However, this model is not yet rich enough to model may-and-must equivalence.  
+Consider, for example, the following two of terms of type $\nat$:
+\begin{gather*}
+  \IfO \wn\;\Omega\;\0 \\
+  \0\,.
+\end{gather*}
+In the first case, there are two possibilities: either the program returns $\0$ or it diverges.
+In the second case, the program always returns $\0$.  
+
+Since divergence is represented by \emph{partiality} in the strategy, these terms both have the same denotation: the strategy with unique maximal play $q0$.  
+However, they are not must-equivalent, since $\0\mustconverge$, while the other term may diverge.  
+The point is that in the first case the addition of the play $q0$ into the strategy obscures the partiality present in the denotation of $\Omega$.
+
+Harmer and McCusker's solution to this problem is to augment each strategy by the addition of a set of \emph{divergences}: $O$-positions at which we signify that play may diverge.  
+
+Tracking divergences explicitly in this way requires some care when we compose strategies.  
+Specifically, we need to be able to add new divergences into strategies when they arise through `infinite chattering' or \emph{livelock}.  
+For example, the denotation of the term
+\[
+  M = \Y_{\nat\to\nat}(\lambda f.\lambda n.n;(f n))\,,
+  \]
+where $n;P$ is a shorthand for $\IfO n\;P\;P$, is given by a total strategy, without divergences: namely the strategy with plays of the form
+\[
+  \begin{array}{cc}
+    \mathbf{\bN} & \mathbf{\bN} \\
+    & q \\
+    q & \\
+    n_1 & \\
+    q & \\
+    n_2 & \\
+    \vdots &
+  \end{array}\,.
+  \]
+However, when we compose this strategy with any total strategy for $\bN$ on the left, we expect the resulting strategy to contain divergences, since the term $M \n$ diverges for any $\n$.
+
+The approach adopted in \cite{mcCHFiniteND} is to check specifically for infinite chattering between strategies $\sigma\from A\implies B$ and $\tau\from B\implies C$ by checking whether the set $\sigma\|\tau$ contains any infinite increasing sequence of plays ending with moves in $B$.  
+If there is such a sequence, then it restricts to some $O$-position in $\sigma;\tau$ and we add in a divergence at that position.  
+
+This works very satisfactorily for finite nondeterminism, but not at all for countable nondeterminism.  
+To see why, consider the term
+\[
+  N = \Y_{\nat\to\nat\to\nat}(\lambda g.\lambda m n.\IfO m\;\0\;n;(g\;(\pred m)\;n))\wn
+  \]
+This term first chooses a natural number $m$, and then reads from its input $n$ for a total of $m$ times before eventually returning $\0$.  
+Thus, its denotation is the strategy with maximal plays of the form:
+\[
+  \begin{array}{cc}
+    \mathbf{\bN} & \mathbf{\bN} \\
+    & q \\
+    q & \\
+    n_1 & \\
+    \vdots & \\
+    q & \\
+    n_m & \\
+    & 0
+  \end{array}\,.
+  \]
+Note that this strategy strictly contains the one we considered before, and therefore that the denotation of
+\[
+  \IfO \wn M N
+  \]
+has the same denotation as $N$, even though it has all the divergent evaluations of $M$, while $N\n\mustconverge$ for all $\n$.
+Moreover, if we try to compose $\deno{N}$ with the strategy on $\bN$ that always returns $1$, then we end up with an infinite increasing sequence of positions, which triggers the introduction of a divergence into the composite -- even though no divergence occurs in the evaluation of $N$.
+
+Aside from making violating soundness for the model, this example actually leads to composition not being associative if we naively extend the Harmer-McCusker model from finite to infinite nondeterminism (e.g., see \cite[4.4.1]{RusssThesis}).  
+
+Somehow, the crucial point is that we need to distinguish between terms like $M$, which contain infinite sequences of moves, and terms like $N$, which contain arbitrarily large finite sequences of oves.  
+The way that we do this is by making the infinite sequences of moves explicit in our strategies, in the style of \cite{RoscoeCspInfinite} and \cite{LevyGsInfinite}.  
+Then the denotation of $M$ will contain an infinite sequence, while the denotation of $N$ will contain arbitarily long finite sequences, but no infinite sequences.  
+
+The games in our model will be the same as those that we considered in the last section, but our definition of a strategy will change.
+
+\subsection{Strategies}
+
+Here, we follow \cite{mcCHFiniteND}, but with the addition of infinite positions.
+Given a set $X\subset M^*$, we write $\bar{X}$ for the ideal closure of $X$; i.e., $X$ together with the set of all infinite sequences $s\in M^\omega$ all of whose finite prefixes are contained in $X$.
+
+A \emph{strategy} for a game $A=(A,\zeta_A)$ is given by a pair $(T_\sigma, D_\sigma)$, where:
+\begin{itemize}
+  \item $T_\sigma$ is a prefix-closed subset of $\bar{P_A}$ such that if $s\in T_\sigma$ is a $P$-position and $sa\in P_A$, then $sa\in T_\sigma$.  
+    In other words, $T_\sigma$ a nondeterministic strategy in the usual sense (possibly incorporating infinite plays).  
+    We consider all infinite positions in $A$ to be $O$-positions.
+  \item $D_\sigma\subset T_\sigma$ is a \emph{postfix}-closed set of $O$-positions satifying the following conditions:
+    \begin{description}
+      \item[All divergences arise from positions] If $d$ is minimal in $D_\sigma$ then either $d\in T_\sigma$ or $d$ is an infinite position that is the limit of positions in $T_\sigma$.
+      \item[Diverge-or-reply] If $s\in T_\sigma$ is an $O$-position, then either $s\in D_\sigma$ or there exists $sa\in T_\sigma$.
+      \item[Infinite positions are divergences] If $s\in T_\sigma$ is infinite, then $s\in D_\sigma$.
+    \end{description}
+\end{itemize}
+
+We say that a strategy $\sigma$ is \emph{complete} if $T_\sigma=\bar{T_\sigma}$; i.e., if $s\in T_\sigma$ whenever $s$ is an infinite position, all of whose finite prefixes live in $T_\sigma$.  
+For example, the denotation of $M$ above is complete, but the denotation of $N$ is not complete.  
+
+We say that $\sigma$ is \emph{locally complete} if $T_\sigma$ can be written as the union of complete strategies.  
+
+It is easy to see that the denotation of any term from nondeterministic PCF must be locally complete.  
+An example of a strategy that is not locally complete is given by taking the denotation of $M$ above and considering it as a strategy with no infinite positions.  
+The difference between this strategy and the denotation of $N$, is that every finite position in $N$ is eventually completed in the copy of $\bN$ on the right, so it is still locally complete.
+
+We will require our strategies to be locally complete from here on.  
+The problem with allowing non-locally complete strategies is that their composition does not necessarily satisfy the diverge-or-reply rule.
+
+\subsection{Composition of strategies}
+
+Let $\sigma\from A\implies B$ and $\tau\from B\implies C$ be strategies.  
+We define $T_{\sigma;\tau}$ in the usual way.  
+In order to define $D_{\sigma;\tau}$, we first define
+\[
+  \sigma\dv\tau = \pocl\left\{\s\in\seqs{(M_A\cprd M_B\cprd M_C)}\;\middle|\; \mbox{\pbox{\textwidth}{\textbf{either} $\s\vert_{A,B}\in D_\sigma$\\ \hspace*{12pt}and $s\vert_{B,C}\in T_\tau$ \\ \textbf{or} $\s\vert_{A,B}\in T_\sigma$ \\\hspace*{12pt}and $s\vert_{B,C}\in D_\tau$}}\right\}\,,
+  \]
+where $\pocl X$ denotes the \emph{postfix closure} of $X$; i.e., the set of all $O$-positions in $A\implies C$ that have some prefix in $X$.
+
+Lastly, we define
+\[
+  D_{\sigma;\tau} = \{\s\vert_{A,C}\suchthat\s\in\sigma\dv\tau\}\,.
+  \]
+
+We need to show firstly that composition preserves local completeness.  
+This is not completely trivial, since the composition of \emph{complete} strategies need not be complete: for example, we may write $N=N'\;\wn$, where $N'$ is a deterministic strategy.  
+Both $N'$ and $\wn$ have complete denotations, but their composite, $N$, has a denotation that is only locally complete.
+
+However, we can show that the composition of \emph{deterministic} complete strategies $\sigma$ and $\tau$ is complete.  
+The proof makes use of a lemma from \cite{abramskyjagadeesangames} that says that if $s\in\sigma;\tau$ is some position, where $\sigma$ and $\tau$ are both deterministic, then there is a unique minimal position $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=s$.  
+This means that if $s_1\prefix s_2\prefix \cdots$ is an infinite increasing sequence in $\sigma;\tau$, then there is a corresponding infinite increasing sequence $\s_1\prefix\s_2\prefix\cdots$ in $\sigma\|\tau$, whose limit must be contained in $\sigma\|\tau$ by completeness of $\sigma$ and $\tau$.  
+It follows that the limit of $s_1,s_2,\dots$ is contained in $\sigma;\tau$.
+
+Now the fact that composition preserves local completeness is an easy consequence of monotonicity of composition with respect to the prefix ordering, together with the fact that if a strategy $\sigma$ is locally complete -- i.e., if it is the union of some collection $(\sigma_\alpha)$ of complete strategies, then the $\sigma_\alpha$ may always be chosen to be deterministic.
+
+We also need to prove that the composition of two strategies satisfies the diverge-or-reply rule.  
+Once again, it is sufficient to prove this in the case that the strategies are both deterministic and complete.  
+In that case, we can, for example, use the argument from \cite{abramskyjagadeesangames} that shows that a partiality in the composite $\sigma;\tau$ of two strategies $\sigma\from A\implies B$ and $\tau\from B\implies C$ (i.e., some $O$-position $s\in\sigma;\tau$ such that $sa\not\in\sigma;\tau$ for any $a$) must arise either from a partiality in one of $\sigma$ or $\tau$ or from an `infinite chattering' between the two strategies.  
+A partiality in either of $\sigma$ or $\tau$ gives rise to a divergence in that strategy, by diverge-or-reply, and hence to a divergence at the appropriate place in $\sigma;\tau$.  
+In the case that there is some infinite chattering between $\sigma$ and $\tau$; i.e., an infinite sequence $\s\in\bar{\sigma\|\tau}$ such that $\s\vert_{A,C}$ is finite, we must have $\s\in\sigma\|\tau$ by completeness for $\sigma$ and $\tau$.  
+Therefore, $\s\vert_{A,B}$ and $\s\vert_{B,C}$ are both divergences in their respective strategies, and therefore $\s\vert_{A,C}\in D_{\sigma;\tau}$.  
+
+The last thing we need to show -- namely, that composition is associative -- follows in the usual way.  
+The important difference between our model and that in \cite{mcCHFiniteND} is that in our model `divergence through infinite chattering' is an organic consequence of the usual definition of composition, not an extra condition that we have imposed upon the model.  
+
+To illustrate this, we return to our examples $M$ and $N$ above, and show how the composite $M\;1$ has a non-empty set of divergences, while $N\;1$ is divergence-free.
+
+In order for the strategy denotation of $M$ to satisfy local completeness, it must contain all its infinite positions.  
+Infinite positions in $\oc \bN$ are $P$-winning, so the corresponding positions in $\deno{M}\from \oc \bN\implies \bN$ are infinite $O$-positions and are therefore contained in $D_{\deno{M}}$.  
+Since the play $q\in \oc\deno{1};\deno{M}$ is the restriction to $\bN$ of the infinite position
+\[
+  \begin{array}{cc}
+    \bN & \bN \\
+    & q \\
+    q & \\
+    1 & \\
+    q & \\
+    1 & \\
+    \vdots &
+  \end{array}
+  \]
+whose right-hand component is contained in $D_{\deno{M}}$, it must therefore be contained in $D_{\oc\deno{1};\deno{M}}$.
+
+We contrast this with the situation with $N$.  
+In this case, the strategy-denotation of $N$ contains \emph{no} infinite position, and we have $D_{\deno{N}}=\emptyset$.  
+Since a divergence in the composition must arise from a divergence in one of the two component strategies, this means that $D_{\oc\deno{1};\deno{N}}$ is empty too.  
+This is in contrast to the Harmer-McCusker model, in which $\sigma;\tau$ may contain a divergence even if neither $\sigma$ nor $\tau$ does.
+
+\subsection{Proving Full Abstraction}
+
+We write $\G_{ND}$ for the category we have defined.  
+It may be made into a symmetric monoidal closed category in a straightforward way, following \cite{mcCHFiniteND}.  
+Given $\sigma\from A\implies C$ and $\tau\from B\implies D$, $D_{\sigma\tensor\tau}$ is the set of all $s\in P_{(A\tensor B)\implies (C\tensor D)}$ such that either $s\vert_{A,C}\in D_\sigma$ or $s\vert_{B,D}\in D_\tau$.  
+
+Similarly, we can define exponentials in our model, where the divergences in $\oc\sigma$ are those positions that are divergent in one of their components.
+
+Although we have solved the problems with associativity of composition, it turns out to be difficult to prove computational adequacy or full abstraction for this model.  
+The main problem is a lack of continuity: we can follow \cite{mcCHFiniteND} and define an ordering on strategies, but composition is no longer continuous with respect to this ordering.  
+This should not be seen as a defect of our model; indeed, we showed earlier on that the language we are trying to model has a similar lack of continuity, so if our model were continuous it would indicate that it did not model the language faithfully enough.  
+
+Our approach to proving full abstraction will be to define a new model $\C$ of our language that is fully abstract for nondeterministic PCF, and to show that $\C$ admits a faithful monoidal functor into $\G_{ND}$, which is enough to show that $\G_{ND}$ is also fully abstract.  
+Before we do this, however, we outline an alternative argument that does not go via this supplementary category.  
+The argument is suggested in \cite[3.7.2]{RusssThesis} as a means of defining an appropriate notion of `nondeterministic innocent strategy'.  
+
+We first define the strategy $\top_\bN$ on $\bN$ by $T_{\top_{\bN}}=P_{\bN}$ and $D_{\top_{\bN}}=\emptyset$.  
+Then we say that a strategy $\sigma\from A\implies B$ is \emph{deterministic history free} if it can be written as
+\[
+  A \xrightarrow{\oracle_A}
+    \oc \bN \tensor A \xrightarrow{\sigma'}
+      B
+  \]
+where $\oracle_A=\lunit;\oc\top_\bN\tensor A$ and $\sigma'\from \oc\bN\tensor A \implies B$ is a deterministic, history-free strategy.
+It is possible to show that the composition and tensor product of such strategies can again be written in this form, and it is then possible to prove full abstraction using properties of deterministic strategies.  
+When we have defined our model $\C$, we will return to this point to show that the two arguments are essentially the same.
+
+\section{Cones on Monoidal Functors}
+
+\subsection{Surjective and winning strategies}
+
+A useful fact about the category $\G$ of games and deterministic strategies, proved in \cite{hylandSchalkGames}, is that it admits a faithful, monoidal and linearly distributive functor into the category $\Rel$ of sets and relations, with monoidal structure given by the Cartesian product and exponentials given by the multiset comonad $W$.  
+The functor sends a game $A$ to the set $P_A$ and sends a strategy $\sigma\from A\implies B$ to the relation
+\[
+  \grel{\sigma}=\{(s\vert_A,s\vert_B)\suchthat s\in\sigma\}\subset P_A\times P_B
+  \]
+
+Given a strategy $\sigma\from A\implies B$, we say that $\sigma$ is \emph{surjective} if $\grel{\sigma}$ is a surjective relation; i.e., if for any $b\in P_B$ there exists some $s\in\sigma$ such that $s\vert_B=b$.  
+Monoidality and linear distributivity of the Hyland-Schalk functor $\G\to\Rel$ show that the composition of surjective strategies is surjective, as is the tensor product of surjective strategies and the bang of a surjective strategy.  
+
+Given a strategy $\sigma\from A\implies B$, we say that $\sigma$ is \emph{winning} if $\sigma$ is total and if for all positions $s\in\sigma$, if $sb\in\sigma$, where $b$ is an $O$-move in $B$, then there is some $t\in\sigma$ such that $sb\prefix t$ and $t$ ends with a move in $B$.  
+
+Once again, the composition, tensor product and bang of winning strategies is still winning.  
+One way of seeing this is by relating our definition to the definition of a winning strategy given in \cite{abramskyjagadeesangames}, in which a game comes attached with a set of winning infinite positions.  
+Then we say that a strategy $\sigma$ is winning if it is total and if every infinite position arising as the limit of plays in $\sigma$ is a winning position.  
+If $A$ and $B$ are such that every infinite position is winning, then our notion of a winning strategy coincides with that notion.  
+
+The reason we are interested in surjective winning strategies is that they preserve top strategies:
+
+\begin{lemma}
+  We say that a game $A$ is \emph{$P$-winning} if for all $O$-positions $s\in P_A$ there exists some $a$ such that $sa\in P_A$.  
+  Let $A,B$ be $P$-winning games, and let $\sigma\from A\implies B$ be a surjective winning strategy.  
+  Write $\top_A$ for the (nondeterministic) strategy given by $T_{\top_A}=P_A$ and $D_{\top_A}=P_A^\omega$ (i.e., the only divergent plays are the infinite ones), and do the same for $B$.
+  Then $\top_A;\sigma=\top_B$.  
+\end{lemma}
+\begin{proof}
+  We can show that $T_{\top_A;\sigma}=T_{\top_B}$ from surjectivity of $\sigma$, using the Hyland-Schalk functor, since the equivalent result clearly holds in $\Rel$.  
+  Now suppose that $s$ is some divergent position in $\top_A;\sigma$.  
+  Then $s=\s\vert_B$, where $\s$ is a position in $\sigma$ and $\s\vert_A$ is a divergent position in $A$.
+  Then $\s\vert_A$ must be infinite; since $\sigma$ is winning, this means that $\s\vert_B$ must be infinite as well, and therefore that $s\in D_{\top_B}$.  
+  \label{lem:sw}
+\end{proof}
+
+We now define a category $\G_{sw}$ whose objects are $P$-winning games and where the morphisms from a game $A$ to a game $B$ are deterministic surjective winning strategies from $A$ to $B$.  
+We write $\G_{sw,rec}$ for the category where the morphisms are \emph{recursive} surjective, winning strategies.  
+
+Write $j$ for the inclusion $\G_{sw,rec}\hookrightarrow\G_{rec}$, and write $J$ for the inclusion functor $\G\hookrightarrow\G_{ND}$ that sends a deterministic strategy $\sigma$ to the strategy given by $T=\sigma$ and $D=\pocl\{s\in\sigma^-\suchthat sa\not\in\sigma\forall a\}$
+Then the lemma we have just proves means that
+\[
+  \top \from I \Rightarrow J\circ j
+  \]
+is a natural transformation, where $I$ is the constant $I$ functor.
+
+Moreover, we would expect Lemma \ref{lem:sw} to hold in \emph{any} sensible game-semantics model of nondeterministic PCF, so the following makes sense as a definition
+
+\begin{definition}
+  A \emph{game semantics category for nondeterministic PCF} is a category $\D$ together with a functor $J\from \G_{rec}\to\D$ and a natural transformation $\top\from I\Rightarrow J\circ j\from\G_{sw,rec}\to\D$.  
+\end{definition}
+
+\subsection{Generalized monoidal natural transformations}
+
+We will need one more technical definition.
+
+Let $\C'$,$C'$,$\D'$,$\D$ be monoidal categories, let $f\from\C'\to\C$, $g\from \D'\to \D$ be oplax monoidal functors and let $F\from\D'\to\C'$, $G\from\D\to\C$ be lax monoidal functors, as in Figure \ref{fig:generalized-monoidal-setup}.
+
+\begin{figure}
+  \[
+    \begin{tikzcd}[row sep=large, column sep=large]
+      \D' \arrow[r, "F", ""'{name=F}] \arrow[d, "g"']
+        & \C' \arrow[d, "f"] \\
+      \D \arrow[r, "G"', ""{name=G}]
+        & \C
+      \arrow[Rightarrow, from=F, to=G, "\phi"]
+    \end{tikzcd}
+    \]
+  \caption{A generalized monoidal natural transformation $\phi$ is a particular sort of natural transformation between composites of lax and oplax monoidal functors.}
+  \label{fig:generalized-monoidal-setup}
+\end{figure}
+
+We say that a natural transformation $\phi\from fF\bigto Gg$ is a \emph{generalized monoidal natural transformation} if the following two diagrams commute for all objects $X,Y$ of $\D'$:
+\begin{mathpar}
+  \begin{tikzcd}
+    f F X \tensor f F Y \arrow[r, "\phi_X \tensor \phi_Y"]
+      & G g X \tensor G g Y \arrow[d, "m_G"] \\
+    f (F X \tensor F Y) \arrow[u, "m_f"] \arrow[d, "f m_F"']
+      & G (g X \tensor g Y) \\
+    f F (X \tensor Y) \arrow[r, "\phi_{X \tensor Y}"]
+      & G g (X \tensor Y) \arrow[u, "G m_g"']
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}[column sep=small, row sep=small]
+    %
+      & f F I_{\D'} \arrow[rr, "\phi_I"]
+        &[-1.2em]
+          &[-1.2em] G g I_{\D'} \arrow[dr, "G \epsilon_g"]
+            & \\
+    f I_{\C'} \arrow[ur, "f \epsilon_F"] \arrow[drr, "\epsilon_f"]
+      &
+        &
+          &
+            & G I_{\D} \\
+    %
+      &
+        & I_{\C} \arrow[urr, "\epsilon_G"]
+          &
+            &
+  \end{tikzcd}\,.
+\end{mathpar}
+The particular structure that generalized natural transformations fit into is that of a \emph{double category} (see \cite{LimitsInDoubleCategories} for the definition); in particular, the double category $\SymmMonCat$ introduced in \cite{AdjointsInDoubleCategories}, in which the objects are symmetric monoidal categories, the horizontal morphisms are lax symmetric monoidal functors, the vertical morphisms are oplax symmetric monoidal functors and the $2$-cells are generalized monoidal natural transformations as defined above.  
+
+Generalized monoidal natural transformations may thus be composed either horizontally or vertically in the usual way; i.e., given a pair of squares as in Figure \ref{fig:generalized-monoidal-setup} that may be pasted together along an edge, then we may define a generalized monoidal natural transformation across the pasted square.  
+We write $\hc{\phi}{\psi}$ for the horizontal composition of natural transformations $\phi,\psi$ pasted together along an oplax monoidal functor and $\vc{\phi}{\psi}$ for the vertical composition of natural transformations $\phi,\psi$ pasted together along a lax monoidal natural functor.
+
+\subsection{The cone of a monoidal functor}
+
+Let $j\from \C'\to \C$ be an oplax monoidal functor.  
+We define a \emph{$j$-category} to be a category $\D$ together with a lax monoidal functor $J\from\C\to\D$ and a generalized natural transformation $\phi\from I \to Jj$:
+\[
+  \begin{tikzcd}[row sep=large, column sep=large]
+    \C' \arrow[r, "()", ""'{name=term}] \arrow[d, "j"']
+      & I \arrow[d, "I"] \\
+    \C \arrow[r, "J"', ""{name=J}]
+      & \D
+    \arrow[Rightarrow, from=term, to=J, "\phi"]
+  \end{tikzcd}\,.
+  \]
+\begin{example}
+  For example, our previous definition of a game semantics category for nondeterministic PCF can be thought of as a $j$-category, where $j$ is the inclusion functor $\G_{sw,rec}\hookrightarrow\G_{rec}$.  
+\end{example}
+We define a \emph{morphism of $j$-categories} going from a $j$-category $(\D',J',\phi')$ to a $j$-category $(\D,J,\phi)$ to be a lax monoidal functor $\F\from \D'\to\D$, sending $I$ to $I$, such that $J=\F\circ J'$ and $\phi$ is the vertical composition of $\phi'$ with the `identity transformation' given by this identity; i.e.:
+\[
+  \begin{tikzcd}[row sep=large, column sep=large]
+    \C' \arrow[r, "()", ""'{name=term}] \arrow[d, "j"']
+      & I \arrow[d, "I"] \\
+    \C \arrow[r, "J'"'{name=Jprimedown}, ""{name=Jprime}] \arrow[d, "\id"']
+      & \D' \arrow[d, "\F"] \\
+    \C \arrow[r, "J", ""{name=J}]
+      & \D
+    \arrow[Rightarrow, from=term, to=Jprime, shift left=1.5ex, "\phi'"]
+    \arrow[Rightarrow, from=Jprimedown, to=J, shift left=1.5ex, "\id"]
+    \arrow[Rightarrow, from=term, to=J, shift right=3ex, "\phi"' near end]
+  \end{tikzcd}\,.
+  \]
+Our main technical result in this section will be the following:
+\begin{proposition}
+  The category $j$-$\Cat$ of $j$-categories and $j$-category morphisms has an initial object $C_j$
+\end{proposition}
+By analogy with homotopy theory, we call this initial object the \emph{mapping cone} or \emph{cone} on $j$.
+
+To see why this is useful, consider another important topic from the theory of semantics.  
+We say that a $j$-category $(\D,J,\phi)$ satisfies \emph{$\phi$-factorization} if for any pair of objects $A$ and $B$ of $\C$ and for every morphism $f\from JA \to JB$ in $\D$, we may write $f$ as a composite
+\[
+  JA \xrightarrow{\lunit;\phi_X\tensor JA}
+  Jj X \tensor JA \xrightarrow{m_J}
+  J (jX \tensor A) \xrightarrow{J f'}
+  JB\,,
+  \]
+where $X$ is some object of $\C'$ and $f'\from jX \tensor A\to B$ is some morphism in $\C$.
+\begin{example}
+  In the case that $j$ is the inclusion $\G_{sw,rec}\hookrightarrow\G_{rec}$, and $\phi=\top$, $\phi$-factorization is the same as \emph{deterministic factorization}: the idea that every morphism can be written as the composition of a deterministic recursive strategy with $\top_X$ for some $X$.
+\end{example}
+
+Then the following result is easy to prove:
+\begin{proposition}
+  Let $(\D,J,\phi)$ be a $j$-category satisfying $\phi$-factorization.  
+  Suppose $\F\from\D'\to\D$ is a morphism of $j$-categories.  
+  Then $\F$ is a full functor.
+\end{proposition}
+In particular, the unique $j$-category morphism $C_j\to\D$ is a full functor.  
+This is useful, because we are viewing game semantic models of nondeterministic PCF as $j$-categories (for a particular $j$), and therefore we can see that $C_j$ admits a full functor into every such model that satisfies deterministic factorization.  
+Since we typically require that our models satisfy such a factorization result, we can form any such model by taking $C_j$ and imposing some equivalence relation on the morphisms.  
+This suggests that we might consider $C_j$ itself as our model of nondeterministic PCF.
+
+\subsection{Constructing the cone}
+
+We will now define what the cone $C_j$ is and give an outline of why it is initial in the category of $j$-categories.
+
+Recall that we start with an oplax symmetric monoidal functor $j\from \C'\to\C$.  
+The objects of $C_j$ are the objects of $\C$.  
+Given objects $A,B$ of $\C$, the class of morphisms $A\to B$ is given by the colimit of the functor
+\[
+  \oppcat{\C'} \xrightarrow{\oppcat{j}}
+  \oppcat{\C} \xrightarrow{\C[\blank\tensor A,B]}
+  \Set\,.
+  \]
+That is, a morphism from $A$ to $B$ is a pair $(X,f)$, where $X$ is an object of $\C'$ and $f\from jX \tensor A \to B$ is a morphism in $\C$.  
+Furthermore, $(X, f)$ and $(X', f')$ are considered to be equivalent if there is some morphism $h\from X'\to X$ in $\C'$ making the following diagram commute:
+\[
+  \begin{tikzcd}
+    j X' \tensor A \arrow[r, "f'"] \arrow[d, "j h \tensor A"']
+      & B \\
+    j X \tensor A \arrow[ur, "f"']
+      &
+  \end{tikzcd}\,.
+  \]
+Given morphisms $(X,f)\from A \to B$, $(Y,g)\from B \to C$, the composite is given by $(Y\tensor X,f;g)$, where $f;g$ is the following composite in $\C$:
+\begin{align*}
+  j(Y\tensor X)\tensor A & \xrightarrow{m_j\tensor A}
+    (jY \tensor jX) \tensor A \\ & \xrightarrow{\assoc}
+      jY \tensor (jX \tensor A) \\ & \xrightarrow{jY \tensor f}
+        jY \tensor B \xrightarrow{g}
+          C\,.
+\end{align*}
+We can prove that this composition is associative using the usual coherence theorems for monoidal categories.  
+Similarly, the symmetric monoidal structure from $\C$ induces a symmetric monoidal structure on $C_j$.  
+
+There is a functor $J\from \C\to C_j$ that is the identity on objects and which sends a strategy $f\from A \to B$ to the strategy
+\[
+  j I \tensor A \xrightarrow{\epsilon_j\tensor A}
+  I \tensor A \xrightarrow{\lunit\inv}
+  A \xrightarrow{f} B\,.
+  \]
+This functor is (strong) symmetric monoidal with respect to the monoidal structure on $C_j$.  
+Lastly, the natural transformation $\phi\from I \Rightarrow J\circ j$ is given by the composite
+\[
+  \phi_X = jX \tensor I \xrightarrow{\runit\inv}
+  jX\,,
+  \]
+considered as a morphism from $I$ to $jX$ in $C_j$.  
+Proving that this is indeed a natural transformation makes essential use of the equivalence relation on morphisms in $C_j$.  
+We can also prove that $\phi$ is a generalized monoidal natural transformation.  
+Therefore, $C_j$ is a $j$-category.
+
+Now suppose that $(\D,F,\psi)$ is another $j$-category.  
+We define a functor $H\from C_j\to\D$ that sends an object $A=JA$ in $C_j$ to the object $FA$ in $\D$.  
+Moreover, we send a morphism $f\from jX\tensor A \to B$ from $JA$ to $JB$ in $C_j$ to the following composite in $\D$:
+\begin{align*}
+  FA \xrightarrow{\lunit;\psi_X\tensor FA}
+  FjX \tensor FA \xrightarrow{m_F}
+  F (jX \tensor A) \xrightarrow{F f}
+  F B\,.
+\end{align*}
+Proving that this is indeed a functor is a little tricky, and relies on $\psi$ being a generalized monoidal natural transformation.  
+We can then go through and check that $H$ is indeed a morphism of $j$-categories.
+
+In order to prove uniqueness, note that, as a morphism of $j$-categories, $H$ is determined on morphisms of the form $Jf$ by the equation $F = H \circ J$ and on morphisms of the form $\phi_X$ by the equation $\psi=\vc{\phi}{H}$.  
+But now, if $f\from jX\tensor A \to B$ is any morphism from $A$ to $B$ in $C_j$, we may write $f$ as the composite
+\[
+  JA \xrightarrow{\lunit;\phi_X\tensor A}
+  JjX \tensor JA \xrightarrow{m_J}
+  J (jX \tensor A) \xrightarrow{Jf}
+  JB\,;
+  \]
+i.e., $C_j$ satisfies $\phi$-factorization.  
+Since the functor $H$ is required to be monoidal, this implies that it is determined everywhere on $C_j$ by the requirement that it be a morphism of $j$-categories.
+Therefore, $C_j$ is initial in the category of $j$-categories.
+
+A consequence of the initiality of the cone construction is that it is \emph{functorial}; that is, given a square of the following form:
+\[
+  \begin{tikzcd}[row sep=large, column sep=large]
+    \C' \arrow[r, "F", ""'{name=term}] \arrow[d, "j"']
+      & \D' \arrow[d, "j'"] \\
+    \C \arrow[r, "G"', ""{name=J}]
+      & \D
+    \arrow[Rightarrow, from=term, to=J, "\psi"]
+  \end{tikzcd}\,,
+  \]
+where horizontal arrows correspond to lax monoidal functors and vertical arrows to monoidal functors, we get an induced lax monoidal functor $C_{j}\to C_{j}$, in a way that respects horizontal pasting of squares.
+
+\section{Denotational Semantics}
+
+In order to model \emph{countable} nondeterminism, rather than arbitrary nondeterminism, we want to constrain our model so that 
+
+%% Acknowledgments
+\begin{acks}                            %% acks environment is optional
+                                        %% contents suppressed with 'anonymous'
+  %% Commands \grantsponsor{<sponsorID>}{<name>}{<url>} and
+  %% \grantnum[<url>]{<sponsorID>}{<number>} should be used to
+  %% acknowledge financial support and will be used by metadata
+  %% extraction tools.
+  This material is based upon work supported by the
+  \grantsponsor{GS100000001}{National Science
+    Foundation}{http://dx.doi.org/10.13039/100000001} under Grant
+  No.~\grantnum{GS100000001}{nnnnnnn} and Grant
+  No.~\grantnum{GS100000001}{mmmmmmm}.  Any opinions, findings, and
+  conclusions or recommendations expressed in this material are those
+  of the author and do not necessarily reflect the views of the
+  National Science Foundation.
+\end{acks}
+
+
+%% Bibliography
+\bibliography{../../common/phd_bibliography}
+
+
+%% Appendix
+\appendix
+\section{Appendix}
+
+Text of appendix \ldots
+
+\end{document}
