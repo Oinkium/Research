@@ -704,6 +704,7 @@ Given morphisms $(X,f)\from A \to B$, $(Y,g)\from B \to C$, the composite is giv
 \end{align*}
 We can prove that this composition is associative using the usual coherence theorems for monoidal categories.  
 Similarly, the symmetric monoidal structure from $\C$ induces a symmetric monoidal structure on $C_j$.  
+If $\C$ is symmetric monoidal \emph{closed}, then so is $C_j$.
 
 There is a functor $J\from \C\to C_j$ that is the identity on objects and which sends a strategy $f\from A \to B$ to the strategy
 \[
@@ -757,10 +758,61 @@ A consequence of the initiality of the cone construction is that it is \emph{fun
   \end{tikzcd}\,,
   \]
 where horizontal arrows correspond to lax monoidal functors and vertical arrows to monoidal functors, we get an induced lax monoidal functor $C_{j}\to C_{j}$, in a way that respects horizontal pasting of squares.
+In particular, if $\C$ and $\C'$ have linear structures, compatible with $j$, then $C_j$ inherits a linear structure.
 
 \section{Denotational Semantics}
 
-In order to model \emph{countable} nondeterminism, rather than arbitrary nondeterminism, we want to constrain our model so that 
+We now restrict our attention to the inclusion functor $j\from G_{sw,rec}\hookrightarrow \G_{rec}$.  
+Then $C_j$ inherits a linear structure from $\G_{rec}$.  
+
+\subsection{Extensional order}
+
+Let $\sigma,\tau\from I \to \bN$ be morphisms in $C_j$, corrseponding to morphisms $\sigma'\from jX \to \bN$, $\tau'\from jY \to \bN$ in $\G_{rec}$.  
+We say that $\sigma\lst\tau$ if the following two conditions hold:
+\begin{itemize}
+  \item If there exists $s\in \sigma'$ such that $s\vert_{\bN}=qn$, then there exists $t\in\tau'$ such that $t\vert_{\bN}=qn$.
+  \item If $\sigma'$ is winning then $\tau'$ is winning.
+\end{itemize}
+In general, given strategies $\sigma,\tau\from I \to A$ in $C_j$, we say that $\sigma\lst\tau$ if for all morphisms $\rho\from A \to \bN$ we have $\sigma;\rho\lst\tau;\rho$.
+
+We can show that this is well-defined; i.e., that it respects the equivalence relation we have already defined on morphisms.  
+This is a good exercise to show the importance of surjective and winning strategies to our model.
+
+\subsection{Countable nondeterminism}
+
+In order to model \emph{countable} nondeterminism, rather than arbitrary nondeterminism, we want to constrain our model so that morphisms are strategies for $\oc\bN\tensor A \to B$, rather than $X \tensor A \to B$ for an arbitrary game $X$.  
+
+Since $\oc\bN$ has the structure of a comonoid, it gives rise to an oplax monoidal functor
+\[
+  n\from I \to \G_{rec}\,,
+  \]
+where $I$ is the one-object monoidal category.  
+Moreover, this functor is linear distributive from the trivial linear structure on $I$ on to $\G$.
+The cone $C_n$ is therefore a linear category.  
+
+Since $\G_{sw,rec}$ is a sub-linear category of $\G_{rec}$, the functor $n$ factors through a functor $n'\from I \to \G_{rec}$.  
+By initiality of the cone construction, this gives rise to a functor $C_n\to C_j$.  
+Our model of nondeterministic PCF will be the category $\C$ that is the image of this functor.
+A morphism in $\C$ from a game $A$ to a game $B$ will be a strategy for $\oc \bN \tensor A \to B$, but the equivalence relation on morphisms is that from $C_j$.  
+For example, two morphisms $f,g\from \oc\bN\to A$ are equivalent in $\C$ if there is a surjective winning strategy $\oc\bN\to \oc\bN$ commuting with $f$ and $g$, but they are not equivalent in $C_n$.  
+
+In fact, once we have applied the extensional quotient, there is no difference between working in $\C$ and working in $C_n$.  
+We will use $\C$, because it is closer to being a fully abstract model for nondeterministic PCF before we apply the extensional quotient.
+
+\subsection{The denotation of a term}
+
+Let $M=C[\wn]\from T$ be a term of nondeterministic PCF, where $C[-]$ is a PCF context (i.e., a context not mentioning the constant $\wn$).  
+Then the denotation of $M$ in $\C$ is given by the following composite:
+\[
+  I \xrightarrow{\phi_{\oc\bN}}
+  \oc \bN \xrightarrow{J (\deno{\lambda n. C[n]})}
+  \deno{T}
+  \]
+In other words, when considered as a morphism in $\G_{rec}$, $\deno{M}$ is precisely the denotation of the term $\lambda n.C[n]$ in $\G_{rec}$.  
+
+\subsection{Relation to our previous model}
+
+Since our Harmer-McCusker-style model $\G_{ND}$
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
