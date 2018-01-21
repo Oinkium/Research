@@ -368,6 +368,8 @@ We fix a set $\P$ of players.
   As with strategies, if $S$ is a \strategy{} for some \game{}-strategy $\sigma$, we write $T_S$ for the set of all shadows of \game{}-plays in $S$.  
 
   Once again, it is easy to see that $T_S$ is a strategy for $A$ in the usual sense.  
+
+  We write $D_S$ for the set of positions $s\in T_\sigma$ where there exists $t\in S$ such that for all $t'\in\sigma$ satisfying $t\prefix t'$, $s$ is the shadow of $t'$.  
 \end{definition}
 
 We use $T$-\strategy{}s to define an order on \game{}-strategies.  
@@ -378,17 +380,18 @@ We use $T$-\strategy{}s to define an order on \game{}-strategies.
   \[
     R_S^s = \{a\in M_A\suchthat sa\in T_S\}
     \]
-  If $s\in T_\sigma$ is an $O$-position, we say that the \strategy{} $S$ is \emph{good at $s$} if $s$ is not the shadow of some infinite position in the limit of $\sigma$.  
 
   We define
   \[
-    R_{\sigma,T}^s = \{R_S^s\suchthat \textrm{$S$ is a $T$-\strategy{} for $\sigma$},\;\textrm{$S$ is good at $s$}\}
+    R_{\sigma,T}^s = \{R_S^s\suchthat \textrm{$S$ is a $T$-\strategy{} for $\sigma$},\;\textrm{$t\not\in D_S$ for all $t\prefix s$}\}
     \]
 
   Lastly, if $\sigma,\tau$ are \game{}-strategies for $A$, we say that $\sigma\le_T\tau$ if for all $s\in T_\sigma\cap T_\tau$ we have
   \[
-    R_{\sigma,T}^s\subset R_{\tau,T}^s
+    R_{\sigma,T}^s\le R_{\tau,T}^s
     \]
+  where we say $R\le R'$ if for all $A\in R$ there exists $B\in R'$ such that $B\subset A$.  
+
   If $\T\subset\power(\P)$ is a set of teams, then we write $\sigma\le_{\T}\tau$ if $\sigma\le_T\tau$ for all $T\in\T$.A
 
   If $\sigma\le_T\tau$ and $\tau\le_T\sigma$, then we say that $\sigma\equiv_T\tau$.  
@@ -404,16 +407,15 @@ In this section we will take $\P=\{\RN{1}\}$, and show that the preorders on str
   Let $A$ be an arena and let $\sigma$ be a \game{}-strategy for $A$.  
 
   i) Let $S$ be a $\{\RN{1}\}$-\strategy{} for $\sigma$.  
-  Then $T_S$ is a deterministic sub-strategy of $T_\sigma$.  
+  Then $T_S$ is a deterministic (possibly partial) sub-strategy of $T_\sigma$.  
 
   ii) Let $S$ be an $\emptyset$-\strategy{} for $\sigma$.  
-  Then $S=\sigma$.
+  Then $S=\sigma$ as sets.
 \end{lemma}
 
 \begin{proposition}
   Let $A$ be an arena.  
-  Given a \game{}-strategy $\sigma$ for $A$, define $D_\sigma$ to be the set of all (finite) sequences in $T_\sigma$ that are the shadow of some infinite sequence $s$ in the limit of $\sigma$.  
-  (A play in $D_\sigma$ necessarily ends with an $O$-move, since an $O$-move is always immediately followed by a $P$-move in a \game{}-play.)
+  Given a \game{}-strategy $\sigma$ for $A$, define $D_\sigma$ to be the set of all (finite) $s\in T_\sigma$ where there exists $t\in\sigma$ such that for all $\t'\in\sigma$ satisfying $t\prefix t'$, $s$ is the shadow of $t'$.  
 
   Now let $\sigma,\tau$ be \game{}-strategies for $A$.  
 
@@ -423,28 +425,52 @@ In this section we will take $\P=\{\RN{1}\}$, and show that the preorders on str
 \end{proposition}
 
 \begin{proof}
-  (i): By Lemma \ref{lemma:guy}, if $S$ is a $\{\RN{1}\}$-\strategy{} for $\sigma$, then $T_S$ is a deterministic sub-strategy of $T_\sigma$.  
-  It follows that if $S$ is good at a position $s$, then $R_S^s$ is a singleton.  
-  Moreover, if $sa\in T_\sigma$ is a $P$-position, then we can construct some $\{\RN{1}\}$-\strategy{} $S$ for $\sigma$ such that $S$ is good at $s$ and $sa\in T_S$.  
-  
-  Suppose that $\sigma\le_{\{\RN{1}\}}\tau$ and suppose that $s\in T_\sigma\cap T_\tau$ is an $O$-position and that $sa\in T_\sigma$.  
-  Then there is some $\{\RN{1}\}$-\strategy{} $S$ for $\sigma$ such that $S$ is good at $s$ and $sa\in T_S$: so $R_S^s=\{a\}$.  
-  Therefore, there is some $\{\RN{1}\}$-\strategy{} $S'$ for $\tau$ such that $S'$ is good at $s$ and $R_{S'}^s=\{a\}$.  
-  It follows that $sa\in T_\sigma$.  
-  Now, working by induction on the strategy, we can prove that $T_\sigma\subset T_\tau$.  
+  (i): Suppose that $\sigma\le_{\{\RN{1}\}}\tau$.  
+  Let $s\in T_\sigma$ be a $P$ position.  
+  If $s=\emptyplay$ then $s\in T_\tau$.  
+  Otherwise, $s=s'a$ for some $O$-position $s'$.  
+  We may construct a $\{\RN{1}\}$-\strategy{} $S$ for $\sigma$ by
+  \[
+    S=\{t\in\sigma\suchthat \textrm{for all even-length prefixes $t'\prefix t$, $t'\prefix s$}\}
+    \]
+  Then $S$ contains $s$ and, moreover, $s'\not\in D_S$.  
+  It follows that $\{a\}\in R_{\sigma,\{\RN{1}\}}^{s'}$ and therefore that $\{a\}\in R_{\tau,\{\RN{1}\}}^{s'}$, which means that there is some \strategy{} $S'$ for $\tau$ such that $sa\in T_{S'}$.  
+  It follows that $sa\in T_\tau$.  
 
   Conversely, suppose that $T_\sigma\subset T_\tau$.  
-  Let $s\in T_\sigma$ be an $O$-position.  
-  So $s\in T_\tau$.  
-  Let $S$ be a $\{\RN{1}\}$-\strategy{} for $\sigma$ that is good at $s$.  
-  We know that $R_S^s = \{a\}$ for some move $a$ such that $sa\in T_\sigma$.  
-  Then $sa\in T_\tau$, and we can construct $S'$ such that $R_{S'}^s=\{a\}$.  
-  Therefore, $R_{\sigma,\{\RN{1}\}}^s\subset R_{\tau,\{\RN{1}\}}^s$ and it follows that $\sigma \le_{\{\RN{1}\}}\tau$.  
+  Let $s\in T_\sigma$ be an $O$-position and let $S$ be a $\{\RN{1}\}$-\strategy{} for $\sigma$ such that $s\not\in D_S$.  
+  Then, by Lemma \ref{lemma:guy}, $T_S$ is a deterministic sub-strategy for $T_\sigma$; since $s\not\in D_S$, we have $sa\in T_\sigma$ for some $a$ and so $R_S^s=\{a\}$.  
+  Since $T_\sigma\subset T_\tau$, we have $sa\in T_\tau$.  
+  As above, we may construct some \strategy{} $S'$ for $\tau$ such that $s\not\in D_{S'}$ and $R_{S'}^s=\{a\}$.  
+  It follows that $\sigma\le_{\{\RN{1}\}}\tau$.  
 
-  (ii): Suppose that $\sigma,\tau$ are \game{}-strategies for $A$ and that $\sigma\le_{\emptyset}\tau$.  
-  Let $s\in T_\sigma\cap T_\tau$ be an $O$-position and suppose that $s\not\in D_\sigma$.  
-  Then it follows that 
+  (ii): Suppose that $\sigma\le_\emptyset\tau$.  
+  By Lemma \ref{lemma:guy} there are unique $\emptyset$-\strategy{}s $S_\sigma$ for $\sigma$ and $S_\tau$ for $\tau$, given at the level of sets by $S_\sigma=\sigma$ and $S_\tau=\tau$.  
 
+  Let $s\in T_\tau$ be a $P$-position, and suppose that $s\not\in T_\sigma$.  
+  Let $d\prefix s$ be the longest prefix contained in $T_\sigma$.  
+  Certainly $d$ is an $O$-position; since $d\ne s$, we have $da\prefix s$ for some $a$.  
+  Now if $R_{\tau,\emptyset}^e$ is inhabited, it must have a single element, $R_{S_\tau, \emptyset}^e$, which contains $a$.  
+  But since $ea\not\in T_\sigma$, no element of $R_{\sigma,\emptyset}^e$ may contain $a$.  
+  The only possibility, then, is that $e'\in D_\sigma$ for some $e'\prefix e\prefix s$.
+
+  Let $d\in D_\tau$; let $d'\prefix d$ be the longest prefix contained in $D_\tau$ and let $e\prefix d'$ be the longest prefix contained in $T_\sigma$.  
+  Then $e$ must be an $O$-position, by the definition of a strategy.  
+
+  If $e=d'$, then $R_{\tau,\emptyset}^e=\emptyset$, since $e=d'\in D_\tau = D_{S_\tau}$.  
+  Therefore, $R_{\sigma,\emptyset}^e=\emptyset$, which means that $e'\in D_{S_\sigma}=D_\sigma$ for some $e'\prefix e\prefix d$.
+
+  If instead $e\neq d'$, then $ea\in T_\sigma\setminus T_\tau$, from which it follows that some prefix of $ea$ is contained in $D_\sigma$, as above.  
+
+  Conversely, suppose that the conditions on $T_\sigma,D_\sigma,T_\tau,D_\tau$ hold.  
+  Let $s\in T_\sigma\cup T_\tau$ be an $O$-position.  
+  We have $R_{S_\sigma,\emptyset}^s = \{a\suchthat sa\in T_\sigma\}$ and $R_{S_\tau,\emptyset}^s = \{a\suchthat sa\in T_\tau\}$.  
+  Then $R_{\sigma,\emptyset}^s=\{R_{S_\sigma,\emptyset}^s\}$ if $s\in D_\sigma$ and is empty otherwise, and similarly for $\tau$.  
+  
+  By the first condition, either $e\in D_\sigma$ for some $e\prefix s$ or $R_{S_\tau,\emptyset}^s\prefix R_{S_\sigma,\emptyset}^s$.  
+  In the first case, $R_{\sigma,\emptyset}^s=\emptyset$, and so certainly $R_{\sigma,\emptyset}^s\le R_{\tau,\emptyset}^s$.  
+  In the second case, by the second condition, $d\not\in D_\tau$ for all $d\prefix s$ and therefore we have $R_{\sigma,\emptyset}^s=R_{S_\sigma,\emptyset}$ and similarly for $\tau$.  
+  The claim then follows.
 \end{proof}
 
 \subsection{Composition of \game{}-strategies}
@@ -457,115 +483,24 @@ We first define
   \M_{\sigma;\tau}=\M_\sigma + \M_\tau
   \]
 
-\section{Strategies as \game{}s}
+We say that a sequence $\s\in (M_A + M_B + M_C + \M_{\sigma;\tau})^*$ is a \emph{legal interaction} if
+\[
+  \s\vert_{A,B,\M}\in \M_\sigma
+  \]
+and
+\[
+  \s\vert_{B,C,\M}\in M_\tau
+  \]
+and moreover if the justification pointers in the sequences interact nicely in the usual manner.  
+Here, $\s\vert_{A,B,\M}$ is shorthand for $\s\vert_{M_A,M_B,\M_{\sigma;\tau}}$ and similarly for $B,C$.  
 
-\subsection{\game{}-plays and \game{}-strategies}
+Write $\sigma\|\tau$ for the set of legal interactions of sequences between $\sigma$ and $\tau$.  
+We then define
+\[
+  \sigma;\tau = \{\s\vert_{A,C,\M}\suchthat \s\in \sigma\|\tau\}
+  \]
 
-We now enrich the structure of strategies by equipping them with certain classes of \game{}s. We fix a set $\P$ of players throughout.
-
-\begin{definition}
-  Let $A$ be an arena and let $\M$ be a set of moves.  
-  Then a \game{}-play over $M_A$ is a (possibly infinite) sequence $s$ of moves that are either:
-  \begin{itemize}
-    \item Moves $a\in M_A$, called \emph{moves} or:
-    \item Moves $p\from m\in \P\times\M$, called \emph{\move{}s}
-  \end{itemize}
-  such that
-  \begin{itemize}
-    \item The first move in $s$ is an $O$-move in $A$.
-    \item If a move of the form $(p\from m)$ is followed by a move $a\in M_A$, then $a$ is a $P$-move.
-    \item Every $P$-move in $A$ is followed immediately (if at all) by an $O$-move in $A$.
-  \end{itemize}
-
-  The \emph{shadow} of a \game{}-play is the sequence formed by removing all moves of the form $p\from m$.  
-  A \emph{justified \game{}-play for $A$} is a \game{}-play $s$ over $A$, together with the structure of a justified play over the shadow of $s$.
-\end{definition}
-
-\begin{definition}
-  A \emph{\game{}-strategy} for an arena $A$ is a set $\M_\sigma$ of moves and a prefix-closed set of \game{}-plays over $\M$ such that when we forget about the \play{}s $\Sigma_s^t$, the resulting collection of justified sequences is a strategy for $A$, and such that if $s.(p\from m),s.(q\from n)\in S$, then $p=q$.
-\end{definition}
-
-\subsection{Composition}
-
-Possibly slightly tricky; the idea is that the process of `hiding' moves concatenates \play{}s together.
-
-\subsection{Ordering strategies}
-
-\begin{definition}
-  Let $\sigma$ be a \game{}-strategy and let $T\subset \P$ be a team of players.
-
-  A $T$-\strategy{} for $\sigma$\footnote{Yes, that is a \strategy{} for a strategy.} is a subset $S$ of $\sigma$ subject to the following rules:
-  \begin{itemize}
-    \item If $s\in S$ and $sa\in\sigma$, where $a$ is either an $O$-move in $M_A$ or a move $(p:m)$, where $m\not\in T$, then $sa\in S$.
-    \item If $sa,sb\in S$, where $a,b$ are $P$-moves in $M_A$, then $a=b$.
-    \item If $s.(p\from m),s.(p\from n)\in S$, and $p\in T$, then $m=n$.
-    \item If $s\in S$ and $sa\in\sigma$, where $a$ is either a $P$-move or a move of the form $(p\from m)$ for $m\in T$, then $sb\in S$ for some $b$.
-  \end{itemize}
-\end{definition}
-
-\begin{definition}
-  Let $\sigma$ be a \game{}-strategy, and let $S$ be a \strategy{} for $\sigma$.  
-  Then, if $s$ is an $O$-play in $A$ that is the shadow of some \game{}-play in $\sigma$, we write $R_S^s$ for the set of moves $a$ such that $sa$ is the shadow of some \game{}-play in $S$.
-
-  We write $R_\sigma^s$ for the set
-  \[
-    \{R_S^s\suchthat \textrm{$S$ is a \strategy{} for $\sigma$ and $s$ is the shadow of a play in $S$}, R_S^s\ne\emptyset\}
-    \]
-\end{definition}
-
-\begin{definition}
-  Let $\sigma,\tau$ be \game{}-strategies.  
-  We say that $\sigma \le_T \tau$ if the shadow of $\sigma$ is a subset of the shadow of $\tau$ and if for all $O$-moves $s$ that are the shadow of a play in $\sigma$, we have $R_\sigma^s\subset R_\tau^s$.
-\end{definition}
-
-\subsection{Example -- one-player \game{}s}
-
-Suppose that $\P=\{\RN{1}\}$.  
-Then there are two possibilities for $T$: $T=\emptyset$ and $T=\{\RN{1}\}$.
-
-We show that these correspond to the may- and must-orderings defined by Harmer and McCusker.
-
-\begin{proposition}
-  Suppose $\{P\}=\{\RN{1}\}$.  Let $A$ be an arena and let $\sigma$ be a strategy for $A$.  
-  Define
-  \begin{itemize}
-    \item $T_\sigma$ to be the shadow of $\sigma$
-    \item $D_\sigma$ to be the set of all $O$-positions $d$ in $T_\sigma$ such that there is either an infinite position in $\sigma$ having shadow $d$ or such that there is a terminal position in $\sigma$ having shadow $d$ and ending with a \move{}.
-  \end{itemize}
-
-  Now let $\sigma,\tau$ be \game{}-strategies for $A$.
-
-  i) $\sigma \le_{\{\RN{1}\}} \tau$ if and only if $T_\sigma \subset T_\tau$.
-  
-  ii) $\sigma \le_\emptyset \tau$ if and only if ...
-\end{proposition}
-
-\begin{proof}
-
-  (i): \textbf{If. }
-  Suppose that $T_\sigma\subset T_\tau$.  
-  We want to show that $\sigma\le_{\{\RN{1}\}}$, for which it suffices to show that for all $O$-positions $s\in T_\sigma$ we have $R_\sigma^s\subset R_\tau^s$.  
-  Let $s\in T_\sigma$ be an $O$-position and let $S$ be a \strategy{} for $\sigma$ such that $s$ is the shadow of some \game{}-play in $S$ and $R_S^s\ne\emptyset$.  
-  Let $a\in R_S^s$.  
-  By the definition of a \strategy{} for $\sigma$, we can see that in fact $R_S^s=\{a\}$.  
-
-  Since $T_\sigma\subset T_\tau$, we know that there is some \game{}-play in $\tau$ whose shadow is $sa$.  
-  Then it is easy to construct a \strategy{} $S'$ for $\tau$ such that $a\in R_{S'}^s$.  
-  Moreover, by the same argument, we see that $R_{S'}^s=\{a\}$.  
-  Therefore, $R_\sigma^s\subset R_\tau^s$.  
-
-  \textbf{Only if. }
-  Suppose that $\sigma\le_{\{\RN{1}\}}\tau$.  
-  Let $sa\in T_\sigma$ be a non-empty $P$-position.  
-  Then $sa$ is the shadow of some position in $\sigma$.  
-  We can construct a \strategy{} $S$ for $\sigma$ such that $sa$ is in the shadow of $S$; moreover, we have $R_S^s=\{a\}$.  
-  Therefore, $\{a\}=R_{S'}^s$ for some \strategy{} $S'$ for $\tau$.  
-  It follows that $sa\in T_\tau$.
-
-  (ii): \textbf{If. }
-  
-
-\end{proof}
+\section{Chess}
 
 \begin{example}
   Fix two players B (black) and W (white) and a set of moves $\M$ consisting of all legal chess moves.  

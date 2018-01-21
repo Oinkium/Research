@@ -77,9 +77,10 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{fact}[theorem]{Fact}
 \newtheorem{construction}[theorem]{Construction}
-\theoremstyle{definition} % Definitions etc.  Remarks too, because I don't like the way the 'remark' style looks.
+\theoremstyle{definition} % Definitions etc.  
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{notation}[theorem]{Notation}
+\theoremstyle{remark} % Remarks
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{remarks}[theorem]{Remarks}
 \newtheorem{example}[theorem]{Example}
@@ -161,8 +162,11 @@
 \newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
 \newcommand{\Rings}{\catname{CRing}}
 \newcommand{\CAT}{\catname{CAT}}
-\newcommand{\Top}{\catname{Top}}
+%\newcommand{\Top}{\catname{Top}}
 \newcommand{\Set}{\catname{Set}}
+\newcommand{\Cat}{\catname{Cat}}
+\newcommand{\MonCat}{\catname{MonCat}}
+\newcommand{\SymmMonCat}{\catname{SymmMonCat}}
 \newcommand{\Cont}{\catname{Cont}}
 \newcommand{\Sch}{\catname{Sch}}
 \newcommand{\Rel}{\catname{Rel}}
@@ -171,6 +175,7 @@
 \newcommand{\Sh}[1][]{\ifthenelse{\isempty{#1}}{\sh}{\sh(#1)}}
 \newcommand{\map}[3]{#2\xrightarrow{#1} #3}
 \newcommand*\from{\colon}
+\newcommand*\bigto{\Rightarrow}
 \newcommand{\cmap}[3]{#1\from{}#2\to{}#3}
 \newcommand\oppcat[1]{#1^{\mathrm{op}}}
 \DeclareRobustCommand{\vmap}[3] {\begin{tikzcd} #2 \arrow[d, "#1"] \\ #3 \end{tikzcd}}
@@ -268,6 +273,8 @@
 \DeclareMathOperator{\cn}{cn}
 \newcommand{\impliescn}{\protect\overset{\cn}{\implies}}
 \newcommand{\C}{{\mathcal{C}}}
+\newcommand{\D}{{\mathcal{D}}}
+\newcommand{\E}{{\mathcal{E}}}
 \DeclareMathOperator{\ev}{ev}
 \newcommand{\der}{{\mathtt{der}}}
 \newcommand{\mult}{{\mathtt{mult}}}
@@ -299,7 +306,8 @@
 \def\Centering{\relax\ifvmode\centering\fi}
 \newcommand{\deno}[1]{\left\llbracket#1\right\rrbracket}
 \newcommand{\nat}{{\mathtt{nat}}}
-\newcommand{\mustconverge}{\Downarrow}
+\newcommand{\converges}{\Downarrow}
+\newcommand{\mustconverge}{\converges^{\text{must}}}
 \newcommand{\Iflt}{\mathtt{If{<}\;}}
 \newcommand{\Ifgt}{\mathtt{If{>}\;}}
 \newcommand{\inr}{{\mathsf{inr}}}
@@ -362,11 +370,18 @@
 \newcommand{\n}{{\mathtt{n}}}
 \newcommand{\IfO}{{\mathtt{If0}\;}}
 \newcommand{\suc}{{\mathtt{suc\;}}}
+\newcommand{\pred}{{\mathtt{pred\;}}}
 \newcommand{\0}{{\mathtt{0}}}
 
-\newcommand{\rec}{{\mathtt{iter}}}
-\newcommand{\iter}{\rec}
+\newcommand{\iter}{{\mathtt{iter}}}
+\newcommand{\rec}{\iter}
 \newcommand{\Var}{{\mathtt{Var}}}
+\newcommand{\new}{{\mathtt{new}}}
+\newcommand{\case}{{\mathtt{case}}}
+\newcommand{\deref}{\texttt{@}}
+
+\newcommand{\lmam}{\sqsubseteq_{m\&m}}
+\newcommand{\emam}{\equiv_{m\&m}}
 
 %% Flexible strategy things
 
@@ -405,7 +420,22 @@
 \newcommand{\rulename}[1]{\LeftTirNameStyle{#1}}
 \newcommand{\ts}{{\;\vdash}}
 
+%% Double category things
+\newcommand{\hc}[2]{\left({#1}\middle|{#2}\right)}
+\newcommand{\vc}[2]{\left(\frac{#1}{#2}\right)}
+
 %% Our
+
+\def\searchmacro#1{
+  \AtBeginOfFiles{%
+    \ifdefined#1
+      \expandafter\def\csname \currfilename:found\endcsname{}%
+    \fi}
+  \AtEndOfFiles{%
+    \ifdefined#1
+      \unless\ifcsname \currfilename:found\endcsname
+        \immediate\write\finder{found in '\currfilename'}%
+    \fi\fi}}
 
 %% Isomorphism arrows on commutative diagrams %%
 \tikzset{Isom/.style={every to/.append style={edge node={node [sloped, above, allow upside down, auto=false]{$\cong$}}}},
