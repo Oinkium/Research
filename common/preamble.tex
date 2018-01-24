@@ -252,6 +252,7 @@
 \newcommand{\pprefix}{\sqsubsetneqq}
 \renewcommand{\ss}{\mathbf{s}}
 \newcommand{\bN}{\mathbb{N}}
+\newcommand{\bC}{\mathbb{C}}
 \newcommand{\pfun}{\rightharpoonup}
 \newcommand{\grel}[1]{\underline{#1}}
 \DeclareMathOperator{\length}{length}
@@ -305,7 +306,6 @@
 \def\flushRight{\leftskip0pt plus 1fill\rightskip0pt}
 \def\Centering{\relax\ifvmode\centering\fi}
 \newcommand{\deno}[1]{\left\llbracket#1\right\rrbracket}
-\newcommand{\nat}{{\mathtt{nat}}}
 \newcommand{\converges}{\Downarrow}
 \newcommand{\mustconverge}{\converges^{\text{must}}}
 \newcommand{\Iflt}{\mathtt{If{<}\;}}
@@ -365,6 +365,8 @@
 
 %% PCF Things
 
+\newcommand{\nat}{{\mathtt{nat}}}
+
 \newcommand{\Y}{\mathbf{Y}}
 \newcommand{\opto}{\longrightarrow}
 \newcommand{\n}{{\mathtt{n}}}
@@ -378,11 +380,36 @@
 \newcommand{\Var}{{\mathtt{Var}}}
 \newcommand{\new}{{\mathtt{new}}}
 \newcommand{\case}{{\mathtt{case}}}
-\newcommand{\deref}{\texttt{@}}
 
 \newcommand{\lmam}{\sqsubseteq_{m\&m}}
 \newcommand{\emam}{\equiv_{m\&m}}
 \newcommand{\lst}{\lesssim}
+
+%% Idealized Algol things
+
+\newcommand{\com}{{\mathtt{com}}}
+\newcommand{\skipp}{{\mathsf{skip}}}
+\newcommand{\neww}{{\mathsf{new}}}
+\newcommand{\mkvar}{{\mathsf{mkvar}\;}}
+\newcommand{\deref}{\texttt{@}}
+\newcommand{\ia}[2]{\langle #1 , #2 \rangle}
+\newcommand{\stup}[3]{\langle #1 \mid #2 \mapsto #3 \rangle}
+
+%% Hyland-Ong games things
+
+\newbox\gnBoxA
+\newdimen\gnCornerHgt
+\setbox\gnBoxA=\hbox{$\ulcorner$}
+\global\gnCornerHgt=\ht\gnBoxA
+\newdimen\gnArgHgt
+\def\pv #1{%
+    \setbox\gnBoxA=\hbox{$#1$}%
+    \gnArgHgt=\ht\gnBoxA%
+    \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
+    \else \advance \gnArgHgt by -\gnCornerHgt%
+    \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
+    \raise\gnArgHgt\hbox{$\urcorner$}}
+\DeclareMathOperator{\Int}{int}
 
 %% Flexible strategy things
 
@@ -420,6 +447,7 @@
 %% Inference rule things
 \newcommand{\rulename}[1]{\LeftTirNameStyle{#1}}
 \newcommand{\ts}{{\;\vdash}}
+\newcommand{\nts}{{\;\not\vdash}}
 
 %% Double category things
 \newcommand{\hc}[2]{\left({#1}\middle|{#2}\right)}

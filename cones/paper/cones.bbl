@@ -69,6 +69,22 @@
 \url{https://doi.org/10.1006/inco.2000.2930}}
 
 
+\bibitem[\protect\citeauthoryear{Abramsky and McCusker}{Abramsky and
+  McCusker}{1999}]%
+        {SamsonGuyIAPassive}
+\bibfield{author}{\bibinfo{person}{Samson Abramsky} {and} \bibinfo{person}{Guy
+  McCusker}.} \bibinfo{year}{1999}\natexlab{}.
+\newblock \showarticletitle{Full Abstraction for {Idealized Algol} with Passive
+  Expressions}.
+\newblock \bibinfo{journal}{{\em Theor. Comput. Sci.\/}} \bibinfo{volume}{227},
+  \bibinfo{number}{1-2} (\bibinfo{date}{Sept.} \bibinfo{year}{1999}),
+  \bibinfo{pages}{3--42}.
+\newblock
+\showISSN{0304-3975}
+\showDOI{%
+\url{https://doi.org/10.1016/S0304-3975(99)00047-X}}
+
+
 \bibitem[\protect\citeauthoryear{{Grandis} and {Par\'e}}{{Grandis} and
   {Par\'e}}{1999}]%
         {LimitsInDoubleCategories}
@@ -156,20 +172,6 @@
 \newblock
 \newblock
 \shownote{To appear.}
-
-
-\bibitem[\protect\citeauthoryear{Laird}{Laird}{2015}]%
-        {LairdOrdinalGames}
-\bibfield{author}{\bibinfo{person}{J. Laird}.} \bibinfo{year}{2015}\natexlab{}.
-\newblock \showarticletitle{Sequential Algorithms for Unbounded
-  Nondeterminism}.
-\newblock \bibinfo{journal}{{\em Electronic Notes in Theoretical Computer
-  Science\/}}  \bibinfo{volume}{319} (\bibinfo{year}{2015}),
-  \bibinfo{pages}{271 -- 287}.
-\newblock
-\showISSN{1571-0661}
-\showDOI{%
-\url{https://doi.org/10.1016/j.entcs.2015.12.017}}
 
 
 \bibitem[\protect\citeauthoryear{Levy}{Levy}{2008}]%
