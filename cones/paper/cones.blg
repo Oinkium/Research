@@ -32,48 +32,45 @@ Warning--empty address in mcCHFiniteND
 Warning--empty institution in RusssThesis
 Warning--empty publisher in hylandSchalkGames
 Warning--empty address in hylandSchalkGames
-Warning--empty year in LairdCofCommCom
-Warning--no number and no volume in LairdCofCommCom
-Warning--page numbers missing in both pages and numpages fields in LairdCofCommCom
-You've used 12 entries,
+You've used 13 entries,
             5795 wiz_defined-function locations,
-            1419 strings with 17915 characters,
-and the built_in function-call counts, 15418 in all, are:
-= -- 2282
-> -- 369
+            1436 strings with 18401 characters,
+and the built_in function-call counts, 17176 in all, are:
+= -- 2506
+> -- 411
 < -- 0
-+ -- 118
-- -- 240
-* -- 944
-:= -- 1452
-add.period$ -- 61
-call.type$ -- 12
-change.case$ -- 69
-chr.to.int$ -- 12
-cite$ -- 21
-duplicate$ -- 1252
-empty$ -- 884
-format.name$ -- 176
-if$ -- 3810
++ -- 132
+- -- 267
+* -- 1053
+:= -- 1618
+add.period$ -- 66
+call.type$ -- 13
+change.case$ -- 75
+chr.to.int$ -- 13
+cite$ -- 19
+duplicate$ -- 1418
+empty$ -- 994
+format.name$ -- 197
+if$ -- 4212
 int.to.chr$ -- 2
 int.to.str$ -- 1
-missing$ -- 46
-newline$ -- 159
-num.names$ -- 96
-pop$ -- 422
+missing$ -- 51
+newline$ -- 170
+num.names$ -- 106
+pop$ -- 446
 preamble$ -- 1
-purify$ -- 170
+purify$ -- 191
 quote$ -- 0
-skip$ -- 432
+skip$ -- 506
 stack$ -- 0
-substring$ -- 1434
-swap$ -- 140
-text.length$ -- 186
+substring$ -- 1645
+swap$ -- 165
+text.length$ -- 205
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 234
-warning$ -- 9
-while$ -- 119
+type$ -- 264
+warning$ -- 6
+while$ -- 134
 width$ -- 0
-write$ -- 265
+write$ -- 289
 (There were 8 error messages)
