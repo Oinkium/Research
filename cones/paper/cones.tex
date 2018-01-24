@@ -431,7 +431,7 @@ Indeed, if we compose $\mu^\circ$ with the strategy $\0$ for $\bN$ on the left, 
 
 \begin{definition}
   Let $\sigma$ be a strategy for a game $A$.  
-  We say that $\sigma$ is \emph{locally complete} if it may be written as the union of complete strategies; i.e., there exist $\sigma_\alpha$ such that $T_\sigma=\bigcup T_{\sigma_\alpha}$ and $D_\sigma=\bigcup D_{\sigma_\alpha}$.
+  We say that $\sigma$ is \emph{locally complete} if it may be written as the union of countably many complete strategies; i.e., there exist $\sigma_n$ such that $T_\sigma=\bigcup T_{\sigma_n}$ and $D_\sigma=\bigcup D_{\sigma_n}$.
 \end{definition}
 
 From now on, we will use `strategy' to mean \emph{locally complete strategy}.
@@ -510,6 +510,7 @@ The arena for $\oc A$ is the same as the arena for $A$, but the set of plays is 
   P_{\oc A} = \{s\in L_A\suchthat s\vert_m\in P_A\text{ for each initial move $m$}\}\,.
   \]
 There are strategies $\mult_A\from \oc A \to \oc A \tensor \oc A$, $\coh\from \oc (A\times B) \toisom \oc A \tensor \oc B$ and $\der_A\from \oc A \to A$ that can be used to create a Cartesian closed category $\G^\oc_{ND}$, in which morphisms from $A$ to $B$ are strategies for the game $\oc A\implies B$.  
+This construction is essentially the co-Kleisli category on a comonad given by $\oc$, but certain technical issues prevent us from presenting it in this way.
 See \cite{SamsonGuyIAPassive} for full details.
 
 \subsection{Constraining strategies}
@@ -550,316 +551,43 @@ Clearly our base games $\bN$ and $\bC$ can be enumerated, as can the tensor prod
 
 \subsection{Determinisitic Factorization}
 
-Our definability results will hinge on a \emph{factorization theorem}, showing that every nondeterministic strategy may be written as the composition of a deterministic strategy with the nondeterministic `oracle' $\top$.  
+Our definability results will hinge on a \emph{factorization theorem}, showing that every nondeterministic strategy may be written as the composition of a deterministic strategy with the nondeterministic `oracle' $\top_{\bN}$.  
+We can then deduce definability from definability in the model of deterministic Idealized Algol.
 
+Note that our result is a bit simpler than the corresponding result in \cite{mcCHFiniteND}; this is because it is easier to model a countable source of nondeterminism than a `finite but arbitrarily large' source.
 
-\section{Cones on Monoidal Functors}
+\begin{proposition}
+  Let $\sigma\from I \to A$ be a strategy for a game $A$ in $\G_{ND}$.
+  Then we may write $\sigma$ as $\top_{\bN};\Det(\sigma)$, where $\Det(\sigma)\from \oc\bN\to A$ is a deterministic strategy and $\top_{\bN}$ is the strategy for $\oc\bN$ given by
+  \begin{itemize}
+    \item $T_{\top_{\bN}}=P_{\oc\bN}$.
+    \item $D_{\top_{\bN}}$ is the set of infinite positions in $T_{\top_\bN}$.
+  \end{itemize}
+\end{proposition}
 
-\subsection{Surjective and winning strategies}
-
-A useful fact about the category $\G$ of games and deterministic strategies, proved in \cite{hylandSchalkGames}, is that it admits a faithful, monoidal and linearly distributive functor into the category $\Rel$ of sets and relations, with monoidal structure given by the Cartesian product and exponentials given by the multiset comonad $W$.  
-The functor sends a game $A$ to the set $P_A$ and sends a strategy $\sigma\from A\implies B$ to the relation
-\[
-  \grel{\sigma}=\{(s\vert_A,s\vert_B)\suchthat s\in\sigma\}\subset P_A\times P_B
-  \]
-
-Given a strategy $\sigma\from A\implies B$, we say that $\sigma$ is \emph{surjective} if $\grel{\sigma}$ is a surjective relation; i.e., if for any $b\in P_B$ there exists some $s\in\sigma$ such that $s\vert_B=b$.  
-Monoidality and linear distributivity of the Hyland-Schalk functor $\G\to\Rel$ show that the composition of surjective strategies is surjective, as is the tensor product of surjective strategies and the bang of a surjective strategy.  
-
-Given a strategy $\sigma\from A\implies B$, we say that $\sigma$ is \emph{winning} if $\sigma$ is total and if for all positions $s\in\sigma$, if $sb\in\sigma$, where $b$ is an $O$-move in $B$, then there is some $t\in\sigma$ such that $sb\prefix t$ and $t$ ends with a move in $B$.  
-
-Once again, the composition, tensor product and bang of winning strategies is still winning.  
-One way of seeing this is by relating our definition to the definition of a winning strategy given in \cite{abramskyjagadeesangames}, in which a game comes attached with a set of winning infinite positions.  
-Then we say that a strategy $\sigma$ is winning if it is total and if every infinite position arising as the limit of plays in $\sigma$ is a winning position.  
-If $A$ and $B$ are such that every infinite position is winning, then our notion of a winning strategy coincides with that notion.  
-
-The reason we are interested in surjective winning strategies is that they preserve top strategies:
-
-\begin{lemma}
-  We say that a game $A$ is \emph{$P$-winning} if for all $O$-positions $s\in P_A$ there exists some $a$ such that $sa\in P_A$.  
-  Let $A,B$ be $P$-winning games, and let $\sigma\from A\implies B$ be a surjective winning strategy.  
-  Write $\top_A$ for the (nondeterministic) strategy given by $T_{\top_A}=P_A$ and $D_{\top_A}=P_A^\omega$ (i.e., the only divergent plays are the infinite ones), and do the same for $B$.
-  Then $\top_A;\sigma=\top_B$.  
-\end{lemma}
 \begin{proof}
-  We can show that $T_{\top_A;\sigma}=T_{\top_B}$ from surjectivity of $\sigma$, using the Hyland-Schalk functor, since the equivalent result clearly holds in $\Rel$.  
-  Now suppose that $s$ is some divergent position in $\top_A;\sigma$.  
-  Then $s=\s\vert_B$, where $\s$ is a position in $\sigma$ and $\s\vert_A$ is a divergent position in $A$.
-  Then $\s\vert_A$ must be infinite; since $\sigma$ is winning, this means that $\s\vert_B$ must be infinite as well, and therefore that $s\in D_{\top_B}$.  
-  \label{lem:sw}
+  We begin by fixing an injection $\code_A$ from the set of $P$-moves in $A$ into the natural numbers.  
+  In the enumerated case, this is given to us already.
+  
+  We first assume that the strategy $\sigma$ is complete.
+  Then the strategy $\Det(\sigma)$ is very easy to describe.  
+  For each $O$-position $sa\in T_\sigma$, we have some set $B$ of possible replies to $sa$, which we order as $b_1,b_2,\cdots$, where $\code_A(b_1)<\code_A(b_2)<\cdots$.  
+  We insert a request to the oracle for a natural number; then, depending on her answer $j$, we play the next move as follows:
+  \begin{itemize}
+    \item If $0 < j \le \code_A(b_1)$, then play $b_1$.
+    \item If $\code_A(b_n) < j \le \code_A(b_{n+1})$ then play $b_{n+1}$.
+    \item If $j = 0$ and $sa\in D_\sigma$, then play nothing, and put the resulting play inside $D_{\Det(\sigma)}$.  
+      Otherwise, play $b_1$.
+  \end{itemize}
+  Lastly, we close under limits to make the strategy $\Det(\sigma)$ complete.  
+  $\Det(\sigma)$ is clearly nondeterministic.  
+  Checking that $\top_{\bN};\Det(\sigma)=\sigma$ is easy for finite plays; for infinite plays, it follows by completeness of $\sigma$.
+
+  Lastly, if $\sigma$ is the union of complete strategies $\sigma_1,\sigma_2,\cdots$, we insert an additional request to the oracle immediately after the very first move by player $O$; after receiving a reply $k$, we play according to $\sigma_k$.
 \end{proof}
 
-We now define a category $\G_{sw}$ whose objects are $P$-winning games and where the morphisms from a game $A$ to a game $B$ are deterministic surjective winning strategies from $A$ to $B$.  
-We write $\G_{sw,rec}$ for the category where the morphisms are \emph{recursive} surjective, winning strategies.  
-
-Write $j$ for the inclusion $\G_{sw,rec}\hookrightarrow\G_{rec}$, and write $J$ for the inclusion functor $\G\hookrightarrow\G_{ND}$ that sends a deterministic strategy $\sigma$ to the strategy given by $T=\sigma$ and $D=\pocl\{s\in\sigma^-\suchthat sa\not\in\sigma\forall a\}$
-Then the lemma we have just proves means that
-\[
-  \top \from I \Rightarrow J\circ j
-  \]
-is a natural transformation, where $I$ is the constant $I$ functor.
-
-Moreover, we would expect Lemma \ref{lem:sw} to hold in \emph{any} sensible game-semantics model of nondeterministic PCF, so the following makes sense as a definition
-
-\begin{definition}
-  A \emph{game semantics category for nondeterministic PCF} is a category $\D$ together with a functor $J\from \G_{rec}\to\D$ and a natural transformation $\top\from I\Rightarrow J\circ j\from\G_{sw,rec}\to\D$.  
-\end{definition}
-
-\subsection{Generalized monoidal natural transformations}
-
-We will need one more technical definition.
-
-Let $\C'$,$C'$,$\D'$,$\D$ be monoidal categories, let $f\from\C'\to\C$, $g\from \D'\to \D$ be oplax monoidal functors and let $F\from\D'\to\C'$, $G\from\D\to\C$ be lax monoidal functors, as in Figure \ref{fig:generalized-monoidal-setup}.
-
-\begin{figure}
-  \[
-    \begin{tikzcd}[row sep=large, column sep=large]
-      \D' \arrow[r, "F", ""'{name=F}] \arrow[d, "g"']
-        & \C' \arrow[d, "f"] \\
-      \D \arrow[r, "G"', ""{name=G}]
-        & \C
-      \arrow[Rightarrow, from=F, to=G, "\phi"]
-    \end{tikzcd}
-    \]
-  \caption{A generalized monoidal natural transformation $\phi$ is a particular sort of natural transformation between composites of lax and oplax monoidal functors.}
-  \label{fig:generalized-monoidal-setup}
-\end{figure}
-
-We say that a natural transformation $\phi\from fF\bigto Gg$ is a \emph{generalized monoidal natural transformation} if the following two diagrams commute for all objects $X,Y$ of $\D'$:
-\begin{mathpar}
-  \begin{tikzcd}
-    f F X \tensor f F Y \arrow[r, "\phi_X \tensor \phi_Y"]
-      & G g X \tensor G g Y \arrow[d, "m_G"] \\
-    f (F X \tensor F Y) \arrow[u, "m_f"] \arrow[d, "f m_F"']
-      & G (g X \tensor g Y) \\
-    f F (X \tensor Y) \arrow[r, "\phi_{X \tensor Y}"]
-      & G g (X \tensor Y) \arrow[u, "G m_g"']
-  \end{tikzcd}
-  \and
-  \begin{tikzcd}[column sep=small, row sep=small]
-    %
-      & f F I_{\D'} \arrow[rr, "\phi_I"]
-        &[-1.2em]
-          &[-1.2em] G g I_{\D'} \arrow[dr, "G \epsilon_g"]
-            & \\
-    f I_{\C'} \arrow[ur, "f \epsilon_F"] \arrow[drr, "\epsilon_f"]
-      &
-        &
-          &
-            & G I_{\D} \\
-    %
-      &
-        & I_{\C} \arrow[urr, "\epsilon_G"]
-          &
-            &
-  \end{tikzcd}\,.
-\end{mathpar}
-The particular structure that generalized natural transformations fit into is that of a \emph{double category} (see \cite{LimitsInDoubleCategories} for the definition); in particular, the double category $\SymmMonCat$ introduced in \cite{AdjointsInDoubleCategories}, in which the objects are symmetric monoidal categories, the horizontal morphisms are lax symmetric monoidal functors, the vertical morphisms are oplax symmetric monoidal functors and the $2$-cells are generalized monoidal natural transformations as defined above.  
-
-Generalized monoidal natural transformations may thus be composed either horizontally or vertically in the usual way; i.e., given a pair of squares as in Figure \ref{fig:generalized-monoidal-setup} that may be pasted together along an edge, then we may define a generalized monoidal natural transformation across the pasted square.  
-We write $\hc{\phi}{\psi}$ for the horizontal composition of natural transformations $\phi,\psi$ pasted together along an oplax monoidal functor and $\vc{\phi}{\psi}$ for the vertical composition of natural transformations $\phi,\psi$ pasted together along a lax monoidal natural functor.
-
-\subsection{The cone of a monoidal functor}
-
-Let $j\from \C'\to \C$ be an oplax monoidal functor.  
-We define a \emph{$j$-category} to be a category $\D$ together with a lax monoidal functor $J\from\C\to\D$ and a generalized natural transformation $\phi\from I \to Jj$:
-\[
-  \begin{tikzcd}[row sep=large, column sep=large]
-    \C' \arrow[r, "()", ""'{name=term}] \arrow[d, "j"']
-      & I \arrow[d, "I"] \\
-    \C \arrow[r, "J"', ""{name=J}]
-      & \D
-    \arrow[Rightarrow, from=term, to=J, "\phi"]
-  \end{tikzcd}\,.
-  \]
-\begin{example}
-  For example, our previous definition of a game semantics category for nondeterministic PCF can be thought of as a $j$-category, where $j$ is the inclusion functor $\G_{sw,rec}\hookrightarrow\G_{rec}$.  
-\end{example}
-We define a \emph{morphism of $j$-categories} going from a $j$-category $(\D',J',\phi')$ to a $j$-category $(\D,J,\phi)$ to be a lax monoidal functor $\F\from \D'\to\D$, sending $I$ to $I$, such that $J=\F\circ J'$ and $\phi$ is the vertical composition of $\phi'$ with the `identity transformation' given by this identity; i.e.:
-\[
-  \begin{tikzcd}[row sep=large, column sep=large]
-    \C' \arrow[r, "()", ""'{name=term}] \arrow[d, "j"']
-      & I \arrow[d, "I"] \\
-    \C \arrow[r, "J'"'{name=Jprimedown}, ""{name=Jprime}] \arrow[d, "\id"']
-      & \D' \arrow[d, "\F"] \\
-    \C \arrow[r, "J", ""{name=J}]
-      & \D
-    \arrow[Rightarrow, from=term, to=Jprime, shift left=1.5ex, "\phi'"]
-    \arrow[Rightarrow, from=Jprimedown, to=J, shift left=1.5ex, "\id"]
-    \arrow[Rightarrow, from=term, to=J, shift right=3ex, "\phi"' near end]
-  \end{tikzcd}\,.
-  \]
-Our main technical result in this section will be the following:
-\begin{proposition}
-  The category $j$-$\Cat$ of $j$-categories and $j$-category morphisms has an initial object $C_j$
-\end{proposition}
-By analogy with homotopy theory, we call this initial object the \emph{mapping cone} or \emph{cone} on $j$.
-
-To see why this is useful, consider another important topic from the theory of semantics.  
-We say that a $j$-category $(\D,J,\phi)$ satisfies \emph{$\phi$-factorization} if for any pair of objects $A$ and $B$ of $\C$ and for every morphism $f\from JA \to JB$ in $\D$, we may write $f$ as a composite
-\[
-  JA \xrightarrow{\lunit;\phi_X\tensor JA}
-  Jj X \tensor JA \xrightarrow{m_J}
-  J (jX \tensor A) \xrightarrow{J f'}
-  JB\,,
-  \]
-where $X$ is some object of $\C'$ and $f'\from jX \tensor A\to B$ is some morphism in $\C$.
-\begin{example}
-  In the case that $j$ is the inclusion $\G_{sw,rec}\hookrightarrow\G_{rec}$, and $\phi=\top$, $\phi$-factorization is the same as \emph{deterministic factorization}: the idea that every morphism can be written as the composition of a deterministic recursive strategy with $\top_X$ for some $X$.
-\end{example}
-
-Then the following result is easy to prove:
-\begin{proposition}
-  Let $(\D,J,\phi)$ be a $j$-category satisfying $\phi$-factorization.  
-  Suppose $\F\from\D'\to\D$ is a morphism of $j$-categories.  
-  Then $\F$ is a full functor.
-\end{proposition}
-In particular, the unique $j$-category morphism $C_j\to\D$ is a full functor.  
-This is useful, because we are viewing game semantic models of nondeterministic PCF as $j$-categories (for a particular $j$), and therefore we can see that $C_j$ admits a full functor into every such model that satisfies deterministic factorization.  
-Since we typically require that our models satisfy such a factorization result, we can form any such model by taking $C_j$ and imposing some equivalence relation on the morphisms.  
-This suggests that we might consider $C_j$ itself as our model of nondeterministic PCF.
-
-\subsection{Constructing the cone}
-
-We will now define what the cone $C_j$ is and give an outline of why it is initial in the category of $j$-categories.
-
-Recall that we start with an oplax symmetric monoidal functor $j\from \C'\to\C$.  
-The objects of $C_j$ are the objects of $\C$.  
-Given objects $A,B$ of $\C$, the class of morphisms $A\to B$ is given by the colimit of the functor
-\[
-  \oppcat{\C'} \xrightarrow{\oppcat{j}}
-  \oppcat{\C} \xrightarrow{\C[\blank\tensor A,B]}
-  \Set\,.
-  \]
-That is, a morphism from $A$ to $B$ is a pair $(X,f)$, where $X$ is an object of $\C'$ and $f\from jX \tensor A \to B$ is a morphism in $\C$.  
-Furthermore, $(X, f)$ and $(X', f')$ are considered to be equivalent if there is some morphism $h\from X'\to X$ in $\C'$ making the following diagram commute:
-\[
-  \begin{tikzcd}
-    j X' \tensor A \arrow[r, "f'"] \arrow[d, "j h \tensor A"']
-      & B \\
-    j X \tensor A \arrow[ur, "f"']
-      &
-  \end{tikzcd}\,.
-  \]
-Given morphisms $(X,f)\from A \to B$, $(Y,g)\from B \to C$, the composite is given by $(Y\tensor X,f;g)$, where $f;g$ is the following composite in $\C$:
-\begin{align*}
-  j(Y\tensor X)\tensor A & \xrightarrow{m_j\tensor A}
-    (jY \tensor jX) \tensor A \\ & \xrightarrow{\assoc}
-      jY \tensor (jX \tensor A) \\ & \xrightarrow{jY \tensor f}
-        jY \tensor B \xrightarrow{g}
-          C\,.
-\end{align*}
-We can prove that this composition is associative using the usual coherence theorems for monoidal categories.  
-Similarly, the symmetric monoidal structure from $\C$ induces a symmetric monoidal structure on $C_j$.  
-If $\C$ is symmetric monoidal \emph{closed}, then so is $C_j$.
-
-There is a functor $J\from \C\to C_j$ that is the identity on objects and which sends a strategy $f\from A \to B$ to the strategy
-\[
-  j I \tensor A \xrightarrow{\epsilon_j\tensor A}
-  I \tensor A \xrightarrow{\lunit\inv}
-  A \xrightarrow{f} B\,.
-  \]
-This functor is (strong) symmetric monoidal with respect to the monoidal structure on $C_j$.  
-Lastly, the natural transformation $\phi\from I \Rightarrow J\circ j$ is given by the composite
-\[
-  \phi_X = jX \tensor I \xrightarrow{\runit\inv}
-  jX\,,
-  \]
-considered as a morphism from $I$ to $jX$ in $C_j$.  
-Proving that this is indeed a natural transformation makes essential use of the equivalence relation on morphisms in $C_j$.  
-We can also prove that $\phi$ is a generalized monoidal natural transformation.  
-Therefore, $C_j$ is a $j$-category.
-
-Now suppose that $(\D,F,\psi)$ is another $j$-category.  
-We define a functor $H\from C_j\to\D$ that sends an object $A=JA$ in $C_j$ to the object $FA$ in $\D$.  
-Moreover, we send a morphism $f\from jX\tensor A \to B$ from $JA$ to $JB$ in $C_j$ to the following composite in $\D$:
-\begin{align*}
-  FA \xrightarrow{\lunit;\psi_X\tensor FA}
-  FjX \tensor FA \xrightarrow{m_F}
-  F (jX \tensor A) \xrightarrow{F f}
-  F B\,.
-\end{align*}
-Proving that this is indeed a functor is a little tricky, and relies on $\psi$ being a generalized monoidal natural transformation.  
-We can then go through and check that $H$ is indeed a morphism of $j$-categories.
-
-In order to prove uniqueness, note that, as a morphism of $j$-categories, $H$ is determined on morphisms of the form $Jf$ by the equation $F = H \circ J$ and on morphisms of the form $\phi_X$ by the equation $\psi=\vc{\phi}{H}$.  
-But now, if $f\from jX\tensor A \to B$ is any morphism from $A$ to $B$ in $C_j$, we may write $f$ as the composite
-\[
-  JA \xrightarrow{\lunit;\phi_X\tensor A}
-  JjX \tensor JA \xrightarrow{m_J}
-  J (jX \tensor A) \xrightarrow{Jf}
-  JB\,;
-  \]
-i.e., $C_j$ satisfies $\phi$-factorization.  
-Since the functor $H$ is required to be monoidal, this implies that it is determined everywhere on $C_j$ by the requirement that it be a morphism of $j$-categories.
-Therefore, $C_j$ is initial in the category of $j$-categories.
-
-A consequence of the initiality of the cone construction is that it is \emph{functorial}; that is, given a square of the following form:
-\[
-  \begin{tikzcd}[row sep=large, column sep=large]
-    \C' \arrow[r, "F", ""'{name=term}] \arrow[d, "j"']
-      & \D' \arrow[d, "j'"] \\
-    \C \arrow[r, "G"', ""{name=J}]
-      & \D
-    \arrow[Rightarrow, from=term, to=J, "\psi"]
-  \end{tikzcd}\,,
-  \]
-where horizontal arrows correspond to lax monoidal functors and vertical arrows to monoidal functors, we get an induced lax monoidal functor $C_{j}\to C_{j}$, in a way that respects horizontal pasting of squares.
-In particular, if $\C$ and $\C'$ have linear structures, compatible with $j$, then $C_j$ inherits a linear structure.
-
-\section{Denotational Semantics}
-
-We now restrict our attention to the inclusion functor $j\from G_{sw,rec}\hookrightarrow \G_{rec}$.  
-Then $C_j$ inherits a linear structure from $\G_{rec}$.  
-
-\subsection{Extensional order}
-
-Let $\sigma,\tau\from I \to \bN$ be morphisms in $C_j$, corrseponding to morphisms $\sigma'\from jX \to \bN$, $\tau'\from jY \to \bN$ in $\G_{rec}$.  
-We say that $\sigma\lst\tau$ if the following two conditions hold:
-\begin{itemize}
-  \item If there exists $s\in \sigma'$ such that $s\vert_{\bN}=qn$, then there exists $t\in\tau'$ such that $t\vert_{\bN}=qn$.
-  \item If $\sigma'$ is winning then $\tau'$ is winning.
-\end{itemize}
-In general, given strategies $\sigma,\tau\from I \to A$ in $C_j$, we say that $\sigma\lst\tau$ if for all morphisms $\rho\from A \to \bN$ we have $\sigma;\rho\lst\tau;\rho$.
-
-We can show that this is well-defined; i.e., that it respects the equivalence relation we have already defined on morphisms.  
-This is a good exercise to show the importance of surjective and winning strategies to our model.
-
-\subsection{Countable nondeterminism}
-
-In order to model \emph{countable} nondeterminism, rather than arbitrary nondeterminism, we want to constrain our model so that morphisms are strategies for $\oc\bN\tensor A \to B$, rather than $X \tensor A \to B$ for an arbitrary game $X$.  
-
-Since $\oc\bN$ has the structure of a comonoid, it gives rise to an oplax monoidal functor
-\[
-  n\from I \to \G_{rec}\,,
-  \]
-where $I$ is the one-object monoidal category.  
-Moreover, this functor is linear distributive from the trivial linear structure on $I$ on to $\G$.
-The cone $C_n$ is therefore a linear category.  
-
-Since $\G_{sw,rec}$ is a sub-linear category of $\G_{rec}$, the functor $n$ factors through a functor $n'\from I \to \G_{rec}$.  
-By initiality of the cone construction, this gives rise to a functor $C_n\to C_j$.  
-Our model of nondeterministic PCF will be the category $\C$ that is the image of this functor.
-A morphism in $\C$ from a game $A$ to a game $B$ will be a strategy for $\oc \bN \tensor A \to B$, but the equivalence relation on morphisms is that from $C_j$.  
-For example, two morphisms $f,g\from \oc\bN\to A$ are equivalent in $\C$ if there is a surjective winning strategy $\oc\bN\to \oc\bN$ commuting with $f$ and $g$, but they are not equivalent in $C_n$.  
-
-In fact, once we have applied the extensional quotient, there is no difference between working in $\C$ and working in $C_n$.  
-We will use $\C$, because it is closer to being a fully abstract model for nondeterministic PCF before we apply the extensional quotient.
-
-\subsection{The denotation of a term}
-
-Let $M=C[\wn]\from T$ be a term of nondeterministic PCF, where $C[-]$ is a PCF context (i.e., a context not mentioning the constant $\wn$).  
-Then the denotation of $M$ in $\C$ is given by the following composite:
-\[
-  I \xrightarrow{\phi_{\oc\bN}}
-  \oc \bN \xrightarrow{J (\deno{\lambda n. C[n]})}
-  \deno{T}
-  \]
-In other words, when considered as a morphism in $\G_{rec}$, $\deno{M}$ is precisely the denotation of the term $\lambda n.C[n]$ in $\G_{rec}$.  
-
-\subsection{Relation to our previous model}
-
-Since our Harmer-McCusker-style model $\G_{ND}$
+Note that in the recursive case, $\Det(\sigma)$ is clearly recursively presentable if $\sigma$ is.  
+Furthermore, if $\sigma$ is visible, then so is $\Det(\sigma)$.
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
