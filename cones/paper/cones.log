@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.23)  27 JAN 2018 18:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.23)  28 JAN 2018 18:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2322,9 +2322,19 @@ LF/m/n/10 (-20) .
  []
 
 [7.7]
-Overfull \hbox (3.93364pt too wide) in paragraph at lines 708--709
+Overfull \hbox (3.93364pt too wide) in paragraph at lines 728--729
 []\T1/LinuxLibertineT-TLF/m/n/10 (-20) We can now prove our sound-ness and ad-e
 -quacy re-sults. 
+ []
+
+
+Package natbib Warning: Citation `TsukadaSheaves' on page 8 undefined on input 
+line 786.
+
+[8.8]
+Overfull \hbox (2.82846pt too wide) in paragraph at lines 820--821
+\T1/LinuxLibertineT-TLF/m/n/10 (-20) quacy, and then re-strict down to non-de-t
+er-min-is-tic PCF. 
  []
 
 Processing 'acks' comment.
@@ -2346,40 +2356,34 @@ LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 (Font)              scaled to size 8.0pt on input line 53.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 (Font)              scaled to size 6.2pt on input line 53.
- [8.8]) [9.9
+ [9.9])
+
+Package natbib Warning: There were undefined citations.
+
+[10.10
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 795.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 795.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 850.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 850.
+ (./cones.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 850.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 850.
+Package rerunfilecheck Info: File `cones.out' has not changed.
+(rerunfilecheck)             Checksum: 93E343033D376AEA9083A70B9B75DB59;3372.
 
-(./cones.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 795.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 795.
-
-
-Package rerunfilecheck Warning: File `cones.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `cones.out':
-(rerunfilecheck)             Before: A9D67DC8A016C3E975F46EA97EC1772B;3048
-(rerunfilecheck)             After:  7047872F18A86B200B684DE0139315BD;3212.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.97499pt have occurred.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 32310 strings out of 492985
- 578241 string characters out of 6138637
- 660602 words of memory out of 5000000
- 34382 multiletter control sequences out of 15000+600000
- 321210 words of font info for 657 fonts, out of 8000000 for 9000
+ 32337 strings out of 492985
+ 578836 string characters out of 6138637
+ 659605 words of memory out of 5000000
+ 34385 multiletter control sequences out of 15000+600000
+ 323219 words of font info for 671 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,18n,94p,899b,629s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,18n,94p,899b,623s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/usr/share/tex
 mf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}{/usr/share/texmf-dist/fonts/en
 c/dvips/libertine/lbtn_edcawa.enc}{/usr/share/texmf-dist/fonts/enc/dvips/libert
@@ -2414,10 +2418,10 @@ e1/public/txfonts/txsyb.pfb></usr/share/texmf-dist/fonts/type1/public/txfonts/t
 xsyc.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/share/
 texmf-dist/fonts/type1/public/newtx/zxlr.pfb></usr/share/texmf-dist/fonts/type1
 /public/newtx/zxlri.pfb>
-Output written on cones.pdf (9 pages, 770361 bytes).
+Output written on cones.pdf (10 pages, 778748 bytes).
 PDF statistics:
- 433 PDF objects out of 1000 (max. 8388607)
- 353 compressed objects within 4 object streams
- 64 named destinations out of 1000 (max. 500000)
- 78505 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 459 PDF objects out of 1000 (max. 8388607)
+ 378 compressed objects within 4 object streams
+ 67 named destinations out of 1000 (max. 500000)
+ 78521 words of extra memory for PDF output out of 89155 (max. 10000000)
 

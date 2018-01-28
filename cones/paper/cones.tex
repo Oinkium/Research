@@ -472,7 +472,7 @@ However, we can show that the composition of \emph{deterministic} complete strat
   Again, it is sufficient to prove this in the case that $\sigma$ and $\tau$ are deterministic and complete.
   Then it essentially follows from the argument used in \cite{abramskyjagadeesangames} that shows that a partiality at an $O$-position $s\in T_{\sigma;\tau}$ must arise either from a partiality in $T_\sigma$ or $T_\tau$ or from `infinite chattering' between $\sigma$ and $\tau$.  
   In the first case, the diverge-or-reply rule for $\sigma$ and $\tau$ gives us a divergence at $s$ in $\sigma;\tau$.  
-  In the second case, an infinite chattering between $\sigma$ and $\tau$ corresponds to an infinite interaction $\s\in\int(A,B,C)$ ending with infinitely many moves in $B$ such that $\s\vert_{A,C}=s$. 
+  In the second case, an infinite chattering between $\sigma$ and $\tau$ corresponds to an infinite interaction $\s\in\Int(A,B,C)$ ending with infinitely many moves in $B$ such that $\s\vert_{A,C}=s$. 
   Completeness for $\sigma$ and $\tau$ tells us that $\s\vert_{A,B}\in D_\sigma$ and $\s\vert_{B,C}\in D_\tau$ and therefore that $\s\vert_{A,C}\in D_{\sigma;\tau}$.  
 \end{proof}
 
@@ -632,21 +632,24 @@ We can also prove the converse, \emph{computational adequacy}.
   \label{prop:adequacy}
 \end{proposition}
 
-In order to prove these, we come back to the concept of an \emph{evaluation} of a term as a sequence of natural numbers that we use to replace the constant $\wn$.  
+Traditional proofs of computational adequacy using logical relations make essential use of the continuity of composition with respect to a natural ordering on strategies (see, for example, \cite{mcCHFiniteND} and \cite{RusssThesis} for the finite nondeterminism case).  
+In our case, since composition is not continuous in the language itself, we cannot use this technique.
+In order to prove soundness and adequacy, we use a new technique that involves using a deterministic stateful construction to model the nondeterminism inside a deterministic world in which continuity holds.  
+We shall return to the concept of an \emph{evaluation} of a term as a sequence of natural numbers that we use to replace the constant $\wn$.  
 
 \begin{lemma}
   Let $M=C[\wn]$ be a term of type $\com$.  
   Write $\sigma_M$ for the denotation of the term $\lambda n.C[n]$.  
-  Let $\pi$ be some evaluation of the configuration $\ia s M$, where $s$ is some state.  
-  Then there is a deterministic total strategy $\sigma_\pi\from \oc\bN$ such that
   \begin{itemize}
-    \item $\pi$ terminates at the value $\skipp$ if and only if then $qa\in T_{\sigma_\pi;\sigma_M}$.
-    \item $\pi$ diverges if and only if $D_{\sigma_\pi;\sigma_M}\ne\emptyset$.
+    \item $M\converges\skipp$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$.
+    \item $M\not{\mustconverge}$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $D_{\sigma;\sigma_M}\ne\emptyset$.
   \end{itemize}
   \label{lem:soundness-lemma}
 \end{lemma}
 
 \begin{proof}
+  We prove the forward directions first.
+
   Let $n_1,\dots,n_k,d$ be a finite sequence of natural numbers.  
   We define an Idealized Algol term $N_{n_1,\dots,n_k,d}\from (\nat \to \com) \to \com$ to be the following.
   \[
@@ -683,9 +686,9 @@ In order to prove these, we come back to the concept of an \emph{evaluation} of 
   So, by soundness and adequacy for the Idealized Algol model, we see that $qa\in T_{\sigma_\pi;\sigma_M}$ if and only if $N_{n_1,\dots,n_k,d} (\lambda n.C[n])\converges\skipp$, which is the case if and only if $M\converges\skipp$ along the evaluation $\pi$.
   Similarly, $D_{\sigma_\pi;\sigma_M}\neq\emptyset$ if and only if $N_{n_1,\dots,n_k,d}(\lambda n.C[n])$ diverges, which is equivalent to saying that $M$ diverges along the evaluation $\pi$.
 
-  Lastly, we need to deal with the case that $\pi$ is an evaluation $n_1,n_2,\dots$ that consults the nondeterministic oracle infinitely often.
+  Lastly, we need to deal with the case that there is an infinite evaluation $\pi = n_1,n_2,\dots$ of $M$ that consults the nondeterministic oracle infinitely often.
   In this case, $M$ must certainly diverge along the evaluation $\pi$.
-  In that case, we define $\pi_n^{(j)}$ to be the strategy for $\oc N$ corresponding to the term $N_{n_1,\dots,n_j,\Omega}$.  
+  For each $j$, we define $\pi_n^{(j)}$ to be the strategy for $\oc N$ corresponding to the term $N_{n_1,\dots,n_j,\Omega}$.  
   So $\pi_n^{(j)}$ has a unique finite maximal play
   \[
     q\;n_1\;q\;n_2\;\cdots\;q\;n_j\;q\,,
@@ -703,33 +706,46 @@ In order to prove these, we come back to the concept of an \emph{evaluation} of 
     q\;n_1\;q\;n_2\;\cdots\,,
     \]
   and so it is total.
+
+  We now prove the reverse implications.  
+  Let $\sigma\from\bN$ be a total deterministic strategy for $\oc\bN$.
+  Then $\sigma$ must have a maximal infinite play $s_\sigma$ of the form
+  \[
+    q\;m_1\;q\;n_2\;\cdots\,,
+    \]
+  where $m_1,m_2,\dots$ is some infinite sequence of natural numbers.  
+  If the strategy $\sigma_M$ contains some play $\s$ such that $\s\vert_{\oc\bN}=s$, then $\sigma=\sigma_\pi$ for some infinite evaluation $\pi$ of $M$.  
+  Otherwise, let $t$ be the maximal subplay of $s$ such that $\s\vert_{\oc\bN}=t$ for some $\s\in\sigma_M$.  
+  Then, if we replace $\sigma$ with the strategy $\sigma'$ that plays according to $t$ and subsequently plays $q\;d\;q\;d\;\cdots$ for our fixed value $d$, then we will have $\sigma';\sigma_M=\sigma;\sigma_M$.  
+  Moreover, $\sigma'=\sigma_\pi$ for some evaluation $\pi$ of $M$.
+
+  Now suppose that there exists $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$.  
+  By the above discussion, we may assume that $\sigma=\sigma_\pi$ for some evaluation $\pi$ of $M$.  
+  Therefore, $qa\in T_{\sigma_\pi;\sigma_M}$, which means that $M\converges\skipp$ along the evaluation $\pi$.  
+  The corresponding statement for must convergence follows in the same way.
 \end{proof}
 
 We can now prove our soundness and adequacy results.
 
 \begin{proof}[Proof of Lemma \ref{lem:consistency}]
   Suppose that that $M$ is a closed term of type $\com$ and that $M\converges\skipp$.  
-  Let $\pi$ be an evaluation such that $M\converges\skipp$ along $\pi$.  
-  Then $qa\in T_{\sigma_\pi;\sigma_M}$ for some strategy $\sigma_\pi$.  
+  Then $qa\in T_{\sigma;\sigma_M}$ for some strategy $\sigma$.  
   It follows that $qa\in T_{\top_\bN;\sigma_M}$.
 
   Now suppose that $D_{\deno M}\neq\emptyset$.  
-  Then there is some interaction $\s\in\int_\infty(I,\oc\bN,\bC)$ such that $\s\vert_\bC\in D_{\sigma_M}$.
-  Let $\sigma$ be the minimal deterministic strategy for $\oc\bN$ containing the play $\s\vert_{\oc\bN}$.  
-  By the proof of Lemma \ref{lem:soundness-lemma}, $\sigma\subset\sigma_\pi$ for some evaluation $\pi$ of $M$.  
-  Then we have $D_{\sigma_\pi;\sigma_M}\ne\emptyset$, so $M$ diverges along $\pi$.
+  Then there is some interaction $\s\in\Int_\infty(I,\oc\bN,\bC)$ such that $\s\vert_\bC\in D_{\sigma_M}$.
+  Let $\sigma$ be a deterministic total strategy containing $\s\vert_{\oc\bN}$.  
+  Then we have $D_{\sigma;\sigma_M}\ne\emptyset$, so $M$ diverges by Lemma \ref{lem:soundness-lemma}.
 \end{proof}
 
 \begin{proof}[Proof of Proposition \ref{prop:adequacy}]
   Suppose that $M$ is a closed term of type $\com$ and that $qa\in T_{\deno M}$.  
-  Then there is some interaction $\s\in\int_\infty(I,\oc\bN,\bC)$ such that $qa\in\s\vert_\bC$.  
-  Let $\sigma$ be the minimal deterministic strategy for $\oc\bN$ containing the play $\s\vert_{\oc\bN}$.  
-  By the proof of Lemma \ref{lem:soundness-lemma}, $\sigma\subset\sigma_\pi$ for some evaluation $\pi$ of the term $M$.
-  Then we have $qa\in T_{\sigma_\pi;\sigma_M}$, so $M\converges\skipp$ along $\pi$.
+  Then there is some interaction $\s\in\Int_\infty(I,\oc\bN,\bC)$ such that $qa\in\s\vert_\bC$.  
+  Let $\sigma$ be a deterministic total strategy for $\oc\bN$ containing the play $\s\vert_{\oc\bN}$.  
+  Then we have $qa\in T_{\sigma;\sigma_M}$, so $M\converges\skipp$ by Lemma \ref{lem:soundness-lemma}.
 
   Now suppse that $M\not\mustconverge$.  
-  Let $\pi$ be a divergent evaluation of $M$.  
-  Then we have $D_{\sigma_\pi;\sigma_M}\ne\emptyset$.  
+  Then we have $D_{\sigma;\sigma_M}\ne\emptyset$ for some strategy $\sigma\from\oc\bN$.
   Moreover, since $\sigma_\pi$ is total, it follows that $D_{\top_{\bN};\sigma_M}\ne\emptyset$.
 \end{proof}
 
@@ -763,6 +779,45 @@ Then $\sigma=\top_\bN;\Det(\sigma)=\deno{\wn};\deno M = \deno{M\;\wn}$.
   By universality, we have $A=\deno{P}$ for some closed term $P$ of type $T\to\com$.  
   Then we have $\deno{M};\deno{P}\ne\deno{N};\deno{P}$; by consistency and adequacy, it follows that $M\not{\emam} N$.
 \end{proof}
+
+\section{Nondeterministic PCF}
+
+We conclude by saying a few remarks about the situation when our base deterministic language is PCF rather than Idealized Algol.  
+Tsukada and Ong \cite{TsukadaSheaves} showed that traditional game semantics models are unsuitable for modelling this language: while the definition of \emph{visibility} of strategies can be extended to nondeterministic strategies without difficulty, the corresponding definition for PCF -- that of an \emph{innocent} strategy -- does not.  
+Tsukada and Ong instead use a new type of game semantics in which strategies are given not by sets of plays but by justified \emph{trees} whose vertices are moves.  
+The difference is subtle but important: from the point of view of countable nondeterminism it allows us to distinguish between terms that take an arbitrarily large finite number of steps to converge and terms that diverge.  
+For example, the denotation of our term $M$ above has an infinite branch in it, while the denotation of $N$ has infinitely many finite branches of arbitrary length.  
+
+The main advantage of the tree-based model, however, is that it gives rise to a satisfactory synthetic definition of a \emph{nondeterministic innocent} strategy based on sheaves.  
+In fact, Tsukada and Ong do not prove full abstraction for PCF with countable nondeterminism (even though that language may be interpreted within their category), but for PCF with finite nondeterminism.  
+
+Having ourselves given a fully abstract model of Idealized Algol with countable nondeterminism, we shall contribute to the process of `completing the square' by giving a sketch of how we can use our techniques to prove soundness and adequacy for the Tsukada-Ong model of PCF with countable nondeterminism.  
+A side-effect of this will be to give an alternative proof of soundness and adequacy for their model of PCF with finite nondeterminism.  
+
+The first observation to make is that our Lemma \ref{lem:soundness-lemma} is not really a statement about the category $\G_{ND,vis}$, but one about the deterministic model $\G_{D,vis}$.  
+
+For example, the first part of the lemma says that if $C[-]$ is an ordinary deterministic Idealized Algol context, then $C[\wn]\converges\skipp$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\deno{\lambda n.C[n]}}$.  
+Although we have mentioned a term ($C[\wn]$) living in nondeterministic Idealized Algol, this can be thought of as a statement about $C[-]$ itself, which is part of deterministic Idealized Algol.  
+Moreover, the strategy $\sigma$ and the denotation of $\lambda n.C[n]$ are both deterministic strategies, so we can interpret Lemma \ref{lem:soundness-lemma} as telling us something about Idealized Algol and its game semantics.  
+We can therefore forget about our nondeterminism model, with its divergence sets and infinite plays (neither of which are part of the Tsukada-Ong model) and concentrate on the Abramsky-McCusker model of Idealized Algol.
+Note that although Lemma \ref{lem:soundness-lemma} mentions $T_{\sigma;\sigma_M}$ and $D_{\sigma;\sigma_M}$, we can rephrase both of these inside the deterministic model, since the strategies involved are both deterministic.  
+
+The second observation is that Lemma \ref{lem:soundness-lemma} can just as easily be applied to PCF contexts and its game semantics model $\G_{inn}$.  
+There really is nothing to this observation: since any PCF context may be interpreted in Idealized Algol, then Lemma \ref{lem:soundness-lemma} applies to it.
+So we have narrowed \ref{lem:soundness-lemma} down to a result about $\G_{inn}$.  
+
+Now we have an inclusion functor $\G_{inn}\hookrightarrow\G_{TO}$, where $\G_{TO}$ is the Tsukada-Ong category.  
+Since the nondeterministic oracle $\wn$ may also be interpreted as a tree-strategy $\top_{\bN}$ in $\G_{TO}$, this gives us a model of PCF with countable nondeterminism inside that category.  
+
+It is then possible to deduce versions of Lemma \ref{lem:consistency} and Proposition \ref{prop:adequacy} from Lemma \ref{lem:soundness-lemma} as we did above, using the details of the inclusion functor from $\G_{inn}$ and the definition of composition in $\G_{TO}$.  
+We can then deduce soundness in the usual way.
+
+\begin{theorem}[Soundness for nondeterministic PCF]
+  Let $M,N\from T$ be two terms of PCF with countable nondeterminism.
+  If $\deno M\oes \deno N$, then $M\emam N$, where the denotation $\deno -$ is taken in the category $\G_{TO}$.  
+\end{theorem}
+
+An alternative line of attack is to first build a copy of our model of Idealized Algol with coutable nondeterminism inside $\G_{TO}$, using our argument to prove soundness and adequacy, and then restrict down to nondeterministic PCF.
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
