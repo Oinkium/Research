@@ -281,6 +281,8 @@ Given some set $S$ of initial moves in $s$, we write $s\vert_S$ for the subseque
 
 A \emph{game} is a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$, where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed set of legal plays in that arena such that if $s\in P_A$ and $I$ is a non-empty set of initial moves in $s$, then $s\vert_I\in P_A$.
 
+Our base games will be the games $\bN$ and $\bC$ on the arenas of the same names, where $P_{\bN}=\{\emptyplay,q\}\cup\{qn\suchthat n\in\bN\}$ and $\bC = \{\emptyplay,q,qa\}$.  
+
 \subsubsection{Multiplicatives}
 
 Let $A,B$ be games.  
