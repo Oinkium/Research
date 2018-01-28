@@ -74,14 +74,14 @@
 \begin{document}
 
 %% Title information
-\title[Short Title]{Full Title}         %% [Short Title] is optional;
+\title{A Fully Abstract Game Semantics for Countable Nondeterminism}         %% [Short Title] is optional;
                                         %% when present, will be used in
                                         %% header instead of Full Title.
-\titlenote{with title note}             %% \titlenote is optional;
+%\titlenote{with title note}             %% \titlenote is optional;
                                         %% can be repeated if necessary;
                                         %% contents suppressed with 'anonymous'
-\subtitle{Subtitle}                     %% \subtitle is optional
-\subtitlenote{with subtitle note}       %% \subtitlenote is optional;
+%\subtitle{Subtitle}                     %% \subtitle is optional
+%\subtitlenote{with subtitle note}       %% \subtitlenote is optional;
                                         %% can be repeated if necessary;
                                         %% contents suppressed with 'anonymous'
 
@@ -98,11 +98,10 @@
 
 %% Author with single affiliation.
 \author{W. J. Gowers}
-\authornote{with author1 note}          %% \authornote is optional;
+%\authornote{with author1 note}          %% \authornote is optional;
                                         %% can be repeated if necessary
 \orcid{0000-0002-4513-9618}             %% \orcid is optional
 \affiliation{
-  \position{PhD Student}
   \department{Department of Computer Science}              %% \department is recommended
   \institution{University of Bath}            %% \institution is required
   \streetaddress{Claverton Down Road}
@@ -112,11 +111,31 @@
 }
 \email{W.J.Gowers@bath.ac.uk}
 
+\author{James Laird}
+%\authornote{with author1 note}          %% \authornote is optional;
+                                        %% can be repeated if necessary
+\orcid{0000-0002-4513-9618}             %% \orcid is optional
+\affiliation{
+  \department{Department of Computer Science}              %% \department is recommended
+  \institution{University of Bath}            %% \institution is required
+  \streetaddress{Claverton Down Road}
+  \city{Bath}
+  \postcode{BA2 7QY}
+  \country{United Kingdom}                    %% \country is recommended
+}
+\email{J.D.Laird@bath.ac.uk}
+
 %% Abstract
 %% Note: \begin{abstract}...\end{abstract} environment must come
 %% before \maketitle command
 \begin{abstract}
-Text of abstract \ldots.
+  The concept of fairness for a concurrent program means that the program must be able to exhibit an unbounded amount of nondeterminism without diverging. Game semantics models of nondeterminism show that this is hard to implement; for example, Harmer and McCusker's model only admits infinite nondeterminism if there is also the possibility of divergence. 
+  We solve a long standing problem by giving a fully abstract game semantics for a simple stateful language with a countably infinite nondeterminism primitive. 
+  We see that doing so requires us to keep track of infinitary information about strategies, as well as their finite behaviours.
+  The unbounded nondeterminism gives rise to further problems, which can be formalized as a lack of continuity in the language. 
+  In order to prove adequacy for our model (which usually requires continuity), we develop a new technique in which we simulate the nondeterminism using a deterministic stateful construction, and then use combinatorial techniques to transfer the result to the nondeterministic language. 
+  Lastly, we prove full abstraction for the model; because of the lack of continuity, we cannot deduce this from definability of compact elements in the usual way, and we have to use a stronger universality result instead. 
+  We discuss how our techniques may also be applied to Tsukada and Ong's model of PCF with finite nondeterminism, yielding an alternative proof of computational adequacy.
 \end{abstract}
 
 
@@ -138,7 +157,7 @@ Text of abstract \ldots.
 
 %% Keywords
 %% comma separated list
-\keywords{keyword1, keyword2, keyword3}  %% \keywords are mandatory in final camera-ready submission
+\keywords{semantics, nondeterminism, games and logic}  %% \keywords are mandatory in final camera-ready submission
 
 
 %% \maketitle
