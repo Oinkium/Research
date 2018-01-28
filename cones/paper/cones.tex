@@ -236,7 +236,7 @@ It is easy enough to see (for example, by the denotational semantics) that the l
 However, it is clear that ${<}n\;\wn\not\mustconverge$ for each $n$, while $\lambda x.\0\;\wn$ must converge to $\0$.  
 Thus, $\lambda x.\0\;\wn$ is not the least upper bound of the ${<}n\;\wn$.
 
-This is a bit of a problem, since continuity often plays an important role in full abstraction proofs -- firstly, for proving Computational Adequacy of the recursion combinator, and, secondly, for deducing full abstraction from compact definability.  
+This is a bit of a problem, since continuity often plays an important role in full abstraction proofs -- firstly, for proving Computational Adequacy of the recursion combinator, and, secondly, for deducing full abstraction from definability of compact elements.
 Semantically, we shall deal with the first problem by adopting a novel approach to Computational Adequacy, and with the second problem by appealing to the stronger \emph{universality} result: namely, that every \emph{recursive} strategy is definable.
 
 \section{Game Semantics}
@@ -367,9 +367,9 @@ Moreover, if we try to compose $\deno{N}$ with the strategy on $\bN$ that always
 
 Aside from making violating soundness for the model, this example actually leads to composition not being associative if we naively extend the Harmer-McCusker model from finite to infinite nondeterminism (e.g., see \cite[4.4.1]{RusssThesis}).  
 
-Somehow, the crucial point is that we need to distinguish between terms like $M$, which contain infinite sequences of moves, and terms like $N$, which contain arbitrarily large finite sequences of oves.  
+Somehow, the crucial point is that we need to distinguish between terms like $M$, which contain infinite sequences of moves, and terms like $N$, which contain arbitrarily large finite sequences of moves.  
 The way that we do this is by making the infinite sequences of moves explicit in our strategies, in the style of \cite{RoscoeCspInfinite} and \cite{LevyGsInfinite}.  
-Then the denotation of $M$ will contain an infinite sequence, while the denotation of $N$ will contain arbitarily long finite sequences, but no infinite sequences.  
+Then the denotation of $M$ will contain an infinite sequence, while the denotation of $N$ will contain arbitrarily long finite sequences, but no infinite sequences.  
 
 The games in our model will be the same as those that we considered in the last section, but our definition of a strategy will change.
 
@@ -470,7 +470,7 @@ However, we can show that the composition of \emph{deterministic} complete strat
   \label{cor:diverge-or-reply}
 \end{corollary}
 \begin{proof}
-  The only tricky point is eastablishing that diverge-or-reply holds for $\sigma;\tau$.  
+  The only tricky point is establishing that diverge-or-reply holds for $\sigma;\tau$.  
   Again, it is sufficient to prove this in the case that $\sigma$ and $\tau$ are deterministic and complete.
   Then it essentially follows from the argument used in \cite{abramskyjagadeesangames} that shows that a partiality at an $O$-position $s\in T_{\sigma;\tau}$ must arise either from a partiality in $T_\sigma$ or $T_\tau$ or from `infinite chattering' between $\sigma$ and $\tau$.  
   In the first case, the diverge-or-reply rule for $\sigma$ and $\tau$ gives us a divergence at $s$ in $\sigma;\tau$.  
@@ -558,7 +558,7 @@ Clearly our base games $\bN$ and $\bC$ can be enumerated, as can the tensor prod
   See also \cite{MurawskiUniversality}.
 \end{proof}
 
-\subsection{Determinisitic Factorization}
+\subsection{Deterministic Factorization}
 
 Our definability results will hinge on a \emph{factorization theorem}, showing that every nondeterministic strategy may be written as the composition of a deterministic strategy with the nondeterministic `oracle' $\top_{\bN}$.  
 We can then deduce definability from definability in the model of deterministic Idealized Algol.
@@ -717,7 +717,7 @@ We shall return to the concept of an \emph{evaluation} of a term as a sequence o
     \]
   where $m_1,m_2,\dots$ is some infinite sequence of natural numbers.  
   If the strategy $\sigma_M$ contains some play $\s$ such that $\s\vert_{\oc\bN}=s$, then $\sigma=\sigma_\pi$ for some infinite evaluation $\pi$ of $M$.  
-  Otherwise, let $t$ be the maximal subplay of $s$ such that $\s\vert_{\oc\bN}=t$ for some $\s\in\sigma_M$.  
+  Otherwise, let $t$ be the maximal sub-play of $s$ such that $\s\vert_{\oc\bN}=t$ for some $\s\in\sigma_M$.  
   Then, if we replace $\sigma$ with the strategy $\sigma'$ that plays according to $t$ and subsequently plays $q\;d\;q\;d\;\cdots$ for our fixed value $d$, then we will have $\sigma';\sigma_M=\sigma;\sigma_M$.  
   Moreover, $\sigma'=\sigma_\pi$ for some evaluation $\pi$ of $M$.
 
@@ -746,7 +746,7 @@ We can now prove our soundness and adequacy results.
   Let $\sigma$ be a deterministic total strategy for $\oc\bN$ containing the play $\s\vert_{\oc\bN}$.  
   Then we have $qa\in T_{\sigma;\sigma_M}$, so $M\converges\skipp$ by Lemma \ref{lem:soundness-lemma}.
 
-  Now suppse that $M\not\mustconverge$.  
+  Now suppose that $M\not\mustconverge$.  
   Then we have $D_{\sigma;\sigma_M}\ne\emptyset$ for some strategy $\sigma\from\oc\bN$.
   Moreover, since $\sigma_\pi$ is total, it follows that $D_{\top_{\bN};\sigma_M}\ne\emptyset$.
 \end{proof}
@@ -819,7 +819,7 @@ We can then deduce soundness in the usual way.
   If $\deno M\oes \deno N$, then $M\emam N$, where the denotation $\deno -$ is taken in the category $\G_{TO}$.  
 \end{theorem}
 
-An alternative line of attack is to first build a copy of our model of Idealized Algol with coutable nondeterminism inside $\G_{TO}$, using our argument to prove soundness and adequacy, and then restrict down to nondeterministic PCF.
+An alternative line of attack is to first build a copy of our model of Idealized Algol with countable nondeterminism inside $\G_{TO}$, using our argument to prove soundness and adequacy, and then restrict down to nondeterministic PCF.
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
