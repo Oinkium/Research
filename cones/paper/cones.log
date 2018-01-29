@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 12:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 12:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2219,8 +2219,11 @@ Overfull \hbox (264.945pt too wide) detected at line 225
 
 ]
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 289.
- [2.2] [3.3]
+(Font)              scaled to size 7.0pt on input line 286.
+ [2.2]
+Underfull \vbox (badness 1168) has occurred while \output is active []
+
+ [3.3]
 Overfull \hbox (20.05386pt too wide) in paragraph at lines 400--402
 []\T1/LinuxLibertineT-TLF/m/n/10 (-20) Let $\OML/nxlmi/m/it/10 A$ \T1/LinuxLibe
 rtineT-TLF/m/n/10 (-20) be a game. A \T1/LinuxLibertineT-TLF/m/it/10 (-20) stra
@@ -2230,7 +2233,7 @@ xlmi/m/it/10 A$ \T1/LinuxLibertineT-TLF/m/n/10 (-20) is a pair $\LMS/ntxsy/m/n/
 10 (-20) , where: 
  []
 
-[4.4] [5.5]
+[4.4] [5.5] [6.6]
 Overfull \hbox (5.42021pt too wide) in paragraph at lines 588--590
 \LMS/ntxsy/m/n/10 G[]$\T1/LinuxLibertineT-TLF/m/it/10 (-20) . Then we may write
  $\OML/nxlmi/m/it/10 ^^[$ \T1/LinuxLibertineT-TLF/m/it/10 (-20) as $\LMS/ntxsy/
@@ -2240,7 +2243,6 @@ mi/m/it/10 ^^[\LMS/ntxsy/m/n/10 º$\T1/LinuxLibertineT-TLF/m/it/10 (-20) , where
 uxLibertineT-TLF/m/n/10 (-20) !\U/ntxsym/m/n/10 N \LMS/ntxsy/m/n/10 !
  []
 
-[6.6]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 7.3pt on input line 644.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
@@ -2299,6 +2301,9 @@ Package rerunfilecheck Info: File `cones.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.97499pt have occurred.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
  32022 strings out of 492985
@@ -2307,7 +2312,7 @@ Here is how much of TeX's memory you used:
  34107 multiletter control sequences out of 15000+600000
  261846 words of font info for 555 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,18n,94p,899b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,18n,94p,899b,510s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/usr/share/tex
 mf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}{/usr/share/texmf-dist/fonts/en
 c/dvips/libertine/lbtn_edcawa.enc}{/usr/share/texmf-dist/fonts/enc/dvips/libert
@@ -2339,10 +2344,10 @@ fonts/txsya.pfb></usr/share/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></u
 sr/share/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb></usr/share/texmf-dist
 /fonts/type1/public/newtx/txsys.pfb></usr/share/texmf-dist/fonts/type1/public/n
 ewtx/zxlr.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/zxlri.pfb>
-Output written on cones.pdf (10 pages, 772276 bytes).
+Output written on cones.pdf (10 pages, 772417 bytes).
 PDF statistics:
- 445 PDF objects out of 1000 (max. 8388607)
- 368 compressed objects within 4 object streams
+ 444 PDF objects out of 1000 (max. 8388607)
+ 367 compressed objects within 4 object streams
  67 named destinations out of 1000 (max. 500000)
  70329 words of extra memory for PDF output out of 74296 (max. 10000000)
 

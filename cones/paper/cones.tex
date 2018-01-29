@@ -173,7 +173,7 @@ Text of paper \ldots
 
 \section{Idealized Algol with Countable Nondeterminism}
 
-The language that we will be modelling is the language Idealized Algol \cite{SamsonGuyIAPassive}, extended with an additional constant $\wn$ representing countable nondeterminism.  
+The language that we will be modelling is Idealized Algol \cite{SamsonGuyIAPassive} extended with an additional constant $\wn$ representing countable nondeterminism.  
 This is similar to the approach adopted in \cite{mcCHFiniteND}, which extends Idealized Algol with \emph{finite} nondeterminism.  
 The types of the language are defined inductively as follows:
 \[
@@ -196,7 +196,7 @@ The value forms in the language are given by
   V \Coloneqq \skipp \mid \n \mid \lambda x.M \mid v \mid \mkvar
   \]
 We define predicates $M \converges V$ ($M$ may converge to $V$) and $M\mustconverge$ ($M$ must converge) inductively to give a big-step operational semantics for our language.  
-We give a selection of the appropriate rules in Figure \ref{fig:ia-os}; this presentation is almost identical to that given in \cite{mcCHFiniteND}, with a slightly different rule for the countable nondeterminism.  
+We give a selection of the appropriate rules in Figure \ref{fig:ia-os}; this presentation is almost identical to that given in \cite{mcCHFiniteND}, with a rule for countable nondeterminism replacing their rule for finite nondeterminism.  
 In each rule, $\ia{s}{M}$ is a \emph{configuration} of the language, where $M$ is a term, and $s$ is a \emph{store}; i.e., a function from the set of variables free in $M$ to the set of natural numbers.  
 If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state formed by updating the value of the variable $v$ to $n$.
 
