@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 12:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 12:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2263,10 +2263,6 @@ Overfull \hbox (3.93364pt too wide) in paragraph at lines 749--750
 Package natbib Warning: Citation `TsukadaSheaves' on page 9 undefined on input 
 line 807.
 
-
-LaTeX Warning: Reference `lem:pcf-soundness-lemma' on page 9 undefined on input
- line 846.
-
 [9.9] Processing 'acks' comment.
 \openout4 = `comment.cut'.
 
@@ -2303,17 +2299,11 @@ Package rerunfilecheck Info: File `cones.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.97499pt have occurred.
 
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  32022 strings out of 492985
  571738 string characters out of 6138637
- 659605 words of memory out of 5000000
+ 659632 words of memory out of 5000000
  34107 multiletter control sequences out of 15000+600000
  261846 words of font info for 555 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
@@ -2350,10 +2340,10 @@ r/share/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></usr/share/texmf-dist/
 fonts/type1/public/txfonts/txsyc.pfb></usr/share/texmf-dist/fonts/type1/public/
 newtx/txsys.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/zxlr.pfb></usr/
 share/texmf-dist/fonts/type1/public/newtx/zxlri.pfb>
-Output written on cones.pdf (10 pages, 779919 bytes).
+Output written on cones.pdf (10 pages, 779949 bytes).
 PDF statistics:
- 449 PDF objects out of 1000 (max. 8388607)
- 370 compressed objects within 4 object streams
+ 450 PDF objects out of 1000 (max. 8388607)
+ 371 compressed objects within 4 object streams
  67 named destinations out of 1000 (max. 500000)
  70329 words of extra memory for PDF output out of 74296 (max. 10000000)
 
