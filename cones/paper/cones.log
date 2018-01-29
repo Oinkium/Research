@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 13:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 14:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2219,12 +2219,12 @@ Overfull \hbox (264.945pt too wide) detected at line 225
 
 ]
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 289.
+(Font)              scaled to size 7.0pt on input line 290.
  [2.2]
 Underfull \vbox (badness 4819) has occurred while \output is active []
 
  [3.3]
-Overfull \hbox (20.05386pt too wide) in paragraph at lines 400--402
+Overfull \hbox (20.05386pt too wide) in paragraph at lines 401--403
 []\T1/LinuxLibertineT-TLF/m/n/10 (-20) Let $\OML/nxlmi/m/it/10 A$ \T1/LinuxLibe
 rtineT-TLF/m/n/10 (-20) be a game. A \T1/LinuxLibertineT-TLF/m/it/10 (-20) stra
 t-egy $\OML/nxlmi/m/it/10 ^^[$ \T1/LinuxLibertineT-TLF/m/n/10 (-20) for $\OML/n
@@ -2234,7 +2234,7 @@ xlmi/m/it/10 A$ \T1/LinuxLibertineT-TLF/m/n/10 (-20) is a pair $\LMS/ntxsy/m/n/
  []
 
 [4.4] [5.5] [6.6]
-Overfull \hbox (5.42021pt too wide) in paragraph at lines 588--590
+Overfull \hbox (5.42021pt too wide) in paragraph at lines 589--591
 \LMS/ntxsy/m/n/10 G[]$\T1/LinuxLibertineT-TLF/m/it/10 (-20) . Then we may write
  $\OML/nxlmi/m/it/10 ^^[$ \T1/LinuxLibertineT-TLF/m/it/10 (-20) as $\LMS/ntxsy/
 m/n/10 >[]\OT1/LinuxLibertineT-TLF/m/n/10 (-20) ; []\LMS/ntxsy/m/n/10 ¹\OML/nxl
@@ -2244,18 +2244,18 @@ uxLibertineT-TLF/m/n/10 (-20) !\U/ntxsym/m/n/10 N \LMS/ntxsy/m/n/10 !
  []
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.3pt on input line 644.
+(Font)              scaled to size 7.3pt on input line 645.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 5.5pt on input line 644.
+(Font)              scaled to size 5.5pt on input line 645.
 
-Overfull \hbox (9.58745pt too wide) in paragraph at lines 648--649
+Overfull \hbox (9.58745pt too wide) in paragraph at lines 649--650
 []\T1/LinuxLibertineT-TLF/m/n/10 (-20) We can also prove the con-verse, \T1/Lin
 uxLibertineT-TLF/m/it/10 (-20) com-pu-ta-tional ad-e-quacy\T1/LinuxLibertineT-T
 LF/m/n/10 (-20) . 
  []
 
 [7.7]
-Overfull \hbox (3.93364pt too wide) in paragraph at lines 749--750
+Overfull \hbox (3.93364pt too wide) in paragraph at lines 750--751
 []\T1/LinuxLibertineT-TLF/m/n/10 (-20) We can now prove our sound-ness and ad-e
 -quacy re-sults. 
  []
@@ -2263,7 +2263,7 @@ Overfull \hbox (3.93364pt too wide) in paragraph at lines 749--750
 [8.8]
 
 Package natbib Warning: Citation `TsukadaSheaves' on page 9 undefined on input 
-line 807.
+line 808.
 
 [9.9] Processing 'acks' comment.
 \openout4 = `comment.cut'.
@@ -2289,11 +2289,11 @@ LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 Package natbib Warning: There were undefined citations.
 
 [10.10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 880.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 880.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 881.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 881.
  (./cones.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 880.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 880.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 881.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 881.
 Package rerunfilecheck Info: File `cones.out' has not changed.
 (rerunfilecheck)             Checksum: 09F9FE931F9C152866D50B49F98C0902;3367.
 
@@ -2341,7 +2341,7 @@ fonts/txsya.pfb></usr/share/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></u
 sr/share/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb></usr/share/texmf-dist
 /fonts/type1/public/newtx/txsys.pfb></usr/share/texmf-dist/fonts/type1/public/n
 ewtx/zxlr.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/zxlri.pfb>
-Output written on cones.pdf (10 pages, 772481 bytes).
+Output written on cones.pdf (10 pages, 772564 bytes).
 PDF statistics:
  444 PDF objects out of 1000 (max. 8388607)
  367 compressed objects within 4 object streams

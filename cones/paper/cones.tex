@@ -231,7 +231,8 @@ Given a term $M$ of ground type $\com$ or $\nat$, a proof $\pi$ that $\ia s M\co
 We call such a sequence an \emph{evaluation} of the configuration $\ia s M$.  
 It is perhaps easier to view this from the perspective of a small-step reduction: the sequence of numbers is formed by listing the different values that the nondeterminism constant $\wn$ decays to over the course of the evaluation $\pi$.  
 
-If $\ia\emptyset M$ is a configuration with empty store, we call $M$ a \emph{closed term}.  
+If $\ia\emptyset M$ is a configuration with empty store, we call $\ia \emptyset M$ a \emph{closed term}.  
+In this case, we shall write $M$ rather than $\ia\emptyset M$.
 Let $T$ be an Idealized Algol type, and let $M,N\from T$ be closed terms.
 Then we write $M\lmam N$ if for all compatible contexts $C[-]$ of ground type we have
 \begin{gather*}
@@ -353,7 +354,7 @@ where $n;P$ is a shorthand for $\IfO n\;P\;P$, is given by a total strategy, wit
     \vdots &
   \end{array}\,.
   \]
-However, when we compose this strategy with any total strategy for $\bN$ on the left, we expect the resulting strategy to contain divergences, since the term $M \n$ diverges for any $\n$.
+However, when we compose this strategy with any total strategy for $\bN$ on the left, we expect the resulting strategy to contain divergences, since $M \n$ diverges for any $\n$.
 
 The approach adopted in \cite{mcCHFiniteND} is to check specifically for infinite chattering between strategies $\sigma\from A\implies B$ and $\tau\from B\implies C$ by checking whether the set $\sigma\|\tau$ contains any infinite increasing sequence of plays ending with moves in $B$.  
 If there is such a sequence, then it restricts to some $O$-position in $\sigma;\tau$ and we add in a divergence at that position.  
@@ -395,13 +396,13 @@ The games in our model will be the same as those that we considered in the last 
 \subsubsection{Strategies}
 
 Given an arena $A$, we define an \emph{infinite justified string} in the obvious way.  
-We define $\bar{P_A}$ to be $P_A$ together with the set of all those infinite justified sequences that have all finite prefixes in $P_A$.
+We define $\overline{P_A}$ to be $P_A$ together with the set of all those infinite justified sequences that have all finite prefixes in $P_A$.
 
 Let $A$ be a game.  
 A \emph{strategy} $\sigma$ for $A$ is a pair $(T_\sigma,D_\sigma)$, where:
 \begin{itemize}
-  \item $T_\sigma$ is a non-empty prefix-closed subset of $\bar{P_A}$ such that if $s\in T_\sigma$ is a $P$-position and $sa\in P_A$ then $sa\in T_\sigma$.
-  \item $D_\sigma\subset \bar{P_A}$ is a postfix-closed set of plays in $\bar{P_A}$ that either end with an $O$-move or are infinite.  
+  \item $T_\sigma$ is a non-empty prefix-closed subset of $\overline{P_A}$ such that if $s\in T_\sigma$ is a $P$-position and $sa\in P_A$ then $sa\in T_\sigma$.
+  \item $D_\sigma\subset \overline{P_A}$ is a postfix-closed set of plays in $\overline{P_A}$ that either end with an $O$-move or are infinite.  
     We require $D_\sigma$ to obey the following rules:
     \begin{description}
       \item[Divergences come from plays] If $d\in D_\sigma$ then there exists some $s\prefix d$ such that $s\in T_\sigma\cap D_\sigma$.
@@ -442,7 +443,7 @@ Note that there is no need to consider separately, as Harmer and McCusker do, di
 We need to impose one more condition on strategies:
 \begin{definition}
   Let $\sigma$ be a strategy for a game $A$.  
-  We say that $\sigma$ is \emph{complete} if $T_\sigma=\bar{T_\sigma}$; i.e., $T_\sigma$ contains an infinite position $s$ if it contains every finite prefix of $s$.  
+  We say that $\sigma$ is \emph{complete} if $T_\sigma=\overline{T_\sigma}$; i.e., $T_\sigma$ contains an infinite position $s$ if it contains every finite prefix of $s$.  
 \end{definition}
 
 Any finite-nondeterminism strategy in the sense of \cite{mcCHFiniteND} may be interpreted as a complete strategy by enlarging it with all its infinite limiting plays.  
@@ -586,7 +587,7 @@ Note that our result is a bit simpler than the corresponding result in \cite{mcC
 
 \begin{proposition}
   Let $\sigma\from I \to A$ be a strategy for a game $A$ in $\G_{ND}$.
-  Then we may write $\sigma$ as $\top_{\bN};\Det(\sigma)$, where $\Det(\sigma)\from \oc\bN\to A$ is a deterministic strategy and $\top_{\bN}$ is the strategy for $\oc\bN$ given by
+  Then we may write $\sigma$ as $\top_{\bN};\Det(\sigma)$, where $\Det(\sigma)\from \oc\bN\to A$ is a deterministic strategy and $\top_{\bN}$ is the strategy for $\oc\bN$ that is given by
   \begin{itemize}
     \item $T_{\top_{\bN}}=P_{\oc\bN}$.
     \item $D_{\top_{\bN}}$ is the set of infinite positions in $T_{\top_\bN}$.
