@@ -227,7 +227,7 @@ If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state forme
   \label{fig:ia-os}
 \end{figure*}
 
-Given a term $M$ of ground type $\com$ or $\nat$, a proof $\pi$ that $\ia s M\converges V$ gives rise to a (possibly infinite) sequence of natural numbers corresponding to a bottom-to-top, left-to-right reading of the natural numbers $n$ used in the first rule for $\wn$.  
+Given a term $M$ of ground type $\com$ or $\nat$, a proof $\pi$ that $\ia s M\converges V$ or that $\ia S M \not\mustconverge$ gives rise to a (possibly infinite) sequence of natural numbers corresponding to a bottom-to-top, left-to-right reading of the natural numbers $n$ used in the rules for $\wn$.  
 We call such a sequence an \emph{evaluation} of the configuration $\ia s M$.  
 It is perhaps easier to view this from the perspective of a small-step reduction: the sequence of numbers is formed by listing the different values that the nondeterminism constant $\wn$ decays to over the course of the evaluation $\pi$.  
 

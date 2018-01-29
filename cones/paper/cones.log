@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 12:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  29 JAN 2018 13:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2219,9 +2219,9 @@ Overfull \hbox (264.945pt too wide) detected at line 225
 
 ]
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 286.
+(Font)              scaled to size 7.0pt on input line 289.
  [2.2]
-Underfull \vbox (badness 1168) has occurred while \output is active []
+Underfull \vbox (badness 4819) has occurred while \output is active []
 
  [3.3]
 Overfull \hbox (20.05386pt too wide) in paragraph at lines 400--402
@@ -2301,14 +2301,11 @@ Package rerunfilecheck Info: File `cones.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.97499pt have occurred.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  32022 strings out of 492985
- 571738 string characters out of 6138637
- 659632 words of memory out of 5000000
+ 571741 string characters out of 6138637
+ 659633 words of memory out of 5000000
  34107 multiletter control sequences out of 15000+600000
  261846 words of font info for 555 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
@@ -2344,7 +2341,7 @@ fonts/txsya.pfb></usr/share/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb></u
 sr/share/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb></usr/share/texmf-dist
 /fonts/type1/public/newtx/txsys.pfb></usr/share/texmf-dist/fonts/type1/public/n
 ewtx/zxlr.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/zxlri.pfb>
-Output written on cones.pdf (10 pages, 772417 bytes).
+Output written on cones.pdf (10 pages, 772481 bytes).
 PDF statistics:
  444 PDF objects out of 1000 (max. 8388607)
  367 compressed objects within 4 object streams
