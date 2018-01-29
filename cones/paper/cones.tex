@@ -823,22 +823,31 @@ Moreover, the strategy $\sigma$ and the denotation of $\lambda n.C[n]$ are both 
 We can therefore forget about our nondeterminism model, with its divergence sets and infinite plays (neither of which are part of the Tsukada-Ong model) and concentrate on the Abramsky-McCusker model of Idealized Algol.
 Note that although Lemma \ref{lem:soundness-lemma} mentions $T_{\sigma;\sigma_M}$ and $D_{\sigma;\sigma_M}$, we can rephrase both of these inside the deterministic model, since the strategies involved are both deterministic.  
 
-The second observation is that Lemma \ref{lem:soundness-lemma} can just as easily be applied to PCF contexts and its game semantics model $\G_{inn}$.  
-There really is nothing to this observation: since any PCF context may be interpreted in Idealized Algol, then Lemma \ref{lem:soundness-lemma} applies to it.
-So we have narrowed \ref{lem:soundness-lemma} down to a result about $\G_{inn}$.  
+We want a version of Lemma \ref{lem:soundness-lemma} that can be applied to PCF contexts and the game semantics model $\G_{inn}$ of PCF.  
+Clearly, the lemma as currently stated does not hold in $\G_{inn}$, since the strategies $\sigma$ that we define are not innocent in general.  
+
+Instead, we need to look at the combinatorial structure of the strategies.  
+We observe that if $\sigma_M\from\oc\bN\to\bC$ is a strategy, then there exists a deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$ if and only if there exists some $\s\in T_{\sigma_M}$ such that $\s\vert_{\bC}=qa$.  
+In addition, there exists a deterministic strategy $\sigma\from\oc\bN$ such that $D_{\sigma;\sigma_M}\ne\emptyset$ if and only if $\sigma_M$ is not \emph{winning}; i.e., either $\sigma_M$ is not total or there exists some $\s\in T_{\sigma_M}$ with an infinite tail of moves in $\oc\bN$.  
+We recover the following version of Lemma \ref{lem:soundness-lemma} which now applies to the interpretation of PCF in $\G_{inn}$:
+\begin{lemma}
+  Let $M=C[\wn]$ be a term of type $\com$.  
+  Write $\sigma_M\from\oc\bN\to\bC$ for the denotation of the term $\lambda n.C[n]$.  
+  \begin{itemize}
+    \item $M\converges\skipp$ if and only if there exists $\s\in \sigma_M$ such that $\s\vert_{\bC}=qa$.  
+    \item $M\mustconverge$ if and only if $\sigma_M$ is \emph{winning}.
+  \end{itemize}
+  \label{lem:pcf-soundness-lemma}
+\end{lemma}
 
 Now we have an inclusion functor $\G_{inn}\hookrightarrow\G_{TO}$, where $\G_{TO}$ is the Tsukada-Ong category.  
 Since the nondeterministic oracle $\wn$ may also be interpreted as a tree-strategy $\top_{\bN}$ in $\G_{TO}$, this gives us a model of PCF with countable nondeterminism inside that category.  
 
-It is then possible to deduce versions of Lemma \ref{lem:consistency} and Proposition \ref{prop:adequacy} from Lemma \ref{lem:soundness-lemma} as we did above, using the details of the inclusion functor from $\G_{inn}$ and the definition of composition in $\G_{TO}$.  
+It is then possible to deduce versions of Lemma \ref{lem:consistency} and Proposition \ref{prop:adequacy} from Lemma \ref{lem:pcf-soundness-lemma} as we did above for our model of Idealized Algol, using the details of the inclusion functor from $\G_{inn}$ and the definition of composition in $\G_{TO}$.  
 We can then deduce soundness in the usual way.
 
-\begin{theorem}[Soundness for nondeterministic PCF]
-  Let $M,N\from T$ be two terms of PCF with countable nondeterminism.
-  If $\deno M\oes \deno N$, then $M\emam N$, where the denotation $\deno -$ is taken in the category $\G_{TO}$.  
-\end{theorem}
-
-An alternative line of attack is to first build a copy of our model of Idealized Algol with countable nondeterminism inside $\G_{TO}$, using our argument to prove soundness and adequacy, and then restrict down to nondeterministic PCF.
+It is worth noting an alternative line of attack, which is to first build a copy of our model of Idealized Algol with countable nondeterminism inside $\G_{TO}$, using our argument to prove soundness and adequacy, and then restrict down to nondeterministic PCF.
+The approach above is more general, however, since it does not make use of the fact that Idealized Algol may be interpreted in $\G_{TO}$.
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
