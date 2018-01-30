@@ -412,13 +412,13 @@ The games in our model will be the same as those that we considered in the last 
 \subsubsection{Strategies}
 
 Given an arena $A$, we define an \emph{infinite justified string} in the obvious way.  
-We define $\bar{P_A}$ to be $P_A$ together with the set of all those infinite justified sequences that have all finite prefixes in $P_A$.
+We define $\overline{P_A}$ to be $P_A$ together with the set of all those infinite justified sequences that have all finite prefixes in $P_A$.
 
 Let $A$ be a game.  
 A \emph{strategy} $\sigma$ for $A$ is a pair $(T_\sigma,D_\sigma)$, where:
 \begin{itemize}
-  \item $T_\sigma$ is a non-empty prefix-closed subset of $\bar{P_A}$ such that if $s\in T_\sigma$ is a $P$-position and $sa\in P_A$ then $sa\in T_\sigma$.
-  \item $D_\sigma\subset \bar{P_A}$ is a postfix-closed set of plays in $\bar{P_A}$ that either end with an $O$-move or are infinite.  
+  \item $T_\sigma$ is a non-empty prefix-closed subset of $\overline{P_A}$ such that if $s\in T_\sigma$ is a $P$-position and $sa\in P_A$ then $sa\in T_\sigma$.
+  \item $D_\sigma\subset \overline{P_A}$ is a postfix-closed set of plays in $\overline{P_A}$ that either end with an $O$-move or are infinite.  
     We require $D_\sigma$ to obey the following rules:
     \begin{description}
       \item[Divergences come from plays] If $d\in D_\sigma$ then there exists some $s\prefix d$ such that $s\in T_\sigma\cap D_\sigma$.
@@ -459,7 +459,7 @@ Note that there is no need to consider separately, as Harmer and McCusker do, di
 We need to impose one more condition on strategies:
 \begin{definition}
   Let $\sigma$ be a strategy for a game $A$.  
-  We say that $\sigma$ is \emph{complete} if $T_\sigma=\bar{T_\sigma}$; i.e., $T_\sigma$ contains an infinite position $s$ if it contains every finite prefix of $s$.  
+  We say that $\sigma$ is \emph{complete} if $T_\sigma=\overline{T_\sigma}$; i.e., $T_\sigma$ contains an infinite position $s$ if it contains every finite prefix of $s$.  
 \end{definition}
 
 Any finite-nondeterminism strategy in the sense of \cite{mcCHFiniteND} may be interpreted as a complete strategy by enlarging it with all its infinite limiting plays.  
@@ -590,7 +590,7 @@ Note that our result is a bit simpler than the corresponding result in \cite{mcC
 
 \begin{proposition}
   Let $\sigma\from I \to A$ be a strategy for a game $A$ in $\G_{ND}$.
-  Then we may write $\sigma$ as $\top_{\bN};\Det(\sigma)$, where $\Det(\sigma)\from \oc\bN\to A$ is a deterministic strategy and $\top_{\bN}$ is the strategy for $\oc\bN$ given by
+  Then we may write $\sigma$ as $\top_{\bN};\Det(\sigma)$, where $\Det(\sigma)\from \oc\bN\to A$ is a deterministic strategy and $\top_{\bN}$ is the strategy for $\oc\bN$ that is given by
   \begin{itemize}
     \item $T_{\top_{\bN}}=P_{\oc\bN}$.
     \item $D_{\top_{\bN}}$ is the set of infinite positions in $T_{\top_\bN}$.
@@ -823,17 +823,21 @@ Moreover, the strategy $\sigma$ and the denotation of $\lambda n.C[n]$ are both 
 We can therefore forget about our nondeterminism model, with its divergence sets and infinite plays (neither of which are part of the Tsukada-Ong model) and concentrate on the Abramsky-McCusker model of Idealized Algol.
 Note that although Lemma \ref{lem:soundness-lemma} mentions $T_{\sigma;\sigma_M}$ and $D_{\sigma;\sigma_M}$, we can rephrase both of these inside the deterministic model, since the strategies involved are both deterministic.  
 
-The second observation is that Lemma \ref{lem:soundness-lemma} can just as easily be applied to PCF contexts and its game semantics model $\G_{inn}$.  
-There really is nothing to this observation: since any PCF context may be interpreted in Idealized Algol, then Lemma \ref{lem:soundness-lemma} applies to it.
-So we have narrowed \ref{lem:soundness-lemma} down to a result about $\G_{inn}$.  
-The only other change we need to make is to switch our base observable type from $\com$ to $\nat$, since PCF has no command type.  
-The version with $\nat$ instead of $\com$ can be proved in exactly the same way.
+We want a version of Lemma \ref{lem:soundness-lemma} that can be applied to PCF contexts and the game semantics model $\G_{inn}$ of PCF.  
+Clearly, the lemma as currently stated does not hold in $\G_{inn}$, since the strategies $\sigma$ that we define are not innocent in general.  
 
+Instead, we need to look at the combinatorial structure of the strategies.  
+We observe that if $\sigma_M\from\oc\bN\to\bC$ is a strategy, then there exists a deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$ if and only if there exists some $\s\in T_{\sigma_M}$ such that $\s\vert_{\bC}=qa$.  
+In addition, there exists a deterministic strategy $\sigma\from\oc\bN$ such that $D_{\sigma;\sigma_M}\ne\emptyset$ if and only if $\sigma_M$ is not \emph{winning}; i.e., either $\sigma_M$ is not total or there exists some $\s\in T_{\sigma_M}$ with an infinite tail of moves in $\oc\bN$.  
+We recover the following version of Lemma \ref{lem:soundness-lemma} which now applies to the interpretation of PCF in $\G_{inn}$:
 \begin{lemma}
-  Let $C[-]\from\nat$ be a PCF context with a hole of type $\nat$.
-  Let $\sigma\from\bN\to\bN$ be the denotation of $\lambda n.C[n]$ in $\G_{inn}^\oc$.  
-  Then $C[\wn]\converges n$ if and only if there exists some $\s\in\sigma$ such that $\s\vert_\bN=qn$.  
-  Moreover, $C[\wn]\mustconverge$ if and only if $\sigma$ is winning.
+  Let $M=C[\wn]$ be a term of type $\com$.  
+  Write $\sigma_M\from\oc\bN\to\bC$ for the denotation of the term $\lambda n.C[n]$.  
+  \begin{itemize}
+    \item $M\converges\skipp$ if and only if there exists $\s\in \sigma_M$ such that $\s\vert_{\bC}=qa$.  
+    \item $M\mustconverge$ if and only if $\sigma_M$ is \emph{winning}.
+  \end{itemize}
+  \label{lem:pcf-soundness-lemma}
 \end{lemma}
 
 Now we have an inclusion functor $J:\G_{inn}^\oc\hookrightarrow\G_{TO}$, where $\G_{TO}$ is the Tsukada-Ong category.  
@@ -864,7 +868,6 @@ It is true in $\G_{TO}$, which allows us to prove the following version of adequ
   Suppose that for all $n\in\omega$, $M\converges n$ if and only if $N\converges n$ and furthermore that $M\mustconverge$ if and only if $N\mustconverge$.  
   Then $\deno{M}=\deno{N}$ in $\G_{TO}$.  
 \end{theorem}
-
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
