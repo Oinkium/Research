@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{13}
+\begin{thebibliography}{16}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -85,6 +85,21 @@
 \url{https://doi.org/10.1016/S0304-3975(99)00047-X}}
 
 
+\bibitem[\protect\citeauthoryear{Castellan, Clairambault, and
+  Winskel}{Castellan et~al\mbox{.}}{2016}]%
+        {ConcurrentHylandOngGames}
+\bibfield{author}{\bibinfo{person}{Simon Castellan}, \bibinfo{person}{Pierre
+  Clairambault}, {and} \bibinfo{person}{Glynn Winskel}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{title}{{Concurrent Hyland-Ong games}}.
+  (\bibinfo{date}{Sept.} \bibinfo{year}{2016}).
+\newblock
+\showURL{%
+\url{https://hal.archives-ouvertes.fr/hal-01068769}}
+\newblock
+\shownote{working paper or preprint.}
+
+
 \bibitem[\protect\citeauthoryear{Curien}{Curien}{2007}]%
         {curienFullAbstraction}
 \bibfield{author}{\bibinfo{person}{Pierre-Louis Curien}.}
@@ -102,30 +117,16 @@
   Plotkin.}
 
 
-\bibitem[\protect\citeauthoryear{{Grandis} and {Par\'e}}{{Grandis} and
-  {Par\'e}}{1999}]%
-        {LimitsInDoubleCategories}
-\bibfield{author}{\bibinfo{person}{Marco {Grandis}} {and}
-  \bibinfo{person}{Robert {Par\'e}}.} \bibinfo{year}{1999}\natexlab{}.
-\newblock \showarticletitle{{Limits in double categories.}}
-\newblock \bibinfo{journal}{{\em {Cah. Topologie G\'eom. Diff\'er.
-  Cat\'egoriques}\/}} \bibinfo{volume}{40}, \bibinfo{number}{3}
-  (\bibinfo{year}{1999}), \bibinfo{pages}{162--220}.
+\bibitem[\protect\citeauthoryear{Dijkstra}{Dijkstra}{1997}]%
+        {DijkstraBook}
+\bibfield{author}{\bibinfo{person}{Edsger~Wybe Dijkstra}.}
+  \bibinfo{year}{1997}\natexlab{}.
+\newblock \bibinfo{booktitle}{{\em A Discipline of Programming\/}
+  (\bibinfo{edition}{1st} ed.)}.
+\newblock \bibinfo{publisher}{Prentice Hall PTR}, \bibinfo{address}{Upper
+  Saddle River, NJ, USA}.
 \newblock
-\showISSN{0008-0004}
-
-
-\bibitem[\protect\citeauthoryear{Grandis}{Grandis}{2004}]%
-        {AdjointsInDoubleCategories}
-\bibfield{author}{\bibinfo{person}{Pare~Robert Grandis, Marco}.}
-  \bibinfo{year}{2004}\natexlab{}.
-\newblock \showarticletitle{Adjoint for double categories}.
-\newblock \bibinfo{journal}{{\em Cahiers de Topologie et Géométrie
-  Différentielle Catégoriques\/}} \bibinfo{volume}{45}, \bibinfo{number}{3}
-  (\bibinfo{year}{2004}), \bibinfo{pages}{193--240}.
-\newblock
-\showURL{%
-\url{http://eudml.org/doc/91684}}
+\showISBNx{013215871X}
 
 
 \bibitem[\protect\citeauthoryear{Harmer and McCusker}{Harmer and
@@ -167,15 +168,29 @@
 \url{https://doi.org/10.1006/inco.2000.2917}}
 
 
-\bibitem[\protect\citeauthoryear{Hyland and Schalk}{Hyland and Schalk}{2002}]%
-        {hylandSchalkGames}
-\bibfield{author}{\bibinfo{person}{Martin Hyland} {and} \bibinfo{person}{Andrea
-  Schalk}.} \bibinfo{year}{2002}\natexlab{}.
-\newblock \showarticletitle{Games on graphs and sequentially realizable
-  functionals. Extended abstract}. In \bibinfo{booktitle}{{\em Logic in
-  Computer Science, 2002. Proceedings. 17th Annual IEEE Symposium on}}. IEEE,
-  \bibinfo{pages}{257--264}.
+\bibitem[\protect\citeauthoryear{Laird}{Laird}{2015}]%
+        {LairdOrdinalGames}
+\bibfield{author}{\bibinfo{person}{J. Laird}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Sequential Algorithms for Unbounded
+  Nondeterminism}.
+\newblock \bibinfo{journal}{{\em Electronic Notes in Theoretical Computer
+  Science\/}}  \bibinfo{volume}{319} (\bibinfo{year}{2015}),
+  \bibinfo{pages}{271 -- 287}.
 \newblock
+\showISSN{1571-0661}
+\showDOI{%
+\url{https://doi.org/10.1016/j.entcs.2015.12.017}}
+
+
+\bibitem[\protect\citeauthoryear{Laird}{Laird}{2016}]%
+        {FunctionalProgramsAsCoroutines}
+\bibfield{author}{\bibinfo{person}{James Laird}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{title}{Higher-order Programs as Coroutines}.
+  (\bibinfo{year}{2016}).
+\newblock
+\newblock
+\shownote{to appear.}
 
 
 \bibitem[\protect\citeauthoryear{Levy}{Levy}{2008}]%
@@ -217,6 +232,34 @@
 \newblock
 \showDOI{%
 \url{https://doi.org/10.1093/logcom/3.2.131}}
+
+
+\bibitem[\protect\citeauthoryear{Tsukada and Ong}{Tsukada and Ong}{2015}]%
+        {TsukadaSheaves}
+\bibfield{author}{\bibinfo{person}{Takeshi Tsukada} {and}
+  \bibinfo{person}{C.~H.~Luke Ong}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Nondeterminism in Game Semantics via Sheaves}. In
+  \bibinfo{booktitle}{{\em Proceedings of the 2015 30th Annual ACM/IEEE
+  Symposium on Logic in Computer Science (LICS)}} {\em (\bibinfo{series}{LICS
+  '15})}. \bibinfo{publisher}{IEEE Computer Society},
+  \bibinfo{address}{Washington, DC, USA}, \bibinfo{pages}{220--231}.
+\newblock
+\showISBNx{978-1-4799-8875-4}
+\showDOI{%
+\url{https://doi.org/10.1109/LICS.2015.30}}
+
+
+\bibitem[\protect\citeauthoryear{Winskel}{Winskel}{2013}]%
+        {StrategiesAsProfunctors}
+\bibfield{author}{\bibinfo{person}{Glynn Winskel}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Strategies as Profunctors}. In
+  \bibinfo{booktitle}{{\em Foundations of Software Science and Computation
+  Structures}}, \bibfield{editor}{\bibinfo{person}{Frank Pfenning}} (Ed.).
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, \bibinfo{address}{Berlin,
+  Heidelberg}, \bibinfo{pages}{418--433}.
+\newblock
+\showISBNx{978-3-642-37075-5}
 
 
 \end{thebibliography}
