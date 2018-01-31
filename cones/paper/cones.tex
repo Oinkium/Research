@@ -241,11 +241,10 @@ The types of our language are defined inductively as follows:
   \]
 Meanwhile, the terms are those given in \cite{SamsonGuyIAPassive}, together with the nondeterministic choice:
 \begin{IEEEeqnarray*}{RCL}
-  M & \Coloneqq & x \mid \lambda x . M \mid M\;M \mid \Y_T M \mid \\
-  && \n \mid \skipp \mid \suc M \mid \pred M \mid \\
-  && \IfO M\;M\;M \mid M;M \mid \\
-  && M \coloneqq M \mid \deref M \mid \\
-  && \neww_T\;M \mid \mkvar M\;M \mid \wn\,.
+  M & \Coloneqq & x \mid \lambda x . M \mid M\;M \mid \Y_T \mid \\
+  && \n \mid \skipp \mid \suc \mid \pred \mid \\
+  && \IfO \mid \blank;\blank \mid \blank \coloneqq \blank \mid \\
+  && \deref \mid \neww_T \mid \mkvar \mid \wn\,.
 \end{IEEEeqnarray*}
 
 The typing rule for $\wn$ is $\Gamma \vdash \wn\from\nat$.
@@ -258,6 +257,20 @@ If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state forme
 
 \begin{figure*}
   \begin{mathpar}
+    \inferrule*{ }{\ia s {(\lambda x.M)\;N} \opto \ia s {M[N/x]}}
+    \and
+    \inferrule*{ }{\ia s {\suc \n}\opto\ia s {\n + \mathsf{1}}}
+    \and
+    \inferrule*{ }{\ia s {\pred \n}\opto\ia s {\0 \sqcup (\n - \mathsf{1})}}
+    \and
+    \inferrule*{ }{\ia s {\IfO \0 M N} \opto \ia s M}
+    \and
+    \inferrule*{ }{\ia s {\IfO (\n + \mathsf{1}) M N} \opto \ia s N}
+    \and
+    \inferrule*{ }{\ia s {\deref (\mkvar M N)} \opto \ia s M}
+    \and
+    \inferrule*{ }{\ia s {(\mkvar M N) \coloneqq L} \opto \ia s {N\;L}}
+    \and
     \inferrule*{ }{\ia s {v \coloneqq n} \opto \ia {\stup s v n} \skipp}
     \and
     \inferrule*[left={$s(v)=n$}]{ }{\ia s {\deref v} \opto \ia s n}
@@ -268,7 +281,19 @@ If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state forme
     \and
     \inferrule*[right=$n\in\bN$]{ }{\wn \opto \n}
     \and
-    \inferrule*{M \opto M'}{M;N\opto M';N}
+    \inferrule*{M \opto M'}{\IfO M \opto \IfO M'}
+    \and
+    \inferrule*{M \opto M'}{\suc M \opto \suc M'}
+    \and
+    \inferrule*{M \opto M'}{\pred M \opto \pred M'}
+    \and
+    \inferrule*{M \opto M'}{M;\blank\opto M';\blank}
+    \and
+    \inferrule*{M \opto M'}{M \coloneqq \blank \opto M' \coloneqq \blank}
+    \and
+    \inferrule*{M \opto M'}{\deref M \opto \deref M'}
+    \and
+    \inferrule*{M \opto M'}{\mkvar M \opto \mkvar M'}
     \and
     \inferrule*{M \opto M'}{M N\opto M'N}
   \end{mathpar}
