@@ -251,13 +251,15 @@ The typing rule for $\wn$ is $\Gamma \vdash \wn\from\nat$.
 We shall use the letter $v$ to range over variables of type $\Var$.  
 
 We define a small-step operational semantics for the language; this presentation is equivalent to the big-step semantics given in \cite{mcCHFiniteND}, except with a different rule for the countable rather than finite nondeterminism.
-We give a selection of the appropriate rules in Figure \ref{fig:ia-os}.
+We give the appropriate rules in Figure \ref{fig:ia-os}.
 In each rule, $\ia{s}{M}$ is a \emph{configuration} of the language, where $M$ is a term, and $s$ is a \emph{store}; i.e., a function from the set of variables free in $M$ to the set of natural numbers.  
 If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state formed by updating the value of the variable $v$ to $n$.
 
 \begin{figure*}
   \begin{mathpar}
     \inferrule*{ }{\ia s {(\lambda x.M)\;N} \opto \ia s {M[N/x]}}
+    \and
+    \inferrule*{ }{\ia s {\Y_T M}\opto \ia s {M (\Y_T M)}}
     \and
     \inferrule*{ }{\ia s {\suc \n}\opto\ia s {\n + \mathsf{1}}}
     \and
@@ -279,25 +281,25 @@ If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state forme
     \and
     \inferrule*{ }{\ia s {\new_T \lambda v.M}\opto \ia {\stup s v 0} M}
     \and
-    \inferrule*[right=$n\in\bN$]{ }{\wn \opto \n}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\IfO M} \opto \ia s {\IfO M'}}
     \and
-    \inferrule*{M \opto M'}{\IfO M \opto \IfO M'}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\suc M} \opto \ia s {\suc M'}}
     \and
-    \inferrule*{M \opto M'}{\suc M \opto \suc M'}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\pred M} \opto \ia s {\pred M'}}
     \and
-    \inferrule*{M \opto M'}{\pred M \opto \pred M'}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {M;\blank} \opto \ia s {M';\blank}}
     \and
-    \inferrule*{M \opto M'}{M;\blank\opto M';\blank}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {M \coloneqq \blank} \opto \ia s {M' \coloneqq \blank}}
     \and
-    \inferrule*{M \opto M'}{M \coloneqq \blank \opto M' \coloneqq \blank}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\deref M} \opto \ia s {\deref M'}}
     \and
-    \inferrule*{M \opto M'}{\deref M \opto \deref M'}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\mkvar M} \opto \ia s {\mkvar M'}}
     \and
-    \inferrule*{M \opto M'}{\mkvar M \opto \mkvar M'}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {M N} \opto \ia s {M'N}}
     \and
-    \inferrule*{M \opto M'}{M N\opto M'N}
+    \inferrule*[right=$n\in\bN$]{ }{\ia s \wn \opto \ia s \n}
   \end{mathpar}
-  \caption{Selected rules in the small-step operational semantics of Idealized Algol with countable nondeterminism}
+  \caption{Small-step operational semantics for Idealized Algol with countable nondeterminism}
   \label{fig:ia-os}
 \end{figure*}
 
@@ -492,6 +494,8 @@ However, when we introduce countable nondeterminism, we introduce the possibilit
 For example, the strategy $\nu$ that we mentioned above has an infinite increasing sequence of plays $q0\prefix q0q0\prefix \cdots$, but has no infinite play corresponding to its limit.  
 Nonetheless, we do not want to allow arbitrary strategies: for example, the strategy $\mu$ above should include the infinite play $qq0q0\dots$; the strategy $\mu^\circ$ formed by removing this infinite play has no meaning in our language.  
 Indeed, if we compose $\mu^\circ$ with the strategy $\0$ for $\bN$ on the left, then the resulting strategy does not satisfy diverge-or-reply.
+The difference with $\nu$ is that every play $qq0\cdots q0\in T_\nu$ may be completed in $\nu$ by playing the move $0$ on the right.
+In other words, $\nu$ is the union of complete strategies, while $\mu^\circ$ is not.
 
 \begin{definition}
   Let $\sigma$ be a strategy for a game $A$.  
