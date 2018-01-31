@@ -857,14 +857,18 @@ Clearly, the lemma as currently stated does not hold in $\G_{inn}$, since the st
 
 Instead, we need to look at the combinatorial structure of the strategies.  
 We observe that if $\sigma_M\from\oc\bN\to\bC$ is a strategy, then there exists a deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$ if and only if there exists some $\s\in T_{\sigma_M}$ such that $\s\vert_{\bC}=qa$.  
-In addition, there exists a deterministic strategy $\sigma\from\oc\bN$ such that $D_{\sigma;\sigma_M}\ne\emptyset$ if and only if $\sigma_M$ is not \emph{winning}; i.e., either $\sigma_M$ is not total or there exists some $\s\in T_{\sigma_M}$ with an infinite tail of moves in $\oc\bN$.  
+
+We define a deterministic strategy $\sigma\from A \implies B$ to be \emph{winning} if it is divergence-free and if for every $O$-play $s\in T_\sigma$ there exists some $t\in T_\sigma$ such that $s\prefix t$ and $t$ ends with a move in $B$.  
+
+Then for any strategy $\sigma_M$, there exists a deterministic strategy $\sigma\from\oc\bN$ such that $D_{\sigma;\sigma_M}\ne\emptyset$ if and only if $\sigma_M$ is not winning.
+
 We recover the following version of Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} which now applies to the interpretation of PCF in $\G_{inn}$:
 \begin{lemma}
-  Let $M=C[\wn]$ be a term of type $\com$.  
-  Write $\sigma_M\from\oc\bN\to\bC$ for the denotation of the term $\lambda n.C[n]$.  
+  Let $C[-]$ be a context of deterministic PCF.
+  Write $\sigma_C\from\oc\bN\to\bN$ for the denotation of the term $\lambda n.C[n]$.  
   \begin{itemize}
-    \item $M\converges\skipp$ if and only if there exists $\s\in \sigma_M$ such that $\s\vert_{\bC}=qa$.  
-    \item $M\mustconverge$ if and only if $\sigma_M$ is \emph{winning}.
+    \item $C[\wn]\converges n$ if and only if there exists $\s\in \sigma_C$ such that $\s\vert_{\bN}=qa$.  
+    \item $C\mustconverge$ if and only if $\sigma_C$ is winning.
   \end{itemize}
   \label{lem:pcf-soundness-lemma}
 \end{lemma}
@@ -906,12 +910,13 @@ It is true in $\G_{TO}$, which allows us to prove the following version of adequ
   %% acknowledge financial support and will be used by metadata
   %% extraction tools.
   This material is based upon work supported by the
-  \grantsponsor{GS501100000690}{National Science
-    Foundation}{http://dx.doi.org/10.13039/501100000690} under Grant
+  \grantsponsor{GS501100000690}{EPSRC}
+  {http://dx.doi.org/10.13039/501100000690} under Grant
   No.~\grantnum{GS501100000690}{EP/K018868/1}. Any opinions, findings, and
   conclusions or recommendations expressed in this material are those
   of the author and do not necessarily reflect the views of the
   EPSRC.
+  I am grateful to Martin Hyland for an interesting conversation that helped me develop some of this material.
 \end{acks}
 
 

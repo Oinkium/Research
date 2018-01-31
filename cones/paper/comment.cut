@@ -4,9 +4,10 @@
   %% acknowledge financial support and will be used by metadata
   %% extraction tools.
   This material is based upon work supported by the
-  \grantsponsor{GS501100000690}{National Science
-    Foundation}{http://dx.doi.org/10.13039/501100000690} under Grant
+  \grantsponsor{GS501100000690}{EPSRC}
+  {http://dx.doi.org/10.13039/501100000690} under Grant
   No.~\grantnum{GS501100000690}{EP/K018868/1}. Any opinions, findings, and
   conclusions or recommendations expressed in this material are those
   of the author and do not necessarily reflect the views of the
   EPSRC.
+  I am grateful to Martin Hyland for an interesting conversation that helped me develop some of this material.
