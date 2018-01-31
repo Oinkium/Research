@@ -325,7 +325,7 @@ We will use the Hyland-Ong version of Game Semantics, as in \cite{SamsonGuyIAPas
 An \emph{arena} is given by a triple $A=(M_A,\lambda_A,\ts_A)$, where
 \begin{itemize}
   \item $M_A$ is a countable set of moves,
-  \item $\lambda_A\from m_A\to\OP\times\QA$ designates each move as either an \emph{$O$-move} or a \emph{$P$-move}, and as either a \emph{question} or an \emph{answer}.  
+  \item $\lambda_A\from M_A\to\OP\times\QA$ designates each move as either an \emph{$O$-move} or a \emph{$P$-move}, and as either a \emph{question} or an \emph{answer}.  
     We define $\lambda_A^{OP}=\pr_1\circ\lambda_A$ and $\lambda_A^{QA}=\pr_2\circ\lambda_A$.  
     We also define $\neg\from\OP\times\QA\to\OP\times\QA$ to be the function that reverses the values of $O$ and $P$ while leaving $\QA$ unchanged.
   \item $\ts_A$ is an \emph{enabling relation} between $M_A+\{*\}$ and $M_A$ satisfying the following rules:
@@ -341,11 +341,12 @@ Our base arenas will be the \emph{flat arenas} for the types $\nat$ and $\com$.
 Given a set $X$, the flat arena on $X$ is the arena with a single $O$-question $q$ and a $P$-answer $x$ for each $x\in X$, where $*\ts q$ and $q\ts x$ for each $x$.  
 The denotation of the type $\nat$ will be the flat arena $\bN$ on the set of natural numbers, while the denotation of the type $\com$ will be the flat arena $\bC$ on the singleton set $\{a\}$.
 
-Given an arena $A$, a \emph{justified string} in $A$ is a sequence $s$ of moves in $A$, together with \emph{justification pointers} that go from move to move in the sequence in such a way that every non-initial move $m$ in $s$ has exactly one justification pointer going back to an earlier move $n$ in $s$ such that $n\ts_A m$.  
+Given an arena $A$, a \emph{justified string} in $A$ is a sequence $s$ of moves in $A$, together with \emph{justification pointers} that go from move to move in the sequence.  
+The justification pointers must be set up in such a way that every non-initial move $m$ in $s$ has exactly one justification pointer going back to an earlier move $n$ in $s$ such that $n\ts_A m$.  
 We say that $n$ \emph{justifies} $m$.  
 It is easy to see that every justified string must begin with an initial move, an hence with an $O$-question.  
 
-A \emph{legal play} $s$ is a justified string in $A$ that strictly alternates between $O$-moves and $P$-moves and is such that the corresponding $QA$-sequence formed by applying $\lambda_A^{QA}$ to terms is well-bracketed.
+A \emph{legal play} $s$ is a justified string in $A$ that strictly alternates between $O$-moves and $P$-moves and is such that the corresponding $QA$-sequence formed by applying $\lambda_A^{QA}$ to moves is well-bracketed.
 We write $L_A$ for the set of legal plays in $A$.
 
 \subsection{Games and strategies}
@@ -358,7 +359,7 @@ Given some set $S$ of initial moves in $s$, we write $s\vert_S$ for the subseque
 
 A \emph{game} is a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$, where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed set of legal plays in that arena such that if $s\in P_A$ and $I$ is a non-empty set of initial moves in $s$, then $s\vert_I\in P_A$.
 
-Our base games will be the games $\bN$ and $\bC$ on the arenas of the same names, where $P_{\bN}=\{\emptyplay,q\}\cup\{qn\suchthat n\in\bN\}$ and $\bC = \{\emptyplay,q,qa\}$.  
+Our base games will be the games $\bN$ and $\bC$ on the arenas of the same names, where $P_{\bN}=\{\emptyplay,q\}\cup\{qn\suchthat n\in\bN\}$ and $P_{\bC} = \{\emptyplay,q,qa\}$.  
 
 \subsubsection{Connectives}
 
@@ -385,25 +386,47 @@ In addition, we have to keep track of any possible divergence in the computation
 where the term on the right must converge (to $\0$), while the term on the left has a possible divergence.  
 The traditional way of representing divergences in game semantics is by a partiality in the strategy; i.e., an $O$-move to which $P$ has no reply, but this doesn't work here: $\IfO\wn\;\Omega\;\0$ and $\0$ both denote the strategy with maximal play $q\;0$; the partiality in the former is `hidden' by the move $0$.
 
-We follow \cite{mcCHFiniteND} by modelling a strategy as a pair $(T_\sigma,D_\sigma)$, where $T_\sigma$ is a nondeterministic strategy in the usual sense and $D_\sigma$ is a set of $O$-plays after which there is a possibility of divergence.  
+To fix this problem, we follow \cite{mcCHFiniteND} by modelling a strategy as a pair $(T_\sigma,D_\sigma)$, where $T_\sigma$ is a nondeterministic strategy in the usual sense and $D_\sigma$ is a set of $O$-plays after which there is a possibility of divergence.  
 
-Tracking divergences explicitly in this way requires some care when we compose strategies.  
+Tracking divergences explicitly in this way requires some care when we compose strategies using `parallel composition plus hiding'.
 Specifically, we need to be able to add new divergences into strategies when they arise through `infinite chattering' or \emph{livelock}.  
 For example, the denotation of the term
 \[
   M = \Y_{\nat\to\nat}(\lambda f.\lambda n.n;(f n))
   \]
-is given by a total strategy, without divergences: namely the strategy $\mu$ with plays of the form
-\[
-  \begin{array}{ccccccc}
-    \mathbf{\bN_1} &   & q & n_1 & q & n_2 & \cdots \\
-    \mathbf{\bN_2} & q &   &     &   &     &
-  \end{array}\,.
-  \]
+is given by a total strategy, without divergences: namely the strategy $\mu$ with plays of the form shown in Figure \ref{fig:mn-plays}(a).
+\begin{figure}
+  \begin{mathpar}
+    a) \and
+    \begin{array}{cc}
+      \mathbf{\bN_1} & \mathbf{\bN_2} \\
+                     & q \\
+                  q  &   \\
+                 n_1 &   \\
+                  q  &   \\
+                 n_2 &   \\
+              \vdots &   \\
+              {}     & {}
+    \end{array}
+    \and b) \and
+    \begin{array}{cc}
+      \mathbf{\bN_1} & \mathbf{\bN_2} \\
+                     & q \\
+                  q  &   \\
+                 n_1 &   \\
+              \vdots &   \\
+                  q  &   \\
+                 n_m &   \\
+                     & 0 \\
+    \end{array}
+  \end{mathpar}
+  \caption{Finite plays alone are not sufficient to distinguish between terms of a language with countable nondeterminism.}
+  \label{fig:mn-plays}
+\end{figure}
 However, when we compose this strategy with any total strategy for $\bN$ on the left, we expect the resulting strategy to contain divergences, since the term $M \n$ diverges for any $\n$.
 Semantically, this corresponds to the fact that we have a legal interaction $q\;q\;n\;q\;n\;\cdots$ with an infinite tail in $\bN_1$; when we perform `hiding' by restricting the interaction to $\bN$, we have no reply to the initial move $q$.
 
-The approach adopted in \cite{mcCHFiniteND} is to check specifically for infinite chattering between strategies $\sigma\from A\implies B$ and $\tau\from B\implies C$ by checking whether the set $\sigma\|\tau$ contains any infinite increasing sequence of plays ending with moves in $B$.  
+The approach adopted in \cite{mcCHFiniteND} is to check specifically for infinite chattering between strategies $\sigma\from A\implies B$ and $\tau\from B\implies C$ by checking whether there is an infinite increasing sequence of interactions between $\sigma$ and $\tau$ with an infinite tail in $B$.  
 If there is such a sequence, then it restricts to some $O$-position in $\sigma;\tau$ and we add in a divergence at that position.  
 
 This works very satisfactorily for finite nondeterminism, but not at all for countable nondeterminism.  
@@ -412,25 +435,19 @@ To see why, consider the term
   N = \Y_{\nat\to\nat\to\nat}(\lambda g.\lambda m n.\IfO m\;\0\;n;(g\;(\pred m)\;n))\wn
   \]
 This term first chooses a natural number $m$, and then reads from its input $n$ for a total of $m$ times before eventually returning $\0$.  
-Thus, its denotation is the strategy $\nu$ with maximal plays of arbitrary length of the form:
-\[
-  \begin{array}{cccccccc}
-    \bN_1 &   & q & n_1 & \cdots & q & n_m & \\
-    \bN_2 & q &   &     &        &   &     & 0
-  \end{array}\,.
-  \]
-Note that this strategy strictly contains the one we considered before, and therefore that the denotation of
+Thus, its denotation is the strategy $\nu$ with maximal plays of arbitrary length of the form shown in Figure \ref{fig:mn-plays}(b).
+Note that this strategy strictly contains the strategy $\mu$ that we considered before, and therefore that the denotation of
 \[
   \IfO \wn M N
   \]
 has the same denotation as $N$, even though for any $n$, $M\n\not{\mustconverge}$, while $N\n\mustconverge$.
-Moreover, if we try to compose $\deno{N}$ with the strategy on $\bN$ that always returns $1$, then we end up with an infinite increasing sequence of positions, which triggers the introduction of a divergence into the composite -- even though no divergence occurs in the evaluation of $N$.
+Moreover, if we try to compose $\deno{N}$ with the strategy on $\bN$ that always returns $1$, then we end up with an infinite increasing sequence of positions, which triggers the introduction of a divergent play into the composite strategy -- even though no divergence occurs in the evaluation of $N$.
 
 Aside from showing that this model cannot possibly be sound, this example actually leads to composition not being associative if we naively extend the Harmer-McCusker model from finite to infinite nondeterminism (e.g., see \cite[4.4.1]{RusssThesis}).  
 
 Somehow, the crucial point is that we need to distinguish between terms like $M$, which contain infinite sequences of moves, and terms like $N$, which contain arbitrarily large finite sequences of moves.  
 The way that we do this is by making the infinite sequences of moves explicit in our strategies, in the style of \cite{RoscoeCspInfinite} and \cite{LevyGsInfinite}.  
-Then the denotation of $M$ will contain an infinite sequence, while the denotation of $N$ will contain arbitrarily long finite sequences, but no infinite sequences.  
+When we use this technique, the denotation of $M$ will contain an infinite sequence, while the denotation of $N$ will contain arbitrarily long finite sequences, but no infinite sequences.  
 
 The games in our model will be the same as those that we considered in the last section, but our definition of a strategy will change.
 
@@ -479,7 +496,7 @@ We then set
   \]
 where $\pocl X$ denotes the \emph{postfix closure} of $X$; i.e., the set of all $O$-plays in $P_{A\implies C}$ that have some prefix in $X$.
 
-Note that there is no need to consider separately, as Harmer and McCusker do, divergences that arise through `infinite chattering': in our model, a case of infinite chattering between strategies $\sigma$ and $\tau$ is itself a legal interaction between the two strategies, which is necessarily divergent (because it is infinite) and therefore gives rise to some divergence in $\sigma;\tau$.
+Note that there is no need to consider separately, as Harmer and McCusker do, divergences that arise through `infinite chattering': in our model, a case of infinite chattering between strategies $\sigma$ and $\tau$ is itself an (infinite) legal interaction between the two strategies, which is necessarily divergent (because it is infinite) and therefore gives rise to some divergence in $\sigma;\tau$.
 
 We need to impose one more condition on strategies:
 \begin{definition}
@@ -488,7 +505,7 @@ We need to impose one more condition on strategies:
 \end{definition}
 
 Any finite-nondeterminism strategy in the sense of \cite{mcCHFiniteND} may be interpreted as a complete strategy by enlarging it with all its infinite limiting plays.  
-However, when we introduce countable nondeterminism, we introduce the possibility of strategies that are not complete.  
+However, when we introduce countable nondeterminism, we also introduce strategies that are not complete.  
 For example, the strategy $\nu$ that we mentioned above has an infinite increasing sequence of plays $q0\prefix q0q0\prefix \cdots$, but has no infinite play corresponding to its limit.  
 Nonetheless, we do not want to allow arbitrary strategies: for example, the strategy $\mu$ above should include the infinite play $qq0q0\dots$; the strategy $\mu^\circ$ formed by removing this infinite play has no meaning in our language.  
 Indeed, if we compose $\mu^\circ$ with the strategy $\0$ for $\bN$ on the left, then the resulting strategy does not satisfy diverge-or-reply.
@@ -503,7 +520,7 @@ In other words, $\nu$ is the union of complete strategies, while $\mu^\circ$ is 
 From now on, we will use `strategy' to mean \emph{locally complete strategy}.
 
 We need to show that the composition of locally complete strategies is locally complete.  
-Note that this does not hold for \emph{complete} strategies: for example, our term $N$ above can be written as $N'\;\wn$, where $N'$ is a deterministic term with complete denotation $\nu'$.  
+Note that the composition of \emph{complete} strategies is not necessarily complete: for example, our term $N$ above can be written as $N'\;\wn$, where $N'$ is a deterministic term with complete denotation $\nu'$.  
 Then we have $\nu=\top_{\bN};\nu'$, but $\nu$ is not complete.
 However, we can show that the composition of \emph{deterministic} complete strategies is complete; since a locally complete strategy may always be written as the union of complete deterministic strategies, this is sufficient to show that the composition of locally complete strategies is locally complete.
 
@@ -549,7 +566,7 @@ This will be essential to our definability result.
 
 In fact, the proof of associativity of composition is pretty much the same in our model as it is in any other model of game semantics.  
 However, it is worth saying a few words about it, since the model obtained by naively extending the Harmer-McCusker model to unbounded nondeterminism does not have an associative composition.  
-The point is that this is not really a problem with associativity, but rather that this naive model gives the wrong result for the composition of strategies with infinite nondeterminism.
+The point is that there is not really a problem with associativity itself, but rather that this naive model gives the wrong result for the composition of strategies with infinite nondeterminism.
 For example, if $\nu$ is the strategy we defined above, and $\0$ is the `constant $0$' strategy on $\bN$, then $\0;\nu$ has a divergence in the naive model, because the strategies $\0$ and $\nu$ appear to be engaged in infinite chattering.  
 In our model, we have fixed that problem, because the strategy $\nu$ contains no infinite plays, and so no divergences arise in the composition.
 
@@ -569,7 +586,7 @@ $\G_{ND}$ has an important subcategory $\G_D$ of deterministic complete strategi
 
 We follow the construction given in \cite{SamsonGuyIAPassive}, using the connectives $\oc$ and $\times$ to build a Cartesian closed category $\G_{ND}^\oc$ from $\G_{ND}$ whose objects are the well-opened games in $\G_{ND}$ and where a morphism from $A$ to $B$ in $\G_{ND}^\oc$ is a morphism from $\oc A$ to $B$ in $\G_{ND}$.  
 
-This is very similar to the construction of a co-Kleisli category for a linear exponential comonad, but certain technical issues relating to well-openedness prevent us from displaying it in this way.
+This is very similar to the construction of a co-Kleisli category for a linear exponential comonad, but certain technical issues relating to well-openedness prevent us from presenting it in this way.
 
 \subsection{Constraining strategies}
 
@@ -592,7 +609,7 @@ The resulting category $\G^\oc_{D,vis}$ of games and deterministic visible strat
 Most full abstraction results go via a definability result that says that all \emph{compact} strategies are definable \cite{curienFullAbstraction}.
 However, deducing full abstraction from compact definability makes essential use of continuity properties that are absent when we deal with countable nondeterminism.  
 We will therefore need to appeal to a stronger result -- that of \emph{universality}, which states that \emph{every} strategy is definable.  
-Clearly, universality does not hold for any of our categories of games, since there are many non-computable functions $\bN\to\bN$.  
+Clearly, universality does not hold for any of our categories of games -- for example, there are many non-computable functions $\bN\to\bN$.  
 However, Hyland and Ong proved in \cite{hoPcf} that every \emph{recursively presentable} innocent strategy is PCF-definable.  
 
 In order to define recursively presentable strategies, we need to work with \emph{enumerated games}; i.e., games where the set of moves comes with an enumeration to the natural numbers.  
@@ -600,7 +617,7 @@ Clearly our base games $\bN$ and $\bC$ can be enumerated, as can the tensor prod
 We can then define a \emph{recursive} strategy to be one that is recursively presentable with respect to that enumeration of moves.
 
 We shall tacitly assume that the games in our category $\G_{ND}$ come with an enumeration so that we can reason about recursive strategies later.  
-For any game that is the denotation of an Idealized Algol type, this enumeration will be the natural one as described above.
+For any game that is the denotation of an Idealized Algol type, this enumeration will be as we have just described.
 
 The relevant result pertaining to recursive strategies is as follows.
 
@@ -616,7 +633,7 @@ The relevant result pertaining to recursive strategies is as follows.
 \subsection{Deterministic Factorization}
 
 Our definability results will hinge on a \emph{factorization theorem}, showing that every nondeterministic strategy may be written as the composition of a deterministic strategy with the nondeterministic `oracle' $\top_{\bN}$.  
-We can then deduce definability from definability in the model of deterministic Idealized Algol.
+We can then deduce universality from universality in the model of deterministic Idealized Algol.
 
 Note that our result is a bit simpler than the corresponding result in \cite{mcCHFiniteND}; this is because it is easier to model a countable source of nondeterminism than a `finite but arbitrarily large' source.
 
@@ -644,7 +661,7 @@ Note that our result is a bit simpler than the corresponding result in \cite{mcC
       Otherwise, play $b_1$.
   \end{itemize}
   Lastly, we close under limits to make the strategy $\Det(\sigma)$ complete.  
-  $\Det(\sigma)$ is clearly nondeterministic.  
+  $\Det(\sigma)$ is clearly deterministic.  
   Checking that $\top_{\bN};\Det(\sigma)=\sigma$ is easy for finite plays; for infinite plays, it follows by completeness of $\sigma$.
 
   Lastly, if $\sigma$ is the union of complete strategies $\sigma_1,\sigma_2,\cdots$, we insert an additional request to the oracle immediately after the very first move by player $O$; after receiving a reply $k$, we play according to $\sigma_k$.
@@ -675,6 +692,7 @@ In other words, we interpret the constant $\wn$ using the strategy $\top_{\bN}$ 
 The \emph{computational adequacy} result for our model can be stated as follows.
 
 \begin{proposition}[Computational Adequacy]
+  Let $M\from\com$ be a closed term of Idealized Algol with countable nondeterminism.
   $M\converges\skipp$ if and only if $qa\in T_{\deno M}$.  
   $M\mustconverge$ if and only if $D_{\deno M}=\emptyset$.
   \label{prop:adequacy}
@@ -683,7 +701,7 @@ The \emph{computational adequacy} result for our model can be stated as follows.
 Traditional proofs of computational adequacy using logical relations make essential use of the continuity of composition with respect to a natural ordering on strategies (see, for example, \cite{mcCHFiniteND} and \cite{RusssThesis} for the finite nondeterminism case).  
 In our case, since composition is not continuous in the language itself, we cannot use this technique.
 In order to prove adequacy, we use a new technique that involves using a deterministic stateful construction to model the nondeterminism inside a deterministic world in which continuity holds.  
-We shall return to the concept of an \emph{evaluation} of a term as a sequence of natural numbers that we use to replace the constant $\wn$.  
+To do this, we shall return to the concept of an \emph{evaluation} $\pi$ of a term as a sequence of natural numbers that we use to replace the constant $\wn$.  
 
 \begin{lemma}
   Let $M=C[\wn]$ be a term of type $\com$, where $C[-]$ is a multi-holed context of Idealized Algol.
@@ -702,7 +720,8 @@ We shall return to the concept of an \emph{evaluation} of a term as a sequence o
     \lambda f.\new_\nat (\lambda v.f(v\coloneqq (suc\;\deref v); \case_{k+1}\;\deref v\;\Omega\;n_1 \cdots n_k d))\,.
     \]
   Here, $\case_{k+1}\;a\;n_0\;\cdots\;n_k\;d$ is a new shorthand that evaluates to $n_i$ if $a$ evaluates to $i$, and evaluates to $d$ if $a$ evaluates to $j> k$.
-  This term adds an extra variable $v$ to the program; each time $f$ is called, it increments the value of $v$ and maps its value on to one of the $n_i$.  
+  This term adds an extra variable $v$ to the program; each time $f$ is called, it increments the value of $v$ and maps its value to one of the $n_i$.  
+  The result is that when $f$ calls its argument, it will receive $n_1$ the first time, $n_2$ the second and so on.
 
   Now let $\pi$ be a finite evaluation $\ia s {C[\wn]}$ that converges to $\skipp$.  
   Encode $\pi$ as a sequence $n_1,\dots,n_k$.  
@@ -718,7 +737,7 @@ We shall return to the concept of an \emph{evaluation} of a term as a sequence o
   Digging into the construction of $\new$ within Idealized Algol, as given in \cite{SamsonGuyIAPassive}, we see that for any term $F$ of type $\nat\to\com$ the denotation of $N_{n_1,\dots,n_k,d} F$ is given by the composite
   \[
     I \xrightarrow{\cell_{0}}
-    \oc \Var \xrightarrow{\deno{\lambda v.v\coloneqq (\suc\;\deref v);\case_{k+1}\;\deref v\;\Omega\;n_1\cdots n_k d}}
+    \oc \Var \xrightarrow{\oc\deno{\lambda v.v\coloneqq (\suc\;\deref v);\case_{k+1}\;\deref v\;\Omega\;n_1\cdots n_k d}}
     \oc\bN \xrightarrow{\deno F}
     \bC\,.
     \]
@@ -728,7 +747,7 @@ We shall return to the concept of an \emph{evaluation} of a term as a sequence o
     q\;n_1\;\cdots\;q\;n_k\;q\;d\;q\;d\;\cdots
     \]
   Setting $F = \lambda n.C[n]$, we see that $\deno{F}=\sigma_M$.  
-  So, by adequacy for the Idealized Algol model, $qa\in T_{\sigma_\pi;\sigma_M}$ if and only if $N_{n_1,\dots,n_k,d} (\lambda n.C[n])\converges\skipp$, which is the case if and only if $M\converges\skipp$ along the evaluation $\pi$.
+  So, by adequacy for the Idealized Algol model, $qa\in T_{\sigma_\pi;\sigma_M}$ if and only if we have $N_{n_1,\dots,n_k,d} (\lambda n.C[n])\converges\skipp$, which is the case if and only if $M\converges\skipp$ along the evaluation $\pi$.
   Similarly, $D_{\sigma_\pi;\sigma_M}\neq\emptyset$ if and only if $N_{n_1,\dots,n_k,d}(\lambda n.C[n])$ diverges, which is equivalent to saying that $M$ diverges along the evaluation $\pi$.
 
   Lastly, we need to deal with the case that there is an infinite evaluation $\pi = n_1,n_2,\dots$ of $M$ that consults the nondeterministic oracle infinitely often.
@@ -768,16 +787,16 @@ From this result, we can prove the converse, which we will also need.
 \begin{proof}
   Since $\sigma$ is total and deterministic, it must have a maximal infinite play $s_\sigma$ of the form
   \[
-    q\;m_1\;q\;n_2\;\cdots\,,
+    q\;m_1\;q\;m_2\;\cdots\,,
     \]
   where $m_1,m_2,\dots$ is some infinite sequence of natural numbers.  
   If the strategy $\sigma_M$ contains some play $\s$ such that $\s\vert_{\oc\bN}=s$, then $\sigma=\sigma_\pi$ for some infinite evaluation $\pi$ of $M$.  
   Otherwise, let $t$ be the maximal sub-play of $s$ such that $\s\vert_{\oc\bN}=t$ for some $\s\in\sigma_M$.  
-  Then, if we replace $\sigma$ with the strategy $\sigma'$ that plays according to $t$ and subsequently plays $q\;d\;q\;d\;\cdots$ for our fixed value $d$, then we will have $\sigma';\sigma_M=\sigma;\sigma_M$.  
-  Moreover, $\sigma'=\sigma_\pi$ for some evaluation $\pi$ of $M$.
+  Then, if we replace $\sigma$ with the strategy $\sigma'$ that plays according to $t$ and subsequently plays $q\;d\;q\;d\;\cdots$ for our fixed value $d$, we will have $\sigma';\sigma_M=\sigma;\sigma_M$.  
+  In either case, $\sigma'=\sigma_\pi$ for some evaluation $\pi$ of the term $M$.
 
   Now suppose that there exists $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$.  
-  By the proof of Lemma \ref{lem:soundness-lemma}, we may assume that $\sigma=\sigma_\pi$ for some evaluation $\pi$ of $M$.  
+  We may assume that $\sigma=\sigma_\pi$ for some evaluation $\pi$ of $M$.  
   Therefore, $qa\in T_{\sigma_\pi;\sigma_M}$, which means that $M\converges\skipp$ along the evaluation $\pi$.  
   The corresponding statement for must convergence follows in the same way.
 \end{proof}
@@ -805,7 +824,11 @@ For proving full abstraction , it is necessary to take the intrinsic quotient in
 These terms are clearly observationally equivalent, but their denotations are not equal; for example, $q\in D_{\deno{\lambda n.\Omega}}$, but $q\not\in D_{\deno{\lambda n.\IfO n\;\Omega\;\Omega}}$.
 
 The point here is that even though $q$ is not explicitly a divergence in the second case, it is nonetheless impossible to prevent the strategy from eventually reaching a divergence.  
-Given a strategy $\sigma$ for a game $A$, we say that $s\in\sigma$ is \emph{unreliable} if player $P$ has a strategy, starting from $s$ and staying at all times within $T_\sigma$, that ensures that we eventually reach some play in $D_\sigma$.  
+
+Given a nondeterministic strategy $\sigma$ for a game $A$, we may treat $\sigma$ as a game in its own right (a sub-game of $A$).  
+Moreover, for any $s\in T_\sigma$, we have a particular branch of that game in which play starts at $s$.  
+We say that $s$ is \emph{unreliable} if player $P$ has a strategy for the game starting at $s$ that ensures that play eventually ends up in $D_\sigma$.  
+
 We then say that a strategy $\sigma$ is \emph{divergence-complete} if every unreliable point of $\sigma$ is contained in $D_\sigma$.  
 Every strategy $\sigma$ can clearly be extended to a minimal divergence-complete strategy $\text{dc}(\sigma)$; Murawski's explicit characterization of the intrinsic collapse \cite{MurawskiIntrinsic}, which may be applied to our model, essentially says that $\sigma\oes\tau$ if and only if $\text{dc}(\sigma)=\text{dc}(\tau)$.
 
@@ -844,11 +867,11 @@ If $\sigma$ is a strategy for $A$ that is deterministic and $P$-visible, we say 
 Tsukada and Ong \cite{TsukadaSheaves}, following Harmer \cite{RusssThesis}, showed that traditional game semantics models are unsuitable for modelling \emph{nondeterministic} PCF: while the definition of \emph{visibility} of strategies can be extended to nondeterministic strategies without difficulty, innocence cannot.
 
 Instead, they use a novel type of game semantics in which strategies are given not by sets of plays but by justified \emph{trees} whose vertices are moves.  
-The difference is subtle but important: from the point of view of countable nondeterminism it allows us to distinguish between terms that take an arbitrarily large finite number of steps to converge and terms that diverge.  
+The difference is subtle but important: from the point of view of countable nondeterminism it allows us to distinguish between terms that take an arbitrarily large finite number of steps to converge and terms that diverge, without needing to track infinitary information.
 For example, the denotation of our term $M$ above has an infinite branch in it, while the denotation of $N$ has infinitely many finite branches of arbitrary length.  
 
-The main advantage of the tree-based model, however, is that it gives rise to a satisfactory synthetic definition of a \emph{nondeterministic innocent} strategy based on sheaves.  
-In fact, Tsukada and Ong do not prove full abstraction for PCF with countable nondeterminism (even though that language may be interpreted within their category), but for PCF with finite nondeterminism.  
+The main advantage of the tree-based model, however, is that it gives rise to a satisfactory synthetic definition of a \emph{nondeterministic innocent} strategy, based on sheaves.  
+The main contribution of their paper is not to prove full abstraction for PCF with countable nondeterminism (even though that language may be interpreted within their category), but for PCF with finite nondeterminism.  
 
 Having ourselves given a fully abstract model of Idealized Algol with countable nondeterminism, we shall contribute to the process of `completing the square' by giving a sketch of how we can use our techniques to prove adequacy for the Tsukada-Ong model of PCF with countable nondeterminism.  
 A side-effect of this will be to give an alternative proof of adequacy for their model of PCF with finite nondeterminism.  
@@ -856,8 +879,9 @@ A side-effect of this will be to give an alternative proof of adequacy for their
 The first observation to make is that our Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} are not really statements about the category $\G_{ND,vis}$, but about the deterministic model $\G_{D,vis}$.  
 
 For example, the first parts of the lemmas says that if $C[-]$ is a deterministic Idealized Algol context, then $C[\wn]\converges\skipp$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\deno{\lambda n.C[n]}}$.  
-Although we have mentioned a term ($C[\wn]$) living in nondeterministic Idealized Algol, this can be thought of as a statement about $C[-]$ itself, which is part of deterministic Idealized Algol.  
+Although we have mentioned a term ($C[\wn]$) living in nondeterministic Idealized Algol, this can be thought of as a statement about $C[-]$ itself, and therefore as a statement about the deterministic language.
 Moreover, the strategy $\sigma$ and the denotation of $\lambda n.C[n]$ are both deterministic strategies, so we can interpret Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} as telling us something about Idealized Algol and its game semantics.  
+
 We can therefore forget about our nondeterminism model, with its divergence sets and infinite plays (neither of which are part of the Tsukada-Ong model) and concentrate on the Abramsky-McCusker model of Idealized Algol.
 Note that although Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} mention $T_{\sigma;\sigma_M}$ and $D_{\sigma;\sigma_M}$, we can rephrase both of these inside the deterministic model, since the strategies involved are both deterministic.  
 
@@ -865,7 +889,7 @@ We want a version of Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-con
 Clearly, the lemma as currently stated does not hold in $\G_{inn}$, since the strategies $\sigma$ that we define are not innocent in general.  
 
 Instead, we need to look at the combinatorial structure of the strategies.  
-We observe that if $\sigma_M\from\oc\bN\to\bC$ is a strategy, then there exists a deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$ if and only if there exists some $\s\in T_{\sigma_M}$ such that $\s\vert_{\bC}=qa$.  
+We observe that if $\sigma_M\from\oc\bN\to\bC$ is a strategy, then there exists a deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$ if and only if there exists some $s\in T_{\sigma_M}$ such that $s\vert_{\bC}=qa$.  
 
 We define a deterministic strategy $\sigma\from A \implies B$ to be \emph{winning} if it is divergence-free and if for every $O$-play $s\in T_\sigma$ there exists some $t\in T_\sigma$ such that $s\prefix t$ and $t$ ends with a move in $B$.  
 
@@ -876,7 +900,7 @@ We recover the following version of Lemmas \ref{lem:soundness-lemma} and \ref{le
   Let $C[-]$ be a multi-holed context of deterministic PCF.
   Write $\sigma_C\from\oc\bN\to\bN$ for the denotation of the term $\lambda n.C[n]$.  
   \begin{itemize}
-    \item $C[\wn]\converges n$ if and only if there exists $\s\in \sigma_C$ such that $\s\vert_{\bN}=qa$.  
+    \item $C[\wn]\converges n$ if and only if there exists $s\in \sigma_C$ such that $s\vert_{\bN}=qa$.  
     \item $C\mustconverge$ if and only if $\sigma_C$ is winning.
   \end{itemize}
   \label{lem:pcf-soundness-lemma}
@@ -893,7 +917,7 @@ The second fact will capture the properties of the morphism $\top_{\bN}\from I \
   Let $\sigma,\tau\from\bN_1\to\bN_2$ be morphisms in $\G_{inn}^\oc$.  
   We say that $\sigma\approx\tau$ if the following two conditions hold.
   \begin{itemize}
-    \item For all $n\in\omega$, there exists $\s\in\sigma$ such that $\s\vert_{\bN_2}=qn$ if and only if there exists $\t\in\tau$ such that $\t\vert_{\bN_2}=qn$.  
+    \item For all $n\in\omega$, there exists $s\in\sigma$ such that $s\vert_{\bN_2}=qn$ if and only if there exists $t\in\tau$ such that $t\vert_{\bN_2}=qn$.  
     \item $\sigma$ is winning if and only if $\tau$ is winning.
   \end{itemize}
 \end{definition}
@@ -907,12 +931,12 @@ The second fact will capture the properties of the morphism $\top_{\bN}\from I \
 \end{definition}
 
 This definition gives a rather minimal condition on the morphism $\top_\bN$ that ensures that it behaves as it should when substituted into functions $\bN \to \bN$.
-For example, our category $\G_{ND}$ is a sensible game semantics of PCF with countable nondeterminism, as is the Tsukada-Ong category $\G_{TO}$.  
+Our category $\G_{ND}$, for example, is a sensible game semantics of PCF with countable nondeterminism, as is the Tsukada-Ong category $\G_{TO}$.  
 
-Using this condition and Lemma \ref{lem:pcf-soundness-lemma}, it is easy to prove the following version of adequacy, which is sufficient for the purpose of proving full abstraction.
+Using this condition and Lemma \ref{lem:pcf-soundness-lemma}, it is easy to prove the following version of adequacy, which is sufficient for the purpose of proving full abstraction, for all such models.
 
 \begin{theorem}[Adequacy for nondeterministic PCF]
-  Let $\C$ be a sensible model of nondeterministic PCF, and define $\deno -$ to be given by the functor $J$ and the morphism $\top_\bN$ in the obvious way.
+  Let $\C$ be a sensible model of nondeterministic PCF, and define an interpretation $\deno -$ of nondeterministic PCF in $\C$ to be given by the functor $J$ and the morphism $\top_\bN$ in the obvious way.
 
   Let $M,N\from\nat$ be two terms of nondeterministic PCF.  
   Suppose that for all $n\in\omega$, $M\converges n$ if and only if $N\converges n$ and furthermore that $M\mustconverge$ if and only if $N\mustconverge$.  
@@ -926,13 +950,14 @@ Using this condition and Lemma \ref{lem:pcf-soundness-lemma}, it is easy to prov
 Our last result is fairly general, and can be applied to a number of different game semantics models, including the models of concurrent games of \cite{ConcurrentHylandOngGames}.  
 The natural next step is to extend it to give a proof of full abstraction for nondeterministic PCF in the Tsukada-Ong model.  
 The missing ingredient is a universality result for that model.  
-Tsukada and Ong prove compact definability from first principles, rather than using a factorization result, and it is not immediate how one defines a recursive element of their model.  
+Tsukada and Ong prove compact definability from first principles, rather than using a factorization result, and it is not immediately clear how one defines a recursive element of their model.  
 Nevertheless, we can have some confidence that such a result is possible, allowing our results to be carried over to stateless languages.
 
-It would be interesting to see whether our adequacy proof can be applied to effects other than nondeterminism; although most effects do not engender a failure of continuity in the same way, a similar approach could help us use an adequacy result from one language to prove adequacy for another language, rather than proving it from first principles each time.
+It would be interesting to see whether our adequacy proof can be applied to effects other than nondeterminism: although most effects do not engender a failure of continuity in the same way, a similar approach could help us use an adequacy result from one language to prove adequacy for another language, rather than having to prove it from first principles each time.
 
 Lastly, our proof has thrown more light on the important relation between nondeterminism and state.  
-As we have discussed, stateful languages (and visible strategies) pose fewer problems for modelling nondeterminism than do stateless languages (and innocent strategies), but the fact that we needed to use the stateful structure of the language in our proof of Lemma \ref{lem:soundness-lemma} suggests that there is a deeper relationship between the two, which we should explore in future work.
+As we have discussed, stateful languages (and visible strategies) pose fewer problems for modelling nondeterminism than do stateless languages (and innocent strategies).  
+However, the fact that we needed to use the stateful structure of the language in our proof of Lemma \ref{lem:soundness-lemma} suggests that there is a deeper relationship between the two, which we should explore in future work.
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
