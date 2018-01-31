@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{16}
+\begin{thebibliography}{18}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -83,6 +83,19 @@
 \showISSN{0304-3975}
 \showDOI{%
 \url{https://doi.org/10.1016/S0304-3975(99)00047-X}}
+
+
+\bibitem[\protect\citeauthoryear{Apt and Plotkin}{Apt and Plotkin}{1981}]%
+        {PlotkinApt}
+\bibfield{author}{\bibinfo{person}{K.~R. Apt} {and} \bibinfo{person}{G.~D.
+  Plotkin}.} \bibinfo{year}{1981}\natexlab{}.
+\newblock \showarticletitle{A cook's tour of countable nondeterminism}. In
+  \bibinfo{booktitle}{{\em Automata, Languages and Programming}},
+  \bibfield{editor}{\bibinfo{person}{Shimon Even} {and} \bibinfo{person}{Oded
+  Kariv}} (Eds.). \bibinfo{publisher}{Springer Berlin Heidelberg},
+  \bibinfo{address}{Berlin, Heidelberg}, \bibinfo{pages}{479--494}.
+\newblock
+\showISBNx{978-3-540-38745-9}
 
 
 \bibitem[\protect\citeauthoryear{Castellan, Clairambault, and
@@ -205,6 +218,20 @@
 \showISSN{0168-0072}
 \showDOI{%
 \url{https://doi.org/10.1016/j.apal.2007.10.007}}
+
+
+\bibitem[\protect\citeauthoryear{Murawski}{Murawski}{2008}]%
+        {MurawskiIntrinsic}
+\bibfield{author}{\bibinfo{person}{A.~S. Murawski}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Reachability Games and Game Semantics: Comparing
+  Nondeterministic Programs}. In \bibinfo{booktitle}{{\em 23rd Annual IEEE
+  Symposium on Logic in Computer Science (LICS 2008)(LICS)}},
+  Vol.~\bibinfo{volume}{00}. \bibinfo{pages}{353--363}.
+\newblock
+\showISSN{1043-6871}
+\showDOI{%
+\url{https://doi.org/10.1109/LICS.2008.24}}
 
 
 \bibitem[\protect\citeauthoryear{Murawski and Tzevelekos}{Murawski and

@@ -14,46 +14,48 @@ Warning--numpages field, but no articleno or eid field, in SamsonGuyIAPassive
 Warning--empty publisher in mcCHFiniteND
 Warning--empty address in mcCHFiniteND
 Warning--empty institution in RusssThesis
+Warning--empty publisher in MurawskiIntrinsic
+Warning--empty address in MurawskiIntrinsic
 Warning--numpages field, but no articleno or eid field, in TsukadaSheaves
-You've used 16 entries,
+You've used 18 entries,
             5795 wiz_defined-function locations,
-            1459 strings with 18843 characters,
-and the built_in function-call counts, 19905 in all, are:
-= -- 2759
-> -- 478
+            1478 strings with 19299 characters,
+and the built_in function-call counts, 22409 in all, are:
+= -- 3036
+> -- 544
 < -- 0
-+ -- 150
-- -- 319
-* -- 1249
-:= -- 1929
-add.period$ -- 86
-call.type$ -- 16
-change.case$ -- 92
-chr.to.int$ -- 16
-cite$ -- 21
-duplicate$ -- 1664
-empty$ -- 1167
-format.name$ -- 218
-if$ -- 4738
++ -- 172
+- -- 345
+* -- 1409
+:= -- 2172
+add.period$ -- 96
+call.type$ -- 18
+change.case$ -- 103
+chr.to.int$ -- 18
+cite$ -- 25
+duplicate$ -- 1920
+empty$ -- 1343
+format.name$ -- 248
+if$ -- 5327
 int.to.chr$ -- 2
 int.to.str$ -- 1
-missing$ -- 54
-newline$ -- 202
-num.names$ -- 132
-pop$ -- 514
+missing$ -- 64
+newline$ -- 220
+num.names$ -- 150
+pop$ -- 606
 preamble$ -- 1
-purify$ -- 234
+purify$ -- 263
 quote$ -- 0
-skip$ -- 602
+skip$ -- 698
 stack$ -- 0
-substring$ -- 1941
-swap$ -- 185
+substring$ -- 2156
+swap$ -- 213
 text.length$ -- 267
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 353
-warning$ -- 5
-while$ -- 156
+type$ -- 413
+warning$ -- 7
+while$ -- 178
 width$ -- 0
-write$ -- 354
-(There were 5 warnings)
+write$ -- 394
+(There were 7 warnings)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  31 JAN 2018 14:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.24)  31 JAN 2018 17:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -717,6 +717,10 @@ Class acmart Info: Printing folios on input line 2.
 Class acmart Info: Suppressing CCS on input line 2.
 Class acmart Info: Suppressing bibformat on input line 2.
 
+(/usr/share/texmf-dist/tex/latex/preprint/balance.sty
+Package: balance 1999/02/23 4.3 (PWD)
+\oldvsize=\dimen143
+)
 (../../common/preamble.tex (/usr/share/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks32
@@ -1127,28 +1131,28 @@ LaTeX Warning: Command \@starttoc  has changed.
 
 ) (/usr/share/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2016/04/27 v1.618033 publication quality tables
-\heavyrulewidth=\dimen143
-\lightrulewidth=\dimen144
-\cmidrulewidth=\dimen145
-\belowrulesep=\dimen146
-\belowbottomsep=\dimen147
-\aboverulesep=\dimen148
-\abovetopsep=\dimen149
-\cmidrulesep=\dimen150
-\cmidrulekern=\dimen151
-\defaultaddspace=\dimen152
+\heavyrulewidth=\dimen144
+\lightrulewidth=\dimen145
+\cmidrulewidth=\dimen146
+\belowrulesep=\dimen147
+\belowbottomsep=\dimen148
+\aboverulesep=\dimen149
+\abovetopsep=\dimen150
+\cmidrulesep=\dimen151
+\cmidrulekern=\dimen152
+\defaultaddspace=\dimen153
 \@cmidla=\count129
 \@cmidlb=\count130
-\@aboverulesep=\dimen153
-\@belowrulesep=\dimen154
+\@aboverulesep=\dimen154
+\@belowrulesep=\dimen155
 \@thisruleclass=\count131
 \@lastruleclass=\count132
-\@thisrulewidth=\dimen155
+\@thisrulewidth=\dimen156
 )
 (/usr/share/texmf-dist/tex/latex/tools/array.sty
 Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
-\col@sep=\dimen156
-\extrarowheight=\dimen157
+\col@sep=\dimen157
+\extrarowheight=\dimen158
 \NC@list=\toks34
 \extratabsurround=\skip70
 \backup@length=\skip71
@@ -1163,7 +1167,7 @@ Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
 Package: subfig 2005/06/28 ver: 1.3 subfig package
 \c@KVtest=\count133
 \sf@farskip=\skip72
-\sf@captopadj=\dimen158
+\sf@captopadj=\dimen159
 \sf@capskip=\skip73
 \sf@nearskip=\skip74
 \c@subfigure=\count134
@@ -1182,8 +1186,8 @@ Package: mathtools 2017/10/30 v1.20 mathematical typesetting tools
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count140
 \calc@Bcount=\count141
-\calc@Adimen=\dimen159
-\calc@Bdimen=\dimen160
+\calc@Adimen=\dimen160
+\calc@Bdimen=\dimen161
 \calc@Askip=\skip77
 \calc@Bskip=\skip78
 LaTeX Info: Redefining \setlength on input line 80.
@@ -1199,45 +1203,45 @@ LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \g_MT_multlinerow_int=\count143
-\l_MT_multwidth_dim=\dimen161
+\l_MT_multwidth_dim=\dimen162
 \origjot=\skip80
-\l_MT_shortvdotswithinadjustabove_dim=\dimen162
-\l_MT_shortvdotswithinadjustbelow_dim=\dimen163
-\l_MT_above_intertext_sep=\dimen164
-\l_MT_below_intertext_sep=\dimen165
-\l_MT_above_shortintertext_sep=\dimen166
-\l_MT_below_shortintertext_sep=\dimen167
+\l_MT_shortvdotswithinadjustabove_dim=\dimen163
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen164
+\l_MT_above_intertext_sep=\dimen165
+\l_MT_below_intertext_sep=\dimen166
+\l_MT_above_shortintertext_sep=\dimen167
+\l_MT_below_shortintertext_sep=\dimen168
 )
 (/usr/share/texmf-dist/tex/latex/IEEEtran/IEEEtrantools.sty
 Package: IEEEtrantools 2015/08/26 V1.5 by Michael Shell
 
 -- See the "IEEEtrantools_doc.txt" manual for usage information.
 -- http://www.michaelshell.org/tex/ieeetran/tools/
-\@IEEEtrantmpdimenA=\dimen168
-\@IEEEtrantmpdimenB=\dimen169
-\@IEEEtrantmpdimenC=\dimen170
+\@IEEEtrantmpdimenA=\dimen169
+\@IEEEtrantmpdimenB=\dimen170
+\@IEEEtrantmpdimenC=\dimen171
 \@IEEEtrantmpcountA=\count144
 \@IEEEtrantmpcountB=\count145
 \@IEEEtrantmpcountC=\count146
 \@IEEEtrantmptoksA=\toks37
-\IEEEnormaljot=\dimen171
-\IEEEquantizedlength=\dimen172
-\IEEEquantizedlengthdiff=\dimen173
-\IEEEquantizedtextheightdiff=\dimen174
-\IEEEilabelindentA=\dimen175
-\IEEEilabelindentB=\dimen176
-\IEEEilabelindent=\dimen177
-\IEEEelabelindent=\dimen178
-\IEEEdlabelindent=\dimen179
-\IEEElabelindent=\dimen180
-\IEEEiednormlabelsep=\dimen181
-\IEEEiedmathlabelsep=\dimen182
+\IEEEnormaljot=\dimen172
+\IEEEquantizedlength=\dimen173
+\IEEEquantizedlengthdiff=\dimen174
+\IEEEquantizedtextheightdiff=\dimen175
+\IEEEilabelindentA=\dimen176
+\IEEEilabelindentB=\dimen177
+\IEEEilabelindent=\dimen178
+\IEEEelabelindent=\dimen179
+\IEEEdlabelindent=\dimen180
+\IEEElabelindent=\dimen181
+\IEEEiednormlabelsep=\dimen182
+\IEEEiedmathlabelsep=\dimen183
 \IEEEiedtopsep=\skip81
 \c@IEEEsubequation=\count147
 \@IEEEeqnnumcols=\count148
 \@IEEEeqncolcnt=\count149
 \@IEEEsubeqnnumrollback=\count150
-\IEEEPARstartletwidth=\dimen183
+\IEEEPARstartletwidth=\dimen184
 ) (/usr/share/texmf-dist/tex/latex/pbox/pbox.sty
 Package: pbox 2011/12/07 v1.2 Dynamic parboxes
 
@@ -1251,7 +1255,7 @@ Package: multirow 2016/11/25 v2.2 Span multiple rows of a table
 \multirow@colwidth=\skip83
 \multirow@cntb=\count151
 \multirow@dima=\skip84
-\bigstrutjot=\dimen184
+\bigstrutjot=\dimen185
 )
 (/usr/share/texmf-dist/tex/latex/multirow/bigdelim.sty
 Package: bigdelim 2016/11/25 v2.2 Create big delimiters in tabular or array
@@ -1260,26 +1264,26 @@ Package: bigdelim 2016/11/25 v2.2 Create big delimiters in tabular or array
 File: lettrine.sty 2015/08/31 v1.9 (Daniel Flipo)
 \c@DefaultLines=\count152
 \c@DefaultDepth=\count153
-\DefaultFindent=\dimen185
-\DefaultNindent=\dimen186
-\DefaultSlope=\dimen187
-\DiscardVskip=\dimen188
+\DefaultFindent=\dimen186
+\DefaultNindent=\dimen187
+\DefaultSlope=\dimen188
+\DiscardVskip=\dimen189
 \L@lbox=\box35
 \L@tbox=\box36
 \c@L@lines=\count154
 \c@L@depth=\count155
-\L@Pindent=\dimen189
-\L@Findent=\dimen190
-\L@Nindent=\dimen191
-\L@lraise=\dimen192
-\L@first=\dimen193
-\L@next=\dimen194
-\L@slope=\dimen195
-\L@height=\dimen196
-\L@novskip=\dimen256
-\LettrineWidth=\dimen257
-\LettrineHeight=\dimen258
-\LettrineDepth=\dimen259
+\L@Pindent=\dimen190
+\L@Findent=\dimen191
+\L@Nindent=\dimen192
+\L@lraise=\dimen193
+\L@first=\dimen194
+\L@next=\dimen195
+\L@slope=\dimen196
+\L@height=\dimen256
+\L@novskip=\dimen257
+\LettrineWidth=\dimen258
+\LettrineHeight=\dimen259
+\LettrineDepth=\dimen260
 
 Loading lettrine.cfg
 (/usr/share/texmf-dist/tex/latex/lettrine/lettrine.cfg))
@@ -1537,8 +1541,8 @@ Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
 (/usr/share/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
 \pgfutil@everybye=\toks41
-\pgfutil@tempdima=\dimen260
-\pgfutil@tempdimb=\dimen261
+\pgfutil@tempdima=\dimen261
+\pgfutil@tempdimb=\dimen262
 
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.tex))
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
@@ -1561,14 +1565,14 @@ Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 (/usr/share/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
 \pgfkeys@tmptoks=\toks44
 ))
-\pgf@x=\dimen262
-\pgf@y=\dimen263
-\pgf@xa=\dimen264
-\pgf@ya=\dimen265
-\pgf@xb=\dimen266
-\pgf@yb=\dimen267
-\pgf@xc=\dimen268
-\pgf@yc=\dimen269
+\pgf@x=\dimen263
+\pgf@y=\dimen264
+\pgf@xa=\dimen265
+\pgf@ya=\dimen266
+\pgf@xb=\dimen267
+\pgf@yb=\dimen268
+\pgf@xc=\dimen269
+\pgf@yc=\dimen270
 \w@pgf@writea=\write5
 \r@pgf@reada=\read2
 \c@pgf@counta=\count156
@@ -1605,7 +1609,7 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen270
+\pgfmath@dimen=\dimen271
 \pgfmath@count=\count162
 \pgfmath@box=\box41
 \pgfmath@toks=\toks48
@@ -1626,29 +1630,29 @@ x) (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex)
 \c@pgfmathroundto@lastzeros=\count163
 )) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
-\pgf@picminx=\dimen271
-\pgf@picmaxx=\dimen272
-\pgf@picminy=\dimen273
-\pgf@picmaxy=\dimen274
-\pgf@pathminx=\dimen275
-\pgf@pathmaxx=\dimen276
-\pgf@pathminy=\dimen277
-\pgf@pathmaxy=\dimen278
-\pgf@xx=\dimen279
-\pgf@xy=\dimen280
-\pgf@yx=\dimen281
-\pgf@yy=\dimen282
-\pgf@zx=\dimen283
-\pgf@zy=\dimen284
+\pgf@picminx=\dimen272
+\pgf@picmaxx=\dimen273
+\pgf@picminy=\dimen274
+\pgf@picmaxy=\dimen275
+\pgf@pathminx=\dimen276
+\pgf@pathmaxx=\dimen277
+\pgf@pathminy=\dimen278
+\pgf@pathmaxy=\dimen279
+\pgf@xx=\dimen280
+\pgf@xy=\dimen281
+\pgf@yx=\dimen282
+\pgf@yy=\dimen283
+\pgf@zx=\dimen284
+\pgf@zy=\dimen285
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2013/10/07  (rcs-revision 1.29)
-\pgf@path@lastx=\dimen285
-\pgf@path@lasty=\dimen286
+\pgf@path@lastx=\dimen286
+\pgf@path@lasty=\dimen287
 ) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
 File: pgfcorepathusage.code.tex 2014/11/02  (rcs-revision 1.24)
-\pgf@shorten@end@additional=\dimen287
-\pgf@shorten@start@additional=\dimen288
+\pgf@shorten@end@additional=\dimen288
+\pgf@shorten@start@additional=\dimen289
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
@@ -1659,14 +1663,14 @@ File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2014/11/02  (rcs-revision 1.12)
-\pgflinewidth=\dimen289
+\pgflinewidth=\dimen290
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.t
 ex
 File: pgfcoretransformations.code.tex 2015/08/07  (rcs-revision 1.20)
-\pgf@pt@x=\dimen290
-\pgf@pt@y=\dimen291
-\pgf@pt@temp=\dimen292
+\pgf@pt@x=\dimen291
+\pgf@pt@y=\dimen292
+\pgf@pt@temp=\dimen293
 ) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
 File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
 )
@@ -1678,11 +1682,11 @@ x
 File: pgfcorepathprocessing.code.tex 2013/09/09  (rcs-revision 1.9)
 ) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
 File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
-\pgfarrowsep=\dimen293
+\pgfarrowsep=\dimen294
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
-\pgf@max=\dimen294
+\pgf@max=\dimen295
 \pgf@sys@shading@range@num=\count165
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
@@ -1709,8 +1713,8 @@ File: pgfmoduleplot.code.tex 2015/08/03  (rcs-revision 1.13)
 )
 (/usr/share/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
 Package: pgfcomp-version-0-65 2007/07/03 v3.0.1a (rcs-revision 1.7)
-\pgf@nodesepstart=\dimen295
-\pgf@nodesepend=\dimen296
+\pgf@nodesepstart=\dimen296
+\pgf@nodesepend=\dimen297
 )
 (/usr/share/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
 Package: pgfcomp-version-1-18 2007/07/23 v3.0.1a (rcs-revision 1.1)
@@ -1724,8 +1728,8 @@ Package: pgfcomp-version-1-18 2007/07/23 v3.0.1a (rcs-revision 1.1)
 Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
 
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
-\pgffor@iter=\dimen297
-\pgffor@skip=\dimen298
+\pgffor@iter=\dimen298
+\pgffor@skip=\dimen299
 \pgffor@stack=\toks51
 \pgffor@toks=\toks52
 ))
@@ -1736,14 +1740,14 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 x
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
 \pgf@plot@mark@count=\count166
-\pgfplotmarksize=\dimen299
+\pgfplotmarksize=\dimen300
 )
-\tikz@lastx=\dimen300
-\tikz@lasty=\dimen301
-\tikz@lastxsaved=\dimen302
-\tikz@lastysaved=\dimen303
-\tikzleveldistance=\dimen304
-\tikzsiblingdistance=\dimen305
+\tikz@lastx=\dimen301
+\tikz@lasty=\dimen302
+\tikz@lastxsaved=\dimen303
+\tikz@lastysaved=\dimen304
+\tikzleveldistance=\dimen305
+\tikzsiblingdistance=\dimen306
 \tikz@figbox=\box47
 \tikz@figbox@bg=\box48
 \tikz@tempbox=\box49
@@ -1776,10 +1780,10 @@ File: tikzlibraryquotes.code.tex 2014/03/21 v3.0.1a (rcs-revision 1.4)
 )
 (/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
 File: pgflibraryarrows.meta.code.tex 2015/05/13 v3.0.1a (rcs-revision 1.13)
-\pgfarrowinset=\dimen306
-\pgfarrowlength=\dimen307
-\pgfarrowwidth=\dimen308
-\pgfarrowlinewidth=\dimen309
+\pgfarrowinset=\dimen307
+\pgfarrowlength=\dimen308
+\pgfarrowwidth=\dimen309
+\pgfarrowlinewidth=\dimen310
 ))
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 patterns.code.tex
@@ -1797,14 +1801,14 @@ decorations.pathmorphing.code.tex
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 decorations.code.tex
 (/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen310
-\pgfdecoratedremainingdistance=\dimen311
-\pgfdecoratedinputsegmentcompleteddistance=\dimen312
-\pgfdecoratedinputsegmentremainingdistance=\dimen313
-\pgf@decorate@distancetomove=\dimen314
+\pgfdecoratedcompleteddistance=\dimen311
+\pgfdecoratedremainingdistance=\dimen312
+\pgfdecoratedinputsegmentcompleteddistance=\dimen313
+\pgfdecoratedinputsegmentremainingdistance=\dimen314
+\pgf@decorate@distancetomove=\dimen315
 \pgf@decorate@repeatstate=\count175
-\pgfdecorationsegmentamplitude=\dimen315
-\pgfdecorationsegmentlength=\dimen316
+\pgfdecorationsegmentamplitude=\dimen316
+\pgfdecorationsegmentlength=\dimen317
 )
 \tikz@lib@dec@box=\box51
 )
@@ -1937,12 +1941,12 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
 \c@abspage=\count178
 \gnBoxA=\box53
-\gnCornerHgt=\dimen317
+\gnCornerHgt=\dimen318
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 404.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 7.3pt on input line 404.
-\gnArgHgt=\dimen318
+\gnArgHgt=\dimen319
 )
 \c@theorem=\count179
 
@@ -1950,36 +1954,36 @@ Excluding comment 'screenonly' Include comment 'printonly'
 Include comment 'anonsuppress' (./cones.aux)
 \openout1 = `cones.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 74.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 74.
+LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 75.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 75.
 
 (/usr/share/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 74.
-LaTeX Info: Redefining \microtypecontext on input line 74.
+(Font)              scaled to size 7.0pt on input line 75.
+LaTeX Info: Redefining \microtypecontext on input line 75.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1996,7 +2000,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box54
-Package hyperref Info: Link coloring OFF on input line 74.
+Package hyperref Info: Link coloring OFF on input line 75.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -2006,9 +2010,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count180
 )
-LaTeX Info: Redefining \ref on input line 74.
-LaTeX Info: Redefining \pageref on input line 74.
-LaTeX Info: Redefining \nameref on input line 74.
+LaTeX Info: Redefining \ref on input line 75.
+LaTeX Info: Redefining \pageref on input line 75.
+LaTeX Info: Redefining \nameref on input line 75.
  (./cones.out)
 (./cones.out)
 \@outlinefile=\write6
@@ -2017,13 +2021,13 @@ LaTeX Info: Redefining \nameref on input line 74.
  (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count181
-\scratchdimen=\dimen319
+\scratchdimen=\dimen320
 \scratchbox=\box55
 \nofMPsegments=\count182
 \nofMParguments=\count183
 \everyMPshowfont=\toks53
 \MPscratchCnt=\count184
-\MPscratchDim=\dimen320
+\MPscratchDim=\dimen321
 \MPnumerator=\count185
 \makeMPintoPDFobject=\count186
 \everyMPtoPDFconversion=\toks54
@@ -2091,24 +2095,24 @@ Package caption Info: End \AtBeginDocument code.
 
 Excluding 'CCSXML' comment.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 167.
+(Font)              scaled to size 17.28pt on input line 168.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 17.28pt on input line 167.
+(Font)              scaled to size 17.28pt on input line 168.
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 167--167
+Overfull \hbox (30.0pt too wide) in paragraph at lines 168--168
 [] 
  []
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 167.
+(Font)              scaled to size 10.95pt on input line 168.
 LaTeX Font Info:    Try loading font information for T1+LinuxBiolinumT-TLF on i
-nput line 167.
+nput line 168.
 (/usr/share/texmf-dist/tex/latex/libertine/T1LinuxBiolinumT-TLF.fd
 File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
 uxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 167.
+(Font)              scaled to size 9.0pt on input line 168.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -2125,68 +2129,68 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.0pt on input line 167.
+(Font)              scaled to size 7.0pt on input line 168.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 167.
+(Font)              scaled to size 9.0pt on input line 168.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 167.
+(Font)              scaled to size 10.95pt on input line 168.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/it' will be
-(Font)              scaled to size 9.0pt on input line 167.
+(Font)              scaled to size 9.0pt on input line 168.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 176.
+(Font)              scaled to size 9.0pt on input line 177.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 179.
+(Font)              scaled to size 7.3pt on input line 180.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 179.
-LaTeX Font Info:    Try loading font information for OT1+zi4 on input line 188.
+(Font)              scaled to size 5.5pt on input line 180.
+LaTeX Font Info:    Try loading font information for OT1+zi4 on input line 189.
 
 
 (/usr/share/texmf-dist/tex/latex/inconsolata/ot1zi4.fd
 File: ot1zi4.fd 2016/12/29 OT1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 9.0pt on input line 188.
+(Font)              scaled to size 9.0pt on input line 189.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 7.3pt on input line 188.
+(Font)              scaled to size 7.3pt on input line 189.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 5.5pt on input line 188.
+(Font)              scaled to size 5.5pt on input line 189.
  [1.1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 9.0pt on input line 244.
+(Font)              scaled to size 9.0pt on input line 248.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 7.3pt on input line 244.
+(Font)              scaled to size 7.3pt on input line 248.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 5.5pt on input line 244.
+(Font)              scaled to size 5.5pt on input line 248.
 LaTeX Font Info:    Try loading font information for OT1+LinuxBiolinumT-TLF on 
-input line 245.
+input line 249.
 
 (/usr/share/texmf-dist/tex/latex/libertine/OT1LinuxBiolinumT-TLF.fd
 File: OT1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for OT1/L
 inuxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 245.
+(Font)              scaled to size 9.0pt on input line 249.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 245.
+(Font)              scaled to size 7.3pt on input line 249.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 245.
-LaTeX Font Info:    Try loading font information for T1+zi4 on input line 247.
+(Font)              scaled to size 5.5pt on input line 249.
+LaTeX Font Info:    Try loading font information for T1+zi4 on input line 251.
 
 (/usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2016/12/29 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 9.0pt on input line 247.
+(Font)              scaled to size 9.0pt on input line 251.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -2198,61 +2202,47 @@ Package microtype Info: Character `textemdash ' is missing
 (microtype)             in font `T1/zi4/m/n/9'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 278.
+(Font)              scaled to size 8.0pt on input line 277.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/sc' will be
-(Font)              scaled to size 8.0pt on input line 278.
+(Font)              scaled to size 8.0pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 278.
+(Font)              scaled to size 8.0pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 278.
+(Font)              scaled to size 6.2pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 8.0pt on input line 278.
+(Font)              scaled to size 8.0pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 6.2pt on input line 278.
+(Font)              scaled to size 6.2pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 278.
+(Font)              scaled to size 8.0pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 6.2pt on input line 278.
+(Font)              scaled to size 6.2pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 8.0pt on input line 278.
+(Font)              scaled to size 8.0pt on input line 277.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 6.2pt on input line 278.
+(Font)              scaled to size 6.2pt on input line 277.
 
-Overfull \hbox (264.945pt too wide) detected at line 301
+Overfull \hbox (264.945pt too wide) detected at line 286
 []
  []
 
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 311.
-[2.2]
-Underfull \vbox (badness 1107) has occurred while \output is active []
-
- [3.3]
-[4.4] [5.5] [6.6]
+(Font)              scaled to size 6.0pt on input line 302.
+[2.2] [3.3] [4.4] [5.5] [6.6]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.3pt on input line 676.
+(Font)              scaled to size 7.3pt on input line 678.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 5.5pt on input line 676.
+(Font)              scaled to size 5.5pt on input line 678.
  [7.7]
-Overfull \hbox (15.77959pt too wide) in paragraph at lines 726--730
+Overfull \hbox (15.77959pt too wide) in paragraph at lines 728--732
 \T1/LinuxLibertineT-TLF/m/n/9 (-20) Ide-al-ized Al-gol model, $\OML/nxlmi/m/it/
 9 qa \LMS/ntxsy/m/n/9 2 \OML/nxlmi/m/it/9 T[]$ \T1/LinuxLibertineT-TLF/m/n/9 (-
 20) if and only if $\OML/nxlmi/m/it/9 N[]\LMS/ntxsy/m/n/9 ¹\OML/nxlmi/m/it/9 ^^
 Un:C\LMS/ntxsy/m/n/9 »\OML/nxlmi/m/it/9 n\LMS/ntxsy/m/n/9 ¼º +
  []
 
-
-Overfull \hbox (1.89388pt too wide) in paragraph at lines 806--809
-\T1/LinuxLibertineT-TLF/m/n/9 (-20) term $\OML/nxlmi/m/it/9 M [] [] S \LMS/ntxs
-y/m/n/9 ! \OML/nxlmi/m/it/9 T$\T1/LinuxLibertineT-TLF/m/n/9 (-20) . Then $\OML/
-nxlmi/m/it/9 ^^[ \U/ntxmia/m/it/9 = \LMS/ntxsy/m/n/9 >[]\OT1/LinuxLibertineT-TL
-F/m/n/9 (-20) ; []\LMS/ntxsy/m/n/9 ¹\OML/nxlmi/m/it/9 ^^[\LMS/ntxsy/m/n/9 º \U/
-ntxmia/m/it/9 = [] \OT1/LinuxLibertineT-TLF/m/n/9 (-20) ; [] \U/ntxmia/m/it/9 =
- []$\T1/LinuxLibertineT-TLF/m/n/9 (-20) . 
- []
-
 [8.8]
-Overfull \hbox (12.35875pt too wide) in paragraph at lines 867--869
+Overfull \hbox (12.35875pt too wide) in paragraph at lines 875--877
 [][]\T1/LinuxLibertineT-TLF/b/n/9 Lemma 5.1. []\T1/LinuxLibertineT-TLF/m/it/9 (
 -20) Let $\OML/nxlmi/m/it/9 C\LMS/ntxsy/m/n/9 »^^@¼$ \T1/LinuxLibertineT-TLF/m/
 it/9 (-20) be a con-text of de-ter-min-is-tic PCF. Write $\OML/nxlmi/m/it/9 ^^[
@@ -2260,24 +2250,22 @@ it/9 (-20) be a con-text of de-ter-min-is-tic PCF. Write $\OML/nxlmi/m/it/9 ^^[
 /9 !
  []
 
-Processing 'acks' comment.
+[9.9] Processing 'acks' comment.
 \openout4 = `comment.cut'.
 
  Comment 'acks' writing to comment.cut.
 Straight input of comment.cut. (./comment.cut) (./cones.bbl
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
 (Font)              scaled to size 7.0pt on input line 53.
- [9.9]) [10.10
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 927.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 927.
+) [10.10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 954.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 954.
 
 (./cones.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 927.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 927.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 954.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 954.
 Package rerunfilecheck Info: File `cones.out' has not changed.
-(rerunfilecheck)             Checksum: B745BC938B5F30D56564BFCDF2DDA97B;3569.
+(rerunfilecheck)             Checksum: D55F9CB8CDACE6717E5DEF92FCD720AA;3676.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -2285,13 +2273,13 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 32001 strings out of 492985
- 571154 string characters out of 6138637
- 668691 words of memory out of 5000000
- 34100 multiletter control sequences out of 15000+600000
- 257335 words of font info for 542 fonts, out of 8000000 for 9000
+ 32038 strings out of 492985
+ 571884 string characters out of 6138637
+ 677163 words of memory out of 5000000
+ 34121 multiletter control sequences out of 15000+600000
+ 258350 words of font info for 548 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,19n,94p,898b,602s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,19n,94p,898b,530s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/usr/share/tex
 mf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}{/usr/share/texmf-dist/fonts/en
 c/dvips/libertine/lbtn_edcawa.enc}{/usr/share/texmf-dist/fonts/enc/dvips/libert
@@ -2323,10 +2311,10 @@ ts/txsyb.pfb></usr/share/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb></usr/
 share/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/share/texmf-dist/font
 s/type1/public/newtx/zxlr.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/z
 xlri.pfb>
-Output written on cones.pdf (10 pages, 779536 bytes).
+Output written on cones.pdf (10 pages, 784701 bytes).
 PDF statistics:
- 488 PDF objects out of 1000 (max. 8388607)
- 412 compressed objects within 5 object streams
- 75 named destinations out of 1000 (max. 500000)
- 65217 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 507 PDF objects out of 1000 (max. 8388607)
+ 431 compressed objects within 5 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 65225 words of extra memory for PDF output out of 74296 (max. 10000000)
 

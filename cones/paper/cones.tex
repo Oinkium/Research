@@ -52,6 +52,7 @@
 %% 'acmart-pacmpl-template.tex'.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\usepackage{balance}
 
 %% Some recommended packages.
 %\usepackage{booktabs}   %% For formal tables:
@@ -173,7 +174,7 @@ Picture two concurrent processes $P$ and $Q$ with shared access to a variable $v
 The execution of $P$ consists in an infinite loop that increments the value of $v$ at each iteration.  
 Meanwhile, $Q$ performs some computation $A$, and then prints out the current value of $v$ and terminates the whole program.
 Since we cannot predict in advance how may cycles of the loop in $P$ will have elapsed by the time the computation $A$ has completed, the value that ends up printed to the screen may be arbitrarily large.  
-Furthermore, under the basic assumption that the task scheduler is \emph{fair}; i.e., any pending task must eventually be executed, we can observe that our program must always terminate by printing out some value to the screen.  
+Furthermore, under the basic assumption that the task scheduler is \emph{fair}; i.e., any pending task must eventually be executed, our program must always terminate by printing out some value to the screen.  
 
 We have therefore built an \emph{unbounded nondeterminism} machine, that can print out arbitrarily large natural numbers but which never diverges, as distinct from finitary choice nondeterminism.
 \footnote{Using recursion, we can build a program out of finite nondeterminism that can produce arbitrarily large natural numbers; however, this program also admits the possibility of divergence.}  
@@ -211,12 +212,15 @@ In the last section of this paper, we will show how our methods can be applied u
 
 Related work by Laird \cite{LairdOrdinalGames,FunctionalProgramsAsCoroutines} discusses a semantics for PCF with unbounded nondeterminism based on sequential algorithms and explores the role played by continuity; however, this semantics is not fully abstract.  
 Laird's work is interesting because it shows that we can obtain a traditional adequacy proof for a semantics with one-sided continuity: composition is continuous with respect to functions, but not with respect to arguments.  
-We cannot use these techniques here, though, because our composition is not continuous on either side.
+
+The idea of using some constrained version of continuity to prove adequacy for countable nondeterminism goes back to Plotkin's work on power-domains \cite{PlotkinApt}.
+A crucial observation in both \cite{PlotkinApt} and \cite{LairdOrdinalGames} is that this sort of proof requires a Hoare logic in which we can reason about all the countable ordinals.
+We cannot use these techniques here, however, because our composition is not continuous on either side.
 
 \subsection{Contributions}
 
 The main concepts of game semantics and the steps we take to establish full abstraction are well-established, with a few exceptions.  
-The idea of including infinitary information in strategies is not new, but this particular presentation, though closely related to that of \cite{LevyGsInfinite}, has not been carried out in a traditional Hyland-Ong game semantics setting before.
+The idea of including infinitary information in strategies is not new, but this particular presentation, though closely related to that of \cite{LevyGsInfinite}, but this is the first time it has been used to establish a full abstraction result for may and must testing.
 
 There are two points in the traditional Full Abstraction proof that depend on composition being continuous, and we have had to come up with ways of getting round them.  
 The easier of the two is that continuity is necessary to derive Full Abstraction from definability of compact strategies; in order to get around this, we have had to appeal to the stronger \emph{universality} result of \cite{hoPcf}, that says that every \emph{recursive} strategy is definable.  
@@ -250,11 +254,6 @@ Meanwhile, the terms are those given in \cite{SamsonGuyIAPassive}, together with
 The typing rule for $\wn$ is $\Gamma \vdash \wn\from\nat$.
 We shall use the letter $v$ to range over variables of type $\Var$.  
 
-We define a small-step operational semantics for the language; this presentation is equivalent to the big-step semantics given in \cite{mcCHFiniteND}, except with a different rule for the countable rather than finite nondeterminism.
-We give the appropriate rules in Figure \ref{fig:ia-os}.
-In each rule, $\ia{s}{M}$ is a \emph{configuration} of the language, where $M$ is a term, and $s$ is a \emph{store}; i.e., a function from the set of variables free in $M$ to the set of natural numbers.  
-If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state formed by updating the value of the variable $v$ to $n$.
-
 \begin{figure*}
   \begin{mathpar}
     \inferrule*{ }{\ia s {(\lambda x.M)\;N} \opto \ia s {M[N/x]}}
@@ -281,27 +280,25 @@ If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state forme
     \and
     \inferrule*{ }{\ia s {\new_T \lambda v.M}\opto \ia {\stup s v 0} M}
     \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\IfO M} \opto \ia s {\IfO M'}}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\suc M} \opto \ia s {\suc M'}}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\pred M} \opto \ia s {\pred M'}}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {M;\blank} \opto \ia s {M';\blank}}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {M \coloneqq \blank} \opto \ia s {M' \coloneqq \blank}}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\deref M} \opto \ia s {\deref M'}}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {\mkvar M} \opto \ia s {\mkvar M'}}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {M N} \opto \ia s {M'N}}
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {E[M]} \opto \ia s {E[M']}}
     \and
     \inferrule*[right=$n\in\bN$]{ }{\ia s \wn \opto \ia s \n}
   \end{mathpar}
   \caption{Small-step operational semantics for Idealized Algol with countable nondeterminism}
   \label{fig:ia-os}
 \end{figure*}
+
+We define a small-step operational semantics for the language; this presentation is equivalent to the big-step semantics given in \cite{mcCHFiniteND}, except with a different rule for the countable rather than finite nondeterminism.
+
+We define a Felleisen-style \emph{evaluation context} $E$ inductively as follows.
+\begin{IEEEeqnarray*}{RCL}
+  E & \Coloneqq & - \mid E M \mid \suc E \mid \pred E \mid \IfO E \mid \\
+  && E;\blank \mid E \coloneqq \blank \mid \deref E \blank \mid \mkvar E \mid \new_T E
+\end{IEEEeqnarray*}
+
+We then give the appropriate small-step rules in Figure \ref{fig:ia-os}.
+In each rule, $\ia{s}{M}$ is a \emph{configuration} of the language, where $M$ is a term, and $s$ is a \emph{store}; i.e., a function from the set of variables free in $M$ to the set of natural numbers.  
+If $s$ is a store and $v$ a variable, we write $\stup s v n$ for the state formed by updating the value of the variable $v$ to $n$.
 
 If $\ia\emptyset M$ is a configuration with empty store, we call $M$ a \emph{closed term}.  
 Given a closed term $M$ of ground type $\com$ or $\nat$, we write that $M\converges x$ (where $x=\skipp$ in the $\com$ case and is a natural number in the $\nat$ case) if there is a finite sequence $M \opto M_1 \opto \cdots \opto M_n = x$.
@@ -601,9 +598,14 @@ In order to define recursively presentable strategies, we need to work with \emp
 Clearly our base games $\bN$ and $\bC$ can be enumerated, as can the tensor product, linear implication, exponential and product of games.  
 We can then define a \emph{recursive} strategy to be one that is recursively presentable with respect to that enumeration of moves.
 
-\begin{proposition}
-  Let $\G_{D,vis,rec}$ be the category of games and \emph{recursive} visible strategies.  
-  Then $\G_{D,vis,rec}^\oc$ is a fully abstract model of Idealized Algol in which every morphism is definable.
+We shall tacitly assume that the games in our category $\G_{ND}$ come with an enumeration so that we can reason about recursive strategies later.  
+For any game that is the denotation of an Idealized Algol type, this enumeration will be the natural one as described above.
+
+The relevant result pertaining to recursive strategies is as follows.
+
+\begin{proposition}[Recursive Universality for Idealized Algol]
+  Let $S$ be an Idealized Algol type and let $\sigma\from \deno S$ be a recursive strategy.  
+  Then there exists a term $M\from S$ of Idealized Algol such that $\sigma=\deno M$.
 \end{proposition}
 \begin{proof}
   This follows from the corresponding results for PCF, together with the \emph{innocent factorization} result of \cite{SamsonGuyIAPassive}.  
@@ -654,8 +656,8 @@ Furthermore, if $\sigma$ is visible, then so is $\Det(\sigma)$.
 
 \subsection{Denotational Semantics}
 
-The category in which we shall model our language is the category $\G_{ND,vis,rec}^\oc$ -- the Cartesian closed category of (enumerated) games with nondeterministic, recursively presentable visible strategies.  
-We have a natural embedding $\G_{D,vis,rec}^\oc\hookrightarrow\G_{ND,vis,rec}^\oc$, and we know that $\G_{D,vis,rec}^\oc$ is a universal and fully abstract model of Idealized Algol.
+The category in which we shall model our language is the category $\G_{ND,vis}^\oc$ -- the Cartesian closed category of (enumerated) games with nondeterministic visible strategies.  
+We have a natural embedding $\G_{D,vis}^\oc\hookrightarrow\G_{ND,vis}^\oc$, and we know that $\G_{D,vis}^\oc$ is a universal and fully abstract model of Idealized Algol.
 
 Any term $M\from T$ of Idealized Algol with countable nondeterminism may be written as $M = C[\wn]$, where $C$ is a context not involving the constant $\wn$.  
 Then the term $\lambda n.C[n]$ is a term of Idealized Algol, and therefore has a denotation $\oc\bN \to \deno{T}$ as in \cite{SamsonGuyIAPassive}.
@@ -789,7 +791,7 @@ We can now prove our computational adequacy result.
   By examining the definition of composition, we see that this is the case if and only if $D_{\deno M}=D_{\top_N;\sigma_M}\ne\emptyset$.
 \end{proof}
 
-We define \emph{extensional equivalence of strategies} as follows.  
+We define \emph{intrinsic equivalence of strategies} as follows.  
 If $\sigma,\tau$ are two strategies for a game $A$, we say that $\sigma\oes\tau$ if for all test morphisms $\alpha\from A \to \bC$ we have $\sigma;\alpha=\tau;\alpha$.  
 Having defined this equivalence, we may prove \emph{soundness} in the usual way.
 
@@ -798,13 +800,21 @@ Having defined this equivalence, we may prove \emph{soundness} in the usual way.
   If $\deno{M}\oes\deno{N}$ then $M\emam N$.  
 \end{theorem}
 
+For proving full abstraction , it is necessary to take the intrinsic quotient in order to identify, for example, the denotations of $\lambda n.\Omega$ and $\lambda n.\IfO n\;\Omega\;\Omega$ of type $\nat\to\nat$.  
+These terms are clearly observationally equivalent, but their denotations are not equal; for example, $q\in D_{\deno{\lambda n.\Omega}}$, but $q\not\in D_{\deno{\lambda n.\IfO n\;\Omega\;\Omega}}$.
+
+The point here is that even though $q$ is not explicitly a divergence in the second case, it is nonetheless impossible to prevent the strategy from eventually reaching a divergence.  
+Given a strategy $\sigma$ for a game $A$, we say that $s\in\sigma$ is \emph{unreliable} if player $P$ has a strategy, starting from $s$ and staying at all times within $T_\sigma$, that ensures that we eventually reach some play in $D_\sigma$.  
+We then say that a strategy $\sigma$ is \emph{divergence-complete} if every unreliable point of $\sigma$ is contained in $D_\sigma$.  
+Every strategy $\sigma$ can clearly be extended to a minimal divergence-complete strategy $\text{dc}(\sigma)$; Murawski's explicit characterization of the intrinsic collapse \cite{MurawskiIntrinsic}, which may be applied to our model, essentially says that $\sigma\oes\tau$ if and only if $\text{dc}(\sigma)=\text{dc}(\tau)$.
+
 \subsection{Universality}
 
-Let $S,T$ be Idealized Algol types and let $\sigma\from S\to T$ be a morphism in $\G_{ND,vis,rec}^\oc$.  
+Let $S,T$ be Idealized Algol types and let $\sigma\from S\to T$ be a recursive morphism in $\G_{ND,vis}^\oc$.  
 We want to prove that $\sigma$ is the denotation of some term.  
 
 By our nondeterministic factorization result, we know that $\sigma=\top_\bN;\Det(\sigma)$, where $\Det(\sigma)$ is a deterministic strategy.  
-By universality for $\G_{D,vis,rec}^\oc$, we know that $\Det(\sigma)=\deno{M}$ for some closed term $M\from S \to T$.  
+By universality for $\G_{D,vis}^\oc$, we know that $\Det(\sigma)=\deno{M}$ for some closed term $M\from S \to T$.  
 Then $\sigma=\top_\bN;\Det(\sigma)=\deno{\wn};\deno M = \deno{M\;\wn}$.
 
 \subsection{Full abstraction}
@@ -816,11 +826,9 @@ Then $\sigma=\top_\bN;\Det(\sigma)=\deno{\wn};\deno M = \deno{M\;\wn}$.
 \begin{proof}
   Let $A=\deno T$.  
   Suppose that $\deno{M}\not{\oes}\deno{N}$; so there is some strategy $\alpha\from A\to\bC$ such that $\deno{M};\alpha\ne\deno{N};\alpha$.  
-  By universality, we have $A=\deno{P}$ for some closed term $P$ of type $T\to\com$.  
+  We can clearly choose $\alpha$ to be recursively presentable; by universality, we have $\alpha=\deno{P}$ for some closed term $P$ of type $T\to\com$.  
   Then we have $\deno{M};\deno{P}\ne\deno{N};\deno{P}$; by computational adequacy, it follows that $M\not{\emam} N$.
 \end{proof}
-
-Of course, this full abstraction holds just as well for $\G_{ND,vis}^\oc$, where we relax the recursivity condition.
 
 \section{Nondeterministic PCF}
 
@@ -889,18 +897,41 @@ The second fact will capture the properties of the morphism $\top_{\bN}\from I \
   \end{itemize}
 \end{definition}
 
-\begin{proposition}
-  If $\sigma,\tau\from\bN\to\bN$ are morphisms in $\G_{inn}^\oc$, then $\top_\bN;J(\sigma)=\top_\bN;J(\tau)$ in $\G_{TO}$ if and only if $\sigma\approx\tau$.  
-\end{proposition}
+\begin{definition}
+  We say that a Cartesian closed category $\C$ is a \emph{sensible game semantics of PCF with countable nondeterminism} if there is a strong monoidal functor $J\from\G_{inn}^\oc\to\C$ and a morphism $\top_{\bN}\from 1 \to J(\bN)$ in $\C$ such that for all $\sigma,\tau\from\bN\to\bN$ in $\G_{inn}^\oc$, we have
+  \[
+    \top_\bN;J(\sigma)=\top_\bN;J(\tau)
+    \]
+  if and only if $\sigma\approx\tau$.  
+\end{definition}
 
-This is evidently true if we replace $\G_{TO}$ with $\G_{ND}$, since a strategy $\rho$ for $\bN$ is determined by the set of $n$ such that $qn\in T_\rho$ and whether or not $D_\rho$ is empty.  
-It is true in $\G_{TO}$, which allows us to prove the following version of adequacy which is sufficient for the purpose of proving full abstraction.
+This definition gives a rather minimal condition on the morphism $\top_\bN$ that ensures that it behaves as it should when substituted into functions $\bN \to \bN$.
+For example, our category $\G_{ND}$ is a sensible game semantics of PCF with countable nondeterminism, as is the Tsukada-Ong category $\G_{TO}$.  
+
+Using this condition and Lemma \ref{lem:pcf-soundness-lemma}, it is easy to prove the following version of adequacy, which is sufficient for the purpose of proving full abstraction.
 
 \begin{theorem}[Adequacy for nondeterministic PCF]
+  Let $\C$ be a sensible model of nondeterministic PCF, and define $\deno -$ to be given by the functor $J$ and the morphism $\top_\bN$ in the obvious way.
+
   Let $M,N\from\nat$ be two terms of nondeterministic PCF.  
   Suppose that for all $n\in\omega$, $M\converges n$ if and only if $N\converges n$ and furthermore that $M\mustconverge$ if and only if $N\mustconverge$.  
-  Then $\deno{M}=\deno{N}$ in $\G_{TO}$.  
+  Then $\deno{M}=\deno{N}$ in $\C$.
 \end{theorem}
+
+\section{Conclusion}
+
+% Oh ho ho ho ho!!!
+\balance
+Our last result is fairly general, and can be applied to a number of different game semantics models, including the models of concurrent games of \cite{ConcurrentHylandOngGames}.  
+The natural next step is to extend it to give a proof of full abstraction for nondeterministic PCF in the Tsukada-Ong model.  
+The missing ingredient is a universality result for that model.  
+Tsukada and Ong prove compact definability from first principles, rather than using a factorization result, and it is not immediate how one defines a recursive element of their model.  
+Nevertheless, we can have some confidence that such a result is possible, which will allow our results to be carried over to stateless languages.
+
+It would be interesting to see whether our adequacy proof can be applied to effects other than nondeterminism; although most effects do not engender a failure of continuity in the same way, a similar approach could help us use an adequacy result from one language to prove adequacy for another language, rather than proving it from first principles each time.
+
+Lastly, our proof has thrown more light on the important relation between nondeterminism and state.  
+As we have discussed, stateful languages (and visible strategies) pose fewer problems for modelling nondeterminism than do stateless languages (and innocent strategies), but the fact that we needed to use the stateful structure of the language in our proof of Lemma \ref{lem:soundness-lemma} suggests that there is a deeper relationship between the two, which we should explore in future work.
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
@@ -912,11 +943,7 @@ It is true in $\G_{TO}$, which allows us to prove the following version of adequ
   This material is based upon work supported by the
   \grantsponsor{GS501100000690}{EPSRC}
   {http://dx.doi.org/10.13039/501100000690} under Grant
-  No.~\grantnum{GS501100000690}{EP/K018868/1}. Any opinions, findings, and
-  conclusions or recommendations expressed in this material are those
-  of the author and do not necessarily reflect the views of the
-  EPSRC.
-  I am grateful to Martin Hyland for an interesting conversation that helped me develop some of this material.
+  No.~\grantnum{GS501100000690}{EP/K018868/1}.   I am grateful to Martin Hyland for an interesting conversation that helped me develop some of this material.
 \end{acks}
 
 
