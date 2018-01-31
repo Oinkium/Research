@@ -650,7 +650,7 @@ The \emph{computational adequacy} result for our model can be stated as follows.
 
 Traditional proofs of computational adequacy using logical relations make essential use of the continuity of composition with respect to a natural ordering on strategies (see, for example, \cite{mcCHFiniteND} and \cite{RusssThesis} for the finite nondeterminism case).  
 In our case, since composition is not continuous in the language itself, we cannot use this technique.
-In order to prove soundness and adequacy, we use a new technique that involves using a deterministic stateful construction to model the nondeterminism inside a deterministic world in which continuity holds.  
+In order to prove adequacy, we use a new technique that involves using a deterministic stateful construction to model the nondeterminism inside a deterministic world in which continuity holds.  
 We shall return to the concept of an \emph{evaluation} of a term as a sequence of natural numbers that we use to replace the constant $\wn$.  
 
 \begin{lemma}
@@ -696,7 +696,7 @@ We shall return to the concept of an \emph{evaluation} of a term as a sequence o
     q\;n_1\;\cdots\;q\;n_k\;q\;d\;q\;d\;\cdots
     \]
   Setting $F = \lambda n.C[n]$, we see that $\deno{F}=\sigma_M$.  
-  So, by soundness and adequacy for the Idealized Algol model, we see that $qa\in T_{\sigma_\pi;\sigma_M}$ if and only if $N_{n_1,\dots,n_k,d} (\lambda n.C[n])\converges\skipp$, which is the case if and only if $M\converges\skipp$ along the evaluation $\pi$.
+  So, by adequacy for the Idealized Algol model, $qa\in T_{\sigma_\pi;\sigma_M}$ if and only if $N_{n_1,\dots,n_k,d} (\lambda n.C[n])\converges\skipp$, which is the case if and only if $M\converges\skipp$ along the evaluation $\pi$.
   Similarly, $D_{\sigma_\pi;\sigma_M}\neq\emptyset$ if and only if $N_{n_1,\dots,n_k,d}(\lambda n.C[n])$ diverges, which is equivalent to saying that $M$ diverges along the evaluation $\pi$.
 
   Lastly, we need to deal with the case that there is an infinite evaluation $\pi = n_1,n_2,\dots$ of $M$ that consults the nondeterministic oracle infinitely often.
@@ -788,7 +788,7 @@ Then $\sigma=\top_\bN;\Det(\sigma)=\deno{\wn};\deno M = \deno{M\;\wn}$.
   Let $A=\deno T$.  
   Suppose that $\deno{M}\not{\oes}\deno{N}$; so there is some strategy $\alpha\from A\to\bC$ such that $\deno{M};\alpha\ne\deno{N};\alpha$.  
   By universality, we have $A=\deno{P}$ for some closed term $P$ of type $T\to\com$.  
-  Then we have $\deno{M};\deno{P}\ne\deno{N};\deno{P}$; by consistency and adequacy, it follows that $M\not{\emam} N$.
+  Then we have $\deno{M};\deno{P}\ne\deno{N};\deno{P}$; by computational adequacy, it follows that $M\not{\emam} N$.
 \end{proof}
 
 Of course, this full abstraction holds just as well for $\G_{ND,vis}^\oc$, where we relax the recursivity condition.
@@ -812,24 +812,24 @@ For example, the denotation of our term $M$ above has an infinite branch in it, 
 The main advantage of the tree-based model, however, is that it gives rise to a satisfactory synthetic definition of a \emph{nondeterministic innocent} strategy based on sheaves.  
 In fact, Tsukada and Ong do not prove full abstraction for PCF with countable nondeterminism (even though that language may be interpreted within their category), but for PCF with finite nondeterminism.  
 
-Having ourselves given a fully abstract model of Idealized Algol with countable nondeterminism, we shall contribute to the process of `completing the square' by giving a sketch of how we can use our techniques to prove soundness and adequacy for the Tsukada-Ong model of PCF with countable nondeterminism.  
-A side-effect of this will be to give an alternative proof of soundness and adequacy for their model of PCF with finite nondeterminism.  
+Having ourselves given a fully abstract model of Idealized Algol with countable nondeterminism, we shall contribute to the process of `completing the square' by giving a sketch of how we can use our techniques to prove adequacy for the Tsukada-Ong model of PCF with countable nondeterminism.  
+A side-effect of this will be to give an alternative proof of adequacy for their model of PCF with finite nondeterminism.  
 
-The first observation to make is that our Lemma \ref{lem:soundness-lemma} is not really a statement about the category $\G_{ND,vis}$, but one about the deterministic model $\G_{D,vis}$.  
+The first observation to make is that our Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} are not really statements about the category $\G_{ND,vis}$, but about the deterministic model $\G_{D,vis}$.  
 
-For example, the first part of the lemma says that if $C[-]$ is an ordinary deterministic Idealized Algol context, then $C[\wn]\converges\skipp$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\deno{\lambda n.C[n]}}$.  
+For example, the first part of the lemmas says that if $C[-]$ is an ordinary deterministic Idealized Algol context, then $C[\wn]\converges\skipp$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\deno{\lambda n.C[n]}}$.  
 Although we have mentioned a term ($C[\wn]$) living in nondeterministic Idealized Algol, this can be thought of as a statement about $C[-]$ itself, which is part of deterministic Idealized Algol.  
-Moreover, the strategy $\sigma$ and the denotation of $\lambda n.C[n]$ are both deterministic strategies, so we can interpret Lemma \ref{lem:soundness-lemma} as telling us something about Idealized Algol and its game semantics.  
+Moreover, the strategy $\sigma$ and the denotation of $\lambda n.C[n]$ are both deterministic strategies, so we can interpret Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} as telling us something about Idealized Algol and its game semantics.  
 We can therefore forget about our nondeterminism model, with its divergence sets and infinite plays (neither of which are part of the Tsukada-Ong model) and concentrate on the Abramsky-McCusker model of Idealized Algol.
-Note that although Lemma \ref{lem:soundness-lemma} mentions $T_{\sigma;\sigma_M}$ and $D_{\sigma;\sigma_M}$, we can rephrase both of these inside the deterministic model, since the strategies involved are both deterministic.  
+Note that although Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} mention $T_{\sigma;\sigma_M}$ and $D_{\sigma;\sigma_M}$, we can rephrase both of these inside the deterministic model, since the strategies involved are both deterministic.  
 
-We want a version of Lemma \ref{lem:soundness-lemma} that can be applied to PCF contexts and the game semantics model $\G_{inn}$ of PCF.  
+We want a version of Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} that can be applied to PCF contexts and the game semantics model $\G_{inn}$ of PCF.  
 Clearly, the lemma as currently stated does not hold in $\G_{inn}$, since the strategies $\sigma$ that we define are not innocent in general.  
 
 Instead, we need to look at the combinatorial structure of the strategies.  
 We observe that if $\sigma_M\from\oc\bN\to\bC$ is a strategy, then there exists a deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$ if and only if there exists some $\s\in T_{\sigma_M}$ such that $\s\vert_{\bC}=qa$.  
 In addition, there exists a deterministic strategy $\sigma\from\oc\bN$ such that $D_{\sigma;\sigma_M}\ne\emptyset$ if and only if $\sigma_M$ is not \emph{winning}; i.e., either $\sigma_M$ is not total or there exists some $\s\in T_{\sigma_M}$ with an infinite tail of moves in $\oc\bN$.  
-We recover the following version of Lemma \ref{lem:soundness-lemma} which now applies to the interpretation of PCF in $\G_{inn}$:
+We recover the following version of Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} which now applies to the interpretation of PCF in $\G_{inn}$:
 \begin{lemma}
   Let $M=C[\wn]$ be a term of type $\com$.  
   Write $\sigma_M\from\oc\bN\to\bC$ for the denotation of the term $\lambda n.C[n]$.  
@@ -877,13 +877,12 @@ It is true in $\G_{TO}$, which allows us to prove the following version of adequ
   %% acknowledge financial support and will be used by metadata
   %% extraction tools.
   This material is based upon work supported by the
-  \grantsponsor{GS100000001}{National Science
-    Foundation}{http://dx.doi.org/10.13039/100000001} under Grant
-  No.~\grantnum{GS100000001}{nnnnnnn} and Grant
-  No.~\grantnum{GS100000001}{mmmmmmm}.  Any opinions, findings, and
+  \grantsponsor{GS501100000690}{National Science
+    Foundation}{http://dx.doi.org/10.13039/501100000690} under Grant
+  No.~\grantnum{GS501100000690}{EP/K018868/1}. Any opinions, findings, and
   conclusions or recommendations expressed in this material are those
   of the author and do not necessarily reflect the views of the
-  National Science Foundation.
+  EPSRC.
 \end{acks}
 
 

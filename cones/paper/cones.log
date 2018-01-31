@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.23)  30 JAN 2018 23:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.11.23)  31 JAN 2018 00:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2271,11 +2271,11 @@ LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 (Font)              scaled to size 6.2pt on input line 53.
 ) [11.11]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 894.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 894.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 893.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 893.
  (./cones.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 894.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 894.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 893.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 893.
 Package rerunfilecheck Info: File `cones.out' has not changed.
 (rerunfilecheck)             Checksum: B745BC938B5F30D56564BFCDF2DDA97B;3569.
 
@@ -2285,13 +2285,13 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 32075 strings out of 492985
- 572944 string characters out of 6138637
- 662798 words of memory out of 5000000
+ 32072 strings out of 492985
+ 572869 string characters out of 6138637
+ 662796 words of memory out of 5000000
  34120 multiletter control sequences out of 15000+600000
- 270278 words of font info for 576 fonts, out of 8000000 for 9000
+ 270005 words of font info for 574 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,19n,94p,899b,498s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,19n,94p,899b,508s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/usr/share/tex
 mf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}{/usr/share/texmf-dist/fonts/en
 c/dvips/libertine/lbtn_edcawa.enc}{/usr/share/texmf-dist/fonts/enc/dvips/libert
@@ -2323,10 +2323,10 @@ nts/txsyb.pfb></usr/share/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb></usr
 /share/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/share/texmf-dist/fon
 ts/type1/public/newtx/zxlr.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/
 zxlri.pfb>
-Output written on cones.pdf (11 pages, 780215 bytes).
+Output written on cones.pdf (11 pages, 780114 bytes).
 PDF statistics:
- 485 PDF objects out of 1000 (max. 8388607)
- 408 compressed objects within 5 object streams
+ 490 PDF objects out of 1000 (max. 8388607)
+ 413 compressed objects within 5 object streams
  76 named destinations out of 1000 (max. 500000)
  70849 words of extra memory for PDF output out of 74296 (max. 10000000)
 
