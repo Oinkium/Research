@@ -176,22 +176,23 @@ Meanwhile, $Q$ performs some computation $A$, and then prints out the current va
 Since we cannot predict in advance how may cycles of the loop in $P$ will have elapsed by the time the computation $A$ has completed, the value that ends up printed to the screen may be arbitrarily large.  
 Furthermore, under the basic assumption that the task scheduler is \emph{fair}; i.e., any pending task must eventually be executed, our program must always terminate by printing out some value to the screen.  
 
-We have therefore built an \emph{unbounded nondeterminism} machine, that can print out arbitrarily large natural numbers but which never diverges, as distinct from finitary choice nondeterminism.
+We have therefore built an \emph{unbounded nondeterminism} machine, that can print out arbitrarily large natural numbers but which never diverges.  
+This is strictly more powerful than finitary choice nondeterminism.
 \footnote{Using recursion, we can build a program out of finite nondeterminism that can produce arbitrarily large natural numbers; however, this program also admits the possibility of divergence.}  
 What we have just shown is that if we want to solve the problem of building a fair task scheduler, then we must in particular be able to solve the problem of building an unbounded nondeterminism machine.  
 
 This is an important observation to make about concurrent programming, because the task of implementing unbounded nondeterminism is difficult -- indeed, considerably more so than that of implementing bounded nondeterminism.  
 Dijkstra argues in \cite[Ch. 9]{DijkstraBook} that it is impossible to implement unbounded nondeterminism, showing that the natural constructs from which we construct imperative programs satisfy a \emph{continuity} property that unbounded nondeterminism lacks.  
-In fact, for semanticists, this lack of continuity is a problem in itself, since the standard proofs of computational adequacy and full abstraction typically make use, implicitly or otherwise, of the fact that composition within the model is continuous with respect to some ordering.
+For semanticists, this lack of continuity is a problem in itself, since the standard proofs of computational adequacy and full abstraction typically make use, implicitly or otherwise, of the fact that composition within the model is continuous with respect to some ordering.
 
 We shall explore some of the problems relating to unbounded nondeterminism, and how they may be solved, using game semantics to give a fully abstract model of a simple stateful language -- Idealized Algol -- enhanced with a countable nondeterminism primitive.  
 We begin with a pair of examples that will illustrate the lack of continuity, from a syntactic point of view.  
-Let $\nat$ be our number type and consider a sequence of functions ${<}n\from\nat\to\nat$ where ${<}m\;k$ evaluates to $0$ if $k<n$ and diverges otherwise.
+Let $\nat$ be our natural number type and consider a sequence of functions ${<}n\from\nat\to\nat$, where ${<}m\;k$ evaluates to $0$ if $k<n$ and diverges otherwise.
 In that case, the least upper bound of the ${<}n$ is the function that combines all their convergent behaviours; i.e., the function $\lambda k.k;\0$ that evaluates its input and then returns $0$.
 If $\wn\from\nat$ is an unbounded nondeterminism machine, then function application to $\wn$ is not continuous; indeed, ${<}m\;\wn$ always has the possibility of divergence -- since $\wn$ may evaluate to $m+1$, say.  
 But $(\lambda k.k;\0);\wn$ always converges to $0$.
 
-Lack of continuity is a problem because fixed-point combinators are typically built using least upper bounds, and proving adequacy of the model requires that these least upper bounds be preserved.  
+Lack of continuity is a problem because fixed-point combinators are typically built using least upper bounds, and proving adequacy of the model typically requires that these least upper bounds be preserved.  
 In a non-continuous situation, we will need to come up with new techniques in order to prove adequacy without using continuity.
 
 A closely connected problem with unbounded nondeterminism is that it leads to terms that may be distinguished only by their \emph{infinitary} behaviour.  
@@ -208,7 +209,7 @@ In particular, we will need something similar to Levy's \emph{liveliness} condit
 
 An alternative approach to the game semantics of nondeterminism can be found in Tsukada and Ong's sheaf model of nondeterministic PCF \cite{TsukadaSheaves} and in the more general work on concurrency by Winskel et al. (e.g., see \cite{StrategiesAsProfunctors} and \cite{ConcurrentHylandOngGames}), in which there is a very natural interpretation of nondeterminism.  
 Although we are able to give a model of Idealized Algol with countable nondeterminism in the more traditional Harmer-McCusker style, it seems necessary to introduce this extra machinery in order to model stateless languages such as PCF (and certainly to model concurrency).  
-In the last section of this paper, we will show how our methods can be applied under very general circumstances, and in particular to these models.
+In the last section of this paper, we will show how our methods can be applied under very general circumstances, and in particular to these models of nondeterministic stateless languages.
 
 Related work by Laird \cite{LairdOrdinalGames,FunctionalProgramsAsCoroutines} discusses a semantics for PCF with unbounded nondeterminism based on sequential algorithms and explores the role played by continuity; however, this semantics is not fully abstract.  
 Laird's work is interesting because it shows that we can obtain a traditional adequacy proof for a semantics with one-sided continuity: composition is continuous with respect to functions, but not with respect to arguments.  
@@ -220,20 +221,20 @@ We cannot use these techniques here, however, because our composition is not con
 \subsection{Contributions}
 
 The main concepts of game semantics and the steps we take to establish full abstraction are well-established, with a few exceptions.  
-The idea of including infinitary information in strategies is not new, but this particular presentation, though closely related to that of \cite{LevyGsInfinite}, but this is the first time it has been used to establish a full abstraction result for may and must testing.
+The idea of including infinitary information in strategies is not new, but this particular presentation, though closely related to that of \cite{LevyGsInfinite}, is the first example of using the technique to establish a full abstraction result for may and must testing.
 
 There are two points in the traditional Full Abstraction proof that depend on composition being continuous, and we have had to come up with ways of getting round them.  
-The easier of the two is that continuity is necessary to derive Full Abstraction from definability of compact strategies; in order to get around this, we have had to appeal to the stronger \emph{universality} result of \cite{hoPcf}, that says that every \emph{recursive} strategy is definable.  
+The easier of the two is that continuity is necessary for the usual proof that we can derive Full Abstraction from definability of compact strategies; in order to get around this, we have had to appeal instead to the stronger \emph{universality} result of \cite{hoPcf}, that says that every \emph{recursive} strategy is definable.  
 
-For the proof of adequacy, we have had to come up with a new technique.  
-This technique can be thought of as a kind of synthesis between the two usual methods of proving adequacy -- one involving logical relations and the other using more hands-on operational techniques.  
+For the proof of adequacy, we have had to come up with a new technique, which can be thought of as a kind of synthesis between the two usual methods of proving adequacy -- one involving logical relations and the other using more hands-on operational techniques.  
 We do this by separating out the deterministic, continuous part of the strategy from the nondeterministic, discontinuous part.  
-Using the stateful language, we can simulate individual evaluation paths of a nondeterministic program using deterministic programs, which allows us to appeal to the adequacy result for deterministic Idealized Algol.  
-We then rely on more combinatorial techniques to factor the nondeterminism back in.
+Using the stateful language, we can simulate individual evaluation paths of a nondeterministic program using a deterministic device that corresponds to the idea of `mocking' a random number generator for testing purposes.  
+This allows us to appeal to the adequacy result for deterministic Idealized Algol.  
+We then rely on more combinatorial techniques in order to factor the nondeterminism back in.
 
 This new technique is actually very generally applicable.  
 In the last section of the paper, we show that it may be used to prove adequacy for models of nondeterministic PCF under very mild assumptions.  
-The Tsukada-Ong model, for example, satisfies these assumptions and so we obtain an adequacy result for its semantics.
+The Tsukada-Ong model, for example, satisfies these assumptions, allowing us to obtain an adequacy result for PCF with countable nondeterminism.
 
 \section{Idealized Algol with Countable Nondeterminism}
 
@@ -290,7 +291,7 @@ We shall use the letter $v$ to range over variables of type $\Var$.
 
 We define a small-step operational semantics for the language; this presentation is equivalent to the big-step semantics given in \cite{mcCHFiniteND}, except with a different rule for the countable rather than finite nondeterminism.
 
-We define a Felleisen-style \emph{evaluation context} $E$ inductively as follows.
+First, we define a Felleisen-style \emph{evaluation context} $E$ inductively as follows.
 \begin{IEEEeqnarray*}{RCL}
   E & \Coloneqq & - \mid E M \mid \suc E \mid \pred E \mid \IfO E \mid \\
   && E;\blank \mid E \coloneqq \blank \mid \deref E \blank \mid \mkvar E \mid \new_T E
@@ -425,7 +426,7 @@ Note that this strategy strictly contains the one we considered before, and ther
 has the same denotation as $N$, even though for any $n$, $M\n\not{\mustconverge}$, while $N\n\mustconverge$.
 Moreover, if we try to compose $\deno{N}$ with the strategy on $\bN$ that always returns $1$, then we end up with an infinite increasing sequence of positions, which triggers the introduction of a divergence into the composite -- even though no divergence occurs in the evaluation of $N$.
 
-Aside from making violating soundness for the model, this example actually leads to composition not being associative if we naively extend the Harmer-McCusker model from finite to infinite nondeterminism (e.g., see \cite[4.4.1]{RusssThesis}).  
+Aside from showing that this model cannot possibly be sound, this example actually leads to composition not being associative if we naively extend the Harmer-McCusker model from finite to infinite nondeterminism (e.g., see \cite[4.4.1]{RusssThesis}).  
 
 Somehow, the crucial point is that we need to distinguish between terms like $M$, which contain infinite sequences of moves, and terms like $N$, which contain arbitrarily large finite sequences of moves.  
 The way that we do this is by making the infinite sequences of moves explicit in our strategies, in the style of \cite{RoscoeCspInfinite} and \cite{LevyGsInfinite}.  
@@ -586,7 +587,7 @@ It can be shown that the composition of visible strategies is visible, and that 
 
 The resulting category $\G^\oc_{D,vis}$ of games and deterministic visible strategies is a fully abstract model of Idealized Algol \cite{SamsonGuyIAPassive}.
 
-\subsection{Recursive games and strategies}
+\subsection{Enumerated games and recursive strategies}
 
 Most full abstraction results go via a definability result that says that all \emph{compact} strategies are definable \cite{curienFullAbstraction}.
 However, deducing full abstraction from compact definability makes essential use of continuity properties that are absent when we deal with countable nondeterminism.  
@@ -659,7 +660,7 @@ Furthermore, if $\sigma$ is visible, then so is $\Det(\sigma)$.
 The category in which we shall model our language is the category $\G_{ND,vis}^\oc$ -- the Cartesian closed category of (enumerated) games with nondeterministic visible strategies.  
 We have a natural embedding $\G_{D,vis}^\oc\hookrightarrow\G_{ND,vis}^\oc$, and we know that $\G_{D,vis}^\oc$ is a universal and fully abstract model of Idealized Algol.
 
-Any term $M\from T$ of Idealized Algol with countable nondeterminism may be written as $M = C[\wn]$, where $C$ is a context not involving the constant $\wn$.  
+Any term $M\from T$ of Idealized Algol with countable nondeterminism may be written as $M = C[\wn]$, where $C$ is a multi-holed context not involving the constant $\wn$.  
 Then the term $\lambda n.C[n]$ is a term of Idealized Algol, and therefore has a denotation $\oc\bN \to \deno{T}$ as in \cite{SamsonGuyIAPassive}.
 We define the denotation of $M$ to be given by the composite
 \[
@@ -685,7 +686,7 @@ In order to prove adequacy, we use a new technique that involves using a determi
 We shall return to the concept of an \emph{evaluation} of a term as a sequence of natural numbers that we use to replace the constant $\wn$.  
 
 \begin{lemma}
-  Let $M=C[\wn]$ be a term of type $\com$, where $C[-]$ is a context of Idealized Algol.
+  Let $M=C[\wn]$ be a term of type $\com$, where $C[-]$ is a multi-holed context of Idealized Algol.
   Write $\sigma_M$ for the denotation of the term $\lambda n.C[n]$.  
   \begin{itemize}
     \item If $M\converges\skipp$ then there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\sigma_M}$.
@@ -786,7 +787,7 @@ We can now prove our computational adequacy result.
 \begin{proof}[Proof of Proposition \ref{prop:adequacy}]
   We prove this for must convergence; the corresponding proof for may convergence is very similar.
 
-  Let $M=C[\wn]$ be a closed term, where $C$ is a deterministic context.  
+  Let $M=C[\wn]$ be a closed term, where $C$ is a deterministic multi-holed context.  
   Then, by Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse}, we see that $M\not\mustconverge$ if and only if there exists some total deterministic $\sigma\from\oc\bN$ such that $D_{\sigma;\sigma_M}\ne\emptyset$.  
   By examining the definition of composition, we see that this is the case if and only if $D_{\deno M}=D_{\top_N;\sigma_M}\ne\emptyset$.
 \end{proof}
@@ -840,7 +841,7 @@ We will abuse notation and refer to this play as $tab$, omitting the justificati
 
 If $\sigma$ is a strategy for $A$ that is deterministic and $P$-visible, we say that $\sigma$ is \emph{innocent} if and only if whenever $sab,ta\in\sigma$ are as above, we have $tab\in\sigma$.
 
-Tsukada and Ong \cite{TsukadaSheaves} showed that traditional game semantics models are unsuitable for modelling \emph{nondeterministic} PCF: while the definition of \emph{visibility} of strategies can be extended to nondeterministic strategies without difficulty, innocence cannot.
+Tsukada and Ong \cite{TsukadaSheaves}, following Harmer \cite{RusssThesis}, showed that traditional game semantics models are unsuitable for modelling \emph{nondeterministic} PCF: while the definition of \emph{visibility} of strategies can be extended to nondeterministic strategies without difficulty, innocence cannot.
 
 Instead, they use a novel type of game semantics in which strategies are given not by sets of plays but by justified \emph{trees} whose vertices are moves.  
 The difference is subtle but important: from the point of view of countable nondeterminism it allows us to distinguish between terms that take an arbitrarily large finite number of steps to converge and terms that diverge.  
@@ -854,7 +855,7 @@ A side-effect of this will be to give an alternative proof of adequacy for their
 
 The first observation to make is that our Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} are not really statements about the category $\G_{ND,vis}$, but about the deterministic model $\G_{D,vis}$.  
 
-For example, the first part of the lemmas says that if $C[-]$ is an ordinary deterministic Idealized Algol context, then $C[\wn]\converges\skipp$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\deno{\lambda n.C[n]}}$.  
+For example, the first parts of the lemmas says that if $C[-]$ is a deterministic Idealized Algol context, then $C[\wn]\converges\skipp$ if and only if there exists some total deterministic strategy $\sigma\from\oc\bN$ such that $qa\in T_{\sigma;\deno{\lambda n.C[n]}}$.  
 Although we have mentioned a term ($C[\wn]$) living in nondeterministic Idealized Algol, this can be thought of as a statement about $C[-]$ itself, which is part of deterministic Idealized Algol.  
 Moreover, the strategy $\sigma$ and the denotation of $\lambda n.C[n]$ are both deterministic strategies, so we can interpret Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} as telling us something about Idealized Algol and its game semantics.  
 We can therefore forget about our nondeterminism model, with its divergence sets and infinite plays (neither of which are part of the Tsukada-Ong model) and concentrate on the Abramsky-McCusker model of Idealized Algol.
@@ -872,7 +873,7 @@ Then for any strategy $\sigma_M$, there exists a deterministic strategy $\sigma\
 
 We recover the following version of Lemmas \ref{lem:soundness-lemma} and \ref{lem:soundness-converse} which now applies to the interpretation of PCF in $\G_{inn}$:
 \begin{lemma}
-  Let $C[-]$ be a context of deterministic PCF.
+  Let $C[-]$ be a multi-holed context of deterministic PCF.
   Write $\sigma_C\from\oc\bN\to\bN$ for the denotation of the term $\lambda n.C[n]$.  
   \begin{itemize}
     \item $C[\wn]\converges n$ if and only if there exists $\s\in \sigma_C$ such that $\s\vert_{\bN}=qa$.  
@@ -926,7 +927,7 @@ Our last result is fairly general, and can be applied to a number of different g
 The natural next step is to extend it to give a proof of full abstraction for nondeterministic PCF in the Tsukada-Ong model.  
 The missing ingredient is a universality result for that model.  
 Tsukada and Ong prove compact definability from first principles, rather than using a factorization result, and it is not immediate how one defines a recursive element of their model.  
-Nevertheless, we can have some confidence that such a result is possible, which will allow our results to be carried over to stateless languages.
+Nevertheless, we can have some confidence that such a result is possible, allowing our results to be carried over to stateless languages.
 
 It would be interesting to see whether our adequacy proof can be applied to effects other than nondeterminism; although most effects do not engender a failure of continuity in the same way, a similar approach could help us use an adequacy result from one language to prove adequacy for another language, rather than proving it from first principles each time.
 
