@@ -1,0 +1,144 @@
+\begin{thebibliography}{10}
+
+\bibitem{abramskyjagadeesangames}
+Samson Abramsky and Radha Jagadeesan.
+\newblock Games and full completeness for multiplicative linear logic.
+\newblock {\em The Journal of Symbolic Logic}, 59(2):543--574, 1994.
+\newblock URL: \url{http://arxiv.org/abs/1311.6057}.
+
+\bibitem{ajmPcf}
+Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
+\newblock Full abstraction for {PCF}.
+\newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0890540100929304},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1006/inco.2000.2930}
+  {\path{doi:http://dx.doi.org/10.1006/inco.2000.2930}}.
+
+\bibitem{SamsonGuyIAPassive}
+Samson Abramsky and Guy McCusker.
+\newblock Full abstraction for {Idealized Algol} with passive expressions.
+\newblock {\em Theor. Comput. Sci.}, 227(1-2):3--42, September 1999.
+\newblock URL: \url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}, \href
+  {http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
+  {\path{doi:10.1016/S0304-3975(99)00047-X}}.
+
+\bibitem{PlotkinApt}
+K.~R. Apt and G.~D. Plotkin.
+\newblock A cook's tour of countable nondeterminism.
+\newblock In Shimon Even and Oded Kariv, editors, {\em Automata, Languages and
+  Programming}, pages 479--494, Berlin, Heidelberg, 1981. Springer Berlin
+  Heidelberg.
+
+\bibitem{ConcurrentHylandOngGames}
+Simon Castellan, Pierre Clairambault, and Glynn Winskel.
+\newblock {Concurrent Hyland-Ong games}.
+\newblock working paper or preprint, September 2016.
+\newblock URL: \url{https://hal.archives-ouvertes.fr/hal-01068769}.
+
+\bibitem{curienFullAbstraction}
+Pierre-Louis Curien.
+\newblock Definability and full abstraction.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 172:301 --
+  310, 2007.
+\newblock Computation, Meaning, and Logic: Articles dedicated to Gordon
+  Plotkin.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S1571066107000837},
+  \href {http://dx.doi.org/https://doi.org/10.1016/j.entcs.2007.02.011}
+  {\path{doi:https://doi.org/10.1016/j.entcs.2007.02.011}}.
+
+\bibitem{DijkstraBook}
+Edsger~Wybe Dijkstra.
+\newblock {\em A Discipline of Programming}.
+\newblock Prentice Hall PTR, Upper Saddle River, NJ, USA, 1st edition, 1997.
+
+\bibitem{mcCHFiniteND}
+R.~Harmer and G.~McCusker.
+\newblock A fully abstract game semantics for finite nondeterminism.
+\newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
+  (Cat. No. PR00158)}, pages 422--430, 1999.
+\newblock \href {http://dx.doi.org/10.1109/LICS.1999.782637}
+  {\path{doi:10.1109/LICS.1999.782637}}.
+
+\bibitem{RusssThesis}
+Russell~S. Harmer.
+\newblock Games and full abstraction for nondeterministic languages.
+\newblock Technical report, 1999.
+
+\bibitem{hoPcf}
+J.M.E. Hyland and C.-H.L. Ong.
+\newblock On full abstraction for {PCF}: {I}, {II}, and {III}.
+\newblock {\em Information and Computation}, 163(2):285 -- 408, 2000.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0890540100929171},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1006/inco.2000.2917}
+  {\path{doi:http://dx.doi.org/10.1006/inco.2000.2917}}.
+
+\bibitem{LairdOrdinalGames}
+J.~Laird.
+\newblock Sequential algorithms for unbounded nondeterminism.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 319:271 --
+  287, 2015.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S1571066115000845},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.entcs.2015.12.017}
+  {\path{doi:http://dx.doi.org/10.1016/j.entcs.2015.12.017}}.
+
+\bibitem{FunctionalProgramsAsCoroutines}
+James Laird.
+\newblock Higher-order programs as coroutines.
+\newblock to appear, 2016.
+
+\bibitem{LevyGsInfinite}
+Paul~Blain Levy.
+\newblock Infinite trace equivalence.
+\newblock {\em Annals of Pure and Applied Logic}, 151(2):170 -- 198, 2008.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0168007207000887},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.apal.2007.10.007}
+  {\path{doi:http://dx.doi.org/10.1016/j.apal.2007.10.007}}.
+
+\bibitem{MurawskiIntrinsic}
+A.~S. Murawski.
+\newblock Reachability games and game semantics: Comparing nondeterministic
+  programs.
+\newblock In {\em 23rd Annual IEEE Symposium on Logic in Computer Science (LICS
+  2008)(LICS)}, volume~00, pages 353--363, 06 2008.
+\newblock URL: \url{doi.ieeecomputersociety.org/10.1109/LICS.2008.24}, \href
+  {http://dx.doi.org/10.1109/LICS.2008.24} {\path{doi:10.1109/LICS.2008.24}}.
+
+\bibitem{MurawskiUniversality}
+Andrzej~S. Murawski and Nikos Tzevelekos.
+\newblock Block structure vs scope extrusion: between innocence and
+  omniscience.
+\newblock {\em Logical Methods in Computer Science}, 12(3), 2016.
+\newblock URL: \url{https://doi.org/10.2168/LMCS-12(3:3)2016}, \href
+  {http://dx.doi.org/10.2168/LMCS-12(3:3)2016}
+  {\path{doi:10.2168/LMCS-12(3:3)2016}}.
+
+\bibitem{RoscoeCspInfinite}
+A.~W. Roscoe.
+\newblock Unbounded non-determinism in {CSP}.
+\newblock {\em Journal of Logic and Computation}, 3(2):131, 1993.
+\newblock URL: \url{http://dx.doi.org/10.1093/logcom/3.2.131}, \href
+  {http://dx.doi.org/10.1093/logcom/3.2.131}
+  {\path{doi:10.1093/logcom/3.2.131}}.
+
+\bibitem{TsukadaSheaves}
+Takeshi Tsukada and C.~H.~Luke Ong.
+\newblock Nondeterminism in game semantics via sheaves.
+\newblock In {\em Proceedings of the 2015 30th Annual ACM/IEEE Symposium on
+  Logic in Computer Science (LICS)}, LICS '15, pages 220--231, Washington, DC,
+  USA, 2015. IEEE Computer Society.
+\newblock URL: \url{http://dx.doi.org/10.1109/LICS.2015.30}, \href
+  {http://dx.doi.org/10.1109/LICS.2015.30} {\path{doi:10.1109/LICS.2015.30}}.
+
+\bibitem{StrategiesAsProfunctors}
+Glynn Winskel.
+\newblock Strategies as profunctors.
+\newblock In Frank Pfenning, editor, {\em Foundations of Software Science and
+  Computation Structures}, pages 418--433, Berlin, Heidelberg, 2013. Springer
+  Berlin Heidelberg.
+
+\end{thebibliography}

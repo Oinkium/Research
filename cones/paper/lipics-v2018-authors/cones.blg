@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Arch Linux)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: cones.aux
+The style file: plainurl.bst
+Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=8) to 20 items from 10.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Database file #1: cones.bib
+Warning--empty institution in RusssThesis
+You've used 18 entries,
+            2849 wiz_defined-function locations,
+            770 strings with 8932 characters,
+and the built_in function-call counts, 8617 in all, are:
+= -- 965
+> -- 229
+< -- 6
++ -- 82
+- -- 61
+* -- 492
+:= -- 1208
+add.period$ -- 71
+call.type$ -- 18
+change.case$ -- 84
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 269
+empty$ -- 837
+format.name$ -- 61
+if$ -- 2270
+int.to.chr$ -- 0
+int.to.str$ -- 18
+missing$ -- 16
+newline$ -- 107
+num.names$ -- 40
+pop$ -- 140
+preamble$ -- 1
+purify$ -- 65
+quote$ -- 0
+skip$ -- 646
+stack$ -- 0
+substring$ -- 426
+swap$ -- 85
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 70
+warning$ -- 1
+while$ -- 60
+width$ -- 20
+write$ -- 244
+(There was 1 warning)
