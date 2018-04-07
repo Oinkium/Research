@@ -170,7 +170,7 @@ For semanticists, this lack of continuity is a problem in itself, since the stan
 
 We shall explore some of the problems relating to unbounded nondeterminism, and how they may be solved, using game semantics to give a fully abstract model of a simple stateful language -- Idealized Algol -- enhanced with a countable nondeterminism primitive.  
 We begin with a pair of examples that will illustrate the lack of continuity, from a syntactic point of view.  
-Let $\nat$ be our natural number type and consider a sequence of functions ${<}n\from\nat\to\nat$, where ${<}m\;k$ evaluates to $0$ if $k<n$ and diverges otherwise.
+Let $\nat$ be our natural number type and consider a sequence of functions ${<}n\from\nat\to\nat$, where ${<}n\;k$ evaluates to $0$ if $k<n$ and diverges otherwise.
 In that case, the least upper bound of the ${<}n$ is the function that combines all their convergent behaviours; i.e., the function $\lambda k.k;\0$ that evaluates its input and then returns $0$.
 If $\wn\from\nat$ is an unbounded nondeterminism machine, then function application to $\wn$ is not continuous; indeed, ${<}m\;\wn$ always has the possibility of divergence -- since $\wn$ may evaluate to $m+1$, say.  
 But $(\lambda k.k;\0)\;\wn$ always converges to $0$.
@@ -232,7 +232,7 @@ Meanwhile, the terms are those given in \cite{SamsonGuyIAPassive}, together with
   M & \Coloneqq & x \mid \lambda x . M \mid M\;M \mid \Y_T \mid \\
   && \n \mid \skipp \mid \suc \mid \pred \mid \\
   && \IfO \mid \blank;\blank \mid \blank \coloneqq \blank \mid \\
-  && \deref \mid \neww_T \mid \mkvar \mid \wn\,.
+  && \deref\footnote{That is, variable \deref{}ccess.} \mid \neww_T \mid \mkvar \mid \wn\,.
 \end{IEEEeqnarray*}
 
 The typing rule for $\wn$ is $\Gamma \vdash \wn\from\nat$.
@@ -270,7 +270,7 @@ We shall use the letter $v$ to range over variables of type $\Var$.
   \end{mathpar}
   \caption{Small-step operational semantics for Idealized Algol with countable nondeterminism}
   \label{fig:ia-os}
-\end{figure*}/
+\end{figure*}
 
 We define a small-step operational semantics for the language; this presentation is equivalent to the big-step semantics given in \cite{mcCHFiniteND}, except with a different rule for the countable rather than finite nondeterminism.
 
@@ -355,7 +355,7 @@ As an example, we give the definition of $A\implies B$:
 \begin{IEEEeqnarray*}{RCL}
   M_{A\implies B} & \quad=\quad & M_A + M_B\,. \\
   \lambda_{A\implies B} & = & [\neg\circ\lambda_A,\lambda_B]\,.\\
-  *\ts_{A\implies B} n & \Leftrightarrow & * \ts_B m\,.\\[1.0ex]
+  *\ts_{A\implies B} n & \Leftrightarrow & * \ts_B n\,.\\[1.0ex]
   m \ts_{A\implies B} n & \Leftrightarrow & \mbox{\pbox\textwidth{$m \ts_A n$ or $m\ts_B n$ \\ or (for $m\neq *$) $ * \ts_B m$ and $* \ts_A n$\,.}} \\[1.0ex]
   P_{A\implies B} & = & \{s\in L_{A\implies B}\suchthat s\vert_A\in P_A\text{ and }s\vert_B\in P_B\}\,.
 \end{IEEEeqnarray*}
