@@ -1,0 +1,39 @@
+-- Review 1 --
+
+Thank you for this review.  As you point out, the idea of using infinite traces to model unbounded nondeterminism has a long history, and has been encountered in a number of different contexts.  However, I cannot agree that the contribution of our paper is nothing more than a recasting of earlier work with LTS models in the context of game semantics.  Necessarily, our model covers much of the same ground that has been covered in earlier studies of unbounded nondeterminism, going back to Roscoe's work on infinite trace CSP (which we have cited), but we have never claimed this to be an original contribution, and we have been careful to cite Levy's work on LTSs and games as a primary source for this material.  
+
+The main contribution lies in our methods for dealing with the lack of continuity in the model, which are different from those employed in CSP and earlier denotational models.  The transfinite induction method used by Roscoe is not suitable in our case, because we do not interpret our operational semantics directly in the model, but use a compositional, algebraic approach to relate the operational to the denotational semantics.  The second author has used transfinite induction to prove a similar result [J. Laird, 2015], but this argument relies on a one-sided continuity property that fails in this case.  The technique in this submission, which uses stateful programs to simulate individual traces within the non-continuous part of the language, is new.
+
+The second review captures the situation well: though our presentation uses techniques that are common in the game semantics community, such as the Harmer-McCusker-style deterministic factorization result, we certainly do not claim novelty for these ideas, and the main technical contribution of the paper is separate both from the earlier game semantics of finite nondeterminism and from the semantics of unbounded nondeterminism using models based on applicative bisimulations.
+
+We chose to illustrate our material with well-known examples demonstrating the difficulty of the problem, which might have contributed to the impression that the only contribution of the paper was to cover well-trodden ground.  I concede that we should perhaps have cited some more of the LTS literature on top of the work on CSP and game semantics in order to make its contribution clear.
+
+We would be interested to study the relationship between game semantic models of nondeterminism and work in LTSs, but we do not feel that the correspondence is yet well enough understood to say that the two strands cover precisely the same ground.  In particular, our semantics is compositional, unlike the model based on LTSs.  This makes it more difficult to navigate the technical issues relating to non-continuity, but also means that our semantics can be extended to give models of non-functional languages that are difficult to study using LTSs and other similar models, and also allows us to study nondeterminism using techniques based on both the algebraic and the combinatorial structure of the model.
+
+-- Review 3 --
+
+Thank you for this detailed review, and for identifying some technical flaws that we missed.
+
+* Definition of recursive strategies:
+
+This is indeed the intended definition of a recursive strategy (in particular, it is required in order for the remark at line 778 to be true).  You are right that this should be spelled out in the paper.
+
+* Theorem 4.5:
+
+Thank you for this clarification.  You are correct that the definition of the intrinsic quotient on strategies needs to be changed so that only recursive 'test morphisms' are allowed.  However, although this is an important adjustment, I am not sure I agree that this makes the result significantly less appealing.  As you are aware, statements of the form 'two programs are indistinguishable by <lang>-contexts if and only if their denotations are indistinguishable by the interpretations of <lang>-contexts' are widespread in full abstraction proofs that use an intrinisic quotient; the only thing we lose here is that we cannot put the word 'compact' in front of 'interpretations', but this is unavoidable.  Indeed, by modifying the \varphi in your example so that the infinite path *is* recursive (but, for example, is very high up in some fast-growing hierarchy), we see that we are unable to impose any boundedness condition on the interpretations of contexts without losing the correspondence with may-must equivalence.
+
+* Tsukada-Ong model:
+
+Your point about the Tsukada-Ong model is technically correct: the model given in that paper is not sound for must-equivalence, and so certainly cannot satisfy the conditions in Definition 5.3 or the conclusion of Theorem 5.4.  However, this is a property of the particular model they choose in order to illustrate their techniques, and is not an essential limitation of those techniques, as they point out in the section titled 'Further considerations'.  Indeed, their techniques are about finding an innocent model of nondeterminism, and are independent of must-equivalence.  It would be worth being clearer that we need to adapt the Tsukada-Ong model using the techniques we have illustrated in the first four sections before it can satisfy the properties in Definition 5.3.  I do not feel, however, that this significantly undermines this section: the conditional result we have shown is still true; it is the motivating example that needs to be adjusted.
+
+I do not agree that the condition in Definition 5.3 is as hard to prove as the result of Theorem 5.4.  In particular, Definition 5.3 does not mention the language at all, so can be proved using only properties of the model (of course, how difficult this is will depend on what the model is).  
+
+As an example, take C to be the (Cartesian closed) category of games and (unconstrained) nondeterministic strategies.  Then there is a natural inclusion functor J : G^!_{inn} -> C and a morphism T_\nat : 1 -> J \nat in C given by the top strategy on the game interpretation of the \nat type.  It is then easy to verify that the conditions in Definition 5.3 hold, since the game interpretation of \nat -> \nat is fairly simple.  Of course, this may be more difficult in a semantics that is less explicitly related to games, but, as the name suggests, this result is intended to be used for models that can sensibly be called 'game semantics'.
+
+The gap between Definition 5.3 and Theorem 5.4 is precisely Lemma 5.1, which is the real content of our adequacy result, where we overcome the difficulties relating to the lack of continuity.  
+
+We accidentally omitted the converse from Theorem 5.4, which is also true, and which immediately implies Inequational Soundness for the given model.  The given direction can be used to deduce full abstraction as in Theorem 4.5, but only if we have access to a universality result for the model.
+
+* Universality:
+
+Thank you for this small point.  You gave a good example of a strategy whose 'definition' in PCF can in fact be distinguished from it using Idealized Algol terms, which shows that we cannot immediately derive Proposition 3.6 from the Hyland-Ong result, and should instead reprove it in full, following the Hyland-Ong proof.  Murawski and Tzevelekos seem to claim that every recursive innocent strategy is the defnotation of some term of call-by-value PCF (without quotient), which suggests that this result should be true for Idealized Algol by using the stateful structure to mimic the appropriate call-by-value constructs, as you did in your example.
