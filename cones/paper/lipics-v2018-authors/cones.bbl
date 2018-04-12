@@ -117,6 +117,11 @@ Andrzej~S. Murawski and Nikos Tzevelekos.
   {http://dx.doi.org/10.2168/LMCS-12(3:3)2016}
   {\path{doi:10.2168/LMCS-12(3:3)2016}}.
 
+\bibitem{PitchersThesis}
+Corin Pitcher.
+\newblock Functional programming and erratic non-determinism.
+\newblock 2001.
+
 \bibitem{RoscoeCspInfinite}
 A.~W. Roscoe.
 \newblock Unbounded non-determinism in {CSP}.

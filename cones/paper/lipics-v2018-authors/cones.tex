@@ -148,7 +148,7 @@ I am grateful to Martin Hyland for our conversation that helped me to develop so
   The unbounded nondeterminism gives rise to further problems, which can be formalized as a lack of continuity in the language. 
   In order to prove adequacy for our model (which usually requires continuity), we develop a new technique in which we simulate the nondeterminism using a deterministic stateful construction, and then use combinatorial techniques to transfer the result to the nondeterministic language. 
   Lastly, we prove full abstraction for the model; because of the lack of continuity, we cannot deduce this from definability of compact elements in the usual way, and we have to use a stronger universality result instead. 
-  We discuss how our techniques could be applied to yield proofs of adequacy for models of nondeterministic PCF, such as those given by Tsukada and Ong.
+  We discuss how our techniques yield proofs of adequacy for models of nondeterministic PCF, such as those given by Tsukada and Ong.
 \end{abstract}
 
 \section{Introduction}
@@ -166,16 +166,16 @@ What we have just shown is that if we want to solve the problem of building a fa
 
 This is an important observation to make about concurrent programming, because the task of implementing unbounded nondeterminism is difficult -- indeed, considerably more so than that of implementing bounded nondeterminism.  
 Dijkstra argues in \cite[Ch. 9]{DijkstraBook} that it is impossible to implement unbounded nondeterminism, showing that the natural constructs from which we construct imperative programs satisfy a \emph{continuity} property that unbounded nondeterminism lacks.  
-For semanticists, this lack of continuity is a problem in itself, since the standard proofs of computational adequacy and full abstraction typically make use, implicitly or otherwise, of the fact that composition within the model is continuous with respect to some ordering.
+This is a problem in itself for semanticists, for whom continuity is often a key ingredient in proofs of computational adequacy and full abstraction.
 
-We shall explore some of the problems relating to unbounded nondeterminism, and how they may be solved, using game semantics to give a fully abstract model of a simple stateful language -- Idealized Algol -- enhanced with a countable nondeterminism primitive.  
+We shall explore some of these problems and how they may be solved, using game semantics to give a fully abstract model of a simple stateful language -- Idealized Algol -- enhanced with a countable nondeterminism primitive.  
 We begin with a pair of examples that will illustrate the lack of continuity, from a syntactic point of view.  
 Let $\nat$ be our natural number type and consider a sequence of functions ${<}n\from\nat\to\nat$, where ${<}n\;k$ evaluates to $0$ if $k<n$ and diverges otherwise.
 In that case, the least upper bound of the ${<}n$ is the function that combines all their convergent behaviours; i.e., the function $\lambda k.k;\0$ that evaluates its input and then returns $0$.
-If $\wn\from\nat$ is an unbounded nondeterminism machine, then function application to $\wn$ is not continuous; indeed, ${<}m\;\wn$ always has the possibility of divergence -- since $\wn$ may evaluate to $m+1$, say.  
+If $\wn\from\nat$ is an unbounded nondeterminism machine, then function application to $\wn$ is not continuous; indeed, ${<}m\;\wn$ may diverge -- since $\wn$ may evaluate to $m+1$, say.  
 But $(\lambda k.k;\0)\;\wn$ always converges to $0$.
 
-Lack of continuity is a problem because fixed-point combinators are typically built using least upper bounds, and proving adequacy of the model typically requires that these least upper bounds be preserved.  
+Lack of continuity is a problem in denotational semantics because fixed-point combinators are typically built using least upper bounds, and proving adequacy of the model typically requires that these least upper bounds be preserved.  
 In a non-continuous situation, we will need to come up with new techniques in order to prove adequacy without using continuity.
 
 A closely connected problem with unbounded nondeterminism is that it leads to terms that may be distinguished only by their \emph{infinitary} behaviour.  
@@ -188,11 +188,11 @@ Our game semantics model bears closest resemblance to that of Harmer and McCuske
 Indeed, our work can be viewed as an extension of the Harmer-McCusker model with the extra information on infinite plays that we need to model countable nondeterminism.  
 
 The idea of adding infinite traces into strategies in order to model unbounded nondeterminism goes back to Roscoe's work on CSP \cite{RoscoeCspInfinite}, and is very similar to work by Levy \cite{LevyGsInfinite} on game semantics for a higher order language.  
-In particular, we will need something similar to Levy's \emph{liveliness} condition on strategies, which is a way of saying that a strategy is a union of deterministic strategies -- something that is not automatic when we start tracking infinite plays.  
+In particular, we will need something similar to Levy's notion of a \emph{lively} strategy -- one that is a union of deterministic strategies -- a property that does not automatically hold when we start tracking infinite plays.  
 
 An alternative approach to the game semantics of nondeterminism can be found in Tsukada and Ong's sheaf model of nondeterministic PCF \cite{TsukadaSheaves} and in the more general work on concurrency by Winskel et al. (e.g., see \cite{StrategiesAsProfunctors} and \cite{ConcurrentHylandOngGames}), in which there is a very natural interpretation of nondeterminism.  
 Although we are able to give a model of Idealized Algol with countable nondeterminism in the more traditional Harmer-McCusker style, it seems necessary to introduce this extra machinery in order to model stateless languages such as PCF (and certainly to model concurrency).  
-In the last section of this paper, we will show how our methods can be applied under very general circumstances, and in particular to these models of nondeterministic stateless languages.
+In the last section of this paper, we will show how our methods can be applied under very general circumstances, and in particular to some of these models of nondeterministic stateless languages.
 
 Related work by Laird \cite{LairdOrdinalGames,FunctionalProgramsAsCoroutines} discusses a semantics for PCF with unbounded nondeterminism based on sequential algorithms and explores the role played by continuity; however, this semantics is not fully abstract.  
 Laird's work is interesting because it shows that we can obtain a traditional adequacy proof for a semantics with one-sided continuity: composition is continuous with respect to functions, but not with respect to arguments.  
@@ -204,10 +204,13 @@ We cannot use these techniques here, however, because our composition is not con
 \subsection{Contributions}
 
 The main concepts of game semantics and the steps we take to establish full abstraction are well-established, with a few exceptions.  
-The idea of including infinitary information in strategies is not new, but this particular presentation, though closely related to that of \cite{LevyGsInfinite}, is the first example of using the technique to establish a full abstraction result for may and must testing.
+The idea of including infinitary information in strategies is not new, but this particular presentation, though closely related to that of \cite{LevyGsInfinite}, is the first example of using the technique to establish a compositional full abstraction result for may and must testing.
+
+Levy's work in \cite{LevyGsInfinite} is part of a tradition of techniques used to handle unbounded nondeterminism operationally, normally using Labelled Transition Systems (see, for example, \cite{PitchersThesis}).  
+The contribution of this work is to apply the basic idea of including infinitary information to a compositional setting, where the semantics is built using the algebraic structure of higher-order programs.
 
 There are two points in the traditional Full Abstraction proof that depend on composition being continuous, and we have had to come up with ways of getting round them.  
-The easier of the two is that continuity is necessary for the usual proof that we can derive Full Abstraction from definability of compact strategies; in order to get around this, we have had to appeal instead to the stronger \emph{universality} result of \cite{hoPcf}, that says that every \emph{recursive} strategy is definable.  
+Firstly, in the absence of continuity, it no longer suffices to show that we can define every \emph{compact} strategy; instead, we need a \emph{universality} result allowing us to define certain infinite strategies -- specifically, the \emph{recursive} ones.
 
 For the proof of adequacy, we have had to come up with a new technique, which can be thought of as a kind of synthesis between the two usual methods of proving adequacy -- one involving logical relations and the other using more hands-on operational techniques.  
 We do this by separating out the deterministic, continuous part of the strategy from the nondeterministic, discontinuous part.  
@@ -216,7 +219,7 @@ This allows us to appeal to the adequacy result for deterministic Idealized Algo
 We then rely on more combinatorial techniques in order to factor the nondeterminism back in.
 
 This new technique is actually very generally applicable.  
-In the last section of the paper, we show that it may be used to prove adequacy for models of nondeterministic PCF under very mild assumptions.  
+We shall show that it may be used to prove adequacy for models of nondeterministic PCF under very mild assumptions.  
 The Tsukada-Ong model, for example, satisfies these assumptions, allowing us to obtain an adequacy result for PCF with countable nondeterminism.
 
 \section{Idealized Algol with Countable Nondeterminism}
@@ -236,7 +239,7 @@ Meanwhile, the terms are those given in \cite{SamsonGuyIAPassive}, together with
 \end{IEEEeqnarray*}
 
 The typing rule for $\wn$ is $\Gamma \vdash \wn\from\nat$.
-We shall use the letter $v$ to range over variables of type $\Var$.  
+We shall use $v$ to range over variables of type $\Var$.  
 
 \begin{figure*}
   \begin{mathpar}
@@ -888,14 +891,13 @@ Then $\sigma=\top_\bN;\Det(\sigma)=\deno{\wn};\deno M = \deno{M\;\wn}$.
 
 We conclude by making a few remarks about the situation when our base deterministic language is PCF rather than Idealized Algol.  
 
-The principal difficulties in modelling nondeterministic stateless languages were made by Tsukada and Ong in \cite{TsukadaSheaves}, where they discovered how to define an innocent nondeterministic strategy by retaining `branching time information' in strategies.  
+The principal difficulties in modelling nondeterministic stateless languages were overcome by Tsukada and Ong in \cite{TsukadaSheaves}, where they outlined how to define an innocent nondeterministic strategy by retaining `branching time information' in strategies.  
 An additional benefit of the retention of branching time information is that we no longer need to keep track of infinite plays in order to model unbounded nondeterminism.  
 The model given in \cite{TsukadaSheaves} is not sound for must-equivalence, but the authors make the claim that it their model may be easily modified to yield a model that \emph{is} sound for this type of equivalence, using the same techniques from \cite{mcCHFiniteND} that we have used.  
 
-However, since there is no such model in the literature at the moment, we shall have to be a bit more general in examining how our techniques can be used to model nondeterministic PCF.  
-Our main new contribution is the proof of adequacy, and our methods can be applied to PCF as well.  
+We could use our methods to help establish this claim in the case of unbounded nondeterminism; specifically, our proof of adequacy will extend to such a model.  
 Indeed, Corollary \ref{cor:adequacy} can easily be modified to apply to PCF, even though we have used Idealized Algol terms in the proof.  
-Corollary \ref{cor:adequacy} reduces the proof of adequacy to a combinatorial check on morphisms from $\bN\to\bC$ on strategies in the well-known category $\G_{vis}^\oc$.
+Corollary \ref{cor:adequacy} then reduces the proof of adequacy to a combinatorial check on morphisms from $\bN\to\bC$ on strategies in the well-known category $\G_{vis}^\oc$, together with an examination of what happens to those strategies when we compose them with $\top_\bN$.
 
 %%
 %% Bibliography

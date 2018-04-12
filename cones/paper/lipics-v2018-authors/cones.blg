@@ -8,45 +8,46 @@ Reallocated glb_str_end (elt_size=8) to 20 items from 10.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: cones.bib
 Warning--empty institution in RusssThesis
-You've used 18 entries,
+Warning--empty booktitle in PitchersThesis
+You've used 19 entries,
             2849 wiz_defined-function locations,
-            770 strings with 8932 characters,
-and the built_in function-call counts, 8617 in all, are:
-= -- 965
-> -- 229
+            775 strings with 9027 characters,
+and the built_in function-call counts, 8928 in all, are:
+= -- 992
+> -- 237
 < -- 6
-+ -- 82
-- -- 61
-* -- 492
-:= -- 1208
-add.period$ -- 71
-call.type$ -- 18
-change.case$ -- 84
++ -- 85
+- -- 63
+* -- 500
+:= -- 1252
+add.period$ -- 74
+call.type$ -- 19
+change.case$ -- 88
 chr.to.int$ -- 0
-cite$ -- 19
-duplicate$ -- 269
-empty$ -- 837
-format.name$ -- 61
-if$ -- 2270
+cite$ -- 21
+duplicate$ -- 282
+empty$ -- 875
+format.name$ -- 63
+if$ -- 2354
 int.to.chr$ -- 0
-int.to.str$ -- 18
-missing$ -- 16
-newline$ -- 107
-num.names$ -- 40
-pop$ -- 140
+int.to.str$ -- 19
+missing$ -- 17
+newline$ -- 112
+num.names$ -- 42
+pop$ -- 153
 preamble$ -- 1
-purify$ -- 65
+purify$ -- 68
 quote$ -- 0
-skip$ -- 646
+skip$ -- 670
 stack$ -- 0
-substring$ -- 426
-swap$ -- 85
+substring$ -- 431
+swap$ -- 86
 text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 70
-warning$ -- 1
-while$ -- 60
-width$ -- 20
-write$ -- 244
-(There was 1 warning)
+type$ -- 74
+warning$ -- 2
+while$ -- 62
+width$ -- 21
+write$ -- 253
+(There were 2 warnings)

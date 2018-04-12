@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2018.3.15)  7 APR 2018 23:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2018.4.11)  12 APR 2018 17:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1296,21 +1296,18 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2]
-[3]
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 233
+ [2] [3]
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 236
 .
- (/usr/share/texmf-dist/tex/latex/lm/ot1lmss.fd
+
+(/usr/share/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 235.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 238.
 
 
 (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
@@ -1324,14 +1321,11 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/9'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 261.
- [4] [5]
-Underfull \vbox (badness 1097) has occurred while \output is active []
+(Font)              <9> on input line 264.
+ [4] [5] [6] [7]
+LaTeX Font Info:    Try loading font information for U+euf on input line 467.
 
- [6]
-[7]
-LaTeX Font Info:    Try loading font information for U+euf on input line 464.
- (/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
+(/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 )
 (/usr/share/texmf-dist/tex/latex/microtype/mt-euf.cfg
@@ -1370,11 +1364,11 @@ n/9.5 , []$\T1/lmtt/m/n/9.5 doi : http : / / dx . doi . org / 10 . 1016 / j .
 [17]) 
 AED: lastpage setting LastPage
 [18]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 909.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 909.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 911.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 911.
  (./cones.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 909.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 909.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 911.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 911.
 Package rerunfilecheck Info: File `cones.out' has not changed.
 (rerunfilecheck)             Checksum: 88429CCC75E257D0A8C1ABBB8F1401F5;1667.
 
@@ -1382,16 +1376,16 @@ Package rerunfilecheck Info: File `cones.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.75pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 909.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 911.
  ) 
 Here is how much of TeX's memory you used:
- 14947 strings out of 492982
- 225882 string characters out of 6138579
- 362276 words of memory out of 5000000
- 17868 multiletter control sequences out of 15000+600000
+ 14949 strings out of 492982
+ 225919 string characters out of 6138579
+ 358313 words of memory out of 5000000
+ 17869 multiletter control sequences out of 15000+600000
  236476 words of font info for 283 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,19n,40p,417b,512s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,19n,40p,417b,508s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf-dist/fo
 nts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.
 enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf-d
@@ -1422,10 +1416,10 @@ mf-dist/fonts/type1/public/amsfonts/symbols/msbm5.pfb></usr/share/texmf-dist/fo
 nts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texmf-dist/fonts/type1/
 public/stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd
 /stmary7.pfb>
-Output written on cones.pdf (18 pages, 579114 bytes).
+Output written on cones.pdf (18 pages, 579637 bytes).
 PDF statistics:
  542 PDF objects out of 1000 (max. 8388607)
  475 compressed objects within 5 object streams
- 80 named destinations out of 1000 (max. 500000)
+ 81 named destinations out of 1000 (max. 500000)
  66262 words of extra memory for PDF output out of 74296 (max. 10000000)
 
