@@ -371,7 +371,7 @@ $
 
 To fix this problem, we follow \cite{mcCHFiniteND} by modelling a strategy as a pair $(T_\sigma,D_\sigma)$, where $T_\sigma$ is a nondeterministic strategy in the usual sense and $D_\sigma$ is the set of those $O$-positions where there is a possibility of divergence.  
 
-Tracking divergences explicitly in this way requires some care when we compose strategies.
+We need to take some care when we compose strategies using `parallel composition plus hiding'.
 Specifically, we need to be able to add new divergences into strategies when they arise through `infinite chattering' or \emph{livelock}.  
 For example, the denotation of the term
 \[
