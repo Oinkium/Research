@@ -7,47 +7,52 @@ Reallocated global_strs (elt_size=20001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: cones.bib
+I was expecting a `,' or a `}'---line 659 of file cones.bib
+ :   
+ :   howpublished={Lecture slides, GaLoP}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
 Warning--empty institution in RusssThesis
 Warning--empty booktitle in PitchersThesis
-You've used 19 entries,
+You've used 22 entries,
             2849 wiz_defined-function locations,
-            775 strings with 9027 characters,
-and the built_in function-call counts, 8928 in all, are:
-= -- 992
-> -- 237
-< -- 6
-+ -- 85
-- -- 63
-* -- 500
-:= -- 1252
-add.period$ -- 74
-call.type$ -- 19
-change.case$ -- 88
+            787 strings with 9366 characters,
+and the built_in function-call counts, 10306 in all, are:
+= -- 1146
+> -- 261
+< -- 8
++ -- 94
+- -- 69
+* -- 544
+:= -- 1429
+add.period$ -- 85
+call.type$ -- 22
+change.case$ -- 100
 chr.to.int$ -- 0
-cite$ -- 21
-duplicate$ -- 282
-empty$ -- 875
-format.name$ -- 63
-if$ -- 2354
+cite$ -- 24
+duplicate$ -- 336
+empty$ -- 1023
+format.name$ -- 69
+if$ -- 2736
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 17
-newline$ -- 112
-num.names$ -- 42
-pop$ -- 153
+int.to.str$ -- 22
+missing$ -- 19
+newline$ -- 127
+num.names$ -- 48
+pop$ -- 187
 preamble$ -- 1
-purify$ -- 68
+purify$ -- 77
 quote$ -- 0
-skip$ -- 670
+skip$ -- 779
 stack$ -- 0
-substring$ -- 431
-swap$ -- 86
-text.length$ -- 6
+substring$ -- 512
+swap$ -- 108
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 74
+type$ -- 86
 warning$ -- 2
-while$ -- 62
-width$ -- 21
-write$ -- 253
-(There were 2 warnings)
+while$ -- 73
+width$ -- 24
+write$ -- 287
+(There was 1 error message)

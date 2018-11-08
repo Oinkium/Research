@@ -1,0 +1,152 @@
+\documentclass{article}
+
+\usepackage{skull}
+
+\input{../common/preamble}
+
+\newcommand{\ocajm}{\oc_{AJM}}
+\newcommand{\ocseq}{\oc_{seq}}
+
+\begin{document}
+
+\section{Games and strategies}
+
+\subsection{Games}
+
+According to \cite{ajmPcf}, a \emph{game} is given by a tuple $(M_A,\lambda_A,P_A,\approx_A)$ where
+
+\begin{itemize}
+  \item $M_A$is a set of \emph{moves}.
+  \item $\lambda_A\from M_A\to \OP \times \QA$ designates each move as either a $P$-move or and $O$-move, and as either a \emph{question} or an \emph{answer}.
+  \item $P_A$ is a non-empty prefix-closed set of finite sequences $s\in M_A^*$ such that each non-empty sequence in $P_A$ starts with an $O$-move and thereafter alternates between $O$-moves and $P$-moves.
+  \item $\approx_A$ is an equivalence relation on $P_A$ satisfying the following rules.
+    \begin{itemize}
+      \item If $s\approx_A t$, then $s$ and $t$ have the same length.
+      \item If $s\approx_A t$ and $s'\prefix s$, $t'\prefix t$ have the same length, then $s'\prefix t'$.
+      \item If $s\approx_A t$ and $s\prefix s'$, where $s'\in P_A$, then there exists some $t'\in P_A$ such that $t\prefix t'$ and $s'\approx_A t'$.
+    \end{itemize}
+\end{itemize}
+
+Of these, the only thing that looks slightly odd is the equivalence relation $\approx_A$.  
+We will see that it is in fact essential to the model of PCF found in \cite{ajmPcf}.
+
+\subsection{Strategies and multiplicatives}
+
+We shall skip over the definitions of the multiplicative connectives and the composition of strategies; the definitions are all found in \cite{ajmPcf}.
+
+A \emph{strategy} for a game $A$ is defined to be a non-empty prefix-closed set of $P$-positions in $P_A$ subject to the \emph{determinism} condition: if $sab,sac\in \sigma$, then $b=c$.
+
+We define a relation $\approx_A$ on the set of strategies for a game $A$: we say that $\sigma\approx_A\tau$ if whenever $s\in\sigma$, $t\in\tau$ and $s\approx_At$, and whenever $s\prefix s'$, where $s'\in \sigma$, there exists $t'\in \tau$ such that $t\prefix t'$ and $s'\approx_At'$.
+
+We will require in addition that our strategies $\sigma$ satisfy $\sigma\approx_A\sigma$; so if $s,t\in\sigma$ and $s\approx_At$, then for every $s'$ with $s\prefix s'$ there exists $t'\in\sigma$ such that $s'\approx_A t'$ and $t\prefix t'$. This makes $\approx_A$ a reflexive relation on the set of strategies; it is easy to see that it is also symmetric and transitive. We will henceforth consider strategies as being `up to' this equivalence relation.
+
+The condition that $\sigma\approx_A\sigma$ is in fact key to the definability result for PCF.
+
+We say that a strategy $\sigma$ is \emph{well-bracketed} if the sequence of questions and answers in any play of $\sigma$ is a well-bracketed sequence.  
+
+We say that $\sigma$ is \emph{history free} if whenever $sab, tac\in\sigma$, we have $b=c$.  
+In other words, the choice that we make in $\sigma$ depends only on the last move played, and not on anything that has happened previously (in the `history') of the play.
+
+The properties of well-bracketedness and history-freeness are both preserved by composition of strategies.
+
+\subsection{Exponentials}
+
+The games representing basic data types (e.g., $\nat$, where the game has a single opening $O$-move $q$, that can be replied to by player $P$ with any natural number $n$) are \emph{discrete}; i.e., the equivalence relation $\approx_A$ is the equality relation.  
+Moreover, the multiplicative and additive connectives $\tensor$, $\implies$ and $\times$ preserve discreteness: they do not introduce any new equivalent-but-not-equal plays.
+
+Non-discrete equivalence relations are introduced by the exponential connective $\oc$.  
+Given a game $A$, $\oc_A$ is defined as follows.
+
+\begin{itemize}
+  \item $M_{\oc A} = \bN \times M_A$.
+  \item $\lambda_{\oc A} = \lambda_A \circ \pr_2$.
+  \item $P_A$ is the set of all alternating sequences $s\in M_{\oc A}^*$ such that $s\vert_i$ (i.e., $(a\vert (i,a)\in s)$) is contained in $P_A$.
+\end{itemize}
+
+All that remains is to define the equivalence relation $\approx_{\oc A}$.  
+First of all, we ought to take account of the equivalence relation on $A$ itself: we say that $s\sim_At$ if for all $i$ we have $s\vert_i\approx_A t\vert_i$.
+
+Given a function $\phi\from \bN \to \bN$ and $s\in P_{\oc A}$, we define $\phi_*s$ to be the sequence formed by replacing each move $(i,a)$ with $(\phi(i),a)$.
+
+We say that $s\approx_{\oc A}t$ if there exists some injection $\pi\from \bN\to\bN$ such that
+\[
+  \pi_*s\sim_At\,.
+  \]
+
+Any exponential requires coherence morphisms.  
+In this case, we need to define strategies on the following games.
+\begin{gather*}
+  \oc A \implies \oc A \tensor \oc A \\
+  \oc A \implies \oc \oc A \\
+  \oc A \implies A \\
+  \oc A \implies I \\
+\end{gather*}
+
+In the first case, the \emph{contraction}, we pick some injection $\bN + \bN \hookrightarrow \bN$. 
+Thus, each index on the right hand side corresponds to some index on the left in such a way that there is no overlap, and we can play by copycat.
+It is then easy to see that if we choose some different injection $\bN + \bN \hookrightarrow \bN$, then the two strategies we get will be equivalent, so we can drop any mention of the particular function we have used.
+
+Similarly, for the second morphism, the \emph{comultiplication}, we choose some injection $\bN \times \bN \hookrightarrow \bN$, and use it to play copycat between the two copies.
+
+For the third strategy, the \emph{dereliction}, we choose some $i\in \bN$ and copy moves $a$ on the right hand side to moves $(i,a)$ on the left.  
+Once again, the choice of $i$ does not change the equivaence class of this strategy.
+
+The \emph{weakening} strategy $\oc A \implies I$ is the empty strategy.
+
+We can see that these strategies obey the appropriate associativity and unitality laws, up to equivalence, and that they form a \emph{linear exponential comonoid}. 
+This allows us to form the co-Kleisli category of that comonad, giving us our model of PCF, in which the type $\nat$ corresponds to the game $\bN$ described earlier and the type $S\iimpl T$ corresponds to the game $\oc\deno{S}\implies \deno{T}$.
+
+Moreover, there is an adequate compositional translation from PCF terms $M\from T$ into history-free well-bracketed (equivalence classes of) strategies $\sigma=\deno{M}$ for $\deno{T}$
+
+\subsection{Definability}
+
+The most important result in the proof of full abstraction found in \cite{ajmPcf} is the following.
+
+\begin{theorem}
+  Given a PCF term $T$ and a compact history-free well-bracketed strategy $\sigma$ for $\deno{T}$, there exists some PCF term $M\from T$ such that $\sigma=\deno{M}$.
+\end{theorem}
+
+\subsection{The sequoidal exponential}
+
+There is an alternative version of the exponential, found in \cite{blassgames} and \cite{hyland1997games}.  
+This version is defined as follows.
+\begin{itemize}
+  \item $M_{\oc A} = \bN\times M_A$.
+  \item $\lambda_{\oc A} = \lambda_A \circ \pr_2$.
+  \item $P_{\oc A}$ is the set of all $s\in M_{\oc A}^*$ such that $s\vert_i\in P_A$ for all $i$ \textbf{and such that if $(i+1,a)$ occurs in $s$, then $(i,b)$ must occur earlier in the sequence than $s$}.  
+    
+    In other words, we have to play the indices in strict order: $(q,2)(a,2)(q,1)(a,1)$ would not be a valid play in $\oc A$, but $(q,1)(a,1)(q,2)(a,2)$ would be.  
+    This is in contrast to the AJM definition of the exponential, in which these would be two separate but equivalent legal plays in $\oc A$.
+  \item $s\approx_{\oc A}t$ if $s\vert_i\approx_A t\vert_i$ for all $i$ (i.e., we do not introduce any additional equivalent-but-not-equal plays).
+\end{itemize}
+
+This gives rise to an alternative denotation for PCF types, in which the equivalence relation on the game $\deno{T}$ is discrete for any type $T$.  
+This means that we can work in a category of games in which we don't have to mention the equivalence relation at all.  
+However, for the purposes of this work, and in order that we can use the definability results from \cite{ajmPcf}, we will work in the full AJM games category.
+
+To avoid confusion, we shall refer to this as the \emph{sequoidal exponential} $\oc_{seq}$ and to the previous version as the \emph{AJM exponential} $\oc_{AJM}$.
+
+This exponential is also a linear exponential comonad: for example, we can define the strategy on $\ocseq A \implies \ocseq A \tensor \ocseq A$ to be the one that opens up a new copy of $A$ on the left for each copy of $A$ that we open on the right, using the order that we are forced to use. Note that this strategy, and the comultiplication $\ocseq A \implies \ocseq \ocseq A$, are not history free.
+
+In fact, we do not have to define these morphisms explicitly, because it turns out that $\ocajm A$ and $\ocseq A$ are isomorphic for any game $A$.
+
+\subsection{The isomorphism $\ocseq A \cong \ocajm A$}
+
+We can define a history-free strategy $w_A$ for $\ocajm A\implies \ocseq A$ that acts as a copycat strategy: we copy the move $(i,a)$ on the right over to $(i,a)$ on the left and vice versa.  
+History-freeness of this strategy is easy to see; as for $w_A \approx w_A$, we observe that as long as we play according to this strategy, only player $P$ ever introduces any new indices on the left hand side.
+
+In the other direction, we define a strategy $\skull_A\from \ocseq A \implies \ocajm A$. The macabre symbol for this strategy is meant to indicate that it is not history free.  
+In this strategy, every time player $O$ starts a new index on the right-hand side, we start a new index on the left, but instead of choosing the same index, we choose the only index we are allowed to choose, namely the first one that we have not yet used. 
+This requires us to remember the index on the right so that we can copy player $O$'s reply back to that index, which is the reason why the strategy is not history free.
+
+It is fairly easy to verify that $\skull_A;w_A$ is the identity strategy on $\ocseq A$, and that while $w_A;\skull_A$ is not the identity on $\ocajm A$, it is nevertheless \emph{equivalent} to the identity.  
+It follows that $\ocseq A$ and $\ocajm A$ are isomorphic.  
+However, since $\skull_A$ is not history-free, this isomorphism does not preserve history-free strategies in general.  
+One consequence of this is one we have mentioned already: namely, that the comultiplication and contraction strategies for the sequoidal exponential are not history free.  
+
+In fact, since $w_A$ \emph{is} history-free, we can see that any history free strategy $\sigma$ for $\ocajm A$ will correspond to a history-free strategy $\sigma;w_A$ for $\ocseq A$.
+
+\bibliographystyle{alpha}
+\bibliography{../common/phd_bibliography}
+
+\end{document}

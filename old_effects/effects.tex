@@ -1,0 +1,22 @@
+\documentclass{article}
+
+\input{../common/preamble}
+
+\begin{document}
+
+\section{Monads and Lawvere Theories}
+
+One of the oldest ideas relating to the treatment of effects in computer science is the idea that an effect should be captured by a suitable monad (or comonad) on our category, and that the effectful category should then be given by the Kleisli category of that monad.  
+Typically the base category is taken to be the category of sets, and it is not always obvious how to relate the construction to other categories -- for instance, finite nondeterminism is often regarded as being captured by some finite powerdomain monad on $\Set$.  
+However, some particular examples are clearly more general.  
+For example, the \emph{state monad} $S_W X = W \implies (X \tensor W)$ exists in any monoidal closed category, while the \emph{reader monad} $R_W X = W \iimpl X$ exists in any Cartesian closed category (and the equivalent \emph{reader comonad} $R^W X = X \times W$ exists in any Cartesian category).  
+
+\begin{example}
+  Dan Ghica's category of \emph{slot games} is equivalent to the Kleisli category for the reader monad $R_\bC$ on a more traditional category of games, where $\bC$ is the singleton or command-type game.  
+  Slot games are used to measure time complexity; we can think of the Kleisli morphism $\text{ask}\from (\bC \iimpl X) \to X$ (given, in the base category, by the identity on $(\bC \iimpl X)$) as being analagous to composing with a term $\text{wait}_T\from \bC$ that pauses for some fixed length of time.
+\end{example}
+
+What, then, distinguishes those monads and comonads on $\Set$ that have analogues in arbitrary Cartesian closed categories from those that can't? 
+The answer dates back to work by ? and ? in the ?0s: such monads are those corresponding to \emph{Lawvere theories}; 
+
+\end{document}

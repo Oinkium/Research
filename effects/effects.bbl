@@ -1,0 +1,61 @@
+\begin{thebibliography}{9}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem[{Ghica(2005)}]{SlotGames}
+Ghica DR (2005) Slot games: A quantitative model of computation. In:
+  Proceedings of the 32Nd ACM SIGPLAN-SIGACT Symposium on Principles of
+  Programming Languages, ACM, New York, NY, USA, POPL '05, pp 85--97,
+  \doi{10.1145/1040305.1040313},
+  \urlprefix\url{http://doi.acm.org/10.1145/1040305.1040313}
+
+\bibitem[{Katsumata(2016)}]{Katsu}
+Katsumata Sy (2016) Graded monads and semantics of effect systems,
+  \urlprefix\url{http://csl16.lif.univ-mrs.fr/planning/qslc/talks/katsumata/},
+  qSLC 2016
+
+\bibitem[{L{\"u}th and Ghani(1997)}]{WeaklyFiltered}
+L{\"u}th C, Ghani N (1997) Monads and modular term rewriting. In: Moggi E,
+  Rosolini G (eds) Category Theory and Computer Science, Springer Berlin
+  Heidelberg, Berlin, Heidelberg, pp 69--86
+
+\bibitem[{Melli\`{e}s(2012)}]{ParametricMonads}
+Melli\`{e}s PA (2012) Parametric monads and enriched adjunctions. Preprint on
+  webpage at
+  \url{https://www.irif.fr/~mellies/tensorial-logic/8-parametric-monads-and-enriched-adjunctions.pdf}
+
+\bibitem[{Moggi(1989)}]{Moggi}
+Moggi E (1989) Computational lambda-calculus and monads. In: [1989]
+  Proceedings. Fourth Annual Symposium on Logic in Computer Science, pp 14--23,
+  \doi{10.1109/LICS.1989.39155}
+
+\bibitem[{Smirnov(2008)}]{Smirnov2008}
+Smirnov AL (2008) Graded monads and rings of polynomials. Journal of
+  Mathematical Sciences 151(3):3032--3051, \doi{10.1007/s10958-008-9013-7},
+  \urlprefix\url{https://doi.org/10.1007/s10958-008-9013-7}
+
+\bibitem[{Spivey(1990)}]{Spivey}
+Spivey M (1990) A functional theory of exceptions. Science of Computer
+  Programming 14(1):25 -- 42,
+  \doi{https://doi.org/10.1016/0167-6423(90)90056-J},
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/016764239090056J}
+
+\bibitem[{Wadler(1990)}]{Wadler2}
+Wadler P (1990) Comprehending monads. In: Proceedings of the 1990 ACM
+  Conference on LISP and Functional Programming, ACM, New York, NY, USA, LFP
+  '90, pp 61--78, \doi{10.1145/91556.91592},
+  \urlprefix\url{http://doi.acm.org/10.1145/91556.91592}
+
+\bibitem[{Wadler(1992)}]{Wadler1}
+Wadler P (1992) The essence of functional programming. In: Proceedings of the
+  19th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages,
+  ACM, New York, NY, USA, POPL '92, pp 1--14, \doi{10.1145/143165.143169},
+  \urlprefix\url{http://doi.acm.org/10.1145/143165.143169}
+
+\end{thebibliography}

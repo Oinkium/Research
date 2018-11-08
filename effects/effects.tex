@@ -1,0 +1,411 @@
+%%%%%%%%%%%%%%%%%%%% author.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample root file for your "contribution" to a proceedings volume
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%% Springer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass{svproc}
+%
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+% to typeset URLs, URIs, and DOIs
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{xspace}
+\usepackage{IEEEtrantools}
+\usetikzlibrary{cd}
+\usepackage{mathpartir}
+\def\UrlFont{\rmfamily}
+
+\newcommand\C{\mathcal{C}}
+\newcommand\D{\mathcal{D}}
+\newcommand\F{\mathcal{F}}
+\newcommand{\suchthat}{\,\colon\,}
+\newcommand{\esuchthat}{\,.\,}
+\newcommand\from{\,\colon\,}
+\newcommand\object\colon
+\DeclareMathOperator{\ac}{ac}
+\DeclareMathOperator{\End}{End}
+\newcommand{\passoc}{\texttt{passoc}}
+\newcommand{\assoc}{\texttt{assoc}}
+\newcommand\tensor\otimes
+\newcommand\run{\texttt{r}}
+\newcommand\lun{\texttt{l}}
+\newcommand\lunit{\texttt{lunit}}
+\newcommand\runit{\texttt{runit}}
+\renewcommand\implies\multimap
+\newcommand{\pfc}{\boldsymbol{\cdot}}
+\newcommand\Mellies{Melli\`{e}s\xspace}
+
+\newcommand{\catname}[1]{\mathbf{#1}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Surj}{\catname{Surj}}
+\newcommand{\powerset}{\mathcal P}
+
+\DeclareMathOperator{\Prof}{Prof}
+\DeclareMathOperator{\Kl}{Kl}
+
+\makeatletter
+\newcommand{\colim@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font colim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\colim}{%
+  \mathop{\mathpalette\colim@{\rightarrowfill@\textstyle}}\nmlimits@
+}
+\makeatother
+
+\begin{document}
+\mainmatter              % start of a contribution
+%
+\title{A Kleisli-like construction for Parametric Monads, with Examples}
+%
+\titlerunning{Dum-di-dum}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{}
+%
+\authorrunning{} % abbreviated author list (for running head)
+%
+%%%% list of authors for the TOC (use if author list has to be modified)
+\tocauthor{}
+%
+\institute{University of Bath, Claverton Down Road, Bath.  
+BA2 7AY,\\
+\email{wjg27@bath.ac.uk},\\ WWW home page:
+\texttt{http://people.bath.ac.uk/wjg27}}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+\keywords{denotational semantics, category theory, game semantics}
+\end{abstract}
+
+\section{Introduction}
+
+\subsection{Monads and Kleisli categories}
+
+This paper is about general frameworks for modelling effects in a categorical semantics.  
+The seminal paper in this field is Moggi's \emph{Computational Lambda-Calculus and Monads} \cite{Moggi}, which first put forward the idea that if $\C$ is a categorical model of a programming language, then we can simulate an effect in that language via a suitable \emph{monad} on $\C$.  
+Given such a monad, its Kleisli category $Kl_M\C$ is then a model of a language formed by adding the effect to the original language.  
+
+Spivey \cite{Spivey} and Wadler \cite{Wadler1,Wadler2} have transferred this theory to the real world by using monads as programming tools, particularly in the Haskell programming language.  
+
+Recent progress in the field of game semantics, however, has shown that monads and Kleisli categories are not the be-all and end-all of modelling effects.  
+There are perfectly game semantic models of effects such as state and nondeterminism that do not arise as the Kleisli category for a monad on some more basic category of games.  
+These models are typically built up using intuition -- for example, by relaxing the determinism condition on strategies to give a model of a nondeterministic language -- and do not readily fit into any category theoretic framework the way Kleisli categories do.  
+The goal of this paper is to examine some possible frameworks that will allow us to study these and other models in a systematic way.  
+
+A closely related problem is that of using a common technique to model a particular effect in different settings.  
+Many of our favourite monads (e.g., the powerset monad on $\Set$ for nondeterminism) live in some particular category and cannot readily be set up in other categories. 
+
+Before we start, it is worth mentioning one example of a Kleisli category arising naturally in game semantics.  
+If we read Ghica's work on \emph{slot games} \cite{SlotGames}, it is not difficult to show that the category he constructs is in fact isomorphic to the Kleisli category for the \emph{reader monad} $\mathbb{C}\to \_$, where $\mathbb{C}$ is the game corresponding to a singleton set.  
+
+Since the reader monad is entirely built out of the Cartesian closed structure of the category, we can perform a similar trick in many different settings, although perhaps not as successfully as in game semantics.  
+
+\subsection{Promonads}
+
+It is instructive at this point to see what happens if we generalize from functors to profunctors.  
+We define a \emph{promonad} on a category $\C$ to be a monoid in the monoidal category $\Prof[\C,\C]$ of endo-profunctors on $\C$.  
+This concept generalizes that of a monad, since an endofunctor $M\from \C\to\C$ may be identified with the profunctor $\C[\_,M(\_)]\from \C^{op}\times\C\to\Set$.
+
+Since the set $\C[A,MB]$ is precisely the set of Kleisli morphisms from $A$ to $B$, it is natural to wonder whether we can perform a Kleisli-type construction on a promonad as well.  
+it turns out that we can: if $\D\from \C^{op}\times\C\to\Set$ is a promonad, then we may define a category (also called $\D$) whose objects are the objects of $\C$, and where the morphisms from $A$ to $B$ are the elements of the set $\D(A,B)$.
+The promonad action
+\[
+  (\D\pfc\D)(A,C) = \int^{B}\D(A,B)\times\D(B,C) \to \D(A,C)
+  \]
+gives us composition in our category and the unit
+\[
+  1(A,B)=\C[A,B]\to \D[A,B]
+  \]
+gives us a functor $\C\to\D$ (and, in particular, the identity morphisms).
+
+In fact, the converse is true: if $\C$ and $\D$ are categories with the same objects and $J\from \C\to\D$ is an identity-on-objects functor, then the functor $\D(JA,JB)=\D(A,B)\from\C^{op}\times\C\to\Set$ may be given the structure of a promonad on $\C$.  
+Thus, the rather complicated definition of a promonad is in fact equivalent to the much simpler idea of an identity-on-objects functor.
+We shall therefore use the word `promonad' to mean both things.
+
+In one sense this is very exciting for us, because we can see that promonads generalize not only monads, but also a very large number of the models developed in Game Semantics.  
+For example, the inclusion of the category of games and deterministic strategies into the category of games and nondeterministic strategies is the identity on objects, so it is a promonad.  
+So is the inclusion of the category of games and innocent strategies into the category of games and visible strategies.  
+
+More generally, this fits in with the idea that effects should not normally create new types, but should instead give us more flexibility when it comes to writing programs -- exactly what is modelled by an identity-on-objects functor.
+
+On the other hand, the sheer generality of promonads means that they don't give us any ways to actually create new models, since the data required to specify one is the entire category that we are trying to build.
+
+One way of describing the purpose of this work, then, is to discover classes intermediate between monads and promonads that are more general than pure monads but can still be specified in a concise way that allows us to transfer them between different settings.
+
+\subsection{Monads on presheaf categories}
+
+We can think of an endo-profunctor $\F\from \C^{op}\times\C\to \Set$ as a functor $\C\to [\C^{op},\Set]$.  
+Since the Yoneda embedding exhibits $[\C^{op},\Set]$ as the free cocompletion of $\Set$, this can alternatively be characterized as a colimit-preserving endofunctor on $[\C^{op},\Set]$.  
+Similarly, any promonad on $\C$ can alternatively be considered as a monad on $[\C^{op},\Set]$ whose underlying endofunctor preserves colimits.
+
+\subsection{Parametric monads}
+
+\Mellies \cite{ParametricMonads}, following work by Smirnov \cite{Smirnov2008}, has demonstrated that the concept of a lax monoidal category action is a useful generalization of that of a monad.  
+A lax action of a monoidal category $\C'$ upon a category $\C$ is a lax monoidal functor $\C'\to \End[\C]$; monads are the special case when $\C'$ is trivial.  
+For this reason, \Mellies renames lax monoidal actions to `parametric monads', where we think of the action of $\C'$ as a kind of monad on $\C$ that is parameterized by the objects of $\C'$.
+
+This idea has been further generalized by Katsumata \cite{Katsu}, who has given a definition of a `Kleisli-like resolution' of a parametric monad.  
+This particular construction, which takes a parametric monad on a category $\C$ parameterized by a monoidal category $\C'$ and yields a new category, generalizes many important properties of the Kleisli category -- in particular, it gives us an adjunction with the original category -- but it does not fit into our framework, since the objects of the category it creates are not the objects of the original category $\C$, but pairs of an object of $\C$ and an object of $\C'$.
+
+Once again, it is useful to generalize to profunctors.  
+First, if $\C$ is a category and $\C'$ a monoidal category, we define a \emph{parametric promonad on $\C$ parameterized by $\C'$} to be a lax monoidal functor $\C'\to\Prof[\C,\C]$.
+
+As with promonads, we can now look at what we have defined and try to recast it as a particular kind of category.  
+Suppose that $\D\from \C'\times\C^{op}\times\C$ is a parametric promonad on $\C$ parameterized by $\C'$.  
+After some thought, we can see that $\D$ corresponds to a category whose objects are the objects of $\C$ and where the morphisms from $A$ to $B$ are labelled by objects of $\C'$ in such a way that the composition of a morphism labelled with $X$ and a morphism labelled with $Y$ is a morphism labelled with $X\tensor Y$. 
+
+One way to state this is as follows.  
+Given a parametric promonad $\D\from \C'\times\C^{op}\times\C\to \Set$, we define a bicategory $\D^2$:
+\begin{itemize}
+  \item whose objects are the objects of $\C$,
+  \item where the $1$-morphisms from $A$ to $B$ are pairs $(X,f)$, where $X$ is an object of $\C'$ and $f\in\D(X,A,B)$
+  \item and where the $2$-morphisms from $(X,f)$ to $(Y,g)$ are morphisms $h\from X\to Y$ in $\C'$ such that $\D(h,A,B)(f)=g$.
+\end{itemize}
+This bicategory comes equipped with two important bifunctors:
+\begin{itemize}
+  \item a bifunctor $J\from \C\to\D^2$ (where we consider $\C$ as a bicategory with only identity $2$-morphisms;
+  \item a bifunctor $l\from \D^2\to \C'$ given by the `labelling' (considering $\C'$ as a bicategory with a single object).
+\end{itemize}
+
+In order to get a promonad resolution of the parametric promonad, then, we need to convert this bicategory into a $1$-category $\D$, which we do by quotienting out the $1$-morphisms in $\D^2$ by the action of the $2$-morphisms: i.e., the smallest equivalence relation such that two $1$-morphisms are related if there is a $2$-morphism from one to the other.
+
+More explicitly, the set of $1$-morphisms from $A$ to $B$ in our new category will be given by the following colimit.
+\[
+  \D(A,B) = \colim_{X\object\C'} \D(X,A,B)
+  \]
+This category $\D$ now admits an identity-on-objects functor from $\C$, meaning that we have found a natural collapse from parametric promonads to ordinary promonads.  
+
+In the particular case that the parametric promonad is in fact a parametric \emph{monad}, then we will call the category we obtain $\C/\C'$.  
+The morphisms in $\C/\C'$ are given by
+\[
+  \C/\C'(A,B)=\colim_{X\object\C'} \C(A,X.B)\,,
+  \]
+with the composition of $f\from A\to X.B$ and $g\from B\to Y.C$ being given by the composite
+\[
+  A \xrightarrow{f}
+  X.B \xrightarrow{X.g}
+  X.Y.C \to
+  (X\tensor Y).C\,.
+  \]
+Note that if $\C'$ is the trivial category (so that the action is in fact a monad), then the category $\C/\C'$ is the usual Kleisli category.
+
+\subsection{Effects, monads and colimits}
+
+The colimit that appears in the definition of the category $\C/\C'$ is instructive, because it is linked to the fact that many important monads may be expressed as colimits.  
+For example, let $\Surj$ be the category of sets and surjections.  
+Then, if $A$ is a set, we have
+\[
+  \powerset(A) \cong \colim_{X\object\Surj^{op}} [X,A]\,,
+  \]
+naturally in $A$.
+
+This is useful, because the body of the colimit -- i.e., the function set $[X,A]$ -- has a natural equivalent inside any Cartesian closed category that admits a functor out of $\Set$.  
+Moreover, the functor $[X,A]$ is actually an \emph{action} of $\Surj^{op}$ (with the Cartesian product) upon the category of sets.  
+So even though we cannot define the powerset \emph{monad} inside arbitrary Cartesian closed categories, we can still define this action of $\Surj^{op}$.  
+
+Unfortunately, when we try to apply our construction to this action in the category of sets, we do not get the usual Kleisli category for the powerset monad.  
+To see why, note that from the discussion above, we have
+\begin{IEEEeqnarray*}{rCl}
+  \Set/\Surj^{op}(A,B) & = & \colim_{X\object\Surj^{op}}[A,[X,B]] \\
+  & \cong & \colim_{X\object\Surj^{op}}[X,[A,B]] \\
+  & \cong & \powerset([A,B])\,,
+\end{IEEEeqnarray*}
+while the morphisms in the Kleisli category take a different form:
+\[
+  \Kl_{\powerset}\Set(A,B) = [A,\powerset(B)]\,.
+  \]
+Nevertheless, there are still a few things we can take from this.  
+The sets $\powerset([A,B])$ and $[A,\powerset(B)]$ are not equal, but there is still a natural function
+\[
+  \powerset([A,B]) \to [A,\powerset(B)]\,,
+  \]
+that sends a set $\F$ of functions to the function $h$ (the \emph{amalgamation} of $\F$) where
+\[
+  h(a) = \{f(a)\suchthat f \in \F\}\,.
+  \]
+This amalgamation function is not \emph{quite} surjective: for example, suppose that $g\from \{0,1\}\to \powerset(\{0\})$ sends $0$ to $\{0\}$ and $1$ to the empty set.  
+Then $g$ is not the amalgamation of any set of functions $\{0,1\}\to\{0\}$.  
+However, if we use the \emph{nonempty powerset monad} $\powerset^+$ (which corresponds to taking the colimit over the opposite of the category $\Surj^+$ of nonempty sets and surjections), then the amalgamation function gives us a surjection
+\[
+  \powerset^+([A,B])\twoheadrightarrow [A,\powerset^+(B)]\,.
+  \]
+This means that we can recover the Kleisli category for the nonempty powerset monad on $\Set$ by taking the quotient by a suitable equivalence relation to the category $\Set/(\Surj^{+\,op}$).  
+
+In fact, this surjection has a natural right inverse, formed by sending a function $h\from A\to\powerset^+(B)$ to the \emph{largest} possible set $\F\subseteq[A,B]$ such that for all $f\in \F$ and $a\in A$, $f(a)\in h(a)$.
+The composition of these inverses sends a set of functions $A\to B$ to its `amalgamation closure':
+\[
+  \ac(\F) = \{g\from A \to B\suchthat\forall a\in A\esuchthat g(a)=f(a)\text{ for some $f\in \F$}\}\,.
+  \]
+By restricting our set of morphisms, then, to those that are fixed points of this operator, we may recover the Kleisli category for $\powerset^+$.  
+
+In the next section, we will see how to generalize this idea to other monads, and to other categories.
+
+\subsection{Weakly filtered colimits}
+
+Suppose we have a lax action of a monoidal category $\C'$ upon a cocomplete category $\C$.  
+Then we may copy the collapse from parametric promonads to promonads and define a monad on $\C$ given by:
+\[
+  M A = \colim_{X\object\C'}A.X\,.
+  \]
+Unfortunately, as in the case of the powerset monad above, this transformation does not commute with the collapse from parametric promonads to promonads.  
+Indeed, if we consider our action as a parametric promonad and apply the collapse, then we get a category where the morphisms from $A$ to $B$ are given by the colimit
+\[
+  \colim_{X\object\C'} \C(A,X.B)\,,
+  \]
+while the morphisms from $A$ to $B$ in the Kleisli category for the monad $M$ are given by
+\[
+  \C(A,\colim_{X\object\C'} X.B)\,.
+  \]
+There is a natural morphism from the first colimit into the second expression, but it is not an isomorphism in general.
+If $\C$ is the category of sets, there is a well known result that states that if $\C'$ is a $\kappa$-filtered category and $|A|<\kappa$, then the colimit will commute with the functor $[A,\_]$, but this does not help us, since the category $\C'$ is not filtered in most of the cases we are interested in (e.g., the category $\Surj^{op}$ has not got morphisms coequalizing parallel pairs, since such maps cannot be chosen to be surjective in general).  
+
+Instead, we try for the next best thing, which is to show that the natural map $\colim_{X\object\C'}\C(A,X.B)\to\C(A,\colim_{X\object\C'}X.B)$ is a surjection if $\C'$ satisfies some weaker conditions.  
+
+We define (see, for example, \cite[Def. 16]{WeaklyFiltered}) a \emph{$\kappa$-weakly filtered category} to be one in which every \emph{discrete} diagram of size $<\kappa$ admits a cocone; i.e., a non-empty category such that whenever $(X_\alpha)_{\alpha<\kappa}$ is a collection of objects we have some object $Y$ and morphisms $X_\alpha\to Y$ for each $\alpha$.  
+
+\begin{example}
+  The category $\Surj^{+\,op}$ is $\kappa$-weakly filtered for arbitrary $\kappa$, because if $(X_\alpha)_{\alpha<\kappa}$ is a collection of sets, then we can take their Cartesian product, and the projections will be surjective.
+
+  The category $\Surj^{op}$ is not weakly filtered, because if there is a surjection from an object $X$ to the empty set, then there is no surjection from $X$ to any other set.
+\end{example}
+
+The importance of $\kappa$-weakly filtered limits is shown by the following result.
+
+\begin{proposition}
+  \label{prop:weakly-filtered}
+  If $\C'$ is a $\kappa$-weakly filtered category, $D\from \C'\to \Set$ is a functor and $A$ is a set with cardinality less than $\kappa$, then the natural function
+  \[
+    \colim_{X\object\C'}[A,D(X)]\to [A,\colim_{X\object\C'}D(X)]
+    \]
+  is a surjection.
+\end{proposition}
+\begin{proof}
+  Given a function $h\from A \to \colim_{X\object\C'}D(X)$, for each $a\in A$, choose some $X_a\object\C'$ such that $h(a)\in D(X_a)$.  
+  Since $\C'$ is $\kappa$-weakly filtered, there is some object $Y$ of $\C'$ that admits morphisms out of all of the $X_a$, and therefore $h$ may be considered as a function $A \to D(Y)$. \qed
+\end{proof}
+
+By setting $D(X)=X.B$, this means that if we have an action of $\C'$ on $\Set$, where the monoidal category $\C'$ is $\kappa$-weakly filtered for any $\kappa$, then we get a full functor $\Set/\C'\to\Kl_M\Set$.
+
+Moreover, if the colimit satisfies additional properties, then the $Y$ in the proof of Proposition \ref{prop:weakly-filtered} can be chosen in a functorial manner, so that we get a faithful right inverse to this full functor.
+
+\begin{example}
+  If $f\from A \to \colim_{X\object\Surj^{+\,op}}[X,B]$ is a function with $f(a)\in [X_a,B]$ for each $a$, then $f$ is equivalent to a function
+  \[
+    \tilde{f}\from A \to \left[\prod_{a\in A}X_a,B\right]
+    \]
+  via the surjections $\prod_{a\in A}X_a\to X_b$ for each $b\in A$.  
+  The operator $f\mapsto\tilde{f}$ is well-defined in this case, and gives rise to the amalgamation functor that we considered in the previous section.
+\end{example}
+
+The point of these last two sections can be summarized as follows.  
+If a monad $M$ on $\Set$ can be expressed as the colimit of an action of a weakly filtered monoidal category $\C'$ on $\Set$, then we do not lose very much by considering the category $\Set/\C'$ obtained from the action rather than the Kleisli category $\Kl_M\Set$.  
+More specifically, there is a full functor $\Kl_M\Set\to \Set/\C'$ that is the identity on objects, so we may recover the Kleisli category by applying a suitable equivalence relation to the set of morphisms.  
+
+The benefit of reasoning about the action of $\C'$ rather than the monad $M$ is that the action might be realizable in a much larger class of categories.  
+For instance, the action of $\Surj^{+\,op}$ on $\Set$ may be replicated inside any monoidal closed category that admits a functor out of the category of sets (for example, most models of PCF or Idealized Algol).
+
+\subsection{Plan for the paper}
+
+The rest of this paper will consist in two sections.  
+In the first, we will give a more detailed account of the construction that allows us to build a promonad (i.e., a category) out of a parametric monad.  
+
+In the second section, we will give a fully abstract game semantics for the language Probabilistic Algol (PA).  
+This is by no means a new result -- the paper \cite{DanosHarmer} that introduced PA also gave it a fully abstract game semantics.  
+Instead, the point of this section will be to demonstrate how the ideas we have outlined can be applied systematically to yield fully abstract models of programming languages.
+
+\section{A Kleisli-style construction for parametric monads}
+
+\subsection{Parametric monads}
+
+Let $\C'$ be a monoidal category and let $\C$ be a category.  
+Then a \emph{lax left action} of $\C'$ on $\C$ is a functor $\_.\_\from \C'\times\C\to \C$ that gives rise (through currying) to a lax monoidal functor $\C'\to \End[\C,\C]$.  
+In other words, we have natural transformations $\passoc_{X,Y,A}\from X.Y.A\to (X\tensor Y).A$ and $\lun_A\from A \to I.A$ making the following diagrams commute for all objects $A$ of $\C$ and $X,Y,Z$ of $\C'$.
+
+\begin{mathpar}
+  \begin{tikzcd}[column sep=6em]
+    X.Y.Z.A \arrow[dr,"X.\passoc_{Y,Z,A}"'] \arrow[r, "\passoc_{X,Y,Z.A}"]
+      & (X \tensor Y).Z.A \arrow[r, "\passoc_{X\tensor Y,Z,A}"]
+        & ((X \tensor Y) \tensor Z).A \arrow[d, "\assoc_{X,Y,Z}.A"] \\
+    %
+      & X.(Y\tensor Z).A \arrow[r, "\passoc_{X,Y\tensor Z,A}"]
+        & (X\tensor(Y\tensor Z)).A
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    X.A \arrow[r, "\lun_{X.A}"] \arrow[dr, "\lunit_X.A"']
+      & I.X.A \arrow[d, "\passoc_{I,X,A}"] \\
+    %
+      & (I \tensor X) . A
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    X.A \arrow[r, "X.\lun_A"] \arrow[dr, "\runit_X.A"']
+      & X.I.A \arrow[d, "\passoc_{X,I,A}"] \\
+    %
+      & (X\tensor I).A
+  \end{tikzcd}
+\end{mathpar}
+
+\begin{example}
+  \begin{itemize}
+    \item Any monad $M$ is an action of the trivial category on its underlying category $\C$, regarding $MA$ as the action $I.A$.
+      The natural transformation $\passoc_{A,I,I}$ is precisely the monad action on $A$:
+      \[
+        I.I.A = MMA \to M A = I.A = (I\tensor I).A\,.
+        \]
+      Dually, any lax action gives rise to a monad on the category being acted upon, by setting $MA = A.I$.
+    \item If $\C$ is also a monoidal category and $J\from \C'\to \C$ is a lax monoidal functor with monoidal coherence $\mu$, then there is an action of $\C'^{co}$ (i.e., $\C'$ with the opposite monoidal product) on $\C$ given by
+      \[
+        A.X = A \tensor JX\,,
+        \]
+      and
+      \[
+        \passoc_{X,Y,A}=
+        (A \tensor JY) \tensor JX \xrightarrow{\assoc_{A,JX,JY}}
+        A \tensor (JY \tensor JX) \xrightarrow{A \tensor \mu_{X,Y}}
+        A \tensor J(Y\tensor X)\,.
+        \]
+      We sometimes refer to a left action of the opposite category $\C'^{co}$ on $\C$ as a \emph{right action} of $\C'$ on $\C$.  
+      In that case, we write $X.A$ instead of $A.X$, so that the coherences become
+      \begin{gather*}
+        \passoc_{A,X,Y}\from A.X.Y \to A.(X\tensor Y)\\
+        \run_A\from A \to A.I\,.
+      \end{gather*}
+
+    \item If $\C$ is a monoidal closed category, and $j$ an oplax monoidal functor with coherence $\nu$, then there is an action of $\C'$ on $\C$ given by
+      \[
+        A.X = jX \implies A
+        \]
+      and
+      \[
+        \passoc_{A,X,Y}=jY \implies (jX \implies A) \to
+        (jY \tensor jX) \implies A \xrightarrow{\nu_{Y,X}\implies A}
+        j(Y \tensor X) \implies A\,.
+        \]
+    \item The intersection of the first two examples is the \emph{writer monad} given by $M_WX = X\tensor W$ for any monoid $W$ in $\C$.  
+      The intersection of the first and third examples is the \emph{reader monad} given by $M^RX = R \implies X$ for any comonoid $R$ in $\C$ (and, in particular, for any object $R$ if $\C$ if the monoidal product in $\C$ is Cartesian).
+      
+      We shall therefore call an action of the form $A \tensor JX$ a \emph{writer-style action} and one of the form $JX \implies A$ a \emph{reader-style action}.
+    \item We can define an \emph{oplax action} of $\C'$ on $\C$ to be a lax action of $\C'$ upon the opposite category $\C^{op}$.  
+      In this case, the coherence $\passoc$ goes from $A.(X\tensor Y)$ to $A.X.Y$.  
+      As monads are lax actions of the trivial category, so are comonads oplax actions of the trivial category.
+  \end{itemize}
+\end{example}
+
+\bibliographystyle{spbasic}
+\bibliography{effects}
+
+\end{document}

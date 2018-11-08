@@ -17,11 +17,15 @@ Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
 
 \bibitem{SamsonGuyIAPassive}
 Samson Abramsky and Guy McCusker.
-\newblock Full abstraction for {Idealized Algol} with passive expressions.
-\newblock {\em Theor. Comput. Sci.}, 227(1-2):3--42, September 1999.
-\newblock URL: \url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}, \href
-  {http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
-  {\path{doi:10.1016/S0304-3975(99)00047-X}}.
+\newblock Linearity, sharing and state: a fully abstract game semantics for
+  idealized algol with active expressions: Extended abstract.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 3:2 -- 14,
+  1996.
+\newblock Linear Logic 96 Tokyo Meeting.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S1571066105803986},
+  \href {http://dx.doi.org/https://doi.org/10.1016/S1571-0661(05)80398-6}
+  {\path{doi:https://doi.org/10.1016/S1571-0661(05)80398-6}}.
 
 \bibitem{PlotkinApt}
 K.~R. Apt and G.~D. Plotkin.
@@ -99,6 +103,10 @@ Paul~Blain Levy.
   \href {http://dx.doi.org/http://dx.doi.org/10.1016/j.apal.2007.10.007}
   {\path{doi:http://dx.doi.org/10.1016/j.apal.2007.10.007}}.
 
+\bibitem{levy2014morphisms}
+Paul~Blain Levy.
+\newblock Morphisms between plays, 2014.
+
 \bibitem{MurawskiIntrinsic}
 A.~S. Murawski.
 \newblock Reachability games and game semantics: Comparing nondeterministic
@@ -116,6 +124,18 @@ Andrzej~S. Murawski and Nikos Tzevelekos.
 \newblock URL: \url{https://doi.org/10.2168/LMCS-12(3:3)2016}, \href
   {http://dx.doi.org/10.2168/LMCS-12(3:3)2016}
   {\path{doi:10.2168/LMCS-12(3:3)2016}}.
+
+\bibitem{park1980semantics}
+David Park.
+\newblock On the semantics of fair parallelism.
+\newblock In {\em Abstract Software Specifications}, pages 504--526. Springer,
+  1980.
+
+\bibitem{park1981concurrency}
+David Park.
+\newblock Concurrency and automata on infinite sequences.
+\newblock In {\em Theoretical computer science}, pages 167--183. Springer,
+  1981.
 
 \bibitem{PitchersThesis}
 Corin Pitcher.

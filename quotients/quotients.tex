@@ -1,0 +1,151 @@
+%%%%%%%%%%%%%%%%%%%% author.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample root file for your "contribution" to a proceedings volume
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%% Springer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass{svproc}
+%
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+% to typeset URLs, URIs, and DOIs
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usepackage{mathpartir}
+\def\UrlFont{\rmfamily}
+
+\newcommand\C{\mathcal{C}}
+\newcommand\from{\,\colon\,}
+\DeclareMathOperator{\End}{End}
+\newcommand{\passoc}{\texttt{passoc}}
+\newcommand{\assoc}{\texttt{assoc}}
+\newcommand\tensor\otimes
+\newcommand\run{\texttt{r}}
+\newcommand\lunit{\texttt{lunit}}
+\newcommand\runit{\texttt{runit}}
+\renewcommand\implies\multimap
+
+\begin{document}
+\mainmatter              % start of a contribution
+%
+\title{A Kleisli-like construction for Parametric Monads, with Examples}
+%
+\titlerunning{Dum-di-dum}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{}
+%
+\authorrunning{} % abbreviated author list (for running head)
+%
+%%%% list of authors for the TOC (use if author list has to be modified)
+\tocauthor{}
+%
+\institute{University of Bath, Claverton Down Road, Bath.  
+BA2 7AY,\\
+\email{wjg27@bath.ac.uk},\\ WWW home page:
+\texttt{http://people.bath.ac.uk/wjg27}}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+\keywords{denotational semantics, category theory, game semantics}
+\end{abstract}
+
+\section{Introduction}
+
+This paper is about general frameworks for modelling effects in a categorical semantics.  
+The seminal paper in this field is Moggi's \emph{Computational Lambda-Calculus and Monads} \cite{Moggi}, which first put forward the idea that if $\C$ is a categorical model of a programming language, then we can simulate an effect in that language via a suitable \emph{monad} on $\C$.  
+Given such a monad, its Kleisli category $Kl_M\C$ is then a model of a language formed by adding the effect to the original language.  
+
+Spivey \cite{Spivey} and Wadler \cite{Wadler1,Wadler2} have transferred this theory to the real world by using monads as programming tools, particularly in the Haskell programming language.  
+
+
+
+\section{Lax quotients of lax actions}
+
+Let $\C'$ be a monoidal category and let $\C$ be a category.  
+Then a \emph{lax iright action} of $\C'$ on $\C$ is a functor $\_.\_\from \C\times\C'\to \C$ that gives rise (through currying) to a lax monoidal functor $\C'\to \End[\C,\C]$.  
+In other words, we have natural transformations $\passoc_{A,X,Y}\from A.X.Y\to A.(X\tensor Y)$ and $\run_A\from A \to A.I$ making the following diagrams commute for all objects $A$ of $\C$ and $X,Y,Z$ of $\C'$.
+
+\begin{mathpar}
+  \begin{tikzcd}[column sep=6em]
+    A.X.Y.Z \arrow[dr,"\passoc_{A.X,Y,Z}"'] \arrow[r, "\passoc_{A,X\tensor Y,Z}"]
+      & A.(X \tensor Y).Z \arrow[r, "\passoc_{A,X\tensor Y,Z}"]
+        & A.((X \tensor Y) \tensor Z) \arrow[d, "A.\assoc_{X,Y,Z}"] \\
+    %
+      & A.X.(Y\tensor Z) \arrow[r, "\passoc_{A,X,Y\tensor Z}"]
+        & A.(X\tensor(Y\tensor Z))
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    A.X \arrow[r, "\run_A.X"] \arrow[dr, "A.\lunit_X"']
+      & A.I.X \arrow[d, "\passoc_{A,I,X}"] \\
+    %
+      & A.(I\tensor X)
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    A.X \arrow[r, "\run_{A.X}"] \arrow[dr, "A.\runit_X"']
+      & A.X.I \arrow[d, "\passoc{A,X,I}"] \\
+    %
+      & A.(X \tensor I)
+  \end{tikzcd}
+\end{mathpar}
+
+\begin{example}
+  \begin{itemize}
+    \item Any monad $M$ is an action of the trivial category on its underlying category $\C$, regarding $MA$ as the action $A.I$.
+      The natural transformation $\passoc_{A,I,I}$ is precisely the monad action on $A$:
+      \[
+        A.I.I = MMA \to M A = A.I = A.(I\tensor I)\,.
+        \]
+      Dually, any lax action gives rise to a monad on the category being acted upon, by setting $MA = A.I$.
+    \item If $\C$ is also a monoidal category and $J\from \C'\to \C$ is a lax monoidal functor with monoidal coherence $\mu$, then there is an action of $\C'$ on $\C$ given by
+      \[
+        A.X = A \tensor JX\,,
+        \]
+      and
+      \[
+        \passoc_{A,X,Y}=
+        (A \tensor JX) \tensor JY \xrightarrow{\assoc_{A,JX,JY}}
+        A \tensor (JX \tensor JY) \xrightarrow{A \tensor \mu_{X,Y}}
+        A \tensor J(X\tensor Y)\,.
+        \]
+
+    \item If $\C$ is a monoidal closed category, and $j$ an oplax monoidal functor with coherence $\nu$, then there is an action of $\C'^{co}$ (i.e., $\C'$ with the opposite monoidal product) on $\C$ given by
+      \[
+        A.X = jX \implies A
+        \]
+      and
+      \[
+        \passoc_{A,X,Y}=jY \implies (jX \implies A) \to
+        (jY \tensor jX) \implies A \xrightarrow{\nu_{Y,X}\implies A}
+        j(Y \tensor X) \implies A\,.
+        \]
+      We sometimes refer to a right action of the opposite category $\C'^{co}$ on $\C$ as a \emph{left action} of $\C'$ on $\C$.  
+      In that case, we write $X.A$ instead of $A.X$, so that the coherence becomes
+      \[
+        \passoc_{Y,X,A}\from Y.X.A \to (Y\tensor X).A\,.
+        \]
+    \item The intersection of the first two examples is the \emph{writer monad} given by $M_WX = X\tensor W$ for any monoid $W$ in $\C$.  
+      The intersection of the first and third examples is the \emph{reader monad} given by $M^RX = R \implies X$ for any comonoid $R$ in $\C$ (and, in particular, for any object $R$ if $\C$ if the monoidal product in $\C$ is Cartesian).
+      
+      We shall therefore call an action of the form $A \tensor JX$ a \emph{writer-type action} and one of the form $JX \implies A$ a \emph{reader-type action}.
+    \item We can define an \emph{oplax action} of $\C'$ on $\C$ to be a lax action of $\C'$ upon the opposite category $\C^{op}$.  
+      In this case, the coherence $\passoc$ goes from $A.(X\tensor Y)$ to $A.X.Y$.  
+      As monads are lax actions of the trivial category, so comonads are oplax actions of the trivial category.
+  \end{itemize}
+\end{example}
+
+\bibliographystyle{spbasic}
+\bibliography{quotients}
+
+\end{document}

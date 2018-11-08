@@ -1,0 +1,90 @@
+\documentclass{beamer}
+
+\let\NOTARTICLE=1
+\let\BEAMER=1
+\let\FEWFONTS=1
+
+\newenvironment{theindex}
+ {\let\item\par
+  %definitions for subitem etc
+  }{}
+\newcommand\indexspace{}
+
+\usepackage{listings}
+\lstset{
+  mathescape
+}
+
+\input{../../common/preamble}
+
+\title{A Fully Abstract Game Semantics for Countable Nondeterminism}
+\subtitle{CSL 2018, Birmingham}
+
+\author{{\ul W. John Gowers} and James Laird}
+
+\begin{document}
+
+\section{Countable nondeterminism}
+
+\begin{frame}
+  \frametitle{Countable nondeterminism}
+
+  \pause
+
+  Motivation: if we can build a \emph{fair} task scheduler, then we can use it to construct a countable nondeterminism machine.
+
+  \pause
+
+  But [Dijkstra, ??], countable nondeterminism is \emph{impossible}! \pause{} [Under a continuity assumption]
+
+  \pause
+
+  Failure of continuity / algebraicity.  
+  E.g.:
+  \begin{align*}
+    <_m,<_\infty & \from \nat \to \nat \\
+    <_m n & = \text{If } n < m \text{ then } \0 \text{ else }\Omega\\
+    <_\infty n & = \0\,,
+  \end{align*}
+  but
+  \begin{align*}
+    <_m \wn & \equiv \0\text{ or }\Omega \\
+    <_\infty \wn & \equiv \0\,.
+  \end{align*}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Must-convergence}
+
+  Nondeterministic languages differ from deterministic ones in that a given term $M$ may admit multiple different small-step reduction rules.
+
+  If $M\from o$ is a term of a nondeterministic language, we say that $M$ \emph{must converge}, and write $M\mustconverge$, if every possible small-step evaluation path of $M$ eventually terminates at some observable value.
+
+  \pause
+
+  \begin{minipage}{0.5\textwidth}
+    \begin{lstlisting}
+$\lambda$ c . {
+  for i = 0 to ? {
+    c;
+  }
+}
+    \end{lstlisting}
+  \end{minipage}\pause\quad\begin{minipage}{0.3\textwidth}
+    \begin{lstlisting}
+$\lambda$ c . {
+  while (TRUE) {
+    c;
+  }
+}
+    \end{lstlisting}
+  \end{minipage}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Must-convergence, continued}
+\end{frame}
+
+\end{document}

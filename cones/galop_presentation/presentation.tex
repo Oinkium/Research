@@ -1,0 +1,490 @@
+\documentclass{beamer}
+
+\let\NOTARTICLE=1
+\let\BEAMER=1
+\let\FEWFONTS=1
+
+\newenvironment{theindex}
+ {\let\item\par
+  %definitions for subitem etc
+  }{}
+\newcommand\indexspace{}
+
+\input{../../common/preamble}
+
+\newtheorem{proposition}{Proposition}
+
+\newcommand{\sign}[1]{\\\hfill -- \parbox[t]{.3\textwidth}{#1}}
+\usepackage{wasysym}
+\usepackage[absolute,overlay]{textpos}
+\DeclareMathOperator{\ding}{ding}
+
+%%% END Article customizations
+
+\title{A unified approach to the semantics of effects}
+\subtitle{GaLoP 2018, Thessaloniki}
+
+\author{John Gowers}
+
+\AtBeginSection{\frame{\sectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Some Examples}
+
+\renewcommand*{\arraystretch}{0.5}
+
+%\begin{frame}[allowframebreaks]
+  %\frametitle{Related Work}
+  %\nocite{mcCHFiniteND, RusssThesis, TsukadaSheaves, RoscoeCspInfinite, LevyGsInfinite, LairdOrdinalGames}
+  %\bibliographystyle{plain}
+  %\bibliography{../../common/phd_bibliography}
+%\end{frame}
+
+\begin{frame}
+  \frametitle{Nondeterminism and innocence}
+
+  The game semantics of nondeterminism models nondeterministic programs by \emph{nondeterministic strategies}, where $P$ can have multiple replies to an $O$-position. But there is no satisfactory definition of an \emph{innocent} nondeterministic strategy.
+  \pause
+
+  For example, consider the term
+  \[
+    (\lambda f.f 0) \text{ OR } (\lambda f.f 1)
+    \]
+  whose denotation is the union of the denotations of the same components.  
+  But this strategy is not innocent!
+  \pause
+
+  Tsukada and Ong: the problem is missing \emph{branching time information}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Is there another approach?}
+
+  Harmer's thesis: a nondeterministic innocent strategy is any strategy of the form
+  \[
+    1 \xrightarrow{\top_{\bB}}
+    \bB \xrightarrow{\sigma}
+    A
+    \]
+  where $\sigma$ is innocent.
+  \pause
+
+  \textit{A more “synthetic”, a priori definition
+of what it is to be an innocent strategy would be preferable.}
+  \sign{Harmer}
+  \pause
+
+  \textit{Such
+an approach is ultimately unsatisfactory as it provides no new
+  insights on nondeterministic stateless computation.}
+  \sign{Tsukada, Ong}
+  \pause
+
+  \only<4->{
+  \begin{textblock}{0.5}(11,4)
+    \rotatebox{350}{\Large\#unsatisfactory}
+  \end{textblock}
+}
+\pause
+
+  Tsukada, Ong: We can solve the problem using a sheaf-based model that retains branching-time information.
+  \pause
+
+  \only<6->{
+  \begin{textblock}{0.5}(11,13)
+    \rotatebox{350}{\Large\#satisfactory}
+  \end{textblock}
+}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A purely formal treatment of effects}
+
+  Idea: If we use the indirect approach, we can treat $\top_\bB$ as a purely formal symbol and say that a nondeterministic innocent strategy for a game $A$ is a deterministic innocent strategy for $\bB\to A$.
+  \pause
+
+  We don't need to mention nondeterministic strategies at all!
+  \pause
+
+  Slight drawback: this approach distinguishes strategies that are in fact identical.  
+  E.g., $\deno{\lambda b.b}$ and $\deno{\lambda b.\text{not }b}\from\bB$ both denote the term $t\text{ OR }f$.
+  \pause
+
+  \begin{minipage}{0pt}
+    \includegraphics{circles_2.jpg}
+  \end{minipage}
+  \hspace{150pt}
+  \begin{minipage}{0.01\textwidth}
+    \includegraphics{circles_3.jpg}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The formal treatment and branching-time information}
+
+  Clearly, the strategy $\sigma\from\bB\to A$ contains all the information about branching time that we might need if we were to reason about $\top_\bB;\sigma$.
+  \pause
+
+  Since deterministic factorization automatically holds, the problem becomes one of working out the right equivalence relation to impose on strategies for $\bN\to A$ (cutting out the circle).
+  \pause
+
+  We can use a semi-indirect approach informed by the operational semantics of the language (e.g., using linear decomposition: $\sigma,\tau\from\bB\to A$ are equivalent if and only if for all $\alpha\from\oc\bB$ there exists some $\beta\from\oc\bB$ such that $\alpha;\sigma=\beta;\tau$ -- and vice versa).
+  \pause
+
+  Or we can use more ingenious techniques.  
+  For example, we can recover the Tsukada-Ong sheaf-theoretic approach by identifying $\sigma$ with the following sheaf.
+  \[
+    \sigma(s) = \{t\in\sigma\suchthat t\vert_A=s\}
+    \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Another example -- bell games}
+
+  We want to model the language PCF${}^{\bell+}$, obtained by enlarging PCF with command types and a constant $\ding\from\com$ with the following operational semantics.
+  \[
+    \inferrule*[right=\bell]{ }{\ding \opto \skipp}
+    \]
+  ($\bell$ $=$ `ring the bell every time you evaluate this rule')
+  \pause
+
+  Game Semantics (Ghica's `slot games'): insert an additional move $\bell$ (belonging to neither player) into the play whenever we ring the bell (so $\deno{\ding}$ is the strategy with maximal play $q\bell a$).  
+  
+  The $\bell$s are not hidden during composition:
+  \pause
+  \begin{mathpar}
+    \begin{array}{cccccc}
+      {}    &  \com & \to & \com  & \to & \com \\
+            &       &     &       &     &   q  \\
+            &    q  &     &       &     &      \\
+      \bell &       &     &       &     &      \\
+            &    a  &     &       &     &      \\
+            &       &     &   q   &     &      \\
+      \bell &       &     &       &     &      \\
+            &       &     &   a   &     &      \\
+            &       &     &       &     &   a  \\
+    \end{array}
+    \and
+    \rightsquigarrow
+    \and
+    \begin{array}{c}
+      \\
+      q\\
+      \\
+      \bell
+      \\
+      \\
+      \bell\\
+      \\
+      a
+    \end{array}
+  \end{mathpar}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The formal approach to bell games}
+  Suppose instead that we attempt to model $\ding$ as a purely formal morphism $1\to\bC$.  
+  In our new model, a strategy for $A$ will be a strategy for $\bC\to A$ in the original model, where we interpret $\sigma\from\bC\to A$ as the strategy $\ding;\sigma\from A$.
+  \pause
+
+  For example, the term $\ding;\ding:\com$ is interpreted as the following composite.
+  \[
+    \bC \xrightarrow{\Delta}
+    \bC \times \bC \xrightarrow{\blank;\blank}
+    \bC
+    \]
+  \pause
+  \renewcommand*{\arraystretch}{.75}
+  As a a strategy:
+  \[
+    \begin{array}{ccc}
+      \bC & \to & \bC \\
+          &     &  q  \\
+       q  &     &     \\
+       a  &     &     \\
+       q  &     &     \\
+       a  &     &     \\
+          &     &  a  \\
+    \end{array}
+    \]
+\pause
+$\bell$ $=$ $qa$ on the left.
+\end{frame}
+
+\begin{frame}
+  \frametitle{A common theme}
+
+  A common theme in both these examples is that formal morphisms expose moves that are normally hidden under composition.
+  \pause
+
+  For some computational effects, this is exactly what we want to do. For nondeterminism, the nondeterministic strategy approach hides too much information, and the formal approach reveals too much.
+  \pause
+
+  Topics for exploration:
+  \pause
+
+  Can we add formal morphisms $A\to A$ for all $A$ in order to make a `revealed game semantics' that is still a Cartesian closed category?
+  \pause
+
+  Are these two examples the same?  (E.g., $\ding$ = `unary nondeterminism')
+  \pause
+
+  Can we build a model of nondeterministic innocence based on bell games?
+\end{frame}
+
+\section{Cones on monoidal functors}
+
+\begin{frame}
+  We talked about formally adding morphisms into a category.  
+  In this section, we'll look at a slightly more general construction.
+  \pause
+
+  The goals of this generalization are twofold:
+  \pause
+  \begin{itemize}
+    \item To allow us to add more than one morphism at a time.
+      \pause
+    \item To give a more systematic account of the equivalence relation on morphisms.
+  \end{itemize}
+  \pause
+
+  Previously, we wanted to add a morphism $\phi\from 1\to A$ for some object $A$ or, equivalently, a natural transformation from $I$ to the `constant $A$ functor'.
+  \pause
+
+  We replace $I$ with an arbitrary symmetric monoidal category $\C'$ and require that $\phi$ be an oplax monoidal functor.
+  \pause
+
+  Note: for every object $A$ of a CCC, the `constant $A$' functor is oplax monoidal with coherence given by the diagonal and projections.
+\end{frame}
+
+\begin{frame}
+  The setup: we have an oplax monoidal functor $j\from \C'\to\C$, where $\C,\C'$ are symmetric monoidal categories.
+  \pause
+
+  We desire a symmetric monoidal category $\D$ that contains $\C$ plus additional morphisms corresponding to the image of $j$.
+  \pause
+
+  I.e., this (a \emph{$j$-category}):
+  \[
+    \begin{tikzcd}[row sep=large, column sep=large, ampersand replacement=\&]
+      \C' \arrow[r, "()", ""'{name=term}] \arrow[d, "j"']
+        \& I \arrow[d, "I"] \\
+      \C \arrow[r, "J"', ""{name=J}]
+        \& \D
+      \arrow[Rightarrow, from=term, to=J, "\phi"]
+    \end{tikzcd}\quad,
+  \]
+where $J$ is a lax monoidal functor and $\phi$ is a `generalized monoidal natural transformation'.
+\pause
+
+The more objects there are in $\C'$, the more morphisms there are in $\D$.  
+  The more morphisms there are in $\C'$, the \emph{fewer} morphisms there are in $\D$ (or: a finer equivalence relation on morphisms).
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Cone on $j$}
+
+  We can define a morphism of $j$-categories $(\D',J',\phi')\to(\D,J,\phi)$ to be an oplax monoidal functor $f\from\D'\to\D$ making the following diagram commute.
+  \[
+    \begin{tikzcd}[row sep=large, column sep=large, ampersand replacement=\&]
+      \C' \arrow[r, "()", ""'{name=term}] \arrow[d, "j"']
+        \& I \arrow[d, "I"] \\
+      \C \arrow[r, "J'"'{name=Jprimedown}, ""{name=Jprime}] \arrow[d, "\id"']
+        \& \D' \arrow[d, "f"] \\
+      \C \arrow[r, "J", ""{name=J}]
+        \& \D
+      \arrow[Rightarrow, from=term, to=Jprime, shift left=1.5ex, "\phi'"]
+      \arrow[Rightarrow, from=Jprimedown, to=J, shift left=1.5ex, "\id"]
+      \arrow[Rightarrow, from=term, to=J, shift right=3ex, "\phi"' near end]
+    \end{tikzcd}\,.
+    \]
+  \pause
+
+  We get a category of $j$-categories.  
+  We can show that this category has an initial object $C_j$, called the \emph{cone on $j$}.
+  \pause
+
+  $C_j$ is the category obtained from $\C$ by `formally adding morphisms $\psi_X\from I \implies jX$'.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Construction of $C_j$}
+
+  The construction of $C_j$ is straightforward (and quite familiar in the Cartesian case).
+  \pause
+
+  The objects of $C_j$ are the objects of $\C$.  
+
+  A morphism $A\to B$ in $C_j$ is a pair $(X,f)$, where $X$ is an object of $\C'$ and $f\from jX \tensor A \to B$ is a morphism in $\C'$.
+
+  Two morphisms $(X, f)$ and $(X', f')$ are considered to be equivalent if there is some morphism $h\from X'\to X$ in $\C'$ making the following diagram commute.
+  \[
+    \begin{tikzcd}[ampersand replacement=\&]
+      j X' \tensor A \arrow[r, "f'"] \arrow[d, "j h \tensor A"']
+        \& B \\
+      j X \tensor A \arrow[ur, "f"']
+        \&
+    \end{tikzcd}
+    \]
+  \pause
+
+  Composition is given by `the only thing you can write down'.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Constructing models from $C_j$}
+
+  We said that we wanted to model effects by finding a particular $j$-category $\D$ for a suitable $j$ that captures the effect in some way.
+  \pause
+
+  Even if we know nothing else about $\D$, we know that there is a functor $C_j\to\D$ that is a morphism of $j$-categories.
+  \pause
+
+  If $\D$ satisfies `$j$-factorization', then this functor is full.
+  \pause
+
+  In such a case, we can recover $\D$ by imposing a suitable equivalence relation on the morphisms in $C_j$.
+  \pause
+
+  The more morphisms we can include in $\C'$, the closer $C_j$ will be to our desired model.
+\end{frame}
+
+\section{More examples}
+
+\begin{frame}
+  \frametitle{Unbounded nondeterminism}
+
+  Let $\G$ be the category of Hyland-Ong games.  
+  \pause
+
+  Now suppose that $\D$ is some extension of $\G$ that somehow models nondeterminism.  
+  For each object $A$ of $\D$, there should be a strategy $\top_A\from 1 \to A$ that includes every position in $A$.
+  \pause
+
+  $\top_A$ is not a natural transformation $1\to\G$: this would mean that $\top_A;\sigma=\top_B$ for every $\sigma\from A \to B$.
+  \pause
+
+  However, if we require that $\sigma$ be \emph{surjective}; i.e., that every position in $B$ is the restriction of some position occurring in $\sigma$, then $\top_A;\sigma=\top_B$.  
+  \pause
+
+  If $j_s$ is the inclusion of the category $\G_s$ of games and \emph{surjective strategies} into $\G$, then $\top_A$ is a natural transformation $1\to j_s A$.
+  \pause
+
+  Therefore, $\D$ is some quotient of $C_{j_s}$.  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Unbounded nondeterminism and must-testing}
+
+  $C_j$ models may-testing: in a model of unbounded nondeterminism with must-testing, we may have $\top_A;\sigma\ne \top_B$ even if $\sigma$ is surjective.  
+  The reason is that $\sigma$ might have a play ending with infinitely many moves in $A$.
+  \pause
+
+  We say that a strategy $\sigma\from A \to B$ is \emph{winning} if it contains no such play.  
+  Then if $j_{sw}$ is the inclusion of the category $\G_{sw}$ of games and \emph{surjective winning} strategies, then any model of unbounded nondeterminism with must testing that satisfies deterministic factorization is a quotient of $C_j$.
+  \pause
+
+  Notice that $\G_{sw}$ has \emph{fewer} morphisms than $\G_s$ and so the cone $C_{j_{sw}}$ has \emph{more} morphisms than the cone $C_{j_s}$: we no longer identify all strategies that have the same convergent behaviours.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Finite nondeterminism, revisited}
+
+  We modelled finite nondeterminism in the cone $C_{c_{\bB}}$, where $c_{\bB}\from I \to \G$ is the constant $\bB$ functor.
+  \pause
+
+  A problem with this model was that it did not distinguish enough morphisms.
+  \pause
+
+  Let us replace $I$ with the one-object category $s_2$ whose morphisms are the surjective functions $\bool\to\bool$.
+  Then $c_{\bB}$ extends to a functor $c_{\bB}'\from s_2\to \G$ in an obvious way.
+  \pause
+
+  The cone on $c_{\bB}'$ now no longer distinguishes the two terms $\lambda b.b$ and $\lambda b.\text{not }b$.
+  \pause
+
+  Alternatively: there is a morphism of oplax monoidal functors from $c_{\bB}\to j_{sw}$, which induces a functor $C_{c_{\bB}}\to C_{j_{sw}}$.  
+  If we take the image of $C_{c_{\bB}}$ inside $C_{j_{sw}}$ then we can use the finer equivalence relation with the simpler category.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probabilistic game semantics}
+  The last example was a category with one object and multiple morphisms.
+  \pause
+
+  Now we consider an example with multiple objects and very few morphisms.
+  \pause
+
+  We turn the monoid $([0,1],\times)$ into a (strict) monoidal category and then add additional morphisms $\neg_p\from p \to 1-p$.  
+  
+  Take the functor $c_{\bB}^p\from [0,1]\to \G$ that sends every element of $[0,1]$ to the boolean object $\bB$ and sends each morphism $\neg_p$ to the morphism $\text{not}\from\bB\to\bB$.
+  \pause
+
+  Then the cone over $c_{\bB}^p$ interprets probabilistic PCF.
+  \pause
+
+  The equivalence relation on morphisms in the cone automatically gives us equations such as the following.
+  \begin{gather*}
+    \text{if }\psi_{2/3}\text{ then }(\text{if }\psi_{1/2}\text{ then }a\text{ else }b)\text{ else }c=\\
+    \text{if }\psi_{1/3}\text{ then }a\text{ else }(\text{if }\psi_{1/2}\text{ then }b\text{ else }c)
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Game semantics of state}
+  Let $\Set^{\overset{\rightarrow}{\leftarrow}}$ be the category whose objects are sets and where the morphisms $A\to B$ are pairs of functions $f\from A\to B,g\from B\to A$ such that $f\circ g=\id_B$.
+
+  Then we get an oplax monoidal functor $\Var\from\Set^{\overset{\rightarrow}{\leftarrow}}\to\G$ sending a set $X$ to the game $\Var[X] = \com^X\times \underline X$.
+  \pause
+
+  The function $\cell_X\from 1 \to \oc\Var[X]$ that is used to encapsulate state in the Abramsky-McCusker model of Idealized Algol is then a natural transformation from $1$ to $\oc\Var[X]$.
+  \pause
+
+  So we can model stateful strategies on a game $A$ as pairs $(X,\sigma)$ where $X$ is a set and $\sigma\from\oc\Var[X]\to A$ is an innocent strategy.
+  \pause
+
+  So what?  We can already characterize these as visible strategies.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Call-by-value state}
+
+  Murawski + Tzevelekos: There is no implicit characterization of the stateful strategies of call-by-value Idealized Algol.
+  \pause
+
+  Contrast
+  
+  RML $=$ PCF${}^+$ $+$ $\text{ref}\from\Var$
+  
+  with
+  
+  IA${}_{cbv}$ $=$ PCF${}^+$ $+$ $\new_X\from ((\Var \to X) \to X)$.
+  \pause
+
+  Cone models make Idealized Algol's \emph{block structure} explicit:
+  \begin{mathpar}
+    \text{[RML] }\Var \to A \and \text{[IA${}_{cbv}$] }((\Var \to X) \to X) \to A
+  \end{mathpar}
+  \pause
+  M+T: $S$-strategies for modelling IA${}_{cbv}$ -- make state and block-structure explicit, keeping just enough information to define a notion of \emph{innocence}.
+  \pause
+
+  Then discard the explicit state to get the semantics of IA${}_{cbv}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Questions?}
+\end{frame}
+
+\end{document}

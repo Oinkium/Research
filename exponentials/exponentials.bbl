@@ -1,0 +1,18 @@
+\begin{thebibliography}{AJM00}
+
+\bibitem[AJM00]{ajmPcf}
+Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
+\newblock Full abstraction for {PCF}.
+\newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
+
+\bibitem[Bla92]{blassgames}
+Andreas Blass.
+\newblock A game semantics for linear logic.
+\newblock {\em Annals of Pure and Applied Logic}, 56(1–3):183 -- 220, 1992.
+
+\bibitem[Hyl97]{hyland1997games}
+Martin Hyland.
+\newblock Game semantics.
+\newblock {\em Semantics and logics of computation}, 14:131, 1997.
+
+\end{thebibliography}

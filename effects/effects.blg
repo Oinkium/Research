@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99d (TeX Live 2018/Arch Linux)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: effects.aux
+The style file: spbasic.bst
+Database file #1: effects.bib
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
+You've used 9 entries,
+            3270 wiz_defined-function locations,
+            748 strings with 6613 characters,
+and the built_in function-call counts, 9427 in all, are:
+= -- 1099
+> -- 107
+< -- 14
++ -- 76
+- -- 32
+* -- 546
+:= -- 1041
+add.period$ -- 8
+call.type$ -- 9
+change.case$ -- 67
+chr.to.int$ -- 9
+cite$ -- 9
+duplicate$ -- 1017
+empty$ -- 705
+format.name$ -- 46
+if$ -- 1980
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 80
+newline$ -- 37
+num.names$ -- 38
+pop$ -- 275
+preamble$ -- 1
+purify$ -- 46
+quote$ -- 0
+skip$ -- 498
+stack$ -- 0
+substring$ -- 749
+swap$ -- 659
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 81
+warning$ -- 0
+while$ -- 66
+width$ -- 0
+write$ -- 125

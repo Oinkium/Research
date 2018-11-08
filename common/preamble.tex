@@ -12,7 +12,10 @@
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)\prefix\t$.
 \fi
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\ifdefined\BEAMER
+\else
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\fi
 \usepackage{mathtools} % for the all important \coloneqq symbol
 \usepackage{url} % for \url
 \usepackage{IEEEtrantools} % for \IEEEeqnarray

@@ -1,0 +1,26 @@
+\frametitle{Must-convergence}
+
+  Nondeterministic languages differ from deterministic ones in that a given term $M$ may admit multiple different small-step reduction rules.
+
+  If $M\from o$ is a term of a nondeterministic language, we say that $M$ \emph{must converge}, and write $M\mustconverge$, if every possible small-step evaluation path of $M$ eventually terminates at some observable value.
+
+  \pause
+
+  \begin{minipage}{0.5\textwidth}
+    \begin{lstlisting}
+$\lambda$ c . {
+  for i = 0 to ? {
+    c;
+  }
+}
+    \end{lstlisting}
+  \end{minipage}\pause\quad\begin{minipage}{0.3\textwidth}
+    \begin{lstlisting}
+$\lambda$ c . {
+  while (TRUE) {
+    c;
+  }
+}
+    \end{lstlisting}
+  \end{minipage}
+
