@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.19)  8 NOV 2018 15:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.19)  8 NOV 2018 15:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -638,12 +638,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7]
 
-LaTeX Warning: Citation `DanosHarmer' on page 7 undefined on input line 326.
+LaTeX Warning: Citation `DanosHarmer' on page 8 undefined on input line 333.
 
-[7]
-Overfull \hbox (22.08395pt too wide) detected at line 380
+[8]
+Overfull \hbox (22.08395pt too wide) detected at line 387
 [][] \OT1/cmr/m/n/10 = (\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 
  \OML/cmm/m/it/10 JY\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 
  \OML/cmm/m/it/10 JX [] A \OMS/cmsy/m/n/10 
@@ -654,7 +654,7 @@ Overfull \hbox (22.08395pt too wide) detected at line 380
  []
 
 
-Overfull \hbox (5.86098pt too wide) detected at line 397
+Overfull \hbox (5.86098pt too wide) detected at line 404
 [][] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 jY \U/msa/m/n/10 ( \OT1/cmr/m/n/10 (\OM
 L/cmm/m/it/10 jX \U/msa/m/n/10 ( \OML/cmm/m/it/10 A\OT1/cmr/m/n/10 ) \OMS/cmsy/
 m/n/10 ! \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 jY \OMS/cmsy/m/n/10 
@@ -663,7 +663,7 @@ T1/cmr/m/n/10 (\OML/cmm/m/it/10 Y \OMS/cmsy/m/n/10
  \OML/cmm/m/it/10 X\OT1/cmr/m/n/10 ) \U/msa/m/n/10 ( \OML/cmm/m/it/10 A :
  []
 
-[8] (./effects.bbl
+(./effects.bbl [9]
 Underfull \hbox (badness 5578) in paragraph at lines 29--32
 []\OT1/cmr/m/n/9 Melli^^Res PA (2012) Para-met-ric mon-ads and en-riched ad-jun
 c-
@@ -675,37 +675,40 @@ Underfull \hbox (badness 7099) in paragraph at lines 29--32
 mellies / tensorial-[]logic /
  []
 
-[9]) [10] (./effects.aux) ) 
+) [10] (./effects.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  14449 strings out of 492642
  290518 string characters out of 6135566
- 347711 words of memory out of 5000000
+ 346711 words of memory out of 5000000
  18044 multiletter control sequences out of 15000+600000
  14045 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,18n,82p,492b,942s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/sh
-are/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-dist/fonts/type1/public/ams
-fonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/sym
-bols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
-0.pfb>
-Output written on effects.pdf (10 pages, 276892 bytes).
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb>
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mtt9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/shar
+e/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on effects.pdf (10 pages, 277887 bytes).
 PDF statistics:
  136 PDF objects out of 1000 (max. 8388607)
  99 compressed objects within 1 object stream
