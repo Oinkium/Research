@@ -89,11 +89,15 @@ BA2 7AY,\\
 \begin{abstract}
   A well-known principle in denotational semantics is that adding an effect to a categorical model should correspond to the Kleisli category construction for some suitable monad.  
   Our point of departure is the observation that much recent work in semantics, particularly in game semantics, has broken away from this principle by modelling effects using categories that are not Kleisli categories.  
-  Such models are usually obtained throuhg a combination of analysis and intuition and therefore, while acknowledging that this program has been very successful, we have set out to provide the beginnings of a theory which could encompass models of effects in a setting like game semantics that is not amenable to the traditional monadic approach.  
+  Our aim is to extend the theory of monadic effects to these models in a systematic way.
 
-  An important part of our approach will be to study parametric monads, otherwise known as lax actions, which have been studied recently by \Mellies, Katsumata and others.  
-  We introduce a construction on parametric monads which generalizes the Kleisli construction and also shares one of its most striking features; namely, that it does not change the objects of the category, only the morphisms.
-  We illustrate the importance of this construction by showing that a particular special case gives us a fully abstract game semantics for Probabilistic Algol.
+  An important part of our approach will be to study parametric monads, otherwise known as lax actions of monoidal categories.
+  These generalize monads: a monad is precisely an action of the trivial category.
+  We introduce a construction on parametric monads which takes a parametric monad on a category and gives us back a new category.  
+  As with the Kleisli category, the objects of this category will be the objects of the original category, while the morphisms are obtained from morphisms in the original category in a formal manner brought about by the action.  
+  We show that this new construction is closely related to existing models of effects in game semantics, allowing us to reason systematically about adequacy and full abstraction proofs.
+
+  We illustrate the relevance of this construction by showing that a special case gives us a fully abstract game semantics for Probabilistic Algol, which can be related to the existing model given by Danos and Harmer.
 \keywords{denotational semantics, category theory, game semantics}
 \end{abstract}
 
