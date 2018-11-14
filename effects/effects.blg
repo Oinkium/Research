@@ -4,44 +4,44 @@ The top-level auxiliary file: effects.aux
 The style file: spbasic.bst
 Database file #1: effects.bib
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
-You've used 9 entries,
+You've used 12 entries,
             3270 wiz_defined-function locations,
-            748 strings with 6613 characters,
-and the built_in function-call counts, 9427 in all, are:
-= -- 1099
-> -- 107
-< -- 14
-+ -- 76
-- -- 32
-* -- 546
-:= -- 1041
-add.period$ -- 8
-call.type$ -- 9
-change.case$ -- 67
-chr.to.int$ -- 9
-cite$ -- 9
-duplicate$ -- 1017
-empty$ -- 705
-format.name$ -- 46
-if$ -- 1980
+            777 strings with 7295 characters,
+and the built_in function-call counts, 13355 in all, are:
+= -- 1577
+> -- 157
+< -- 18
++ -- 109
+- -- 47
+* -- 787
+:= -- 1454
+add.period$ -- 11
+call.type$ -- 12
+change.case$ -- 89
+chr.to.int$ -- 12
+cite$ -- 12
+duplicate$ -- 1442
+empty$ -- 987
+format.name$ -- 72
+if$ -- 2806
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 80
-newline$ -- 37
-num.names$ -- 38
-pop$ -- 275
+missing$ -- 108
+newline$ -- 46
+num.names$ -- 50
+pop$ -- 374
 preamble$ -- 1
-purify$ -- 46
+purify$ -- 63
 quote$ -- 0
-skip$ -- 498
+skip$ -- 716
 stack$ -- 0
-substring$ -- 749
-swap$ -- 659
-text.length$ -- 5
+substring$ -- 1103
+swap$ -- 933
+text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 81
+type$ -- 108
 warning$ -- 0
-while$ -- 66
+while$ -- 91
 width$ -- 0
-write$ -- 125
+write$ -- 162

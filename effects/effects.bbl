@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{{#1}}
 \providecommand{\urlprefix}{URL }
@@ -7,6 +7,17 @@
   \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
   \urlstyle{rm}\Url}\fi
 \providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem[{Abramsky and McCusker(1999)}]{SamsonGuyIAPassive}
+Abramsky S, McCusker G (1999) Full abstraction for {Idealized Algol} with
+  passive expressions. Theor Comput Sci 227(1-2):3--42,
+  \doi{10.1016/S0304-3975(99)00047-X},
+  \urlprefix\url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
+
+\bibitem[{Danos and Harmer(2000)}]{DanosHarmer}
+Danos V, Harmer R (2000) Probabilistic game semantics. In: Proceedings
+  Fifteenth Annual IEEE Symposium on Logic in Computer Science (Cat.
+  No.99CB36332), pp 204--213, \doi{10.1109/LICS.2000.855770}
 
 \bibitem[{Ghica(2005)}]{SlotGames}
 Ghica DR (2005) Slot games: A quantitative model of computation. In:
@@ -19,6 +30,11 @@ Ghica DR (2005) Slot games: A quantitative model of computation. In:
 Katsumata Sy (2016) Graded monads and semantics of effect systems,
   \urlprefix\url{http://csl16.lif.univ-mrs.fr/planning/qslc/talks/katsumata/},
   qSLC 2016
+
+\bibitem[{Lurie(2009)}]{lurie2009}
+Lurie J (2009) On the classification of topological field theories. Current
+  Developments in Mathematics 2008:129--280,
+  \urlprefix\url{https://projecteuclid.org:443/euclid.cdm/1254748657}
 
 \bibitem[{L{\"u}th and Ghani(1997)}]{WeaklyFiltered}
 L{\"u}th C, Ghani N (1997) Monads and modular term rewriting. In: Moggi E,
