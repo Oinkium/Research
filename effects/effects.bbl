@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{{#1}}
 \providecommand{\urlprefix}{URL }
@@ -25,6 +25,11 @@ Ghica DR (2005) Slot games: A quantitative model of computation. In:
   Programming Languages, ACM, New York, NY, USA, POPL '05, pp 85--97,
   \doi{10.1145/1040305.1040313},
   \urlprefix\url{http://doi.acm.org/10.1145/1040305.1040313}
+
+\bibitem[{Giry(1982)}]{Giry}
+Giry M (1982) A categorical approach to probability theory. In: Banaschewski B
+  (ed) Categorical Aspects of Topology and Analysis, Springer Berlin
+  Heidelberg, Berlin, Heidelberg, pp 68--85
 
 \bibitem[{Katsumata(2016)}]{Katsu}
 Katsumata Sy (2016) Graded monads and semantics of effect systems,

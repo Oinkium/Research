@@ -19,6 +19,7 @@
 \usepackage{tikz}
 \usepackage{xspace}
 \usepackage{IEEEtrantools}
+\usepackage{mathtools}
 \usetikzlibrary{cd}
 \usepackage{mathpartir}
 \def\UrlFont{\rmfamily}
@@ -30,9 +31,9 @@
 \newcommand\M{\mathcal{M}}
 \DeclareMathOperator\pr{pr}
 \DeclareMathOperator\id{id}
+\newcommand{\inv}{{}^{-1}}
 \newcommand{\suchthat}{\,\colon\,}
 \newcommand{\esuchthat}{\,.\,}
-\newcommand\from{\,\colon\,}
 \newcommand\object\colon
 \DeclareMathOperator{\ac}{ac}
 \DeclareMathOperator{\End}{End}
@@ -47,15 +48,57 @@
 \newcommand{\pfc}{\boldsymbol{\cdot}}
 \newcommand\Mellies{Melli\`{e}s\xspace}
 
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+\newcommand{\nat}{{\mathtt{nat}}}
+\newcommand*\from{\colon}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\opto}{\longrightarrow}
+\newcommand{\n}{{\mathtt{n}}}
+\newcommand{\x}{{\mathtt{x}}}
+\newcommand{\IfO}{{\mathtt{If0}\;}}
+\newcommand{\If}{{\mathtt{If}\;}}
+\newcommand{\suc}{{\mathtt{suc\;}}}
+\newcommand{\pred}{{\mathtt{pred\;}}}
+\newcommand{\0}{{\mathtt{0}}} \newcommand{\com}{{\mathtt{com}}}
+\newcommand{\skipp}{{\mathsf{skip}}}
+\newcommand{\neww}{{\mathsf{new}}}
+\newcommand{\mkvar}{{\mathsf{mkvar}\;}}
+\newcommand{\deref}{\texttt{@}}
+\newcommand{\ia}[2]{\langle #1 , #2 \rangle}
+\newcommand{\stup}[3]{\langle #1 \mid #2 \mapsto #3 \rangle}
+\newcommand{\Var}{{\mathtt{Var}}}
+\newcommand{\new}{{\mathtt{new}}}
+\renewcommand{\case}{{\mathtt{case}}}
+\newcommand{\blank}{\;\underline{\hspace{1.5ex}}\;}
+\newcommand{\converges}{\Downarrow}
+
 \newcommand{\catname}[1]{\mathbf{#1}}
 \newcommand{\Set}{\catname{Set}}
 \newcommand{\Surj}{\catname{Surj}}
 \newcommand{\Ret}{\catname{Ret}}
 \newcommand{\Cat}{\catname{Cat}}
+\newcommand{\DProb}{\catname{DProb}}
+\newcommand{\BProb}{\catname{BProb}}
 \newcommand{\powerset}{\mathcal P}
+\usepackage{bbm}
+\newcommand{\true}{\mathbbm{t}}
+\newcommand{\false}{\mathbbm{f}}
+
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bP}{\mathbb{P}}
 
 \DeclareMathOperator{\Prof}{Prof}
 \DeclareMathOperator{\Kl}{Kl}
+
+\newcommand{\coin}{\textsf{coin}}
+\newcommand{\polydie}{\textsf{polydie}}
+\newcommand{\bool}{\textsf{bool}}
+
+\renewcommand{\emptyset}{\varnothing}
 
 \makeatletter
 \newcommand{\colim@}[2]{%
@@ -403,7 +446,7 @@ In other words, we have natural transformations $\passoc_{X,Y,A}\from X.Y.A\to (
         \run_A\from A \to A.I\,.
       \end{gather*}
 
-    \item If $\C$ is a monoidal closed category, and $j$ an oplax monoidal functor with coherence $\nu$, then there is an action of $\M$ on $\C$ given by
+    \item If $\C$ is a monoidal closed category, and $j$ an oplax monoidal functor with coherence $\nu$, then there is an action of $\M^{op}$ on $\C$ given by
       \[
         A.X = jX \implies A
         \]
@@ -519,12 +562,12 @@ $\C/\M$, $J$ and $\phi_{X,A}$ are universal in the following sense.
   For example, in \cite{SamsonGuyIAPassive}, it is shown that any morphism $\sigma \from A\to B$ in the category $\G_{vis}$ of games and visible strategies may be factorized as
   \[
     \sigma = A \xrightarrow{\text{Inn}(\sigma)}
-    (\text{Var[S]} \to B) \xrightarrow{\textsf{new}_S}
+    (\text{Var[S]} \to B) \xrightarrow{\new_S}
     B\,,
     \]
-  where $\text{Inn}(\sigma)$ is a morphism in the category of $\G_{inn}$ of games and innocent strategies, $S$ is a set and $\textsf{new}$ is a special morphism that introduces stateful behaviour.  
-  The $\text{Var}[S]$ construction, which is the game corresponding to a storage cell holding values of the set $S$, may be regarded as an oplax monoidal functor from the category $\Ret$ of sets and retractions into the category of games, and so $\text{Var}[S]\to B$ is a reader-style action.  
-  Moreover, it can be shown that $\textsf{new}$ gives rise to a multiplicative natural transformation, inducing a functor $\G_{inn}/\Ret\to \G_{vis}$.  
+  where $\text{Inn}(\sigma)$ is a morphism in the category of $\G_{inn}$ of games and innocent strategies, $S$ is a set and $\new$ is a special morphism that introduces stateful behaviour.  
+  The $\Var[S]$ construction, which is the game corresponding to a storage cell holding values of the set $S$, may be regarded as an oplax monoidal functor from the category $\Ret$ of sets and retractions into the category of games, and so $\Var[S]\to B$ is a reader-style action.  
+  Moreover, it can be shown that $\new$ gives rise to a multiplicative natural transformation, inducing a functor $\G_{inn}/\Ret\to \G_{vis}$.  
   Then the factorization result we have quoted says precisely that this functor is full.
 \end{remark}
 \begin{remark}
@@ -566,10 +609,10 @@ In our setting, the two functors $\pr_2$ and $\_.\_$ from $\M\times\C \to \C$ fo
 It turns out that a similar result then applies.
 
 \begin{proposition}
-  Given an action of a monoidal category $\M$ on a category $\C$, there is an obvious way to define an action of $\M\times\M$ on $\C\times\C$.  
+  Given an action of a monoidal category $\M$ on a category $\C$, and an action of a monoidal category $\M'$ on a category $\C'$, there is an obvious way to define an action of $\M\times\M'$ on $\C\times\C'$.  
   Then the functor
   \[
-    (\C\times\C)/(\M\times\M) \to (\C/\M) \times (\C/\M)
+    (\C\times\C')/(\M\times\M') \to (\C/\M) \times (\C'/\M')
     \]
   induced as in Proposition \ref{quotient-universal} is an isomorphism.
   \label{monoidality}
@@ -607,6 +650,146 @@ This generalizes the case of a monoidal monad, whose the Kleisli category is alw
 Now, if $\C$ is monoidal closed and the action of $\M$ on $\C$ is a \emph{reader-type action}, then $\C/\M$ also inherits the monoidal closed structure from $\C$.  
 Note that this may not be true for arbitrary actions, even for monads.  
 For example, the Kleisli category for the power set monad on $\Set$ (which is better known as the category of sets and relations) is monoidal closed, but with inner function space given by the Cartesian product, and not by the function space from $\Set$.
+
+\section{Game Semantics for Probabilistic Algol}
+
+\subsection{The discrete probability monad}
+
+Given a set $X$, we define a \emph{discrete probability measure} on $X$ to be a function $\bP\from\powerset(X)\to[0,1]$ satisfying the following conditions.
+\begin{description}
+  \item[Empty set] $\bP(\emptyset) = 0$.
+  \item[Countable additivity] If $\{E_i\}_{i=0}^\infty$ is a sequence of pairwise-disjoint subsets of $X$, then
+    \[
+      \bP\left(\bigcup_{i=0}^\infty E_i\right) = \sum_{i=0}^\infty \bP(E_i)\,.
+      \]
+  \item[Whole space] $\bP(X)=1$.
+\end{description}
+
+If instead we have $\bP(X)\le 1$, we say that $\bP$ is a \emph{sub-probability measure}
+
+Note that if $A$ is countable, then $\mu$ may be entirelly specified by its action on singletons: if $A\subseteq X$ is a set, then we have
+\[
+  \bP(A) = \sum_{a\in A}\bP(\{a\})\,.
+  \]
+
+Given a set $X$, we define $P(X)$ to be the set of all discrete probability measures on $X$.  
+Then we have natural maps
+\begin{mathpar}
+  \delta_X\from X \to P(X) \and m_X\from P(P(X)) \to X
+\end{mathpar}
+given by
+\begin{mathpar}
+  \delta_X(x)(A) = \begin{cases}
+    1 & x\in A \\
+    0 & x\not\in A
+  \end{cases} \and
+  \bP_X(\tau)(A) = \sum_{\bP\in P(X)} \tau(\{\bP\})\bP(A)
+\end{mathpar}
+$\delta_X$ and $m_X$ give $P$ the structure of a monad on $\Set$, which we will call the \emph{discrete probability monad}.  
+This is a discrete form of the monad developed in \cite{Giry}.
+
+We want to exhibit this monad as the colimit of an action, as we did for the power set monad earlier.  
+We define a \emph{discrete probability space} to be a pair $(X,\bP_X)$, where $X$ is a set and $\mu$ a discrete probability measure on $X$.  
+We will normally refer to this pair using the set $X$.
+Given discrete probability spaces $X$ and $Y$, we define a \emph{measure-preserving map} from $X$ to $Y$ to be a function $f\from X \to Y$ such that for all $A\subseteq Y$ we have $\bP(X)(f\inv(A)) = \bP_Y(A)$.
+It is clear that discrete probability spaces and measure-preserving maps form a category $\DProb$.
+
+Moreover, $\DProb$ is a monoidal category: given discrete probability spaces $X$ and $Y$, we may define a probability measure on the Cartesian product $X\times Y$ by
+\[
+  \bP_{X\times Y} (A) = \sum_{(x,y)\in A} \bP_X(\{x\})\bP_Y(\{y\})\,.
+  \]
+
+Then we have a natural isomorphism
+\[
+  P(X) \cong \colim_{(Y,\bP_Y)\object\DProb^{op}} [Y,X]\,,
+  \]
+such that the monad structure on $P$ is induced from the reader-style action of $\DProb^{op}$ on $\Set$ given by the monoidal functor $\DProb\to\Set$ that sends $(Y,\bP_Y)$ to its underlying set $Y$.
+
+Moreover, the category $\DProb^{op}$ is weakly filtered, and so, as in our earlier discussion, we feel confident using this action, rather than the monad $P$ we have defined, to model discrete probability.  
+
+By cutting down the category $\DProb$ we can obtain slightly different notions of probability.  
+For our purposes, we will be using the full subcategory $\BProb$ where the objects $(X,\bP_X)$ are those that satisfy the following three additional conditions.
+\begin{description}
+  \item[Countability] The set $X$ is countable.
+  \item[Finite support] There is a finite subset $E\subseteq X$ such that $\bP_X(E)=1$.
+  \item[Rational probabilities] $\bP_X(A)\in\mathbb{Q}$ for all $A\subseteq X$.
+\end{description}
+
+The action of $\BProb$ gives rise to a monad on the category of countable sets.  
+
+\subsection{Probabilistic Algol}
+
+\cite{DanosHarmer} gives a fully abstract game semantics for the language Probabilistic Algol (PA).  
+The base language for PA is the language Idealized Algol (IA) from \cite{SamsonGuyIAPassive}, and it has been extended with a constant $\coin\from\bool$.  
+We give the language a small-step reduction semantics, as shown in Figure \ref{pa-operational}.  
+
+\begin{figure*}
+  \begin{mathpar}
+    \inferrule*{ }{\ia s {(\lambda x.M)\;N} \opto \ia s {M[N/x]}}
+    \and
+    \inferrule*{ }{\ia s {\Y_T M}\opto \ia s {M (\Y_T M)}}
+    \and
+    \inferrule*{ }{\ia s {\suc \n}\opto\ia s {\n + \mathsf{1}}}
+    \and
+    \inferrule*{ }{\ia s {\pred \n}\opto\ia s {\0 \sqcup (\n - \mathsf{1})}}
+    \and
+    \inferrule*{ }{\ia s {\IfO \0 M N} \opto \ia s M}
+    \and
+    \inferrule*{ }{\ia s {\IfO (\n + \mathsf{1}) M N} \opto \ia s N}
+    \and
+    \inferrule*{ }{\ia s {\If \true\;M\;N} \opto M}
+    \and
+    \inferrule*{ }{\ia s {\If \false\;M\;N} \opto N}
+    \and
+    \inferrule*{ }{\ia s {\deref (\mkvar M N)} \opto \ia s M}
+    \and
+    \inferrule*{ }{\ia s {(\mkvar M N) \coloneqq L} \opto \ia s {N\;L}}
+    \and
+    \inferrule*{ }{\ia s {v \coloneqq n} \opto \ia {\stup s v n} \skipp}
+    \and
+    \inferrule*[left={$s(v)=n$}]{ }{\ia s {\deref v} \opto \ia s n}
+    \and
+    \inferrule*{ }{\ia s {\skipp;M} \opto \ia s M}
+    \and
+    \inferrule*{ }{\ia s {\new_T \lambda v.M}\opto \ia {\stup s v 0} M}
+    \and
+    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {E[M]} \opto \ia s {E[M']}}
+    \and
+    \inferrule*[left=coin]{ }{\ia s \coin \opto \ia s \true}
+    \and
+    \inferrule*[left=coin]{ }{\ia s \coin \opto \ia s \false}
+  \end{mathpar}
+  \caption{Small-step operational semantics for Probabilistic Algol, where $E$ ranges over suitable evaluation contexts}
+  \label{pa-operational}
+\end{figure*}
+
+All of these rules are deterministic with the exception of the two marked \LeftTirName{coin}.
+Given an evaluation $\pi = M \to M_1 \to \cdots \to \x$ of a term $M$ of ground type $o$, we define the \emph{weight} $w(\pi)$ of $\pi$ to be $\frac{1}{2^k}$, where $k$ is the number of instances of a \LeftTirName{coin} rule occurring in $\pi$.
+
+This defines a discrete sub-probability measure on the set corresponding to the ground type $o$ given by
+\[
+  \bP(\{x\}) = \sum_{\substack{\text{evaluations}\\\pi = M \to\dots \x}}w(\pi)\,.
+  \]
+This is only a subprobability measure, because some evaluations may continue forever.
+
+\cite{DanosHarmer} shows how we can define other probabilistic terms using $\coin$.  
+Specifically, they define a term $\polydie\from\bN\to\bN$, where the behaviour of $\polydie n$ is to return the result of tossing an $n$-sided die (with sides numbered $0$ to $n-1$), with each outcome occurring with probability $1/n$.  
+The definition of $\polydie n$ in terms of $\coin$ works as follows.  
+We choose some number $k$ such that $2^k\ge n$ and then toss the coin $n$ times to give one of $2^k$ outcomes.  
+If an outcome corresponds (under some fixed correspondence $n\hookrightarrow 2^k$) to a natural number below $n$, then we return that number; otherwise, we repeat the process until we get such a number.  
+
+This process will terminate with probability $1$, and since each $m<n$ occurs with equal probability, they must all occur with probability $1/n$.
+
+\subsection{Extending a semantics for IA to a semantics for PA}
+
+Let $\G$ be a category that admits a fully abstract adequate semantics for Idealized Algol.  
+See \cite{SamsonGuyIAPassive} for a list of the conditions that such a category should satisfy, and also for the best known example, the category of games and visible strategies.
+
+As explained in \cite{SamsonGuyIAPassive}, $\G$ should be Cartesian closed and there should be a lax monoidal functor $\Set\to \G$ that gives the denotation of the ground types $\nat$,$\bool$ and $\com$, together with their structural functions.
+We can therefore get a lax monoidal functor $\BProb \to \G$ by composing this with the forgetful functor $\BProb\to\Set$.
+
+This gives rise to a reader-style action of $\BProb^{op}/\G$, and the resulting category $\G/\BProb^{op}$ is therefore a symmetric monoidal closed category.  
+Unfortunately, the monoidal product on $\G/\BProb^{op}$ is not Cartesian; the problem is that there is no unique way to form the copairing of 
 
 \bibliographystyle{spbasic}
 \bibliography{effects}
