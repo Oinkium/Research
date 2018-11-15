@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{{#1}}
 \providecommand{\urlprefix}{URL }
@@ -31,10 +31,29 @@ Giry M (1982) A categorical approach to probability theory. In: Banaschewski B
   (ed) Categorical Aspects of Topology and Analysis, Springer Berlin
   Heidelberg, Berlin, Heidelberg, pp 68--85
 
+\bibitem[{Harmer and McCusker(1999)}]{mcCHFiniteND}
+Harmer R, McCusker G (1999) A fully abstract game semantics for finite
+  nondeterminism. In: Proceedings. 14th Symposium on Logic in Computer Science
+  (Cat. No. PR00158), pp 422--430, \doi{10.1109/LICS.1999.782637}
+
+\bibitem[{Hyland and Power(2007)}]{Lawvere}
+Hyland M, Power J (2007) The category theoretic understanding of universal
+  algebra: Lawvere theories and monads. Electronic Notes in Theoretical
+  Computer Science 172:437 -- 458,
+  \doi{https://doi.org/10.1016/j.entcs.2007.02.019},
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S1571066107000874},
+  computation, Meaning, and Logic: Articles dedicated to Gordon Plotkin
+
 \bibitem[{Katsumata(2016)}]{Katsu}
 Katsumata Sy (2016) Graded monads and semantics of effect systems,
   \urlprefix\url{http://csl16.lif.univ-mrs.fr/planning/qslc/talks/katsumata/},
   qSLC 2016
+
+\bibitem[{Linton(1966)}]{FinitaryMonadOnSet}
+Linton FEJ (1966) Some aspects of equational categories. In: Eilenberg S,
+  Harrison DK, MacLane S, R{\"o}hrl H (eds) Proceedings of the Conference on
+  Categorical Algebra, Springer Berlin Heidelberg, Berlin, Heidelberg, pp
+  84--94
 
 \bibitem[{Lurie(2009)}]{lurie2009}
 Lurie J (2009) On the classification of topological field theories. Current

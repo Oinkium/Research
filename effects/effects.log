@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.19)  14 NOV 2018 23:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.19)  15 NOV 2018 23:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -583,18 +583,18 @@ LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
 ) (./effects.aux)
 \openout1 = `effects.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
 
 ABD: EveryShipout initializing macros
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -666,21 +666,35 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 136.
+LaTeX Font Info:    Try loading font information for U+msa on input line 139.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 136.
+LaTeX Font Info:    Try loading font information for U+msb on input line 139.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (42.57155pt too wide) in paragraph at lines 172--175
+\OT1/cmr/m/n/10 -- such as the well-known game se-man-tics for scoped state [[]
 ]
-Overfull \hbox (22.08395pt too wide) detected at line 441
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2]
+Overfull \hbox (25.98834pt too wide) in paragraph at lines 233--236
+\OT1/cmr/m/n/10 strate-gies (cor-re-spond-ing to state-ful pro-grams) from [[]]
+. 
+ []
+
+[3] [4] [5] [6] [7] [8] [9]
+Overfull \hbox (22.08395pt too wide) detected at line 481
 [][] \OT1/cmr/m/n/10 = (\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 
  \OML/cmm/m/it/10 JY\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 
  \OML/cmm/m/it/10 JX [] A \OMS/cmsy/m/n/10 
@@ -691,7 +705,7 @@ Overfull \hbox (22.08395pt too wide) detected at line 441
  []
 
 
-Overfull \hbox (5.86098pt too wide) detected at line 458
+Overfull \hbox (5.86098pt too wide) detected at line 498
 [][] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 jY \U/msa/m/n/10 ( \OT1/cmr/m/n/10 (\OM
 L/cmm/m/it/10 jX \U/msa/m/n/10 ( \OML/cmm/m/it/10 A\OT1/cmr/m/n/10 ) \OMS/cmsy/
 m/n/10 ! \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 jY \OMS/cmsy/m/n/10 
@@ -700,65 +714,70 @@ T1/cmr/m/n/10 (\OML/cmm/m/it/10 Y \OMS/cmsy/m/n/10
  \OML/cmm/m/it/10 X\OT1/cmr/m/n/10 ) \U/msa/m/n/10 ( \OML/cmm/m/it/10 A :
  []
 
-[9] [10] [11] [12] [13] [14]
-LaTeX Font Info:    Try loading font information for U+bbm on input line 740.
+[10] [11] [12] [13] [14] [15]
+LaTeX Font Info:    Try loading font information for U+bbm on input line 790.
 
 (/usr/share/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-) [15] (./effects.bbl
-[16]
-Underfull \hbox (badness 5578) in paragraph at lines 50--53
+) [16] [17] (./effects.bbl
+Underfull \hbox (badness 1303) in paragraph at lines 40--46
+\OT1/cmr/m/n/9 der-stand-ing of uni-ver-sal al-ge-bra: Law-vere the-o-ries and 
+mon-ads. Elec-tronic
+ []
+
+
+Underfull \hbox (badness 5578) in paragraph at lines 69--72
 []\OT1/cmr/m/n/9 Melli^^Res PA (2012) Para-met-ric mon-ads and en-riched ad-jun
 c-
  []
 
 
-Underfull \hbox (badness 4441) in paragraph at lines 50--53
+Underfull \hbox (badness 4441) in paragraph at lines 69--72
 \OT1/cmr/m/n/9 tions. Preprint on web-page at $https : / / www . irif . fr / []
 mellies / tensorial-[]logic /
  []
 
-) [17] (./effects.aux) ) 
+[18]) [19] (./effects.aux) ) 
 Here is how much of TeX's memory you used:
- 15194 strings out of 492642
- 303987 string characters out of 6135566
- 359629 words of memory out of 5000000
- 18763 multiletter control sequences out of 15000+600000
+ 15216 strings out of 492642
+ 304422 string characters out of 6135566
+ 359779 words of memory out of 5000000
+ 18785 multiletter control sequences out of 15000+600000
  16685 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,19n,82p,490b,967s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/john/.texlive/texmf-var/fonts/pk/ljfour/public/
-bbm/bbm9.600pk></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pf
-b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-csc10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.
-pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr
-/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/sh
-are/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/font
-s/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on effects.pdf (17 pages, 394548 bytes).
+ </home/john/.texlive/texmf-var/fonts/pk/ljfour/pub
+lic/bbm/bbm9.600pk></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy1
+0.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sh
+are/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9
+.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/sh
+are/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9
+.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/share/te
+xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/
+fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on effects.pdf (19 pages, 398033 bytes).
 PDF statistics:
- 197 PDF objects out of 1000 (max. 8388607)
- 142 compressed objects within 2 object streams
+ 204 PDF objects out of 1000 (max. 8388607)
+ 147 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

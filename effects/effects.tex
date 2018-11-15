@@ -24,6 +24,9 @@
 \usepackage{mathpartir}
 \def\UrlFont{\rmfamily}
 
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
 \newcommand\C{\mathcal{C}}
 \newcommand\D{\mathcal{D}}
 \newcommand\F{\mathcal{F}}
@@ -161,23 +164,54 @@ Given such a monad, its Kleisli category $Kl_M\C$ is then a model of a language 
 
 Spivey \cite{Spivey} and Wadler \cite{Wadler1,Wadler2} have transferred this theory to the real world by using monads as programming tools, particularly in the Haskell programming language.  
 
-Recent progress in the field of game semantics, however, has shown that monads and Kleisli categories are not the be-all and end-all of modelling effects.  
-There are perfectly game semantic models of effects such as state and nondeterminism that do not arise as the Kleisli category for a monad on some more basic category of games.  
-These models are typically built up using intuition -- for example, by relaxing the determinism condition on strategies to give a model of a nondeterministic language -- and do not readily fit into any category theoretic framework the way Kleisli categories do.  
+Monads are certainly not the only formal method of adding effects into categories.  
+For example, \cite{Lawvere} argues that Lawvere theories, a tool used originally in universal algebra (as monads were), also give us a natural way to model effects in categories.  
+Since \cite{FinitaryMonadOnSet} every Lawvere theory may be regarded as a particular monad on the category of sets, this is not surprising.  
+However, Lawvere theories are a lot more flexible than monads when it comes to composing multiple effects together.
+
+More recent work in game semantics, however, has produced models of effects -- such as the well-known game semantics for scoped state \cite{SamsonGuyIAPassive} and nondeterminism \cite{mcCHFiniteND} -- do not arise by applying any systematic procedure to a base category of games that lacks the effect.  
+Instead, these models are typically built up using intuition -- for example, by relaxing the determinism condition on strategies to give a model of a nondeterministic language -- and do not readily fit into any category theoretic framework the way Kleisli categories do.  
 The goal of this paper is to examine some possible frameworks that will allow us to study these and other models in a systematic way.  
 
 A closely related problem is that of using a common technique to model a particular effect in different settings.  
 Many of our favourite monads (e.g., the powerset monad on $\Set$ for nondeterminism) live in some particular category and cannot readily be set up in other categories. 
 
 Before we start, it is worth mentioning one example of a Kleisli category arising naturally in game semantics.  
-If we read Ghica's work on \emph{slot games} \cite{SlotGames}, it is not difficult to show that the category he constructs is in fact isomorphic to the Kleisli category for the \emph{reader monad} $\mathbb{C}\to \_$, where $\mathbb{C}$ is the game corresponding to a singleton set.  
+The \emph{slot games} defined in \cite{SlotGames} are defined like ordinary games, but their strategies are allowed to contain extra moves, called \emph{tokens}, which are meant to represent a point at which the computation takes up time or resources.  
+For example, a strategy for a term of natural number type that returns the value $5$ after two CPU cycles could be represented by the strategy shown on the left of Figure \ref{slot-games}.  
+Now, we can alternatively represent this strategy as being a normal strategy inside the Kleisli category for the reader monad given by the \emph{command} or \emph{singleton} type, as on the right of Figure \ref{slot-games}.  
+The translation works by replacing each token $\circled{\$}$ with a request to the argument to the function: since this arguement has singleton type, there is only one possible value that can be passed in, but the game semantics will record that we have made the request.  
+What is more, this translation respects composition in the two categories, both the Kleisli composition and the composition defined synthetically for slot games.
+\begin{figure}
+  \begin{mathpar}
+    \begin{array}{c}
+      \mathbf{\bN} \\
+      q \\
+      \circled{\$} \\
+      \circled{\$} \\
+      5 \\
+    \end{array}
+    \and
+    \begin{array}{ccc}
+      \mathbf{\bC} & \mathbf{\implies} & \mathbf{\bN} \\
+      && q \\
+      q && \\
+      a && \\
+      q && \\
+      a && \\
+      && 5
+    \end{array}
+  \end{mathpar}
+  \label{slot-games}
+  \caption{The `slot-games' denotation of a program that uses resources can also be represented in a Kleisli category.}
+\end{figure}
 
 Since the reader monad is entirely built out of the Cartesian closed structure of the category, we can perform a similar trick in many different settings, although perhaps not as successfully as in game semantics.  
 
 \subsection{Promonads}
 
 It is instructive at this point to see what happens if we generalize from functors to profunctors.  
-We define a \emph{promonad} on a category $\C$ to be a monoid in the monoidal category $\Prof[\C,\C]$ of endo-profunctors on $\C$.  
+We define a \emph{promonad} on a category $\C$ to be a monoid in the monoidal category $\Prof[\C,\C]$ of endo-profunctors on $\C$, where the monoidal product in $\Prof[\C,\C]$ is given by composition of profunctors.
 This concept generalizes that of a monad, since an endofunctor $M\from \C\to\C$ may be identified with the profunctor $\C[\_,M(\_)]\from \C^{op}\times\C\to\Set$.
 
 Since the set $\C[A,MB]$ is precisely the set of Kleisli morphisms from $A$ to $B$, it is natural to wonder whether we can perform a Kleisli-type construction on a promonad as well.  
@@ -197,12 +231,14 @@ Thus, the rather complicated definition of a promonad is in fact equivalent to t
 We shall therefore use the word `promonad' to mean both things.
 
 In one sense this is very exciting for us, because we can see that promonads generalize not only monads, but also a very large number of the models developed in Game Semantics.  
-For example, the inclusion of the category of games and deterministic strategies into the category of games and nondeterministic strategies is the identity on objects, so it is a promonad.  
-So is the inclusion of the category of games and innocent strategies into the category of games and visible strategies.  
+For example, the inclusion of the category of games and deterministic strategies into the category of games and nondeterministic strategies from \cite{mcCHFiniteND} is the identity on objects, so it is a promonad.  
+So is the inclusion of the category of games and innocent strategies (corresponding to stateless programs) into the category of games and visible strategies (corresponding to stateful programs) from \cite{SamsonGuyIAPassive}.
 
-More generally, this fits in with the idea that effects should not normally create new types, but should instead give us more flexibility when it comes to writing programs -- exactly what is modelled by an identity-on-objects functor.
+What these models have in common is that they model effects by changing the morphisms (i.e., the programs) but not the objects (i.e., the types).  
+Though effectful types can be useful [REFERENCE?], the simplest way of adding effects is to give us new ways to create programs between existing types, and this is the formalism that we will adopt in this paper.
 
-On the other hand, the sheer generality of promonads means that they don't give us any ways to actually create new models, since the data required to specify one is the entire category that we are trying to build.
+So promonads give a good general framework for the denotational semantics of effects.
+On the other hand, their sheer generality means that they don't give us any ways to actually create new models, since the data required to specify one is the entire category that we are trying to build.
 
 One way of describing the purpose of this work, then, is to discover classes intermediate between monads and promonads that are more general than pure monads but can still be specified in a concise way that allows us to transfer them between different settings.
 
@@ -268,9 +304,10 @@ Note that if $\M$ is the trivial category (so that the action is in fact a monad
 The colimit that appears in the definition of the category $\C/\M$ is instructive, because it is linked to the fact that many important monads may be expressed as colimits.  
 For example, let $\Surj$ be the category of sets and surjections.  
 Then, if $A$ is a set, we have
-\[
-  \powerset(A) \cong \colim_{X\object\Surj^{op}} [X,A]\,,
-  \]
+\begin{IEEEeqnarray*}{CCC}
+  \colim_{X\object\Surj^{op}} [X,A] & \cong & \powerset(A) \\[6pt]
+  \left(X \xrightarrow{f} A\right) & \mapsto & \text{Im}(f)\,,
+\end{IEEEeqnarray*}
 naturally in $A$.
 
 This is useful, because the body of the colimit -- i.e., the function set $[X,A]$ -- has a natural equivalent inside any Cartesian closed category that admits a functor out of $\Set$.  
@@ -358,7 +395,7 @@ The importance of $\kappa$-weakly filtered limits is shown by the following resu
   Since $\M$ is $\kappa$-weakly filtered, there is some object $Y$ of $\M$ that admits morphisms out of all of the $X_a$, and therefore $h$ may be considered as a function $A \to D(Y)$. \qed
 \end{proof}
 
-By setting $D(X)=X.B$, this means that if we have an action of $\M$ on $\Set$, where the monoidal category $\M$ is $\kappa$-weakly filtered for any $\kappa$, then we get a full functor $\Set/\M\to\Kl_M\Set$.
+By setting $D(X)=X.B$, this means that if we have a lax action of $\M$ on $\Set$, where the monoidal category $\M$ is $\kappa$-weakly filtered for any $\kappa$, then we get a full functor $\Set/\M\to\Kl_M\Set$.
 
 Moreover, if the colimit satisfies additional properties, then the $Y$ in the proof of Proposition \ref{prop:weakly-filtered} can be chosen in a functorial manner, so that we get a faithful right inverse to this full functor.
 
@@ -372,8 +409,11 @@ Moreover, if the colimit satisfies additional properties, then the $Y$ in the pr
 \end{example}
 
 The point of these last two sections can be summarized as follows.  
-If a monad $M$ on $\Set$ can be expressed as the colimit of an action of a weakly filtered monoidal category $\M$ on $\Set$, then we do not lose very much by considering the category $\Set/\M$ obtained from the action rather than the Kleisli category $\Kl_M\Set$.  
+If a monad $M$ on $\Set$ can be expressed as the colimit of a lax action of a weakly filtered monoidal category $\M$ on $\Set$, then we do not lose very much by considering the category $\Set/\M$ obtained from the action rather than the Kleisli category $\Kl_M\Set$.  
 More specifically, there is a full functor $\Kl_M\Set\to \Set/\M$ that is the identity on objects, so we may recover the Kleisli category by applying a suitable equivalence relation to the set of morphisms.  
+
+For example, since the nonempty power set monad may be expressed as the colimit of the lax action of the weakly filtered category $\Surj^{+\,op}$ on $\Set$, we get an alternative way to model it by using the category $\Set/\Surj^{+\,op}$ rather than the usual Kleisli category.  
+Though these two categories are not equal, the colimit representation gives rise to a natural functor from one to the other, which is the same as the amalgamation functor that we defined earlier.
 
 The benefit of reasoning about the action of $\M$ rather than the monad $M$ is that the action might be realizable in a much larger class of categories.  
 For instance, the action of $\Surj^{+\,op}$ on $\Set$ may be replicated inside any monoidal closed category that admits a functor out of the category of sets (for example, most models of PCF or Idealized Algol).
@@ -501,6 +541,15 @@ We define the composition of $f$ with $g$ to be given by the following composite
 The identity morphism $A\to A$ is given by the morphism $\lun_A\from A \to I.A$ in $\C$.
 The coherence conditions for the action guarantee that this is an identity and that our composition is associative.
 
+If we consider the case that $\M$ is trivial, so the action is a monad $M$ given by $MA = I.A$, then this composition becomes
+\[
+  A \xrightarrow{f}
+  M B \xrightarrow{M g}
+  M M C \xrightarrow{\passoc_{I,I,C}}
+  M C\,,
+  \]
+which is precisely the usual Kleisli composition.
+
 There is a natural functor $J\from \C \to \C/\M$ that is the identity on objects and that sends the morphism $f\from A \to B$ in $\C$ to the composite
 \[
   A \xrightarrow{f}
@@ -508,6 +557,11 @@ There is a natural functor $J\from \C \to \C/\M$ that is the identity on objects
   I.B\,,
   \]
 considered as a morphism $A\to B$ in $\C/\M$.
+
+Let us see what that looks like when our action is the action of $\Surj^{+\,op}$ on $\Set$ that we considered earlier.  
+In that case, a morphism $A\to B$ is given by a function $A \to [X,B]$, or equivalently $X \to [A,B]$.
+We may identify this function with its image, which is a subset of $[A,B]$, and this identification corresponds precisely to the equivalence relation that is automatically given by our construction; namely, the smallest equivalence relation such that $X \to [A,B]$ is equivalent to the composite $Y \to X \to [A,B]$ for any surjection $Y \to X$.
+Indeed, if $f\from X \to [A,B]$ and $g \from Y \to [A,B]$ have the same image $\F\subset[A,B]$, then $f$ and $g$ are both equivalent to the inclusion $\F\hookrightarrow [A,B]$, so they are equivalent.
 
 \subsection{Universal property of $\C/\M$}
 
@@ -545,9 +599,8 @@ $\C/\M$, $J$ and $\phi_{X,A}$ are universal in the following sense.
   \label{quotient-universal}
 \end{proposition}
 
-\begin{remark}
-  The functor $H$ in Proposition \ref{quotient-universal}(i) sends the object $JA=A$ to the object $FA$.  
-  To define $H$ on morphisms, we use the fact that every morphism $f\from A \to X.B$ from $A$ to $B$ in $\C/\M$ may be factorized as:
+\begin{proof}
+  The proof, which we will not give full details of, comes down to the fact that we can factorize any morphism $f\from A \to X.B$ from $A$ to $B$ in $\C/\M$ as:
   \[
     f = A \xrightarrow{Jf}
     X.B \xrightarrow{\phi_{X,A}}
@@ -555,21 +608,16 @@ $\C/\M$, $J$ and $\phi_{X,A}$ are universal in the following sense.
     \]
   where we have considered $f$ both as a morphism $A\to B$ in $\C/\M$ and as a morphism $A \to X.B$ in $\C$.  
   It therefore suffices to define $H$ on morphisms of the form $Jf$ (which must be sent to $Ff$, since $F=HJ$) and on morphisms of the form $\phi_{X,A}$ (which must be sent to $\psi_{X,A}$, since $\psi=H\phi$).  
-  The proof of part (ii) also follows from this factorization.
-
-  Thus, one way of thinking of the category $\C/\M$ is as a general theory of categories that extend $\C$, and admit a factorization result whereby every morphism is the composition of a morphism from $\C$ with one of the distinguished morphisms $\phi_{X,A}$.
-
-  For example, in \cite{SamsonGuyIAPassive}, it is shown that any morphism $\sigma \from A\to B$ in the category $\G_{vis}$ of games and visible strategies may be factorized as
+  Therefore $H$ is uniquely defined, if it exists, so it suffices to check that the $H$ given by sending the above factorization to the composite
   \[
-    \sigma = A \xrightarrow{\text{Inn}(\sigma)}
-    (\text{Var[S]} \to B) \xrightarrow{\new_S}
-    B\,,
+    FA \xrightarrow{Ff}
+    F(X.B) \xrightarrow{\psi_{X,A}}
+    FB
     \]
-  where $\text{Inn}(\sigma)$ is a morphism in the category of $\G_{inn}$ of games and innocent strategies, $S$ is a set and $\new$ is a special morphism that introduces stateful behaviour.  
-  The $\Var[S]$ construction, which is the game corresponding to a storage cell holding values of the set $S$, may be regarded as an oplax monoidal functor from the category $\Ret$ of sets and retractions into the category of games, and so $\Var[S]\to B$ is a reader-style action.  
-  Moreover, it can be shown that $\new$ gives rise to a multiplicative natural transformation, inducing a functor $\G_{inn}/\Ret\to \G_{vis}$.  
-  Then the factorization result we have quoted says precisely that this functor is full.
-\end{remark}
+  is indeed a functor satisfying the requirements of the proposition.  
+  Part (ii) is proved in a very similar way.
+\end{proof}
+
 \begin{remark}
   If $\M$ is the trivial category, so our action is a monad $M$, then this universal property can be used to prove the usual universal property for the Kleisli category; namely, that it is initial among all adjunctions giving rise to $M$.  
   To see this, suppose that $\C \xrightarrow{F} \D \xrightarrow{G} \C$ are functors such that $F$ is left adjoint to $G$ and $M=GF$.  
@@ -580,24 +628,24 @@ $\C/\M$, $J$ and $\phi_{X,A}$ are universal in the following sense.
   which satisfies the hypotheses of Proposition \ref{quotient-universal}(i).  
   Therefore, Proposition \ref{quotient-universal} tells us that the Kleisli category is not only initial amongst adjunctions giving rise to $M$, but is initial among all functors $F\from \C \to \D$ that admit a natural transformation $FMA \to FA$.
   Note that for more general $\M$, we do not in general get an adjunction between $\C$ and $\C/\M$.
-\end{remark}
-\begin{remark}
+
   The quotient notation we have used is because the universal property we have outlined exhibits $\C/\M$ as a particular weighted coequalizer of the functors $\pr_2,\_.\_\from \M\times\C \rightrightarrows \C$ in $\Cat$.
   It may therefore be regarded as a lax $2$-dimensional analogue of the quotient $X/G$ of a set $X$ by a group or monoid action.  
   
-  This is a strange idea, since we are not used to thinking of, for example, a Kleisli category as quotient of the original category.  
+  When the action is a monad, this is a strange idea, since we are not used to thinking of, for example, a Kleisli category as quotient of the original category.  
   The reason for this is the laxness: we do not identify the objects $A$ and $X.A$ with an isomorphism, but with a morphism in one direction.  
   One way in which a Kleisli category does act like a quotient is that it allows us to transfer effects that are usually associated with higher types on to lower types.  
   For example, the type $W\to [A,W]$ encodes a state transformer with state $W$.  
   Working in the Kleisli category for the state monad allows us to associate this stateful behaviour to the object $A$.
 \end{remark}
 \begin{remark}
-  Suppose we have an oplax right action of a monoidal category $\M$ on a category $\C$.  
-  This may be regarded as a lax left action of $\M^{co}$ upon $\C^{op}$, and therefore we get a category in the same way in which the objects are the objects of $\C$ and the morphisms from $A$ to $B$ are equivalence classes of morphisms $A.X \to B$ in $\C$.
+  The proof of Proposition \ref{quotient-universal} tells us that one way of thinking of the category $\C/\M$ is as a general theory of categories that extend $\C$, and admit a factorization result whereby every morphism is the composition of a morphism from $\C$ with one of the distinguished morphisms $\phi_{X,A}$.
 
-  In the case that the action is an oplax reader-style action given by $A.X = A\tensor jX$ for some oplax monoidal functor $j\from \M \to \C$, then the natural transformation $\phi_{A,X}$ goes from $J(A\tensor jX)$ to $JA$, and may instead be regarded as a natural transformation $I\to jX$ in $\C$.  
-  In that case, the category $\C/\M$ that we obtain is what \cite[4.3.11]{lurie2009} calls the \emph{cone} over the functor $j$.  
-  This is because the universal property in that case is a lax version of the property satisfied by the mapping cone in homotopy theory.
+  Factorization results are very important in the game semantics of effects.  
+  What usually happens is that when we extend a model $\G$ to a new model $\G'$, we wish to show that each morphism in $\G'$ may be written as the composite of a morphism from $\G$ composed with one of a small collection of new morphisms that are readily definable in the language -- for example, nondeterministic oracles, or simple storage cells.  
+  This allows us to lift a definability result from the old category to the new one.  
+  If these new morphisms can be cast as the components of some natural transformation $\psi_{X,A}\from X.A \to A$ for some action of some monoidal category $\M$ on $\G$ (and often they can), then Proposition \ref{quotient-universal}(i) gives us a functor from $\G/\M$ to $\G'$.  
+  The factorization result then tells us that this functor is full, and so the model $\G'$ can also be defined as a quotient of $\G/\M$.
 \end{remark}
 
 \subsection{Monoidal and monoidal closed structure of $\C/\M$}
@@ -706,6 +754,8 @@ Then we have a natural isomorphism
 such that the monad structure on $P$ is induced from the reader-style action of $\DProb^{op}$ on $\Set$ given by the monoidal functor $\DProb\to\Set$ that sends $(Y,\bP_Y)$ to its underlying set $Y$.
 
 Moreover, the category $\DProb^{op}$ is weakly filtered, and so, as in our earlier discussion, we feel confident using this action, rather than the monad $P$ we have defined, to model discrete probability.  
+
+This action is very closely related to the action of $\Surj^{+,op}$ that we defined earlier; indeed, $\Surj^+$ is equivalent to the category of discrete probability spaces taking probabilities in the Boolean semiring $\{0,1\}$ with countable summation given by maximum.
 
 By cutting down the category $\DProb$ we can obtain slightly different notions of probability.  
 For our purposes, we will be using the full subcategory $\BProb$ where the objects $(X,\bP_X)$ are those that satisfy the following three additional conditions.
