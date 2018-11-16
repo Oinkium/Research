@@ -22,10 +22,13 @@
 \usepackage{mathtools}
 \usetikzlibrary{cd}
 \usepackage{mathpartir}
+\usepackage{stmaryrd}
 \def\UrlFont{\rmfamily}
 
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
     \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand{\deno}[1]{\left\llbracket#1\right\rrbracket}
+\renewcommand{\ts}{{\;\vdash}}
 
 \newcommand\C{\mathcal{C}}
 \newcommand\D{\mathcal{D}}
@@ -50,6 +53,8 @@
 \renewcommand\implies\multimap
 \newcommand{\pfc}{\boldsymbol{\cdot}}
 \newcommand\Mellies{Melli\`{e}s\xspace}
+
+\newcommand{\test}{\texttt{test}}
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
@@ -99,6 +104,7 @@
 
 \newcommand{\coin}{\textsf{coin}}
 \newcommand{\polydie}{\textsf{polydie}}
+\newcommand{\multicoin}{\textsf{multicoin}}
 \newcommand{\bool}{\textsf{bool}}
 
 \renewcommand{\emptyset}{\varnothing}
@@ -118,9 +124,9 @@
 \begin{document}
 \mainmatter              % start of a contribution
 %
-\title{A Kleisli-like construction for Parametric Monads, with Examples}
+\title{A Kleisli-style construction for Parametric Monads, with Examples}
 %
-\titlerunning{Dum-di-dum}  % abbreviated title (for running head)
+\titlerunning{A Kleisli-Style Construction}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
@@ -762,69 +768,44 @@ For our purposes, we will be using the full subcategory $\BProb$ where the objec
 \begin{description}
   \item[Countability] The set $X$ is countable.
   \item[Finite support] There is a finite subset $E\subseteq X$ such that $\bP_X(E)=1$.
-  \item[Rational probabilities] $\bP_X(A)\in\mathbb{Q}$ for all $A\subseteq X$.
 \end{description}
 
-The action of $\BProb$ gives rise to a monad on the category of countable sets.  
+The action of $\BProb^{op}$ gives rise to a monad on the category of countable sets.  
 
 \subsection{Probabilistic Algol}
 
 \cite{DanosHarmer} gives a fully abstract game semantics for the language Probabilistic Algol (PA).  
-The base language for PA is the language Idealized Algol (IA) from \cite{SamsonGuyIAPassive}, and it has been extended with a constant $\coin\from\bool$.  
-We give the language a small-step reduction semantics, as shown in Figure \ref{pa-operational}.  
+The base language for PA is the language Idealized Algol (IA) from \cite{SamsonGuyIAPassive}, and it has been extended with a constants $\coin\from\bool$.  
+To make things a little more interesting, we will extend this further to incorporate an infinite family of constants $\coin_p\from\bool$, where $p$ ranges over the real interval $[0,1]$.  
 
-\begin{figure*}
-  \begin{mathpar}
-    \inferrule*{ }{\ia s {(\lambda x.M)\;N} \opto \ia s {M[N/x]}}
-    \and
-    \inferrule*{ }{\ia s {\Y_T M}\opto \ia s {M (\Y_T M)}}
-    \and
-    \inferrule*{ }{\ia s {\suc \n}\opto\ia s {\n + \mathsf{1}}}
-    \and
-    \inferrule*{ }{\ia s {\pred \n}\opto\ia s {\0 \sqcup (\n - \mathsf{1})}}
-    \and
-    \inferrule*{ }{\ia s {\IfO \0 M N} \opto \ia s M}
-    \and
-    \inferrule*{ }{\ia s {\IfO (\n + \mathsf{1}) M N} \opto \ia s N}
-    \and
-    \inferrule*{ }{\ia s {\If \true\;M\;N} \opto M}
-    \and
-    \inferrule*{ }{\ia s {\If \false\;M\;N} \opto N}
-    \and
-    \inferrule*{ }{\ia s {\deref (\mkvar M N)} \opto \ia s M}
-    \and
-    \inferrule*{ }{\ia s {(\mkvar M N) \coloneqq L} \opto \ia s {N\;L}}
-    \and
-    \inferrule*{ }{\ia s {v \coloneqq n} \opto \ia {\stup s v n} \skipp}
-    \and
-    \inferrule*[left={$s(v)=n$}]{ }{\ia s {\deref v} \opto \ia s n}
-    \and
-    \inferrule*{ }{\ia s {\skipp;M} \opto \ia s M}
-    \and
-    \inferrule*{ }{\ia s {\new_T \lambda v.M}\opto \ia {\stup s v 0} M}
-    \and
-    \inferrule*{\ia s M \opto \ia s {M'}}{\ia s {E[M]} \opto \ia s {E[M']}}
-    \and
-    \inferrule*[left=coin]{ }{\ia s \coin \opto \ia s \true}
-    \and
-    \inferrule*[left=coin]{ }{\ia s \coin \opto \ia s \false}
-  \end{mathpar}
-  \caption{Small-step operational semantics for Probabilistic Algol, where $E$ ranges over suitable evaluation contexts}
-  \label{pa-operational}
-\end{figure*}
+We give the language a small-step operational semantics.  
+The rules for the deterministic terms may be derived from the operational semantics given in \cite{SamsonGuyIAPassive}; for example:
+\[
+  \inferrule*{ }{\ia s {v \coloneqq n} \opto \ia {\stup s v n} \skipp}
+  \]
+See also \cite{JimGuySmallStep}.
 
-All of these rules are deterministic with the exception of the two marked \LeftTirName{coin}.
-Given an evaluation $\pi = M \to M_1 \to \cdots \to \x$ of a term $M$ of ground type $o$, we define the \emph{weight} $w(\pi)$ of $\pi$ to be $\frac{1}{2^k}$, where $k$ is the number of instances of a \LeftTirName{coin} rule occurring in $\pi$.
+We add two small-step rules for the $\coin_p$ primitives:
+
+\begin{mathpar}
+  \inferrule*[left={heads${}_p$}]{ }{\ia s \coin_p \opto \ia s \true}
+  \and
+  \inferrule*[left={tails${}_{1-p}$}]{ }{\ia s \coin_p \opto \ia s \false}\,.
+\end{mathpar}
+
+These are the only nondeterministic parts of the operational semantics.  
+
+Given a small-step evaluation $\pi = M \to M_1 \to \cdots \to \x$ of a term $M$ of ground type $o$, we define the \emph{probability} $p(\pi)$ of $\pi$ to be the product of all the indices $q$ belonging to \LeftTirName{heads${}_q$} or \LeftTirName{tails${}_q$} rules.
 
 This defines a discrete sub-probability measure on the set corresponding to the ground type $o$ given by
 \[
-  \bP(\{x\}) = \sum_{\substack{\text{evaluations}\\\pi = M \to\dots \x}}w(\pi)\,.
+  \bP(\{x\}) = \sum_{\substack{\text{evaluations}\\\pi = M \to\dots \x}}p(\pi)\,.
   \]
 This is only a subprobability measure, because some evaluations may continue forever.
 
 \cite{DanosHarmer} shows how we can define other probabilistic terms using $\coin$.  
-Specifically, they define a term $\polydie\from\bN\to\bN$, where the behaviour of $\polydie n$ is to return the result of tossing an $n$-sided die (with sides numbered $0$ to $n-1$), with each outcome occurring with probability $1/n$.  
-The definition of $\polydie n$ in terms of $\coin$ works as follows.  
+Specifically, they define a term $\polydie\from\bN\to\bN$, where the behaviour of $\polydie\,n$ is to return the result of tossing an $n$-sided die (with sides numbered $0$ to $n-1$), with each outcome occurring with probability $1/n$.  
+The definition of $\polydie\,n$ in terms of $\coin$ works as follows.  
 We choose some number $k$ such that $2^k\ge n$ and then toss the coin $n$ times to give one of $2^k$ outcomes.  
 If an outcome corresponds (under some fixed correspondence $n\hookrightarrow 2^k$) to a natural number below $n$, then we return that number; otherwise, we repeat the process until we get such a number.  
 
@@ -839,9 +820,120 @@ As explained in \cite{SamsonGuyIAPassive}, $\G$ should be Cartesian closed and t
 We can therefore get a lax monoidal functor $\BProb \to \G$ by composing this with the forgetful functor $\BProb\to\Set$.
 
 This gives rise to a reader-style action of $\BProb^{op}/\G$, and the resulting category $\G/\BProb^{op}$ is therefore a symmetric monoidal closed category.  
-Unfortunately, the monoidal product on $\G/\BProb^{op}$ is not Cartesian; the problem is that there is no unique way to form the copairing of 
 
-\bibliographystyle{spbasic}
+\subsection{Testing morphisms and plays}
+
+The equivalence relation on morphisms is still too weak for our purposes.  
+For example, if the boolean type $\bB$ carries a Bernoulli distribution with coefficient $p$, then the diagonal map $\Delta\from \bB\to \bB\times\bB$ should be equivalent to the identity $\id\from\bB\times\bB\to\bB\times\bB$ as terms of type $\bB\times\bB$, because the projections on to each component are equivalent.  
+However, they are not yet equivalent in our category.  
+
+To improve the equivalence relation, we introduce the concept of \emph{testing morphism} for an object $A$ that is the denotation of an Idealized Algol term.
+This is a term of type $(\bN \to A) \to A$ that is the denotation of an Idealized Algol term of the form
+\[
+  \test_{n_1,\cdots,n_k} = \lambda f.\new\;v\coloneqq 0 \text{ in } f(v \coloneqq \deref v + 1; \case\,v\,\_\,n_1\,\cdots\,n_k\,\Omega)\,,
+  \]
+where $n_1,\cdots,n_k$ is a sequence of numbers.  
+The effect of this term is to call $f$, and to pass in the numbers $n_1,\cdots,n_k$ in turn, and diverging if $f$ calls its argument more than $k$ times.
+In game semantics, the sequence $n_1,\cdots,n_k$ is more easily recognized as a sequence of moves occurring in the game $\bN$ on the left.  
+
+Given a morphism $\sigma\from \bN \to A$, we say that the sequence $n_1,\cdots,n_k$ is a \emph{play} of $\sigma$ if it is minimal (with respect to the prefix ordering) such that $\test_{n_1,\cdots,n_k}(\sigma)$ represents a non-diverging term.
+In that case, the \emph{result} of the play is the strategy $\test_{n_1,\cdots,n_k}(\sigma)$ for $A$.
+
+Now, if the set $\bN$ carries a probability distribution, then this gives rise to a sub-probability distribution on the set of plays for $\sigma$, where the probability associated to the sequence $n_1,\cdots,n_k$ is the product of the probabilities of the $n_i$.  
+This then induces a discrete probability distribution on the set of morphisms $1\to A$.
+
+We say that two morphisms $\sigma,\tau\from \bN\to A$ from $1$ to $A$ in $\G/\BProb$ are equivalent if they give rise to the same probability distribution on the set of strategies for $A$.  
+This equivalence relation refines our earlier one.
+
+\subsection{Single-threaded morphisms}
+
+Our category is symmetric monoidal closed, but not yet Cartesian closed.  
+A trick that is often used in Game Semantics (see, for example, \cite{mcCHFiniteND} and \cite{DanosHarmer}) is to pass to a category of \emph{single-threaded} strategies; this is equivalent to cutting down to those morphisms that are comonoid homomorphisms.  
+
+Note that, in our category, every object has a natural commutative comonoid structure that arises from diagonal $\Delta\from A\to A\times A$ in the original category.  
+We say that a morphism $\sigma\from A\to B$ is \emph{single-threaded} if it is a homomorphism of the comonoid structures on $A$ and $B$; i.e., if the following square commutes.
+\[
+  \begin{tikzcd}
+    A \arrow[r, "\sigma"] \arrow[d, "\Delta"']
+      & B \arrow[d, "\Delta"] \\
+    A \times A \arrow[r, "\sigma\times\sigma"]
+      & B \times B
+  \end{tikzcd}
+  \]
+Since the category of commutative comonoids in a symmetric monoidal category is automatically Cartesian closed (see, for example, \cite{Freyd}), this gives us a Cartesian closed category.
+
+The deterministic terms are all comonoid homomorphisms.  
+As long as we have applied the equivalence relation outlined above, the natural morphisms $\phi_{X,A}$ are also comonoid homomorphisms.
+
+\subsection{Denotational semantics and adequacy}
+
+We may now inductively build up a denotational semantics for PA.  
+The deterministic terms may all be defined inside the base category $\G$ and transported into our new category via the natural inclusion.  
+The probabilistic term $\coin_p$ is given by the natural morphism $\phi_{B_p, 1}$, where $B_p$ is a Bernoulli space with coefficient $p$.  
+That is to say, it is given by the pair
+\[
+  ((\{H,T\}, \mu(H)=p, \mu(T)=1-p), 1 \to (\{H,T\} \to \bB))\,
+  \]
+where the function on the right sends $H$ to $\true$ and $T$ to $\false$.
+
+Note now that the denotation of a term $M = C[\coin_{p_1},\cdots,\coin_{p_j}]T$ is given by the following morphism.
+\[
+  \bB^j
+  \xrightarrow{\deno{b_1,\cdots,b_j\ts C[b_1,\cdots,b_j]}}
+  \deno{T}\,,
+  \]
+where the distribution on the product $\bB^j$ is the product of Bernoulli distributions.
+
+Fix an injection $r\from\bB^j\to \bN$ (for instance, the one given by ibinary representation) and suitable projection functions $\pr_i \from \bN \to \bB$ such that $\pr_i(r(v))$ is the $i$-th entry of $v$.
+Let $\multicoin\from\nat$ be the term (depending on the values of the $p_i$) given by
+\[
+  (r\;\coin_{p_1}\,\cdots\,\coin_{p_j})\,.
+  \]
+Now the operational semantics of $\pr_i(\multicoin)$ is the same as the operational semantics of $\coin_{p_i}$, since the projections from the product are probability-preserving.  
+This means that any evaluation $\pi$ of the term $M$ may be pegged to an evaluation of the term formed by replacing each instance of $\coin_{p_i}$ in $M$ with $\pr_i(\multicoin)$.
+
+\begin{proposition}[Computational Adequacy]
+  Let $M = C[\multicoin]\from \com$ be a term of Idealized Algol, where $C$ is a multi-holed deterministic IA context.
+  Let $p$ be the sum of the probabilities of all evaluation sequences of $M$ that terminate at $\skipp$.
+
+  The denotation of $M$ is a morphism $\bN \to \bC$ as outlined above.
+
+  Then we get an induced sub-probability distribution on the set of morphisms $1\to A$.  
+  The adequacy result is that $p$ is the same as the induced probability of the morphism $\deno{\skipp}$.
+\end{proposition}
+\begin{proof}
+  Each terminating evaluation sequence of $M$ corresponds to a finite sequence $n_1,\cdots,n_k$ of the different values that $\multicoin$ takes on over the course of the evaluation of the term.  
+  By inspection, we may peg this evaluation of $M$ exactly to the evaluation of the term $\test_{n_1,\cdots,n_k} (\lambda n.C[n])$ in pure deterministic Idealized Algol, and therefore this IA term must converge.  
+  By the Adequacy result for Idealized Algol \cite{SamsonGuyIAPassive}, an IA term converges to $\skipp$ if and only if its denotation is $\deno{\skipp}$.  
+  Therefore, there is bijective matching between terminating evaluation sequences of $M$ and plays of the morphism $\deno{M}$, with each one getting the same probability.  
+  The result follows.
+\end{proof}
+
+\subsection{Full Abstraction}
+
+In order to prove full abstraction for our model, we will define a further equivalence on morphisms.  
+Say that two morphisms $f,g\from A \to B$ are \emph{intrinsically equivalent} if and only if for all morphisms $\alpha\from (A\to B)\to\bC$, $\alpha(f)$ and $\alpha(g)$ are probabilistically equivalent in the sense given above.
+Then our full abstraction result becomes:
+
+\begin{proposition}[Full Abstraction]
+  Let $M,N\from T$ be two PA terms.  
+  Then $M$ and $N$ are observationally equivalent if and only if their denotations $\deno{M}$ and $\deno{N}$ are intrinisically equivalent.
+\end{proposition}
+
+One direction (soundness) follows immediately from our Computational Adequacy result.  
+To prove the other direction, it suffices to show that any compact strategy is definable \cite{CurienFullAbstraction}, where we say that a morphism $\sigma\from A \to (X \to B)$ from $A$ to $B$ is \emph{compact} if it is compact when considered as a morphism in $\G$.
+We prove this using a factorization result:
+\begin{lemma}[Deterministic factorization]
+  Let $\sigma\from A \to B$ be a morphism in $\G/\BProb^{op}$.  
+  Then $\sigma$ may be factorized as $\text{Det}(\sigma)(\multicoin)$, where $\text{Det}(\sigma)\from \bN \to A \to B$ is a strategy in the image of the inclusion functor $J\from \G \to \G/\BProb^{op}$, and $\multicoin$ is defined for some values $p_1,\cdots,p_k$.
+\end{lemma}
+\begin{proof}
+  Treat $\sigma$ as a morphism $A \to X \to B$ in $\G$.  
+  Since $X$ is finitely supported, there is a probability-preserving function $\bN \to X$, for some finitely supported distribution on $\bN$.  
+  So $\sigma$ is equivalent to a morphism $A \to \bN \to B$, and then the factorization is automatic.
+\end{proof}
+
+\bibliographystyle{spphys}
 \bibliography{effects}
 
 \end{document}

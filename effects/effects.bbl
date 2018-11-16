@@ -1,101 +1,113 @@
-\begin{thebibliography}{16}
-\providecommand{\natexlab}[1]{#1}
+\begin{thebibliography}{10}
 \providecommand{\url}[1]{{#1}}
 \providecommand{\urlprefix}{URL }
 \expandafter\ifx\csname urlstyle\endcsname\relax
-  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
-  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \providecommand{\doi}[1]{DOI \discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI \discretionary{}{}{}\begingroup
   \urlstyle{rm}\Url}\fi
-\providecommand{\eprint}[2][]{\url{#2}}
 
-\bibitem[{Abramsky and McCusker(1999)}]{SamsonGuyIAPassive}
-Abramsky S, McCusker G (1999) Full abstraction for {Idealized Algol} with
-  passive expressions. Theor Comput Sci 227(1-2):3--42,
-  \doi{10.1016/S0304-3975(99)00047-X},
-  \urlprefix\url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
+\bibitem{Moggi}
+E.~Moggi, in \emph{[1989] Proceedings. Fourth Annual Symposium on Logic in
+  Computer Science} (1989), pp. 14--23.
+\newblock \doi{10.1109/LICS.1989.39155}
 
-\bibitem[{Danos and Harmer(2000)}]{DanosHarmer}
-Danos V, Harmer R (2000) Probabilistic game semantics. In: Proceedings
-  Fifteenth Annual IEEE Symposium on Logic in Computer Science (Cat.
-  No.99CB36332), pp 204--213, \doi{10.1109/LICS.2000.855770}
-
-\bibitem[{Ghica(2005)}]{SlotGames}
-Ghica DR (2005) Slot games: A quantitative model of computation. In:
-  Proceedings of the 32Nd ACM SIGPLAN-SIGACT Symposium on Principles of
-  Programming Languages, ACM, New York, NY, USA, POPL '05, pp 85--97,
-  \doi{10.1145/1040305.1040313},
-  \urlprefix\url{http://doi.acm.org/10.1145/1040305.1040313}
-
-\bibitem[{Giry(1982)}]{Giry}
-Giry M (1982) A categorical approach to probability theory. In: Banaschewski B
-  (ed) Categorical Aspects of Topology and Analysis, Springer Berlin
-  Heidelberg, Berlin, Heidelberg, pp 68--85
-
-\bibitem[{Harmer and McCusker(1999)}]{mcCHFiniteND}
-Harmer R, McCusker G (1999) A fully abstract game semantics for finite
-  nondeterminism. In: Proceedings. 14th Symposium on Logic in Computer Science
-  (Cat. No. PR00158), pp 422--430, \doi{10.1109/LICS.1999.782637}
-
-\bibitem[{Hyland and Power(2007)}]{Lawvere}
-Hyland M, Power J (2007) The category theoretic understanding of universal
-  algebra: Lawvere theories and monads. Electronic Notes in Theoretical
-  Computer Science 172:437 -- 458,
-  \doi{https://doi.org/10.1016/j.entcs.2007.02.019},
-  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S1571066107000874},
-  computation, Meaning, and Logic: Articles dedicated to Gordon Plotkin
-
-\bibitem[{Katsumata(2016)}]{Katsu}
-Katsumata Sy (2016) Graded monads and semantics of effect systems,
-  \urlprefix\url{http://csl16.lif.univ-mrs.fr/planning/qslc/talks/katsumata/},
-  qSLC 2016
-
-\bibitem[{Linton(1966)}]{FinitaryMonadOnSet}
-Linton FEJ (1966) Some aspects of equational categories. In: Eilenberg S,
-  Harrison DK, MacLane S, R{\"o}hrl H (eds) Proceedings of the Conference on
-  Categorical Algebra, Springer Berlin Heidelberg, Berlin, Heidelberg, pp
-  84--94
-
-\bibitem[{Lurie(2009)}]{lurie2009}
-Lurie J (2009) On the classification of topological field theories. Current
-  Developments in Mathematics 2008:129--280,
-  \urlprefix\url{https://projecteuclid.org:443/euclid.cdm/1254748657}
-
-\bibitem[{L{\"u}th and Ghani(1997)}]{WeaklyFiltered}
-L{\"u}th C, Ghani N (1997) Monads and modular term rewriting. In: Moggi E,
-  Rosolini G (eds) Category Theory and Computer Science, Springer Berlin
-  Heidelberg, Berlin, Heidelberg, pp 69--86
-
-\bibitem[{Melli\`{e}s(2012)}]{ParametricMonads}
-Melli\`{e}s PA (2012) Parametric monads and enriched adjunctions. Preprint on
-  webpage at
-  \url{https://www.irif.fr/~mellies/tensorial-logic/8-parametric-monads-and-enriched-adjunctions.pdf}
-
-\bibitem[{Moggi(1989)}]{Moggi}
-Moggi E (1989) Computational lambda-calculus and monads. In: [1989]
-  Proceedings. Fourth Annual Symposium on Logic in Computer Science, pp 14--23,
-  \doi{10.1109/LICS.1989.39155}
-
-\bibitem[{Smirnov(2008)}]{Smirnov2008}
-Smirnov AL (2008) Graded monads and rings of polynomials. Journal of
-  Mathematical Sciences 151(3):3032--3051, \doi{10.1007/s10958-008-9013-7},
-  \urlprefix\url{https://doi.org/10.1007/s10958-008-9013-7}
-
-\bibitem[{Spivey(1990)}]{Spivey}
-Spivey M (1990) A functional theory of exceptions. Science of Computer
-  Programming 14(1):25 -- 42,
-  \doi{https://doi.org/10.1016/0167-6423(90)90056-J},
+\bibitem{Spivey}
+M.~Spivey, Science of Computer Programming \textbf{14}(1), 25  (1990).
+\newblock \doi{https://doi.org/10.1016/0167-6423(90)90056-J}.
+\newblock
   \urlprefix\url{http://www.sciencedirect.com/science/article/pii/016764239090056J}
 
-\bibitem[{Wadler(1990)}]{Wadler2}
-Wadler P (1990) Comprehending monads. In: Proceedings of the 1990 ACM
-  Conference on LISP and Functional Programming, ACM, New York, NY, USA, LFP
-  '90, pp 61--78, \doi{10.1145/91556.91592},
-  \urlprefix\url{http://doi.acm.org/10.1145/91556.91592}
+\bibitem{Wadler1}
+P.~Wadler, in \emph{Proceedings of the 19th ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages} (ACM, New York, NY, USA, 1992), POPL
+  '92, pp. 1--14.
+\newblock \doi{10.1145/143165.143169}.
+\newblock \urlprefix\url{http://doi.acm.org/10.1145/143165.143169}
 
-\bibitem[{Wadler(1992)}]{Wadler1}
-Wadler P (1992) The essence of functional programming. In: Proceedings of the
-  19th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages,
-  ACM, New York, NY, USA, POPL '92, pp 1--14, \doi{10.1145/143165.143169},
-  \urlprefix\url{http://doi.acm.org/10.1145/143165.143169}
+\bibitem{Wadler2}
+P.~Wadler, in \emph{Proceedings of the 1990 ACM Conference on LISP and
+  Functional Programming} (ACM, New York, NY, USA, 1990), LFP '90, pp. 61--78.
+\newblock \doi{10.1145/91556.91592}.
+\newblock \urlprefix\url{http://doi.acm.org/10.1145/91556.91592}
+
+\bibitem{Lawvere}
+M.~Hyland, J.~Power, Electronic Notes in Theoretical Computer Science
+  \textbf{172}, 437  (2007).
+\newblock \doi{https://doi.org/10.1016/j.entcs.2007.02.019}.
+\newblock
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S1571066107000874}.
+\newblock Computation, Meaning, and Logic: Articles dedicated to Gordon Plotkin
+
+\bibitem{FinitaryMonadOnSet}
+F.E.J. Linton, in \emph{Proceedings of the Conference on Categorical Algebra},
+  ed. by S.~Eilenberg, D.K. Harrison, S.~MacLane, H.~R{\"o}hrl (Springer Berlin
+  Heidelberg, Berlin, Heidelberg, 1966), pp. 84--94
+
+\bibitem{SamsonGuyIAPassive}
+S.~Abramsky, G.~McCusker, Theor. Comput. Sci. \textbf{227}(1-2), 3 (1999).
+\newblock \doi{10.1016/S0304-3975(99)00047-X}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1016/S0304-3975(99)00047-X}
+
+\bibitem{mcCHFiniteND}
+R.~Harmer, G.~McCusker, in \emph{Proceedings. 14th Symposium on Logic in
+  Computer Science (Cat. No. PR00158)} (1999), pp. 422--430.
+\newblock \doi{10.1109/LICS.1999.782637}
+
+\bibitem{SlotGames}
+D.R. Ghica, in \emph{Proceedings of the 32Nd ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages} (ACM, New York, NY, USA, 2005), POPL
+  '05, pp. 85--97.
+\newblock \doi{10.1145/1040305.1040313}.
+\newblock \urlprefix\url{http://doi.acm.org/10.1145/1040305.1040313}
+
+\bibitem{ParametricMonads}
+P.A. Melli\`{e}s.
+\newblock Parametric monads and enriched adjunctions (2012).
+\newblock Preprint on webpage at
+  \url{https://www.irif.fr/~mellies/tensorial-logic/8-parametric-monads-and-enriched-adjunctions.pdf}
+
+\bibitem{Smirnov2008}
+A.L. Smirnov, Journal of Mathematical Sciences \textbf{151}(3), 3032 (2008).
+\newblock \doi{10.1007/s10958-008-9013-7}.
+\newblock \urlprefix\url{https://doi.org/10.1007/s10958-008-9013-7}
+
+\bibitem{Katsu}
+S.y. Katsumata, Graded monads and semantics of effect systems (2016).
+\newblock
+  \urlprefix\url{http://csl16.lif.univ-mrs.fr/planning/qslc/talks/katsumata/}.
+\newblock QSLC 2016
+
+\bibitem{WeaklyFiltered}
+C.~L{\"u}th, N.~Ghani, in \emph{Category Theory and Computer Science}, ed. by
+  E.~Moggi, G.~Rosolini (Springer Berlin Heidelberg, Berlin, Heidelberg, 1997),
+  pp. 69--86
+
+\bibitem{DanosHarmer}
+V.~Danos, R.~Harmer, in \emph{Proceedings Fifteenth Annual IEEE Symposium on
+  Logic in Computer Science (Cat. No.99CB36332)} (2000), pp. 204--213.
+\newblock \doi{10.1109/LICS.2000.855770}
+
+\bibitem{Giry}
+M.~Giry, in \emph{Categorical Aspects of Topology and Analysis}, ed. by
+  B.~Banaschewski (Springer Berlin Heidelberg, Berlin, Heidelberg, 1982), pp.
+  68--85
+
+\bibitem{JimGuySmallStep}
+J.~Laird, G.~Manzonetto, G.~McCusker, M.~Pagani, in \emph{Logic in Computer
+  Science, Symposium on(LICS)}, vol.~00 (2013), vol.~00, pp. 301--310.
+\newblock \doi{10.1109/LICS.2013.36}.
+\newblock \urlprefix\url{doi.ieeecomputersociety.org/10.1109/LICS.2013.36}
+
+\bibitem{Freyd}
+P.~Freyd, P.~O’Hearn, A.~Power, M.~Takeyama, R.~Street, R.~Tennent,
+  Theoretical Computer Science \textbf{228}(1), 49  (1999).
+\newblock \doi{https://doi.org/10.1016/S0304-3975(98)00354-5}.
+\newblock
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0304397598003545}
+
+\bibitem{CurienFullAbstraction}
+P.L. Curien, Electron. Notes Theor. Comput. Sci. \textbf{172}, 301 (2007).
+\newblock \doi{10.1016/j.entcs.2007.02.011}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1016/j.entcs.2007.02.011}
 
 \end{thebibliography}
