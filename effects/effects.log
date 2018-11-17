@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.19)  16 NOV 2018 21:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.19)  17 NOV 2018 10:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -690,11 +690,13 @@ LaTeX Font Info:    Try loading font information for U+stmry on input line 145.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
 
-LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
-(Font)              using `U/stmry/m/n' instead on input line 227.
+LaTeX Warning: Citation `Promonad' on page 3 undefined on input line 224.
 
-[3] [4] [5] [6] [7] [8] [9]
-Overfull \hbox (22.08395pt too wide) detected at line 487
+
+LaTeX Warning: Citation `Cbpv' on page 3 undefined on input line 231.
+
+[3] [4] [5] [6]
+Overfull \hbox (22.08395pt too wide) detected at line 379
 [][] \OT1/cmr/m/n/10 = (\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 
  \OML/cmm/m/it/10 JY\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 
  \OML/cmm/m/it/10 JX [] A \OMS/cmsy/m/n/10 
@@ -705,7 +707,7 @@ Overfull \hbox (22.08395pt too wide) detected at line 487
  []
 
 
-Overfull \hbox (5.86098pt too wide) detected at line 504
+Overfull \hbox (5.86098pt too wide) detected at line 396
 [][] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 jY \U/msa/m/n/10 ( \OT1/cmr/m/n/10 (\OM
 L/cmm/m/it/10 jX \U/msa/m/n/10 ( \OML/cmm/m/it/10 A\OT1/cmr/m/n/10 ) \OMS/cmsy/
 m/n/10 ! \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 jY \OMS/cmsy/m/n/10 
@@ -714,18 +716,22 @@ T1/cmr/m/n/10 (\OML/cmm/m/it/10 Y \OMS/cmsy/m/n/10
  \OML/cmm/m/it/10 X\OT1/cmr/m/n/10 ) \U/msa/m/n/10 ( \OML/cmm/m/it/10 A :
  []
 
-[10] [11] [12] [13] [14] [15]
-LaTeX Font Info:    Try loading font information for U+bbm on input line 791.
+[7]
 
-(/usr/share/texmf-dist/tex/latex/bbm-macros/ubbm.fd
+LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
+(Font)              using `U/stmry/m/n' instead on input line 410.
+
+[8] [9] [10] [11] [12] [13]
+LaTeX Font Info:    Try loading font information for U+bbm on input line 683.
+ (/usr/share/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-) [16] [17] [18]
+) [14] [15]
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 896.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 788.
 
 
-[19] (./effects.bbl [20]
+[16] (./effects.bbl [17]
 Underfull \hbox (badness 10000) in paragraph at lines 64--68
 []\OT1/cmr/m/n/9 P.A. Melli^^Res.  Para-met-ric mon-ads and en-riched ad-junc-t
 ions (2012).
@@ -737,16 +743,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--68
  / tensorial-[]logic /
  []
 
-) [21] (./effects.aux)
+[18]) [19] (./effects.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 15426 strings out of 492642
- 307381 string characters out of 6135566
- 359813 words of memory out of 5000000
- 18978 multiletter control sequences out of 15000+600000
+ 15425 strings out of 492642
+ 307363 string characters out of 6135566
+ 361070 words of memory out of 5000000
+ 18977 multiletter control sequences out of 15000+600000
  19806 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,18n,82p,490b,967s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -780,10 +789,10 @@ msfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/sy
 mbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msb
 m7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr/sh
 are/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb>
-Output written on effects.pdf (21 pages, 431386 bytes).
+Output written on effects.pdf (19 pages, 418923 bytes).
 PDF statistics:
- 222 PDF objects out of 1000 (max. 8388607)
- 160 compressed objects within 2 object streams
+ 216 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
