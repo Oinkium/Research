@@ -38,11 +38,6 @@ M.~Hyland, J.~Power, Electronic Notes in Theoretical Computer Science
   \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S1571066107000874}.
 \newblock Computation, Meaning, and Logic: Articles dedicated to Gordon Plotkin
 
-\bibitem{FinitaryMonadOnSet}
-F.E.J. Linton, in \emph{Proceedings of the Conference on Categorical Algebra},
-  ed. by S.~Eilenberg, D.K. Harrison, S.~MacLane, H.~R{\"o}hrl (Springer Berlin
-  Heidelberg, Berlin, Heidelberg, 1966), pp. 84--94
-
 \bibitem{SamsonGuyIAPassive}
 S.~Abramsky, G.~McCusker, Theor. Comput. Sci. \textbf{227}(1-2), 3 (1999).
 \newblock \doi{10.1016/S0304-3975(99)00047-X}.
@@ -59,6 +54,17 @@ D.R. Ghica, in \emph{Proceedings of the 32Nd ACM SIGPLAN-SIGACT Symposium on
   '05, pp. 85--97.
 \newblock \doi{10.1145/1040305.1040313}.
 \newblock \urlprefix\url{http://doi.acm.org/10.1145/1040305.1040313}
+
+\bibitem{Promonad}
+M.~Shulman, R.~Garner, Categories, functors, and profunctors are a free
+  cocompletion (2012).
+\newblock
+  \urlprefix\url{https://home.sandiego.edu/~shulman/papers/cfapaafcc.pdf}.
+\newblock Octoberfest 2012
+
+\bibitem{Cbpv}
+P.B. Levy, in \emph{Typed Lambda Calculi and Applications}, ed. by J.Y. Girard
+  (Springer Berlin Heidelberg, Berlin, Heidelberg, 1999), pp. 228--243
 
 \bibitem{ParametricMonads}
 P.A. Melli\`{e}s.
@@ -77,20 +83,15 @@ S.y. Katsumata, Graded monads and semantics of effect systems (2016).
   \urlprefix\url{http://csl16.lif.univ-mrs.fr/planning/qslc/talks/katsumata/}.
 \newblock QSLC 2016
 
-\bibitem{WeaklyFiltered}
-C.~L{\"u}th, N.~Ghani, in \emph{Category Theory and Computer Science}, ed. by
-  E.~Moggi, G.~Rosolini (Springer Berlin Heidelberg, Berlin, Heidelberg, 1997),
-  pp. 69--86
+\bibitem{Giry}
+M.~Giry, in \emph{Categorical Aspects of Topology and Analysis}, ed. by
+  B.~Banaschewski (Springer Berlin Heidelberg, Berlin, Heidelberg, 1982), pp.
+  68--85
 
 \bibitem{DanosHarmer}
 V.~Danos, R.~Harmer, in \emph{Proceedings Fifteenth Annual IEEE Symposium on
   Logic in Computer Science (Cat. No.99CB36332)} (2000), pp. 204--213.
 \newblock \doi{10.1109/LICS.2000.855770}
-
-\bibitem{Giry}
-M.~Giry, in \emph{Categorical Aspects of Topology and Analysis}, ed. by
-  B.~Banaschewski (Springer Berlin Heidelberg, Berlin, Heidelberg, 1982), pp.
-  68--85
 
 \bibitem{JimGuySmallStep}
 J.~Laird, G.~Manzonetto, G.~McCusker, M.~Pagani, in \emph{Logic in Computer
@@ -98,12 +99,15 @@ J.~Laird, G.~Manzonetto, G.~McCusker, M.~Pagani, in \emph{Logic in Computer
 \newblock \doi{10.1109/LICS.2013.36}.
 \newblock \urlprefix\url{doi.ieeecomputersociety.org/10.1109/LICS.2013.36}
 
-\bibitem{Freyd}
-P.~Freyd, P.~O’Hearn, A.~Power, M.~Takeyama, R.~Street, R.~Tennent,
-  Theoretical Computer Science \textbf{228}(1), 49  (1999).
-\newblock \doi{https://doi.org/10.1016/S0304-3975(98)00354-5}.
-\newblock
-  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0304397598003545}
+\bibitem{CslPaper}
+W.J. Gowers, J.D. Laird, in \emph{27th EACSL Annual Conference on Computer
+  Science Logic (CSL 2018)}, \emph{Leibniz International Proceedings in
+  Informatics (LIPIcs)}, vol. 119, ed. by D.~Ghica, A.~Jung (Schloss
+  Dagstuhl--Leibniz-Zentrum fuer Informatik, Dagstuhl, Germany, 2018),
+  \emph{Leibniz International Proceedings in Informatics (LIPIcs)}, vol. 119,
+  pp. 24:1--24:18.
+\newblock \doi{10.4230/LIPIcs.CSL.2018.24}.
+\newblock \urlprefix\url{http://drops.dagstuhl.de/opus/volltexte/2018/9691}
 
 \bibitem{CurienFullAbstraction}
 P.L. Curien, Electron. Notes Theor. Comput. Sci. \textbf{172}, 301 (2007).

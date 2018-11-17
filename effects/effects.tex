@@ -78,7 +78,7 @@
 \newcommand{\Var}{{\mathtt{Var}}}
 \newcommand{\new}{{\mathtt{new}}}
 \renewcommand{\case}{{\mathtt{case}}}
-\newcommand{\blank}{\;\underline{\hspace{1.5ex}}\;}
+\newcommand{\blank}{\,\underline{\hspace{1.5ex}}\,}
 \newcommand{\converges}{\Downarrow}
 
 \newcommand{\catname}[1]{\mathbf{#1}}
@@ -130,17 +130,16 @@
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
-\author{}
+\author{W. John Gowers}
 %
-\authorrunning{} % abbreviated author list (for running head)
+\authorrunning{W. J. Gowers} % abbreviated author list (for running head)
 %
 %%%% list of authors for the TOC (use if author list has to be modified)
 \tocauthor{}
 %
 \institute{University of Bath, Claverton Down Road, Bath.  
 BA2 7AY,\\
-\email{wjg27@bath.ac.uk},\\ WWW home page:
-\texttt{http://people.bath.ac.uk/wjg27}}
+\email{wjg27@bath.ac.uk}}
 
 \maketitle              % typeset the title of the contribution
 
@@ -153,7 +152,7 @@ BA2 7AY,\\
   These generalize monads: a monad is precisely an action of the trivial category.
   We introduce a construction on parametric monads which takes a parametric monad on a category and gives us back a new category.  
   As with the Kleisli category, the objects of this category will be the objects of the original category, while the morphisms are obtained from morphisms in the original category in a formal manner brought about by the action.  
-  In the case that the action is actually a monad, we get the usual Kleisli category.
+  If the action is actually a monad, we get the usual Kleisli category.
 
   We show that this new construction is closely related to existing models of effects in game semantics, allowing us to reason systematically about adequacy and full abstraction proofs.
   We illustrate the relevance of the construction by showing that a special case gives us a fully abstract game semantics for Probabilistic Algol, which can be related to the existing model given by Danos and Harmer.
@@ -162,31 +161,22 @@ BA2 7AY,\\
 
 \section{Introduction}
 
-\subsection{Monads and Kleisli categories}
-
 This paper is about general frameworks for modelling effects in a categorical semantics.  
 The seminal paper in this field is Moggi's \emph{Computational Lambda-Calculus and Monads} \cite{Moggi}, which first put forward the idea that if $\C$ is a categorical model of a programming language, then we can simulate an effect in that language via a suitable \emph{monad} on $\C$.  
-Given such a monad, its Kleisli category $Kl_M\C$ is then a model of a language formed by adding the effect to the original language.  
+Given a monad, its Kleisli category $\Kl_M\C$ is then a model of a language formed by adding the effect to the original one.  
 
-Spivey \cite{Spivey} and Wadler \cite{Wadler1,Wadler2} have transferred this theory to the real world by using monads as programming tools, particularly in the Haskell programming language.  
+Spivey \cite{Spivey} and Wadler \cite{Wadler1,Wadler2} have transferred this theory to the real world by using monads as programming tools, particularly in Haskell.
 
-Monads are certainly not the only formal method of adding effects into categories.  
-For example, \cite{Lawvere} argues that Lawvere theories, a tool used originally in universal algebra (as monads were), also give us a natural way to model effects in categories.  
-Since \cite{FinitaryMonadOnSet} every Lawvere theory may be regarded as a particular monad on the category of sets, this is not surprising.  
-However, Lawvere theories are a lot more flexible than monads when it comes to composing multiple effects together.
-
+There are other systematic treatments of effects -- for example, Lawvere theories \cite{Lawvere}.  
 More recent work in game semantics, however, has produced models of effects -- such as the well-known game semantics for scoped state \cite{SamsonGuyIAPassive} and nondeterminism \cite{mcCHFiniteND} -- do not arise by applying any systematic procedure to a base category of games that lacks the effect.  
 Instead, these models are typically built up using intuition -- for example, by relaxing the determinism condition on strategies to give a model of a nondeterministic language -- and do not readily fit into any category theoretic framework the way Kleisli categories do.  
 The goal of this paper is to examine some possible frameworks that will allow us to study these and other models in a systematic way.  
-
-A closely related problem is that of using a common technique to model a particular effect in different settings.  
-Many of our favourite monads (e.g., the powerset monad on $\Set$ for nondeterminism) live in some particular category and cannot readily be set up in other categories. 
 
 Before we start, it is worth mentioning one example of a Kleisli category arising naturally in game semantics.  
 The \emph{slot games} defined in \cite{SlotGames} are defined like ordinary games, but their strategies are allowed to contain extra moves, called \emph{tokens}, which are meant to represent a point at which the computation takes up time or resources.  
 For example, a strategy for a term of natural number type that returns the value $5$ after two CPU cycles could be represented by the strategy shown on the left of Figure \ref{slot-games}.  
 Now, we can alternatively represent this strategy as being a normal strategy inside the Kleisli category for the reader monad given by the \emph{command} or \emph{singleton} type, as on the right of Figure \ref{slot-games}.  
-The translation works by replacing each token $\circled{\$}$ with a request to the argument to the function: since this arguement has singleton type, there is only one possible value that can be passed in, but the game semantics will record that we have made the request.  
+The translation works by replacing each token $\circled{\$}$ with a request to the argument to the function: since this argument has singleton type, there is only one possible value that can be passed in, but the game semantics will record that we have made the request.  
 What is more, this translation respects composition in the two categories, both the Kleisli composition and the composition defined synthetically for slot games.
 \begin{figure}
   \begin{mathpar}
@@ -212,13 +202,13 @@ What is more, this translation respects composition in the two categories, both 
   \caption{The `slot-games' denotation of a program that uses resources can also be represented in a Kleisli category.}
 \end{figure}
 
-Since the reader monad is entirely built out of the Cartesian closed structure of the category, we can perform a similar trick in many different settings, although perhaps not as successfully as in game semantics.  
+\section{Promonads and Parametric monads}
 
 \subsection{Promonads}
 
 One clue comes from generalizing from functors to profunctors.  
-Since a monad is a monoid in the category $\End[\C]$ of endofunctors on $\C$ with monoidal product given by functor composition, we can define a \emph{promonad} to be a monoid in the category $\Prof[\C,\C]$ of endoprofunctors on $\C$ (i.e., functors $\C^{op}\times\C\to \Set$), where the monoidal product is profunctor composition.
-Since a functor $\F\from \C\to \D$ may be identified with the profunctor $\D[F(\blank),\blank]\from\C^{op}\times\D\to\Set$, this certainly generalizes the idea of a monad.  
+A monad is a monoid in the category $\End[\C]$ of endofunctors on $\C$, with monoidal product given by composition. So we can define a \emph{promonad} to be a monoid in the category $\Prof[\C,\C]$ of endoprofunctors on $\C$ (i.e., functors $\C^{op}\times\C\to \Set$), where the monoidal product is profunctor composition.
+A functor $\F\from \C\to \D$ may be identified with the profunctor $\D[F(\blank),\blank]\from\C^{op}\times\D\to\Set$, so promonads generalize monads.
 
 A little thought, however, shows that a promonad is a vast generalization of a monad.  
 Any promonad $\D\from\C^{op}\times\C\to\Set$ on a category $\C$ may be identified \cite{Promonad} with a category (also called $\D$) where the objects are the objects of $\C$ and the morphisms from $A$ to $B$ are elements of the set $\D(A,B)$.  
@@ -227,8 +217,8 @@ The promonad structure gives us composition and identities in the category $\D$,
 In the other direction, if we have such a $\C\xrightarrow{J}\D$, then the hom functor $\D(J(\blank),J(\blank)$ is a promonad on $\C$.  
 Thus, promonads on $\C$ generalize the Kleisli construction to such an extent that they incorporate, among others, any category formed from $\C$ by keeping the same objects and adding new morphisms, such as the game semantics models of state \cite{SamsonGuyIAPassive} and nondeterminism \cite{mcCHFiniteND}.  
 
-On the other hand, what promonads capture is quite a natural simple way of modelling effects: keep the same types (objects), but give us new ways to write programs (morphisms).  
-Although effectful types are important (e.g., in work on call-by-push-value \cite{Cbpv}), we shall adopt this paradigm in our paper.  
+On the other hand, what promonads capture is quite a natural simple way of modelling effects: keep the same types (objects), but give new ways to write programs (morphisms).  
+Although effectful types are important (e.g., in work on call-by-push-value \cite{Cbpv}), we shall adopt this paradigm here.
 So one way to state our goal is that we are looking for systematic ways to construct promonads on a category that are more general than the existing Kleisli construction for monads.
 
 \subsection{Parametric monads}
@@ -257,7 +247,7 @@ The morphisms in $\C/\M$ are given by
 \[
   \C/\M(A,B)=\colim_{X\object\M} \C(A,X.B)\,,
   \]
-with the composition of $f\from A\to X.B$ and $g\from B\to Y.C$ being given by the composite
+with the composition of $f\from A\to X.B$ and $g\from B\to Y.C$ given by the composite
 \[
   A \xrightarrow{f}
   X.B \xrightarrow{X.g}
@@ -270,20 +260,19 @@ Note that if $\M$ is the trivial category (so that the action is in fact a monad
 
 The colimit that appears in the definition of the category $\C/\M$ is instructive, because it is linked to the fact that many important monads may be expressed as colimits.  
 For example, let $\Surj^+$ be the category of non-empty sets and surjections.  
-Then, if $A$ is a set, we have
+Then, if $A$ is a set, we have (naturally in $A$):
 \begin{IEEEeqnarray*}{CCC}
   \colim_{X\object\Surj^{+\,op}} [X,A] & \cong & \powerset(A) \\[6pt]
-  \left(X \xrightarrow{f} A\right) & \mapsto & \text{Im}(f)\,,
+  \left(X \xrightarrow{f} A\right) & \mapsto & \text{Im}(f)\,.
 \end{IEEEeqnarray*}
-naturally in $A$.
 
 This is useful, because the body of the colimit -- i.e., the function set $[X,A]$ -- has a natural equivalent inside any Cartesian closed category $\C$ that admits a functor $\F\from\Set\to\C$; i.e., the internal hom $\F(X)\implies A$.
 Moreover, the functor $[X,A]$ is actually a lax action of $\Surj^{+,op}$ (with the Cartesian product) upon the category of sets, and the monad structure of the powerset may be deduced from the structure of this action via the colimit.
-So even though we cannot define the powerset \emph{monad} inside arbitrary Cartesian closed categories, we can still define this action of $\Surj^{op}$.  
+So even though we cannot define the powerset \emph{monad} inside arbitrary CCCs, we can still define this action of $\Surj^{op}$.  
 
 The idea, then, is that we might try to model nondeterminism in other categories (where we might not be able to define the powerset) using this parametric monad.  
 One unfortunate fact is that these two alternatives (powerset monad vs lax action of $\Surj^{+,op}$) do not give rise to the same promonad in the category of sets.  
-Indeed, if we have a general action of a monoidal category $\M$ on $\Set$, then (as long as the possibly large colimits exist) we get a monad on $\Set$ given by
+Indeed, if we have a general action of a monoidal category $\M$ on $\Set$, then (as long as the possibly large colimits exist) we get a monad $M$ on $\Set$ given by
 \[
   M A = \colim_{X\object\M} X.A\,
   \]
@@ -291,7 +280,7 @@ and the morphisms between sets $A$ and $B$ in the Kleisli category are given by
 \[
   [A, \colim_{X\object\M} X.B]\,.
   \]
-Meanwhile, the morphisms between $A$ and $B$ in the category $\C/\M$ are given by the set
+Meanwhile, the morphisms between $A$ and $B$ in the category $\C/\M$ are given by
 \[
   \colim_{X\object\M} [A,X.B]\,,
   \]
@@ -300,31 +289,16 @@ and the two sets need not be the same, since the colimit might not commute with 
 However, if the category $\M$ satisfies certain additional properties, we can get some relation back.  
 There is always a natural identity-on-objects functor between the two categories, given by the natural map
 \[
-  \colim_{X\object\M}[A,X.B] \to [A, \colim_{X\object\M} X.B]\,,
+  \colim_{X\object\M}[A,X.B] \to [A, \colim_{X\object\M} X.B]\,.
   \]
-and if the category $\M$ admits a cocone over every discrete diagram (i.e., if whenever $(X_i)$ is a collection of objects of $\M$ there is some $Y$ such that there is a morphism $f_i\from X_i\to Y$ for all $i$), then this function is surjective, meaning that the functor will be full.
+If the category $\M$ admits a cocone over every discrete diagram (i.e., if whenever $(X_i)$ is a collection of objects of $\M$ there is some $Y$ such that there is a morphism $f_i\from X_i\to Y$ for all $i$), then this function is surjective, meaning that the functor will be full.
 The category $\Surj^{+,op}$ has this property (via the Cartesian product and its projections, which are always surjective for non-empty sets).  
-In the case of the action of $\Surj^{+,op}$ that gives rise to the powerset monad, the natural map given above is the surjection $\powerset[A,B]\to [A,\powerset B]$ that takes a set $\F$ of functions $A\to B$ and forms the function $A\to\powerset B$ that sends an element $a$ to the set
-\[
-  \{f(a)\suchthat f\in\F\}\,.
-  \]
-This means that we may recover the Kleisli category from the category given by the action by taking the quotient by a further equivalence relation on morphisms.
+In the case of the action of $\Surj^{+,op}$ that gives rise to the powerset monad, the natural map given above is the surjection $\powerset[A,B]\to [A,\powerset B]$ that takes a set $\F$ of functions $A\to B$ and forms the function $A\to\powerset B$ that sends an element $a$ to the set $\{f(a)\suchthat f\in\F\}$.
+So we may recover the Kleisli category from the category given by the action by applying a further equivalence relation on morphisms.
 
-In general, if a monad $M$ on $\Set$ can be expressed as the colimit of a lax action of a monoidal category $\M$ on $\Set$, where $\M$ admits a cocone over every discrete diagram, then we do not lose very much by considering the category $\Set/\M$ obtained from the action rather than the Kleisli category $\Kl_M\Set$.  
-More specifically, there is a full functor $\Kl_M\Set\to \Set/\M$ that is the identity on objects, so we may recover the Kleisli category by applying a suitable equivalence relation to the set of morphisms.  
-The benefit of reasoning about the action of $\M$ rather than the monad $M$ is that the action might be realizable in a much larger class of categories.  
-For instance, the action of $\Surj^{+\,op}$ on $\Set$ may be replicated inside any monoidal closed category that admits a functor out of the category of sets (for example, most models of PCF or Idealized Algol).
+In general, if a monad $M$ on $\Set$ can be expressed as the colimit of a lax action of a monoidal category $\M$ on $\Set$, where $\M$ admits a cocone over every discrete diagram, then we do not lose very much by considering the category $\Set/\M$ obtained from the action rather than the Kleisli category $\Kl_M\Set$, since there is a full functor $\Kl_M\Set\to \Set/\M$ that is the identity on objects, letting us recover the Kleisli category by applying a suitable equivalence relation on morphisms.
+The benefit of reasoning about the action of $\M$ rather than the monad $M$ is that the action might be realizable in a much larger class of categories, as with our action of $\Surj^{+\,op}$.
 We will see later that the non-empty powerset monad has a probabilistic counterpart, where the set of discrete probability distributions on a set may be obtained as a colimit over the category of probability spaces and probability-preserving maps, which satisfies similar properties, allowing us to model discrete probability in categories other than $\Set$.
-
-\subsection{Plan for the paper}
-
-The rest of this paper will consist in two sections.  
-In the first, we will give a more detailed account of the construction that allows us to build a promonad (i.e., a category) out of a parametric monad.  
-
-In the second section, we will give a fully abstract game semantics for the language Probabilistic Algol (PA).  
-This is by no means a new result -- the paper \cite{DanosHarmer} that introduced PA also gave it a fully abstract game semantics.  
-Instead, the point of this section will be to demonstrate how the ideas we have outlined can be applied systematically to yield fully abstract models of programming languages.
-
 \section{A Kleisli-style construction for parametric monads}
 
 \subsection{Parametric monads}
@@ -365,18 +339,17 @@ In other words, we have natural transformations $\passoc_{X,Y,A}\from X.Y.A\to (
       \[
         I.I.A = MMA \to M A = I.A = (I\tensor I).A\,.
         \]
-      Dually, any lax action gives rise to a monad on the category being acted upon, by setting $MA = A.I$.
     \item If $\C$ is also a monoidal category and $J\from \M\to \C$ is a lax monoidal functor with monoidal coherence $\mu$, then there is an action of $\M^{co}$ (i.e., $\M$ with the opposite monoidal product) on $\C$ given by
       \[
         A.X = A \tensor JX\,,
         \]
-      and
+      where $\passoc_{X,Y,A}$ is given by the composite
       \[
-        \passoc_{X,Y,A}=
         (A \tensor JY) \tensor JX \xrightarrow{\assoc_{A,JX,JY}}
         A \tensor (JY \tensor JX) \xrightarrow{A \tensor \mu_{X,Y}}
         A \tensor J(Y\tensor X)\,.
         \]
+      and the unit $\lun_A$ similarly.  
       We sometimes refer to a left action of the opposite category $\M^{co}$ on $\C$ as a \emph{right action} of $\M$ on $\C$.  
       In that case, we write $X.A$ instead of $A.X$, so that the coherences become
       \begin{gather*}
@@ -388,7 +361,7 @@ In other words, we have natural transformations $\passoc_{X,Y,A}\from X.Y.A\to (
       \[
         A.X = jX \implies A
         \]
-      and
+      where $\passoc_{A,X,Y}$ is given by the composite
       \[
         \passoc_{A,X,Y}=jY \implies (jX \implies A) \to
         (jY \tensor jX) \implies A \xrightarrow{\nu_{Y,X}\implies A}
@@ -396,8 +369,7 @@ In other words, we have natural transformations $\passoc_{X,Y,A}\from X.Y.A\to (
         \]
     \item The intersection of the first two examples is the \emph{writer monad} given by $M_WX = X\tensor W$ for any monoid $W$ in $\C$.  
       The intersection of the first and third examples is the \emph{reader monad} given by $M^RX = R \implies X$ for any comonoid $R$ in $\C$ (and, in particular, for any object $R$ if $\C$ if the monoidal product in $\C$ is Cartesian).
-      
-      We shall therefore call an action of the form $A \tensor JX$ a \emph{writer-style action} and one of the form $jX \implies A$ a \emph{reader-style action}.
+      We therefore call an action of the form $A \tensor JX$ a \emph{writer-style action} and one of the form $jX \implies A$ a \emph{reader-style action}.
     \item We can define an \emph{oplax action} of $\M$ on $\C$ to be a lax action of $\M$ upon the opposite category $\C^{op}$.  
       In this case, the coherence $\passoc$ goes from $A.(X\tensor Y)$ to $A.X.Y$.  
       As monads are lax actions of the trivial category, so are comonads oplax actions of the trivial category.
@@ -424,12 +396,12 @@ That is, if $A$ and $B$ are objects of $\C$, then a morphism from $A$ to $B$ in 
       & Y.B
   \end{tikzcd}
   \]
-Note that this does not automatically define an equivalence relation in general, so there may be pairs $(X,f)$ and $(Y,g)$ that are not related by some $h\from X\to Y$ but are nevertheless equivalent because there is some chain of such relations from one to the other.
+Note that this does not automatically define an equivalence relation in general, so there may be pairs $(X,f)$ and $(Y,g)$ that are not related by some $h\from X\to Y$ but are nevertheless equivalent because there is some zigzag of such relations from one to the other.
 
 For the rest of the paper, we will refer to the pair $(X,f)$ using the morphism $f$, since the object $X$ should usually be clear from context.
 
 Let $A,B,C$ be objects of $\C$, and let $f\from A\to X.B,g\from B\to Y.C$ be morphisms $A\to B$ and $B\to C$ in $\C/\M$.  
-We define the composition of $f$ with $g$ to be given by the following composite in $\C$.
+The composition of $f$ with $g$ is given in $\C$ by:
 \[
   A \xrightarrow{f}
   X.B \xrightarrow{X.g}
@@ -456,11 +428,6 @@ There is a natural functor $J\from \C \to \C/\M$ that is the identity on objects
   \]
 considered as a morphism $A\to B$ in $\C/\M$.
 
-Let us see what that looks like when our action is the action of $\Surj^{+\,op}$ on $\Set$ that we considered earlier.  
-In that case, a morphism $A\to B$ is given by a function $A \to [X,B]$, or equivalently $X \to [A,B]$.
-We may identify this function with its image, which is a subset of $[A,B]$, and this identification corresponds precisely to the equivalence relation that is automatically given by our construction; namely, the smallest equivalence relation such that $X \to [A,B]$ is equivalent to the composite $Y \to X \to [A,B]$ for any surjection $Y \to X$.
-Indeed, if $f\from X \to [A,B]$ and $g \from Y \to [A,B]$ have the same image $\F\subset[A,B]$, then $f$ and $g$ are both equivalent to the inclusion $\F\hookrightarrow [A,B]$, so they are equivalent.
-
 \subsection{Universal property of $\C/\M$}
 
 The category $\C/\M$ has one other piece of structure besides the functor out of $\C$.  
@@ -483,8 +450,8 @@ $\C/\M$, $J$ and $\phi_{X,A}$ are universal in the following sense.
   Let $\D$ be a category, $F$ a functor $\C\to \D$ and $\psi_{X,A}\from F(X.A) \to FA$ a multiplicative natural transformation in $\D$.  
   Then there is a unique functor $H\from \C/\M\to \D$ such that $F=H J$ and $\psi=H\phi$.
 
-  ii) Let $\D$ be a category and let $H,K\from \C/\M\to \D$ be two functors.  
-  Let $\alpha\from HJ \to KJ$ be a natural transformation making the following diagram commute.
+  ii) Let $H,K\from \C/\M\to \D$ be two functors.  
+  Let $\alpha\from HJ \to KJ$ be a natural transformation making the following square commute.
   \[
     \begin{tikzcd}
       HJ A \arrow[r, "\alpha_A"] \arrow[d, "H\phi_{X,A}"']
@@ -505,15 +472,15 @@ $\C/\M$, $J$ and $\phi_{X,A}$ are universal in the following sense.
     B\,,
     \]
   where we have considered $f$ both as a morphism $A\to B$ in $\C/\M$ and as a morphism $A \to X.B$ in $\C$.  
-  It therefore suffices to define $H$ on morphisms of the form $Jf$ (which must be sent to $Ff$, since $F=HJ$) and on morphisms of the form $\phi_{X,A}$ (which must be sent to $\psi_{X,A}$, since $\psi=H\phi$).  
-  Therefore $H$ is uniquely defined, if it exists, so it suffices to check that the $H$ given by sending the above factorization to the composite
+  It therefore suffices to define $H$ on morphisms of the form $Jf$ and on morphisms of the form $\phi_{X,A}$.  
+  The conditions in the statement mean that $H$ must be defined by sending the above factorization to the composite
   \[
     FA \xrightarrow{Ff}
     F(X.B) \xrightarrow{\psi_{X,A}}
-    FB
+    FB\,,
     \]
-  is indeed a functor satisfying the requirements of the proposition.  
-  Part (ii) is proved in a very similar way.
+  so it suffices to check that this is indeed a functor.
+  Part (ii) is proved from the factorization in a very similar way.\qed
 \end{proof}
 
 \begin{remark}
@@ -527,14 +494,14 @@ $\C/\M$, $J$ and $\phi_{X,A}$ are universal in the following sense.
   Therefore, Proposition \ref{quotient-universal} tells us that the Kleisli category is not only initial amongst adjunctions giving rise to $M$, but is initial among all functors $F\from \C \to \D$ that admit a natural transformation $FMA \to FA$.
   Note that for more general $\M$, we do not in general get an adjunction between $\C$ and $\C/\M$.
 
-  The quotient notation we have used is because the universal property we have outlined exhibits $\C/\M$ as a particular weighted coequalizer of the functors $\pr_2,\blank.\blank\from \M\times\C \rightrightarrows \C$ in $\Cat$.
-  It may therefore be regarded as a lax $2$-dimensional analogue of the quotient $X/G$ of a set $X$ by a group or monoid action.  
+  The `$/$' notation we have used is because the universal property we have outlined exhibits $\C/\M$ as a particular weighted coequalizer of the functors $\pr_2,\blank.\blank\from \M\times\C \rightrightarrows \C$ in $\Cat$.
+  It may therefore be regarded as a lax $2$-dimensional analogue of the quotient $X/G$ of a set $X$ by a monoid action.  
   
-  When the action is a monad, this is a strange idea, since we are not used to thinking of, for example, a Kleisli category as quotient of the original category.  
+  When the action is a monad, this is a strange idea, since we are not used to thinking of a Kleisli category as quotient of the original category.  
   The reason for this is the laxness: we do not identify the objects $A$ and $X.A$ with an isomorphism, but with a morphism in one direction.  
   One way in which a Kleisli category does act like a quotient is that it allows us to transfer effects that are usually associated with higher types on to lower types.  
   For example, the type $W\to [A,W]$ encodes a state transformer with state $W$.  
-  Working in the Kleisli category for the state monad allows us to associate this stateful behaviour to the object $A$.
+  In the Kleisli category for the state monad, we can associate this stateful behaviour to the object $A$.
 \end{remark}
 \begin{remark}
   The proof of Proposition \ref{quotient-universal} tells us that one way of thinking of the category $\C/\M$ is as a general theory of categories that extend $\C$, and admit a factorization result whereby every morphism is the composition of a morphism from $\C$ with one of the distinguished morphisms $\phi_{X,A}$.
@@ -589,7 +556,7 @@ Given a monoidal action, we get a natural transformation
   \]
 which is multiplicative, inducing a functor $(\C\times\C)/(\M\times\M)\to \C/\M$.  
 Composing with the isomorphism from the start of this section, we get a functor $(\C/\M)\times(\C/\M)\to\C/\M$.  
-It turns out that this gives $\C/\M$ the structure of a monoidal category and that in this case the functor $J\from \C\to\C/\M$ is a strict monoidal functor.
+It turns out that this gives $\C/\M$ the structure of a monoidal category such that the functor $J\from \C\to\C/\M$ is a strict monoidal functor.
 
 This generalizes the case of a monoidal monad, whose the Kleisli category is always a monoidal category.
 
@@ -599,48 +566,43 @@ For example, the Kleisli category for the powerset monad on $\Set$ (which is bet
 
 \section{Game Semantics for Probabilistic Algol}
 
+We will now apply the ideas from the previous section to give a fully abstract game semantics for Probabilistic Algol (PA), where the model will be derived using a parametric monad.
+
 \subsection{The discrete probability monad}
 
 Given a set $X$, we define a \emph{discrete probability measure} on $X$ to be a function $\bP\from\powerset(X)\to[0,1]$ satisfying the following conditions.
 \begin{description}
-  \item[Empty set] $\bP(\emptyset) = 0$.
-  \item[Countable additivity] If $\{E_i\}_{i=0}^\infty$ is a sequence of pairwise-disjoint subsets of $X$, then
+  \item[Empty set and whole space] $\bP(\emptyset) = 0$ and $\bP(X)=1$.
+  \item[Countable additivity] If $\{E_i\}_{i=0}^\infty$ are pairwise-disjoint subsets of $X$, then
     \[
       \bP\left(\bigcup_{i=0}^\infty E_i\right) = \sum_{i=0}^\infty \bP(E_i)\,.
       \]
-  \item[Whole space] $\bP(X)=1$.
 \end{description}
 
 If instead we have $\bP(X)\le 1$, we say that $\bP$ is a \emph{sub-probability measure}
-
-Note that if $A$ is countable, then $\mu$ may be entirelly specified by its action on singletons: if $A\subseteq X$ is a set, then we have
-\[
-  \bP(A) = \sum_{a\in A}\bP(\{a\})\,.
-  \]
 
 Given a set $X$, we define $P(X)$ to be the set of all discrete probability measures on $X$.  
 Then we have natural maps
 \begin{mathpar}
   \delta_X\from X \to P(X) \and m_X\from P(P(X)) \to X
 \end{mathpar}
-given by
 \begin{mathpar}
   \delta_X(x)(A) = \begin{cases}
     1 & x\in A \\
     0 & x\not\in A
   \end{cases} \and
-  \bP_X(\tau)(A) = \sum_{\bP\in P(X)} \tau(\{\bP\})\bP(A)
+  m_X(\tau)(A) = \sum_{\bP\in P(X)} \tau(\{\bP\})\bP(A)
 \end{mathpar}
-$\delta_X$ and $m_X$ give $P$ the structure of a monad on $\Set$, which we will call the \emph{discrete probability monad}.  
+$\delta_X$ and $m_X$ give $P$ the structure of a monad on $\Set$, which we call the \emph{discrete probability monad}.  
 This is a discrete form of the monad developed in \cite{Giry}.
 
 We want to exhibit this monad as the colimit of an action, as we did for the powerset monad earlier.  
 We define a \emph{discrete probability space} to be a pair $(X,\bP_X)$, where $X$ is a set and $\mu$ a discrete probability measure on $X$.  
 We will normally refer to this pair using the set $X$.
-Given discrete probability spaces $X$ and $Y$, we define a \emph{measure-preserving map} from $X$ to $Y$ to be a function $f\from X \to Y$ such that for all $A\subseteq Y$ we have $\bP(X)(f\inv(A)) = \bP_Y(A)$.
+Given discrete probability spaces $X$ and $Y$, a \emph{measure-preserving map} from $X$ to $Y$ is a function $f\from X \to Y$ such that for all $A\subseteq Y$ we have $\bP(X)(f\inv(A)) = \bP_Y(A)$.
 It is clear that discrete probability spaces and measure-preserving maps form a category $\DProb$.
 
-Moreover, $\DProb$ is a monoidal category: given discrete probability spaces $X$ and $Y$, we may define a probability measure on the Cartesian product $X\times Y$ by
+Moreover, $\DProb$ is a monoidal category: given discrete probability spaces $X$ and $Y$, we define a probability measure on the Cartesian product $X\times Y$ by
 \[
   \bP_{X\times Y} (A) = \sum_{(x,y)\in A} \bP_X(\{x\})\bP_Y(\{y\})\,.
   \]
@@ -649,33 +611,28 @@ Then we have a natural isomorphism
 \[
   P(X) \cong \colim_{(Y,\bP_Y)\object\DProb^{op}} [Y,X]\,,
   \]
-such that the monad structure on $P$ is induced from the reader-style action of $\DProb^{op}$ on $\Set$ given by the monoidal functor $\DProb\to\Set$ that sends $(Y,\bP_Y)$ to its underlying set $Y$.
+such that the monad structure on $P$ is induced from this reader-style action of $\DProb$ on $\Set$.
 
-Moreover, the category $\DProb^{op}$ is weakly filtered, and so, as in our earlier discussion, we feel confident using this action, rather than the monad $P$ we have defined, to model discrete probability.  
-
-This action is very closely related to the action of $\Surj^{+,op}$ that we defined earlier; indeed, $\Surj^+$ is equivalent to the category of discrete probability spaces taking probabilities in the Boolean semiring $\{0,1\}$ with countable summation given by maximum.
+This action is closely related to the action of $\Surj^{+,op}$ that we defined earlier: $\Surj^+$ is equivalent to the category of discrete probability spaces taking probabilities in the semiring $\{0,1\}$ with countable summation given by maximum.
 
 By cutting down the category $\DProb$ we can obtain slightly different notions of probability.  
-For our purposes, we will be using the full subcategory $\BProb$ where the objects $(X,\bP_X)$ are those that satisfy the following three additional conditions.
+We will be using the full subcategory $\BProb$ where the objects $(X,\bP_X)$ are those that satisfy the following two additional conditions.
 \begin{description}
   \item[Countability] The set $X$ is countable.
   \item[Finite support] There is a finite subset $E\subseteq X$ such that $\bP_X(E)=1$.
 \end{description}
 
-The action of $\BProb^{op}$ gives rise to a monad on the category of countable sets.  
-
 \subsection{Probabilistic Algol}
 
-\cite{DanosHarmer} gives a fully abstract game semantics for the language Probabilistic Algol (PA).  
-The base language for PA is the language Idealized Algol (IA) from \cite{SamsonGuyIAPassive}, and it has been extended with a constants $\coin\from\bool$.  
+PA was introduced in \cite{DanosHarmer}, where it was also given a fully abstract game semantics.
+The base language is the language Idealized Algol (IA) from \cite{SamsonGuyIAPassive}, and it has been extended with a constants $\coin\from\bool$.  
 To make things a little more interesting, we will extend this further to incorporate an infinite family of constants $\coin_p\from\bool$, where $p$ ranges over the real interval $[0,1]$.  
 
 We give the language a small-step operational semantics.  
-The rules for the deterministic terms may be derived from the operational semantics given in \cite{SamsonGuyIAPassive}; for example:
+The rules for the deterministic terms may be derived from the operational semantics given in \cite{SamsonGuyIAPassive} (see also \cite{JimGuySmallStep}); for example:
 \[
-  \inferrule*{ }{\ia s {v \coloneqq n} \opto \ia {\stup s v n} \skipp}
+  \inferrule*{ }{\ia s {v \coloneqq n} \opto \ia {\stup s v n} \skipp}\,.
   \]
-See also \cite{JimGuySmallStep}.
 
 We add two small-step rules for the $\coin_p$ primitives:
 
@@ -693,7 +650,7 @@ This defines a discrete sub-probability measure on the set corresponding to the 
 \[
   \bP(\{x\}) = \sum_{\substack{\text{evaluations}\\\pi = M \to\dots \x}}p(\pi)\,.
   \]
-This is only a subprobability measure, because some evaluations may continue forever.
+This is only a subprobability measure, because some evaluations may diverge.
 
 \cite{DanosHarmer} shows how we can define other probabilistic terms using $\coin$.  
 Specifically, they define a term $\polydie\from\bN\to\bN$, where the behaviour of $\polydie\,n$ is to return the result of tossing an $n$-sided die (with sides numbered $0$ to $n-1$), with each outcome occurring with probability $1/n$.  
@@ -705,21 +662,19 @@ This process will terminate with probability $1$, and since each $m<n$ occurs wi
 
 \subsection{Extending a semantics for IA to a semantics for PA}
 
-Let $\G$ be a category that admits a fully abstract adequate semantics for Idealized Algol.  
-See \cite{SamsonGuyIAPassive} for a list of the conditions that such a category should satisfy, and also for the best known example, the category of games and visible strategies.
+Let $\G$ be a category that admits an adequate semantics for Idealized Algol that satisfies finite definability.
+The reader may assume that we are dealing with the category of games and visible strategies given in \cite{SamsonGuyIAPassive}.
 
-As explained in \cite{SamsonGuyIAPassive}, $\G$ should be Cartesian closed and there should be a lax monoidal functor $\Set\to \G$ that gives the denotation of the ground types $\nat$,$\bool$ and $\com$, together with their structural functions.
-We can therefore get a lax monoidal functor $\BProb \to \G$ by composing this with the forgetful functor $\BProb\to\Set$.
+We assume that $\G$ is symmetric monoidal closed and there is a lax monoidal functor $\Set\to \G$, giving the denotation of the ground types $\nat$,$\bool$ and $\com$ and their structural functions.
+So we get a lax monoidal functor $\BProb \to \G$ by composing this with the forgetful functor $\BProb\to\Set$.
 
 This gives rise to a reader-style action of $\BProb^{op}/\G$, and the resulting category $\G/\BProb^{op}$ is therefore a symmetric monoidal closed category.  
-
-\subsection{Testing morphisms and plays}
 
 The equivalence relation on morphisms is still too weak for our purposes.  
 For example, if the boolean type $\bB$ carries a Bernoulli distribution with coefficient $p$, then the diagonal map $\Delta\from \bB\to \bB\times\bB$ should be equivalent to the identity $\id\from\bB\times\bB\to\bB\times\bB$ as terms of type $\bB\times\bB$, because the projections on to each component are equivalent.  
 However, they are not yet equivalent in our category.  
 
-To improve the equivalence relation, we introduce the concept of \emph{testing morphism} for an object $A$ that is the denotation of an Idealized Algol term.
+To improve the equivalence relation, we use the concept of \emph{testing morphism} for an object $A$ that is the denotation of an Idealized Algol term, which the author introduced in \cite{CslPaper}.
 This is a term of type $(\bN \to A) \to A$ that is the denotation of an Idealized Algol term of the form
 \[
   \test_{n_1,\cdots,n_k} = \lambda f.\new\;v\coloneqq 0 \text{ in } f(v \coloneqq \deref v + 1; \case\,v\,\blank\,n_1\,\cdots\,n_k\,\Omega)\,,
@@ -732,61 +687,45 @@ Given a morphism $\sigma\from \bN \to A$, we say that the sequence $n_1,\cdots,n
 In that case, the \emph{result} of the play is the strategy $\test_{n_1,\cdots,n_k}(\sigma)$ for $A$.
 
 Now, if the set $\bN$ carries a probability distribution, then this gives rise to a sub-probability distribution on the set of plays for $\sigma$, where the probability associated to the sequence $n_1,\cdots,n_k$ is the product of the probabilities of the $n_i$.  
-This then induces a discrete probability distribution on the set of morphisms $1\to A$.
+This induces a discrete probability distribution on the set of morphisms $1\to A$.
 
-We say that two morphisms $\sigma,\tau\from \bN\to A$ from $1$ to $A$ in $\G/\BProb$ are equivalent if they give rise to the same probability distribution on the set of strategies for $A$.  
+We say that two morphisms $\sigma,\tau\from \bN\to A$ from $1$ to $A$ in $\G/\BProb$ are \emph{probabilistically equivalent} if they give rise to the same probability distribution on the set of strategies for $A$.  
 This equivalence relation refines our earlier one.
 
-\subsection{Single-threaded morphisms}
-
 Our category is symmetric monoidal closed, but not yet Cartesian closed.  
-A trick that is often used in Game Semantics (see, for example, \cite{mcCHFiniteND} and \cite{DanosHarmer}) is to pass to a category of \emph{single-threaded} strategies; this is equivalent to cutting down to those morphisms that are comonoid homomorphisms.  
+Since every object of our category has a natural comonoid structure given by the `diagonal' $A\to A\times A$, we may make our category Cartesian closed by cutting the morphisms down to the ones that are comonoid homomorphisms.  
+Note that we need to apply this equivalence relation in order to make sure that the natural morphisms $\phi_{X,A}$ are comonoid homomorphisms.
 
-Note that, in our category, every object has a natural commutative comonoid structure that arises from diagonal $\Delta\from A\to A\times A$ in the original category.  
-We say that a morphism $\sigma\from A\to B$ is \emph{single-threaded} if it is a homomorphism of the comonoid structures on $A$ and $B$; i.e., if the following square commutes.
-\[
-  \begin{tikzcd}
-    A \arrow[r, "\sigma"] \arrow[d, "\Delta"']
-      & B \arrow[d, "\Delta"] \\
-    A \times A \arrow[r, "\sigma\times\sigma"]
-      & B \times B
-  \end{tikzcd}
-  \]
-Since the category of commutative comonoids in a symmetric monoidal category is automatically Cartesian closed (see, for example, \cite{Freyd}), this gives us a Cartesian closed category.
-
-The deterministic terms are all comonoid homomorphisms.  
-As long as we have applied the equivalence relation outlined above, the natural morphisms $\phi_{X,A}$ are also comonoid homomorphisms.
-
-\subsection{Denotational semantics and adequacy}
+\subsection{Denotational semantics and Full Abstraction}
 
 We may now inductively build up a denotational semantics for PA.  
 The deterministic terms may all be defined inside the base category $\G$ and transported into our new category via the natural inclusion.  
 The probabilistic term $\coin_p$ is given by the natural morphism $\phi_{B_p, 1}$, where $B_p$ is a Bernoulli space with coefficient $p$.  
 That is to say, it is given by the pair
 \[
-  ((\{H,T\}, \mu(H)=p, \mu(T)=1-p), 1 \to (\{H,T\} \to \bB))\,
+  ((\{H,T\}, \mu(H)=p, \mu(T)=1-p), 1 \to (\{H,T\} \to \bB))\,,
   \]
 where the function on the right sends $H$ to $\true$ and $T$ to $\false$.
 
-Note now that the denotation of a term $M = C[\coin_{p_1},\cdots,\coin_{p_j}]T$ is given by the following morphism.
+Note now that the denotation of a term $M = C[\coin_{p_1},\cdots,\coin_{p_j}]\from T$ is given by the following morphism.
 \[
   \bB^j
   \xrightarrow{\deno{b_1,\cdots,b_j\ts C[b_1,\cdots,b_j]}}
   \deno{T}\,,
   \]
-where the distribution on the product $\bB^j$ is the product of Bernoulli distributions.
+where the distribution on $\bB^j$ is the product of Bernoulli distributions.
 
-Fix an injection $r\from\bB^j\to \bN$ (for instance, the one given by ibinary representation) and suitable projection functions $\pr_i \from \bN \to \bB$ such that $\pr_i(r(v))$ is the $i$-th entry of $v$.
-Let $\multicoin\from\nat$ be the term (depending on the values of the $p_i$) given by
+Fix an injection $r\from\bB^j\to \bN$ (for instance, the one given by binary representation) and projection functions $\pr_i \from \bN \to \bB$ such that $\pr_i(r(v))$ is the $i$-th entry of $v$.
+Let $\multicoin\from\nat$ be the term (depending on the $p_i$) given by
 \[
   (r\;\coin_{p_1}\,\cdots\,\coin_{p_j})\,.
   \]
-Now the operational semantics of $\pr_i(\multicoin)$ is the same as the operational semantics of $\coin_{p_i}$, since the projections from the product are probability-preserving.  
+Now the operational semantics of $\pr_i(\multicoin)$ is the same as that of $\coin_{p_i}$, since the projections from the product are probability-preserving.  
 This means that any evaluation $\pi$ of the term $M$ may be pegged to an evaluation of the term formed by replacing each instance of $\coin_{p_i}$ in $M$ with $\pr_i(\multicoin)$.
 
 \begin{proposition}[Computational Adequacy]
   Let $M = C[\multicoin]\from \com$ be a term of Idealized Algol, where $C$ is a multi-holed deterministic IA context.
-  Let $p$ be the sum of the probabilities of all evaluation sequences of $M$ that terminate at $\skipp$.
+  Let $p$ be the sum of the probabilities of all terminating evaluation sequences of $M$.
 
   The denotation of $M$ is a morphism $\bN \to \bC$ as outlined above.
 
@@ -798,18 +737,16 @@ This means that any evaluation $\pi$ of the term $M$ may be pegged to an evaluat
   By inspection, we may peg this evaluation of $M$ exactly to the evaluation of the term $\test_{n_1,\cdots,n_k} (\lambda n.C[n])$ in pure deterministic Idealized Algol, and therefore this IA term must converge.  
   By the Adequacy result for Idealized Algol \cite{SamsonGuyIAPassive}, an IA term converges to $\skipp$ if and only if its denotation is $\deno{\skipp}$.  
   Therefore, there is bijective matching between terminating evaluation sequences of $M$ and plays of the morphism $\deno{M}$, with each one getting the same probability.  
-  The result follows.
+  The result follows.\qed
 \end{proof}
 
-\subsection{Full Abstraction}
-
-In order to prove full abstraction for our model, we will define a further equivalence on morphisms.  
+To prove full abstraction for our model, we define a further equivalence on morphisms.  
 Say that two morphisms $f,g\from A \to B$ are \emph{intrinsically equivalent} if and only if for all morphisms $\alpha\from (A\to B)\to\bC$, $\alpha(f)$ and $\alpha(g)$ are probabilistically equivalent in the sense given above.
-Then our full abstraction result becomes:
+Then our full abstraction result is:
 
 \begin{proposition}[Full Abstraction]
   Let $M,N\from T$ be two PA terms.  
-  Then $M$ and $N$ are observationally equivalent if and only if their denotations $\deno{M}$ and $\deno{N}$ are intrinisically equivalent.
+  Then $M$ and $N$ are observationally equivalent if and only if their denotations $\deno{M}$ and $\deno{N}$ are intrinsically equivalent.
 \end{proposition}
 
 One direction (soundness) follows immediately from our Computational Adequacy result.  
@@ -820,10 +757,13 @@ We prove this using a factorization result:
   Then $\sigma$ may be factorized as $\text{Det}(\sigma)(\multicoin)$, where $\text{Det}(\sigma)\from \bN \to A \to B$ is a strategy in the image of the inclusion functor $J\from \G \to \G/\BProb^{op}$, and $\multicoin$ is defined for some values $p_1,\cdots,p_k$.
 \end{lemma}
 \begin{proof}
-  Treat $\sigma$ as a morphism $A \to X \to B$ in $\G$.  
+  Treat $\sigma$ as a morphism $A \to (X \to B)$ in $\G$.  
   Since $X$ is finitely supported, there is a probability-preserving function $\bN \to X$, for some finitely supported distribution on $\bN$.  
-  So $\sigma$ is equivalent to a morphism $A \to \bN \to B$, and then the factorization is automatic.
+  So $\sigma$ is equivalent to a morphism $A \to (\bN \to B)$, and then the factorization is automatic.\qed
 \end{proof}
+The most striking thing about the computational adequacy and deterministic factorization results is that they are proved entirely inside the original category $\G$.  
+This demonstrates what we have been trying to achieve: to model effects using a systematic method that allows us to prove results formulaically.  
+The factorization result, in particular, follows immediately from the way we have set the model up, whereas the corresponding result in traditional game semantics is often intricate and combinatorial.
 
 \bibliographystyle{spphys}
 \bibliography{effects}
