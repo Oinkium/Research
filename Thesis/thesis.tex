@@ -45,7 +45,7 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
 \end{example}
 \begin{example}
   Let $\M$ be a monoidal category and let $x$ be a monoid in $\M$.  
-  The \emph{writer monoid} $W_x$ on $\M$ is defined by $W_x y = y \tensor x$, with natural transformations
+  The \emph{writer monad} $W_x$ on $\M$ is defined by $W_x y = y \tensor x$, with natural transformations
   \begin{mathpar}
     m_y \from y \tensor x \tensor x \to y \tensor x
     \and
@@ -53,7 +53,7 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
   \end{mathpar}
   given by the monoid structure on $x$.
 
-  Going the other way, if $\M$ is monoidal closed with inner hom $\implies$, and if $z$ is a comonoid in $\M$, then the \emph{reader monoid} $R_z$ is given by $R_z y = z \implies y$.  
+  Going the other way, if $\M$ is monoidal closed with inner hom $\implies$, and if $z$ is a comonoid in $\M$, then the \emph{reader monad} $R_z$ is given by $R_z y = z \implies y$.  
   Then the monadic coherences
   \begin{mathpar}
     m_y \from z \implies z \implies y \to z \implies y
