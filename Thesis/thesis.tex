@@ -684,14 +684,14 @@ The difference here is that our factorization result is immediate, and does not 
     \and
     \tit(\deno N;(\bC \to \alpha');\mu) \ne n\,.
   \end{mathpar}
-  Now the compact definability result for Idealized Algol \cite[17]{SamsonGuyIAActive} tells us that $\alpha'$ must be the denotation of some IA term $x\from T \ts C[x] \from \com \to \com$, which is therefore the denotation of $C[\sleep] \from \com \to \com$ in $\Kl_{R_\bC}$.
+  Now the compact definability result for Idealized Algol \cite[17]{SamsonGuyIAActive} tells us that $\alpha'$ must be the denotation of some IA term $x\from T \ts C[x] \from \com \to \com$, which is therefore the denotation of $x\from T \ts C[x]\,\sleep \from \com$ in $\Kl_{R_\bC}$.
   So we get
   \begin{mathpar}
-    \tit(\deno{C[\sleep] M}) = n\,;
+    \tit(\deno{C[M]\,\sleep}) = n\,;
     \and
-    \tit(\deno{C[\sleep] N}) \ne n\,.
+    \tit(\deno{C[N]\,\sleep}) \ne n\,.
   \end{mathpar}
-  By Theorem \ref{IaSleepComputationalAdequacy}, $C[\sleep] M\converges_n$ and $C[\sleep] N\not\converges_n$.  
+  By Theorem \ref{IaSleepComputationalAdequacy}, $C[M]\,\sleep\converges_n$ and $C[N]\,\sleep\not\converges_n$.  
   Therefore, $M$ and $N$ are observationally inequivalent in IA+$\sleep$.
 \end{proof}
 
