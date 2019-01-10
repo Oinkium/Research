@@ -1,0 +1,39 @@
+\begin{thebibliography}{Lam74}
+
+\bibitem[AM96]{SamsonGuyIAActive}
+Samson Abramsky and Guy McCusker.
+\newblock Linearity, sharing and state: a fully abstract game semantics for
+  idealized algol with active expressions: Extended abstract.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 3:2 -- 14,
+  1996.
+\newblock Linear Logic 96 Tokyo Meeting.
+
+\bibitem[HM99]{mcCHFiniteND}
+R.~Harmer and G.~McCusker.
+\newblock A fully abstract game semantics for finite nondeterminism.
+\newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
+  (Cat. No. PR00158)}, pages 422--430, 1999.
+
+\bibitem[Kle65]{Kleisli}
+H.~Kleisli.
+\newblock Every standard construction is induced by a pair of adjoint functors.
+\newblock {\em Proceedings of the American Mathematical Society},
+  16(3):544--546, 1965.
+
+\bibitem[Lam74]{FunctionalCompleteness}
+J.~Lambek.
+\newblock Functional completeness of cartesian categories.
+\newblock {\em Annals of Mathematical Logic}, 6(3):259 -- 292, 1974.
+
+\bibitem[Mac71]{WorkingMathematician}
+Saunders MacLane.
+\newblock {\em Categories for the Working Mathematician}.
+\newblock Springer-Verlag, New York, 1971.
+\newblock Graduate Texts in Mathematics, Vol. 5.
+
+\bibitem[Str72]{StreetMonads}
+Ross Street.
+\newblock The formal theory of monads.
+\newblock {\em Journal of Pure and Applied Algebra}, 2(2):149 -- 168, 1972.
+
+\end{thebibliography}
