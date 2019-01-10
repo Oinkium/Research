@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.12.10)  10 JAN 2019 11:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.12.10)  10 JAN 2019 16:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -874,40 +874,39 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8
 ] [9] [10] [11] [12]
-(./thesis.bbl [13]) [14] (./thesis.aux) ) 
+(./thesis.bbl) [13] (./thesis.aux) ) 
 Here is how much of TeX's memory you used:
- 18713 strings out of 492639
- 367808 string characters out of 6135496
- 423476 words of memory out of 5000000
- 22148 multiletter control sequences out of 15000+600000
+ 18714 strings out of 492639
+ 367822 string characters out of 6135496
+ 423487 words of memory out of 5000000
+ 22149 multiletter control sequences out of 15000+600000
  16209 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,45n,82p,816b,941s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmss9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/sha
-re/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.p
-fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/
-share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm5.pfb></usr/share/texm
-f-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texmf-dist/fon
-ts/type1/public/stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/public
-/stmaryrd/stmary7.pfb>
-Output written on thesis.pdf (14 pages, 272071 bytes).
+</usr/share/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmb
+x12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmss9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbol
+s/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
+pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm5.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texm
+f-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/stmaryrd/stmary7.pfb>
+Output written on thesis.pdf (13 pages, 262720 bytes).
 PDF statistics:
- 150 PDF objects out of 1000 (max. 8388607)
- 108 compressed objects within 2 object streams
+ 143 PDF objects out of 1000 (max. 8388607)
+ 103 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

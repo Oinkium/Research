@@ -266,7 +266,8 @@ First, we note the Computational Adequacy result proved for the game semantics o
   \label{SamsonGuyAdequacy}
 \end{proposition}
 
-Readers unfamiliar with game semantics should not worry too much about what $\bot$ is; the point of Proposition \ref{SamsonGuyAdequacy} is that the denotation of a command-type term precisely captures the operational behaviourof that term, in the sense that there is some distinguished strategy $\bot\from 1 \to \bC$ that is the denotation of every divergent program, and no convergent one.
+To make sense of this strategy, we need to know that $\G$ is enriched in algebraic cpos.  
+Then $\bot$ is the bottom element of $\G(1,\bC)$.
 
 Before proceeding further, we prove an important lemma.  
 This lemma tells us that the operational semantics of a term of IA+$\sleep$ may be modelled within Idealized Algol; i.e., that IA+$\sleep$ is a conservative extension of the original language.
@@ -466,29 +467,24 @@ in $\Kl_{R_\bC}$.
 
 Working in the original category $\G$, however, we may identify this composite with the morphism
 \[
-  \deno{c\ts M[c/\sleep]} \from \bC \to \bC\,.
+  \deno{\lambda c.M[c/\sleep]} \from 1 \to (\bC \to \bC)\,.
   \]
-Now we have morphisms
+Now we have a morphism
 \begin{mathpar}
-  \deno{v\ts v \gets \suc !v} \from \Var \to \bC
-  \and
-  \deno{v\ts !v} \from \Var \to \bN\,,
+  \eta = \deno{f\from \com\to \com \ts \lambda v.f(v\gets \suc!v);!v}\from (\bC \to \bC) \to (\Var \to \bN)\,.
 \end{mathpar}
-which together induce the composite
+If we form the composite
 \[
-  \Var \xrightarrow{\langle \deno{v\ts v \gets \suc !v},\deno{v\ts !v}\rangle}
-  \bC \times \bN \xrightarrow{\deno{c \ts M[c/\sleep]} \times \id}
-  \bC \times \bN \xrightarrow{\deno{\blank;\blank}}
-  \bN\,.
+  1 \xrightarrow{\deno{\lambda c.M[c/\sleep]}}
+  (\bC \to \bC) \xrightarrow{\eta}
+  (\Var \to \bN) \xrightarrow{\new_\bN}
+  \bN
   \]
-Lastly, we may curry this term to give a morphism $1 \to (\Var\to \bN)$ and compose with the morphism
+then the morphism we get will be the denotation in $\G$ of the term
 \[
-  \new_\bN \from (\Var \to \bN) \to \bN\,.
+  \ts \new\;v=0\text{ in } M[v\gets \suc !v/\sleep];!v\from \nat
   \]
-The resulting morphism will be the denotation of the term
-\[
-  \new\;v=0\text{ in } M[v\gets \suc !v/\sleep];!v\from \nat\,.
-  \]
+(since the $\beta$ rule is valid for the semantics in $\G$).
 Lemma \ref{IaSleepsSoundnessLemma} tells us that if $M\converges_n\skipp$ then this term converges to $n$ in Idealized Algol.
 
 Before we introduce our adequacy result, we need one more definition in order to take account of the fact that Proposition \ref{SamsonGuyAdequacy} applies to terms of type $\com$, not $\nat$.
@@ -511,26 +507,19 @@ Before we introduce our adequacy result, we need one more definition in order to
 
 \newcommand{\tit}{\mathrm{tt}}
 \begin{definition}
-  Let $\sigma\from 1 \to \bC$ be a Kleisli morphism in $\Kl_{R_{\bC}}$, considered as a morphism $\bC \to \bC$ in $\G$.  
-  Define:
-  \begin{IEEEeqnarray*}{rCl}
-    \sigma' & = & \Var \xrightarrow{\langle \deno{v\ts v \gets \suc !v},\deno{v\ts !v}\rangle}
-    \bC \times \bN \xrightarrow{\sigma\times\id}
-    \bC \times \bN \xrightarrow{\deno{\blank;\blank}}
-    \bN\,; \\
-    \sigma'' & = & 1 \xrightarrow{\text{curry }\sigma''}
-    (\Var \to \bN) \xrightarrow{\new_\bN}
-    \bN\,.
-  \end{IEEEeqnarray*}
-  
-  If there is some (necessarily unique) $n\in\omega$ such that
+  Let $\sigma\from 1 \to \bC$ be a Kleisli morphism in $\Kl_{R_{\bC}}$, considered as a morphism $1 \to (\bC \to \bC)$ in $\G$.  
+
+  If there is some (necessarily unique) $n\in\omega$ such that the composite
   \[
-    1 \xrightarrow{\sigma''}
+    1 \xrightarrow{\sigma}
+    (\bC \to \bC) \xrightarrow{\eta}
+    (\Var \to \bN) \xrightarrow{\new_\bN}
     \bN \xrightarrow{t_n}
     \bC
     \]
   is not equal to $\bot$, then we say that $n$ is the \emph{time taken for $\sigma$ to converge}, or $\tit(\sigma)$.
   If there is no such $n$, we say that $\tit(\sigma)=\infty$.
+  \label{DefTimeTaken}
 \end{definition}
 
 From our discussion above, we have proved the following result.
@@ -657,27 +646,53 @@ The difference here is that our factorization result is immediate, and does not 
   So there is some $\alpha\from \deno{T} \to \bC$ such that $\deno{M};\alpha\ne\deno{N};\alpha$.
 
   Let us now work in the category $\G$.  
-  So $\deno{M},\deno{N}$ may be regarded as morphisms $\bC \to \deno{T}$ and $\alpha$ may be regarded as a morphism $\deno{T} \to (\bC \to \bC)$, or equivalently as a morphism $\deno{T}\times \bC \to \bC$.
-  Then the composites $\deno M;\alpha,\deno N;\alpha$ within $\Kl_{R_\bC}$ are given by the following composites in $\G$.
+  So $\deno{M},\deno{N}$ may be regarded as morphisms $1 \to (\bC \to \deno{T})$ and $\alpha$ may be regarded as a morphism $\deno{T} \to (\bC \to \bC)$.
+  Then the composites $\deno M;\alpha$ and $\deno N;\alpha$ within $\Kl_{R_\bC}$ are given by the following composites in $\G$.
   \begin{mathpar}
-    \bC \xrightarrow{\langle \deno M,\id\rangle}
-    \deno T \times \bC \xrightarrow{\alpha}
-    \bC
+    1 \xrightarrow{\deno M}
+    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
+    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
+    (\bC \to \bC)
     \and
-    \bC \xrightarrow{\langle \deno N,\id\rangle}
-    \deno T \times \bC \xrightarrow{\alpha}
-    \bC
+    1 \xrightarrow{\deno N}
+    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
+    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
+    (\bC \to \bC)
   \end{mathpar} 
-  By assumption, these composites are not equal in $\G$.  
-  Then it is sufficient (since this is the case in $\G$) to assume that $\alpha$ is a compact strategy.
-  Then, by the compact definability result in \cite{SamsonGuyIAActive}, $\alpha$ must be the denotation (in $\G$) of some term $P\from T \to \com \to \com$, which corresponds to the context
-  \[
-    C[x] = P\,x\;\sleep
-    \]
-  in $\Kl_{R_\bC}$.
+  Without loss of generality, suppose that there exists some $n$ such that
+  \begin{mathpar}
+    \tit(\deno{M};(\bC \to \alpha);\mu)=n \and \tit(\deno{N};(\bC \to \alpha);\mu)\ne n\,.
+  \end{mathpar}
+  This means that we must have
+  \begin{mathpar}
+    \deno M;(\bC \to \alpha);\mu;\eta;\new_\bC;t_n \ne \bot
+    \and
+    \deno N;(\bC \to \alpha);\mu;\eta;\new_\bC;t_n = \bot
+  \end{mathpar}
+  in $\G$ (where $\eta$ is as defined in Definition \ref{DefTimeTaken}).
 
-  It follows that $\deno{C[M]} \ne \deno{C[N]}$.  
-  Therefore, by Proposition \ref{IaSleepComputationalAdequacy}, $M$ and $N$ are not observationally equivalent.
+  $\G$ is enriched in algebraic cpos, so $\alpha$ is the least upper bound of its compact approximants.  
+  It follows that there is some compact $\alpha'\subset \alpha$ such that
+  \begin{mathpar}
+    \deno M;(\bC \to \alpha');\mu;\eta;\new_\bC;t_n \ne \bot
+    \and
+    \deno N;(\bC \to \alpha');\mu;\eta;\new_\bC;t_n = \bot\,.
+  \end{mathpar}
+  In other words:
+  \begin{mathpar}
+    \tit(\deno M;(\bC \to \alpha');\mu) = n\,;
+    \and
+    \tit(\deno M;(\bC \to \alpha');\mu) \ne n\,.
+  \end{mathpar}
+  Now the compact definability result for Idealized Algol \cite[17]{SamsonGuyIAActive} tells us that $\alpha'$ must be the denotation of some IA term $x\from T \ts C[x] \from \com \to \com$, which is therefore the denotation of $C[\sleep] \from \com \to \com$ in $\Kl_{R_\bC}$.
+  So we get
+  \begin{mathpar}
+    \tit(\deno{C[\sleep] M}) = n\,;
+    \and
+    \tit(\deno{C[\sleep] N}) \ne n\,.
+  \end{mathpar}
+  By Theorem \ref{IaSleepComputationalAdequacy}, $C[\sleep] M\converges_n$ and $C[\sleep] N\not\converges_n$.  
+  Therefore, $M$ and $N$ are observationally inequivalent in IA+$\sleep$.
 \end{proof}
 
 \bibliographystyle{alpha}
