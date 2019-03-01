@@ -1,0 +1,1035 @@
+\documentclass{article}
+
+\input{../common/preamble}
+
+\begin{document}
+
+\section{Promonads and parametric promonads}
+\label{SecPromonads}
+
+The purpose of this section is to shine some light on the definition of the \Mellies category, showing why it is natural to think about $[\X,\Set]$-enriched categories and why the \Mellies category may be considered analogous to the Kleisli category.
+
+As a technical tool to prove the results we want, we shall introduce multicategories, which are a small generalization of monoidal categories.  
+The main purpose of this generalization is to allow us to do without coends wherever possible: for example, while we need coends to make $[\X,\Set]$ into a monoidal category, we do not need them to make it into a multicategory.  
+
+The first half of this section is, in the interests of completeness, fairly technical, and may be skimmed over on a first reading.  
+In section \ref{SecEndoprofunctors}, we introduce the multicategory of endoprofunctors on a category $\C$, which generalizes the monoidal category of endofunctors on $\C$.  
+As monoids in $\End(\C)$ are called monads on $\C$, so we will call monoids in $\Endoprof(\C)$ \emph{promonads} on $\C$.  
+We will observe that a promonad may be regarded as a sort of category, and that the Kleisli category may be characterized as the embedding of monads on $\C$ into promonads on $\C$.  
+
+The main result will then be to show that an $\X$-parametric promonad on a category $\C$ -- i.e., a multifunctor $\X \to \Endoprof(\C)$ -- may be regarded as a sort of $[\X,\Set]$-enriched category, and that the \Mellies category may similarly be regarded as an embedding of $\X$-parametric monads on $\C$ into $\X$-parametric promonads on $\C$.
+
+\subsection{Multicategories}
+
+\begin{definition}[\cite{Multicategories}]
+  A \emph{multicategory} $\M$ is given by a set of objects $\text{Ob}(\M)$ whose elements are called \emph{objects} and, for each (possibly empty) list $a_1,\cdots,a_n$ of objects and each object $b$, a set
+  \[
+    \M_n(x_1,\cdots,x_n;y)
+    \]
+  whose elements are called the ($n$-ary) \emph{multimorphisms} $a_1,\cdots,a_n\to b$.
+
+  Given collections $(a_{ij} \from i = 1,\cdots, n,j=1, \cdots, k_i), (b_i \from i = 1, \cdots, n), c$ of objects and multimorphisms
+  \begin{mathpar}
+    f_i \from a_{i1} , \cdots , a_{i,k_{i}} \to b_i
+    \and
+    g \from b_1, \cdots, b_n \to c\,,
+  \end{mathpar}
+  there is an operation that forms the \emph{composition}
+  \[
+    (f_1,\cdots, f_n);g \from a_{11},\cdots,a_{1k_1},\cdots,a_{n1}\cdots,a_{nk_n} \to c\,.
+    \]
+  Moreover, for each object $a$ of $\M$, there is a distinguished morphism $\id_a \from a \to a$ called the \emph{identity} on $a$.
+
+  The composition and identity are subject to associativity and unitality conditions.
+  Namely, let
+  \begin{mathpar}
+    \left(\mbox{\pbox{24pt}{$a_{pqr}$}} \suchthat \mbox{\pbox{80pt}{$p=1,\cdots,n$ \\ $q=1,\cdots,k_p$ \\ $r=1,\cdots, l_{pq}$}}\right)
+    \and
+    \left(\mbox{\pbox{24pt}{$b_{pq}$}} \suchthat \mbox{\pbox{80pt}{$p=1,\cdots,n$ \\ $q=1,\cdots,k_p$}}\right)
+    \and
+    (c_p\from p = 1,\cdots,n)
+    \and
+    d
+  \end{mathpar}
+  be collections of objects and let
+  \begin{mathpar}
+    f_{pq} \from a_{pq1},\cdots,a_{p,q,l_{pq}} \to b_{pq}
+    \and
+    g_p \from b_{p1},\cdots,b_{p,k_p} \to c_p
+    \and
+    d \from c_1,\cdots,c_n\to d
+  \end{mathpar}
+  be multimorphisms.
+  Then we require that
+  \begin{gather*}
+    (((f_{11},\cdots,f_{1k_1});g_1),\cdots,((f_{n1},\cdots,f_{n,k_n});g_n));h\\
+    =\\
+    (f_{11},\cdots,f_{1k_1},\cdots,f_{n1},\cdots,f_{n,k_n});((g_1,\cdots,g_n);h)\,.
+  \end{gather*}
+  Furthermore, we require that if $f\from a_1,\cdots,a_n\to b$ is a multimorphism, then
+  \begin{mathpar}
+    (\id_{a_1},\cdots,\id_{a_n});f = f
+    \and
+    f = (f);\id_b\,.
+  \end{mathpar}
+\end{definition}
+
+\begin{example}
+  If $\C$ is an ordinary category, then $\C$ may be regarded as a multicategory $\hat{C}$ in which $\hat{C}_1(a;b)=\C(a,b)$ and $\hat{C}_n(a_1,\cdots,a_n;b)=\emptyset$ for $n\ne 1$.  
+  At the same time, if $\M$ is a multicategory, then it has an \emph{underlying ordinary category} $\M_1$ whose morphisms are the morphisms in $\M$ with a single source object.
+\end{example}
+\begin{example}
+  If $\M$ is a \emph{monoidal} category, then $\M$ may be regarded as a multicategory $\tilde{\M}$ with
+  \begin{mathpar}
+    \tilde{\M}_n(a_1,\cdots,a_n;b) = \M(a_1 \tensor \cdots \tensor a_n, b) \quad n\ge 1
+    \and
+    \tilde{\M}_0(;b) = \M(I, b)
+  \end{mathpar}
+  Since the tensor product is not necessarily strictly associative, it is not obvious exactly what we mean by $a_1 \tensor \cdots \tensor a_n$.
+  In fact, it is enough to choose any one of the possible bracketings (e.g., to make $\blank\tensor\blank$ always associate to the right).  
+
+  Composition is then given by
+  \begin{IEEEeqnarray*}{CCCCCC}
+    & a_{11} \tensor \cdots \tensor a_{1k_1} & \tensor & \mathmakebox[4em]{\cdots} & \tensor & a_{n1} \tensor \cdots \tensor a_{nk_n} \\
+    \xrightarrow{\mathmakebox[4em]{}} &
+    (a_{11} \tensor \cdots \tensor a_{1k_1}) & \tensor & \mathmakebox[4em]{\cdots} & \tensor & (a_{n1} \tensor \cdots \tensor a_{nk_n}) \\
+    \xrightarrow{\mathmakebox[4em]{f_1\tensor \cdots \tensor f_n}} &
+    b_1 & \tensor & \mathmakebox[4em]{\cdots} & \tensor & b_n \\
+    \xrightarrow{\mathmakebox[4em]{g}} &
+    &&c\,,&&
+  \end{IEEEeqnarray*}
+  where the first arrow is induced from the normal monoidal coherences (exactly which ones depends on how we choose to interpret the iterated tensor product).
+\end{example}
+
+\subsection{Representable multicategories}
+
+We call a multicategory \emph{representable} if it isomorphic to a multicategory that arises from a monoidal category in this way.  
+The next theorem gives a criterion for a multicategory to be representable.
+
+\begin{theorem}[\cite{RepresentableMulticategories}]
+  \label{TheRepresentableMulticategories}
+  Let $\M$ be a multicategory and suppose that for each natural number $n$ and each sequence $a_1,\cdots,a_n$ of objects of $\M$ there is an object $\tensor \vec{a}$ and a multimorphism
+  \[
+    \pi_{\vec a} \from a_1,\cdots,a_n \to \tensor \vec a
+    \]
+  that is \emph{strongly universal} in the sense that if $b_1,\cdots b_k, c_1,\cdots,c_l$ are two (possibly empty) lists of objects, and $d$ is an object, then any multimorphism
+  \[
+    f \from b_1,\cdots,b_k,a_1,\cdots,a_n,c_1,\cdots,c_l \to d
+    \]
+  factors uniquely through $\pi_{\vec a}$; i.e., there is a unique morphism
+  \[
+    \hat{f} \from b_1,\cdots,b_k,\tensor\vec{a},c_1,\cdots,c_l \to d
+    \]
+  such that
+  \[
+    f=(\id_{b_1},\cdots,\id_{b_k},\pi_{\vec a},\id_{c_1},\cdots,\id_{c_l});\hat{f}\,.
+    \]
+  Define an operation $\blank\tensor\blank$ that sends objects $a,b$ of $\M$ to $a\tensor b = \tensor a,b$, and let $I$ be the object $\tensor\epsilon$, where $\epsilon$ is the empty list.  
+  Then $\blank\tensor\blank$ and $I$ give rise to the multicategory structure on $\M$:
+  \begin{itemize}
+    \item $\blank\tensor\blank$ and $I$ are the monoidal product and unit of a monoidal category on $\M_1$, the underlying category of $\M$.
+    \item For any sequence $a_1,\cdots a_n$ of objects of $\M$ there is a canonical isomorphism
+      \[
+        a_1 \tensor \cdots \tensor a_n \cong \tensor \vec a
+        \]
+      for any bracketing of the left hand side, and the associators and unitors in $\M_1$ are induced from these isomorphisms.
+    \item The set of multimorphisms $a_1,\cdots,a_n \to b$ is in bijection with the set of morphisms $a_1\tensor\cdots\tensor a_n \to b$ for $n\ge1$, and the set of multimorphisms $\to b$ is in bijection with the set of morphisms $I \to b$, and these bijections commute with the multicategory composition in $\M$ and the composition in $\M_1$.
+  \end{itemize}
+\end{theorem}
+
+\begin{definition}
+  A \emph{symmetric multicategory} is a multicategory $\M$ together with an action of the symmetric group on the sets $\M_n(a_1,\cdots,a_n;b)$ that respects composition.  
+  In other words, for each natural number $n$, each multimorphism $f\from a_1,\cdots,a_n\to b$ and each permutation $\sigma$ of $\{1,\cdots,n\}$ there is a multimorphism
+  \[
+    \sigma_* f \from a_{\sigma(1))},\cdots,a_{\sigma(n)} \to b
+    \]
+  such that if $(a_{ij}\from i=1,\cdots,n), (b_i\from i = 1,\cdots,n)$ are objects, 
+  \begin{mathpar}
+    f_i \from a_{i1},\cdots,a_{i,k_i} \to b_i
+    \and
+    g \from b_1,\cdots,b_n \to c
+  \end{mathpar}
+  are multimorphisms, $\sigma_i$ is a permutation of $\{1,\cdots,k_i\}$ and $\tau$ is a permutation of $\{1,\cdots,n\}$, then
+  \[
+    ({\sigma_1}_* f_q,\cdots,{\sigma_n}_*f_n);(\tau_*g) = (\tau*(\sigma_1,\cdots,\sigma_n))_*((f_1,\cdots,f_n);g)\,,
+    \]
+  where $\tau*(\sigma_1,\cdots,\sigma_n)$ is the permutation of
+  \[
+    \{(1,1),\cdots,(1,k_1),\cdots,(n,1),\cdots,(n,k_n)\}
+    \]
+  that sends $(i,j)$ to $(\tau(i),\sigma_i(j))$.
+
+  Moreover, we require that for any morphism $f\from a_1,\cdots,a_n\to b$ and permutations $\sigma,\tau$ of $\{1,\cdots,n\}$ we have
+  \begin{mathpar}
+    \sigma_*\tau_*f = (\sigma\circ\tau)_*f
+    \and
+    \id_* f = f
+  \end{mathpar}
+\end{definition}
+
+\begin{example}
+  Any multicategory arising from an ordinary category is symmetric.
+\end{example}
+\begin{example}
+  A monoidal category is a symmetric multicategory if and only if it is a symmetric monoidal category.  
+\end{example}
+
+\subsection{Product and unit multicategories}
+
+\begin{definition}
+  Let $\M,\N$ be multicategories.  
+  The \emph{product multicategory} $\M\times\N$ has, as objects, pairs $(a,b)$, where $a$ is an object of $\M$ and $b$ an object of $\N$.  
+  The multimorphisms are given by
+  \[
+    (\M\times\N)_n((a_1,b_1),\cdots,(a_n,b_n);(c,d)) = \M_n(a_1,\cdots,a_n;c)\times\N_n(b_1,\cdots,b_n;d),.
+    \]
+  Composition and the identity are easily defined pointwise.
+\end{definition}
+
+\begin{definition}
+  The \emph{unit multicategory} $1$ has a single object $I$, and for each $n$, the set
+  \[
+    1_n(I,\cdots,I;I)
+    \]
+  is a singleton.
+
+  This is a representable multicategory; indeed, it may be identified with the usual unit monoidal category.
+\end{definition}
+
+\subsection{Multifunctors and multinatural transformations}
+
+\begin{definition}
+  Let $\M,\N$ be multicategories.  
+  A \emph{multifunctor} from $\M$ to $\N$ is a map $F$ from the objects of $\M$ to the objects of $\N$ together with, for each list $a_1,\cdots,a_n,b$ of objects of $\M$, a function
+  \[
+    \M_n(a_1,\cdots,a_n;b) \to \N_n(F a_1,\cdots,F a_n; F b)
+    \]
+  that commutes with the composition operator.
+\end{definition}
+  
+\begin{definition}
+  Given multicategories $\M,\N$ and multifunctors $F,G\from \M \to \N$, a \emph{multinatural transformation} $\phi$ is given by morphisms $\phi_a \from F a \to G a$ for each object $a$ of $\M$, such that if $f\from a_1,\cdots a_n\to b$ is any morphism in $\M$, then the following diagram commutes.
+  \[
+    \begin{tikzcd}[column sep=36pt]
+      Fa_1,\cdots, Fa_n \arrow[r, "{\phi_{a_1},\cdots,\phi_{a_n}}"] \arrow[d, "Ff"']
+        & Ga_1,\cdots, Ga_n \arrow[d, "Gf"] \\
+      Fb \arrow[r, "\phi_b"]
+        & Gb
+    \end{tikzcd}
+    \]
+\end{definition}
+
+\begin{proposition}
+  If $\M,\N$ are monoidal categories, considered as multicategories, then multifunctors $\M\to\N$ are the same thing as lax monoidal functors.  
+  Multinatural transformations are the same thing as monoidal natural transformations.
+\end{proposition}
+
+\begin{definition}
+  Let $\M,\N$ be multicategories, where $\M$ is symmetric.  
+  Then the collection of multifunctors $\M\to\N$ forms a multicategory.  
+  A multimorphism $F_1,\cdots,F_n\Rightarrow G$, where $F_1,\cdots,F_n,G$ are multifunctors $\M\to \N$, is given by a family
+  \[
+    \phi_a \from F_1(a),\cdots,F_n(a) \to G(a)
+    \]
+  such that for any multimorphism $f\from a_1,\cdots,a_m\to b$ in $\M$, the diagram
+  \[
+    \begin{tikzcd}[column sep=48pt]
+      F_1(a_1),\cdots,F_n(a_1),\cdots,F_1(a_m),\cdots,F_n(a_m) \arrow[r, "{\phi_{a_1},\cdots,\phi_{a_m}}"] \arrow[d, "\sigma_*"']
+        & G(a_1),\cdots,G(a_m) \arrow[dd, "Gf"] \\
+      F_1(a_1),\cdots,F_1(a_m),\cdots,F_n(a_1),\cdots,F_n(a_m) \arrow[d, "{F_1f,\cdots,F_nf}"']
+        & \\
+      F_1(b),\cdots,F_n(b) \arrow[r, "\phi_b"]
+        & G(b)
+    \end{tikzcd}
+    \]
+  commutes, where $\sigma$ is the permutation of
+  \[
+    \{(1,1),\cdots,(n,1),\cdots,(1,m),\cdots,(n,m)\}
+    \]
+  that sends $(i,j)$ to $(j,i)$.
+\end{definition}
+
+\subsection{Monoids in multicategories}
+
+\begin{definition}
+  \label{DefMonoidMulticategory}
+Let $\M$ be a multicategory.  
+
+  Then a \emph{monoid} in $\M$ is an object $a$ of $\M$ together with multimorphisms
+  \begin{mathpar}
+    m\from a,a\to a
+    \and
+    e \from \to a
+  \end{mathpar}
+  satisfying the following associativity and unitality laws.
+  \begin{mathpar}
+    \begin{tikzcd}
+      a,a,a \arrow[r, "{m,\id_a}"] \arrow[d, "{\id_a,m}"']
+        & a,a \arrow[d, "m"] \\
+      a,a \arrow[r, "m"]
+        & a
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      a \arrow[r,"\id_a"] \arrow[d, "{e_a,\id_a}"']
+        & a \\
+      a,a \arrow[ur, "m"']
+        &
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      a \arrow[r, "\id_a"] \arrow[d, "{\id_a,e_a}"']
+        & a \\
+      a,a \arrow[ur, "m"']
+        &
+    \end{tikzcd}
+  \end{mathpar}
+\end{definition}
+
+Note that a monoid in a multicategory $\M$ may also be defined to be a multifunctor $1 \to \M$ \cite[2.1.11]{Multicategories}.
+
+\subsection{Categories enriched over multicategories}
+
+\begin{definition}
+  \label{DefEnrichedCategoryMulticategory}
+  Let $\V$ be a multicategory.  
+  Then a \emph{$V$-enriched category} $\C$ is given by a collection $\text{Ob}(\C)$ of objects together with, for each pair $a,b$ of objects, an object
+  \[
+    \C(a,b)
+    \]
+  of $\V$ and, for objects $a,b,c$ of $\C$, composition and identity multimorphisms
+  \begin{mathpar}
+    ;_{a,b,c} \from \C(a,b),\C(b,c) \to \C(a,c)
+    \and
+    \eta_a \from \to \C(a,a)
+  \end{mathpar}
+  that satisfy the following associativity and unitality laws for all objects $a,b,c,d$ of $\C$.
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=12ex]
+      \C(a,b),\C(b,c),\C(c,d) \arrow[r, "{;_{a,b,c},\id_{\C(c,d)}}"] \arrow[d, "{\id_{\C(a,b)},;_{b,c,d}}"']
+        & \C(a,c),\C(c,d) \arrow[d, "{;_{a,c,d}}"] \\
+      \C(a,b),\C(b,d) \arrow[r, "{;_{a,b,d}}"]
+        & \C(a,d)
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      \C(a,b) \arrow[r, "{\id_{\C(a,b)}}"] \arrow[d, "{\eta_a,\id_{\C(a,b)}}"']
+        & \C(a,b) \\
+      \C(a,a),\C(a,b) \arrow[ur, "{;_{a,a,b}}"']
+        &
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      \C(a,b) \arrow[r, "{\id_{\C(a,b)}}"] \arrow[d, "{\id_{\C(a,b)},\eta_b}"']
+        & \C(a,b) \\
+      \C(a,b),\C(b,b) \arrow[ur, "{;_{a,b,b}}"']
+        &
+    \end{tikzcd}
+  \end{mathpar}
+\end{definition}
+
+\begin{remark}
+  These definitions clearly generalize the same definitions for categories enriched over a monoidal category.
+
+  In particular, a monoid in a multicategory $\M$ is the same thing as an $\M$-enriched category with a single object.
+
+  Another equivalent definition of a monoid in a multicategory $\M$ is that it is a multifunctor from $1$ to $\M$, where $1$ is the unit monoidal category, considered as a multicategory.
+\end{remark}
+
+\begin{remark}
+  If $\V$ is a symmetric multicategory and $\C$ is a $\V$-enriched category, then we may define the \emph{opposite category} $\oppcat{\C}$ whose objects are the objects of $\C$ and where
+  \[
+    \oppcat\C(a,b)=\C(b,a)\,.
+    \]
+  Composition is defined by
+  \[
+    \C(b,a),\C(c,b) \xrightarrow{\tau_*}
+    \C(c,b),\C(b,a) \xrightarrow{;_{c,b,a}}
+    \C(c,a)\,,
+    \]
+  where $\tau$ is the permutation that transposes the two values.
+\end{remark}
+
+\subsection{Multicategory-enriched functors and natural transformations}
+
+\begin{definition}
+  Let $\C,\D$ be categories enriched over some multicategory $\V$.  
+  An \emph{$\V$-enriched functor} $F \from \C \to \D$ is a map $F$ from the objects of $\C$ to the objects of $\D$ together with, for each, pair $a,b$ of objects of $\C$, a (unary) multimorphism
+  \[
+    F \from \C(a,b) \to \D(F(a),F(b))
+    \]
+  such that for all $a, b, c$ the following diagrams commute.
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=48pt]
+      \C(a, b), \C(b, c) \arrow[r, "{;_{a,b,c}}"] \arrow[d, "{F,F}"']
+        & \C(a,c) \arrow[d, "F"] \\
+      \D(F(a), F(b)), \D(F(b), F(c)) \arrow[r, "{;_{F(a),F(b),F(c)}}"]
+        & \D(F(a), F(c))
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+       \arrow[r, "\eta_a"] \arrow[dr, "\eta_{F(a)}"']
+        & \C(a,a) \arrow[d, "F"] \\
+      %
+        & \D(F(a),F(a))
+    \end{tikzcd}
+  \end{mathpar}
+\end{definition}
+
+\begin{definition}
+  Let $\C,\D$ be categories enriched over a multicategory $\V$ and let $F,G\from \C \to \D$ be $\V$-enriched functors.
+  An \emph{$\V$-enriched natural transformation} $\phi\from F \Rightarrow G$ is given by a family of $0$-ary multimorphisms
+  \[
+    \phi_a \from \to \D(F(a),G(a))
+    \]
+  such that for all objects $a,b$ the following diagram commutes.
+  \[
+    \begin{tikzcd}
+      \C(a,b) \arrow[r, "{F,\phi_b}"] \arrow[d, "{\phi_a,G}"']
+        & \D(F(a),F(b)),\D(F(b),G(b)) \arrow[d, "{;_{F(a),F(b),G(b)}}"] \\
+      \D(F(a),G(a)),\D(G(a),G(b)) \arrow[r, "{;_{F(a),G(a),G(b)}}"]
+        & \D(F(a), G(b))
+    \end{tikzcd}
+    \]
+\end{definition}
+
+\subsection{The categories enriched over a symmetric multicategory form a multicategory}
+
+\begin{definition}
+  Let $\V$ be a symmetric multicategory.
+  Given $\V$-enriched categories $\C_1,\cdots,\C_n,\D$, a multimorphism
+  \[
+    F\from \C_1,\cdots,\C_n \to \D
+    \]
+  is given by a function
+  \[
+    F \from \text{Ob}(\C_1)\times \cdots \times \text{Ob}(\C_n) \to \text{Ob}(\D)
+    \]
+  together with, for each $a_i,b_i\in \text{Ob}(\C_i)$, a multimorphism
+  \[
+    F \from \C_1(a_1,b_1) , \cdots , \C_n(a_n,b_n) \to \D(F(a_1,\cdots,a_n),F(b_1,\cdots,b_n))\,,
+    \]
+  such that the diagrams in Figure \ref{fig:VEnrichedMulticategoryFunctors} commute.  
+  \begin{SidewaysFigure}
+    \centering
+    \begin{mathpar}
+      \begin{tikzcd}[ampersand replacement=\&, column sep=116pt]
+        \C_1(a_1,b_1),\C_1(b_1,c_1),\cdots,\C_n(a_n,b_n),\C_n(b_n,c_n) \arrow[r, "{;_{a_1,b_1,c_1},\cdots,;_{a_n,b_n,c_n}}"] \arrow[d, "\sigma_*"']
+          \& \C_1(a_1,c_1),\cdots,\C_n(a_n,c_n) \arrow[dd, "F"] \\
+        \C_1(a_1,b_1),\cdots,\C_n(a_n,b_n),\C_1(b_1,c_1),\cdots,\C_n(b_n,c_n) \arrow[d, "F"']
+          \& \\
+        \D(F(a_1,\cdots,a_n),F(b_1,\cdots,b_n)),\D(F(b_1,\cdots,b_n),F(c_1,\cdots,c_n)) \arrow[r, "{;_{F(a_1,\cdots,a_n),F(b_1,\cdots,b_n),F(c_1,\cdots,c_n)}}" yshift=0.3em]
+          \& \D(F(a_1,\cdots,a_n),F(c_1,\cdots,c_n))
+      \end{tikzcd}
+      \\
+      \vspace{25pt}
+      \\
+      \begin{tikzcd}[ampersand replacement=\&]
+        { } \arrow[r, "{\eta_{a_1},\cdots,\eta_{a_n}}"] \arrow[dr, "{\eta_{F(a_1,\cdots,a_n)}}"']
+          \& \C_1(a_1,a_1),\cdots,\C_n(a_n,a_n) \arrow[d, "F"] \\
+        %
+          \& \D(F(a_1,\cdots,a_n),F(a_1,\cdots,a_n))
+      \end{tikzcd}
+    \end{mathpar}
+    \caption{The rules for preservation of composition and identity by multimorphisms of $\V$-enriched functors are similar to those for ordinary enriched functors.  
+    Note that it is essential for the $\V$ to be a symmetric multicategory.  
+    This generalizes the usual construction for categories enriched over a symmetric monoidal category.}
+    \label{fig:VEnrichedMulticategoryFunctors}
+  \end{SidewaysFigure}
+
+  In the case $n=1$, this is the same thing as a $\V$-enriched functor from $\C_1$ to $\D$.
+  We will use the word `functor' to refer to the more general multimorphisms between $\V$-enriched categories in the case that $\V$ is symmetric.
+\end{definition}
+
+\subsection{Change of base}
+
+Let $\M,\N$ be multicategories, let $F\from \M \to \N$ be a multifunctor and let $\C$ be an $\M$-enriched category.  
+Then we can form an $\N$-enriched category $F_*\C$ whose objects are the objects of $\C$ and where the morphisms are given by the formula
+\[
+  F_*\C(a,b) = F(\C(a,b))\,.
+  \]
+We get composition and identities by applying the multifunctor $F$ to the composition and identity multimorphisms in $\C$.
+By functoriality of $F$, these composition and identities are associative and unital, meaning that $F_*\C$ is indeed an $\N$-enriched category.  
+
+This process is called \emph{base change along $F$}.
+
+\subsection{Closed multicategories}
+
+\begin{definition}[\cite{ClosedMulticategories}]
+  We say that a multicategory $\M$ is \emph{closed} if for any pair $a,c$ of objects, there exists an object
+  \[
+    \underline{\M}(a,c)
+    \]
+  and a multimorphism
+  \[
+    \ev_{a,c} \from a,\underline{\M}(a,c) \to c
+    \]
+  such that for any sequence $b_1,\cdots,b_n$ of objects of $\M$, the function
+  \begin{IEEEeqnarray*}{rCcCc}
+    \kappa_{a,b_1,\cdots,b_n,c} & \from & \M_n(b_1,\cdots,b_n;\underline{\M}(a,c)) & \to & \M_{n+1}(a,b_1,\cdots,b_n;c) \\
+    && f & \mapsto & (\id_a,f);\ev_{a,c}
+  \end{IEEEeqnarray*}
+  is a bijection.
+\end{definition}
+
+\begin{proposition}[\cite{ClosedMulticategories}]
+  If $\V$ is a closed multicategory, then $\V$ gives rise to the structure of a $\V$-enriched category on the underlying category $\V_1$ of $\V$.  
+  We will also call this category $\V_1$, relying on context to distinguish the two.  
+  The objects of $\V_1$ are the objects of $\V$, while the morphisms are given by
+  \[
+    \V_1(a,b) = \underline{\V}(a,b)\,.
+    \]
+\end{proposition}
+
+If $\V$ is a closed multicategory and $\C_1,\cdots,\C_n$ are $\V$-enriched categories, then a functor $\C_1,\cdots,\C_n \to \V$ is given by a map $\text{Ob}(\C_1)\times\cdots\times\text{Ob}(\C_n) \to \text{Ob}(\V)$ and, for each $a_i,b_i\in \text{Ob}(\C_i)$, a multimorphism
+\[
+  \C_1(a_1,b_1),\cdots,\C_n(a_n,b_n) \to \underline{\V}(F(a_1,\cdots,a_n),F(b_1,\cdots,b_n))
+  \]
+By the definition of a closed multicategory, this is equivalent to providing a multimorphism
+\[
+  F(a_1,\cdots,a_n),\C_1(a_1,b_1),\cdots,\C_n(a_n,b_n) \to F(b_1,\cdots,b_n)\,.
+  \]
+We will use the letter $p$ to refer to these multimorphisms and their various permutations.
+
+We have seen so far that multicategories provide us with a rather straightforward generalization of monoidal categories.  
+We might ask the question, then: why make this generalization? 
+
+To answer this question, we introduce some natural multicategories that are not representable.
+
+\subsection{The multicategory of endoprofunctors}
+\label{SecEndoprofunctors}
+
+Let $\C,\D$ be ordinary categories.  
+Recall that a \emph{profunctor} $F \from \C \pto \D$ is an ordinary functor $\oppcat\C \times \D\to\Set$.
+
+More generally, if $\C,\D$ are enriched over some symmetric closed multicategory $\V$, then a $\V$-enriched profunctor $F \from \C \pto \D$ is a $\V$-enriched functor $\oppcat\C\times\D\to\V_1$.
+
+Let $F_1,\cdots,F_n,G \from \oppcat \C \times \C \to \V$ be $\V$-enriched profunctors $\C\pto \C$, where $\C$ is a $\V$-enriched category.
+
+We then define a multimorphism $\phi\from F_1,\cdots,F_n \Rightarrow G$ to be given by a family of multimorphisms
+\[
+  \phi_{a,b_1,\cdots,b_{n-1},c} \from F_1(a,b_1),\cdots,F_n(b_{n-1},c) \to G(a,c)
+  \]
+that make the diagrams in Figure \ref{FigExtranatural} commute.
+
+A $0$-ary multimorphism $\to G$ is an ordinary enriched natural transformation $\C(a,c) \to G(a,c)$.
+\begin{figure}
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=21pt]
+      {\C(a,a'),F_1(a',b_1),\cdots,F_n(b_{n-1},c),\C(c,c')} \arrow[r, "{\id,\phi_{a',\vec{b},c},\id}", xshift=-2ex, shorten=-1.8ex] \arrow[d, "{p,\id,\cdots,\id,p}"']
+
+        & \C(a,a'),G(a',c),G(c,c') \arrow[d, "p"] \\
+      F_1(a,b_1),\cdots,F_n(b_{n-1},c') \arrow[r, "{\phi_{a,\vec{b},c'}}"]
+        & \G(a,c')
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}[column sep=-120pt]
+      & F_1(a,b_1),\C(b_1,b_1'),F_2(b_1',b_2),\cdots,F_{n-1}(b_{n-2}',b_{n-1}),\C(b_{n-1},b_{n-1}'),F_n(b_{n-1}',c)
+      \arrow[dr, "{\id,p,\cdots,p}"] \arrow[dl, "{p,\cdots,p,\id}"'] & \\
+      F_1(a,b_1'),\cdots,F_n(b_{n-1}',c) \arrow[dr, "{\phi_{a,\vec{b'},c}}"'] & &
+      F_1(a,b_1),\cdots,F_n(b_{n-1},c) \arrow[dl, "{\phi_{a,\vec{b},c}}"]  \\
+        & G(a,c) &
+    \end{tikzcd}
+  \end{mathpar}
+  \caption{The coherences we require on the multimorphisms between endoprofunctors are essentially the axioms for an extranatural transformation as in \cite{ExtranaturalTransformations}.}
+  \label{FigExtranatural}
+\end{figure}
+
+We say that $\phi_{a,b_1,\cdots,b_{n-1},c}$ is \emph{natural} in $a$ and $c$ and \emph{extranatural} in the $b_i$.
+
+We will often drop the component objects from $\phi$ and from the profunctors in question where they can be inferred from context.
+
+We compose these multimorphisms pointwise.
+The following proposition shows that this is indeed a well-defined composition.
+
+\begin{proposition}
+  Let $\V$ be a symmetric closed multicategory and let $\C$ be a $\V$-enriched category.
+  Let $F_1,\cdots F_n,G_1,\cdots,G_m,H$ be profunctors $\C \pto \C$, and let $0=k_0,\cdots,k_m=n$ be a (not necessarily strictly) increasing subsequence of $\{0,\cdots,n\}$.  
+  Let $\phi^{(i)} \from F_{k_i + 1},\cdots,F_{k_{i+1}} \to \G_i, \psi\from G_1,\cdots,G_m \to G$ be multimorphisms of profunctors.
+
+  Then the family of multimorphisms
+  \[
+    F_1,\cdots,F_n
+    \xrightarrow{\phi^{(1)},\cdots,\phi^{(m)}}
+    G_1,\cdots,G_m
+    \xrightarrow{\psi}
+    H
+    \]
+  forms a multimorphism $F_1,\cdots,F_n\to H$.
+\end{proposition}
+\begin{proof}
+  For the first condition (naturality), we have
+  \[
+    \begin{tikzcd}[column sep=60pt]
+      \C,F_1,\cdots,F_n,\C \arrow[r, "{\id,\phi^{(1)},\cdots,\phi^{(m)},\id}"] \arrow[d, "{p,\id,\cdots,\id,p}"']
+        & \C,\G_1,\cdots,\G_m,\C \arrow[r, "{\id,\psi,\id}"] \arrow[d, "{p,\id,\cdots,\id,p}"]
+          & \C,H,\C \arrow[d, "p"] \\
+      F_1,\cdots,F_n \arrow[r, "{\phi^{(1)},\cdots,\phi^{(m)}}"]
+        & G_1,\cdots,G_m \arrow[r, "\psi"]
+          & H
+    \end{tikzcd}\,,
+    \]
+  where commutativity of the left hand square is the naturality condition on $\phi^{(1)}$ and $\phi^{(m)}$, while commutativity of the right hand square is the naturality condition for $\psi$.
+
+  For the second condition (extranaturality), see Figure \ref{FigExtranaturalityComposition}.
+\end{proof}
+
+\begin{SidewaysFigure}
+  \[
+    \begin{tikzcd}[ampersand replacement=\&, row sep=80pt, column sep=30pt]
+      %
+        \& F_1,\cdots,F_n \arrow[dr, "{\phi^{(1)},\cdots,\phi^{(m)}}"]
+          \&
+            \& \\
+      %
+        \& F_1,\cdots,F_{k_1},\C,\cdots,\C,F_{k_{m-1}},\cdots,F_n \arrow[u, "{\id_{F_1},\cdots,\id_{F_{k_1}},p,\cdots,p,\id_{F_{k_{m-1}+1}},\cdots,\id_{F_n}}"' {description, near start, xshift=6ex}] \arrow[dr, "{\phi^{(1)},\id,\cdots,\id,\phi^{(n)}}" description]
+          \& G_1,\cdots,G_m \arrow[dr, "\psi"]
+            \& \\
+      F_1,\C_1,F_2,\cdots,F_{n-1},\C,F_n \arrow[uur, "{\id,p,\cdots,p}"] \arrow[ddr, "{p,\cdots,p,\id}"'] \arrow[ur, "{\id,p,\cdots,p,\id_{\C},\cdots,\id_{\C},\id,\cdots,p}"' {description, xshift=6ex}] \arrow[dr, "{p,\cdots,p,\id,\id_{\C},\cdots,\id_{\C},p,\cdots,p,\id}" {description, xshift=6ex}]
+        \&
+          \& G_1,\C,G_2,\cdots,G_{m-1},\C,G_m \arrow[u, "{\id,p,\cdots,p}" description] \arrow[d, "{p,\cdots,p,\id}" description]
+            \& H \\
+      %
+        \& F_1,\cdots,F_{k_1},\C,\cdots,\C,F_{k_{m-1}},\cdots,F_n \arrow[d, "{\id_{F_1},\cdots,\id_{F_{k_1}},p,\cdots,p,\id_{F_{k_{m-1}+1}},\cdots,\id_{F_n}}"' {description, near start, xshift=6ex}] \arrow[ur, "{\phi^{(1)},\id,\cdots,\id,\phi^{(n)}}" description]
+          \& G_1,\cdots,G_m \arrow[ur, "\psi"']
+            \& \\
+      %
+        \& F_1,\cdots,F_n \arrow[ur, "{\phi^{(1)},\cdots,\phi^{(m)}}"']
+          \&
+            \& \\
+    \end{tikzcd}
+    \]
+  \caption{Proof that extranaturality is preserved by composition.  
+  Commutativity of the central square is by extranaturality of the $\phi^{(i)}$, while that of the four-cornered triangle at the right is by extranaturality of $\psi$.  
+  The triangles on the left commute automatically, while the parallelograms at the top and the bottom commute by naturality of the $\phi^{(i)}$.}
+  \label{FigExtranaturalityComposition}
+\end{SidewaysFigure}
+
+This composition is associative, because it is given pointwise by composition in $\V$, and its unit is given by the identity natural transformation.  
+This gives us a multicategory.  
+
+Suppose that $\V$ is the category of sets, so that the multimorphisms
+\[
+  F_1,\cdots,F_n \to G
+  \]
+are ordinary extranatural transformations
+\[
+  \phi_{a,\vec{b},c} \from F_1(a,b_1),\cdots,F_n(b_{n-1},c) \to G(a,c)\,.
+  \]
+Then the definition of the \emph{coend}
+\[
+  \int_{b_1,\cdots,b_{n-1}\from\C} F_1(a,b_1)\times\cdots\times F_n(b_{n-1},c)
+  \]
+is that it is universal among all objects admitting such an extranatural transformation out of them.  
+It follows that in this case (and more generally, if $\V$ is a cocomplete monoidal category), that the multicategory of endoprofunctors on $\C$ is representable, with monoidal product given by
+\[
+  F\tensor G(a, c) = \int_{b\from \C} F(a,b) \times G(b,c)\,.
+  \]
+This is the usual notion of composition for $\Set$-enriched profunctors.  
+However, if $\V$ is not cocomplete, then the multicategory of endoprofunctors on $\C$ need not be representable, even if $\V$ is representable.
+
+We have only considered profunctors going from a category into itself.  
+We might ask what structure is carried by more general profunctors enriched in a multicategory.
+The answer is that they form an \emph{fc-multicategory} \cite{Multicategories}.  
+
+\subsection{Functors are a special case of profunctors}
+
+The reason why we refer to a functors $F\from \oppcat\C,\D \to \V$ as a \emph{profunctors} $\C \pto \D$ is that they generalize ordinary functors $\C \to \D$.  
+Specifically, if $F \from \C \to \D$ is a functor, then we can identify it with the profunctor
+\[
+  \tilde{F}(d,c) = \D(d, F(c)) \from \oppcat \D, \C \to \V\,.
+  \]
+This gives us an embedding of the monoidal category of endofunctors $\C \to \C$ into the multicategory of endoprofunctors $\C \pto \C$:
+
+\begin{proposition}
+  Let $\V$ be a closed symmetric multicategory and let $\C$ be a $\V$-enriched category.
+  Let $F_1,\cdots,F_n, G\from \C \to \C$ be functors.  
+  Then the set of natural transformations $F_1\circ\cdots\circ F_n \to G$ is naturally in bijection with the set of extranatural transformations
+  \[
+    \hat{F_1},\cdots,\hat{F_n} \to \hat{G}\,.
+    \]
+  \label{PropFunctorsIntoProfunctors}
+\end{proposition}
+\begin{proof}
+  We have a natural multimorphism
+  \begin{IEEEeqnarray*}{RL}
+    &\C(a,F_1(b_1)),\cdots,\C(b_{n-1},F_n(c))\\
+    \xrightarrow{\mathmakebox[6em]{\id,\cdots,F_1\circ\cdots\circ F_{n-1}}}&
+    \C(a,F_1(b_1)),\cdots,\C(F_1\circ\cdots\circ F_{n-1}(b_{n-1}),F_1\circ\cdots\circ F_n(c))\\
+    \xrightarrow{\mathmakebox[6em]{;^*}}&
+    \C(a,F_1\circ\cdots\circ F_n(c))\,,
+  \end{IEEEeqnarray*}
+  which is natural in $a,c$ and extranatural in the $b_i$.
+
+  If $\phi\from F_1\circ\cdots\circ F_n\to G$ is a natural transformation, then it gives rise (via postcomposition) to a natural transformation
+  \[
+    \C(a,F_1(\cdots(F_n(c))\cdots)) \to \C(a,G(c))\,,
+    \]
+  which we can compose with the multimorphism above to get the required extranatural transformation
+  \[
+    \C(a,F_1(b_1)),\cdots,\C(b_{n-1},F_n(c)) \to \C(a,G(c))\,.
+    \]
+  In the other direction, suppose that we have some extranatural transformation
+  \[
+    \phi_{a,\vec{b},c} \from \C(a,F_1(b_1)),\cdots,\C(b_{n-1},F_n(c)) \to \C(a,G(c))\,.
+    \]
+  Then we can take components of the form
+  \[
+    \phi_{a,F_1\circ\cdots\circ F_n(c),\cdots,F_n(c),c}\from \C(a,F_1\circ\cdots\circ F_n(c)),\cdots,\C(F_n(c),F_n(c)) \to \C(a,G(c))
+    \]
+  and compose with $\id,\eta,\cdots,\eta$ to get our natural transformation
+  \[
+    \C(a,F_a\circ\cdots\circ F_n(c)) \to \C(a,\G(c))\,.
+    \]
+  It is easy to check that these two constructions are inverses and that they respect composition of natural transformations.
+\end{proof}
+
+\subsection{Promonads are categories}
+
+Since a monad was defined to be a monoid in the category of endofunctors on a category $\C$, we can define a \emph{promonad} to be a monoid in the multicategory of endoprofunctors on $\C$.
+
+\begin{proposition}[See, e.g., \cite{Promonad}]
+  \label{PropPromonadsAreCategories}
+  Let $\V$ be a symmetric closed multicategory.  
+  Let $\C$ be a $\V$-enriched category.  
+  Then a promonad $\D\from \C\pto \C$ is the same thing as a $\V$-enriched category $\D$ that admits an identity-on-objects functor $j\from \C \to \D$.
+\end{proposition}
+\begin{proof}
+  This is a matter of unwrapping the definitions.
+
+  Let $\D\from \C \pto \C$ be such a promonad.  
+  So $\D$ is given by a functor $\D \from \oppcat \C,\C \to \V$, together with extranatural transformations
+  \begin{mathpar}
+    m_{a,b,c} \from \D(a,b),\D(b,c) \to \D(a,c)
+    \and
+    e_{a,b} \from \C(a,b) \to \D(a,b)
+  \end{mathpar}
+  such that the following diagrams commute (see Definition \ref{DefMonoidMulticategory}).
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=12ex]
+      \D(a,b),\D(b,c),\D(c,d) \arrow[r, "{m_{a,b,c},\id}"] \arrow[d, "{\id,m_{b,c,d}}"']
+        & \D(a,c),\D(c,d) \arrow[d, "{m_{a,c,d}}"] \\
+      \D(a,b),\D(b,d) \arrow[r, "{m_{a,b,d}}"]
+        & \D(a,d)
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      \C(a,b),\D(b,c) \arrow[r, "p"] \arrow[d, "{e_{a,b},\id}"']
+        & \D(a,c) \\
+      \D(a,b),\D(b,c) \arrow[ur, "{m_{a,b,c}}"']
+        &
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      \D(a,b),\C(b,c) \arrow[r, "p"] \arrow[d, "{\id,e_{a,b}}"']
+        & \D(a,c) \\
+      \D(a,b),\D(b,c) \arrow[ur, "{m_{a,b,c}}"']
+        &
+    \end{tikzcd}
+  \end{mathpar}
+  If we set $a=b$ in the second diagram and $b=c$ in the third, and compose with the identity multimorphisms $\eta$, then these are exactly the diagrams (see Definition \ref{DefEnrichedCategoryMulticategory}) for $\D$ to have the structure of a $\V$-enriched category on the collection of objects of $\C$!
+  Moreover, $e_{a,b}$ gives us the enriched functor $\C\to \D$, which is the identity on objects and is the multimorphism $e_{a,b}$ on morphisms.
+
+  We can show that this is indeed a functor using the diagram in Figure \ref{FigPromonadFunctorProof}.
+  \begin{figure}[hbt]
+    \[
+      \begin{tikzcd}
+        \C(a,b),\C(b,c) \arrow[rr, "{;_{a,b,c}}"] \arrow[dd, "{e_{a,b},e_{b,c}}"'] \arrow[dr, "{\id_{e_{b,c}}}" description]
+          &
+            & \C(a,c) \arrow[dd, "{e_{a,c}}"] \\
+        %
+          & \C(a,b),\D(b,c) \arrow[dl, "{e_{a,b},\id}" description] \arrow[dr, "p" description]
+            & \\
+        \D(a,b),\D(b,c) \arrow[rr, "{m_{a,b,c}}"]
+          &
+            & \D(a,c)
+      \end{tikzcd}
+      \]
+    \caption{Proof that the identity-on-objects functor arising from a promonad is indeed a functor.  
+    The proof uses naturality of $e_{a,b}$ for commutativity of the large triangle at the top right.}
+    \label{FigPromonadFunctorProof}
+  \end{figure}
+\end{proof}
+
+Consider the case that $\D$ is an actual functor, so that $\D(a,b)=\C(a,F(b))$ for some endofunctor $F\from\C\to\C$.  
+Then, by Proposition \ref{PropFunctorsIntoProfunctors}, a promonad structure on $\D$ is the same thing as a monad structure on $F$.  
+If we consider $\D$ as a category, then the objects of $\D$ are the objects of $\C$, and morphisms from $a$ to $b$ are morphisms from $a$ to $F(b)$ in $\C$; i.e., Kleisli morphisms for $F$.
+
+If we work the definitions through the proof of Proposition \ref{PropFunctorsIntoProfunctors}, then we see that the composition of morphisms $f\from a \to F(b)$ and $g \from b \to F(c)$ in $\D$ is given by the composite
+\[
+  a \xrightarrow{f}
+  Fb \xrightarrow{Fg}
+  FFc \to
+  Fc\,,
+  \]
+where the rightmost arrow arises from the promonad structure on $\D$.  
+In other words, $\D$ is precisely the Kleisli category for the monad $F$:
+
+\begin{slogan}
+  \label{SlogKleisli}
+  The Kleisli category is the category we get by considering functors as profunctors.
+\end{slogan}
+
+\subsection{The multicategory of functors}
+
+Let $\X$ be a monoidal category and let $\M$ be a multicategory.
+We define a multicategory $[\X,\M]$ where the objects are ordinary functors
+\[
+  \X \to \M_1
+  \]
+and where multimorphisms $F_1,\cdots,F_n\to G$ are natural transformations
+\[
+  \phi_{x_1,\cdots,x_n} \from F_1(x_1),\cdots,F_n(x_n)\to G(x_1\tensor\cdots\tensor x_n)\,.
+  \]
+\begin{remark}
+  Suppose that $\M$ is the category of sets, regarded as a multicategory through its Cartesian structure.  
+  Let $x_1,\cdots,x_n,y_1,\cdots,y_p$ be objects of $\X$.  
+  Then for any collection of functors
+  \[
+    F_1,\cdots,F_n,G_1,\cdots,G_p,H \from \X \to \Set\,,
+    \]
+  the set of natural transformations
+  \[
+    \phi_{\vec{x},\vec{y}} \from \prod_i F_i(x_i) \times \prod_j G_j(y_j) \to H(x_1\tensor\cdots\tensor x_n\tensor y_1\tensor\cdots\tensor y_p)
+    \]
+  may be written as the end
+  \[
+    \int_{\vec{x},\vec{y}} \left[\prod_i F_i(x_i) \times \prod_j G_j(y_j) ,  H\left(\Tensor_i x_i \tensor \Tensor_j y_j\right)\right]\,.
+    \]
+  We may then perform some co/end calculus (See the similar computation in \cite{Pisani}, but note that that version is not quite sufficient to prove representability according to Theorem \ref{TheRepresentableMulticategories}).
+  \begin{IEEEeqnarray*}{Cl}
+    &\int_{\vec{x},\vec{y}} \left[\prod_i F_i(x_i) \times \prod_j G_j(y_j) ,  H\left(\Tensor_i x_i \tensor \Tensor_j y_j\right)\right]\\
+    \cong&\int_{\vec{x},z,\vec{y}} \left[\X\left(\Tensor_i x_i,z\right),\left[\prod_i F_i(x_i) \times \prod_j G_j(y_j) ,  H\left(z \tensor \Tensor_j y_j\right)\right]\right]\\
+    \cong&\int_{\vec{x},z,\vec{y}} \left[\prod_i F_i(x_i) \times \X\left(\Tensor_i x_i,z\right) \times \prod_j G_j(y_j),H\left(z \tensor \Tensor_j y_j\right)\right]\\
+    \cong&\int_{z,\vec{y}}\left[\int^{\vec{x}} \left(\prod_i F_i(x_i) \times \X\left(\Tensor_i x_i,z\right)\right)\times\prod_j G_j(y_j),H\left(z\tensor\Tensor_j y_j\right)\right]
+  \end{IEEEeqnarray*}
+  In other words, this multicategory is representable by the Day convolution that we met in Definition \ref{DefDayConvolution}:
+  \[
+    (F\tensor_{\text{Day}} G)(z) = \int^{x,y} F(x) \times G(y)\times \X(x\tensor y,z)\,.
+    \]
+  However, this multicategory is not representable in general, particularly in the cases when we are working with enriched multicategories (not defined here), where the enriching multicategory is not cocomplete, or when the category $\M$ is not the enriching category.
+\end{remark}
+
+\subsection{Monoids on functors are multifunctors}
+It might seem strange that the objects of the multicategory of functors are ordinary functors, ignoring the monoidal structure of $\X$ and the multicategory structure of $\M$.  
+One way to make sense of this fact is to note that an object of a category $\C$ is the same thing as a functor
+\[
+  1 \to \C\,.
+  \]
+In the same way, perhaps the correct way to think of an `element' of a multicategory is that it is a \emph{multifunctor}
+\[
+  1 \to \M\,;
+  \]
+i.e., a monoid in $\M$.
+
+\begin{proposition}
+  Let $\X$ be a monoidal category and let $\M$ be a multicategory.  
+  Then a monoid in $[\X,\M]$ is the same thing as a multifunctor $\X \to \M$.
+  \label{PropMonoidInXMIsMultifunctorXToM}
+\end{proposition}
+
+This can be proved by setting $\N=1$ in the following stronger result.
+
+\begin{proposition}[{\cite[2.8]{Pisani}}]
+  Let $\X$ be a monoidal category and let $\M,\N$ be multicategories.  
+  \label{PropPisani}
+  Then a multifunctor $\N \to [\X,\M]$ is the same thing as a multifunctor $\N\times\X \to \M$.
+\end{proposition}
+
+\subsection{Two perspectives on monoids in $\Set$}
+
+We now come to our main result of the section.  
+By way of motivation, consider the two ways of generalizing the notion of an internal monoid in $\Set$.
+
+\begin{enumerate}
+  \item A monoid in $\Set$ may be regarded as a lax monoidal functor (i.e., a multifunctor) $1 \to \Set$.  
+    This generalizes to arbitrary lax monoidal functors $\X \to \Set$, for monoidal categories $\X$.
+  \item A monoid in $\Set$ may also be regarded as a category with a single object.  
+    This generalizes to arbitrary categories.
+\end{enumerate}
+
+The work we have done allows us to unify these into a single definition.  
+From Proposition \ref{PropPromonadsAreCategories}, we know that a category with one object is the same thing as a monoid in the category $\Endoprof_\Set(*)$, where $*$ is the category with a single object and only an identity morphism.
+
+We can clearly generalize this to the idea of a monoid in $\Endoprof_\Set(\C)$ for an arbitrary category $\C$.  
+This then generalizes to the universal idea of a multifunctor
+\[
+  \X \to \Endoprof_\Set(\C)\,,
+  \]
+(which we might call a \emph{parametric promonad on $\C$ parameterized by $\X$}), which generalizes both lax monoidal functors $\X \to \Set$ (when $\C=*$) and $\Set$-enriched categories (when $\X=1$).
+
+However, we can also do things the other way round.  
+From Proposition \ref{PropMonoidInXMIsMultifunctorXToM}, a lax monoidal functor $\X \to \Set$ is a monoid in the multicategory $[\X,\Set]$.  
+This is the same thing as an $[\X,\Set]$-enriched category with a single object, so another way of generalizing monoids in $\Set$ is to generalize them to monoids in the multicategory
+\[
+  \Endoprof_{[\X,\Set]}(\C)
+  \]
+for some monoidal category $\X$ and some $[\X,\Set]$-enriched category $\C$.
+
+This generalizes categories in the case that $\X=1$.  
+It generalizes monoidal functors $\X \to \Set$ in the case that $\C$ is the enriched category $*_{[\X,\Set]}$ with a single object $()$, where the morphisms $() \to ()$ are given by the functor $[I,\blank]$, for $I$ the monoidal unit in $\X$, this being the initial object in $[\X,\Set]$.
+
+Our result is that these two ways of unifying the two generalization of a monoid in fact give the same result.  
+The only ingredient we are missing is an appropriate change of base to move from ordinary $\Set$-enriched categories to $[\M,\Set]$-enriched categories.
+
+\begin{definition}
+  Let $\X$ be a monoidal category.  
+  We have a multifunctor
+  \[
+    \X \to [\Set,\Set]
+    \]
+  given by
+  \[
+    x \mapsto \X(I,x) \times \blank\,.
+    \]
+  By Proposition \ref{PropPisani}, this may equivalently be given as a multifunctor
+  \[
+    \omega_\X\from\Set \to [\X,\Set]
+    \]
+  that sends a set $A$ to the functor
+  \[
+    \X(I,\blank)\times A\,.
+    \]
+\end{definition}
+
+The important property of this particular multifunctor is as follows.
+
+\begin{proposition}
+  If $\C_1,\cdots,\C_n$ are categories, then $[\X,\Set]$-enriched functors ${\omega_\X}_*\C_1,\cdots,{\omega_\X}_*\C_n\to[\X,\Set]$ are the same thing as ordinary functors from $\C_1\times\cdots\times\C_n$ to $[\X,\Set]$.
+\end{proposition}
+\begin{proof}
+  Let $\C_1,\cdots,\C_n$ be categories.  
+  An $[\X,\Set]$-enriched functor
+  \[
+    F \from {\omega_\X}_*\C_1,\cdots,{\omega_\X}_*\C_n \to [\X,\Set]
+    \]
+  is given by a map
+  \[
+    F\from \text{Ob}(\C_1)\times\cdots\times\text{Ob}(\C_n) \to \text{Ob}([\X,\Set])\,,
+    \]
+  together with, for all objects $a_i,b_i$ of $\C_i$, a multimorphism
+  \[
+    {\omega_X}_*\C_1(a_1,b_1),\cdots,{\omega_X}_*\C_n(a_n,b_n),F(a_1,\cdots,a_n)\to F(b_1,\cdots,b_n)\,;
+    \]
+  i.e., a natural transformation
+  \[
+    \left(\prod_i \X(I,x_i)\times\C(a_i,b_i)\right) \times F(a_1,\cdots,a_n)(y) \to F(b_1,\cdots,b_n)(x_1\tensor\cdots\tensor x_n\tensor y)\,.
+    \]
+  By the Yoneda lemma, such a natural transformation is the same thing as a natural transformation
+  \[
+    \prod_i \C(a_i,b_i) \times F(a_1,\cdots,a_n)(y) \to F(b_1,\cdots,b_n)(I \tensor \cdots \tensor I \tensor y)\,;
+    \]
+  i.e., a natural transformation
+  \[
+    \C(a_1,b_1)\times\cdots\times\C(a_n,b_n) \times F(a_1,\cdots,a_n)(y) \to F(b_1,\cdots,b_n)(y)\,.
+    \]
+  But this is precisely the data of an ordinary functor $\C_1\times\cdots\times\C_n \to [\X,\Set]$.
+
+  By naturality of the Yoneda transformation (and the left unitor), this process preserves and reflects the property of respecting composition and units.
+  \label{PropOmegaProperty}
+\end{proof}
+
+\begin{theorem}[`Stokes's Theorem']
+  \label{StokessTheorem}
+  Let $\X$ be a monoidal category and let $\C$ be a category.  
+  Then we have an isomorphism of multicategories
+  \[
+    [\X,\Endoprof_{\Set}(\C)] \cong \Endoprof_{[X,\Set]}({\omega_\X}_*\C)\,.
+    \]
+\end{theorem}
+\begin{proof}
+  Let $F \from \X\times\oppcat\C\times\C \to \Set$ be an ordinary functor.  
+  We may view $F$ either as the object
+  \[
+    F(x, \blank, \blank) \from \X \to \Endoprof_\Set(\C)_1
+    \]
+  of $[\X,\Endoprof_{\Set}(\C)]$ or, by Proposition \ref{PropOmegaProperty}, as the object
+  \[
+    F(\blank, a, b) \from \oppcat \C \times \C \to [\X,\Set]
+    \]
+  of $\Endoprof_{[\X,\Set]}({\omega_\X}_*\C)$.
+  Moreover, every object of each of the two categories arises in such a way.  
+  Our aim is to show that the two categories give rise to identical notions of multimorphisms between such $F$.
+
+  Let $F_1,\cdots,F_n,G \from \X \times \oppcat\C\times\C\to \Set$ be functors.  
+  Considering the $F_i$ as objects of $[\X,\Endoprof_\Set(\C)]$, a multimorphism $F_1,\cdots,F_n\to G$ is given by a transformation
+  \[
+    F_1(x_1,\blank,\blank),\cdots, F_n(x_n,\blank,\blank) \to G(x_1\tensor\cdots\tensor x_n,\blank,\blank)\,;
+    \]
+  natural in the $x_i$ i.e., a transformation
+  \[
+    F_1(x_1,a,b_1)\times\cdots\times F_n(x_n,b_{n-1},c) \to G(x_1\tensor\cdots\tensor x_n,a,c)\,.
+    \]
+  natural in the $x_i,a,c$ and extranatural in the $b_i$.
+
+  A multimorphism $\to G$ is given by a multimorphism
+  \[
+    \to G(I,\blank,\blank)\,;
+    \]
+  i.e., a morphism
+  \[
+    \C(a,c) \to G(I,a,c)\,.
+    \]
+
+  Now let us consider the $F_i,G$ as objects of $\Endoprof_{[\X,\Set]}({\omega_\X}_*\C)$.  
+  A multimorphism $F_1,\cdots,F_n\to G$ is given by a transformation
+  \[
+    F_1(\blank,a,b_1),\cdots,F_n(\blank,b_{n-1},c) \to G(\blank,a,c)
+    \]
+  natural in $a,c$ and extranatural in the $b_i$; i.e., a transformation
+  \[
+    F_1(x_1,a,b_1)\times\cdots\times F_n(x_n,b_{n-1},c) \to G(x_1\tensor\cdots\tensor x_n,a,c)
+    \]
+  natural in $a$, $c$ and the $x_i$ and extranatural in the $b_i$.  
+
+  A multimorphism $\to G$ is given by an extranatural transformation
+  \[
+    \omega_\X(\C(a,c)) \to G(\blank,a,c)\,;
+    \]
+  i.e., a natural transformation
+  \[
+    \X(I,x)\times\C(a,c) \to \G(x,a,c)\,,
+    \]
+  which by the Yoneda lemma is the same thing as a natural transformation
+  \[
+    \C(a,c) \to \G(I,a,c)\,.
+    \]
+  Thus, the two multicategories are isomorphic.
+\end{proof}
+
+Now consider the case that we have a parametric monad $\blank.\blank\from\X \times \C \to \C$ on a category $\C$.  
+By considering functors as profunctors, we may identify this with a multifunctor $\X \to \Endoprof_\Set(\C)$; i.e., a monoid in $[\X,\Endoprof_\Set(\C)]$.
+Then, by Theorem \ref{StokessTheorem}, we may identify this multifunctor with a monoid in $\Endoprof_{[\X,\Set]}({\omega_\X}_*\C)$; i.e., an $[\X,\Set]$-enriched promonad on ${\omega_\X}_*\C$.
+
+But now, by Proposition \ref{PropPromonadsAreCategories}, this promonad is the same thing as an $[\X,\Set]$-enriched category with the same objects as $\C$ that admits an identity-on-objects $[\X,\Set]$-enriched functor out of ${\omega_X}_*(\C)$.  
+
+The objects of this $[\X,\Set]$-enriched category are the objects of $\C$.
+By working the definitions through the proofs of Proposition \ref{PropFunctorsIntoProfunctors} and Theorem \ref{StokessTheorem}, we see that the object of morphisms from $a$ to $b$ is
+\[
+  x \mapsto \C(a,x.b)\,,
+  \]
+and that composition of morphisms is the multimorphism
+\[
+  \C(a,x.b) \times \C(b,y.c) \to \C(a,(x\tensor y).c)
+  \]
+in $[\X,\Set]$ given by sending morphisms $f\from a \to x.b$, $g\from b \to x.c$ to the composite
+\[
+  a
+  \xrightarrow{f}
+  x.b
+  \xrightarrow{x.g}
+  x.y.c \xrightarrow{m}
+  (x\tensor y).c\,,
+  \]
+which is precisely the definition of composition in the \Mellies category.
+
+We get a new analogue of Slogan \ref{SlogKleisli}.
+
+\begin{slogan}
+  The \Mellies category is precisely the $[\X,\Set]$-enriched category that we get by considering functors as profunctors.
+\end{slogan}
+
+\bibliographystyle{alpha}
+\bibliography{../common/phd_bibliography}
+
+\end{document}

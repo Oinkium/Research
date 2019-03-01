@@ -1,0 +1,97 @@
+\begin{thebibliography}{{nLa}19}
+
+\bibitem[AM96]{SamsonGuyIAActive}
+Samson Abramsky and Guy McCusker.
+\newblock Linearity, sharing and state: a fully abstract game semantics for
+  idealized algol with active expressions: Extended abstract.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 3:2 -- 14,
+  1996.
+\newblock Linear Logic 96 Tokyo Meeting.
+
+\bibitem[Day70]{ThesisForDays}
+Brian Day.
+\newblock On closed categories of functors.
+\newblock In S.~MacLane, H.~Applegate, M.~Barr, B.~Day, E.~Dubuc, Phreilambud,
+  A.~Pultr, R.~Street, M.~Tierney, and S.~Swierczkowski, editors, {\em Reports
+  of the Midwest Category Seminar IV}, pages 1--38, Berlin, Heidelberg, 1970.
+  Springer Berlin Heidelberg.
+
+\bibitem[FKM16]{KleisliResolution}
+Soichiro Fujii, Shin-ya Katsumata, and Paul-Andr{\'e} Melli{\`e}s.
+\newblock Towards a formal theory of graded monads.
+\newblock In Bart Jacobs and Christof L{\"o}ding, editors, {\em Foundations of
+  Software Science and Computation Structures}, pages 513--530, Berlin,
+  Heidelberg, 2016. Springer Berlin Heidelberg.
+
+\bibitem[GHN15]{Gepner}
+David Gepner, Rune Haugseng, and Thomas Nikolaus.
+\newblock Lax colimits and free fibrations in $\infty$-categories, 2015.
+
+\bibitem[Gra04]{AdjointsInDoubleCategories}
+Pare~Robert Grandis, Marco.
+\newblock Adjoint for double categories.
+\newblock {\em Cahiers de Topologie et Géométrie Différentielle
+  Catégoriques}, 45(3):193--240, 2004.
+
+\bibitem[SGA1]{SGA1}
+Alexander Grothendieck.
+\newblock {\em Rev\^etements \'etales et groupe fondamental (SGA 1)}, volume
+  224 of {\em Lecture notes in mathematics}.
+\newblock Springer-Verlag, 1971.
+
+\bibitem[HM99]{mcCHFiniteND}
+R.~Harmer and G.~McCusker.
+\newblock A fully abstract game semantics for finite nondeterminism.
+\newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
+  (Cat. No. PR00158)}, pages 422--430, 1999.
+
+\bibitem[JK02]{LaxActions}
+G.~Janelidze and G.~M. Kelly.
+\newblock A note on actions of a monoidal category.
+\newblock {\em Theory and Applications of Categories}, 9, 01 2002.
+
+\bibitem[Joh02]{Elephant}
+Peter~T Johnstone.
+\newblock {\em {Sketches of an elephant: a Topos theory compendium}}.
+\newblock Oxford logic guides. Oxford Univ. Press, New York, NY, 2002.
+
+\bibitem[Lei98]{BasicBicategories}
+Tom Leinster.
+\newblock Basic bicategories, 1998.
+
+\bibitem[Mel12]{MelliesCategory}
+Paul-Andr\'{e} Melli\`{e}s.
+\newblock Parametric monads and enriched adjunctions, 2012.
+\newblock preprint on webpage at
+  \url{https://www.irif.fr/~mellies/tensorial-logic/8-parametric-monads-and-enriched-adjunctions.pdf}.
+
+\bibitem[Mel17]{ParametricMonads}
+Paul-Andr\'{e} Melli\`{e}s.
+\newblock The parametric continuation monad.
+\newblock {\em Mathematical Structures in Computer Science}, 27(5):651–680,
+  2017.
+
+\bibitem[{nLa}19]{nlab:2-limit}
+{nLab authors}.
+\newblock 2-limit.
+\newblock \url{http://ncatlab.org/nlab/show/2-limit}, February 2019.
+\newblock \href{http://ncatlab.org/nlab/revision/2-limit/52}{Revision 52}.
+
+\bibitem[Pis14]{Pisani}
+Claudio Pisani.
+\newblock Sequential multicategories.
+\newblock {\em Theory and Applications of Categories}, 29(19):496 -- 541, 2014.
+
+\bibitem[Str72]{StreetTwoConstructions}
+Ross Street.
+\newblock Two constructions on lax functors.
+\newblock {\em Cahiers de Topologie et G\'eom\'etrie Diff\'erentielle
+  Cat\'egoriques}, 13(3):217--264, 1972.
+
+\bibitem[Str80]{FibrationsInBicategories}
+Ross Street.
+\newblock Fibrations in bicategories.
+\newblock {\em Cahiers de Topologie et G\'eom\'etrie Diff\'erentielle
+  Cat\'egoriques}, 21(2):111--160, 1980.
+
+\end{thebibliography}

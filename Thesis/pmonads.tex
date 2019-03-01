@@ -1,0 +1,1959 @@
+\documentclass{article}
+
+\input{../common/preamble}
+\begin{document}
+\section{Parametric monads}
+
+Since a monoid in a monoidal category $\mathcal X$ is the same thing as a lax monoidal functor from the unit category into $\mathcal X$, the definition of a monad on a category $\C$ (i.e., a monoid in $[\C,\C]$) may be generalized to that of a \emph{lax action} \cite{LaxActions} of a monoidal category $\X$ on $\C$; i.e., a lax monoidal functor $\X \to [\C,\C]$ (so that a monoid in $\C$ is a lax action of the unit category on $\C$).
+
+Equivalently, a lax action is given by a functor $\blank.\blank \from \X \times \C \to \C$ together with natural transformations
+\begin{mathpar}
+  m_{x,y,a}\from x.y.a \to (x\tensor y).a
+  \and
+  e_a \from a \to I.a
+\end{mathpar}
+such that the following diagrams commute.
+\begin{mathpar}
+  \begin{tikzcd}[column sep=36pt]
+    x.y.z.a \arrow[r, "x.m_{y,z,a}"] \arrow[d, "m_{x,y,z.a}"']
+      & x.(y\tensor z).a \arrow[r, "m_{x,y\tensor z,a}"]
+        & (x \tensor (y \tensor z)) . a \\
+    (x\tensor y).z.a \arrow[r, "m_{x\tensor y,z,a}"]
+      & ((x\tensor y)\tensor z) . a \arrow[ur, "\assoc_{x,y,z}.a"']
+        &
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    x.a \arrow[r, "e_{x.a}"] \arrow[dr, "\lunit_x.a"']
+      & I.x.a \arrow[d, "m_{I,x,a}"] \\
+    %
+      & (I\tensor x).a
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    x.a \arrow[r, "x.e_a"] \arrow[dr, "\runit_x.a"']
+      & x.I.a \arrow[d, "m_{x,I,a}"] \\
+    %
+      & (x\tensor I) . a
+  \end{tikzcd}
+\end{mathpar}
+Since lax actions generalize monads, we shall follow \Mellies \cite{ParametricMonads} and refer to them as \emph{parametric monads}.
+
+\begin{example}
+  If $\X$ is a monoidal category, $\C$ is a monoidal closed category and $j\from \X \to \C$ is an oplax monoidal functor, then we have a lax action of $\oppcat\X$ on $\C$ given by
+  \[
+    x.a = jx \implies a\,,
+    \]
+  together with the natural coherences
+  \begin{mathpar}
+    jx\implies jy\implies a \xrightarrow{\makebox[24pt]{}} (jx\tensor jy) \implies a \xrightarrow{m^j_{x,y}\implies a} j(x\tensor y) \implies a
+    \and
+    a \xrightarrow{\makebox[24pt]{}} I \implies a \xrightarrow{e^j\implies a} jI \implies a\,.
+  \end{mathpar}
+  This generalizes the \emph{reader monads} that we met earlier, so we shall call a parametric monad of this form a \emph{parametric reader monad} or \emph{lax reader action}.
+\end{example}
+
+\begin{definition}
+  \label{DefOplaxMorphismOfActions}
+  Suppose that a monoidal category $\X$ acts on a category $\C$ and that it also acts on a category $\D$.  
+  An \emph{oplax morphism of actions} from one action to the other is given by a functor $F \from \C \to \D$ together with a natural transformation $\mu_{x,a} \from F(x.a) \to x.Fa$ that makes the following diagrams commute for all objects $x,y$ of $\X$ and $a$ of $\C$.
+  \begin{mathpar}
+    \begin{tikzcd}
+      F(x.y.a) \arrow[r, "{\mu_{x,y.a}}"] \arrow[d, "{Fm_{x,y,a}}"']
+        & x.F(y.a) \arrow[r, "{x.\mu_{y,a}}"]
+          & x.y.Fa \arrow[d, "{m_{x,y,Fa}}"] \\
+      F((x\tensor y).a) \arrow[rr, "{\mu_{x\tensor y,a}}"]
+        &
+          & (x \tensor y).Fa
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      Fa \arrow[d, "Fe_a"'] \arrow[dr, "e_{Fa}"]
+        & \\
+      F(I.a) \arrow[r, "{\mu_{I,a}}" xshift=-3pt]
+        & I.Fa
+    \end{tikzcd}
+  \end{mathpar}
+\end{definition}
+
+\subsection{The \Mellies category}
+
+The main thing we want to do with lax actions is to perform a construction analogous to that of the Kleisli category of a monad.  
+Fujii, Katsumata and \Mellies give a construction called a `Kleisli resolution' in the paper \cite{KleisliResolution}, but we shall prefer an alternative construction due to \Mellies.
+
+Suppose that a monoidal category $\X$ acts on a category $\C$.
+\begin{definition}
+  A \emph{\Mellies morphism} from $a$ to $b$ is one of the form
+  \[
+    a \to x.b\,,
+    \]
+  for some object $x$ of $\X$.
+\end{definition}
+
+\begin{definition}
+  Given \Mellies morphisms $f$ from $a$ to $b$ and $g$ from $b$ to $c$ given by
+  \begin{mathpar}
+    \tilde{f} \from a \to x.b
+    \and
+    \tilde{g} \from b \to y.c\,,
+  \end{mathpar}
+  their \emph{\Mellies composition} is given by the composite
+  \[
+    a \xrightarrow{\tilde f}
+    x.b \xrightarrow{x.\tilde g}
+    x.y.c \xrightarrow{m_{x,y,c}}
+    (x\tensor y).c\,,
+    \]
+  which is a \Mellies morphism from $a$ to $c$.
+  \label{DefMelliesComposition}
+\end{definition}
+\begin{definition}[\cite{ThesisForDays}]
+  Let $\X$ be a monoidal category, and let $F,G\from \X \to \Set$ be functors.  
+  Then the \emph{Day convolution} of $F$ and $G$ is a functor
+  \[
+    F \tensor_{\text{Day}} G \from \X \to \Set
+    \]
+  given by
+  \[
+    (F \tensor_{\text{Day}} G)(x) = \int^{y,z\from \X} F(y) \times G(z) \times \X(y\tensor z,x)\,.
+    \]
+  This makes $[\X,\Set]$ into a monoidal category (the monoidal unit is the functor $\X(I,\blank)\from \X \to \Set$).
+  \label{DefDayConvolution}
+\end{definition}
+
+\begin{definition}[\cite{MelliesCategory}]
+  Given a lax action of a monoidal category $\X$ upon a category $\C$, the \emph{\Mellies category} of the action is an $[\X,\Set]$-enriched category $\Mell_\X\C$ whose objects are the objects of $\C$ and where the hom objects are given by
+  \[
+    \Mell_\X\C(a,b)(x) = \C(a,x.b)\,.
+    \]
+  The composition is given by the natural transformation
+  \begin{IEEEeqnarray*}{Cl}
+    & (\Mell_\X\C(a,b) \tensor_{\text{Day}} \Mell_\X\C(b,c))(x)\\
+    = & \int^{y,z\from \X} \C(a,y.b) \times \C(b,z.c) \times \X(y\tensor z,x) \\
+    \to & \int^{y,z\from \X} \C(a,(y\tensor z).c) \times \X(y\tensor z,x) \\
+    \cong & \C(a,x.c) \\
+    = & \Mell_\X\C(a,c)(x)\,,
+  \end{IEEEeqnarray*}
+  where the arrow is induced by the \Mellies composition $\C(a,y.b) \times \C(b,z.c) \to \C(a,(y\tensor z).c)$.
+
+  The identity transformation
+  \[
+    \C(I,x) \to \C(a,x.a)
+    \]
+  is the one sending a morphism $f\from I \to x$ to the composite
+  \[
+    a \xrightarrow{e_a}
+    I.a \xrightarrow{f.a}
+    x.a\,.
+    \]
+\end{definition}
+
+\subsection{The category $\C/\X$}
+
+We will mainly be concerned not with the \Mellies category itself, but with a closely related ordinary category.  
+The usual method for turning a $\V$-enriched category into an ordinary category is via base change along a monoidal functor $\V \to \Set$: for example, any $\V$-enriched category has an \emph{underlying ordinary category}, obtained via base change along the functor $\V(I, \blank)$.  
+For example, if $a$ and $b$ are objects of the base category $\C$, then the set of morphisms in the underlying ordinary category of the \Mellies category is the set of natural transformations
+\[
+  \C(I,x) \to \C(a,x.b)\,,
+  \]
+which by the Yoneda lemma is the same as the set $\C(a,I.b)$.  
+In other words, this underlying ordinary category is precisely the Kleisli category for the monad on $\C$ given by the composite
+\[
+  1 \xrightarrow{I}
+  \X \xrightarrow{\blank.\blank}
+  \End[\C]\,;
+  \]
+in other words, the monad on $\C$ given by $Ma = I.a$.
+
+This is not very useful for us, since it ignores most of the action and does not give us any new theory beyond the basic theory of monads and Kleisli categories.  
+We want a monoidal functor $[\M,\Set]\to\M$ that will preserve more of the structure.  
+
+Let us assume for now that $\X$ is a small category.  
+Then we have a functor
+\begin{IEEEeqnarray*}{cCc}
+  [\X,\Set] & \to & \Set \\
+  F & \mapsto & \colim_{x\from \X} F(x)
+\end{IEEEeqnarray*}
+given by the colimit in $\Set$.  
+
+Moreover, this functor is lax monoidal, via the morphisms
+\begin{IEEEeqnarray*}{Cl}
+  & \left(\int^y F(y)\right)\times \left(\int^z G(z)\right) \\
+  \to & \int^{y,z} F(y) \times G(z) \\
+  \to & \int^{y,z} F(y) \times G(z) \times \X(y \tensor z,x) \\
+  = & \int^x (F\tensor_{\text{Day}} G)(x)
+\end{IEEEeqnarray*}
+(where the second morphism sends picks out the inhabitant $\inj_{y\tensor z}(\id_{y\tensor z})$ of $\colim_{x\from \X}\X(y\tensor z,x)$)
+and
+\begin{IEEEeqnarray*}{cCc}
+  1 & \to & \colim_{x\from \X} \X(I,x) \\
+  () & \mapsto & \inj_I(\id_I)\,.
+\end{IEEEeqnarray*}
+
+Rather than pursue this line of argument to its conclusion, though, we choose to define the base-changed category directly.
+
+\begin{definition}
+  Let a monoidal category $\X$ act on a category $\C$ via a lax action.  
+  Then we define a new category $\C/\X$ where
+  \begin{itemize}
+    \item the objects are the objects of $\C$,
+    \item given objects $a,b$ of $\C$, the set of morphisms $a \to b$ is given by the colimit
+      \[
+        \colim_{x\from \X} \C(a,x.b)\,;
+        \]
+      i.e., a morphism in $\C/\X$ from $a$ to $b$ is an equivalence class of \Mellies morphisms
+      \[
+        a \to x.b
+        \]
+      in $\C$, where $x$ ranges over the objects of $\X$, and where the equivalence relation on morphisms is generated by identifying two morphisms $f\from a \to x.b$, $g \from a \to y.b$ if there is a morphism $h\from x\to y$ in $\X$ such that the following diagram commutes (we say that $h$ \emph{mediates} between $f$ and $g$);
+      \[
+        \begin{tikzcd}
+          a \arrow[r, "f"] \arrow[dr, "g"']
+            & x.b \arrow[d, "h.b"] \\
+          %
+            & y.b
+        \end{tikzcd}
+        \]
+    \item composition of morphisms is via the \Mellies composition of Definition \ref{DefMelliesComposition} and
+    \item the identity $a\to a$ is given by the equivalence class corresponding to the morphism
+      \[
+        e_a \from a \to I.a
+        \]
+      in $\C$.
+  \end{itemize}
+  \label{DefCX}
+\end{definition}
+
+\begin{remark}
+  We will not in general assume that $\X$ is a small category, as we do above, but we will assume that the colimits in Definition \ref{DefCX} do exist in $\Set$.  
+  If $\X$ is a small category, then they are small colimits so they exist automatically.
+  If the colimits do not exist, then we get a category that is not locally small.
+\end{remark}
+
+\begin{proposition}
+  $\C/\X$ is a well defined category.
+\end{proposition}
+\begin{proof}
+  Let us first check that \Mellies composition is well defined with respect to our equivalence relation.  
+  Suppose that
+  \begin{gather*}
+    f \from a \to x.b \\
+    f' \from a \to x'.b \\
+    g \from b \to y.c \\
+    g' \from b \to y'.c
+  \end{gather*}
+  are \Mellies morphisms, and that there are morphisms $h \from x \to x'$, $k \from y \to y'$ in $\X$ such that the following diagrams commute.
+  \begin{mathpar}
+    \begin{tikzcd}
+      a \arrow[r, "f"] \arrow[dr, "f'"']
+        & x.b \arrow[d, "h.b"] \\
+      %
+        & x'.b
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      b \arrow[r, "g"] \arrow[dr, "g'"']
+        & y.c \arrow[d, "k.c"] \\
+      %
+        & y'.c
+    \end{tikzcd}
+  \end{mathpar}
+  Then we have the following commutative diagram, since $m$ is a natural transformation.
+  \[
+    \begin{tikzcd}
+      a \arrow[r, "f"] \arrow[dr, "f'"']
+        & x.b \arrow[r, "x.g"] \arrow[dr, "h.g" description] \arrow[d, "h.b" description]
+          & x.y.c \arrow[r, "{m_{x,y,c}}"] \arrow[d, "h.y.c" description] \arrow[dd, bend left=50, "h.k.c"]
+            & (x \tensor y).c \arrow[dd, "(h\tensor k).c"] \\
+      %
+        & x'.b \arrow[r, "x'.g" description] \arrow[dr, "x'.g'"']
+          & x'.y.c \arrow[d, "x'.k.c" description]
+            & \\
+      %
+        &
+          & x'.y'.c \arrow[r, "{m_{x',y',c}}"]
+            & (x' \tensor y').c
+    \end{tikzcd}
+    \]
+  This proves that the \Mellies composition of $f$ and $g$ is equivalent to the \Mellies composition of $f'$ and $g'$.
+
+  We should check that \Mellies composition is associative with respect to our equivalence relation.  
+  Let $f \from a \to x.b$, $g\from b \to y.c$, $h \from c \to z.d$ be \Mellies morphisms.  
+  Then we have the following commutative diagram.
+  \[
+    \begin{tikzcd}
+      a \arrow[d, "f"' yshift=3pt] \arrow[d, dashed, thick]
+        &
+          &
+            & \\
+      x.b \arrow[d, "x.g"' yshift=3pt] \arrow[d, dashed, thick]
+        &
+          &
+            & \\
+      x.y.c \arrow[r, "x.y.h", thick, dashed] \arrow[d, "{m_{x,y,c}}"']
+        & x.y.z.d \arrow[r, "x.m_{y,z,d}", thick, dashed] \arrow[d, "m_{x,y,z.d}"', dotted]
+          & x.(y\tensor z).d \arrow[r, "m_{x,y\tensor z,d}", thick, dashed]
+            & (x \tensor (y \tensor z)) . a \\
+      (x \tensor y).c \arrow[r, "(x\tensor y).h"]
+        & (x\tensor y).z.d \arrow[r, "m_{x\tensor y,z,a}"]
+          & ((x\tensor y)\tensor z) . a \arrow[ur, "\assoc_{x,y,z}.d"', dotted]
+            &
+    \end{tikzcd}
+    \]
+  Here, the pentagon at the right is one of our conditions for a lax action, while the left-hand square commutes because $m$ is a natural transformation.  
+  The composite given by the thick dashed lines is the \Mellies composition $f;(g;h)$, while that given by thin lines is the \Mellies composition $(f;g);h$.  
+  The arrow $\assoc_{x,y,z}$ in $\X$ then mediates between these morphisms, so they are equivalent.
+
+  Lastly, we need to check that the identity we have defined is indeed an identity for the composition.  
+  The following diagrams show us that the morphism $\lunit_x$ in $\X$ mediates between a \Mellies morphism $f\from a \to x.b$ and the \Mellies composite $e_a;f$, and that the morphism $\runit_x$ in $\X$ mediates between $f$ and the \Mellies composite $f;e_b$.
+  \begin{mathpar}
+    \begin{tikzcd}
+      a \arrow[r, "f"] \arrow[d, "e_a"']
+        & x.b \arrow[d, "e_{x.b}"'] \arrow[dr, "\lunit_x.b"]
+          & \\
+      I.a \arrow[r, "I.f"]
+        & I.x.b \arrow[r, "{m_{I,x,b}}" xshift=-3pt]
+          & (I\tensor x).b
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      a \arrow[r, "f"]
+        & x.b \arrow[r, "x.e_b"] \arrow[dr, "\runit_x.b"']
+          & x.I.b \arrow[d, "{m_{x,I,b}}"] \\
+      %
+        &
+          & (x\tensor I).b
+    \end{tikzcd}
+    \and
+    \qedhere
+  \end{mathpar}
+\end{proof}
+
+\begin{remark}
+  This generalizes the Kleisli category of a monad.  
+  Indeed, if $M$ is a monad on $\C$, then we may consider $M$ as a lax action of the unit category on $\C$.
+  Then composition of morphisms $f \from a \to I.b$, $g \from b \to I.c$ in the category $\C/1$ is given by
+  \[
+    a \xrightarrow{f}
+    I.b \xrightarrow{I.g}
+    I.I.c \xrightarrow{m_{I,I,c}}
+    I.c\,.
+    \]
+  Identifying $I.\blank$ with $M$, we see that this is precisely the definition of composition in the Kleisli category for $M$ (and the identity is the same thing too).  
+  Since the unit category has only an identity morphism, the equivalence relation on morphisms in $\C/1$ is discrete, which is why we do not need to mention it in this context.
+\end{remark}
+
+There is an identity-on-objects functor $J \from \C \to \C/\X$ given by sending a morphism $f \from a \to b$ to the \Mellies morphism
+\[
+  a \xrightarrow{f}
+  b \xrightarrow{e_b}
+  I.b\,.
+  \]
+It is easy to show that this is a functor, and we will prove this in a more general context in Proposition \ref{PropGrotLaxLimit}.
+
+A special role will be played by the identity morphisms
+\[
+  \id_{x.a} \from x.a \to x.a\,,
+  \]
+considered as \Mellies morphisms $x.a \to a$.  
+We will see later that these are the components of a natural transformation $\phi_{x,a}\from x.a \to a$ in $\C/\X$, generalizing the natural transformation $\phi_a \from Ma \to a$ in the Kleisli category for a monad $M$ (see Proposition \ref{pKleisli}).
+
+We will be using the following `factorization result'.  
+If $f \from a \to x.b$ is a morphism in $\C$ then the corresponding \Mellies morphism $a \to b$ may be written as the following composite in $\C/\X$.
+\[
+  a \xrightarrow{Jf}
+  x.b \xrightarrow{\phi_{x,b}}
+  b\,.
+  \]
+Indeed, if we compute this composite in $\C$, then we get
+\[
+  a \xrightarrow{f}
+  x.b \xrightarrow{e_{x.b}}
+  I.x.b \xrightarrow{\id}
+  I.x.b \xrightarrow{m_{I,x,b}}
+  (I\tensor x).b\,,
+  \]
+which is equivalent to $f$ in $\C/\X$, because $e_{x.b};m_{I,x,b}=\lunit_x.b$, so $\lunit_x$ mediates between this morphism and $f$.
+
+\subsection{Lax $2$-colimits}
+
+In the previous section, we approached the category $\C/\X$ via the \Mellies category.  
+In this section, we will show that $\C/\X$ has important properties in its own right: namely that it is a certain lax $2$-colimit in $\Cat$.  
+We will briefly return to the \Mellies category in Section \ref{SecPromonads}, when we will show why it is a natural idea to consider an $[\X,\Set]$-enriched category.
+
+\begin{definition}[\cite{StreetTwoConstructions}]
+  Let $\C,\D$ be bicategories.  
+  Then a \emph{lax functor} $F\from\C \to \D$ is given by
+  \begin{itemize}
+    \item a map $F$ from the objects of $\C$ to the objects of $\D$,
+    \item for each pair $a,b$ of objects of $\C$, a functor $F$ from $\C(a,b)$ to $\D(F(a),F(b))$,
+    \item for each triple $a,b,c$ of objects of $\C$, a transformation $m_{f,g}\from F(f);F(g) \to F(f;g)$ natural in $f\from a \to b$, $g\from b \to c$ and
+    \item for each object $a$ of $\C$, a $2$-cell $e_a\from \id_{Fa} \Rightarrow F(\id_a)\from Fa \to Fa$
+  \end{itemize}
+  such that for all tuples $a,b,c,d$ of objects and all morphisms $f\from a \to b$, $g\from b \to c$, $h \from c \to d$, the following diagrams commute.
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=60pt]
+      (F(f);F(g));F(h) \arrow[r, "{\assoc_{F(f),F(g),F(h)}}"] \arrow[d, "{m_{f,g};F(h)}"']
+        & F(f);(F(g);F(h)) \arrow[d, "{F(f);m_{g,h}}"] \\
+      F(f;g);F(h) \arrow[d, "{m_{f;g,h}}"']
+        & F(f);F(g;h) \arrow[d, "{m_{f,g;h}}"] \\
+      F((f;g);h) \arrow[r, "{F(\assoc_{f,g,h})}"]
+        & F(f;(g;h))
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      Ff \arrow[r, "\lunit_{Ff}"] \arrow[d, "F\lunit_f"']
+        & \id_{Fa} ; Ff \arrow[d, "e_a;Ff"] \\
+      F(\id_a;f)
+        & F\id_a;Ff \arrow[l, "{m_{\id_a,f}}"']
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      Ff \arrow[r, "\runit_{Ff}"] \arrow[d, "F\runit_f"']
+        & Ff ; \id_{Fb} \arrow[d, "Ff;e_b"] \\
+      F(f;\id_b)
+        & Ff;F\id_b \arrow[l, "{m_{f,\id_b}}"']
+    \end{tikzcd}
+  \end{mathpar}
+\end{definition}
+\begin{example}
+  If $\C = \BB \X$, $\D = \BB \YY$ are the delooping bicategories of monoidal categories $\X, \YY$ -- i.e., $\X$ and $\YY$ considered as bicategories with a single object -- then a lax functor $\C \to \D$ is the same thing as a lax monoidal functor $\X \to \YY$.  
+
+  More generally, a lax functor $F\from \BB \X \to \D$ is the same as a lax monoidal functor from $\X$ to the monoidal category of $1$-cells $F(*) \to F(*)$, where $*$ is the unique object of $\BB\X$.  
+  In particular, a lax functor $1\to \Cat$ is the same thing as a monad and a lax functor $\BB\X \to \Cat$ is the same thing as a parametric monad parameterized by $\X$.
+\end{example}
+
+\begin{definition}
+  Let $F \from \C \to \D$ be a lax functor of bicategories.  
+  Then an \emph{oplax cocone under $F$} is given by an object $d$ of $\D$, together with $1$-cells
+  \[
+    l_c \from F(c) \to d
+    \]
+  for each object $c$ of $\C$ and $2$-cells
+  \[
+    \mu_h \from F(h);l_{c'} \Rightarrow l_c \from F(c) \to d
+    \]
+  for each $1$-cell $h\from c \to c'$ in $\C$, such that for all $2$-cells $\phi\from h' \Rightarrow h \from c \to c'$ the diagram
+  \[
+    \begin{tikzcd}
+      F(h');l_{c'} \arrow[r, "\mu_{h'}", Rightarrow] \arrow[d, "F(\phi);l_{c'}"', Rightarrow]
+        & l_c \\
+      F(h);l_{c'} \arrow[ur, "\mu_h"', Rightarrow]
+        &
+    \end{tikzcd}
+    \]
+  commutes, and such that for all $h\from c \to c'$, $h' \from c' \to c''$, the diagrams
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=60pt]
+      (F(h);F(h'));l_{c''} \arrow[r, "{\assoc_{F(h),F(h'),l_{c''}}}", Rightarrow] \arrow[d, "{m_{h,h'};l_{c''}}"', Rightarrow]
+        & F(h);(F(h');l_{c''}) \arrow[r, "F(h);\mu_{h'}", Rightarrow] 
+          & F(h);l_{c'} \arrow[d, "\mu_h", Rightarrow] \\
+      F(h;h');l_{c''} \arrow[rr, "\mu_{h;h'}", Rightarrow]
+        &
+          & l_c
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      l_c \arrow[r, "\lunit_{l_c}", Rightarrow] \arrow[d, "\id_{l_c}"', Rightarrow]
+        & \id_c;l_c \arrow[d, "e_c;l_c", Rightarrow] \\
+      l_c
+        & F(\id_c);l_c \arrow[l, "\mu_{\id}"', Rightarrow]
+    \end{tikzcd}
+  \end{mathpar}
+  commute.
+\end{definition}
+
+\begin{definition}[\cite{Gepner}]
+  Let $F \from \C \to \D$ be a lax functor of bicategories.  
+  Then a \emph{lax colimit} of $F$ is an oplax cocone $(u,k,\nu)$ under $F$ such that if $(d,l,\mu)$ is any other oplax cocone then there is a unique $1$-cell $\hat{l} \from u \to d$ such that $k_c;\hat{l}=l_c$ for each object $c$ of $\C$ and such that $\nu_h\hat{l}=\mu_h$ for any $1$-cell $h\from c \to c'$ in $\C$.
+\end{definition}
+
+For the justification of the terminology we have used whereby a \emph{lax} limit is a limiting \emph{oplax} cocone, see \cite{nlab:2-limit}.
+
+\begin{remark}
+  The definition of a lax colimit is normally weaker than the one we have given, in that the equations $k_c;\hat l = l_c$ and $\nu_h\hat l = \mu_h$ are not required to hold exactly, but instead up to coherent isomorphism.  
+  For the lax functors we are constructing, however, we will be able to construct lax colimits that make these equations hold exactly.
+\end{remark}
+
+\subsection{Lax natural transformations and functoriality of lax colimits}
+
+\begin{definition}[\cite{BasicBicategories}]
+  Let $F,G \from \C \to \D$ be lax functors of bicategories.  
+  A \emph{oplax natural transformation} $\C\to \D$ is given by a family of $1$-cells
+  \[
+    t_c \from F(c) \to G(c)\,,
+    \]
+  for each object $c$ of $\C$, together with a family of $2$-cells
+  \[
+    \mu_h \from F(h);t_{c'} \Rightarrow t_c ; G(h) \from F(c) \to G(c')
+    \]
+  for each morphism $h\from c \to c'$ in $\C$, such that for all $2$-cells $\phi\from h' \to h\from c \to c'$ the diagram
+  \[
+    \begin{tikzcd}[arrows=Rightarrow]
+      F(h');t_{c'} \arrow[r, "\mu_{h'}"] \arrow[d, "F(\phi);t_{c'}"']
+        & t_c;G(h') \arrow[d, "T_c;F(\phi)"] \\
+      F(h);t_{c'} \arrow[r, "\mu_h"]
+        & t_c;G(h)
+    \end{tikzcd}
+    \]
+  commutes, and such that for all $h\from c\to c'$, $h'\from c' \to c''$, the diagrams
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=34pt, arrows=Rightarrow]
+      (F(h);F(h'));t_{c''} \arrow[r, "\assoc"] \arrow[d, "{m^F_{h,h'};t_{c''}}"']
+        & F(h);(F(h');t_{c''}) \arrow[r, "F(h);\mu_{h'}"]
+          & F(h);(t_{c'};G(h')) \arrow[d, "\assoc"] \\
+      F(h;h');t_{c''} \arrow[d, "\mu_{h;h'}"']
+        &
+          & (F(h);t_{c'});G(h') \arrow[d, "\mu_h;G(h')"] \\
+      t_c;G(h;h')
+        & t_c;(G(h);G(h')) \arrow[l, "{t_c;m^G_{h,h'}}"]
+          & (t_c;G(h));G(h') \arrow[l, "\assoc"]
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}[arrows=Rightarrow]
+      l_c \arrow[r, "\lunit_{l_c}"] \arrow[d, "\runit_{l_c}"']
+        & \id_c;l_c \arrow[dd, "e^F_c;l_c"] \\
+      l_c;\id_c \arrow[d, "l_c;e^G_c"']
+        & \\
+      l_c;G(\id_c)
+        & F(\id_c);l_c \arrow[l, "\mu_{\id_c}"]
+    \end{tikzcd}
+  \end{mathpar}
+  commute.
+\end{definition}
+
+As we would expect, the horizontal/vertical composition of two oplax natural transformations is also an oplax natural transformation, and there is an identity oplax natural transformation $F \Rightarrow F$ for any lax functor $F$ of bicategories.
+
+\begin{example}
+  An oplax natural transformation between lax functors $\BB\X \to \Cat$ is the same thing as an oplax morphism between the corresponding actions, as defined in Definition \ref{DefOplaxMorphismOfActions}.
+\end{example}
+\begin{example}
+  If $F\from \C \to \D$ is a lax functor of bicategories, then an oplax cocone under $F$ with tip $d\from \D$ is the same thing as an oplax natural transformation $F \to *_d$, where $*_d$ is the constant functor taking the value $d$.
+\end{example}
+
+We can then get a functoriality result similar to the usual one for ordinary colimits.
+
+\begin{proposition}
+  Let $F,G \from \C \Rightarrow \D$ be lax functors and let $t \from F \Rightarrow G$ be an oplax natural transformation.  
+  Suppose that $F$ and $G$ have lax colimits $\tilde{F}$ and $\tilde{G}$.  
+  Then $t$ naturally gives rise to a lax functor $\tilde{F} \to \tilde{G}$ in a way that respects composition and identity of lax natural transformations.
+  \label{PropFunctorialityOfLaxColimits}
+\end{proposition}
+\begin{proof}
+  Composing the limiting oplax cocone $k^G\from G \to *_{\tilde{G}}$ with $t$ gives us an oplax natural transformation $F \to *_{\tilde{G}}$ and hence a unique lax functor $(t;k^G)\hat{}\from \tilde{F} \to \tilde{G}$ such that $k^F_c;(t;k^G)\hat{}=t_c;k^G_c$ and $\nu^F_h(t;k^G)\hat{}=\nu^G_h$ for all objects $c$ and morphisms $h$ in $\C$.  
+
+  Preservation of composition and identities is via the usual technique: if we have oplax natural transformations $t\from F \Rightarrow G$ and $t' \from G \Rightarrow H$, then the composite of the induced lax functors $\tilde{F} \to \tilde{G}$ and $\tilde{G}\to \tilde{H}$ satisfies the same property that uniquely defines the lax functor $\tilde{F} \to \tilde{H}$ induced from the composite of $t$ and $t'$.
+\end{proof}
+
+Another similar functoriality result tells us what happens to lax colimits when we precompose with a lax functor.
+
+\begin{proposition}
+  Let $F \from \C \to \D$, $G \from \D \to \E$ be lax functors.  
+  Suppose that lax colimits exist for $G$ and for $F;G$.  
+  Then we get a natural lax functor $\hat F$ from the lax colimit of $F;G$ to the lax colimit of $G$ such that for all objects $c$ and all morphisms $h$ in $\C$ we have
+  \begin{mathpar}
+    k^{F;G}_c;\hat{F} = k^g_{Fc}
+    \and
+    \nu^{F;G}_h \hat{F} = \nu^G_{Fh}\,,
+  \end{mathpar}
+  where $(k^{F;G},\nu^{F;G})$ is the limiting cocone for the lax colimit of $F;G$ and $(k^G,\nu^G)$ is the limiting cocone for the lax colimit of $G$.
+  \label{PropHorizFunctorialityOfLaxColimits}
+\end{proposition}
+\begin{proof}
+  Composing the limiting cocone $(k^G_d,\nu^G_k)$ for the lax colimit of $G$ with $F$ gives us an oplax cocone $(k^G_{Fc},\nu^G_{Fh})$ under $F;G$, inducing a functor from the lax colimit of $F;G$ to the lax colimit of $G$ that satisfies the required properties.
+\end{proof}
+
+\subsection{Lax $2$-colimits in $\Cat$}
+
+Let $\C$ be a bicategory, and let $F\from \C \to \Cat$ be a bifunctor.
+
+\begin{definition}[\cite{FibrationsInBicategories}]
+  The \emph{Grothendieck construction} associates to the bifunctor $F$ a bicategory $\int F$, where
+  \begin{itemize}
+    \item the objects are pairs $(a, m)$, where $a$ is an object of $\C$ and $m$ an object of $F(a)$,
+    \item the $1$-cells $(a, m) \to (b, n)$ are pairs $(h, f)$, where $h$ is a morphism $b \to a$ and $f$ is a morphism $m \to F(h)(n)$ and
+    \item the $2$-cells $(h, f) \Rightarrow (k, g) \from (a,m) \to (b,n)$ are $2$-cells $\phi\from h \Rightarrow k$ in $\C$ that make the following diagram commute.
+      \[
+        \begin{tikzcd}
+          m \arrow[r, "f"] \arrow[dr, "g"']
+            & F(h)(n) \arrow[d, "(F\phi)_n"] \\
+          %
+            & F(k)(n)
+        \end{tikzcd}
+        \]
+  \end{itemize}
+  The identity $1$-cell $(a,m)\to(a,m)$ is given by $\left(\id_a,m \xrightarrow{(e_a)_m} F(\id)(m)\right)$.
+  The composite of a $1$-cell $(h,f)\from (a,m) \to (b,n)$ with a $1$-cell $(k,g)\from (b,n) \to (c,p)$ is the pair $(k;h,f*g)$, where $f*g$ is the following composite.
+  \[
+    m \xrightarrow{f}
+    F(h)(n) \xrightarrow{F(h)(g)}
+    F(h)(F(k)(n)) \xrightarrow{m_{h,k}}
+    F(k;h)(n)
+    \]
+\end{definition}
+\begin{remark}
+  For the Grothendieck construction see \cite[VI.8]{SGA1} and \cite[B1.3.1]{Elephant} -- in the original formulation, the category $F$ is a pseudofunctor $\C \to \Cat$ (i.e., a lax functor where the coherences $m$ and $e$ are isomorphisms), where $\C$ is an ordinary category -- then $\int F$ is an ordinary category.
+  For the version where $\C$ is an arbitrary bicategory (and $\int F$ is a bicategory), see \cite{FibrationsInBicategories}.
+
+  There are many different variations of this construction, where various combinations of arrows are reversed.  
+  We have chosen the variation that suits our needs.
+\end{remark}
+
+\begin{definition}
+  Given a bicategory $\C$, we write $\pi_*\C$ for the ordinary category whose objects are the objects of $\C$ and where the morphisms $a\to b$ are the connected components of the $1$-cells $a\to b$ in $\C$: i.e., equivalence classes of $1$-cells $a\to b$ under the equivalence relation generated by relating $f\from a \to b$ to $g \from a \to b$ if there is a $2$-cell $\phi \from f \to g$.
+\end{definition}
+
+\begin{proposition}[{\cite[\sec 3]{nlab:2-limit}}]
+  Let $\C$ be a bicategory and let $F\from \C \to \Cat$ be a lax functor.  
+  Then $\pi_*\int F$ is the lax colimit of $F$.
+  \label{PropGrotLaxLimit}
+\end{proposition}
+\begin{proof}
+  First, we define the lax cocone under $F$ with tip $\pi_*\int F$.
+  Given an object $a$ of $\C$, we have a functor $k_a \from F(a) \to \pi_*\int F$ given by
+  \begin{mathpar}
+    k_a(m) = (a,m)
+    \and
+    k_a\left(m \xrightarrow{f} n\right) = \left(\id_a,m\xrightarrow{f}n\xrightarrow{(e_a)_n} F(\id)(n)\right)\,.
+  \end{mathpar}
+  We should check that this is indeed a functor; clearly it preserves the identity, so we need to check that it preserves composition.  
+  Let $m\xrightarrow{f}n\xrightarrow{g}p$ be morphisms in $F(a)$.  
+  We need to show that $k_a(f);k_a(g) = k_a(f;g)$ in $\pi_*\int F$, for which it suffices to exhibit a $2$-cell in $\int F$ mediating between these two $1$-cells, and indeed such a $2$-cell is given by $\lunit_{\id_a}\from \id_a \to \id_a;\id_a$ (see Figure \ref{FigKaFG=KaFKaG}).
+  \begin{figure}
+    \[
+      \begin{tikzcd}[column sep=45pt]
+        m \arrow[r, thick, dashed, "f"] \arrow[r]
+          & n \arrow[r, thick, dashed, "(e_a)_n"] \arrow[d, "g"']
+            & F(\id_a)(n) \arrow[d, thick, dashed, "F(\id_a)(g)"]
+              & \\
+        %
+          & p \arrow[r, "(e_a)_p"]
+            & F(\id_a)(p) \arrow[r, thick, dashed, "F(\id_a)(e_p)" xshift=-3pt] \arrow[dr, dotted, "F(\lunit_{\id_a})_p"']
+              & F(\id_a)((F(\id_a)(p))) \arrow[d, thick, dashed, "{m_{\id_a,\id_a}}"] \\
+        %
+          &
+            &
+              & F(\id_a,\id_a)(p)
+      \end{tikzcd}
+      \]
+    \caption[The composite $k_a(f);k_a(g)$ is equal to $k_a(f;g)$ in $\pi_*\int F$.]{The square commutes because $(e_a)$ is a natural transformation, while commutativity of the triangle is one of the conditions for a lax functor.  
+The composite $k_a(f);k_a(g)$ is given by the pair $\left(\id_a;\id_a, {\begin{tikzcd}[ampersand replacement=\&]m \arrow[r, thick, dashed] \& F(\id_a,\id_a)(p)\end{tikzcd}}\right)$ (thick dashed arrows), while $k_a(f;g)$ is given by $\left(\id_a,m \to F(\id_a)(p)\right)$ (normal arrows). The $2$-cell $\lunit_{\id_a}\from \id_a\to\id_a$ from $\int F$ mediates between them (dotted arrow).}
+      \label{FigKaFG=KaFKaG}
+  \end{figure}
+
+  Next, if $h\from a \to a'$ is a morphism in $\C$, then we define a natural transformation
+  \[
+    \nu_h \from F(h);k_{a'} \Rightarrow k_a
+    \]
+  by
+  \[
+    (\nu_h)_m = (h, \id_{F(h)(m)}) \from (a',F(h)(m)) \to (a,m)\,.
+    \]
+  We want to show that this is a natural transformation; i.e., that for any morphism $f \from m \to n$ in $F(a)$, the following diagram commutes.
+  \[
+    \begin{tikzcd}
+      k_{a'}(F(h)(m)) \arrow[r, "(\nu_h)_m"] \arrow[d, "k_{a'}(F(h)(f))"']
+        & k_a(m) \arrow[d, "k_a(f)"] \\
+      k_{a'}(F(h)(n)) \arrow[r, "(\nu_h)_n"]
+        & k_a(n)
+    \end{tikzcd}
+    \]
+  Here, the top right composite is given by
+  \[
+    F(h)(m) \xrightarrow{F(h)(f)}
+    F(h)(n) \xrightarrow{F(h)((e_{a})_n)}
+    F(h)(F(\id_a)(n)) \xrightarrow{m_{h,\id_a}}
+    F(h;\id_a)(n)\,,
+    \]
+  which is related to $F(h)(f)$ via $\runit_h$, while the bottom left composite is given by
+  \[
+    F(h)(m) \xrightarrow{(Fh)f}
+    F(h)(n) \xrightarrow{(e_{a'})_{(Fh)f}}
+    F(\id_{a'})(F(h)(n)) \xrightarrow{m_{\id_{a'},h}}
+    F(\id_{a'};F(h))(n)\,,
+    \]
+  which is related to $F(h)(f)$ via $\lunit_h$.
+
+  We now need to show that the appropriate diagrams commute to ensure that $\left(\pi_*\int F,k,\nu\right)$ is a lax cocone under $F$.
+  For the first diagram, we must show that the following commutes for any $2$-cell $\phi\from h' \Rightarrow h\from a \to a'$ and any object $m$ of $F(a)$.
+  \[
+    \begin{tikzcd}
+      k_{a'}(F(h')(m)) \arrow[r, "(\nu_{h'})_m"] \arrow[d, "k_{a'}((F\phi)_m)"']
+        & k_a(m) \\
+      k_{a'}(F(h)(m)) \arrow[ur, "(\nu_h)_m"']
+        &
+    \end{tikzcd}
+    \]
+  Since the arrow along the top is given by the identity on $F(h')(m)$, it will suffice to show that the arrow along the bottom is of the form $F(\psi)_m$, for some $2$-cell $\psi$ in $\C$, and is therefore equal to the identity in $\pi_*\int F$.
+  Indeed, writing this composite out in full, we get
+  \[
+    F(h')(m) \xrightarrow{(F\phi)_m}
+    F(h)(m) \xrightarrow{(e_{a'})_{F(h)(m)}}
+    F(\id)(F(h)(n)) \xrightarrow{m_{\id,h}}
+    F(\id;h)(n)\,.
+    \]
+  By the conditions on a lax functor, the composite of the last two morphisms is $F(\lunit_h)_m$, and so the whole thing is equal to $F(\phi;\lunit_h)_m$.
+
+  Lastly, we need to show that the following diagrams commute for any $1$-cells $h\from a \to a'$, $h'\from a' \to a''$ and any object $m$ of $F(a)$.
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=50pt]
+      k_{a''}(F(h')(F(h)(m))) \arrow[r, "(\nu_h)_{F(h)(m)}"] \arrow[d, "{k_{a''}((m_{h,h'})_m)}"']
+        & k_{a'}(F(h)(m)) \arrow[d, "(\nu_{h})_m"] \\
+      k_{a''}(F(h;h')(m)) \arrow[r, "(\nu_{h;h'})_m"]
+        & k_a(m)
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}[column sep=40pt]
+      k_a(m) \arrow[r, "k_a((e_a)_m)"] \arrow[dr, "\id_{k_a(m)}"']
+        & k_a(F(\id)(m)) \arrow[d, "(\nu_{\id})_m"] \\
+      %
+        & k_a(m)
+    \end{tikzcd}
+  \end{mathpar}
+  This time, we can compute that both composites in the first diagram are equal to
+  \[
+    F(h')(F(h)(m)) \xrightarrow{m_{h,h'}} F(h;h')(m)\,,
+    \]
+  while in the second diagram the top left composite is equal to
+  \[
+    m \xrightarrow{(e_a)_m}
+    F(\id)(m) \xrightarrow{(e_a)_{F(\id)(m)}}
+    F(\id)(F(\id)(m)) \xrightarrow{\mu_{\id,\id}}
+    F(\id;\id)(m)\,,
+    \]
+  and the diagonal arrow is given by
+  \[
+    m \xrightarrow{(\e_a)_m}
+    F(\id)(m)\,.
+    \]
+  These $1$-cells in $\int F$ are related by $F(\lunit_m)$, so they correspond to the same morphism in $\pi_*\int F$.
+
+  This completes the definition of the universal cocone under $\pi_*\int F$.
+
+  Now, suppose that $(\D,l,\mu)$ is another lax cocone under $F$.  
+  We define a functor $\hat{l}$ from $\pi_*\int F$ to $\D$ by
+  \begin{mathpar}
+    \hat{l}(a,m) = l_a(m)
+    \and
+    \hat{l}\left((a,m) \xrightarrow{(h,f)} (b,n)\right) =
+    l_a(m) \xrightarrow{l_a(f)}
+    l_a(F(h)(n)) \xrightarrow{(\mu_h)_n}
+    l_b(n)\,.
+  \end{mathpar}
+  We need to show that $\hat{l}$ is a functor.  
+  First, observe that it sends the identity on $(a,m)$ to the composite
+  \[
+    l_a(m) \xrightarrow{l_a((e_a)_m)}
+    l_a(F(\id)(m)) \xrightarrow{(\mu_{\id})_m}
+    l_a(m)\,,
+    \]
+  which is equal to the identity on $l_a(m)$ since $l$ is a cocone under $F$.
+  Now suppose we have morphisms
+  \[
+    (a,m) \xrightarrow{(h,f)}
+    (b,n) \xrightarrow{(k,g)}
+    (c,p)\,.
+    \]
+  Using the formula above for the composition of morphisms in the Grothendieck construction, we see that $\hat{l}((h,f);(k;g))$ is given by the thick dotted composite in Figure \ref{FigLHatFunctor}, while $\hat{l}(h,f);\hat{l}(k,g)$ is given by the thin composite.  
+  Therefore, these two are equal.
+  \begin{figure}
+    \[
+      \begin{tikzcd}[column sep=40pt]
+        l_a(m) \arrow[r, "l_a(f)"] \arrow[r, thick, dashed]
+          & l_a(F(h)(n)) \arrow[r, "(\mu_h)_n"] \arrow[d, "l_a(F(h)(g))"', thick, dashed]
+            & l_b(n) \arrow[d, "l_b(g)"] \\
+        %
+          & l_a(F(h)(F(k)(p))) \arrow[r, "(\mu_h)_{F(k)(p)}", dotted] \arrow[d, "l_a((m_{k,h})_p)"', thick, dashed]
+            & l_b(F(k)(p)) \arrow[d, "(\mu_k)_p"] \\
+        %
+          & l_a(F(k;h)(p)) \arrow[r, "(\mu_{k;h})_p", thick, dashed]
+            & l_c(p)
+      \end{tikzcd}
+      \]
+    \caption{Proof that $\hat{l}$ respects composition.  
+    The thick dotted line represents $\hat{l}((h,f);(k,g))$, while the thin solid line represents $\hat{l}(h,f);\hat{l}(k,g)$.  
+    The top square commutes because $\mu_h$ is a natural transformation, while the bottom is one of the conditions on a cocone.}
+    \label{FigLHatFunctor}
+  \end{figure}
+
+  Therefore, $\hat{l}$ is a functor.  
+  Moreover, if $a$ is an object of $\C$ and $m$ and object of $F(a)$, we have $\hat{l}(k_a(m))=\hat{l}(a,m)=l_a(m)$, and if $f\from m \to n$ is a morphism in $F(a)$, then $\hat{l}(k_a(f))$ is given by the composite
+  \[
+    l_a(m) \xrightarrow{l_a(f)}
+    l_a(n) \xrightarrow{l_a((e_a)_n)}
+    l_a(F(\id)(n)) \xrightarrow{(\mu_{\id})_n}
+    l_a(n)\,,
+    \]
+  which is equal to $l_a(f)$ by the cocone condition on $\mu$.
+  Therefore, $k_a;\hat{l}=l_a$ for each object $a$ of $\C$.
+
+  Lastly, if $h\from a \to b$ is a morphism in $\C$, then $\hat{l}((\nu_h)_m)=\hat{l}(h,\id_{F(h)(m)}) = (\mu_h)_m$, and so $\nu_hl = \mu_h$.  
+  This completes the existence part of the proof.
+
+  For uniqueness, suppose that $j$ is another functor $\pi_*\int F \to \D$ such that $k_a;j=l_a$ and $\nu_hj=\mu_h$ for each object $a$ of $\C$ and each morphism $h\from a \to b$ in $\C$.
+
+  Let $(a,m)$ be an object of $\pi_*\int F$.  
+  Then $j(a,m)=j(k_a(m))=l_a(m)=\hat{l}(a,m)$.  
+
+  Now let $(h,f)\from (a,m) \to (b,n)$ be a morphism in $\pi_*\int F$.  
+  We claim that we may decompose $(h,f)$ as the composite
+  \[
+    \begin{tikzcd}
+      (a,m) \arrow[d, "k_a(f)"'] \arrow[dr, "{(h,f)}"]
+        & \\
+      (a,F(h)(n)) \arrow[r, "(\nu_h)_n"']
+        & (b,n)
+    \end{tikzcd}\,.
+    \]
+  Indeed, if we work out what that composite is, then we get
+  \[
+    m \xrightarrow{f}
+    F(h)(n) \xrightarrow{(e_a)_n}
+    F(\id)(F(h)(n)) \xrightarrow{(m_{\id,h})_n}
+    F(\id;h)(n)\,,
+    \]
+  which is related to $(h,f)$ in $\int F$ by the $2$-cell $\lunit_h$ (since $F$ is a lax functor), and is therefore equal to $(h,f)$ in $\pi_*\int F$.
+
+  We therefore have
+  \[
+    j(h,f) = j(k_a(f);(\nu_h)_n) = j(k_a(f));j((\nu_h)_n) = l_a(f);(\mu_h)_n = \hat{l}(h, f)\,,
+    \]
+  and therefore $j=\hat{l}$.  
+\end{proof}
+
+\subsection{Examples of lax $2$-colimits in $\Cat$}
+
+Suppose that $M$ is a monad on a category $\C$, considered as a lax functor
+\[
+  F\from 1\to \Cat
+  \]
+such that $F(*)=\C$.
+
+If we apply the Grothendieck construction to $F$, then the category we get has pairs $(*,a)$ for objects, where $a$ ranges over the objects of $\C$, and the morphisms from $(*,a)$ to $(*,b)$ are morphisms $a \to F(\id)(b)$ in $\C$, where $F(\id)=M$.  
+In other words, $\int F$ is precisely the Kleisli category for $M$.
+In this case, Proposition \ref{PropGrotLaxLimit} reduces to Proposition \ref{pKleisli}.
+
+More generally, if $\X$ is a monoidal category and $F\from \BB \X \to \Cat$ is a lax functor, corresponding to a lax action of $\X$ upon $\C = F(*)$, then it is easy to see that $\pi_*\int F$ is isomorphic to the category $\C/\X$ that we defined earlier.  
+Indeed, in both cases the objects may be identified with the objects of $\C$, and the morphisms from an object $a$ to an object $b$ may be written as equivalence classes of morphisms $a \to x.b$ in $\C$ under the equivalence relation generated by relating $f\from a \to x.b$ to $g\from a \to y.b$ if there is a morphism $h\from x \to y$ in $\X$ such that $g=f;(h.b)$.
+
+In this case, we can recast Proposition \ref{PropGrotLaxLimit} to get a result about $\C/\X$.
+
+\begin{corollary}
+  Let $\blank.\blank$ be an action of a monoidal category $\X$ on a category $\C$.  
+  If we identify this action with a lax functor $F \from \BB \X \to \Cat$, then $\C/\X$ is the lax colimit of this functor.
+
+  In other words, there is a functor $J\from \C \to \C/\X$ and a natural transformation
+  \[
+    \phi_{x,a}\from J(x.a) \to Ja
+    \]
+  making the following diagrams commute
+  \begin{mathpar}
+    \begin{tikzcd}
+      J(x.y.a) \arrow[r, "{\phi_{x,y.a}}"] \arrow[d, "{J(m_{x,y,a})}"']
+        & J(y.a) \arrow[d, "{\phi_{y,a}}"] \\
+      J((x\tensor y).a) \arrow[r, "{\phi_{x\tensor y,a}}"]
+        & Ja
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      Ja \arrow[dr, "\id"] \arrow[d, "J(\lun_a)"']
+        & \\
+      J(I.a) \arrow[r, "{\phi_{I,a}}" xshift=-4pt]
+       & Ja
+    \end{tikzcd}\,,
+  \end{mathpar}
+  such that if $F\from \C \to \D$ is a functor and
+  \[
+    \psi_{x,a} \from F(x.a) \to Fa
+    \]
+   is a natural transformation making the following diagrams commute
+  \begin{mathpar}
+    \begin{tikzcd}
+      F(x.y.a) \arrow[r, "{\psi_{x,y.a}}"] \arrow[d, "{F(m_{x,y,a})}"']
+        & F(y.a) \arrow[d, "{\psi_{y,a}}"] \\
+      F((x\tensor y).a) \arrow[r, "{\psi_{x\tensor y,a}}"]
+        & Fa
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      Fa \arrow[dr, "\id"] \arrow[d, "F(\lun_a)"']
+        & \\
+      F(I.a) \arrow[r, "{\psi_{I,a}}" xshift=-4pt]
+       & Fa
+    \end{tikzcd}\,,
+  \end{mathpar}
+  then there is a unique functor $\hat{F}\from \C/\X\to \D$ such that $F=\hat{F}J$ and $\psi=\hat{F}\phi$.
+  \label{CorTheConstructionUniversalProperty}
+\end{corollary}
+
+Corollary \ref{CorTheConstructionUniversalProperty} tells us that $\C/\X$ is generated as a category by the objects and morphisms in $\C$, together with the special morphisms making up the natural transformation $\phi_{x,a}\from x.a \to a$.  
+
+This is significant, because it tells us that the category $\C/\X$ always satisfies a `factorization result' akin to those in \cite{SamsonGuyIAActive} and \cite{mcCHFiniteND}: if $f \from a \to b$ is a morphism in $\C/\X$, given by some morphism $\tilde{f}\from a \to x.b$ in $\C$, then we may write $f$ as the composite
+\[
+  a \xrightarrow{J(\tilde{f})} x.b \xrightarrow{\phi_{x,b}} b
+  \]
+in $\C$.  
+This means that if we have a definability result for the category $\C$ -- for example, that every compact morphism in $\C$ is definable in some language $\L$ -- then we can automatically get a definability result for the category $\C/\X$ -- for example, that every compact morphism in $\C/\X$ (i.e., every morphism $a\to b$ in $\C/\X$ that is given by a compact morphism $a \to x.b$ in $\C$) is definable in the language $\L + \Phi_{x,a}$, where $\Phi_{x,a}$ is a new family of primitives in the language whose denotations are given by the $\phi_{x,a}$.
+This is the same purpose that we used Proposition \ref{pKleisli} for when proving Theorem \ref{TheKleisliFullAbstraction}.
+
+\subsection{Finite products distribute over lax colimits in $\Cat$}
+
+The next result mirrors the result for distributivity of finite products over arbitrary colimits in a Cartesian closed category (essentially because the functor $A \times \blank$ is a left adjoint, so preserves colimits).
+
+\begin{proposition}
+  Let $F \from \C \to \Cat$ be a lax functor of bicategories.  
+  Let $\A$ be a category.
+  Then the lax colimit of $\A \times F$ (defined by $(\A \times F)(c) = \A \times F(c)$ and $(\A \times F)(f) = (\id,f)$) is given by the product of $\A$ with the lax colimit of $F$.
+  \label{PropGrotCommutesProducts}
+\end{proposition}
+\begin{proof}
+  It is easiest to compute the colimit of $\A \times F$ directly using Proposition \ref{PropGrotLaxLimit}. 
+  The objects are tuples $(c,(a,m))$, where $c$ is an object of $\C$, $a$ is an object of $a$ and $m$ is an object of $F(c)$.
+  $1$-cells from $(c',(a',m'))$ to $(c,(a,m))$ are given by pairs $(h,(q,f))$, where $h$ is a morphism $c \to c'$ in $\C$, $f$ is a morphism $a' \to F(h)(a)$ in $F(a')$ and $q$ is a morphism $a'\to a$ in $\A$.
+  Two $1$-cells $(h,(q,f))$ and $(h',(q',f'))$ from $(c',(a',m'))$ to $(c,(a,m))$ define equivalent morphisms if there is a $2$-cell $\phi\from h \Rightarrow h'$ such that $f;(F\phi)_m=f'$, and if $a'=a$.  
+
+  Meanwhile, the product of $\A$ with the lax colimit of $F$ has tuples $(a,(c,m))$ for objects, where $a$ is an object of $\A$, $c$ an object of $\C$ and $m$ an object of $F(c)$.
+  $1$-cells $(a',(c',m')) \to (a,(c,m))$ are given by tuples $(q,(h,f))$, where $q$ is a morphism $a' \to a$, $h$ is a morphism $c \to c'$ and $f$ is a morphism $m' \to F(h)(m)$.
+  Two $1$-cells $(q,(h,f))$ and $(q',(h',f'))$ from $(a',(c',m'))$ to $(a,(c,m))$ define equivalent morphisms if $a'=a$, and if there is a $2$-cell $\phi\from h\Rightarrow h'$ such that $f;(F\phi)_m=f'$. 
+  These two categories are clearly isomorphic.
+\end{proof}
+
+\begin{corollary}
+  Let $F\from \C\to\Cat$, $G\from \D \to \Cat$ be lax functors of bicategories.  
+  Then
+  \[
+    \laxcolim_{c\from\C,d\from\D} F(c)\times G(d) \cong \laxcolim_{c\from \C} F(c) \times \laxcolim_{d\from\D} G(d)\,.
+    \]
+  \label{CorGrotBothSidesProductPreservation}
+\end{corollary}
+\begin{proof}
+  By Proposition \ref{PropGrotCommutesProducts}, we have
+  \begin{IEEEeqnarray*}{Cl}
+    & \laxcolim_{c\from \C} F(c) \times \laxcolim_{d\from\D} G(d) \\
+    \cong &
+    \laxcolim_{c\from \C} (F(c) \times \laxcolim_{d\from\D} G(d)) \\
+    \cong &
+    \laxcolim_{c\from \C} \laxcolim_{d\from\D} (F(c)\times G(d)) \\
+    \cong  &
+    \laxcolim_{c\from\C,d\from\D} (F(c)\times G(d))\,.\qedhere
+  \end{IEEEeqnarray*}
+\end{proof}
+
+In the particular case of a bifunctor out of $\BB\X$, for $\X$ a monoidal category, we get the following.
+
+\begin{corollary}
+  Suppose we have actions of a monoidal category $\X$ on a category $\C$ and of a monoidal category $\YY$ on a category $\D$.
+  We get an action of $\X\times\YY$ on $\C\times \D$ by
+  \[
+    (x,y).(c,d) = (x.c,y.d)\,.
+    \]
+  Then
+  \[
+    (\C\times\D)/(\X\times\YY)\cong (\C/\X) \times (\D/\YY)\,.
+    \]
+  \label{CorQuotProductPreservation}
+\end{corollary}
+\begin{proof}
+  Since the $\C/\X$ construction is a special case of a lax colimit in $\Cat$, this is a direct application of Corollary \ref{CorGrotBothSidesProductPreservation} where we are using the fact that $\BB(\X\times\YY)\cong \BB\X \times \BB\YY$.
+\end{proof}
+
+\subsection{Monoidal structure of $\C/\X$}
+
+\begin{definition}
+  Suppose that $\X$ is a symmetric monoidal category acting on a monoidal category $\C$, and suppose moreover that the underlying functor $\X\times\C \to \C$ is a lax monoidal functor.  
+  
+  Then the functor $\X\times\X\times\C\to \C$ that sends $(x,y,a)$ to $x.y.a$ is lax monoidal.  
+  Since $\X$ is symmetric monoidal, the tensor product $\blank\tensor\blank\from \X \times\X \to \X$ is a strong monoidal functor and so the functor $\X \times \X \times \C \to \C$ that sends $(x,y,a)$ to $(x\tensor y).a$ is lax monoidal.
+
+  We say that the action of $\X$ on $\C$ is \emph{monoidal} if, in addition to the underlying functor $\X \times \C \to \C$ being monoidal, the natural transformations $m_{x,y,a}$ and $e_a$ are monoidal natural transformations.
+  \label{DefMonoidalLaxAction}
+\end{definition}
+
+\begin{example}
+  If $\X,\C$ are symmetric monoidal categories, where $\C$ is symmetric monoidal closed, and $j\from \X \to \C$ is an oplax symmetric monoidal functor, then the parametric reader monad action
+  \[
+    x.a = jx\implies a
+    \]
+  is a symmetric monoidal lax action of $\oppcat\X$ on $\C$.
+\end{example}
+
+\begin{remark}
+  This generalizes the definition of a monad being \emph{monoidal}; i.e., when the underlying functor $\C \to \C$ is a monoidal functor and the multiplication and unit for the monad are monoidal natural transformations.  
+  However, although a monoidal monad can be defined to be a monoid in the category of monoidal functors $\C \to \C$ and monoidal natural transformations between them, a monoidal parametric monad parameterized by a symmetric monoidal category $\X$ cannot be defined as a monoidal functor from $\X$ into this category.  
+  Indeed, that would mean we had a natural transformation
+  \[
+    x.a \tensor x.b \to x.(a\tensor b)\,,
+    \]
+  whereas we want to specify that there should be a natural transformation
+  \[
+    x.a \tensor y.b \to (x\tensor y).(a\tensor b)\,.
+    \]
+\end{remark}
+
+\begin{proposition}
+  Suppose that $\X$ is a symmetric monoidal category, and that we have a symmetric monoidal lax action of $\X$ on another monoidal category $\C$.  
+  Then $\C/\X$ inherits the structure of a monoidal category and the natural functor $J\from \C \to \C/\X$ is strict monoidal.
+\end{proposition}
+\begin{proof}
+  By taking the product of the action with itself, we get an action of $\X\times\X$ on $\C\times\C$; i.e., the action given by $(x,y).(a,b)=(x.a,y.b)$.  
+  Since $\X$ is symmetric monoidal, the tensor product functor $\X\times\X \to \X$ is strong monoidal, so by composing it with the action of $\X$ on $\C$ we get a lax action of $\X\times\X$ on $\C$; i.e., the action given by $(x,y).a = (x\tensor y).a$, with coherence $m_{(x,y),(x',y').a}$ given by
+  \[
+    (x\tensor y).(x'\tensor y').a \xrightarrow{m_{(x\tensor y),(x'\tensor y'),a}}
+    ((x\tensor y)\tensor (x'\tensor y')).a \to
+    ((x\tensor x')\tensor (y\tensor y')).a\,,
+    \]
+  where the last arrow is given by the unique symmetric monoidal isomorphism.
+
+  We claim that the functor $\blank\tensor\blank\from \C\times\C\to\C$ and the monoidal coherence
+  \[
+    m_{x,y,a,b} \from x.a \tensor y.b \to (x\tensor y).(a\tensor b)
+    \]
+  of the monoidal functor $\blank.\blank\from \X \times \C \to \C$ give rise to an oplax morphism from the action of $\X\times\X$ on $\C\times\C$ to the action of $\X\times\X$ on $\C$.
+
+  Indeed, the first diagram in Definition \ref{DefOplaxMorphismOfActions} in this case is given by
+  \[
+    \begin{tikzcd}
+      (x.y.a)\tensor(x'.y'.a') \arrow[r, "{m_{x,x',y.a,y'.a'}}"] \arrow[d, "{m_{x,y,a}\tensor m_{x',y',a'}}"']
+        & (x\tensor x').(y.a \tensor y'.a') \arrow[d, "{(x\tensor x').m_{y,y',a,a'}}"] \\
+      ((x\tensor y).a)\tensor ((x'\tensor y').a') \arrow[d, "{m_{x\tensor y,x'\tensor y',a,a'}}"']
+        & (x \tensor x').(y\tensor y').(a \tensor a') \arrow[d, "{m_{x\tensor x',y\tensor y',a\tensor a'}}"] \\
+      ((x\tensor y)\tensor (x'\tensor y')).(a\tensor a') \arrow[r]
+        & ((x \tensor x')\tensor (y \tensor y')) . (a \tensor a') \\
+    \end{tikzcd}\,,
+    \]
+  which is precisely the diagram saying that $m$ is a monoidal natural transformation.  
+  Similarly, the second diagram from Definition \ref{DefOplaxMorphismOfActions} is the same as the diagram saying that $e$ is a monoidal natural transformation.  
+
+  Therefore, by Proposition \ref{PropFunctorialityOfLaxColimits}, this lax morphism of actions gives rise to a functor
+  \[
+    (\C\times\C)/(\X\times\X) \to \C/(\X\times\X)\,.
+    \]
+  The lax monoidal functor $\X \times \X \to \X$ gives rise by Proposition \ref{PropHorizFunctorialityOfLaxColimits} to a functor $\C/(\X\times\X) \to \C/\X$, which we may compose with the functor above to give us a functor
+  \[
+    (\C\times\C)/(\X\times\X) \to \C/\X\,.
+    \]
+  Moreover, Corollary \ref{CorQuotProductPreservation} tells us that $(\C\times\C)/(\X\times\X)$ is isomorphic to $(\C/\X)\times(\C/\X)$, giving us our desired functor
+  \[
+    \blank\tensor\blank \from (\C/\X)\times(\C/\X) \to (\C/\X)\,.
+    \]
+  Moreover, the construction of this functor tells us that it commutes with the identity-on-objects functors out of the original categories:
+  \[
+    \begin{tikzcd}
+      \C \times \C \arrow[r, "\blank\tensor\blank"] \arrow[d, "J\times J"]
+        & \C \arrow[d, "J"] \\
+      (\C/\X)\times (\C/\X) \arrow[r, "\blank\tensor\blank"]
+        & \C/\X
+    \end{tikzcd}\,,
+    \]
+  which means that the functor $J$ preserves the tensor product.
+  This also means that we may lift the associators and unitors for the tensor product on $\C$ along the functor $J$ morphisms in $\C/\X$, and that these morphisms satisfy the appropriate coherence diagrams.
+  It remains to show that they are still natural transformations in $\C/\X$, which we do in Figure \ref{FigAssocUnitorNaturalTransformations}.
+  \begin{figure}
+    \begin{mathpar}
+      \begin{tikzcd}[column sep=100pt]
+        (a'\tensor b')\tensor c' \arrow[r, "{\assoc_{a',b',c'}}"] \arrow[d, "(f\tensor g)\tensor h"']
+          & a' \tensor (b'\tensor c') \arrow[d, "f\tensor(g\tensor h)"] \\
+        (x.a \tensor y.b) \tensor z.c \arrow[r, "{\assoc_{x.a,y.b,z.c}}"] \arrow[d, "{m_{x,y,a,b}\tensor z.c}"']
+          & x.a \tensor (y.b \tensor z.c) \arrow[d, "{x.a \tensor m_{y.b,z.c}}"] \\
+        ((x\tensor y).(a\tensor b)) \tensor z.c \arrow[d, "{m_{x\tensor y,z,a\tensor b,c}}"']
+          & x.a \tensor ((y\tensor z).(b\tensor c)) \arrow[d, "{m_{x,y\tensor z,a,b\tensor c}}"] \\
+        ((x\tensor y)\tensor z).((a \tensor b)\tensor c) \arrow[r, "{\assoc_{x,y,z}.\assoc_{a,b,c}}"]
+          & (x \tensor (y \tensor z)).(a \tensor (b \tensor c))
+      \end{tikzcd}
+      \and
+      \begin{tikzcd}
+        a' \arrow[r, "\lunit_{a'}"] \arrow[d, "f"']
+          & I \tensor a \arrow[d, "I\tensor f"] \\
+        x.a \arrow[r, "\lunit_{x.a}"] \arrow[d, "\lunit_x.\lunit_a"' description]
+          & I\tensor (x.a) \arrow[d, "e\tensor x.a"] \\
+        (I\tensor x).(I\tensor a)
+          & (I.I) \tensor (x.a) \arrow[l, "{m_{I,x,I,a}}"']
+      \end{tikzcd}
+      \and
+      \begin{tikzcd}
+        a' \arrow[r, "\runit_{a'}"] \arrow[d, "f"']
+          & a \tensor I \arrow[d, "f\tensor I"] \\
+        x.a \arrow[r, "\runit_{x.a}"] \arrow[d, "\runit_x.\runit_a"' description]
+          & (x.a)\tensor I \arrow[d, "x.a\tensor e"] \\
+        (x\tensor I).(a\tensor I)
+          & (x.a) \tensor (I.I) \arrow[l, "{m_{x,I,a,I}}"']
+      \end{tikzcd}
+    \end{mathpar}
+    \caption[Proof that the associators and unitors in $\C/\X$ are indeed natural transformations.]{Proof that the associators and unitors in $\C/\X$ are indeed natural transformations.  
+    Here, $f\from a'\to a$, $g\from b' \to b$, $h\from c'\to c$ are morphisms in $\C/\X$, considered as morphisms $a'\to x.a$, $b'\to y.b$, $c'\to z.c$ in $\C$.}
+    \label{FigAssocUnitorNaturalTransformations}
+  \end{figure}
+\end{proof}
+
+Having defined the monoidal structure on $\C/\X$ in a very formal way, let us unpack what it actually is.  
+The tensor product on objects is defined exactly as in $\C$, while the tensor product of morphisms $f\from a' \to a$, $g \from b' \to b$ (considered as morphisms $f \from a' \to x.a$, $g\from b'\to y.b$ in $\C$) is given by the composite
+\[
+  a'\tensor b' \xrightarrow{f\tensor g}
+  (x.a) \tensor (y.b) \xrightarrow{m_{x,y,a,b}}
+  (x\tensor y).(a\tensor b)\,,
+  \]
+where the right hand arrow is the multiplicative coherence for the monoidal functor $\blank.\blank\from \X \times \C \to \C$.
+
+The reason we need some kind of symmetry in $\X$ is for this to be a functor: indeed, suppose that we have morphisms $f' \from a'' \to a'$, $f \from a' \to a$, $g' \from b'' \to b'$ and $g \from b' \to b$ in $\C/\X$, considered as morphisms $f' \from a'' \to x'.a'$, $f \from a' \to x.a$, $g' \from b'' \to y'.b'$ and $g \from b' \to y'b$ in $\C$.  
+Then $(f'\tensor g');(f\tensor g)$ is given by the composite
+\begin{IEEEeqnarray*}{Cl}
+  & a'' \tensor b'' \\
+  \xrightarrow{\makebox[100pt]{$f'\tensor g'$}}
+  & (x'.a') \tensor (y'.b') \\
+  \xrightarrow{\makebox[100pt]{$m_{x',y',a',b'}$}}
+  & (x'\tensor y').(a'\tensor b') \\
+  \xrightarrow{\makebox[100pt]{$(x'\tensor y').(f\tensor g)$}}
+  & (x'\tensor y').((x.a)\tensor (y.b)) \\
+  \xrightarrow{\makebox[100pt]{$(x'\tensor y').m_{x,y,a,b}$}}
+  & (x' \tensor y').(x\tensor y).(a\tensor b) \\
+  \xrightarrow{\makebox[100pt]{$m_{x'\tensor y',x\tensor y,a\tensor b}$}}
+  & ((x'\tensor y')\tensor (x\tensor y)).(a\tensor b)\,,
+\end{IEEEeqnarray*}
+
+while $(f';f)\tensor (g';g)$ is given by
+\begin{IEEEeqnarray*}{Cl}
+  & a'' \tensor b'' \\
+  \xrightarrow{\makebox[100pt]{$f'\tensor g'$}}
+  & (x'.a') \tensor (y'.b') \\
+  \xrightarrow{\makebox[100pt]{$x'.f \tensor y'.g$}}
+  & (x'.x.a) \tensor (y'.y.b) \\
+  \xrightarrow{\makebox[100pt]{$m_{x',x,a} \tensor m_{y',y,b}$}}
+  & ((x'\tensor x).a) \tensor ((y'\tensor y).b) \\
+  \xrightarrow{\makebox[100pt]{$m_{x'\tensor x,y'\tensor y,a,b}$}}
+  & ((x' \tensor x) \tensor (y' \tensor y)) \tensor (a \tensor b)\,.
+\end{IEEEeqnarray*}
+
+Since $\X$ is symmetric, and since the natural transformation $m_{x,y,a}$ is a monoidal natural transformation with respect to the monoidal functor structure on $x.y.a$ and $(x\tensor y).a$, the natural symmetric monoidal coherence
+\[
+  ((x'\tensor y')\tensor (x\tensor y)) \toisom ((x' \tensor x) \tensor (y' \tensor y))
+  \]
+mediates between these two composites, so they give us the same morphism in $\C/\X$.
+
+\subsection{Symmetric monoidal structure of $\C/\X$}
+
+\begin{definition}
+  Let a symmetric monoidal category $\X$ act via a monoidal lax action on a monoidal category $\C$.  
+  If $\C$ is symmetric monoidal, then we say that the action of $\X$ on $\C$ is \emph{symmetric monoidal} if the underlying functor $\X \times \C \to \C$ is a symmetric monoidal functor.
+\end{definition}
+
+\begin{example}
+  If $j\from \X \to \C$ is a symmetric oplax monoidal functor, where $\C$ is symmetric monoidal closed, then the reader action of $\oppcat\X$ on $\C$ induced from $j$ is a symmetric monoidal lax action.
+\end{example}
+
+\begin{proposition}
+  Let a symmetric monoidal category $\X$ act via a symmetric monoidal lax action on a symmetric monoidal category $\C$.  
+  Then the category $\C/\X$ is symmetric monoidal.
+\end{proposition}
+\begin{proof}
+  As with the associators and unitors, we can lift the symmetry isomorphisms from $\C$ on to $\C/\X$, and these isomorphisms will satisfy the appropriate coherence diagrams.
+
+  We need only show that they are natural transformations in $\C/\X$.  
+  Let $f\from a' \to a$, $g\from b' \to b$ be morphisms in $\C/\X$, considered as morphisms $f\from a' \to x.a$, $g\from b' \to y.b$ in $\C$.  
+  Then we need show that the following diagram commutes.
+  \[
+    \begin{tikzcd}[column sep=80pt]
+      a'\tensor b' \arrow[r, "{\sym_{a',b'}}"] \arrow[d, "f\tensor g"']
+        & b' \tensor a' \arrow[d, "g\tensor f"] \\
+      (x.a)\tensor(y.b) \arrow[r, "{\sym_{x.a,y.b}}", dotted] \arrow[d, "{m_{x,y,a,b}}"']
+        & (y.b) \tensor (x.a) \arrow[d, "{m_{y,x,b,a}}"] \\
+      (x\tensor y).(a\tensor b) \arrow[r, "{\sym_{x,y}.\sym_{a,b}}"]
+        & (y \tensor x).(b\tensor a)
+    \end{tikzcd}
+    \]
+  Indeed, the top square commutes because $\sym$ is a natural transformation in $\C$, and the bottom square commutes because the action is a symmetric monoidal functor.
+\end{proof}
+
+\subsection{Symmetric monoidal closed structure of $\C/\X$}
+
+Let a symmetric monoidal category $\X$ act on a symmetric monoidal category $\C$ via a symmetric monoidal action.  
+Since any lax monoidal functor between monoidal closed categories is automatically lax monoidal closed, we might expect that in such a situation the category $\C/\X$ would be symmetric monoidal closed.
+
+In fact, this is not the case.  
+For example, suppose that $\X$ is the unit monoidal category, and that $\X$ acts on the category of sets via the powerset monad.  
+Then the category $\Set/\X$ is the Kleisli category for the powerset monad -- i.e., the category of sets and relations.  
+
+Since the powerset functor is lax monoidal, it induces a monoidal structure on the Kleisli category -- i.e., the familiar Cartesian product.  
+Indeed, the category of sets and relations \emph{is} monoidal closed under this choice of monoidal product, but the internal hom functor is also given by the Cartesian product, and does not agree with the function space functor on the original category of sets.
+
+In fact, we can obtain a result for monoidal closedness of $\C/\X$, but under different conditions.  
+Only $\C$ needs to be monoidal closed, but the action of $\X$ must preserve the internal hom strictly.
+
+\begin{definition}
+  Let a symmetric monoidal category $\X$ act on a symmetric monoidal closed category $\C$ via a symmetric monoidal lax action.
+  We say that the action is \emph{symmetric monoidal closed} if there is a natural isomorphism
+  \[
+    s_{x,a,b} \from a\implies (x.b) \toisom x.(a\implies b)
+    \]
+  that makes the following diagram commute for any object $x$ of $\X$ and any objects $a,b$ of $\C$.
+  \[
+    \begin{tikzcd}[column sep=50pt]
+      (x.(a\implies b)) \tensor (I.a) \arrow[r, "{m_{x,I,a\implies b,a}}"]
+        & (x \tensor I).((a\implies b)\tensor a) \arrow[d, "{\runit\inv\tensor \ev_{a,b}}"] \\
+      (a \implies x.b)\tensor a \arrow[u, "{s_{x,a,b}\tensor e_a}"] \arrow[r, "{\ev_{a,x.b}}"]
+        & x.b
+    \end{tikzcd}
+    \]
+  \label{DefSymmetricMonoidalClosedAction}
+\end{definition}
+
+\begin{example}
+  If $j$ is an oplax symmetric monoidal functor from a symmetric monoidal category $\X$ to a symmetric monoidal closed category $\C$, then the reader action of $\oppcat X$ on $\C$ induced by $j$ is symmetric monoidal closed, via the isomorphism
+  \[
+    (jx \implies b) \cong jx \implies (a \implies b)\,.
+    \]
+\end{example}
+
+\begin{proposition}
+  Suppose that a symmetric monoidal category $\X$ acts on a symmetric monoidal closed category $\C$ via a symmetric monoidal closed action.  
+  Then the category $\C/\X$ is symmetric monoidal closed.
+\end{proposition}
+\begin{proof}
+  Given objects $a,b$ of $\C$, we define $a\implies b$ in $\C/\X$ to be the same as $a\implies b$ in $\C$, and we define
+  \[
+    \ev_{a,b} = J(\ev_{a,b}) \from (a\implies b)\tensor a \to b\,,
+    \]
+  to be given by the same morphism as in $\C$.
+
+  Let $f \from c \tensor a \to b$ be a morphism in $\C/\X$.  
+  It is necessary and sufficient to show that there is a unique morphism
+  \[
+    h \from c \to a \implies b
+    \]
+  in $\C/\X$ such that $f = (h\tensor a);\ev_{a,b}$.
+
+  Suppose that $f$ is given by a morphism
+  \[
+    \hat{f} \from c \tensor a \to x.b
+    \]
+  in $\C$.  
+  This then induces a morphism
+  \[
+    \tilde{f} = W(\hat{f}) \from c \to (a \implies x.b)\,,
+    \]
+  which we can compose with $s_{x,a,b}\inv$ to give us a morphism
+  \[
+    \hat{h} = W(\hat{f});s_{x,a,b} \from c \to x.(a\implies b)\,,
+    \]
+  which we may consider as a morphism $h\from c \to (a\implies b)$ in $\C/\X$.  
+  We claim that $(h\tensor a);\ev_{a,b}=f$; indeed, the composite $(h\tensor \id_a);\ev_{a,b}$ is given in $\C$ by the composite
+  \[
+    \begin{tikzcd}[column sep=50pt]
+      %
+        & (x.(a\implies b)) \tensor (I.a) \arrow[r, "{m_{x,I,a\implies b,a}}"]
+          & (x \tensor I).((a\implies b)\tensor a) \arrow[d, "{\id_{x\tensor I}\tensor \ev_{a,b}}"] \\
+      c \tensor a \arrow[r, "\tilde{f}\tensor a"]
+        & (a \implies x.b)\tensor a \arrow[u, "{s_{x,a,b}\tensor e_a}"]
+          & (x\tensor I).b
+    \end{tikzcd}\,.
+    \]
+  Using the diagram in Definition \ref{DefSymmetricMonoidalClosedAction}, we see that this is equal to the composite
+  \[
+    c\tensor a \xrightarrow{\tilde{f}\tensor a}
+    (a \implies x.b) \tensor a \xrightarrow{\ev_{a,x.b}}
+    x.b \xrightarrow{\runit_x.b}
+    (x\tensor I).b\,.
+    \]
+  The composite of the first two morphisms is equal to $\hat{f}$, and so the whole thing defines the same morphism as $f$ in $\C/\X$ (using the equivalence relation on morphisms).
+
+  Now suppose that $h\from c \to a\implies b$ is a morphism in $\C/X$, given by a morphism $\hat{h} \from c \to x.(a\implies b)$ in $\C$.
+  Let $f \from c \tensor a \to b$ be given by the morphism
+  \[
+    \hat{f} = W\inv(\hat{h};s_{x,a,b}\inv)\,.
+    \]
+  Then $h$ may be recovered from $f$ just as in the first part of this proof, and the equation $f = (h\tensor a);\ev_{a,b}$ determines $f$.  
+  It follows that the choice of $h$ is unique.
+\end{proof}
+
+\subsection{Cartesianness of the monoidal structure}
+
+Suppose that a symmetric monoidal category $\X$ acts via a symmetric monoidal action on a Cartesian category $\C$.  
+In this section we will consider what properties of the action we need in order to ensure that the induced monoidal structure on $\C/\X$ is Cartesian.
+
+Since $\C$ is Cartesian, the diagonal map in $\C$ gives every object a natural comonoid structure:
+\[
+  a \xrightarrow{\Delta_a} a \times a\,.
+  \]
+Since the tensor product of objects in $\C/\X$ is given by the same object as in $\C$, we can lift this comonoid structure through the functor $J$ to give us a natural comonoid structure on each object of $\C/\X$:
+\[
+  a \xrightarrow{J\Delta_a} a \tensor a\,.
+  \]
+We use the symbol $\tensor$ rather than $\times$ in $\C/\X$, since this is not necessarily a category-theoretic product.
+
+If every morphism $f\from a \to b$ in $\C/\X$ is a comonoid homomorphism with respect to this comonoid structure; i.e., if it makes the diagram
+\[
+  \begin{tikzcd}
+    a \arrow[r, "f"] \arrow[d, "J\Delta_a"']
+      & b \arrow[d, "J\Delta_b"] \\
+    a \tensor a \arrow[r, "f\tensor f"]
+      & b \tensor b
+  \end{tikzcd}
+  \]
+commute, then we may identify $\C/\X$ with a full subcategory of its own category of comonoids, closed under tensor product.  
+Since the category of comonoids in a monoidal category is automatically Cartesian, this will tell us that $\C/\X$ is Cartesian.  
+
+What does it mean for every morphism in $\C/\X$ to be a comonoid homomorphism?  
+Firstly, since $\C$ itself is Cartesian, every morphism in $\C$ is a comonoid homomorphism with respect to the diagonal, and it follows that every morphism of the form $Jf \from a \to b$ (where $f\from a \to b$ is a morphism in $\C$) is a comonoid homomorphism in $\C/\X$.  
+Since every morphism in $\C/\X$ may be written as the composite of a morphism of the form $Jf$ with a morphism of the form $\phi_{x,b}$, it will suffice to show that the morphisms of the form $\phi_{x,a}$ are comonoid homomorphisms in $\C/\X$; i.e., that they make the following diagram commute.
+\[
+  \begin{tikzcd}[column sep=40pt]
+    x.a \arrow[r, "{\phi_{x,a}}"] \arrow[d, "J\Delta_{x.a}"']
+      & a \arrow[d, "J\Delta_a"] \\
+    x.a \tensor x.a \arrow[r, "{\phi_{x,a}\tensor\phi_{x,a}}"]
+      & a \tensor a
+  \end{tikzcd}
+  \]
+Let us compute the two arms of this square directly in $\C$.  
+The composite along the top right is given in $\C$ by the morphism
+\[
+  x.a \xrightarrow{x.\Delta_a}
+  x.(a\times a)\,,
+  \]
+while that along the bottom right is given by the composite
+\[
+  x.a \xrightarrow{\Delta_{x.a}}
+  x.a \times x.a \xrightarrow{m_{x,x,a,a}}
+  (x\tensor x) . (a \times a)\,.
+  \]
+Then a sufficient condition for these two morphisms to be equal in $\C/\X$, and therefore for the category $\C/\X$ to be Cartesian, is that for every object $x$ of $\X$ there should be a morphism $f \from x \to x\tensor x$ that makes the following diagram commute.
+\[
+  \begin{tikzcd}
+    x.a \arrow[dr, "f.\Delta_a"] \arrow[d, "\Delta_{x.a}"']
+      & \\
+    x.a \times x.a \arrow[r, "{m_{x,x,a,a}}"]
+      & (x\tensor x). (a\times a)
+  \end{tikzcd}
+  \]
+If $\X$ itself is Cartesian, then we have a natural choice of morphism $x \to x \times x$, but choosing $f$ to be the diagonal map does not automatically make the diagram above commute.  
+For example, the Cartesian product is not the category-theoretic product in the category of sets and relations, even though this category is the Kleisli category for the symmetric monoidal monad $\powerset \from \Set \to \Set$, and may be identified with the category $\Set/1$, where $1$ and $\Set$ are both Cartesian.  
+In this case, the diagram
+\[
+  \begin{tikzcd}
+    \powerset(A) \arrow[dr, "\powerset(\Delta_A)"] \arrow[d, "\Delta_{\powerset(A)}"']
+      & \\
+    \powerset(A) \times \powerset(A) \arrow[r, "{m_{A,A}}" xshift=-3pt]
+      & \powerset(A \times A)
+  \end{tikzcd}
+  \]
+does not commute, the arrow at the top right sending a set $X\subseteq A$ to the set $\{(x,x) \suchthat x \in X\}$ while the composite at the bottom left sends $X$ to the set $\{(x,y)\suchthat x,y\in X\}$.
+
+An alternative sufficient condition for $\C/\X$ to be Cartesian is for the morphism mediating between the two arms of the square to go in the other direction.  
+In this case, we require that for each object $x$ of $\X$ there should be a morphism $g \from x\tensor x \to x$ that makes the following diagram commute.
+\[
+  \begin{tikzcd}
+    x.a \arrow[r, "x.\Delta_a"] \arrow[d, "\Delta_{x.a}"']
+      & x.(a\times a) \\
+    x.a \times x.a \arrow[r, "{m_{x,x,a,a}}"]
+      & (x \tensor x).(a \times a) \arrow[u, "g.(a\times a)"']
+  \end{tikzcd}
+  \]
+This will be particularly useful for reader actions.  
+Indeed, suppose that $j\from \X \to \C$ is an oplax symmetric monoidal functor between symmetric monoidal categories, where $\C$ is Cartesian closed.  
+The functor $j$ induces a reader action of $\oppcat\X$ on $\C$ (i.e., $x.a = jx \to a$), and we want the category $\C/\oppcat\X$ to be Cartesian.  
+For this, it will be sufficient to find, for each object $x$ of $\X$, a morphism $f \from x \to x\tensor x$ such that the following diagram commutes.
+\[
+  \begin{tikzcd}
+    jx \to a \arrow[rr, "jx \to \Delta_a"] \arrow[d, "\Delta_{jx \to a}"']
+      &[-10pt]
+        &[+10pt] jx \to (a \times a) \\
+    (jx \to a) \times (jx \to a) \arrow[r]
+      & (jx \times jx) \to (a \times a) \arrow[r, "m^j_x \to (a\times a)"]
+        & j(x\tensor x) \to (a \times a) \arrow[u, "jf \to (a \times a)"']
+  \end{tikzcd}
+  \]
+For this to commute, it is sufficient that $jf$ should be equal to the following composite.
+\[
+  jx \xrightarrow{\Delta_{jx}}
+  jx \times jx \xrightarrow{m^j_{x,x}}
+  j(x \tensor x)\,.
+  \]
+We have proved:
+
+\begin{theorem}
+  Let $j\from \X \to \C$ be an oplax symmetric monoidal functor between symmetric monoidal categories, where $\C$ is Cartesian closed.  
+  Then $j$ induces a reader action of $\oppcat\X$ on $\C$, and the category $\C/\oppcat \X$ is symmetric monoidal closed.
+
+  Suppose that for every object $x$ of $\X$, there is a morphism $f \from x \to x\tensor x$ in $\X$ such that $jf=\Delta_{jx};m^j_{x,x}$.  
+  Then $\C/\oppcat \X$ is Cartesian closed.
+  \label{TheCartesianClosedCx}
+\end{theorem}
+
+In the next section, we will investigate a class of reader actions, and give a more concrete property for the category $\C/\oppcat\X$ to be Cartesian closed.
+
+\section{Reader actions on $\Set$}
+
+\subsection{Colimits of actions are monoidal functors}
+
+\begin{proposition}
+  Let $\C$ be a cocomplete monoidal category, and suppose that a symmetric monoidal category $\X$ acts on $\C$ via a symmetric monoidal action in the sense of Definition \ref{DefMonoidalLaxAction}.  
+  Define a functor $\C \to \C$ by
+  \[
+    F a = \colim_{x\from \X} x.a\,.
+    \]
+  Then $F$ is a lax monoidal functor.
+  \label{PropColimitOfActionIsMonoidalFunctor}
+\end{proposition}
+\begin{proof}
+  We have morphisms
+  \begin{IEEEeqnarray*}{Cl}
+    & \colim_{x \from \X} x.a \tensor \colim_{y\from \X} y.b \\
+    \to & \colim_{x,y \from \X} x.a \tensor y.b \\
+    \to & \colim_{x,y \from \X} (x\tensor y).(a \tensor b) \\
+    \hookrightarrow & \colim_{z \from \X} z.(a\tensor b)\,.
+  \end{IEEEeqnarray*}
+  and
+  \[
+    1 \xrightarrow{e}
+    I.1 \hookrightarrow
+    \colim_{x\from \X} x.1\,.
+    \]
+  Figures \ref{FigColimMonoidalMultiplicative} and \ref{FigColimMonoidalUnital} show that these satisfy the coherence conditions for a monoidal functor.
+  \begin{SidewaysFigure}
+    \begin{mathpar}
+      \begin{tikzcd}[ampersand replacement=\&]
+        %
+        \&[-20pt] \left(\colim_{x\from \X}\limits x.a \tensor \colim_{y\from \X}\limits y.b\right) \tensor \colim_{z \from \X}\limits z.c \arrow[r, "\assoc" yshift=5pt] \arrow[d]
+            \&[-20pt] \colim_{x \from \X}\limits x.a \tensor \left(\colim_{y\from \X}\limits y.b \tensor \colim_{z \from \X}\limits z.c \right) \arrow[d]
+              \&[-20pt] \\
+        %
+          \& \left(\colim_{x,y\from \X}\limits x.a \tensor y.b\right) \tensor \colim_{z \from \X}\limits z.c \arrow[d]
+            \& \colim_{x\from \X}\limits x.a \tensor \left(\colim_{y,z \from \X}\limits (y.b \tensor z.c)\right) \arrow[d]
+              \& \\
+        %
+          \& \colim_{x,y,z \from \X}\limits (x.a \tensor y.b) \tensor z.c \arrow[r, "\Colim\assoc"] \arrow[d, "{\Colim m_{x,y,a,b}\tensor z.c}"']
+            \& \colim_{x,y,z \from \X}\limits x.a \tensor (y.b \tensor z.c) \arrow[d, "{\Colim x.a \tensor m_{y,z,b,c}}"]
+              \& \\
+        \colim_{t,z\from \X}\limits t.(a \tensor b) \tensor z.c \arrow[d, "{\Colim m_{t,z,a\tensor b,c}}"']
+          \& \colim_{x,y,z \from \X}\limits (x\tensor y).(a \tensor b) \tensor z.c \arrow[d, "{\Colim m_{x\tensor y,z,a\tensor b,c}}"'] \arrow[l, hookrightarrow]
+            \& \colim_{x,y,z \from \X}\limits x.a \tensor (y\tensor z).(b\tensor c) \arrow[d, "{\Colim m_{x,y\tensor z,a,b\tensor c}}"] \arrow[r, hookrightarrow]
+              \& \colim_{x,t\from \X}\limits x.a \tensor t.(b\tensor c) \arrow[d, "{\Colim m_{x,t,a,b\tensor c}}"] \\
+        \colim_{t,z\from \X}\limits (t\tensor z).((a \tensor b)\tensor c) \arrow[d, hookrightarrow]
+          \& \colim_{x,y,z\from\X}\limits ((x\tensor y) \tensor z).((a \tensor b) \tensor c) \arrow[r, "\Colim\assoc.\assoc" yshift=5pt] \arrow[l, hookrightarrow]
+            \& \colim_{x,y,z\from\X}\limits (x \tensor (y\tensor z)).(a \tensor (b \tensor c)) \arrow[r, hookrightarrow]
+              \& \colim_{x,t\from \X}\limits (x \tensor t).(a \tensor (b \tensor c)) \arrow[d, hookrightarrow] \\
+        \colim_{u\from \X}\limits u.((a\tensor b) \tensor c) \arrow[rrr, "\Colim u.\assoc"]
+          \&
+            \&
+              \& \colim_{u\from \X}\limits u.(a \tensor (b\tensor c))
+      \end{tikzcd}
+    \end{mathpar}
+    \caption[Proof that the colimit of a monoidal action satisfies the multiplicative criterion for being a monoidal functor.]
+    {Proof that $\colim_{x\from \X} x.a$ satisfies the multiplicative criterion for being a monoidal functor.  
+    The bottom hexagon is the multiplicative coherence for $\blank.\blank$ as a monoidal functor, after applying the colimit.}
+    \label{FigColimMonoidalMultiplicative}
+  \end{SidewaysFigure}
+  \begin{figure}
+    \begin{mathpar}
+      \begin{tikzcd}
+        %
+          & |[alias=Z]| \colim_{z\from \X}\limits z.(1 \tensor a)
+            &[-20pt] \\
+        |[alias=Y]| \colim_{y\from \X}\limits y.a \arrow[r, "\Colim\lunit.\lunit" yshift=2pt] \arrow[ur, "\Colim \id.\lunit", from=Y.north, to=Z.west, bend left=20] \arrow[d, "\Colim\lunit" description] \arrow[dd, "\lunit"', bend right=60]
+          & \colim_{y\from \X}\limits (I \tensor y).(1\tensor a) \arrow[r, hookrightarrow] \arrow[u, hookrightarrow]
+            & |[alias=X]| \colim_{x,y\from \X}\limits (x \tensor y).(1 \tensor a) \arrow[ul, hookrightarrow, from=X.north, to=Z.east, bend right=20] \\
+        \colim_{y\from \X}\limits 1 \tensor y.a \arrow[r, "\Colim e \tensor \id"]
+          & \colim_{y \from \X}\limits I.1 \tensor y.a \arrow[u, "{\Colim m_{I,y,1,a}}" description] \arrow[r, hookrightarrow]
+            & \colim_{x,y\from\X}\limits x.1 \tensor y.a \arrow[u, "{\Colim m_{x,y,1,a}}"'] \\
+        1 \tensor \colim_{y \from \X}\limits y.a \arrow[u, Sim] \arrow[r, "e \tensor \id"]
+          & I.1 \tensor \colim_{y \from \X}\limits y.a \arrow[u, Sim] \arrow[r, hookrightarrow]
+            & \colim_{x\from \X}\limits x.1 \tensor \colim_{y\from 1} y.a \arrow[u]
+      \end{tikzcd}
+      \and
+      \begin{tikzcd}
+        %
+          & |[alias=Z]| \colim_{z\from \X}\limits z.(a \tensor 1)
+            &[-20pt] \\
+        |[alias=Y]| \colim_{x\from \X}\limits x.a \arrow[r, "\Colim\runit.\runit" yshift=2pt] \arrow[ur, "\Colim \id.\runit", from=Y.north, to=Z.west, bend left=20] \arrow[d, "\Colim\runit" description] \arrow[dd, "\runit"', bend right=60]
+          & \colim_{x\from \X}\limits (x \tensor I).(a\tensor 1) \arrow[r, hookrightarrow] \arrow[u, hookrightarrow]
+            & |[alias=X]| \colim_{x,y\from \X}\limits (x \tensor y).(a \tensor 1) \arrow[ul, hookrightarrow, from=X.north, to=Z.east, bend right=20] \\
+        \colim_{x\from \X}\limits x.a \tensor 1 \arrow[r, "\Colim \id \tensor e"]
+          & \colim_{x \from \X}\limits x.a \tensor I.1 \arrow[u, "{\Colim m_{x,I,a,1}}" description] \arrow[r, hookrightarrow]
+            & \colim_{x,y\from\X}\limits x.a \tensor y.1 \arrow[u, "{\Colim m_{x,y,a,1}}"'] \\
+        \left(\colim_{x \from \X}\limits x.a\right) \tensor 1 \arrow[u, Sim] \arrow[r, "\id \tensor e"]
+          & \left(\colim_{x \from \X}\limits x.a\right)\tensor I.a \arrow[u, Sim] \arrow[r, hookrightarrow]
+            & \colim_{x\from \X}\limits x.a \tensor \colim_{y\from 1} y.1 \arrow[u]
+      \end{tikzcd}
+    \end{mathpar}
+    \caption[Proof that the colimit of a monoidal action satisfies the unital criteria for being a monoidal functor.]
+    {Proof that $\colim_{x\from \X} x.a$ satisfies the unital criteria for being a monoidal functor.  
+    The top-right squares are the unital coherence for $\blank.\blank$ as a monoidal functor, after applying the colimit.}
+    \label{FigColimMonoidalUnital}
+  \end{figure}
+\end{proof}
+
+\begin{proposition}
+  If $\C$ is a cocomplete symmetric monoidal category and the action of $\X$ on $\C$ is symmetric monoidal, then
+  \[
+    \colim_{x\from \X} x.\blank
+    \]
+  is a symmetric monoidal functor.
+\end{proposition}
+\begin{proof}
+  We have a commutative diagram
+  \[
+    \begin{tikzcd}
+      \colim_{x\from \X}\limits x.a \tensor \colim_{y\from \X} y.b \arrow[r, "\sym"] \arrow[d]
+        & \colim_{y\from \X}\limits y.b \tensor \colim_{x\from \X}x.a \arrow[d] \\
+      \colim_{x,y\from \X}\limits x.a \tensor y.b \arrow[r, "\Colim\sym"] \arrow[d, "{\Colim m_{x,y,a,b}}"']
+        & \colim_{x,y\from \X}\limits y.b \tensor x.a \arrow[d, "{\Colim m_{y,x,b,a}}"] \\
+      \colim_{x,y\from \X}\limits (x\tensor y).(a\tensor b) \arrow[r, "\Colim sym.sym"] \arrow[d, hookrightarrow]
+        & \colim_{x,y \from \X}\limits (y \tensor x).(b\tensor a) \arrow[d, hookrightarrow] \\
+      \colim_{z \from \X}\limits z.(a \tensor b) \arrow[r, "\Colim \id.\sym"]
+        & \colim_{z\from \X}\limits z.(b\tensor a)
+    \end{tikzcd}\,.
+    \]
+  Here, commutativity of the middle square is by applying the colimit to the diagram for $\blank.\blank$ to be a symmetric monoidal functor.
+\end{proof}
+
+\subsection{Reader actions on $\Set$ vs change of base}
+
+For our next result, we will go via the \Mellies category.  
+First, we need a standard result about the Day convolution product.
+
+\begin{proposition}[\cite{Pisani}]
+  Let $\X,\YY$ be a monoidal category and let $[\YY,\Set]$ be equipped with the Day convolution product.  
+  Then a lax monoidal functor $\X \times \YY \to \Set$ is the same thing (via currying) as a lax monoidal functor $\X \to [\YY,\Set]$.
+\end{proposition}
+
+In particular, if $\X$ acts on the category of sets via a monoidal action, then it gives rise to a functor $\Set \to [\X,\Set]$.
+
+\begin{proposition}
+  Let $j \from \X \to \Set$ be an oplax symmetric monoidal functor between symmetric monoidal categories.
+  Let $\oppcat\X$ act on $\Set$ via the reader action induced by $j$.
+  Then the \Mellies category $\Mell_{\oppcat\X}\Set$ is isomorphic to the category obtained via base change along the action regarded as a functor
+  \[
+    \blank.\blank\from \Set \to [\X,\Set]\,.
+    \]
+  \label{PropMelliesVsBaseChange}
+\end{proposition}
+\begin{proof}
+  The objects of both categories are sets.  
+  The morphism objects in the \Mellies category are given by
+  \[
+    \Mell_\X\Set(A,B)(x) = [A,[jx,B]]\,,
+    \]
+  while those in the base-changed category are given by
+  \[
+    (\blank.\blank)_*\Set(A,B)(x) = [jx, [A,B]]\,,
+    \]
+  and these may be related by the symmetry isomorphism
+  \[
+    s_{jx,A,B} \from [A,[jx,B]] \to [jx, [A,B]]\,.
+    \]
+  We need to show that this preserves composition of morphisms.  
+  Recall that composition in the \Mellies category is given by
+  \begin{IEEEeqnarray*}{Cl}
+    & \int^{y,z} [A,[jy,B]] \times [B,[jz,C]] \times \X(y\tensor z,x) \\
+    \to &
+    \int^{y,z} [A,[j(y\tensor z),C]]\times \X(y\tensor z,x) \\
+    \cong &
+    [A,[jx,C]]\,,
+  \end{IEEEeqnarray*}
+  where the first arrow is induced via the \Mellies composition, while composition in the base changed category is given by
+  \begin{IEEEeqnarray*}{Cl}
+    &\int^{y,z}[jy,[A,B]] \times [jz,[B,C]] \times \X(y\tensor z,x) \\
+    \xrightarrow{\makebox[146pt]{$\int^{y,z} m_{jy,jz,[A,B],[B,C]}\times \X(y\tensor z,x)$}} &
+    \int^{y,z}[jy \times jz,[A,B]\times [B,C]] \times \X(y,\tensor z,x) \\
+    \xrightarrow{\makebox[146pt]{$\int^{y,z} [m^j_{y,z}, ;] \times \X(y\tensor z,x)$}} &
+    \int^{y,z}[j(y \tensor z),[A,C]]\times \X(y\tensor z,x) \\
+    \cong & 
+    [jx,[A,C]]\,.
+  \end{IEEEeqnarray*}
+  where $;$ is the internal composition in $\Set$.
+
+  Using the diagram in Figure \ref{FigMelliesVsBaseChange}, we see that the expressions inside the coends are related by the symmetry isomorphisms as follows.
+  \[
+    \begin{tikzcd}[column sep=30pt]
+      {[A,[jy,B]] \times [B,[jz,C]]} \arrow[r, "\text{\Mellies}" xshift=-2pt] \arrow[d, "{s_{jx,A,B}\times s_{jy,B,C}}"']
+        & {[A,[j(y\tensor z),C]]} \arrow[d, "{s_{j(x\tensor y)},A,C}"] \\
+      {[jy,[A,B]]\times [jz,[B,C]]} \arrow[r, "\text{B.c.}"]
+        & {[j(y \tensor z),[A,C]]}
+    \end{tikzcd}
+    \]
+  \begin{SidewaysFigure}
+    \[
+      \begin{tikzcd}[ampersand replacement=\&, column sep=73pt, row sep=20pt]
+        {[A,[jy,B]] \times [B,[jz,C]]} \arrow[d, "{[A,[jy,B]] \times L_{B,[jz,C]}^{jy}}"', thick, dashed] \arrow[r, "{s_{y,A,B}\times s_{z,B,C}}", dotted]
+          \& {[jy,[A,B]] \times [jz,[B,C]]} \arrow[d, "{m_{jy,jz,[A,B],[A,C]}}"]
+            \& \\
+        {[A,[jy,B]] \times [[jy,B],[jy,[jz,C]]]} \arrow[d, "{[A,[jy,B]]\times[[jy,B],W\inv]}"', thick, dashed]
+          \& |[alias=Z]| {[jy \times jz,[A,B]\times[B,C]]} \arrow[d, "{[jy\times jz,;]}", dotted] \arrow[dr, "{[m_{y,z},;]}", bend left=17.5, from=Z.east]
+            \& \\
+        {[A,[jy,B]]} \times [[jy,B],[jy\times jz,C]] \arrow[d, ";"', thick, dashed]
+          \& {[jy \times jz,[A,C]]} \arrow[r, "{[m_{y,z},[A,C]]}", dotted]
+            \& {[j(y\tensor z),[A,C]]} \\[51pt]
+        {[A,[jy \times jz,C]]} \arrow[ur, "{s_{jy\times jz,A,C}}", dotted] \arrow[r, "{[A,[m_{y,z},C]]}", thick, dashed]
+          \& {[A,[j(y\tensor z),C]]} \arrow[ur, "{s_{j(y\tensor z),A,C}}", dotted]
+            \&
+      \end{tikzcd}
+      \]
+      \caption[Proof that \Mellies composition agrees with base-changed composition in the case of a symmetric reader action on $\Set$.]%
+      {Proof that \Mellies composition agrees with base-changed composition in the case of a symmetric reader action on $\Set$.  
+      The \Mellies composition is given by the thick dashed arrows, while the composition in the base-changed category is given by the thin arrows.
+      The dotted lines at the top and at the bottom right -- given by the symmetry isomorphisms -- mediate between the two.
+      We can verify that the main heptagon commutes by directly computing each direction: in each case, a pair $\langle f,g\rangle$ of functions is sent to the function $h \from A \to {[jy\times jz,C]}$ given by
+      \[
+        h(a)(Y,Z) = g(f(a)(Y))(Z)\,.
+        \]}
+      \label{FigMelliesVsBaseChange}
+  \end{SidewaysFigure}
+  It follows that the functor induced by $s$ is an isomorphism of $[\X,\Set]$-enriched categories.
+\end{proof}
+
+By applying base change along the colimit functor to both these categories, we get the following.
+
+\begin{corollary}
+  Let $j\from \X \to \Set$ be a symmetric monoidal functor.  
+  Let $\oppcat\X$ act on $\Set$ via the induced reader action.  
+  Then the category $\Set/\oppcat\X$ is isomorphic to the category obtained from $\Set$ by base change along the functor
+  \[
+    \colim_{x\from \X} x.\blank \from \Set \to \Set\,.
+    \]
+  \label{CorCxVsBaseChange}
+\end{corollary}
+
+Thus, the theory of reader actions on $\Set$ is subsumed into the theory of base change in $\Set$ along monoidal functors $\Set \to \Set$.
+
+\subsection{From monoidal endofunctors on $\Set$ to reader actions}
+
+We can get a result in the other direction; i.e., a kind of converse to Proposition \ref{PropColimitOfActionIsMonoidalFunctor} in the case of reader actions on $\Set$.
+
+\begin{proposition}
+  Let $F \from \Set \to \Set$ be a lax symmetric monoidal functor.  
+  Then there is a symmetric monoidal category $\X$ and an oplax monoidal functor $j\from \X \to \Set$ such that for all sets $A$, we have
+  \[
+    FA \cong \colim_{x \from \X} [jx,A]\,,
+    \]
+  and the monoidal coherences of $F$ arise from the reader action of $\oppcat\X$ on $\Set$ as in Proposition \ref{PropColimitOfActionIsMonoidalFunctor}.
+  \label{PropMonoidalFunctorIsColimitOfReaderAction}
+\end{proposition}
+\begin{proof}
+  Consider $F$ as a pseudofunctor $\Set \to \Cat$, and let $\X=\oppcat{\left(\int F\right)}$ be the opposite of its Grothendieck construction.  
+  Since $\Set$ is an ordinary category, so is $\X$.
+
+  More concretely, the objects of $\X$ are pairs $(A,m)$, where $A$ is a set and $m\in FA$, and morphisms
+  \[
+    (A,m) \to (B,n)
+    \]
+  are given by functions $h\from A \to B$ such that $F(h)(m) = n$.
+  $\X$ is normally called the \emph{category of elements of $F$}.
+
+  We define a symmetric monoidal structure on $\X$ by defining
+  \begin{mathpar}
+    (A,m) \tensor (B,n) = (A \times B, m^F_{A,B}(m,n))
+    \and
+    I = (1, e^F)\,,
+  \end{mathpar}
+  using the fact that the monoidal coherences for $F$ are given by functions
+  \begin{mathpar}
+    m^F_{A,B} \from FA \times FB \to F(A\times B)
+    \and
+    e^F \from 1 \to F1\,.
+  \end{mathpar}
+  We now need to show that the monoidal coherences in $\Set$ give rise to morphisms
+  \begin{mathpar}
+    \assoc_{A,B,C} \from ((A \times B) \times C,m^F_{A\times B,C}(m^F_{A,B}(m,n),p))
+    \to
+    (A \times (B \times C),m^F_{A,B \times C}(m,m^F_{B,C}(n,p))
+    \and
+    \lunit_{A} \from (A,m) \to (1\times A,m^F_{1,A}(e^F,m))
+    \and
+    \runit_{A} \from (A,m) \to (A \times a,m^F_{A,1}(m,e^F))
+    \and
+    \sym_{A,B} \from (A \times B,m^F_{A,B}(m,n)) \to (B \times A,m^F_{B,A}(n,m))
+  \end{mathpar}
+  in $\X$.  
+  Happily, the diagrams we need for this are precisely the coherence diagrams for $m^F,e^F$ that we get from $F$ being a lax symmetric monoidal functor.
+
+  Since $\assoc,\lunit,\runit,\sym$ satisfy the pentagon, triangle and hexagon identities in $\Set$, so they do in $\X$.
+  Therefore, $\X$ is a symmetric monoidal category.
+
+  There is an obvious forgetful functor $\X \to \Set$ that is, in fact, strict monoidal.
+
+  We claim that if $A$ is a set, then we have
+  \[
+    \colim_{(X,m)\from \oppcat\X} [X,A] \cong FA\,.
+    \]
+  Indeed, for each object $(X,m)$ of $\X$ we have a function
+  \begin{IEEEeqnarray*}{cCc}
+    [X,A] & \to & FA \\
+    f & \mapsto & F(f)(m)\,.
+  \end{IEEEeqnarray*}
+  We claim that this defines a cocone under the functor $(X,m) \mapsto [X,A] \from \oppcat\X \to \Set$.  
+  Indeed, if we have a morphism $h \from (Y,n) \to (X,m)$ then by definition we have
+  \[
+    F(h)(n) = m\,,
+    \]
+  and so we have a commutative triangle
+  \[
+    \begin{tikzcd}[column sep=50pt]
+      {[X,A]} \arrow[r, "{f \mapsto  F(f)(m)}"] \arrow[d, "{f \mapsto h;f}"']
+        & FA \\
+      {[Y,A]} \arrow[ur, "{g \mapsto F(g)(n)}"']
+        &
+    \end{tikzcd}\,,
+    \]
+  since
+  \[
+    F(h;f)(n) = F(f)(F(h)(n)) = F(f)(m)\,.
+    \]
+  Therefore, we have an induced map
+  \[
+    \colim_{(X,m)\from\X}[X,A] \to FA
+    \]
+  that sends $((X,m),f)$ to $F(f)(m)$.
+
+  Now we define a map in the other direction.
+  \begin{IEEEeqnarray*}{cCc}
+    FA & \to & \colim_{(X,m)\from \X} [X,A] \\
+    m & \mapsto & ((A,m),\id_A)
+  \end{IEEEeqnarray*}
+
+  We claim that these two maps are inverses.  
+  Indeed, we certainly have
+  \[
+    F(\id_A)(m) = id_{FA}(m) = m\,.
+    \]
+  In the other direction, we need to show that
+  \[
+    ((A,F(f)(m)),\id_A) = ((X,m),f)
+    \]
+  in the colimit.
+  But indeed, we have a morphism $f\from (X,m) \to (A,F(f)(m))$ in $\oppcat\X$, and $f;\id_A=f$.
+  Therefore, our map $\colim_{(X,m)\from \X}[X,A] \to FA$ was a bijection.
+
+  Lastly, we need to show that this decomposition as a colimit gives rise to the monoidal structure on the functor $F$; i.e., that the following diagrams commute.
+  \begin{mathpar}
+    \begin{tikzcd}
+      FA \times FB \arrow[r, "{m^F_{A,B}}"] \arrow[d, Isom']
+        & F(A\times B) \arrow[d, Isom] \\
+      \colim_{(X,m)\from \X}\limits [X,A] \times \colim_{(Y,n)\from\X}\limits [Y,B] \arrow[r]
+        & \colim_{(Z,p)\from\X}\limits [Z,A\times B]
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      1 \arrow[r, "e^F"] \arrow[dr]
+        & F1 \arrow[d, Isom] \\
+      %
+        & \colim_{(X,m)\from \X}\limits[X,1]
+    \end{tikzcd}
+  \end{mathpar}
+  Here, the arrows marked with the isomorphism symbol $\cong$ are the isomorphisms that we have just defined, while the arrows at the bottom of the first diagram and at the bottom left of the second are as in Proposition \ref{PropColimitOfActionIsMonoidalFunctor}.
+
+  We can check by hand that these diagrams commute: that in the first diagram, both directions send the pair $(m,n)\in FA \times FB$ to
+  \[
+    ((A\times B,m_{A,B}(m,n)),\id_{A\times B})\in \colim_{(Z,p)\from \X}[Z,A\times B]\,,
+    \]
+  and that in the second diagram both directions pick out the element
+  \[
+    ((1,e^F),\id_1)
+    \]
+  of $\colim_{(X,m)\from \X}[X,1]$.
+\end{proof}
+
+\begin{example}
+  Let $\powerset_+\from \Set \to \Set$ be the non-empty powerset functor.  
+  Then the category $\X$ of elements of $\powerset_+$ has pairs $(A,M)$ as elements, where $A$ is a (necessarily non-empty) set and $M$ is a non-empty subset of $A$.
+  Morphisms $(A,M) \to (B,N)$ are functions $f \from A \to B$ such that $f(M)=N$.
+
+  The nonempty powerset functor has a natural monoidal structure:
+  \begin{mathpar}
+    \powerset_+A \times \powerset_+ B \to \powerset_+(A \times B)
+    \and
+    1 \to \powerset_+1
+  \end{mathpar}
+  sending $(M,N)$ to $M\times N\subset A \times B$ and picking out the subset $1 \subset 1$.
+  This then gives us a monoidal structure on this category of elements, inducing an action as in Proposition \ref{PropMonoidalFunctorIsColimitOfReaderAction}.
+  The colimit of this action then gives us the original functor.  
+  Therefore, by Corollary \ref{CorCxVsBaseChange}, the category $\Set/\X$ is isomorphic to the category $(\powerset_+)_*\Set$ obtained by base change along the non-empty powerset functor $\powerset_+\from \Set \to \Set$.
+\end{example}
+
+\begin{example}
+  Let $\DG \from \Set \to \Set$ be the functor that sends a set $A$ to the set of discrete probability measures on $A$ and sends a function $f\from A \to B$ to the function $\DG(A) \to \DG(B)$ that sends a probability measure $\bP$ on $A$ to the probability measure $f_*\bP$ on $B$ given by
+  \[
+    f_*\bP(X) = \bP(f\inv(X))\,.
+    \]
+  Then the category of elements of $\DG$ is the category whose objects are pairs $(A,\bP)$ and where the morphisms $(A,\bP_A) \to (B,\bP_B)$ are functions $f\from A \to B$ such that $\bP_B=f_*\bP_A$.  
+  In other words, it is the category of discrete probability spaces and probability-preserving functions.
+
+  The functor $DG$ has a natural monoidal structure: given a discrete probability measure on a set $A$ and a discrete probability measure on a set $B$, we can get a discrete probability measure on the set $A \times B$ by
+  \[
+    \bP_{A\times B}(\{(a,b)\}) = \bP_A(\{a\})\times\bP_B(\{b\})\,.
+    \]
+  This then gives us a monoidal structure on the category of discrete probability spaces, where the tensor product of probability spaces $(A,\bP_A)$ and $(B,\bP_B)$ is given by the set $A \times B$, together with the probability measure as described above.
+\end{example}
+
+Now suppose that $F\from \Set \to \Set$ is a lax symmetric monoidal endofunctor.  
+We have shown that $F$ gives rise to a strict symmetric monoidal functor $j\from \X \to \Set$, for some monoidal category $\X$, and that the induced category $\Set/\oppcat\X$ is isomorphic to the category obtained from $\Set$ by base change along $F$.  
+
+Since the action of $\X$ on $\Set$ is the reader action of a symmetric monoidal functor, by Theorem \ref{TheCartesianClosedCx} we know that the category $\Set/\oppcat\X$ must be symmetric monoidal closed.  
+
+Now recall that in order to apply the second part of Theorem \ref{TheCartesianClosedCx}, and deduce that $\Set/\oppcat\X$ is Cartesian closed, we must prove that for every object $x$ of $\X$, there is a morphism $f \from x \to x \tensor x$ such that $jf = \Delta_{jx};m^j_x$.  
+This is particularly useful in our case, since the functor $\X \to \Set$ is faithful.
+
+In other words, for every set $A$ and every $p\in FA$, the function $\Delta_A$ must define a morphism
+\[
+  (A,p) \to (A \times A, m^F_{A,A}(p,p))\,;
+  \]
+i.e., we must have
+\[
+  F(\Delta_A)(p) = m^F_{A,A}(p,p)\,.
+  \]
+Let us see what this means in some examples.
+\begin{example}
+  The finite powerset functor does not satisfy the condition given above; indeed, we have
+  \begin{mathpar}
+    \powerset_+(\Delta_A)(X) = \{(x,x)\in A \times A \suchthat x \in X\}
+    \and
+    m^{\powerset_+}_{A,A}(X,X) = X \times X = \{(x,y) \in A \times A \suchthat x \in X\}\,.
+  \end{mathpar}
+  Similarly, the discrete probability measure functor does not satisfy the condition we have given, since the diagonal map
+  \[
+    \Delta_A \from (A,\bP_A) \to (A \times A, \bP_{A\times A})
+    \]
+  does not preserve probability in general.
+\end{example}
+
+\begin{example}
+  An alternative way of dealing with probability that does satisfy the condition for Cartesianness of the resulting category.
+  If $(\Omega,\F,\bP)$ is a fixed probability space, then a \emph{discrete random variable taking values in a set $A$} is a measurable function
+  \[
+    V\from (\Omega,\F) \to (A,\powerset A)\,.
+    \]
+  Given $X \subset A$, we define
+  \[
+    \bP(V \in X) = \bP(V\inv(X))\,.
+    \]
+  This then gives us a discrete probability measure on $X$.
+
+  Write $\RV_\Omega \from \Set \to \Set$ for the functor that sends a set $A$ to the set of all random variables taking values in the set $A$ and sends a function $f\from A \to B$ to the function
+  \[
+    \RV_\Omega(A) \to \RV_\Omega(B)
+    \]
+  given by composing on the right with $f$.
+
+  Moreover, $\RV_\Omega$ is a lax monoidal functor: if $V,W$ are discrete random variables taking values in sets $A,B$, then we have a random variable $\langle V,W \rangle\from X \to A\times B$ given by pairing (and if $(a,b)\in A\times B$, then $(\langle V,W\rangle)\inv(\{(a,b)\}) = V\inv(\{a\})\cap W\inv(\{b\})$, so this is a measurable function).  
+
+  Now if we apply the construction from Proposition \ref{PropMonoidalFunctorIsColimitOfReaderAction}, we get the category whose objects are pairs $(A,V)$, where $A$ is a set and $V$ a discrete random variable taking values in $A$ and where the morphisms $(A,V) \to (B,W)$ are functions $f \from A \to B$ such that $W=V;f$.
+  This category, which we will call $\Rv_\Omega$, admits a strict monoidal forgetful functor into the category of sets, giving us a lax reader action of $\oppcat{\Rv_\Omega}$ on $\Set$.
+  Once again, we can pass to the symmetric monoidal category $\Set/\oppcat{\Rv_\Omega}$, giving us a way of modelling probability that is equivalent to taking base change through the functor $\RV_\Omega$.
+
+  The difference now is that the diagonal map
+  \[
+    \Delta_A \from (A,V) \to (A\times A, \langle V,V\rangle)
+    \]
+  \emph{is} probability preserving.  
+  In the language of probability, the two copies of the random variable $V$ are \emph{dependent random variables}, so the probability of obtaining the reading $(a,a)$ from $\langle V,V\rangle$ is the same as the probability of obtaining the reading $v$ from $V$.
+  Therefore, the category $\Set/\oppcat{\Rv_\Omega}$ will be Cartesian closed.
+\end{example}
+
+\subsection{Actions of categories with terminal objects}
+
+The probability example above lends itself to further examination.  
+Recall that if a monoidal category $\X$ acts on a category $\C$, and $x$ is a monoid in $\X$ with multiplication $m^x$ and unit $e^x$, then we get a monad on $\C$ given by the composite
+\[
+  1 \xrightarrow{x} \X \xrightarrow{\blank.\blank} \End[\C]
+  \]
+of lax monoidal functors.
+
+More explicitly, this monad is given by
+\[
+  M_xa = x.a\,,
+  \]
+with the monadic coherences given by
+\begin{mathpar}
+  M_xM_xa = x.x.a \xrightarrow{m_{x,x}} (x \tensor x).a \xrightarrow{m^x.a} x.a = M_xa
+  \and
+  a \xrightarrow{e_a} I.a \xrightarrow{e^x.a} x.a = M_x a\,.
+\end{mathpar}
+In particular, if $j\from \X \to \C$ is an oplax monoidal (in particular, comonoid-preserving) functor, yielding a reader action of $\oppcat\X$ upon $\C$, and $x$ is a monoid in $\oppcat\X$ (i.e., a comonoid in $\X$), then the monad $M_x$ will be the reader monad corresponding to $jx$.
+
+Now suppose that the category $\X$ has a terminal object $1$.  
+Then $1$ automatically has the structure of a monoid in $\X$, via the unique morphisms
+\begin{mathpar}
+  1 \tensor 1 \xrightarrow{()} 1
+  \and
+  I \xrightarrow{()} 1\,.
+\end{mathpar}
+
+\begin{proposition}
+  Let a monoidal category $\X$ act on a category $\C$ via a lax action.  
+  Suppose that $\X$ has a terminal object $1$.
+  Then the category $\C/\X$ is isomorphic to the Kleisli category for the monoid $M_1$.
+\end{proposition}
+\begin{proof}
+  In both cases, the objects are the objects of $\C$.  
+  Note also that we have an isomorphism
+  \begin{mathpar}
+    (\C/\X)(a,b) = \int^x\C(a,x.b) \cong \int^x \C(a,x.b) \times \C(x,1) \cong \C(a,1.b) = \Kl_{M_1}(a,b)\,.
+  \end{mathpar}
+  More concretely, this isomorphism sends a \Mellies morphism $f\from a \to x.b$ to the Kleisli morphism given by the composite
+  \[
+    a \xrightarrow{f} x.b \xrightarrow{().b} 1.b\,.
+    \]
+  By Proposition \ref{PropFunctorialityOfLaxColimits}, this gives us a functor
+  \[
+    \C/\X \to \Kl_{M_1}\,,
+    \]
+  which is fully faithful and the identity on objects.
+\end{proof}
+
+Now we can get a clearer idea of what is going on in the probability example: the new category $\Rv_\Omega$ \emph{almost} has an initial object (i.e., a terminal object in $\oppcat{\Rv_\Omega}$), given by the pair
+\[
+  (\Omega,\id_\Omega)\,.
+  \]
+At least, it does if the $\sigma$-algebra $\F$ on $\Omega$ is discrete.  
+But in general, the identity function
+\[
+  \id_\Omega \from (\Omega,\F) \to (\Omega,\powerset\Omega)
+  \]
+is not measurable (indeed, it is measurable if and only if $\F=\powerset\Omega$), so $\id_\Omega$ is not a discrete random variable in general.
+
+In the case that $\F=\powerset\Omega$, the category $\Rv_\Omega$ has an initial object, and the category
+\[
+  \Set/\oppcat{\Rv_\Omega}
+  \]
+is isomorphic to the Kleisli category for the reader monad for the set $\Omega$ on $\Set$.  
+Now, from Theorem \ref{FunctionalCompletenessCcc}, we know that this Kleisli category is automatically Cartesian closed.  
+The point here is that the category $\Rv_\Omega$ is just close enough to having an initial object for the category $\Set/\oppcat{\Rv_\Omega}$ to be Cartesian, even though it is not a Kleisli category.
+
+\begin{remark}
+  This subtlety with probability spaces is not present in the case of the nonempty powerset functor, which is why we it makes sense to model plain nondeterminism with a Kleisli category, as we did in Section \ref{SecMonads}.
+\end{remark}
+
+\subsection{Reader actions and semantics}
+
+Suppose that we have an oplax monoidal functor $j \from \X \to \Set$, giving rise to a lax reader action of $\oppcat\X$ on $\Set$.
+Let $\G$ be a (Cartesian closed) model for a programming language $P$, and suppose that there is a functor $D\from \Set \to \G$ that gives us the denotation of the datatypes in $\G$.
+
+For example, if $\G$ is the category of games, then we can define $D(A)$ to be the game given by $M_{D(A)} = \{q\}\cup A$ with $\lambda(q)=O$ and $\lambda(a)=P$ for $a\in A$, where $q$ is initial and justifies the moves $a\in A$ and the legal plays are those of the form $\epsilon$, $q$ or $qa$.
+
+In general, such functions automatically carry an oplax monoidal structure, since the source category $\Set$ and target category $\G$ are Cartesian.  
+So we get morphisms
+\begin{mathpar}
+  m_{A,B} = D(A \times B) \xrightarrow{\langle D(\pr_1),D(\pr_2) \rangle} D(A) \times D(B)
+  \and
+  e = D(1) \xrightarrow{()} 1\,.
+\end{mathpar}
+
+Then we may compose the functors $j$ and $D$ to get a new oplax monoidal functor $\X \to \G$, inducing a reader action of $\oppcat{\X}$ on $\G$.
+
+Now the category $\G/\oppcat\X$ has its universal natural transformation
+\[
+  \phi_{x,A} \from (Djx \to A) \to A\,,
+  \]
+which, by the enriched Yoneda lemma, may be equivalently given by the natural transformation
+\[
+  \omega_x = 1 \xrightarrow{u_{D(jx)}} (D(jx) \to D(jx)) \xrightarrow{\phi_{x,D(jx)}} D(jx)\,.
+  \]
+We can use this natural transformation to model primitives in the language of the form
+\[
+  \choose_x \from jx\,,
+  \]
+for each object $x$ of $\X$, where we use $jx$ to refer to the datatype corresponding to the set $jx$.
+
+The purpose of the final chapter will be to define a language with an operational semantics for which these primitives make sense, and prove a full abstraction result for it.
+
+\bibliographystyle{alpha2}
+\bibliography{../common/phd_bibliography}
+
+\end{document}

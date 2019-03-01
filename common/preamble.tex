@@ -21,12 +21,15 @@
 \fi
 \fi
 \usepackage{mathtools} % for the all important \coloneqq symbol
-\usepackage{url} % for \url
+\usepackage{hyperref} % for hyperreferences
 \usepackage{IEEEtrantools} % for \IEEEeqnarray
 \usepackage{pbox} % for \pbox
 \usepackage{multirow,bigdelim} % for \multirow
 \usepackage{lettrine} % For the drop cap
 \usepackage{mathpartir} % for \inferrule
+
+\usepackage{caption}
+\captionsetup{singlelinecheck=off}
 
 \ifdefined\NOTARTICLE
 \else
@@ -108,6 +111,7 @@
 \newtheorem{remarks}[theorem]{Remarks}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{question}[theorem]{Question}
+\newtheorem{slogan}[theorem]{Slogan}
 
 \newtheoremstyle{note} {3pt} {3pt} {\itshape} {} {\itshape} {:} {.5em} {} % For short notes
 \theoremstyle{note}
@@ -217,6 +221,7 @@
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\op}{op}
 \DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\inj}{in}
 \DeclareMathOperator{\pre}{{pre}}
 \DeclareMathOperator{\et}{{\acute{e}t}}
 
@@ -245,6 +250,7 @@
 
 \newcommand{\neggame}[1]{\presuper{\perp}{#1}}
 \newcommand{\tensor}{\otimes}
+\newcommand{\Tensor}{\bigotimes}
 \newcommand{\sequoid}{\oslash}
 \newcommand{\varsequoid}{\vartriangleleft}
 \renewcommand{\implies}{\multimap}
@@ -278,6 +284,7 @@
 \newcommand{\bN}{\mathbb{N}}
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bB}{\mathbb{B}}
+\newcommand{\bP}{\mathbb{P}}
 \newcommand{\pfun}{\rightharpoonup}
 \newcommand{\grel}[1]{\underline{#1}}
 \DeclareMathOperator{\length}{length}
@@ -289,6 +296,7 @@
 \renewcommand{\S}{{\mathfrak{S}}}
 \DeclareMathOperator{\cc}{cc}
 \newcommand{\B}{\mathcal B}
+\newcommand{\BB}{\mathbf B}
 \renewcommand{\H}{\mathcal H}
 \DeclareMathOperator{\assoc}{assoc}
 \DeclareMathOperator{\lunit}{lunit}
@@ -473,6 +481,9 @@
 \newcommand{\A}{{\mathcal{A}}}
 \renewcommand{\P}{\mathcal P}
 \newcommand{\M}{\mathcal M}
+\newcommand{\N}{\mathcal N}
+\newcommand{\X}{\mathcal X}
+\newcommand{\YY}{\mathcal Y}
 \newcommand{\hole}{\blank}
 \newcommand{\Tct}{\xrightarrow{T}t}
 \newcommand{\teamconverge}[2]{\xrightarrow{#1}#2}
@@ -488,11 +499,35 @@
 
 %% What is going on?
 \DeclareMathOperator{\Kl}{Kl}
+\DeclareMathOperator{\Mell}{Mell}
 \newcommand{\powerset}{\mathcal P}
 \newcommand{\ask}{{\mathsf{ask}}}
 \newcommand{\sleep}{{\mathsf{sleep}}}
 \newcommand{\true}{\mathbbm{t}}
 \newcommand{\false}{\mathbbm{f}}
+
+%% Profunctor arrows
+
+\makeatletter
+\def\slashedarrowfill@#1#2#3#4#5{%
+  $\m@th\thickmuskip0mu\medmuskip\thickmuskip\thinmuskip\thickmuskip
+   \relax#5#1\mkern-7mu%
+   \cleaders\hbox{$#5\mkern-2mu#2\mkern-2mu$}\hfill
+   \mathclap{#3}\mathclap{#2}%
+   \cleaders\hbox{$#5\mkern-2mu#2\mkern-2mu$}\hfill
+   \mkern-7mu#4$%
+}
+\def\rightslashedarrowfill@{%
+  \slashedarrowfill@\relbar\relbar\mapstochar\rightarrow}
+\newcommand\xslashedrightarrow[2][]{%
+  \ext@arrow 0055{\rightslashedarrowfill@}{#1}{#2}}
+\makeatother
+\newcommand{\pto}{{\xslashedrightarrow{} }}
+
+%% Profunctors 
+\DeclareMathOperator{\Prof}{Prof}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Endoprof}{Endoprof}
 
 %% Our
 
@@ -517,6 +552,41 @@
 \newcommand{\adjunction}[4]{%
   {#1} \underset{\underset{#3}{\longleftarrow}}{\overset{\overset{#2}{\longrightarrow}}{\bot}} {#4}}        
 
+%% Important!
+\newcommand\Mellies{Melli\`{e}s\xspace}
+
+\makeatletter
+\newcommand{\colim@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font colim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\colim}{%
+  \mathop{\mathpalette\colim@{\rightarrowfill@\textstyle}}\nmlimits@
+}
+\makeatother
+
+\makeatletter
+\newcommand{\laxcolim@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font colim_l$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\laxcolim}{%
+  \mathop{\mathpalette\laxcolim@{\rightarrowfill@\textstyle}}\nmlimits@
+}
+\makeatother
+
+\DeclareMathOperator{\Colim}{colim}
+
+\DeclareMathOperator{\DG}{DG}
+\DeclareMathOperator{\RV}{RV}
+\newcommand{\Rv}{\catname{Rv}}
+
+\let\choose\undefined
+\DeclareMathOperator{\choose}{\mathsf{choose}}
 
 %%% END Article customizations
 

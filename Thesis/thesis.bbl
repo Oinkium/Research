@@ -14,6 +14,11 @@ R.~Harmer and G.~McCusker.
 \newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
   (Cat. No. PR00158)}, pages 422--430, 1999.
 
+\bibitem[JK02]{LaxActions}
+G.~Janelidze and G.~M. Kelly.
+\newblock A note on actions of a monoidal category.
+\newblock {\em Theory and Applications of Categories}, 9, 01 2002.
+
 \bibitem[Kle65]{Kleisli}
 H.~Kleisli.
 \newblock Every standard construction is induced by a pair of adjoint functors.

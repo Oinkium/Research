@@ -1,0 +1,63 @@
+
+  \begin{SidewaysFigure}
+    \[
+      \begin{tikzcd}[column sep=1pt, ampersand replacement=\&]
+        %
+        \&[-126pt] (jx \implies jy \implies a) \tensor (jx' \implies jy' \implies a') \arrow[r] \arrow[d]
+            \& (jx \tensor jx') \implies ((jy \implies a)\tensor (jy'\implies a')) \arrow[r] \arrow[d]
+              \& j(x\tensor x') \implies ((jy\implies a) \tensor (jy'\implies a')) \arrow[d] \\
+        %
+          \& ((jx \tensor jy) \implies a) \tensor ((jx' \tensor jy') \implies a') \arrow[ddl, to path= {(\tikztostart.west) -| ([xshift=-50pt] \tikztotarget.north)}] \arrow[d]
+            \& (jx \tensor jx') \implies (jy \tensor jy') \implies (a \tensor a') \arrow[d] \arrow[ddr, bend left=10] \arrow[r]
+              \& j(x\tensor x') \implies (jy \tensor jy') \implies (a \tensor a') \arrow[dd] \\
+        %
+          \& ((jx\tensor jy)\tensor (jx'\tensor jy')) \implies (a\tensor a') \arrow[ddl, to path= {([xshift=50pt] \tikztostart.south) |- (\tikztotarget.east)}] \arrow[r]
+            \& ((jx \tensor jx') \tensor (jy \tensor jy')) \implies (a\tensor a') \arrow[ddr, to={Z.west}, bend right=10]
+              \& \\
+        (j(x\tensor y) \implies a) \tensor (j(x'\tensor y') \implies a') \arrow[d]
+          \&
+            \&
+              \& j(x\tensor x') \implies j(y\tensor y') \implies (a \tensor a') \arrow[d] \\
+        (j(x\tensor y) \tensor j(x'\tensor y')) \implies (a \tensor a') \arrow[d]
+          \&
+            \&
+              \& |[alias=Z]| (j(x \tensor x') \tensor j(y \tensor y') \implies(a \tensor a')) \arrow[d] \\
+        j((x\tensor y)\tensor (x'\tensor y')) \implies (a \tensor a') \arrow[rrr]
+          \&
+            \&
+              \& j((x\tensor x') \tensor (y \tensor y')) \implies (a \tensor a')
+      \end{tikzcd}
+      \]
+    \caption{Proof that the parametric reader monad corresponding to a symmetric monoidal functor is a symmetric monoidal action.  
+    The hexagon at the top commutes by the coherence theorems for symmetric monoidal closed categories, while that at the bottom commutes because $j$ is a symmetric monoidal functor.}
+    \label{FigReaderMonadIsGoodActionProof}
+  \end{SidewaysFigure}
+
+
+  \begin{figure}
+    \[
+      \begin{tikzcd}[column sep=60pt]
+        \left[B,y.C\right] \times ([A,x.B] \times A) \arrow[r, "{s_{y,B,C}\times(s_{x,A,B} \times A)}" xshift=-3pt, dotted] \arrow[dd, "{[B,y.C]\times\ev_{A,x.B}}"'] \arrow[ddr, "\textbf{1}", phantom]
+          & y.[B,C] \times (x.[A,B] \times A) \arrow[d, "{y.[B,C]\times (x.[A,B] \times e_A)}", thick, dashed] \\
+        %
+          & y.[B,C] \times (x.[A,B]\times I.A) \arrow[d, "{y.[B,C]\times m_{x,I,[A,B],A}}", thick, dashed] \\
+        \left[B,y.C\right] \times x.B \arrow[d, "{e_{[B,y.C]}\times x.B}"'] \arrow[dr, "\textbf{2}", phantom]
+          & y.[B,C] \times (x\tensor I).([A,B]\times A) \arrow[l, "{s_{y,B,C}\inv\times\runit_x\inv . \ev_{A,B}}"' xshift=3pt, dotted]  \arrow[d, "{e_{y.[B,C]} \times \runit_x\inv.\ev_{A,B}}", thick, dashed] \\
+        I.\left[B,y.C\right] \times x.B \arrow[dd, "{m_{I,x,[B,y.C],B}}"'] \arrow[r, "{I.s_{y,B,C} \times x.B}", dotted] \arrow[ddr, "\textbf{3}", phantom]
+          & I.y.[B,C] \times x.B  \arrow[d, "{m_{I,x,y,[B,C],B}}", thick, dashed] \\
+        %
+          & (I \tensor x).(y.[B,C] \times B) \arrow[d, "{(I \tensor x).(y.[B,C] \times e_B)}", thick, dashed] \\
+        (I \tensor x).([B,y.C] \times B) \arrow[r, "{(I\tensor x) . (s_{y,B,C} \times e_B)}" xshift=-3pt, dotted] \arrow[d, "{\id.\ev_{B,y.C}}"'] \arrow[dr, "\textbf{4}", phantom]
+          & (I \tensor x).(y.[B,C] \times I.B) \arrow[d, "{(I\tensor x).m_{y,I,B,C}}", thick, dashed] \\
+        (I \tensor x).y.C \arrow[d, "\lunit_x\inv.y.C"']
+          & (I \tensor x).(y \tensor I).([B,C] \times B) \arrow[l, "{(I\tensor x).\lunit_y\inv.\ev_{B,C}}"', dotted] \arrow[dl, "{\lunit_x\inv.\lunit_y\inv.\ev_{B,C}}", thick, dashed] \\
+        x.y.C \arrow[d, "{m_{x,y,C}}"'] \arrow[d, thick, dashed]
+          & \\
+        (x \tensor y).C
+          &
+      \end{tikzcd}
+      \]
+      \caption{Commutative diagram relating \Mellies composition with base changed composition for a monoidal lax action.  
+      Commutativity of \textbf{1} and \textbf{4} is by the coherence diagram in Definition \ref{DefSymmetricMonoidalClosedAction}. \textbf{2} commutes because $s$ is a natural transformation and \textbf{3} commutes because $m$ is a natural transformation.  
+      For the \Mellies composition, we have been fairly free about choosing a representative morphism from each equivalence class; i.e., if $f \from a \to x.b$ is a particular representative for some morphism in $\C/\X$, then we have not }
+  \end{figure}

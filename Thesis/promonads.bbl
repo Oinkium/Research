@@ -1,0 +1,31 @@
+\begin{thebibliography}{Man09}
+
+\bibitem[EK66]{ExtranaturalTransformations}
+Samuel Eilenberg and G.M Kelly.
+\newblock A generalization of the functorial calculus.
+\newblock {\em Journal of Algebra}, 3(3):366 -- 375, 1966.
+
+\bibitem[Her00]{RepresentableMulticategories}
+Claudio Hermida.
+\newblock Representable multicategories.
+\newblock {\em Advances in tics}, 151(2):164 -- 225, 2000.
+
+\bibitem[Lei03]{Multicategories}
+Tom Leinster.
+\newblock Higher operads, higher categories, 2003.
+
+\bibitem[Man09]{ClosedMulticategories}
+Oleksandr Manzyuk.
+\newblock Closed categories vs. closed multicategories, 2009.
+
+\bibitem[Pis14]{Pisani}
+Claudio Pisani.
+\newblock Sequential multicategories.
+\newblock {\em Theory and Applications of Categories}, 29(19):496 -- 541, 2014.
+
+\bibitem[SG12]{Promonad}
+Mike Shulman and Richard Garner.
+\newblock Categories, functors, and profunctors are a free cocompletion.
+\newblock Octoberfest 2012, October 2012.
+
+\end{thebibliography}

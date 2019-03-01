@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2018/Arch Linux)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: promonads.aux
+The style file: alpha.bst
+Database file #1: ../common/phd_bibliography.bib
+You've used 6 entries,
+            2543 wiz_defined-function locations,
+            598 strings with 5175 characters,
+and the built_in function-call counts, 1987 in all, are:
+= -- 194
+> -- 70
+< -- 4
++ -- 21
+- -- 20
+* -- 133
+:= -- 333
+add.period$ -- 16
+call.type$ -- 6
+change.case$ -- 32
+chr.to.int$ -- 6
+cite$ -- 6
+duplicate$ -- 75
+empty$ -- 161
+format.name$ -- 30
+if$ -- 404
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 3
+newline$ -- 31
+num.names$ -- 18
+pop$ -- 31
+preamble$ -- 1
+purify$ -- 38
+quote$ -- 0
+skip$ -- 69
+stack$ -- 0
+substring$ -- 124
+swap$ -- 5
+text.length$ -- 4
+text.prefix$ -- 4
+top$ -- 0
+type$ -- 48
+warning$ -- 0
+while$ -- 17
+width$ -- 9
+write$ -- 73
