@@ -1,23 +1,17 @@
 \begin{thebibliography}{Lam74}
 
-\bibitem[AM96]{SamsonGuyIAActive}
-Samson Abramsky and Guy McCusker.
-\newblock Linearity, sharing and state: a fully abstract game semantics for
-  idealized algol with active expressions: Extended abstract.
-\newblock {\em Electronic Notes in Theoretical Computer Science}, 3:2 -- 14,
-  1996.
-\newblock Linear Logic 96 Tokyo Meeting.
+\bibitem[Ghi05]{SlotGames}
+Dan~R. Ghica.
+\newblock Slot games: A quantitative model of computation.
+\newblock In {\em Proceedings of the 32Nd ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages}, POPL '05, pages 85--97, New York, NY,
+  USA, 2005. ACM.
 
 \bibitem[HM99]{mcCHFiniteND}
 R.~Harmer and G.~McCusker.
 \newblock A fully abstract game semantics for finite nondeterminism.
 \newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
   (Cat. No. PR00158)}, pages 422--430, 1999.
-
-\bibitem[JK02]{LaxActions}
-G.~Janelidze and G.~M. Kelly.
-\newblock A note on actions of a monoidal category.
-\newblock {\em Theory and Applications of Categories}, 9, 01 2002.
 
 \bibitem[Kle65]{Kleisli}
 H.~Kleisli.

@@ -404,9 +404,9 @@
 \newcommand{\Y}{\mathbf{Y}}
 \newcommand{\opto}{\longrightarrow}
 \newcommand{\n}{{\mathtt{n}}}
-\newcommand{\IfO}{{\mathtt{If0}\;}}
-\newcommand{\suc}{{\mathtt{succ\;}}}
-\newcommand{\pred}{{\mathtt{pred\;}}}
+\DeclareMathOperator{\IfO}{{\mathtt{If0}}}
+\DeclareMathOperator{\suc}{{\mathtt{succ}}}
+\DeclareMathOperator{\pred}{{\mathtt{pred}}}
 \newcommand{\0}{{\mathtt{0}}}
 
 \newcommand{\iter}{{\mathtt{iter}}}
@@ -425,8 +425,9 @@
 
 \newcommand{\com}{{\mathtt{com}}}
 \newcommand{\skipp}{{\mathsf{skip}}}
-\newcommand{\neww}{{\mathsf{new}}}
-\newcommand{\mkvar}{{\mathsf{mkvar}\;}}
+\DeclareMathOperator{\seq}{{\mathsf{seq}}}
+\DeclareMathOperator{\neww}{{\mathsf{new}}}
+\DeclareMathOperator{\mkvar}{{\mathsf{mkvar}}}
 \newcommand{\deref}{\texttt{@}}
 \newcommand{\ia}[2]{\langle #1 , #2 \rangle}
 \newcommand{\stup}[3]{\langle #1 \mid #2 \mapsto #3 \rangle}
@@ -490,8 +491,8 @@
 
 %% Inference rule things
 \newcommand{\rulename}[1]{\LeftTirNameStyle{#1}}
-\newcommand{\ts}{{\;\vdash}}
-\newcommand{\nts}{{\;\not\vdash}}
+\newcommand{\ts}{\mathbin{\vdash}}
+\newcommand{\nts}{\mathbin{\not\vdash}}
 
 %% Double category things
 \newcommand{\hc}[2]{\left({#1}\middle|{#2}\right)}
@@ -501,10 +502,14 @@
 \DeclareMathOperator{\Kl}{Kl}
 \DeclareMathOperator{\Mell}{Mell}
 \newcommand{\powerset}{\mathcal P}
-\newcommand{\ask}{{\mathsf{ask}}}
+\DeclareMathOperator{\ask}{{\mathsf{ask}}}
 \newcommand{\sleep}{{\mathsf{sleep}}}
 \newcommand{\true}{\mathbbm{t}}
 \newcommand{\false}{\mathbbm{f}}
+\DeclareMathOperator{\If}{\mathsf{If}}
+\newcommand{\Then}{\mathbin{\mathsf{then}}}
+\newcommand{\Else}{\mathbin{\mathsf{else}}}
+\newcommand\cat{\mathbin{+\mkern-10mu+}}
 
 %% Profunctor arrows
 
@@ -587,6 +592,15 @@
 
 \let\choose\undefined
 \DeclareMathOperator{\choose}{\mathsf{choose}}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\test}{test}
+
+%% Slot game things %%
+\newcommand{\circled}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}}
+\newcommand{\slot}{{\circled{\$}}}
+
+\DeclareMathOperator{\may}{may}
+\DeclareMathOperator{\must}{must}
 
 %%% END Article customizations
 
