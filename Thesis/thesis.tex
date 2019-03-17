@@ -1098,15 +1098,15 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
 \begin{definition}
   Let $\sigma,\tau\from A \to B$ be morphisms in $\G_X$.  
   By currying, we may consider $A$ and $B$ as morphisms $1 \to (A \to B)$ in $\G_X$.
-  We say that $\sigma\sim\tau$ if for all morphisms $\alpha\from (A \to B) \to \bC$ and for all sequences $u\in X^*$, if we regard the $\alpha;\sigma,\alpha;\tau\from 1 \to \bC$ as morphisms $X \to \bC$ in $\G$, then the composites
+  We say that $\sigma\sim\tau$ if for all morphisms $\alpha\from (A \to B) \to \bC$ and for all sequences $u\in X^*$, if we regard $\sigma;\alpha,\tau;\alpha\from 1 \to \bC$ as morphisms $X \to \bC$ in $\G$, then the composites
   \begin{mathpar}
-    1 \xrightarrow{\alpha;\sigma}
+    1 \xrightarrow{\sigma;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|u|}}
     \bC
     \and
-    1 \xrightarrow{\alpha;\tau}
+    1 \xrightarrow{\tau;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|u|}}
@@ -1128,17 +1128,17 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
   First, suppose that $\deno{M}\sim\deno{N}$.  
   Let $C[-]\from\com$ be a context with a hole of type $T$.  
   Then the denotation of $t\ts C[t]$ is a morphism $\alpha\from \deno{T} \to \bC$.
-  Moreover, the denotation of $C[M]$ is the composite $\alpha;\deno{M}$ and that of $C[N]$ is the composite $\alpha;\deno{N}$, by functional completeness.
+  Moreover, the denotation of $C[M]$ is the composite $\deno{M};\alpha$ and that of $C[N]$ is the composite $\deno{N};\alpha$ by functional completeness.
 
   Then the composites
   \begin{mathpar}
-    1 \xrightarrow{\alpha;\sigma}
+    1 \xrightarrow{\sigma;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|u|}}
     \bC
     \and
-    1 \xrightarrow{\alpha;\tau}
+    1 \xrightarrow{\tau;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|u|}}
@@ -1149,11 +1149,11 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
   Conversely, suppose that $M\not\sim N$.  
   So there is some $\alpha\from \deno T \to \bC$ in $\G_X$ and some sequence $u$ such that (without loss of generality),
   \begin{mathpar}
-    (\alpha;\deno M);\eta_u;\deno{\neww};t_{|u|} \ne \bot
+    (\deno M;\alpha);\eta_u;\deno{\neww};t_{|u|} \ne \bot
     \and
-    (\alpha;\deno N);\eta_u;\deno{\neww};t_{|u|} = \bot\,.
+    (\deno N;\alpha);\eta_u;\deno{\neww};t_{|u|} = \bot\,.
   \end{mathpar}
-  Here, we have enclosed $\alpha;\deno M$ and $\alpha;\deno N$ in brackets to indicate that the composition is taken in the Kleisli category $\G_X$, and then the whole thing is considered as a morphism $1 \to (X \to \bC)$ in $\G$.
+  Here, we have enclosed $\deno M;\alpha$ and $\deno N;\alpha$ in brackets to indicate that the composition is taken in the Kleisli category $\G_X$, and then the whole thing is considered as a morphism $1 \to (X \to \bC)$ in $\G$.
 
   More specifically, these composites are given by the composites
   \begin{mathpar}
@@ -1302,13 +1302,13 @@ In light of this result, we can define a new intrinsic equivalence on morphisms 
   Let $\sigma,\tau\from A \to B$ be morphisms in $\G_X$, considered as morphisms $1 \to (A \to B)$ in $\G_X$.  
   We say that $\sigma \sim_{\may} \tau$ if for all $u\in X^*$ there exists $v\in X^*$ such that the composites
   \begin{mathpar}
-    1 \xrightarrow{\alpha;\sigma}
+    1 \xrightarrow{\sigma;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|u|}}
     \bC
     \and
-    1 \xrightarrow{\alpha;\tau}
+    1 \xrightarrow{\tau;\alpha}
     (X \to \bC) \xrightarrow{\eta_v}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|v|}}
@@ -1333,7 +1333,7 @@ Then exactly the same argument as before gives us a full abstraction result for 
   Suppose that $,()\ts C[M] \converges \skipp,()$.  
   So there is some sequence $u\in X^*$ such that $,()\ts C[M] \converges_u \skipp,()$ and therefore the composite
   \[
-    1 \xrightarrow{\alpha;\deno{M}}
+    1 \xrightarrow{\deno M;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|u|}}
@@ -1342,7 +1342,7 @@ Then exactly the same argument as before gives us a full abstraction result for 
   is not equal to $\bot$.  
   Therefore, there exists some $v\in X^*$ such that the composite
   \[
-    1 \xrightarrow{\alpha;\deno{N}}
+    1 \xrightarrow{\deno N;\alpha}
     (X \to \bC) \xrightarrow{\eta_v}
     (\Var \to \bN) \xrightarrow{\deno{\neww}}
     \bN \xrightarrow{t_{|v|}}
@@ -1401,14 +1401,14 @@ Now we can also see that this equivalence we have just defined is subsumed into 
   If $\sigma\approx_{\may}\tau$ then $\sigma\sim_{\may} \tau$.
 \end{proposition}
 \begin{proof}
-  Given strategies $\sigma,\tau\from A$ in $\G_X$, we have $\sigma \sim_{\may} \tau$ if and only if $\alpha;\sigma\approx_{\may}\alpha;\tau$ for any morphism $\alpha\from \oc A \implies \bC$ in $\G_X$.
+  Given strategies $\sigma,\tau\from A$ in $\G_X$, we have $\sigma \sim_{\may} \tau$ if and only if $\sigma;\alpha\approx_{\may}\tau;\alpha$ for any morphism $\alpha\from \oc A \implies \bC$ in $\G_X$.
   If $\sigma\approx_{\may}\tau$, we have
   \[
-    \alpha;\sigma\vert_{\bC} = \alpha;(\sigma\vert_{\bC}) = \alpha;(\tau\vert_{\bC}) = \alpha;\tau\vert_{\bC}\,.\qedhere
+    \sigma;\alpha\vert_{\bC} = (\sigma\vert_{\bC});\alpha = (\tau\vert_{\bC});\alpha = \tau;\alpha\vert_{\bC}\,.\qedhere
     \]
 \end{proof}
 
-Note that it is also the case that if $\alpha\approx_{\may}\alpha'$ and $\sigma\approx_{\may}\tau$ then $\alpha;\sigma \approx_{\may} \alpha';\tau$.  
+Note that it is also the case that if $\alpha\approx_{\may}\alpha'$ and $\sigma\approx_{\may}\tau$ then $\sigma;\alpha \approx_{\may} \tau;\alpha'$.  
 Therefore, the Full Abstraction result we have just proved applies to the quotiented category.
 
 The definition of the relation $\approx_{\may}$ suggests that we might forget about the $\oc X$ component of a strategy $\sigma\from\oc X \implies A$ altogether, and consider only the set $\sigma\vert_A$.  
@@ -1667,13 +1667,19 @@ We now extend our earlier definitions using the new $\mustconverge$ rule.
 We write $M\emam N$ if $M\equiv_{\may} N$ and $M\equiv_{\must} N$.
 
 \begin{definition}
-  Given morphisms $\sigma,\tau\from A \to B$ in $\G_X$, considered as morphisms $1 \to (A \to B)$, we write $\sigma\sim_{\must}\tau$ if whenever $\alpha\from (A \to B) \to \bC$ is a morphism in $\G_X$ and $w\in X^\omega$ is an infinite sequence, then $\alpha;\sigma\downarrow_{\must}$ if and only if $\alpha;\tau\downarrow_{\must}$.
+  Given morphisms $\sigma,\tau \from 1 \to \bC$ in $\G_X$, we write $\sigma\approx_{\must}\tau$ if $\sigma\downarrow_{\must}$ and $\tau\downarrow_{\must}$ or if $\sigma\not\downarrow_{\must}$ and $\tau\not\downarrow_{\must}$.  
+\end{definition}
+
+We write $\sigma\amam \tau$ if $\sigma\approx_{\may}\tau$ and $\sigma\approx_{\must}\tau$.
+
+\begin{definition}
+  Given morphisms $\sigma,\tau\from A \to B$ in $\G_X$, considered as morphisms $1 \to (A \to B)$, we write $\sigma\sim_{\must}\tau$ if whenever $\alpha\from (A \to B) \to \bC$ is a morphism in $\G_X$, then $\sigma;\alpha\approx_{\must}\tau;\alpha$.
 \end{definition}
 
 We write $\sigma\smam \tau$ if $\sigma\sim_{\may}\tau$ and $\sigma\sim_{\must} \tau$.
 
 \begin{remark}
-  In the category of games we can simplify this to saying that $\alpha;\sigma\approx_{\may}\alpha;\tau$ and that either $\alpha;\sigma$ and $\alpha;\tau$ are both winning, or neither is.
+  In the category of games we can simplify this to saying that $\sigma;\alpha\approx_{\may}\tau;\alpha$ and that either $\sigma;\alpha$ and $\tau;\alpha$ are both winning, or neither is.
 \end{remark}
 
 Now we might expect to be able to prove a full abstraction result as before, namely that $\deno M\smam \deno N$ if and only if $M\emam N$.  
@@ -1850,15 +1856,188 @@ At the extreme, if the category $\G$ satisfies the property (universality) that 
 \begin{proof}
   See the proof of Theorem \ref{FullAbstractionFiniteNondeterminism} for the proof that if $\deno M \smam \deno N$ then $M\emam N$.  
 
-  Conversely, if $\deno M \not\smam \deno N$, then without loss of generality there is some $\alpha\from\deno T \to \bC$ such that $\alpha;\deno M \downarrow_{\must}$ and $\alpha;\deno N\not\downarrow_{\must}$.  
-  But by universality $\alpha;\deno M = \deno{LM}$ and $\alpha;\deno N=\deno{LN}$ for some term $L\from T \to \com$ of IA.  
+  Conversely, if $\deno M \not\smam \deno N$, then without loss of generality there is some $\alpha\from\deno T \to \bC$ such that $\deno M;\alpha \downarrow_{\must}$ and $\deno N;\alpha\not\downarrow_{\must}$.  
+  But by universality $\deno M;\alpha = \deno{LM}$ and $\deno N;\alpha=\deno{LN}$ for some term $L\from T \to \com$ of IA.  
   Therefore, the result follows from Corollary \ref{CorAdeqMust}.
 \end{proof}
 
-\begin{example}
-  It was proven in \cite{hoPcf} that every innocent strategy between the denotations of PCF types is innocently intrinsically equivalent to the denotation of some term of PCF.  
-  A sharper result (unpublished, but see \cite[\sec 7.1.5]{LongleyBook}), which allows us to forget the intrinsic equivalence part, is that every innocent strategy between the denotations of PCF terms is the denotation of some term of the language formed by augmenting PCF with a constant called $\lett$ or $\byval$ whose 
+The next step is to find an example of such a $\G$, which we will do by cutting down the set of strategies in our category of games to those that are in some sense computable.  
+The first step is to fix an enumeration $e_A\from M_A \to \bN$ of the moves of each game $A$.  
+We do this for the ground type games and then extend to the connectives.  
+For example:
+\begin{mathpar}
+  e_{\bC}(q)=0
+  \and
+  e_{\bC}(a)=1
+  \and
+  e_{\bB}(q)=0
+  \and
+  e_{\bB}(\true)=1
+  \and
+  e_{\bB}(\false)=2
+  \\
+  e_{\bN}(q)=0
+  \and
+  e_{\bN}(n)=n+1
+  \and
+  e_{\Var}(q)=0
+  \and
+  e_{\Var}(n)=3n+1
+  \and
+  e_{\Var}(q_n)=3n+2
+  \and
+  e_{\Var}(a_n)=3n+3
+  \\
+  e_{A\tensor B}(\inj_A(a))=2e_A(a)
+  \and
+  e_{A\tensor B}(\inj_B(b))=2e_B(b)+1
+\end{mathpar}
+...and so on.
 
+We can extend the enumeration of moves to an enumeration of (justified) plays in $A$.  
+We then say that a strategy $\sigma$ is \emph{recursive} if it is a recursively enumerable subset of $P_A$.
+Recursive visible strategies give us a Cartesian closed subcategory of the original category of games and visible strategies.
+
+We now appeal to some results about these recursive strategies.  
+For example, the following was proved in \cite{hoPcf}.
+
+\begin{theorem}[Universality for PCF]
+  Let $A$ be the denotation of a PCF type $T$
+  Then every recursive innocent strategy for $A$ is innocently intrinsically equivalent to the denotation of some PCF term $M\from T$.
+\end{theorem}
+
+This result is not quite enough for us, since the innocent intrinsic equivalent is coarser than that for visible strategies.  
+Instead, we appeal to the following result, which gives us definability \emph{on the nose}.  
+For this result, we need to extend PCF with a new constant $\lett$ or $\byval$ where the semantics of $\lett x = M\inn N$ is to evaluate the term $M$ and bind the result to the free variable $x$ in $N$.
+
+\begin{theorem}[{Unpublished, but see \cite[\sec 7.1.5]{LongleyBook}}]
+  Let $A$ be the denotation of a PCF type $T$.
+  Then every recursive innocent strategy for $A$ is the denotation of a term $M\from T$ of PCF+$\lett$.
+\end{theorem}
+
+We can interpret $\lett$ in Idealized Algol by defining
+\[
+  \lett x = M \inn N
+  \]
+to be the term
+\[
+  \neww (\lambda x. x\gets M;N[\oc x/x])\,.
+  \]
+Moreover, these results are all easily extended to the IA ground types that are not present in PCF.  
+So we see that any recursive innocent $\sigma\from \deno T$ is the denotation of some Idealized Algol term $M \from T$.
+
+Lastly, we observe that our innocent factorization result (Proposition \ref{PropInnocentFactorization}) will always produce a recursive innocent strategy if the original strategy is recursive.  
+It follows, then, that any recursive \emph{visible} $\sigma\from \deno T$ is the denotation of some Idealized Algol term $M \from T$.
+Thus, the category $\G^{rec}$ of games and recursive visible strategies is universal for Idealized Algol, and thus its Kleisli category $\G^{rec}_X$ is fully abstract for \IAX.
+
+As an application of this fully abstract semantics, we clear up a loose end from the proof of Propostion \ref{PropNotFullyAbstract}.
+
+\begin{lemma}
+  The terms $M,N\from (\nat \to \nat) \to \com$, as defined in the proof of Propostion \ref{PropNotFullyAbstract}, are observationally equivalent in Idealized Algol with countable nondeterminism.
+\end{lemma}
+\begin{proof}
+  The denotations for $M$ and $N$ both have maximal plays that look like this:
+  \[
+    \begin{array}{cccc}
+      \bN & \bN & \bN & \bC \\
+          &     &     &  q  \\
+       q  &     &     &     \\
+       p  &     &     &     \\
+          &     &  q  &     \\
+          &  q  &     &     \\
+          &  p  &     &     \\
+          &     &  c  &     \\
+       q  &     &     &     \\
+       n  &     &     &     \\
+          &     &     & (a)
+    \end{array}\,.
+    \]
+  Here, the copy of $\bN$ on the left denotes the nondeterministic oracle given by the Kleisli category.  
+  The final move $a$ is in brackets to indicate that it does not always occur, depending on the moves that have gone before.
+
+  More specifically, in $\deno M$, the final move $a$ always occurs unless the number $p$ is the encoding of a term $P\from\nat \to \nat$ of Idealized Algol such that the evaluation $P\;p$ converges in fewer than $n$ steps to a number different from $c+1$.
+
+  Meanwhile, the final move $a$ is present in $\deno N$ if and only if the number $n$ is equal to $0$.
+  Since an evaluation $P\;p$ will never converge in fewer than $0$ steps, this means that $\deno N$ is a subset of $\deno M$.
+
+  Fix some strategy $\alpha\from ((\bN \to \bN)\to\bC) \to \bC$ in $\G_X$ and suppose that
+  \[
+    \deno M;\alpha\not\amam \deno N;\alpha\,.
+    \]
+  To show that $M$ and $N$ are observationally equivalent, it will be sufficient to prove that $\alpha$ is not recursive.
+
+  First note that we always have $\deno M;\alpha\approx_{\may}\deno N;\alpha$ for arbitrary $\alpha$, which we can deduce by ignoring the copy of $\bN$ on the left and considering $\deno M$ and $\deno N$ as nondeterministic strategies.  
+  In this setting, $\deno M$ and $\deno N$ are equal, since both have maximal plays of the form
+  \[
+    \begin{array}{ccc}
+      \bN & \bN & \bC \\
+          &     &  q  \\
+          &  q  &     \\
+       q  &     &     \\
+       p  &     &     \\
+          &  c  &     \\
+          &     & a
+    \end{array}\,,
+    \]
+  where $p$ is arbitrary.  
+
+  Therefore, we must have $\deno M;\alpha \not\approx_{\must}\deno N;\alpha$.
+
+  Since $\deno N \subseteq \deno M$, it must be the case that $\deno M;\alpha\downarrow_{\must}$ and $\deno N;\alpha\not\downarrow_{\must}$; i.e., that $\deno M;\alpha$ is a winning strategy, when considered as a strategy $\bN \to \bC$ in $\G$, but $\deno N;\alpha$ is not.
+
+  Since $\deno M$ and $\deno N$ do not differ until the very last move, this means that $\alpha$ must respond to the initial move $q$ in the rightmost copy of $\bC$ with the move $q$ in the copy of $\bC$ on the left (otherwise, $\deno N;\alpha$ is winning), and that $\alpha$ must be total (otherwise, $\deno M;\alpha$ is not winning).
+  Then we see that for any value of $p$, $\alpha$ must reply to the move $p$ with the number $\phi(p)$, where $\phi$ is the number defined above.  
+  Otherwise, $\deno M;\alpha$ is not winning.
+
+  But if $\alpha$ is a recursively enumerable subset of $P_{\bN \to ((\bN \to \bN) \to \bC) \to \bC}$, then that would mean that the set of pairs $(p,\phi(p))$ were a recursively enumerable subset of $\bN \times \bN$, and this is not the case, since $\phi$ is not a recursive function.  
+  Therefore, $\alpha$ is not recursive.  
+
+  It follows that $M$ and $N$ are observationally equivalent in Idealized Algol with countable nondeterminism under may-and-must testing.
+\end{proof}
+
+Note that we certainly have $\sigma_\phi;\deno M\downarrow_{\must}$, while $\sigma_\phi;\deno N\not\downarrow_{\must}$, demonstrating that the recursivity requirement is essential to the full abstraction result in this case.
+
+\subsection{The intrinsic equivalence relation in $\G_X$}
+
+We conclude this section by examining the intrinsic equivalence relation in $\G_X$.
+
+\begin{proposition}
+  Let $\sigma,\tau\from A \to B$ be two morphisms in $\G_X$,
+  If $\sigma\sim\tau$ when considered as morphisms $X \to (A \to B)$ in $\G$, then $\sigma\sim\tau$ in $\G_X$.
+\end{proposition}
+\begin{proof}
+  Suppose that $\alpha$ separates $\sigma$ and $\tau$ in $\G_X$, so without loss of generality, we have
+  \begin{mathpar}
+    1 \xrightarrow{(\sigma;\alpha)}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC = \bot
+    \and
+    1 \xrightarrow{(\tau;\alpha)}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC \ne \bot
+  \end{mathpar}
+  for some $u$.  
+  Expanding the Kleisli compositions $\sigma;\alpha$ and $\tau;\alpha$, we get
+  \begin{mathpar}
+    \sigma;(X \to \alpha);\mu;\eta_u;\deno{\neww};t_{|u|} = \bot
+    \\
+    \tau;(X \to \alpha);\mu;\eta_u;\deno{\neww};t_{|u|} \ne \bot\,,
+  \end{mathpar}
+  and so $(X\to\alpha);\mu;\eta_u;\deno{\neww};t_{|u|}$ distinguishes $\sigma$ and $\tau$, when considered as morphisms $X \to (A \to B)$ in $\G$.
+\end{proof}
+
+As a special case, if $\sigma,\tau\from A \to B$ are morphisms in $\G$, then $\sigma\sim\tau$ in $\G$ if and only if $J\sigma\sim J\tau$ in $\G_X$.  
+Combined with our Full Abstraction results, this tells us that \IAX is a conservative extension of Idealized Algol.
+
+What is more, we have
+\[
+  \sigma \sim \tau \Rightarrow J\sigma \sim J\tau \Rightarrow J\sigma \smam J\tau \Rightarrow \sigma\sim\tau\,.
+  \]
+This proves that the finite and countable nondeterministic variants of Idealized Algol are conservative extensions of Idealized Algol.
 \bibliographystyle{alpha}
 \bibliography{../common/phd_bibliography}
 

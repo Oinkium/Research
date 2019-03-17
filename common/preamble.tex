@@ -404,9 +404,9 @@
 \newcommand{\Y}{\mathbf{Y}}
 \newcommand{\opto}{\longrightarrow}
 \newcommand{\n}{{\mathtt{n}}}
-\DeclareMathOperator{\IfO}{{\mathtt{If0}}}
-\DeclareMathOperator{\suc}{{\mathtt{succ}}}
-\DeclareMathOperator{\pred}{{\mathtt{pred}}}
+\DeclareMathOperator{\IfO}{{\mathsf{If0}}}
+\DeclareMathOperator{\suc}{{\mathsf{succ}}}
+\DeclareMathOperator{\pred}{{\mathsf{pred}}}
 \newcommand{\0}{{\mathtt{0}}}
 
 \newcommand{\iter}{{\mathtt{iter}}}
@@ -419,6 +419,7 @@
 \newcommand{\emam}{\mathrel{\equiv_{m\&m}}}
 \newcommand{\lst}{\mathrel{\lesssim}}
 \newcommand{\smam}{\mathrel{\sim_{m\&m}}}
+\newcommand{\amam}{\mathrel{\approx_{m\&m}}}
 
 \newcommand{\oes}{\sim}
 
@@ -604,9 +605,10 @@
 \DeclareMathOperator{\must}{must}
 
 \newcommand{\encode}[1]{\lceil#1\rceil}
-\DeclareMathOperator{\app}{\textsf{app}}
-\DeclareMathOperator{\lett}{\mathtt{let}}
-\DeclareMathOperator{\byval}{\mathtt{byval}}
+\DeclareMathOperator{\app}{\mathsf{app}}
+\DeclareMathOperator{\lett}{\mathsf{let}}
+\newcommand{\inn}{\mathrel{\mathsf{in}}}
+\DeclareMathOperator{\byval}{\mathsf{byval}}
 
 %%% END Article customizations
 
