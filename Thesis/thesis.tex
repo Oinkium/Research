@@ -9,7 +9,7 @@
 \begin{document}
 
 \section{Monads and Kleisli categories}
-\ref{SecMonads}
+\label{SecMonads}
 
 \subsection{Monads}
 
@@ -786,7 +786,7 @@ First recall the statement of Computational Adequacy for $\G$:
   \[
     \inferrule*
     {
-      \inferrule*
+      \inferrule*[sep=1.7em]
       {
         \inferrule*[left={Lem. \ref{LemSoundness}}]
         {
@@ -1158,22 +1158,22 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
   More specifically, these composites are given by the composites
   \begin{mathpar}
     1 \xrightarrow{\deno M}
-    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
-    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
-    (\bC \to \bC)
+    (X \to \deno T) \xrightarrow{X \to \alpha}
+    (X \to (X \to \bC)) \xrightarrow{\mu}
+    (X \to \bC)
     \and
     1 \xrightarrow{\deno N}
-    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
-    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
-    (\bC \to \bC)
+    (X \to \deno T) \xrightarrow{X \to \alpha}
+    (X \to (X \to \bC)) \xrightarrow{\mu}
+    (X \to \bC)
   \end{mathpar} 
   in $\G$, where $\mu$ indicates precomposition with the diagonal.
 
-  Now $\alpha$ is the least upper bound of its compact approximans, so it follows that there is some compact $\alpha'\subseteq \alpha$ such that
+  Now $\alpha$ is the least upper bound of its compact approximants, so it follows that there is some compact $\alpha'\subseteq \alpha$ such that
   \begin{mathpar}
-    \deno M;(\bC \to \alpha');\mu;\eta_u;\deno{\neww};t_{|u|} \ne \bot
+    \deno M;(X \to \alpha');\mu;\eta_u;\deno{\neww};t_{|u|} \ne \bot
     \and
-    \deno N;(\bC \to \alpha');\mu;\eta_u;\deno{\neww};t_{|u|} = \bot\,.
+    \deno N;(X \to \alpha');\mu;\eta_u;\deno{\neww};t_{|u|} = \bot\,.
   \end{mathpar}
   Then, by compact definability in $\G$, $\alpha'$ is the denotation of some IA term $x\from T \ts C[x]\from X \to \com$, which is therefore the denotation of the term $x\from T \ts C[x]\,\ask_X \from \com$ in $\G_X$.
   So we get
@@ -1276,7 +1276,7 @@ So we get the following alternative definition of may convergence.
 
 We can reflect this operational relation in the semantics by modifying the definition of intrinsic equivalence.  
 
-Firstly, an obvious consequence of Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy} is that we have
+Firstly, an obvious consequence of Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy} is that
 
 \begin{corollary}
   Let $M\from\com$ be a closed term of \IAX.  
@@ -1289,7 +1289,7 @@ Firstly, an obvious consequence of Propositions \ref{PropKleisliSoundness} and \
     \bN \xrightarrow{t_{|u|}}
     \bC
     \]
-  if and only if
+  is not equal to $\bot$, if and only if
   \[
     ,()\ts M \converges \skipp,()\,.
     \]
@@ -1438,7 +1438,7 @@ We shall define this indirectly via its negation.
   \[
     \Gamma,s\ts M\diverges
     \]
-  between $\Var$-contexts $\Gamma$, $\Gamma$-stores $s$ and terms $\Gamma\ts M\from T$ of Idealized Algol.
+  ($M$ `may diverge') between $\Var$-contexts $\Gamma$, $\Gamma$-stores $s$ and terms $\Gamma\ts M\from T$ of Idealized Algol.
 
   The rules for this relation may be deduced from the rules for Idealized Algol.  
   If
@@ -1446,8 +1446,418 @@ We shall define this indirectly via its negation.
     \inferrule{\Gamma,s^{(0)}\ts M_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges c_n,s^{(n)}}
     {\Gamma,s^{(0)} \ts M \converges c,s^{(n)}}\,,
     \]
-  is an IA rule, then
+  is an IA rule, then for each $j=1,\cdots,n$ we have a rule
+  \[
+    \inferrule*[sep=1.9em]{\Gamma,s^{(0)}\ts M_1 \converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges}
+    {\Gamma,s^{(0)} \ts M \diverges}\,.
+    \]
+  In other words, if the evaluation of the term $M$ diverges at any step, then the whole thing diverges.  
+  Note that since the rules for the canonical forms have no premises, there are no rules relating them to the $\diverges$ predicate.
+
+  Crucially, these rules are interpreted not inductively but coinductively; in other words, the derivation trees for $\diverges$ are allowed to have infinite height.
+  Indeed, since every rule for $\diverges$ has at least one premise, any valid tree must be infinitely tall.
+
+  If there is no such derivation tree, then we say that $M$ \emph{must converge}, and write $\Gamma,s\ts M\mustconverge$.
+  \label{DefMayDivergence}
 \end{definition}
+
+\begin{example}
+  If $\Gamma\ts c$ is a canonical form, then $\Gamma\ts c\mustconverge$, since there is no inference that we can apply that will yield the term $\Gamma\ts c\diverges$ on the bottom.
+\end{example}
+
+\begin{example}
+  $,()\ts \Y(\lambda x.x)\diverges$ because it has the following infinite derivation tree.
+  \[
+    \inferrule*
+    {
+      \inferrule*
+      {
+        \inferrule*
+        {
+        }
+        {
+          ,()\ts (\lambda x.x) \converges (\lambda x.x),()
+        }
+        \\
+        \inferrule*
+        {
+          \vdots
+        }
+        {
+          ,() \ts \Y(\lambda x.x)\diverges
+        }
+      }
+      {
+        ,()\ts (\lambda x.x)(\Y(\lambda x.x)) \diverges
+      }
+    }
+    {
+      ,()\ts \Y(\lambda x.x)\diverges
+    }
+    \]
+\end{example}
+
+It is possible to characterize the $\mustconverge$ directly via an inductive relation (see \cite{RusssThesis}, for instance).  
+We will give an alternative definition that will relate it to our existing rules $\converges_u$.
+
+\begin{definition}
+  We say that $\Gamma,s\ts M\mustconverge$ if for every infinite sequence $w\in X^\omega$ there is some finite prefix $u\pprefix w$ such that $\Gamma,s\ts M\converges_u c,s'$ for some canonical form $c$ and some $\Gamma$-store $s'$.
+  \label{DefMustConvergence}
+\end{definition}
+
+Before we show that the two definitions are equivalent, we shall examine why this one makes sense.  
+Recall that we said that the statement $\Gamma,s\ts M\converges_u c,s'$ meant that $M$ will converge to $c$ in the case that the values we obtain by querying the nondeterministic oracle form the sequence $u$.  
+Our initial thought, then, might be to say that $\Gamma,s\ts M\mustconverge$ if for all $u\in X^*$, $\Gamma,s\ts M\converges_u c,s'$ for some $c,s'$, but this is not the case.  
+For example, if we have
+\[
+  M = \If \ask_\bB \Then \true \Else \false\,,
+  \]
+then $M\converges_\true \true$ and $M\converges_\false \false$.  
+However, it is not the case that $M\converges_\epsilon c$, nor that $M\converges_{\true\false\false\true\false}c$ for any $c$.
+Instead, we should think of the nondeterministic oracle as a promise to provide us with some infinite sequence of elements of $X$, only some of which we will use to converge.
+
+\begin{proposition}
+  The two definitions of the $\mustconverge$ predicate given in Definitions \ref{DefMayDivergence} and \ref{DefMustConvergence} are equivalent.
+\end{proposition}
+\begin{proof}
+  Suppose that $\Gamma,s\ts M\diverges$.  
+  We coinductively construct a sequence $w\in X^\omega$ such that $\Gamma,s\ts M\not\converges_u c,s'$ for any finite prefix $u\pprefix w$ and any $c,s'$.
+  We shall use the notation $\Gamma,s\ts M\diverges^w$ to indicate this $w$.
+
+  Given any rule
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1 \converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges}
+    {\Gamma,s^{(0)} \ts M \diverges}\,,
+    \]
+  by our definition of $\converges$, there are $u_1,\cdots,u_{j-1}\in X^*$ such that $\Gamma,s^{(i-1)}\ts M_i\converges_{u_i}c_i,s^{(i)}$ for each $i=1,\cdots,j-1$.  
+
+  The corresponding coinductive rule is then
+  \[
+    \inferrule*[sep=8pt]{\Gamma,s^{(0)}\ts M_1 \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges_{u_{j-1}} c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges^w}
+    {\Gamma,s^{(0)} \ts M \diverges^{u_1\cat \cdots \cat u_{j-1}\cat w}}\,.
+    \]
+  In other words, the sequence $w$ at the bottom of the tree may be characterized as the concatenation of all the sequences $u$ constructed for the $\converges$ relation in the tree, working bottom to top and left to right.
+  If the $w$ so formed is a finite sequence, then pad it with arbitrary values so that it becomes infinite.
+
+  Now suppose that $u\pprefix w$ is some finite prefix such that $\Gamma,s\ts M\converges_u c,s'$ for some $c,s'$.  
+  We claim that $\Gamma,s\ts M\not\diverges$, giving us a contradiction.  
+
+  The proof of the claim is via induction on the derivation of $\Gamma,s\ts M\converges_u c,s'$.  
+
+  Suppose that the last rule takes the form
+  \[
+    \inferrule*{\Gamma,s^{(0)}\ts M_1\converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges_{u_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges_{u_1\cat \cdots\cat u_n} c,s^{(n)}}\,.
+    \]
+  Then inspection of the IA rules tells us that the last step in our derivation of $\Gamma,s^{(0)} \ts M\diverges$ must look like
+  \[
+    \inferrule*[sep=8pt]{\Gamma,s^{(0)}\ts M_1 \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges_{u_{j-1}} c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges^w}
+    {\Gamma,s^{(0)} \ts M \diverges^{u_1\cat \cdots \cat u_{j-1}\cat w}}
+    \]
+  \emph{for the same $M_i$ and $c_i$}.
+  But we had $\Gamma,s^{(j-1)}\ts M_j\converges_{u_j} c_j,s^{(j)}$.  
+  By hypothesis, $u_1\cat \cdots \cat u_n$ is a finite prefix of $u_1 \cat \cdots \cat u_{j-1} \cat w$, and so $u_j$ is a finite prefix of $w$.  
+  Therefore, by the inductive hypothesis applied to $M_j$, we cannot have $\Gamma,s^{(j-1)}\ts M_j\diverges$, leading to the desired contradiction.
+
+  For the converse, define an \emph{$n$-truncated} derivation tree to be a derivation tree of height $n$ such that the premises of the form $\Gamma,s\ts M\diverges^w$ may occur at the top level without proof.  
+  Then we define a family of functions $(F_i \suchthat i \ge 0)$ that take an infinite sequence $w\in X^\omega$ and a triple $\Gamma,s\ts M$ and returns either a proof of height $\le i$ of $\Gamma,s\ts M\converges_u c,s'$ for some $u\pprefix w$, or some $i$-truncated proof of $\Gamma,s\ts M\diverges^v$ for some (possibly infinite) $v\prefix w$.
+
+  For $i=0$, $F(w,\Gamma,s\ts M)$ is the tree of the form
+  \[
+    \Gamma,s\ts M\diverges^w\,,
+    \]
+  where this statement is treated as an unproven (and in many cases untrue) hypothesis.
+
+  Now we define $F_{i+1}(w,\Gamma,s\ts M)$ as follows.  
+  If $M$ is a canonical form, then $F_{i+1}(w,\Gamma,s\ts M)$ is the derivation.
+  \[
+    \inferrule*{ }{\Gamma,s\ts M\converges_\epsilon M,s}\,.
+    \]
+  If $M=\ask_X$, then $F_{i+1}(w,\Gamma,s\ts M)$ is the derivation
+  \[
+    \inferrule*{ }{\Gamma,s\ts M\converges_{w^{(0)}} w^{(0)},s}\,.
+    \]
+  Otherwise, based on the structure of $M$, we choose a first premise $M_1$ for $M$.  
+  In most cases, there is a unique \IAX rule that applies to $M$, but sometimes (i.e., if $M$ is $\pred M'$, $\If M' \Then N' \Else P'$, $\IfO M' \Then N' \Else P'$, $!V$ or $V\gets E$) there may be more than one possible rule.  
+  However, in all of these cases, the first premise of each rule is the same.  
+  For instance, if $M=\If M' \Then N' \Else P'$ then the first premise of both the possible IA rules is $M'$, and the value that this converges to then determines which instance of the $\If$ rule we use.
+
+  We evaluate $F_i(w,\Gamma,s\ts M_1)$.  
+  If $F_i(w,\Gamma,s\ts M_1)$ is a complete proof that $\Gamma,s\ts M_1 \converges_{u_1} c_1,s^{(1)}$ for $u\pprefix w$, then write $w=u_1w_2$ and move on to the next premise, computing $F_i(w_2,\Gamma,s\ts M_2)$.  
+  Note that now the value of $c_1$ completely determines the \IAX rule we are using; for example, if $M=\If M' \Then N' \Else P'$, and $\Gamma,s\ts M' \converges_{u} c,s'$, then $c$ is either $\true$ or $\false$, and there is a unique \IAX rule that applies in each case.
+
+  We keep going through the premises of $M$ in order.  
+  If we satisfy them all, so that $F_i(w_i,\Gamma,s^{(i-1)} \ts M_i)$ is a proof that $\Gamma,s^{(i-1)} \ts M_i \converges_{u_i} c_i,s^{(i)}$ for each $M_i$, then we can put these together to get a derivation of
+  \[
+    \Gamma,s \ts M\converges_{u_1\cat \cdots \cat u_n} c,s^{(n)}\,,
+    \]
+  of height $\le i+1$, where $u_1\cat \cdots \cat u_n$ is a finite prefix of $w$.
+  
+  Otherwise, at some point $F_i(w,\Gamma,s^{(j-1)}\ts M_j)$ must be an $i$-truncated proof that
+  \[
+    \Gamma,s^{(j-1)}\ts M_j\diverges^v
+    \]
+  for some $v\prefix w$.
+  In that case, since we have a proof of height $\le i$ for $\Gamma,s^{(k-1)}\ts M_k \converges_{u_k} c_k,s^{(k)}$ for each $k<j$, we can apply the appropriate rule for $\diverges^v$ to get an $(i+1)$-truncated proof that
+  \[
+    \Gamma,s\ts M\diverges^{u_1\cat \cdots \cat u_{j-1} \cat v}\,,
+    \]
+  where $u_1\cat \cdots \cat u^{j-1} \cat v$ is a prefix of $w$.
+
+  Now, given $w$ and $\Gamma,s\ts M$, either $F_m(\Gamma,s\ts M)$ is a proof that $\Gamma,s\ts M\converges_u c,s'$ for $u\pprefix w$ and $m$ sufficiently large, or the $F_i(w,\Gamma,s\ts M)$ form an infinite sequence of trees of increasing height that all extend one another.  
+  In the second case, we can stitch the trees together to form an infinite derivation tree for $\Gamma,s\ts M\diverges$.
+
+  It follows that if there is some $w$ such that $\Gamma,s\ts M\not\converges_u c,s'$ for any finite prefix $u\pprefix w$, then there is an infinite derivation tree for $\Gamma,s\ts M\diverges$.
+\end{proof}
+
+We therefore get an adequacy result for must testing.
+
+\begin{definition}
+  Given a morphism $\sigma\from 1\to\bC$ in $\G_X$, considered as a morphism $X \to \bC$ in $\G$, we write $\sigma\downarrow_{\must}$ if whenever $w\in X^\omega$ is an infinite sequence, then $w$ has a finite prefix $u$ such that the composite
+  \[
+    1 \xrightarrow{\sigma}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.
+\end{definition}
+
+\begin{corollary}
+  Let $M\from \com$ be a closed term of \IAX and consider the denotation $\deno M \from 1 \to \bC$ in $\G_X$ as a morphism $1 \to (X \to \bC)$ in $\G$.
+  Then $,()\ts M\mustconverge$ if and only if $\deno{M}\downarrow_{\must}$.
+  \label{CorAdeqMust}
+\end{corollary}
+
+Once again, this slightly abstruse result becomes much more natural when $\G$ is the category of games, though in this case things are a bit more subtle.  
+Let $\sigma$ be a strategy for $\oc X \implies \bC$.  
+We observed earlier that $\sigma;\eta_u;\deno{\new};t_{|u|}\neq\bot$ if and only if the sequence
+\[
+  q(qu^{(i)})_{i=0}^{|u|-1} a
+  \]
+is contained in $\sigma$, so consider what it means if we say that such a sequence is not contained in $\sigma$ for any $u\pprefix w$.  
+By the definition of a strategy, there are two reasons why this might happen.  
+Either there is a partiality in the strategy, so that for some finite $v\pprefix w$, player $P$ has no reply at all to the $O$-position
+\[
+  q(qv^{(i)})_{i=0}^{|v|-1}\,.
+  \]
+Or, $\sigma$ contains an infinite increasing sequence of plays, whose limit is the infinite sequence
+\[
+  q(qw^{(i)})_{i=0}^\infty\,.
+  \]
+\begin{definition}
+  We say that a strategy $\sigma\from \oc X \implies \bC$ is \emph{winning} if every finite play in $\sigma$ is contained inside some complete play; i.e., if $\sigma$ is total and contains no infinite plays.
+\end{definition}
+
+We have shown the following adequacy result.
+\begin{corollary}
+  Let $M\from \com$ be a closed term of \IAX and consider the denotation $\deno M \from 1 \to \bC$ in $\G_X$ as a morphism $X \to \bC$ in $\G$.
+  Then $,()\ts M\mustconverge$ if and only if this strategy is winning.
+\end{corollary}
+
+\subsection{Full Abstraction for Nondeterminism and Must Testing}
+
+We now extend our earlier definitions using the new $\mustconverge$ rule.
+
+\begin{definition}
+  Given closed terms $M,N\from T$ of \IAX, we write $M\equiv_{\must} N$, if for all contexts $-\from T\ts C[-]\from\com$, $C[M]\mustconverge$ if and only if $C[N]\mustconverge$.
+\end{definition}
+
+We write $M\emam N$ if $M\equiv_{\may} N$ and $M\equiv_{\must} N$.
+
+\begin{definition}
+  Given morphisms $\sigma,\tau\from A \to B$ in $\G_X$, considered as morphisms $1 \to (A \to B)$, we write $\sigma\sim_{\must}\tau$ if whenever $\alpha\from (A \to B) \to \bC$ is a morphism in $\G_X$ and $w\in X^\omega$ is an infinite sequence, then $\alpha;\sigma\downarrow_{\must}$ if and only if $\alpha;\tau\downarrow_{\must}$.
+\end{definition}
+
+We write $\sigma\smam \tau$ if $\sigma\sim_{\may}\tau$ and $\sigma\sim_{\must} \tau$.
+
+\begin{remark}
+  In the category of games we can simplify this to saying that $\alpha;\sigma\approx_{\may}\alpha;\tau$ and that either $\alpha;\sigma$ and $\alpha;\tau$ are both winning, or neither is.
+\end{remark}
+
+Now we might expect to be able to prove a full abstraction result as before, namely that $\deno M\smam \deno N$ if and only if $M\emam N$.  
+In the case of finite nondeterminism, this is possible.
+
+\begin{theorem}
+  Let $M,N\from T$ be closed terms of IA${}_{\bB}$.
+  Then $M\emam N$ if and only if $\deno M\smam \deno N$.
+  \label{FullAbstractionFiniteNondeterminism}
+\end{theorem}
+\begin{proof}
+  We already know that $\deno M\sim_{\may}\deno N$ if and only if $M$ and $N$ are may-contextually equivalent, so it is sufficient to prove that $\deno M\sim_{\must}\deno N$ if and only if $M\equiv_{\must}N$.
+
+  One direction is easy, as usual.  
+  Suppose that $\deno M\sim_{\must} \deno N$, and let $C[-]$ be a context.  
+  Suppose that $C[M]\mustconverge$, and fix $w\in X^\omega$.
+  Then $\deno{C[M]} = \deno{C};\deno{M}$, so there is some finite prefix $u\pprefix w$ such that the composite
+  \[
+    1 \xrightarrow{\deno{C};\deno{M}}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.  
+  Since $M\sim_{\must} N$, there is some finite prefix $v\pprefix w$ such that the composite
+  \[
+    1 \xrightarrow{\deno{C};\deno{N}}
+    (X \to \bC) \xrightarrow{\eta_v}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|v|}}
+    \bC
+    \]
+  is not equal to $\bot$, and therefore $C[N]\mustconverge$.  
+  The other direction is completely symmetric.
+
+  The converse is harder.  
+  Let $\alpha \from \deno{T} \to \bC$ be an arbitrary morphism.
+  Suppose that for all $w\in \bB^\omega$ there is some finite $u\pprefix w$ such that the composite
+  \[
+    \deno{M};(X \to \alpha);\mu;\eta_u;\deno{\neww};t_{|u|}
+    \]
+  is not equal to $\bot$.  
+  Let $V$ be the set of all sequences $v\in \bB^*$ such that $v$ has no prefix $u$ with this property.  
+  Then by hypothesis $V$ is a finitely branching tree with no infinite path so, by K\"{o}nig's Lemma, it is finite.  
+  Therefore, there is some finite set of sequences $U\subset \bB^*$ such that for every sequence $w\in \bB^\omega$, $w$ has some prefix $u\in U$ satisfying the condition above.
+
+  Since $\G$ is enriched in algebraic cpos, for each $u\in U$ there is some compact $\alpha^u\subset\alpha$ such that
+  \[
+    \deno{M};(X \to \alpha^u);\mu;\eta_u;\deno{\neww};t_{|u|}
+    \]
+  is not equal to $\bot$.  
+  Since the set of compact elements below $\alpha$ is directed, there is some compact $\alpha'\subset\alpha$ such that $\alpha^u\subset\alpha'$ for each $u\in U$.  
+
+  So we now know that: for any infinite sequence $w\in \bB^\omega$, there is some finite prefix $u\pprefix w$ such that the composite
+  \[
+    \deno{M};(X \to \alpha');\mu;\eta_u;\deno{\neww};t_{|u|}
+    \]
+  is not equal to $\bot$.  
+  Now if $\deno N\not\sim_{\must}\deno M$, then there is some infinite $w\in \bB^\omega$ is such that for every $v\pprefix w$ the composite
+  \[
+    \deno{N};(X \to \alpha);\mu;\eta_v;\deno{\neww};t_{|v|}
+    \]
+  is equal to $\bot$; since $\alpha'\subset \alpha$, the same is true if we replace $\alpha$ with $\alpha'$.
+
+  Now, since $\alpha'$ is compact, it is definable as a term in IA and hence as a term $L$ in IA${}_\bB$.  
+  By Corollary \ref{CorAdeqMust}, this means that $L M \mustconverge$, while $L N\diverges$, so $M\not\equiv_{\must}N$.
+\end{proof}
+
+Now clearly this last result depends on finiteness of $\bB$, since we may have infinite trees with no infinite path if the trees are allowed to be infinitely branching.
+The next result shows that if we replace $\bB$ with $\bN$, then we cannot hope to obtain such a full abstraction result.
+
+\begin{proposition}
+  Let $\C$ be a category that admits a computationally adequate denotational semantics of IA${}_\bN$.  
+  Suppose that the natural number datatype is denoted by an object $\bN$ of $\C$ and that for all functions $f \from \bN \to \bN$ in $\Set$ there is a morphism
+  \[
+    \sigma_f \from \bN \to \bN
+    \]
+  in $\C$ such that for all $n\in \bN$, 
+  \[
+    \deno{n};\sigma_f = \deno{f(n)}\,.
+    \]
+  Then $\C$ is not fully abstract for Idealized Algol with countable nondeterminism.
+  \label{PropNotFullyAbstract}
+\end{proposition}
+\begin{example}
+  In the category $\G$ of games (and hence in its Kleisli categories), we have strategies $\sigma_f$ with maximal plays of the form
+  \[
+    \begin{array}{cc}
+      \bN & \bN \\
+          &  q  \\
+       q  &     \\
+       n  &     \\
+          & f(n)
+    \end{array}\,,
+    \]
+  which have the property stated above.
+\end{example}
+\begin{proof}[Sketch proof of \ref{PropNotFullyAbstract}]
+  We fix an inductive encoding $\encode -$ of IA terms and assume the existence of an \emph{interpreter}
+  \[
+    \Int \from \bN \to \bN\,.
+    \]
+  $\Int n$ first checks whether its argument $n$ is the encoding of a valid IA term of type $\nat$; if it is not, then it returns the value $0$, which will take the place of an error value.
+  If it is, then $\Int n$ evaluates the program corresponding to $n$; if this evaluation terminates, then it adds $1$ to the value returned and returns that.  
+  The reason we add $1$ to the value is primarily to avoid the error value $0$, though it will serve a purpose later too.
+
+  Now consider the term
+  \setlength{\jot}{0pt}%
+  \begin{align*}
+    M=&\lambda f^{\nat \to \nat} .\neww(\lambda p.p\gets\ask_\bN;\\
+      &\hspace{82pt}\new(\lambda v.v\gets f(\oc p);\\
+        &\hspace{116pt}\new(\lambda x.x\gets \Int' \ask_\bN (\app \oc p \encode {\oc p});\\
+          &\hspace{148pt}\IfO \oc x \Then \skipp \Else\\
+            &\hspace{168pt}(\If \oc v = \oc x \Then \skipp \Else \Omega))))
+  \end{align*}
+  of type $(\nat\to \nat) \to \com$.
+  Here, $\app$ is the constructor used in the encoding to apply one term to another: so if $p$ is the encoding of an IA $P\from \nat \to \nat$, then $\app p \encode p$ will be the encoding of the term $P\,p$; i.e., $P$ applied to its own encoding.
+
+  Consider also the term
+  \[
+    N = \lambda f^{\nat \to \nat}.f(\ask_\bN);\IfO \ask_\bN \Then \skipp \Else \Omega\,.
+    \]
+  of type $(\nat \to \nat) \to \com$.  
+  Here, we have used the notation $P;Q$ to mean $\IfO P \Then Q \Else Q$ for $P\from \nat$; i.e., the program that evaluates $P$, forgets the result and then evaluates $Q$.
+
+  We claim that $M$ and $N$ are may-and-must-observationally equivalent.  
+  We will save the formal proof of this until we have a working fully abstract semantics; for now, we shall give an informal argument.  
+
+  First, note that $M$ and $N$ have the same behaviour in any applicative context; i.e., if $F\from \nat \to \nat$ is a term, then $MF\converges \skipp$ if and only if $NF\converges\skipp$ and $MF\mustconverge$ if and only if $NF\mustconverge$.  
+  Indeed, we certainly have $NF\converges\skipp$ and $NF\diverges$.
+  Moreover, $MF\converges\skipp$, so we need to show that $MF\diverges$.
+
+  Consider the evaluation path of $M$ in which the variable $p$ acquires the value $\encode F$ at the beginning.  
+  If $F (\encode F)$ diverges, then the whole term will diverge.  
+  Otherwise, there is some value $k$ such that $F (\encode F)$ converges to a value $n$ after $k$ steps.
+  Then $v$ acquires the value $n$.  
+  Consider the path where $\ask_\bN$ on the third line acquires the value $k$.  
+  Then $\Int' k (\app F !p \encode{!p})$ will carry out the computation of $F (\encode F)$, returning the value $n$, but will then add $1$ to that value before returning.  
+  The result is that $v$ holds the value $n$ and $x$ holds the value $n+1$.  
+  Therefore, the term diverges.
+
+  The case for a non-applicative context is the same, after we have made the observation that any side-effects that occur when $f$ is evaluated will take place in both terms in the case that they converge, while they will have no effect if the terms diverge.
+
+  After satisfying ourselves that $M$ and $N$ are observationally equivalent, we claim that they are distinguished by the semantics, which proves that the model is not fully abstract.
+
+  Indeed, let $\phi\from \bN \to \bN$ where $\phi(p)$ is $n+1$ if $p$ is the encoding of a term $P\from\nat \to \nat$ and $P\;p\converges n$ and $0$ otherwise (including the case that $P\;p\diverges$.
+
+  We know that $\deno{N};\sigma\not\downarrow_{\must}$ for all $\sigma$, because $N$ essentially discards its argument.
+  We claim that $\deno{M};\sigma_\phi\downarrow_{\must}$, proving that $N\not\sim_{\must} M$.
+
+  Indeed, by compositionality and adequacy of the semantics, we may consider $\sigma_\phi$ to behave as a term $\Phi\from\nat \to \nat$ with the operational behaviour that
+  \[
+    \inferrule*{\Gamma,s\ts N \converges n,s'}{\Gamma,s\ts \Phi N \converges \phi(n),s'}\,.
+    \]
+  Then, whatever the value of $p$, either $\Int' \ask_{\bN} (\app \oc p \encode{\oc p})$ will return $0$ or it will return the value of $\phi(\oc p)$.  
+  In either case, the term will not diverge.
+\end{proof}
+
+\begin{remark}
+  The term $M$ that we have constructed in this proof is an instance of the \emph{Kleene tree} (see, for example, \cite{KleeneTree}), a computable tree with an infinite path but no computable infinite path.
+\end{remark}
+
+The proof of Proposition \ref{PropNotFullyAbstract} makes it clear that the problem is the existence in the semantics of morphisms that behave like certain noncomputable functions.  
+The presence of such morphisms is normally an orthogonal issue to full abstraction, since we can usually assume that the strategy $\alpha$ in the definition of intrinsic equivalence is compact.
+However, in our case, the presence of these noncomputable morphisms is a big problem.
+
+At the extreme, if the category $\G$ satisfies the property (universality) that every morphism between the denotations of IA types is the denotation of an IA term, then we can get the full abstraction result we desire.
+
+\begin{theorem}
+  Let $M,N\from T$ be terms of \IAX and suppose that our base semantics of IA in $\G$ satisfies universality.  
+  Then $M\emam N$ if and only if $\deno M \smam \deno N$.
+\end{theorem}
+\begin{proof}
+  See the proof of Theorem \ref{FullAbstractionFiniteNondeterminism} for the proof that if $\deno M \smam \deno N$ then $M\emam N$.  
+
+  Conversely, if $\deno M \not\smam \deno N$, then without loss of generality there is some $\alpha\from\deno T \to \bC$ such that $\alpha;\deno M \downarrow_{\must}$ and $\alpha;\deno N\not\downarrow_{\must}$.  
+  But by universality $\alpha;\deno M = \deno{LM}$ and $\alpha;\deno N=\deno{LN}$ for some term $L\from T \to \com$ of IA.  
+  Therefore, the result follows from Corollary \ref{CorAdeqMust}.
+\end{proof}
+
+\begin{example}
+  It was proven in \cite{hoPcf} that every innocent strategy between the denotations of PCF types is innocently intrinsically equivalent to the denotation of some term of PCF.  
+  A sharper result (unpublished, but see \cite[\sec 7.1.5]{LongleyBook}), which allows us to forget the intrinsic equivalence part, is that every innocent strategy between the denotations of PCF terms is the denotation of some term of the language formed by augmenting PCF with a constant called $\lett$ or $\byval$ whose 
 
 \bibliographystyle{alpha}
 \bibliography{../common/phd_bibliography}

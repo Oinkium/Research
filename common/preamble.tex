@@ -415,9 +415,10 @@
 \newcommand{\new}{{\mathtt{new}}}
 \newcommand{\case}{{\mathtt{case}}}
 
-\newcommand{\lmam}{\sqsubseteq_{m\&m}}
-\newcommand{\emam}{\equiv_{m\&m}}
-\newcommand{\lst}{\lesssim}
+\newcommand{\lmam}{\mathrel{\sqsubseteq_{m\&m}}}
+\newcommand{\emam}{\mathrel{\equiv_{m\&m}}}
+\newcommand{\lst}{\mathrel{\lesssim}}
+\newcommand{\smam}{\mathrel{\sim_{m\&m}}}
 
 \newcommand{\oes}{\sim}
 
@@ -507,8 +508,8 @@
 \newcommand{\true}{\mathbbm{t}}
 \newcommand{\false}{\mathbbm{f}}
 \DeclareMathOperator{\If}{\mathsf{If}}
-\newcommand{\Then}{\mathbin{\mathsf{then}}}
-\newcommand{\Else}{\mathbin{\mathsf{else}}}
+\newcommand{\Then}{\mathrel{\mathsf{then}}}
+\newcommand{\Else}{\mathrel{\mathsf{else}}}
 \newcommand\cat{\mathbin{+\mkern-10mu+}}
 
 %% Profunctor arrows
@@ -601,6 +602,11 @@
 
 \DeclareMathOperator{\may}{may}
 \DeclareMathOperator{\must}{must}
+
+\newcommand{\encode}[1]{\lceil#1\rceil}
+\DeclareMathOperator{\app}{\textsf{app}}
+\DeclareMathOperator{\lett}{\mathtt{let}}
+\DeclareMathOperator{\byval}{\mathtt{byval}}
 
 %%% END Article customizations
 

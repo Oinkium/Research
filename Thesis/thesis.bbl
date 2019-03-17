@@ -1,11 +1,23 @@
 \begin{thebibliography}{Lam74}
 
+\bibitem[Bau06]{KleeneTree}
+Andrej Bauer.
+\newblock K\"{o}nig's lemma and the {K}leene tree.
+\newblock Published via blog post at
+  \url{http://math.andrej.com/2006/04/25/konigs-lemma-and-the-kleene-tree/},
+  April 2006.
+
 \bibitem[Ghi05]{SlotGames}
 Dan~R. Ghica.
 \newblock Slot games: A quantitative model of computation.
 \newblock In {\em Proceedings of the 32Nd ACM SIGPLAN-SIGACT Symposium on
   Principles of Programming Languages}, POPL '05, pages 85--97, New York, NY,
   USA, 2005. ACM.
+
+\bibitem[Har99]{RusssThesis}
+Russell~S. Harmer.
+\newblock Games and full abstraction for nondeterministic languages.
+\newblock Technical report, 1999.
 
 \bibitem[HM99]{mcCHFiniteND}
 R.~Harmer and G.~McCusker.
