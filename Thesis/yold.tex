@@ -1,0 +1,484 @@
+
+
+\subsection{Extended example: game semantics of time complexity}
+This is an extended example of using a reader monad, in the style of Example \ref{ExReaderMonadKleisli}.
+Let $\G$ be the category of games and visible single-threaded strategies as in \cite{SamsonGuyIAActive}.  
+So $\G$ is a sound and adequate model of Idealized Algol satisfying compact definability.
+Let $\bC$ be the denotation of the command type $\com$ of Idealized Algol.  
+Then the Kleisli category for the reader monad over $\bC$ is freely generated over $\G$ by a single morphism $1 \to \bC$.  
+
+Let us extend Idealized Algol with a single term, $\sleep$, of type $\com$.
+This should be thought of as a command to the computer to pause for some fixed interval of time -- let us say a second -- before resuming execution.
+By Theorem \ref{FunctionalCompletenessCcc}, our Kleisli category is Cartesian closed.
+So it gives us a denotational semantics of IA+$\sleep$, in which the terms of IA are interpreted within $\G$ as in \cite{SamsonGuyIAActive} and the new term $\sleep$ is interpreted by the new morphism $1 \to \bC$.
+
+Let us now give an operational semantics to terms of IA+$\sleep$.  
+Let $\Gamma$ be an IA-context.
+Then a \emph{store} $s$ over $\Gamma$ is a list of pairs $(v\mapsto x)$, where each $v$ is the name for a $\Var$-type variable occurring in $\Gamma$ and $x$ is a value held in $v$.  
+We write $()$ for the empty store, $(s\vert v\mapsto x)$ for the store obtained from $s$ by adding or updating the variable $v$ to hold the value $x$ and $(s\vert v\mapsto \bot)$ for the store obtained by removing the variable $v$ from $s$.
+Given disjoint stores $s,t$ (i.e., stores whose sets of variables are disjoint), we write $s+t$ for the store obtained by concatenating together $s$ and $t$.  
+
+Given a term $\Gamma\ts M$ in context, stores $s$,$s'$ over $\Gamma$, a value $c$ and a natural number $n$, we define a big-step relation
+\[
+  \Gamma,s\ts M\converges_n c,s'\,,
+  \]
+read as `in the context $\Gamma$, $s,M$ converges to $c,s'$ in time $n$'.  
+The rule for the constant $\sleep$ is given by
+\[
+  \inferrule*
+  { }
+  {\Gamma,s\ts \sleep\converges_1 \skipp,s}\,,
+  \]
+indicating that execution of the $\sleep$ command takes up an additional time step.  
+The other rules are the same as those given in \cite{SamsonGuyIAActive} for the $\converges$ relation, except that we have to modify them in order to take account of the new information we have added to the reduction relation (i.e., the time taken to converge).
+For example:
+\begin{mathpar}
+  \inferrule*
+  { }
+  {\Gamma,s\ts c \converges_0 c,s}
+  \and
+  \inferrule*
+  {\Gamma,s\ts M\converges_m\skipp,s'\\
+  \Gamma,s'\ts N\converges_n\skipp,s''}
+  {\Gamma,s\ts M;N\converges_{m+n}\skipp,s''}\,.
+\end{mathpar}
+If $P$ is a program (i.e., a term of type $\com$) then we write $P\converges_n$ as a shorthand for $,()\ts P \converges_n \skipp,()$.
+We say that $P$ \emph{diverges} and write $P\diverges$ if there is no $n$ such that $P\converges_n$.
+
+We now want a way to capture this operational behaviour within the denotational semantics.
+First, we note the Computational Adequacy result proved for the game semantics of Idealized Algol.
+
+\begin{proposition}[{\cite[21]{SamsonGuyIAActive}}]
+  Let $P$ be a term of type $\com$.  
+  Then $P\converges$ if and only if $\deno{P}\ne\bot$.
+  \label{SamsonGuyAdequacy}
+\end{proposition}
+
+To make sense of this strategy, we need to know that $\G$ is enriched in algebraic cpos.  
+Then $\bot$ is the bottom element of $\G(1,\bC)$.
+
+Before proceeding further, we prove an important lemma.  
+This lemma tells us that the operational semantics of a term of IA+$\sleep$ may be modelled within Idealized Algol; i.e., that IA+$\sleep$ is a conservative extension of the original language.
+
+\begin{lemma}
+  Let $P\from T$ be a term of IA+$\sleep$.
+  Suppose that
+  \[
+    \Gamma,s\ts P\converges_n c,s'
+    \]
+  in IA+$\sleep$.
+
+
+  Then for all $k\ge 0$, all contexts $\Delta$ disjoint from $\Gamma$, all stores $t$ over $\Gamma,\Delta$ disjoint from $s$ and all variables $v$ not in $\Gamma,\Delta$:
+  \[
+    \Delta,\Gamma,v,(t{+}s\vert v \mapsto k)\ts P[v \gets \suc !v/\sleep] \converges c,(t{+}s\vert v \mapsto k+n)
+    \]
+  in Idealized Algol.
+  \label{IaSleepsSoundnessLemma}
+\end{lemma}
+\begin{proof}
+  Induction on the derivation that $\Gamma,s\ts P\converges_n c,s'$.
+  There are several possibilities for the last step in the derivation.
+  \begin{description}
+    \item[Structural congruence]
+      Suppose that the last step in the derivation is
+      \[
+        \inferrule*{P\equiv P'\\
+        \Gamma,s\ts P' \converges_n \skipp, s'}
+        {\Gamma,s\ts P\converges_n \skipp, s'}\,.
+        \]
+      It is clear then by the definition of structural congruence that $P'[v\gets\suc !v/\sleep]\equiv P[v\gets\suc !v/\sleep]$.  
+      So the claim follows by the inductive hypothesis applied to $P'$ and the structural congruence rule for Idealized Algol.
+    \item[$\sleep$]
+      Suppose that the last step in the derivation is
+      \[
+        \inferrule*{ }
+        {\Gamma,s\ts \sleep \converges_1 \skipp,s}\,.
+        \]
+      Fix a context $\Delta$ disjoint from $\Gamma$ and a store $t$ over $\Gamma,\Delta$ that is disjoint from $s$.  
+      Fix $k\ge n$.  
+      Then it suffices to show that the following judgement may be proved within the operational semantics of Idealized Algol.
+      \[
+        \Delta,\Gamma,v,(t{+}s\vert v\mapsto k)\ts v \gets \suc !v \converges \skipp, (t{+}s\vert v\mapsto k+1)
+        \]
+      A derivation for this obvious fact is given in Figure \ref{SleepIADerivation}.
+      \begin{SidewaysFigure}
+        \centering
+        \begin{subfigure}{\textheight}
+          \[
+            \inferrule*
+            {
+              \inferrule*
+              {
+                \inferrule*
+                {
+                  \inferrule*
+                  {
+                  }
+                  {
+                    \Delta,\Gamma,v,(t{+}s\vert v\mapsto k)\ts v \converges v,(t{+}s\vert v\mapsto k)
+                  }
+                }
+                {
+                  \Delta,\Gamma,v,(t{+}s\vert v\mapsto k) \ts !v \converges k,(t{+}s\vert v\mapsto k)
+                }
+              }
+              {
+                \Delta,\Gamma,v,(t{+}s\vert v\mapsto k)\ts \suc !v \converges k+1,(t{+}s\vert v\mapsto k)
+              } \\
+              \inferrule*
+              {
+              }
+              {
+                \Delta,\Gamma,v,(t{+}s\vert v\mapsto k)\ts v \converges v,(t{+}s\vert v\mapsto k)
+              }
+            }
+            {
+              \Delta,\Gamma,v,(t{+}s\vert v\mapsto k)\ts v\gets\suc !v\converges\skipp,(t{+}s\vert v\mapsto k+1)
+            }
+            \]
+          \caption{The crucial part of Lemma \ref{IaSleepsSoundnessLemma} pertaining to the $\sleep$ constant is a routine Idealized Algol derivation.}
+          \label{SleepIADerivation}
+        \end{subfigure}
+        \par\vspace{48pt}
+        \begin{subfigure}{\textheight}
+          \[
+            \inferrule*{\Delta,\Gamma_1,v,(t{+}s\vert v\mapsto k) \ts M_1[v \gets \suc !v/\sleep] \converges c_1,(t{+}s\vert v \mapsto k + n_1) \\
+            \cdots \\
+            \Delta,\Gamma_p,v,(t{+}s\vert v\mapsto k + n_1 + \cdots + n_{p-1}) \ts M_p[v \gets \suc !v/\sleep] \converges c_1,(t{+}s\vert v \mapsto k+n_1+\cdots+n_p)}
+            {\Delta,\Gamma,v,(t{+}s^{(0)}\vert v \mapsto k + n_1 + \cdots + n_p)\ts M[v\gets \suc !v/\sleep] \converges c,(t{+}s^{(p)}\vert v \mapsto k)}
+            \]
+          \caption{The big-step rules of IA+$\sleep$ give rise to big-step rules of Idealized Algol via our translation.}
+          \label{GeneralIADerivation}
+        \end{subfigure}
+        \caption{The proof of Lemma \ref{IaSleepsSoundnessLemma} works by translating big-step derivations from IA+$\sleep$ into big-step derivations of Idealized Algol.}
+        \label{IADerivations}
+      \end{SidewaysFigure}
+    \item[Canonical forms]
+      Suppose that the last step in the derivation is
+      \[
+        \inferrule*{ }
+        {\Gamma,s\ts_0 c\converges c,s}\,.
+        \]
+      Then, since $\sleep$ is not a canonical form, we have $c[v\gets \suc !v/\sleep]=c$.  
+      Then we have the derivation
+      \[
+        \inferrule*{ }
+        {\Delta,\Gamma,(t{+}s\vert v\mapsto k)\ts c \converges c,(t{+}s\vert v\mapsto k)}\,.
+        \]
+    \item[Sequencing]
+      Suppose instead that the last step in the derivation is
+      \[
+        \inferrule*{\Gamma,s\ts M \converges_m \skipp, s'\\
+        \Gamma,s'\ts N \converges_n \skipp, s''}
+        {\Gamma,s\ts M;N \converges_{m+n} \skipp, s''}\,.
+        \]
+      Fix $k\ge 0$.  
+      By induction on $M,N$, we have
+      \begin{mathpar}
+        \Delta,\Gamma,v,(t{+}s\vert v\mapsto k)\ts M[v\gets\pred !v/\sleep]\converges \skipp,(t{+}s'\vert  v\mapsto k+m)\,;
+        \and
+        \Delta,\Gamma,v,(t{+}s'\vert  v\mapsto k+m) \hspace{144pt} \par\vspace{-8pt} \\ \par \hspace{144pt} \ts N[v\gets\pred !v/\sleep]\converges \skipp,(t{+}s''\vert v\mapsto k+m+n)\,.
+      \end{mathpar}
+      It follows that
+      \begin{mathpar}
+        \Delta,\Gamma,v,(t{+}s\vert v\mapsto k) \hspace{180pt} \par\vspace{-8pt} \\ \par \hspace{180pt} \ts (M;N)[v\gets\pred !v/\sleep] \converges \skipp, (t{+}s''\vert v\mapsto k+m+n)\,,
+      \end{mathpar}
+      by the sequencing rule of Idealized Algol.
+    \item[Remaining rules]
+      Having given the rule for canonical forms and sequencing explicitly, we now give a general technique by which we can deal with all the remaining rules.
+
+      Each rule is of the form
+      \[
+        \inferrule*{ \Gamma_1,s^{(0)}\ts z_1\converges_{n_1}\gamma_1,s^{(1)} \\
+        \cdots \\
+        \Gamma_p,s^{(p - 1)}\ts z_p \converges_{n_p} \gamma_p,s^{(p)}}
+        { \Gamma,s^{(0)}\ts z \converges_{n_1+\cdots+n_p} \gamma,s^{(p)}}
+        \]
+      (for $p\in\{0,1,2,3\}$), where
+      \[
+        \inferrule*{ \Gamma_1,s^{(0)}\ts z_1\converges \gamma_p,s^{(1)} \\
+        \cdots \\
+        \Gamma_p,s^{(p - 1)}\ts z_p \converges \gamma_1,s^{(p)}}
+        { \Gamma,s^{(0)}\ts z \converges \gamma,s^{(p)}}
+        \]
+      is a rule for Idealized Algol.
+
+      Here, each $z_i,z,\gamma_i,\gamma$ is a term of Idealized Algol (without $\sleep$) that may have free variables that are not included in the $\Gamma_i,\Gamma$.  
+      These free variables $(x_\alpha)$ may be shared between the $z_i,z,\gamma_i,\gamma$, introducing a dependence between them.
+      For example, in the rule for sequencing, the terms on the top are single-variable terms of IA, where `$M$' and `$N$' are themselves free variables.  
+      These variables are bound in the expression `$M;N$' on the bottom of the rule.
+
+      Fix some such rule, and suppose that it is used in the last step of the deduction.  
+      So the last step looks like this.
+      \[
+        \inferrule*{ \Gamma_1,s^{(0)}\ts M_1\converges_{n_1}c_1,s^{(1)} \\
+        \cdots \\
+        \Gamma_p,s^{(p - 1)}\ts M_p \converges_{n_p} c_p,s^{(p)}}
+        { \Gamma,s^{(0)}\ts M \converges_{n_1+\cdots+n_p} c,s^{(p)}}
+        \]
+      Here, the $M_i,M,c_i,c$ fit the pattern given by the $z_i,z,\gamma_i,\gamma$.  
+      By induction, for each $i=1,\cdots,p$, the following judgement may be proved in Idealized Algol.
+      \begin{mathpar}
+        \Delta,\Gamma,v,(t{+}s^{(i)}\vert v \mapsto k + n_1 + \cdots + n_{i-1})
+        \hspace{144pt} \par\vspace{-20pt} \\ \par \hspace{144pt}
+        \ts
+        M[v \gets \suc !v] \converges c_i,(t{+}s^{(i)}\vert v \mapsto k + n_1 + \cdots + n_i)
+      \end{mathpar}
+
+      Now we know that the $M_i,M,c_i,c$ may be obtained from the $z_i,z,\gamma_i,\gamma$ by substituting in actual terms $N_\alpha$ for the free variables $x_\alpha$ in these expressions.  
+      Moreover, since the primitive $\sleep$ is not mentioned anywhere in these rules, it follows that we have
+      \begin{IEEEeqnarray*}{rCl}
+        M_i[v\gets\suc !v/\sleep] & = & (z_i[N\alpha/x_\alpha])[v\gets \suc !v/\sleep] \\
+        & = & z_i[(N[v\gets \suc !v/\sleep])/x_\alpha]\,,
+      \end{IEEEeqnarray*}
+      and similarly for the $z,\gamma_i,\gamma$.
+      Therefore, the $M_i,M,c_i,c$ still fit the pattern given by the $z_i,z,\gamma_i,\gamma$, even after making our substitution.  
+      It follows that we may derive
+      \begin{mathpar}
+        \Delta,\Gamma,v,(t{+}s^{(0)}\vert v \mapsto k)\hspace{180pt}\par\vspace{-8pt}\\ \par
+        \hspace{180pt}\ts M[v\gets \suc !v/\sleep] \converges c,(t{+}s^{(p)}\vert v \mapsto k+n_1+\cdots+n_p)
+      \end{mathpar}
+      using the derivation shown in Figure \ref{GeneralIADerivation}.
+  \end{description}
+  This completes the induction.
+\end{proof}
+
+In light of this result, we can make a definition relating the denotational and operational semantics of terms of type $\nat$.  
+First, observe that since the $\beta$ rule is valid in our semantics, we may write the denotation of a term $M\from\com$ of IA+$\sleep$ as the composite
+\[
+  1 \xrightarrow{\sleep}
+  \bC \xrightarrow{\deno{c\ts M[c/\sleep]}}
+  \bC
+  \]
+in $\Kl_{R_\bC}$.
+
+Working in the original category $\G$, however, we may identify this composite with the morphism
+\[
+  \deno{\lambda c.M[c/\sleep]} \from 1 \to (\bC \to \bC)\,.
+  \]
+Now we have a morphism
+\begin{mathpar}
+  \eta = \deno{f\from \com\to \com \ts \lambda v.f(v\gets \suc!v);!v}\from (\bC \to \bC) \to (\Var \to \bN)\,.
+\end{mathpar}
+If we form the composite
+\[
+  1 \xrightarrow{\deno{\lambda c.M[c/\sleep]}}
+  (\bC \to \bC) \xrightarrow{\eta}
+  (\Var \to \bN) \xrightarrow{\new_\bN}
+  \bN
+  \]
+then the morphism we get will be the denotation in $\G$ of the term
+\[
+  \ts \new\;v=0\text{ in } M[v\gets \suc !v/\sleep];!v\from \nat
+  \]
+(since the $\beta$ rule is valid for the semantics in $\G$).
+Lemma \ref{IaSleepsSoundnessLemma} tells us that if $M\converges_n\skipp$ then this term converges to $n$ in Idealized Algol.
+
+Before we introduce our adequacy result, we need one more definition in order to take account of the fact that Proposition \ref{SamsonGuyAdequacy} applies to terms of type $\com$, not $\nat$.
+
+\newcommand{\test}{{\mathtt{test}}}
+\begin{definition}
+  Define terms $\test_n\from\nat\to\com$ inductively by
+  \begin{gather*}
+    \test_0 = \lambda m.\IfO m\text{ then }\skipp\text{ else }\Omega\,; \\
+    \test_{n+1} = \lambda m.\IfO m\text{ then }\Omega\text{ else }\test_n\,. (\pred m)
+  \end{gather*}
+  So $\test_n$ converges if its input evaluates to $n$ and diverges otherwise.
+  
+  Let $t_n\from\bN \to \bC$ be the denotation in $\G$ of $\test_n$.
+\end{definition}
+
+\begin{remark}
+  In the model $\G$ of Idealized Algol, every morphism $1 \to \bN$ is definable, so if $\sigma\from 1 \to \bN$ is such a morphism, then there must be at most one $n\in\omega$ such that the composite $\sigma;t_n$ is not equal to $\bot$.
+\end{remark}
+
+\newcommand{\tit}{\mathrm{tt}}
+\begin{definition}
+  Let $\sigma\from 1 \to \bC$ be a Kleisli morphism in $\Kl_{R_{\bC}}$, considered as a morphism $1 \to (\bC \to \bC)$ in $\G$.  
+
+  If there is some (necessarily unique) $n\in\omega$ such that the composite
+  \[
+    1 \xrightarrow{\sigma}
+    (\bC \to \bC) \xrightarrow{\eta}
+    (\Var \to \bN) \xrightarrow{\new_\bN}
+    \bN \xrightarrow{t_n}
+    \bC
+    \]
+  is not equal to $\bot$, then we say that $n$ is the \emph{time taken for $\sigma$ to converge}, or $\tit(\sigma)$.
+  If there is no such $n$, we say that $\tit(\sigma)=\infty$.
+  \label{DefTimeTaken}
+\end{definition}
+
+From our discussion above, we have proved the following result.
+
+\begin{proposition}[Soundness for IA+$\sleep$]
+  Let $P\from \com$ be a term of IA+$\sleep$ and let $\sigma\from \bC \to \bC$ be its denotation in $\Kl_{R_\bC}$, considered as a morphism in $\G$.
+  If $P\converges_n$ then $\tit(\sigma)=n$.
+  \label{IaSleepSoundness}
+\end{proposition}
+
+In order to prove the other direction (adequacy), we need to prove a kind of converse to Lemma \ref{IaSleepsSoundnessLemma}.
+
+\begin{lemma}
+  Let $\Gamma\ts M\from \com$ be a term of IA+$\sleep$ in context.
+  Let $s,s'$ be stores, let $a,b\in\bN$, let $c$ be a canonical form and let $v$ be a variable not included in $\Gamma$.  
+  Suppose that
+  \[
+    \Gamma,v,(s\vert v\mapsto a) \ts M \converges c,(s'\vert v\mapsto b)
+    \]
+  in Idealized Algol.
+  Then there exists $n$ such that
+  \[
+    \Gamma,s \ts M \converges_n c,s'
+    \]
+  in IA+$\sleep$.
+\end{lemma}
+\begin{proof}
+  Induction on the derivation that $\Gamma,v,(s\vert v\mapsto a)\ts M\converges c,(s'\vert v\mapsto b)$.  
+  Most cases are self-explanatory.  
+  For example, suppose that the last step in the derivation is an instance of the sequencing rule:
+  \[
+    \inferrule{\Gamma,v,(s\vert v \mapsto a) \ts M[v\gets\suc !v/\sleep] \converges \skipp, s' \\
+    \Gamma,v,s' \ts N[v\gets\suc !v/\sleep] \converges c, (s''\vert v \mapsto b)}
+    {\Gamma,v(s\vert v \mapsto a) \ts (M;N)[v\gets\suc !v/\sleep] \converges c,(s''\vert v \mapsto b)}\,.
+    \]
+  Since there is no provable sequent of Idealized Algol in which a defined variable on the left ceases to be defined on the right, we may deduce that $s'$ can be written as $(t\vert v \mapsto d)$.  
+  Therefore, we may apply the inductive hypothesis to $M$ and $N$, which tells us that there must be $m,n$ such that
+  \begin{mathpar}
+    \Gamma,s \ts M\converges_m\skipp,t\,;
+    \and
+    \Gamma,t \ts M\converges_n c,s''\,.
+  \end{mathpar}
+  From this it follows that
+  \[
+    \Gamma,s \ts M;N \converges_{m+n} c,s''\,.
+    \]
+  Crucial to this argument is the fact that
+  \[
+    (M[v\gets\suc !v/\sleep]);(N[v\gets\suc !v/\sleep]) = (M;N)[v\gets\suc!v/\sleep]\,.
+    \]
+  For almost all the other rules, a similar equality holds.  
+  The only case where there is a problem is the first rule for $\blank\gets\blank$, since this may introduce a new copy of $v\gets\suc!v$ on the bottom that does not arise from copies of $v\gets\suc!v$ on the top.
+
+  The offending term occurs when $M=\sleep$ and so $M[v\gets\suc!v/\sleep]=v\gets\suc!v$.
+  In that case, the inference is
+  \[
+    \inferrule{\Gamma,(s\vert v \mapsto a)\ts \suc ! v \converges b,s'\\
+    \Gamma,s'\ts v \converges v,s''}
+    {\Gamma,(s\vert v\mapsto a)\ts v \gets\suc!v \converges \skipp,(s''\vert v\mapsto b)}\,.
+    \]
+  By following the derivation upwards, we may deduce that in fact $s=s'=s''$.
+  But in that case the derivation of $\Gamma,s\ts_n M\converges \skipp,s''$ is one of the base rules:
+  \[
+    \inferrule{ }
+    {\Gamma,s \ts \sleep \converges_1 \skipp,s}\,.
+    \]
+  The other cases are routine.  
+  This completes the induction.
+  \label{IaSleepAdequacyLemma}
+\end{proof}
+
+\begin{theorem}[Computational adequacy for IA+$\sleep$]
+  Let $P\from\com$ be a term of IA+$\sleep$ and let $\sigma\from \bC\to \bC$ be its denotation in $\Kl_{R_\bC}$, considered as a morphism in $\G$.
+  Then $P\converges_n$ if and only if $\tit(\sigma)=n$.
+  \label{IaSleepComputationalAdequacy}
+\end{theorem}
+\begin{proof}
+  The forward direction is Proposition \ref{IaSleepSoundness}.  
+  For the reverse direction, note that if $\tit(\sigma)=n$, it means that
+  \[
+    \deno{\test_n(\new v=0\text{ in }P[v\gets \suc!v/\sleep];!v])} \ne \bot\,,
+  \]
+  which, by Proposition \ref{SamsonGuyAdequacy}, means that
+  \[
+    \test_n(\new v=0\text{ in } P[v\gets\suc!v/\sleep];!v])\converges
+  \]
+  in Idealized Algol, and therefore that
+  \[
+    v,(v\mapsto 0) \ts P[v\gets\suc!v/\sleep]\converges \skipp,(v\mapsto n)\,.
+    \]
+  From Lemma \ref{IaSleepAdequacyLemma}, we deduce that we must have
+  \[
+    ,() \ts P \converges_m \skipp,()
+    \]
+  in IA+$\sleep$ for some $m$, and by Lemma \ref{IaSleepsSoundnessLemma} we must have $m=n$.  
+  Therefore, $P\converges_n$.
+\end{proof}
+
+The last definition we need to make is the standard intrinsic equivalence relation.
+
+\begin{definition}
+  Let $\sigma,\tau\from A \to B$ be morphisms in $\Kl_{R_\bC}$.  
+  By currying, we may consider $\sigma,\tau$ to be morphisms $1 \to (A \to B)$.  
+  We say that $\sigma\sim\tau$ if for all morphisms $\alpha\from (A \to B) \to \bC$, we have $\tit(\sigma;\alpha)=\tit(\sigma;\beta)$.
+\end{definition}
+
+We now have all the tools necessary to prove that $Kl_{R_\bC}$ is fully abstract for IA+$\sleep$.
+The technique we use is standard and relies on a factorization result, as with the proofs given in \cite{SamsonGuyIAActive} and \cite{mcCHFiniteND}.  
+The difference here is that our factorization result is immediate, and does not rely on any combinatorial arguments.
+
+\begin{theorem}
+  Let $M,N\from T$ be two terms of IA+$\sleep$.  
+  Then $M$ and $N$ are observationally equivalent if and only if $\deno{M}\sim\deno{N}$.
+  \label{IaSleepTimeComplexity}
+\end{theorem}
+\begin{proof}
+  First suppose that $M$ and $N$ are not observationally equivalent.  
+  So there is some context $-\from T\ts C[-]\from\com$ such that $C[M]$ and $C[N]$ have different operational behaviours in IA+$\sleep$.
+  By Theorem \ref{IaSleepComputationalAdequacy} we know that for any program $P$ we have $P\converges_n$ if and only if $\tit(\deno P)=n$ and $P\diverges$ if and only if $\tit(\deno P)=\infty$.
+  Therefore, we must have $\tit(\deno{C[M]})\ne \tit(\deno{C[n]})$.  
+  But since $\deno{C[M]}=\deno{M};\deno{C}$ and $\deno{C[N]}=\deno{N};\deno{C}$, we must have $\deno M\not\sim \deno N$.
+
+  Conversely, suppose that $\deno M \not\sim \deno N$.  
+  So there is some $\alpha\from \deno{T} \to \bC$ such that $\deno{M};\alpha\ne\deno{N};\alpha$.
+
+  Let us now work in the category $\G$.  
+  So $\deno{M},\deno{N}$ may be regarded as morphisms $1 \to (\bC \to \deno{T})$ and $\alpha$ may be regarded as a morphism $\deno{T} \to (\bC \to \bC)$.
+  Then the composites $\deno M;\alpha$ and $\deno N;\alpha$ within $\Kl_{R_\bC}$ are given by the following composites in $\G$.
+  \begin{mathpar}
+    1 \xrightarrow{\deno M}
+    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
+    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
+    (\bC \to \bC)
+    \and
+    1 \xrightarrow{\deno N}
+    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
+    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
+    (\bC \to \bC)
+  \end{mathpar} 
+  Without loss of generality, suppose that there exists some $n$ such that
+  \begin{mathpar}
+    \tit(\deno{M};(\bC \to \alpha);\mu)=n \and \tit(\deno{N};(\bC \to \alpha);\mu)\ne n\,.
+  \end{mathpar}
+  This means that we must have
+  \begin{mathpar}
+    \deno M;(\bC \to \alpha);\mu;\eta;\new_\bC;t_n \ne \bot
+    \and
+    \deno N;(\bC \to \alpha);\mu;\eta;\new_\bC;t_n = \bot
+  \end{mathpar}
+  in $\G$ (where $\eta$ is as defined in Definition \ref{DefTimeTaken}).
+
+  $\G$ is enriched in algebraic cpos, so $\alpha$ is the least upper bound of its compact approximants.  
+  It follows that there is some compact $\alpha'\subset \alpha$ such that
+  \begin{mathpar}
+    \deno M;(\bC \to \alpha');\mu;\eta;\new_\bC;t_n \ne \bot
+    \and
+    \deno N;(\bC \to \alpha');\mu;\eta;\new_\bC;t_n = \bot\,.
+  \end{mathpar}
+  In other words:
+  \begin{mathpar}
+    \tit(\deno M;(\bC \to \alpha');\mu) = n\,;
+    \and
+    \tit(\deno N;(\bC \to \alpha');\mu) \ne n\,.
+  \end{mathpar}
+  Now the compact definability result for Idealized Algol \cite[17]{SamsonGuyIAActive} tells us that $\alpha'$ must be the denotation of some IA term $x\from T \ts C[x] \from \com \to \com$, which is therefore the denotation of $x\from T \ts C[x]\,\sleep \from \com$ in $\Kl_{R_\bC}$.
+  So we get
+  \begin{mathpar}
+    \tit(\deno{C[M]\,\sleep}) = n\,;
+    \and
+    \tit(\deno{C[N]\,\sleep}) \ne n\,.
+  \end{mathpar}
+  By Theorem \ref{IaSleepComputationalAdequacy}, $C[M]\,\sleep\converges_n$ and $C[N]\,\sleep\not\converges_n$.  
+  Therefore, $M$ and $N$ are observationally inequivalent in IA+$\sleep$.
+\end{proof}

@@ -1,0 +1,37 @@
+\begin{thebibliography}{AM96}
+
+\bibitem[AJ94]{abramskyjagadeesangames}
+Samson Abramsky and Radha Jagadeesan.
+\newblock Games and full completeness for multiplicative linear logic.
+\newblock {\em The Journal of Symbolic Logic}, 59(2):543--574, 1994.
+
+\bibitem[AM96]{SamsonGuyIAActive}
+Samson Abramsky and Guy McCusker.
+\newblock Linearity, sharing and state: a fully abstract game semantics for
+  {Idealized Algol} with active expressions: Extended abstract.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 3:2 -- 14,
+  1996.
+\newblock Linear Logic 96 Tokyo Meeting.
+
+\bibitem[Har06]{Harmer2006InnocentGS}
+Russell Harmer.
+\newblock Innocent game semantics.
+\newblock 2006.
+
+\bibitem[HO00]{hoPcf}
+J.M.E. Hyland and C.-H.L. Ong.
+\newblock On full abstraction for {PCF}: {I}, {II}, and {III}.
+\newblock {\em Information and Computation}, 163(2):285 -- 408, 2000.
+
+\bibitem[Lai]{LairdCofCommCom}
+James Laird.
+\newblock Functional programs as coroutines: A semantic analysis.
+\newblock {\em Logical methods in computer science}.
+\newblock To appear.
+
+\bibitem[Lai02]{laird02}
+J.~Laird.
+\newblock A categorical semantics of higher-order store.
+\newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
+
+\end{thebibliography}

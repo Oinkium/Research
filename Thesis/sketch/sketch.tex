@@ -1,0 +1,282 @@
+\documentclass{article}
+
+\input{../../common/preamble}
+
+\newcommand{\sdeno}[1]{\{\!\{#1\}\!\}}
+\DeclareMathOperator{\comm}{\mathsf{comm}}
+
+\begin{document}
+
+We have a natural $\Var\sequoid\blank$-coalgebra
+\[
+  \cell_0\from \oc\bN \implies \Var \sequoid \oc\bN\,,
+  \]
+inducing a morphism
+\[
+  \cell \from \oc\bN \to \oc\Var\,.
+  \]
+As in Guy and Samson's work, we define the denotation of a term
+\[
+  \Gamma,s\ts M\from T
+  \]
+to be given by
+\[
+  I \cong I \tensor \cdots \tensor I
+  \xrightarrow{\deno{s}}
+  \oc\bN \tensor \cdots \tensor \oc\bN
+  \xrightarrow{\cell\tensor\cdots\tensor\cell}
+  \oc\Var \tensor \cdots \tensor \oc\Var
+  \xrightarrow{\deno{\Gamma\ts M}}
+  \deno T\,.
+  \]
+The soundness result we want to prove is that if
+\[
+  \Gamma,s\ts M \converges c,s'
+  \]
+is derivable, then the denotation of $\Gamma,s\ts M$ is the same as the denotation of $\Gamma,s'\ts c$.
+
+To prove this....
+
+Let $\Gamma$ be a $\Var$-context, and write $S_\Gamma$ for the object
+\[
+  \oc\bN \tensor \cdots \tensor \oc\bN\,,
+  \]
+with a copy of $\oc\bN$ for each variable in $\Gamma$.  
+Then, if $\Gamma\ts M\from T$ is an IA term, we define a $\deno T\sequoid\blank$-coalgebra
+\[
+  \sdeno{M}_\Gamma \from S_\Gamma \to \deno{T} \sequoid S_\Gamma
+  \]
+by induction on the structure of $M$.
+
+For example:
+
+\begin{description}
+  \item[Canonical forms]
+    $\sdeno{\skipp}_\Gamma$ is given by
+    \[
+      S_\Gamma \xrightarrow{\lunit}
+      I \tensor S_\Gamma \xrightarrow{\deno{\skipp}\tensor \id}
+      \bC \tensor S_\Gamma \xrightarrow{\wk}
+      \bC \sequoid S_\Gamma\,.
+      \]
+    Similarly for the other atomic forms (not for $\mkvar$).
+
+    If $x$ is a variable in $\Gamma$, then write $\Gamma=x,\Gamma'$.  
+    Then $\sdeno{x}_\Gamma$ is given by
+    \[
+      \oc\bN \tensor S_{\Gamma'} \xrightarrow{\cell_0\tensor S_{\Gamma'}}
+      (\Var \sequoid \oc\bN) \tensor S_{\Gamma'} \xrightarrow{\wk;\passoc}
+      \Var \sequoid (\oc\bN \tensor S_{\Gamma'})\,.
+      \]
+  \item[Sequencing]
+    Suppose we have terms $\Gamma\ts M\from\com$; $\Gamma\ts N\from X$ and coalgebras
+    \begin{mathpar}
+      \sdeno{M}_\Gamma\from S_\Gamma \to \bC \sequoid S_\Gamma
+      \and
+      \sdeno{N}_\Gamma \from S_\Gamma \to X \sequoid S_\Gamma\,.
+    \end{mathpar}
+    Then we define
+    \begin{mathpar}
+      \sdeno{M;N}_\Gamma = S_\Gamma \xrightarrow{\sdeno{M}_\Gamma}
+      \bC \sequoid S_\Gamma \xrightarrow{\seq_{S_\Gamma}}
+      S_\Gamma \xrightarrow{\sdeno{N}_\Gamma}
+      X \sequoid S_\Gamma\,.
+    \end{mathpar}
+  \item[Variable dereference]
+    Suppose that we have a term $\Gamma\ts M\from \Var$, giving us a coalgebra
+    \[
+      \sdeno{M}_\Gamma\from S_\Gamma \to \Var \sequoid S_\Gamma\,.
+      \]
+    Then we define
+    \[
+      \sdeno{!M}_\Gamma = S_\Gamma \xrightarrow{\sdeno{M}_\Gamma} \Var \sequoid S_\Gamma
+      \xrightarrow{\pr\sequoid S_\Gamma} \bN \sequoid S_\Gamma\,.
+      \]
+  \item[$\neww$]
+    Suppose that we have a term $x,\Gamma \ts M\from T$, giving us a coalgebra
+    \[
+      \sdeno{M}_{\Gamma,x}\from \oc\bN\tensor S_\Gamma \to \deno{T} \sequoid (S_\Gamma\tensor\oc\bN)\,.
+      \]
+    Then we form the coalgebra
+    \begin{mathpar}
+      \oc\bN \xrightarrow{\Lambda(\sdeno{M}_{\Gamma,x})}
+      S_\Gamma \implies (\deno{T} \sequoid (\oc\bN \tensor S_\Gamma))
+      \xrightarrow{S_\Gamma \implies \passoc}
+      S_\Gamma \implies ((\deno{T}\sequoid S_\Gamma) \sequoid \oc\bN)
+      \xrightarrow{???}
+      (S_\Gamma \implies (\deno{T}\sequoid S_\Gamma)) \sequoid\oc \bN\,.
+    \end{mathpar}
+    Here, the last morphism is part of the definition of a \emph{commutative sequoidal category} (Laird '02) and is not valid in the usual model.  
+    I'm not sure quite how to resolve this.
+
+    We take the anamorphism of this coalgebra to give us a morphism
+    \[
+      \oc\bN \to \oc(S_\Gamma\implies (\oc T \sequoid S_\Gamma)\,,
+      \]
+    before composing on the right with $\der$ and on the left with $0$, before uncurrying to get a coalgebra
+    \[
+      S_\Gamma \to \deno{T}\sequoid S_\Gamma\,,
+      \]
+    which we will call $\sdeno{\neww_T \lambda x.M}_\Gamma$.
+\end{description}
+
+We now need to prove things about these coalgebras.  
+The first thing to prove is:
+\begin{lemma}
+  Let $\Gamma\ts M\from T$ be a reducible term of Idealized Algol and let $\Delta$ be a $\Var$-context disjoint from $\Gamma$.  
+  Then
+  \begin{mathpar}
+    \sdeno{M}_{\Delta,\Gamma} =
+    S_\Delta \tensor S_\Gamma \xrightarrow{S_\Delta \tensor \sdeno{M}_\Gamma}
+    S_\Delta \tensor (\deno{T} \sequoid S_\Gamma) \xrightarrow{\sym;\wk}
+    (\deno{T} \sequoid S_\Gamma) \sequoid S_\Delta \xrightarrow{\passoc\inv}
+    \deno{T} \sequoid (S_\Gamma \tensor S_\Delta)\,.
+  \end{mathpar}
+  \label{BoringLemma}
+\end{lemma}
+
+Next, we prove.
+
+\begin{proposition}
+  Let $\Gamma\ts M\from T$ be a term of Idealized Algol.  
+  Then $\fcoal{\sdeno{M}_\Gamma};\der_{\deno T}$ is equal to the composite
+  \[
+    S_\Gamma \xrightarrow{\cell\tensor \cdots \tensor\cell}
+    \oc\Var \tensor \cdots \tensor \oc\Var \xrightarrow{\deno{\Gamma\ts M}}
+    \deno{T}\,.
+    \]
+\end{proposition}
+For example, in the case of the term $x\ts x$, $\sdeno{x}_\Gamma$ is the coalgebra
+\[
+  \cell_0 \from \oc\bN \to \Var \sequoid \oc\bN\,,
+  \]
+whose anamorphism is $\cell\from \oc\bN \to \oc\Var$ by definition.
+The general case is much harder.
+
+We then prove:
+\begin{proposition}
+  Suppose that
+  \[
+    \Gamma,s\ts M\converges c,s'
+    \]
+  is derivable.  
+
+  Then 
+  \[
+    \deno{s};\sdeno{M}_\Gamma=\deno{s'};\sdeno{c}_\Gamma\,.
+    \]
+\end{proposition}
+\begin{remark}
+  This is similar to the result we are trying to prove for $\deno{M}$, but our result is strong enough to be proved directy by induction.
+\end{remark}
+\begin{proof}
+  Structural induction on the derivation.
+  \begin{description}
+    \item[Canonical forms]
+      Obvious.
+    \item[Sequencing] 
+      Suppose that we have derived
+      \begin{mathpar}
+        \Gamma,s\ts M\converges \skipp,s'
+        \and
+        \Gamma,s'\ts N \converges x,s''\,,
+      \end{mathpar}
+      so that we derive
+      \[
+        \Gamma,s\ts M;N \converges x,s''\,.
+        \]
+      Then by induction we have
+      \begin{mathpar}
+        \deno{s};\sdeno{M}_\Gamma=\deno{s'};\sdeno{\skipp}_\Gamma
+        \and
+        \deno{s'};\sdeno{N}_\Gamma=\deno{s''};\sdeno{x}_\Gamma\,.
+      \end{mathpar}
+      Then we have
+      \begin{IEEEeqnarray*}{Cl}
+        &\deno{s};\sdeno{M;N}_\Gamma \\
+        = & \deno{s};\sdeno{M}_\Gamma;\seq_{S_\Gamma};\sdeno{N}_\Gamma \\
+        = & \deno{s'};\sdeno{\skipp}_\Gamma;\seq_{S_\Gamma};\sdeno{N}_\Gamma \\
+        = & \deno{s'};\sdeno{N}_\Gamma \\
+        = & \deno{s''};\sdeno{x}_\Gamma\,.
+      \end{IEEEeqnarray*}
+    \item[Variable dereference]
+      Suppose we have derived
+      \[
+        \Gamma,s \ts M \converges v,s'\,,
+        \]
+      and that $s'(v)=x$, and therefore that
+      \[
+        \Gamma,s \ts !M \converges x,s'\,.
+        \]
+      By induction, we have
+      \[
+        \deno{s};\sdeno{M}_\Gamma = \deno{s'};\sdeno{v}_\Gamma\,,
+        \]
+      and therefore
+      \begin{IEEEeqnarray*}{Cl}
+        &\deno{s};\sdeno{!M}_\Gamma \\
+        = & \deno{s};\sdeno{M}_\Gamma;(\pr\sequoid\oc\bN) \\
+        = & \deno{s'};\sdeno{v}_\Gamma;(\pr\sequoid\oc\bN) \\
+        = & \deno{s'};\cell_0;(\pr\sequoid\oc\bN) \\
+        = & \deno{s'};\sdeno{x}_\Gamma\,.
+      \end{IEEEeqnarray*}
+    \item[$\neww$]
+      Suppose that we have derived
+      \[
+        \Gamma,v,(s\vert v\mapsto 0) \ts M \converges c,(s'\vert v\mapsto n)\,,
+        \]
+      so that we may deduce
+      \[
+        \Gamma,s \ts \new \lambda x.M \converges c,s'\,.
+        \]
+      Here, it is important to realize that $c$ exists in the context $\Gamma$; i.e., the variable $x$ does not appear free in $c$. (Otherwise the language admits scope extrusion (?) through $\mkvar$.  In any case, it does not make sense to say $\Gamma,s\ts \new\lambda x.M \converges c,s'$ if $c$ contains free variables not in $\Gamma$.)
+      This means that $c$ has the coalgebra
+      \[
+        \sdeno{c}_\Gamma \from S_\Gamma \to \deno T \sequoid S_\Gamma\,,
+        \]
+      and that we interpret $c$ inside the context $\Gamma,v$ as described in Lemma \ref{BoringLemma}.
+
+      We also have the coalgebra
+      \[
+        \sdeno{M}_{\Gamma,v} \from \oc\bN \tensor S_\Gamma \to (\deno t \sequoid (\oc \bN \tensor S_\Gamma)\,,
+        \]
+      and we know by induction that
+      \[
+        (0\tensor\deno{s});\sdeno{M}_{\Gamma,v} = (n\tensor \deno{s'});\sdeno{c}_{\Gamma,v}\,.
+        \]
+      Then we have
+      \begin{IEEEeqnarray*}{Cl}
+        & \deno{s};\sdeno{\new \lambda v.M}_{\Gamma} \\
+        = & \deno s;\Lambda\inv(0;\fcoal{\Lambda\sdeno{M}_{\Gamma,v};S_\Gamma\implies\passoc;\comm};\der) \\
+        = & \deno s;\Lambda\inv(0;\fcoal{\Lambda\sdeno{M}_{\Gamma,v};S_\Gamma\implies\passoc;\comm};\alpha;\id\sequoid();\run) \\
+        = & \deno s;\Lambda\inv(0;\Lambda\sdeno{M}_{\Gamma,v};S_{\Gamma\implies \passoc};\comm;\id\sequoid\fcoal\cdots;\id\sequoid();\run) \\
+        = & (0 \tensor \deno s);\sdeno{M}_{\Gamma,v};\passoc;(\deno T\sequoid S_\Gamma)\sequoid ();\run \\
+        = & (n \tensor \deno{s'});\sdeno{c}_{\Gamma,v};\passoc;(\deno T\sequoid S_\Gamma)\sequoid();\run \\
+        = & (n \tensor \deno{s'});\sdeno{c}_\Gamma;\sym;\wk;\passoc\inv;\passoc;(T\sequoid S_\Gamma)\sequoid();\run \\
+        = & (n \tensor \deno{s'});(\bN \tensor \sdeno{c}_\Gamma);\sym;\wk;(\deno T \sequoid S_\Gamma)\sequoid ();\run) \\
+        = & (n \tensor \deno{s'});(()\tensor \sdeno{c}_\Gamma);\lunit \\
+        = & \deno{s'};\sdeno{c}_\Gamma\,.
+      \end{IEEEeqnarray*}
+  \end{description}
+  And the other cases are similar.
+\end{proof}
+
+Lastly, suppose that
+\[
+  \Gamma,s \ts M \converges c,s'
+  \]
+is derivable in Idealized Algol.
+Then we have
+\begin{IEEEeqnarray*}{Cl}
+  &\deno{\Gamma,s \ts M} \\
+  = & \deno s ; \cell \tensor \cdots \tensor \cell ; \deno{\Gamma \ts M} \\
+  = & \deno s ; \fcoal{\sdeno{M}_{\Gamma}};\der \\
+  = & \deno s ; \fcoal{\sdeno{M}_{\Gamma}};\alpha;\id \sequoid ();\run \\
+  = & \deno s ; \sdeno{M}_{\Gamma} ; \id \sequoid ();\run \\
+  = & \deno{s'} ; \sdeno{c}_{\Gamma} ; \id \sequoid ();\run \\
+  = & \cdots \\
+  = & \deno{\Gamma,s' \ts c}\,,
+\end{IEEEeqnarray*}
+as desired.
+
+\end{document}

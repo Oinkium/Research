@@ -1,0 +1,796 @@
+\documentclass{article}
+
+\def\FEWFONTS{1}
+\input{../common/preamble}
+
+\begin{document}
+
+\section{A Fully Abstract Game Semantics for Idealized Algol}
+
+To introduce our material, we will go back over some old ground, namely the fully abstract game semantics for Idealized Algol developed by Abramsky and McCusker in \cite{SamsonGuyIAActive}.  
+In keeping with the spirit of this thesis, we will aim to use category theoretic methods, and so our proofs of soundness and adequacy will depart from those given by Abramsky and McCusker, and will instead involve coalgebraic ideas developed by Laird in \cite{laird02} and \cite{LairdCofCommCom}.
+
+\subsection{Idealized Algol}
+
+The ground types of Idealized Algol are called $\com$, $\bool$, $\nat$ and $\Var$.  
+The first three are data types corresponding to the sets $\bC = \{a\}$, $\bB = \{\true,\false\}$ and $\bN = \{0,1,2,\cdots\}$.
+$\com$ takes the role of a command or void type; typically, although the return value of a function $T \to \com$ will not convey any information, the function will have useful side effects.
+
+The type $\Var$ is the type of a variable that holds elements of $\bN$.
+It is best understood as corresponding to the following pseudo-Java `interface'.
+
+\begin{lstlisting}[language=Java, morekeywords={nat,com}]
+public interface Var
+{
+  nat read();
+  com write(nat value);
+}
+\end{lstlisting}
+
+We now present the typing rules for the language.  
+Here, $\Gamma$ will represent a \emph{context}; i.e., a list $x_1\from T_1,\cdots,x_n\from T_n$ of variable names together with their types.
+
+First, we have the usual rules for the simply typed lambda calculus.
+
+\begin{mathpar}
+  \inferrule*{ }{\Gamma,x\from T \ts x \from T}
+  \and
+  \inferrule*{\Gamma\ts M \from S \to T \\ \Gamma \ts N \from S}{\Gamma\ts MN \from T}
+  \and
+  \inferrule*{\Gamma,x\from S \ts M \from T}{\Gamma \ts \lambda x^S.M \from S \to T}
+\end{mathpar}
+
+We then have rules for each of the base types.  
+At type $\com$ we have:
+\begin{mathpar}
+  \inferrule*{ }{\Gamma\ts\skipp\from\com}
+  \and
+  \inferrule*[right={$T\in\{\com,\bool,\nat\}$}]{\Gamma\ts M\from\com \\ \Gamma\ts N \from T}{\Gamma\ts M;N\from T}\,.
+\end{mathpar}
+Here, $\skipp$ is a generic command with no side-effects that returns the unique element of the singleton set $\bC$.  
+$M;N$ represents the sequential composition of $M$ with $N$; i.e., the term that first evaluates $M$, performing any of its side-effects, and then evaluates $N$ and returns the result.
+
+At type $\bool$ we have true/false values and conditionals.
+\begin{mathpar}
+  \inferrule*{ }{\Gamma\ts\true\from\bool}
+  \and
+  \inferrule*{ }{\Gamma\ts\false\from\bool}
+  \\
+  \inferrule*[right={$T\in\{\com,\bool,\nat\}$}]{\Gamma\ts M \from \bool \\ \Gamma \ts N \from T \\ \Gamma \ts P \from T}{\Gamma\ts \If M \Then N \Else P \from T}
+\end{mathpar}
+
+At type $\nat$ we have numerals, arithmetic operators and a conditional that tests whether a number is equal to $0$ or not.
+\begin{mathpar}
+  \inferrule*{ }{\Gamma\ts n\from\nat}
+  \and
+  \inferrule*{\Gamma\ts M \from \nat}{\Gamma\ts \suc M \from \nat}
+  \and
+  \inferrule*{\Gamma\ts M \from \nat}{\Gamma\ts \pred M\from \nat}
+  \\
+  \inferrule*[right={$T\in\{\com,\bool,\nat\}$}]{\Gamma\ts M \from \nat \\ \Gamma\ts N \from T \\ \Gamma \ts P \from T}{\Gamma \ts \IfO M \Then N \Else P \from T}
+\end{mathpar}
+
+At type $\Var$, we have terms that call the read and write `methods' to dereference the variable or to assign a new value to it.
+\begin{mathpar}
+  \inferrule*{\Gamma\ts V \from \Var}{\Gamma \ts \oc V \from \nat}
+  \and
+  \inferrule*{\Gamma\ts V \from \Var \\ \Gamma \ts E \from \nat}{\Gamma \ts V\gets E \from \com}
+\end{mathpar}
+
+We also have the ability to create a new variable.
+\begin{mathpar}
+  \inferrule*{\Gamma,x\from \Var \ts M \from T}{\Gamma\ts \neww_T \lambda x.M\from T}
+\end{mathpar}
+The idea here is that $M$ is a term that refers to some free variable $x$ of type $\Var$; then $\neww \lambda x.M$ makes $x$ behave like an actual storage cell (so, for instance, the result of the computation $\neww_\nat \lambda x.(x\gets 5);!x$ will be $5$).
+
+We have another way of creating variables, using the $\mkvar$ keyword.  
+If we think back to our illustration of the $\Var$ type as an interface, this becomes clearer.  
+$\mkvar$ creates a new anonymous instance of the $\Var$ interface, using the `methods' supplied through its arguments.
+\begin{mathpar}
+  \inferrule*{\Gamma \ts M \from \nat \\ \Gamma \ts N \from \nat \to \com}{\Gamma\ts \mkvar M N \from \Var}
+\end{mathpar}
+
+Lastly, we have fixpoint combinators at all types that we use to implement recursion.
+\begin{mathpar}
+  \inferrule*{\Gamma \ts M \from T \to T}{\Gamma \ts \Y_T M \from T}
+\end{mathpar}
+
+\subsection{Games and Strategies}
+
+We adopt the game semantics from \cite{SamsonGuyIAActive}; these are based on the game semantics developed in \cite{hoPcf}, with a modification to make them into a linear category.
+
+\begin{definition}
+  An \emph{arena} is a tuple $A=(M_A,\lambda_A,\ts_A)$, where
+  \begin{itemize}
+    \item $M_A$ is a set of \emph{moves},
+    \item $\lambda_A \from M_A \to \OP \times \QA$ is a function that identifies each move as either an \emph{$O$-move} or a \emph{$P$-move}, and as either a \emph{question} or an \emph{answer}, and
+    \item $\ts_A$ is a relation between $M_A+\{*\}$ and $M_A$ such that
+      \begin{itemize}
+        \item if $*\ts_A a$, then $\lambda_A(a)=(O,Q)$, and if $b\ts_A a$ then $b=*$,
+        \item if $a\ts_A b$ and $a$ is an answer, then $b$ is a question, and
+        \item if $a \ts_A b$ and $a\ne *$, then either $a$ is an $O$-move and $b$ a $P$-move, or the other way round.
+      \end{itemize}
+  \end{itemize}
+  If $*\ts_A a$, then we say that $a$ is an \emph{initial move} in $A$.  
+  If $a \ts_A b$, the we say that $a$ \emph{enables} $b$.
+\end{definition}
+
+As a shorthand, we write $\lambda_A^{OP}\from M_A \to \OP$ for $\pr_1\circ\lambda_A$ and $\lambda_A^{QA}\from M_A \to \QA$ for $\pr_2\circ\lambda_A$.
+
+\begin{definition}
+  A \emph{justified sequence} in an arena $A$ is a finite sequence $s$ of moves together with, for each non-initial move $a$ occurring in $s$, a pointer back to some move $b$ occurring earlier in $s$ such that $b\ts_A a$.
+  We say that \emph{$b$ justifies $a$} or that $b$ is the \emph{justifier} of $a$.
+
+  Given such a justified sequence, we define the \emph{$P$-view} $\pv s$ and \emph{$O$-view} $\ov s$ of $s$ inductively as follows.
+  \begin{IEEEeqnarray*}{RCL"s}
+    \pv{\epsilon} & = & \epsilon & \\
+    \pv{sa} & = & \pv{s}a & if $a$ is a $P$-move \\
+    \pv{sa} & = & a & if $a$ is initial \\
+    \pv{sbta} & = & \pv{s}ba & if $a$ is an $O$-move justified by $b$ \\
+    & & & \\
+    \ov{\epsilon} & = & \epsilon & \\
+    \ov{sa} & = & \ov{s}a & if $a$ is an $O$-move \\
+    \ov{sbta} & = & \ov{s}ba & if $a$ is a $P$-move justified by $b$
+  \end{IEEEeqnarray*}
+  
+  A justified sequence $s$ is \emph{well-bracketed} if whenever a question $q$ justifies some answer $a$, then any question $q'$ occurring after $q$ and before $a$ must justify some answer $a'$ occurring between $q'$ and $a$, and moreover $a$ is the only answer justified by $q$.
+  We say that a justified sequence $s$ is \emph{alternating} if it alternates between $O$-moves and $P$-moves, and that it is \emph{well-formed} if it is both well-bracketed and alternating.
+
+  We say that a well-formed justified sequence is \emph{visible} if whenever $ta\prefix s$, and $a$ is a $P$-move, then the justifier of $a$ occurs in the $P$-view of $t$, and if whenever $tb\prefix s$, and $b$ is a non-initial $O$-move, then the justifier of $b$ occurs in the $O$-view of $t$.
+
+  We say that a justified sequence $s$ is \emph{legal} if it is well-formed and visible, and write $L_A$ for the set of legal sequences occurring in $A$.
+\end{definition}
+
+Note that since every non-initial move in a justified sequence $s$ must be justified by some previous move, then the first move in the sequence must be initial and therefore an $O$-question.  
+If $s$ is alternating, this means that $s$ ends with an $O$-move if it has odd length and with a $P$-move if it has even length.  
+
+\begin{definition}
+  Given a legal sequence $s\in L_A$, and a move $b$ in $s$, we say that a move $a$ in $s$ is \emph{hereditarily justified by $b$} if there is a chain of justification pointers going back from $a$ to $b$.
+
+  We write $s\vert_b$ for the subsequence of $s$ given by all moves in $s$ that are hereditarily justified by $b$.
+  Given a set $I$ of initial moves, we write $s\vert_I$ for the subsequence of $s$ given by all moves that are hereditarily justified by some $b\in I$.
+
+  A \emph{game} is given by a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$ where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed subset of $L_A$ such that if $s\in P_A$ and $I$ is a set of initial moves, then $s\vert_I\in P_A$.
+\end{definition}
+
+We shall call an odd-length sequence $s\in P_A$ an \emph{$O$-position} and an even-length sequence a \emph{$P$-position}
+
+\begin{example}[Empty game]
+  The \emph{empty game} $I$ is given by the tuple
+  \[
+    (\emptyset,\emptyset,\emptyset,\{\epsilon\})\,,
+    \]
+  where $\epsilon$ is the empty sequence.
+\end{example}
+
+\begin{example}[Data-type games]
+  Let $X$ be some set.  
+  Then we have a game, which we shall also call $X$, given by:
+  \begin{itemize}
+    \item $M_X = \{q\} + X$, 
+    \item $\lambda_X(q)=(O,Q)$ and $\lambda_X(x)=(P,A)$ for all $x\in X$, 
+    \item $q\ts_X x$ for each $x\in X$, and
+    \item $P_X = \{\epsilon,q\}\cup\{qx\suchthat x\in X\}$, where the $x$ in $qx$ is justified by $q$.
+  \end{itemize}
+
+  In particular, we have games $\bC$, $\bB$ and $\bN$, which we shall use to model the datatypes $\com$, $\bool$ and $\nat$ of Idealized Algol.
+\end{example}
+
+\begin{definition}
+  Let $A$ be a game.  
+  Then a \emph{strategy} for $A$ is a non-empty even-prefix-closed set $\sigma\subset P_A$ of $P$-positions in $A$ such that if $sab,sac\in \sigma$ then $b=c$ and the justifier of $b$ is the justifier of $c$.  
+\end{definition}
+Here, we have identified a strategy for a game with the set of $P$-positions that can occur when player $P$ plays according to that strategy.  
+So the condition we have given is one of \emph{determinism}: in any $O$-position $sa$ that can occur in the strategy, player $P$ must have at most one reply.
+
+Note that there may be $O$-positions for which player $P$ has no reply at all; we use these to model non-terminating computations.
+
+We write $\sigma\from A$ to denote that $\sigma$ is a strategy for the game $A$.
+
+\begin{definition}
+  A strategy $\sigma$ for a game $A$ is called \emph{innocent} if player $P$'s moves only depend on the current $P$-view; i.e., if whenever $sab\in\sigma$, $t\in\sigma$ and $ta\in P_A$ such that $\pv{sa}=\pv{ta}$, then we have $tab\in\sigma$.
+\end{definition}
+
+\subsection{Connectives on Games}
+
+In the \emph{product} $A\times B$ of games $A$ and $B$, player $O$ chooses either $A$ or $B$ on the first move and subsequent play is that game.
+
+\begin{definition}
+  Given games $A$,$B$, define a game $A\times B$ by
+  \begin{itemize}
+    \item $M_{A\times B} = M_A + M_B$,
+    \item $\lambda_{A\times B} = [\lambda_A,\lambda_B]$,
+    \item $* \ts_{A\times B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\times B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, and
+    \item $P_{A\times B} = \{s\in L_{A\times B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B=\epsilon$ or $s\vert_A=\epsilon$ and $s\vert_B\in P_B$}\}$.
+  \end{itemize}
+\end{definition}
+
+Here, we have written $s\vert_A$ for the subsequence of $s$ consisting of all moves from $M_A$ and $s\vert_B$ for the subsequence consisting of all moves from $M_B$.
+
+In the \emph{tensor product} $A\tensor B$ of games $A$ and $B$, the games $A$ and $B$ are played in parallel, and player $O$ may switch between games when it is his turn.
+
+\begin{definition}
+  Given games $A$,$B$, define a game $A\tensor B$ by
+  \begin{itemize}
+    \item $M_{A\tensor B} = M_A + M_B$,
+    \item $\lambda_{A\tensor B} = [\lambda_A,\lambda_B]$,
+    \item $* \ts_{A\tensor B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\tensor B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, and
+    \item $P_{A\tensor B} = \{s\in L_{A\tensor B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
+  \end{itemize}
+\end{definition}
+
+In the \emph{linear implication} $A\implies B$, the game $B$ is played in parallel with a version of $A$ in which the two players' roles have been switched around, and player $P$ may switch between the two games when it is her turn.
+
+\begin{definition}
+  Given games $A$,$B$, define a game $A\implies B$ by
+  \begin{itemize}
+    \item $M_{A\implies B} = M_A + M_B$,
+    \item $\lambda_{A\implies B} = [\neg\circ\lambda_A,\lambda_B]$,
+    \item $* \ts_{A\implies B} a$ if and only if $*\ts_B a$, and $a \ts_{A\implies B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, or if $a$ is initial in $B$ and $b$ is initial in $a$, and
+    \item $P_{A\implies B} = \{s\in L_{A\implies B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
+  \end{itemize}
+\end{definition}
+
+Here, $\neg\from \OP\times\QA \to \OP\times \QA$ is the function that reverses $O$ and $P$, while leaving $\QA$ unchanged.
+
+In the \emph{exponential} of a game $A$, infinitely many copies of $A$ are played in parallel, and player $O$ may switch between copies whenever it is his move.
+
+\begin{definition}
+  Given a game $A$, define a game $\oc A$ by
+  \begin{itemize}
+    \item $M_{\oc A}=M_A$,
+    \item $\lambda_{\oc A} = \lambda_A$,
+    \item $\ts_{\oc A} = \ts_A$ and
+    \item $P_{\oc A} = \{s\in L_{\oc A} \suchthat \text{$s\vert_b\in P_A$ for each initial move $b$ occurring in $s$}\}$.
+  \end{itemize}
+\end{definition}
+
+Lastly, the \emph{sequoid} $A\sequoid B$ of two games $A$ and $B$ behaves like the tensor product $A\tensor B$, except that the opening move must take place in $A$.
+
+\begin{definition}
+  Given games $A,B$, define a game $A\sequoid B$ by
+  \begin{itemize}
+    \item $M_{A\sequoid B} = M_{A\tensor B}$, 
+    \item $\lambda_{A\sequoid B} = \lambda_{A\tensor B}$, 
+    \item $\ts_{A\sequoid B} = \ts_{A \tensor B}$ and
+    \item $P_{A\sequoid B} = \{s\in P_{A\tensor B}\suchthat\text{$s=\epsilon$ or $s$ begins with a move from $A$}\}$.
+  \end{itemize}
+\end{definition}
+
+\subsection{Composition of strategies}
+
+\begin{definition}
+  Let $A,B,C$ be arenas.  
+  An \emph{interaction sequence} between $A,B,C$ is a justified sequence $\s$ of moves drawn from $M_A$, $M_B$ and $M_C$ such that $\s\vert_{A,B}\in L_{A\implies B}$ and $\s\vert_{B,C}\in L_{B\implies C}$.  
+  Here, $\s\vert_{A,B}$ is the subsequence of $\s$ consisting of those moves from $\s$ that occur in $A$ or $B$, together with all justification pointers between moves in $A$ and $B$, and $\s\vert_{B,C}$ is defined similarly.
+
+  We write $\Int(A,B,C)$ for the set of all interaction sequences between $A,B,C$.
+
+  Given $\s\in\Int(A,B,C)$, we write $\s\vert_{A,C}$ for the subsequence of $\s$ consisting of those moves from $\s$ that occur in $A$ or $B$.  
+  A move $b$ in $\s\vert_{A,C}$ justifies a move $a$ either if $b$ justifies $a$ in either the $A$ or the $C$ components, or if $b$ justifies in $\s$ some initial move $c$ in $B$, which itself justifies $a$.
+\end{definition}
+
+\begin{definition}
+  Let $A,B,C$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $B\implies C$.  
+  We define $\sigma\|\tau$ to be given by the set
+  \[
+    \{\s\in\Int(A,B,C)\suchthat \text{$\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$}\}\,.
+    \]
+  Then we define the \emph{composition} $\sigma;\tau$ of $\sigma$ and $\tau$ to be given by the set
+  \[
+    \{\s\vert_{A,C}\suchthat \s\in\sigma\|\tau\}\,.
+    \]
+\end{definition}
+
+We need some small lemmata and definitions to help us show that this is a strategy.
+
+\begin{lemma}
+  We extend the function $\lambda_A^{OP}$ to sequences of moves by
+  \begin{itemize}
+    \item $\lambda_A^{OP}(\epsilon)=P$ and
+    \item $\lambda_A^{OP}(sa)=\lambda_A(a)$.
+  \end{itemize}
+
+  If $s\in P_{A\implies B}$, then $\lambda_{A\implies B}^{OP}(s)=(\lambda_A^{OP}(s\vert_A)\Rightarrow \lambda_B^{OP}(s\vert_B))$, where $\Rightarrow$ is the binary operation on $\OP$ defined by
+  \[
+    \begin{array}{cc|c}
+      P & Q & P\Rightarrow Q \\
+      \hline
+      P & P & P \\
+      O & P & P \\
+      P & O & O \\
+      O & O & P
+    \end{array}\,.
+    \]
+  Moreover, if $\lambda_A^{OP}(s\vert_A)=O$ then $\lambda_A^{OP}(s\vert_B)=O$.
+  \label{LemCompositionLemma}
+\end{lemma}
+\begin{proof}
+  Induction on the length of $s$.
+  If $s=\epsilon$, then $s\vert_A=s\vert_B=\epsilon$, and so $(\lambda_A^{OP}(s\vert_A)\Rightarrow \lambda_B^{OP}(s\vert_B)) = (P\Rightarrow P) = P = \lambda_{A\implies B}^{OP}(s)$.  
+
+  Suppose then that $s=ta$, and that $\lambda_{A\implies B}^{OP}(t)=O$.  
+  This means that $\lambda_A^{OP}(t\vert_A)=P$ and $\lambda_B^{OP}(t\vert_B)=O$.
+  Then, whether $a$ is a move in $A$ or a move in $B$, adding it will flip exactly one of these components -- so $\lambda_{A\implies B}(s\vert_A)=O$ and $\lambda_{A\implies B}^{OP}(s\vert_B)=O$ if $a$ is a move in $A$ and $\lambda_{A\implies B}(s\vert_A)=P$ and $\lambda_{A\implies B}^{OP}(s\vert_B)=P$ if $a$ is a move in $C$.
+
+  Suppose instead that $\lambda_{A\implies B}^{OP}(t)=P$.  
+  By induction, this means that either $\lambda_A^{OP}(t\vert_A)=P$ and $\lambda_B^{OP}(t\vert_B)=P$ or that $\lambda_A^{OP}(t\vert_A)=O$ and $\lambda_B^{OP}(t\vert_B)=O$.
+  In the first case, this means that either $t\vert_A$ is empty or its last move is a $P$-move in $A$ (and therefore an $O$-move in $A\implies B$), and so the move $a$ must take place in $C$, meaning that $\lambda_A^{OP}(s\vert_A)=P$ and $\lambda_B^{OP}(s\vert_B)=O$.  
+
+  Similarly, in the second case, the last move in $t\vert_C$ must be an $O$-move in $B$ (and therefore an $O$-move in $A\implies B$, and so the move $a$ must take place in $A$, meaning that $\lambda_A^{OP}(s\vert_A)=P$ and $\lambda_B^{OP}(s\vert_B)=O$.  
+\end{proof}
+
+It follows that
+
+\begin{corollary}[Switching condition]
+  Only player $P$ may switch between games in $A\implies B$; i.e., if $tab\in P_{A\implies B}$, and $a$ occurs in $A$ and $b$ in $B$, or if $a$ occurs in $B$ and $b$ in $A$, then $b$ is a $P$-move.
+  \label{CorSwitchingCondition}
+\end{corollary}
+\begin{proof}
+  Otherwise, $\lambda_{A\implies B}(t)=O$, so $\lambda_A(t\vert_A)=P$ and $\lambda_B(t\vert_B)=O$.  
+  But we must also have $\lambda_{A\implies B}(tab)=O$, so $\lambda_A(tab\vert_A)=P$ and $\lambda_B(tab\vert_B)=O$.  
+  But this is a contradiction, since $tab\vert_A$ and $tab\vert_B$ are both one move longer than the plays $t\vert_A$ and $t\vert_B$.
+\end{proof}
+
+\begin{definition}[{\cite[\sec 3.1]{Harmer2006InnocentGS}}]
+  Given $\s\in \Int(A,B,C)$, we define the \emph{$P$-view} $\pv{\s}$ of $\s$ inductively as follows.
+  \begin{IEEEeqnarray*}{RCL?s}
+    \pv{\epsilon} & = & \epsilon & \\
+    \pv{\s a} & = & \pv{\s}a & if $a$ is a move in $B$, an $O$-move in $A$ or a $P$-move in $C$ \\
+    \pv{\s c} & = & c & if $c$ is an initial move of $C$ \\
+    \pv{\s b\t a} & = & \pv{\s}ba & if $a$ is a $P$-move of $A$ or an $O$-move of $C$ and is justified by $b$ \\
+  \end{IEEEeqnarray*}
+\end{definition}
+
+\begin{lemma}
+  If $\s\in \Int(A,B,C)$, then $\pv{\s}\vert_{A,C}=\pv{\s\vert_{A,C}}$.
+  \label{LemHarmerRestriction}
+\end{lemma}
+\begin{proof}
+  Induction on the length of $\s$.  
+  This is clear if $\s=\epsilon$.  
+  
+  If $a$ is an $O$-move in $A$ or a $P$-move in $C$, then $a$ is a $P$-move in $A\implies C$.  
+  We have $\pv{\s a}\vert_{A,C}=\pv{\s}\vert_{A,C}a$, which by the inductive hypothesis is equal to $\pv{\s\vert_{A,C}}a$, which is the same as $\pv{\s a\vert_{A,C}}$.
+  If $b$ is a move in $B$, then $\pv{\s b}\vert_{A,C}=\pv{\s}b\vert_{A,C}=\pv{\s}\vert_{A,C}=\pv{\s\vert_{A,C}}=\pv{\s b\vert_{A,C}}$, by the inductive hypothesis.
+
+  If $c$ is initial in $C$, then $\pv{\s c}\vert_{A,C}=c=\pv{\s c\vert_{A,C}}$.
+
+  Suppose $a$ is a $P$-move of $A$ or an $O$-move of $C$ -- so $a$ is an $O$-move in $A\implies C$ -- and suppose that $a$ is justified by $b$ in the sequence $\s b\t a$.  
+  Since $a$ cannot be an initial move in $A$, $b$ must occur in the same game as $a$, and in particular must not occur in $B$.
+  Then we have $\pv{\s b\t a}\vert_{A,C}=\pv{\s} ba\vert_{A,C}=\pv{\s}\vert_{A,C}ba$, which by the inductive hypothesis is equal to $\pv{\s\vert_{A,C}}ba=\pv{\s ba\vert_{A,C}}$.
+\end{proof}
+
+\begin{lemma}[{\cite[\sec 3.1]{Harmer2006InnocentGS}}]
+  Let $\s a\in \Int(A,B,C)$ (so, in particular, $\s\vert_{A,B}$ and $\s\vert_{B,C}$ satisfy the visibility condition).  
+  If $a$ is a move in $B$, an $O$-move in $A$ or a $P$-move in $C$, then $\pv{\s a}\in \Int(A,B,C)$.
+  \label{LemHarmersLemma}
+\end{lemma}
+\begin{proof}
+  Induction on the length of $\s$.  
+  If $\s=\epsilon$, then this is clear.  
+  Otherwise, suppose that $\s$ is non-empty.
+
+  First, we claim that $\pv{\s}\in\Int(A,B,C)$.  
+  If $\s$ ends with a move in $B$, an $O$-move in $A$ or a $P$-move in $C$, then this follows immediately from the inductive hypothesis.  
+  Otherwise, suppose that $\s$ ends with a $P$-move in $A$ or an $O$-move in $C$.  
+  If this last move is initial, then $\pv{\s}$ is a single move, so the claim is trivial.  
+  Otherwise, write $\s=\t p\u r$, where $p$ justifies $r$.  
+  By the inductive hypothesis, we have $\pv{\t p}\in \Int(A,B,C)$, and then $\pv{s}=\pv{\t p\u r}=\pv{\t}pr=\pv{\t p}r\in \Int(A,B,C)$.  
+
+  Now, since $a$ is a $P$-move in $A\implies B$ or in $B\implies C$, its predecessor $b$ is an $O$-move and has some justifier $c$ contained in $\pv{\s\vert_X}$, where $X\in\{A\implies B,B\implies C\}$ is that component in which $a$ is a $P$-move.  
+  Then this $c$ is preceded by some other $O$-move $b'$, which is necessarily also contained in $\pv{\s}$, and so has some justifier $c'$, contained in $\pv{\s\vert_X}$ by visibility.  
+  Continuing in this way until we reach an initial move, we build up the whole of the sequence $\pv{\s\vert_X}$ as a subsequence of $\pv{\s}$.  
+  Therefore, the justifier of $a$ must be contained in $\pv{\s}$, and so $\pv{\s a}=\pv{\s}a\in\Int(A,B,C)$.
+\end{proof}
+
+\begin{lemma}[$O$-views in the linear implication, {\cite[4.2,4.3]{hoPcf}}]
+  Let $A,B$ be games, and let $bs$ be a non-empty play in $A\implies B$ beginning with an initial move $b$ in $B$.
+
+  i) If $bs$ ends with a $P$-move in $B$, then $\ov{bs}_{A\implies B}=\ov{bs\vert_B}_B$.
+
+  ii) If $bs$ ends with a $P$-move in $A$, then $\ov{bs}_{A\implies B} = b\pv{s\vert_A}^A$.
+  \label{LemProjectionLemma}
+\end{lemma}
+\begin{proof}
+  Induction on the length of $s$.
+  If $s=\epsilon$, then $bs$ ends with an $O$-move in $B$, and we have $\pv{b}^{A\implies B} = b = \pv{b}^{B}$.  
+
+  Otherwise, suppose that $bs$ ends with a $P$-move $c$ in $B$.  
+  Let $d$ be the justifier of $c$.  
+  Then $d$ must be an $O$-move in $B$.
+  Write $bs=tduc$, where $t,u$ are sequences.  
+  Then $\ov{tduc}_{A\implies B}=\ov{t}_{A\implies B}dc$ and $\ov{tduc\vert_B}_B=\ov{t\vert_B}_Bdc$.
+  By Corollary \ref{CorSwitchingCondition}, $t$ must end with a $P$-move in $B$, or be empty, so by the inductive hypothesis we have $\ov{t}_{A\implies B}=\ov{t\vert_B}_B$.
+  Therefore, $\ov{bs}_{A\implies B}=\ov{tduc}_{A\implies B}=\ov{t}_Bdc = \ov{tduc\vert_B}_B=\ov{bs\vert_B}_B$.
+
+  Next, suppose that $bs$ ends with a $P$-move $a$ in $A$.
+  Let $c$ be the justifier of $a$.  
+  Then $c$ must be an $O$-move in $A$.  
+  Write $s=tcua$, where $t,u$ are sequences.  
+  Then $\ov{btcua}_{A\implies B}=\ov{bt}_{A\implies B}ca$ and $\pv{tcua\vert_A}^A = \pv{t\vert_A}^Aca$, since the roles are reversed in $A$.
+  By Corollary \ref{CorSwitchingCondition}, $t$ must end in a $P$-move in $A$, or be empty, so by the inductive hypothesis we have $\ov{bt}_{A\implies B} = b\pv{t\vert_A}^A$.  
+  Therefore, $\ov{bs}_{A\implies B}=\ov{btcua}_{A\implies B}=\ov{bt}_{A\implies B}ca=b\pv{t\vert_A}^Aca=b\pv{tcua\vert_A}^A=b\pv{s\vert_A}^A$.  
+\end{proof}
+
+\begin{proposition}
+  $\sigma;\tau$ is a strategy for $A\implies C$.  
+\end{proposition}
+\begin{proof}
+  First, we claim that $\s\vert_{A,C}\in P_{A\implies B}$ for any $\s\in \sigma\|\tau$.
+  Since we certainly have $\s\vert_{A,C}\vert_A = \s\vert_{A,B}\vert_A\in P_A$ and $\s\vert_{A,C}\vert_C = \s\vert_C = \s\vert_{B,C}\vert_C\in P_C$, it suffices to show that $\s\vert_{A,C}\in L_{A\implies C}$.
+
+  Suppose that $ta\prefix \s\vert_{A,C}$.  We claim that $\lambda_{A\implies C}(t) = \neg\lambda_{A\implies C}(a)$.
+  By Lemma \ref{LemCompositionLemma}, we are in one of the following configurations.
+  \small
+  \[
+    \begin{array}{ccc|ccc}
+      \lambda_A^{OP}(t\vert_A) & \lambda_B^{OP}(t\vert_B) & \lambda_C^{OP}(t\vert_C) & \lambda_{A\implies B}^{OP}(t\vert_{A,B}) & \lambda_{B\implies C}^{OP}(t\vert_{B,C}) & \lambda_{A\implies C}^{OP}(t\vert_{A,C}) \\
+      \hline
+      P & P & P & P & P & P \\
+      P & P & O & P & O & O \\
+      P & O & O & O & P & O \\
+      O & O & O & P & P & P 
+    \end{array}
+    \]
+  \normalsize
+  In the configuration $PPP$, the move $a$ cannot be a move in $A$, since that would leave $ta\vert_{A\implies B}$ in the configuration $OP$, which is impossible by Lemma \ref{LemCompositionLemma}.  
+  Therefore, it must be a move in $C$, and must therefore be an $O$-move in $C$ and hence an $O$-move in $A\implies C$.
+
+  In the configuration $PPO$, once again the move $a$ cannot take place in $A$, since this would leave $ta\vert_{A\implies B}$ in an illegal configuration.  
+  Therefore, it must occur in $C$, and must be a $P$-move in $C$ and hence a $P$-move in $A\implies C$.
+
+  In the configuration $POO$, the move $a$ cannot take place in $C$, or it would leave $ta\vert_{B,C}$ in the illegal configuration $OP$, so the move $a$ takes place in $A$.  
+  Therefore, it must be an $O$-move in $A$ and hence a $P$-move in $A\implies C$.  
+
+  Lastly, in the configuration $OOO$, the move $a$ cannot occur in $C$, or it would leave $ta\vert_{B,C}$ in the configuration $OP$, and so it must take place in $A$.  
+  Therefore, it must be a $P$-move in $A$, and hence an $O$-move in $A\implies C$.
+
+  Having established that $\s\vert_{A,C}$ is alternating, we show that it is well-bracketed.
+  Suppose that a question move $q$ in $\s\vert_{A,C}$ justifies some answer move $a$.
+  $q$ and $a$ must occur in the same component, since the only case in which a move from one of $A$ and $C$ can justify a move in the other is when both moves are initial, and hence questions.
+  Suppose first that $q$ and $a$ both occur in the game $C$.  
+  Suppose that some other question move $q'$ occurs between $q$ and $a$ in $\s\vert_{A,C}$.  
+  If $q'$ occurs in $C$, then it must be answered by some $a'$ occurring between $q'$ and $a$, since $\s\vert_C$ is a well-bracketed sequence.  
+  Otherwise, suppose that $q'$ occurs in $A$.  
+
+  By examining the table above, we see that there must be some move in $B$ occurring between $q$ and $q'$ in $\s$, since moves in $A$ move between configurations $OOO$ and $POO$, while moves in $C$ move us between configurations $PPP$ and $PPO$.
+  Let $b$ be the earliest such move.  
+  Then $b$ must be a question; indeed, if it is an answer, then it is non-initial and so can only be justified by questions in $B$.  
+  But such a question must occur earlier in $\s\vert_{B,C}$ than $q$, which would mean that $q$ was an unanswered question when the move $b$ was played, contradicting well-bracketedness of $\s\vert_{B,C}$.  
+  Since $b$ is a question, it must be answered by some $a''$ occurring between $b$ and $a$.  
+  Therefore, since $\s\vert_{A,B}$ is well-bracketed, the move $q'$ must be answered by some $a'$ occurring between $a'$ and $a''$ in $\s\vert_{A,B}$, and therefore between $a'$ and $a$ in $\s\vert_{A,C}$.
+
+  The case when $q$ and $a$ both occur in $A$ is similar.  
+
+  Lastly, we need to show that $\s\vert_{A,C}$ satisfies the visibility condition.
+  Let $ta\prefix\s\vert_{A,C}$.
+  Choose some $\t\prefix\s$ such that $\t\vert_{A,C}=t$.  
+
+  Suppose $a$ is a $P$-move.
+  Then by Lemma \ref{LemHarmersLemma}, $\pv{\t a}\in\Int(A,B,C)$.  
+  By Lemma \ref{LemHarmerRestriction}, $\pv{t}a=\pv{ta}=\pv{\t a}\vert_{A,C}$, and therefore that the justifier of $a$ must be inside $\pv{t}$.
+
+  Secondly, suppose that $a$ is an $O$-move.
+  If $a$ is an $O$-move in $C$, then either it is initial or $t$ ends with some $P$-move in $B$, and therefore $\ov{t}_{A\implies C}=\ov{t\vert_B}_B = \ov{\t\vert_{B,C}}_B$.  
+  Therefore, since $t\vert_{B,C}$ satisfies visibility, the justifier of $a$ must lie in $\ov{t}_{A\implies C}$.  
+  If $a$ is an $O$-move in $A$, then write $t=cu$ and $\t=c\u$, where $c$ is the starting move in $C$.
+  We have $\ov{cua}_{A\implies C}=c\pv{u\vert_A a}^A = \ov{c\u\vert_{A,B}}_{A\implies B}$.  
+  Therefore, the justifier of $a$ must lie in $\ov{t}_{A\implies C}$.
+
+  Therefore, $\s\vert_{A,C}\in L_{A\implies C}$, so $\s\vert_{A,C}\in P_{A\implies C}$.
+
+  It is fairly clear that $\sigma;\tau$ is even-prefix closed, since $\sigma$ and $\tau$ are.  
+  Indeed, if $\s\vert_{A,C}\in\sigma;\tau$ and $t\prefix\s\vert_{A,C}$, then we may choose some prefix $\t$ of $\s$ such that $t=\t\vert_{A,C}$.  
+  Then $\t\vert_{A,B}\prefix\s\vert_{A,B}\in\sigma$ and $\t\vert_{B,C}\prefix\s\vert_{B,C}\in\tau$, so $\t\in\sigma\|\tau$.
+
+  We claim that every sequence in $\sigma;\tau$ has even length.  
+  Indeed, if $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$, then both $\s\vert_{A,B}$ and $\s\vert_{B,C}$ must have even length, so must be in configuration $OO$ or $PP$.  
+  This means that $\s$ as a whole must be in configuration $OOO$ or $PPP$, and so $\s\vert_{A,C}$ must be in configuration $OO$ or $PP$, so must have even length.
+
+  Lastly, we need to show that $\sigma;\tau$ is deterministic.  
+  Suppose that $sab,sac\in\sigma;\tau$, and suppose that $b\ne c$.  
+  Suppose that $\s\vert_{A,C}=sab$ and $\t\vert_{A,C}=sac$, for $\s,\t\in\sigma\|\tau$, and let $\u$ be the longest common prefix of $\s,\t$.
+  $\s$ and $\t$ are certainly incomparable under the prefix ordering, since $\s\vert_{A,C}$ and $\t\vert_{A,C}$ are, so we have $\u p\prefix \s$ and $\u q\prefix \t$, where $p\ne q$.
+  Now $p$ and $q$ cannot be $O$-moves in $A$, $P$-moves in $C$ or moves in $B$, or they would have to be equal by determinism of $\sigma$ and $\tau$.  
+  Therefore, they are $P$-moves in $A$ or $O$-moves in $C$, but this contradicts $\s\vert_{A,C}=sab$ and $\t\vert_{A,C}=sac$.
+
+  Therefore, the composition $\sigma;\tau$ is a strategy.  
+\end{proof}
+
+We also want to show that the composition of innocent strategies is innocent.
+We follow the proof given in \cite{Harmer2006InnocentGS}.  
+First, we use a lemma.
+
+\begin{lemma}[{\cite[3.3.3]{Harmer2006InnocentGS}}]
+  Let $\s a\in\Int(A,B,C)$.  
+
+  i) If $a$ is a $P$-move of $A$ or an $O$-move of $B$, then $\pv{\s a\vert_{A,B}}=\pv{\pv{\s a}\vert_{A,B}}$.
+
+  ii) If $a$ is a $P$-move of $B$ or an $O$-move of $C$, then $\pv{\s a\vert_{B,C}}=\pv{\pv{\s a}\vert_{B,C}}$.
+  \label{LemHarmerProjection}
+\end{lemma}
+\begin{proof}
+  Induction on the length of $\s$.
+  We prove (i); the proof of (ii) is exactly the same.  
+
+  If $a$ is a $P$-move of $A$ or an $O$-move of $B$, then it is an $O$-move of $A\implies B$.
+  If $a$ is an initial move of $A\implies B$, then we have $\pv{\s\vert_{A,B}a}=a=\pv{a}\vert_{A,B}=\pv{\pv{\s a}}\vert_{A,B}$.  
+  Otherwise, write $\s=\t b\u$, where $b$ justifies $a$.  
+  Then $\pv{\s a \vert_{A,B}} = \pv{\t\vert_{A,B} b\u\vert_{A,B} a} = \pv{t\vert_{A,B}}ba$, which by the inductive hypothesis is equal to $\pv{\pv{\t}\vert_{A,B}}ba$, which is equal to $\pv{\pv{\t b \u a}\vert_{A,B}} = \pv{\pv{\s a}\vert_{A,B}}$.
+\end{proof}
+
+\begin{proposition}
+  If $\sigma\from A \implies B$ and $\tau\from B \implies C$ are innocent strategies, then $\sigma;\tau\from A\implies C$ is innocent.
+\end{proposition}
+\begin{proof}
+  Suppose there are $sab,t\in\sigma;\tau$ such that $ta\in P_{A\implies C}$, $\pv{sa}=\pv{ta}$.
+  Let $\s' b$ be such that $\s' b\vert_{A,C}=sab$ and choose the minimal prefix $\s\prefix \s'$ such that $\s a\vert_{A,C}=sa$.
+  
+  Let $\t a$ be such that $\t a\vert_{A,C}=ta$.
+  Since $\pv{sa}=\pv{ta}$, we have $\pv{\s a}\vert_{A,C}=\pv{\s a\vert_{A,C}}=\pv{sa}=\pv{ta}=\pv{\t a\vert_{A,C}}=\pv{\t a}\vert_{A,C}$ by Lemma \ref{LemHarmerRestriction}.  
+  Let $\u$ be the longest common prefix of $\pv{\s a}$ and $\pv{\t a}$.  
+  If $\s a$ and $\t a$ are not equal, then without loss of generality there is some $\u p\prefix \s$, where $\u p\not\prefix \t$.  
+  Then, by determinism of $\sigma$ and $\tau$, this $p$ cannot be a $P$-move in either $A\implies B$ or $B\implies C$, so it must be a $P$-move in $A$ or an $O$-move in $C$, and is therefore preceded by another move in $A$ or $C$, which contradicts $\pv{\s a}\vert_{A,C}=\pv{\t a}\vert_{A,C}$.  
+  Therefore, $\pv{\s a}=\pv{\t a}$.
+
+  Now write $\s'=\s a b_1 \cdots b_n b$, where each $b_i$ is a move in $B$.  
+  We show by induction that $\t a b_1 \cdots b_j\in\sigma\|\tau$.  
+  Indeed, if $\t a b_1 \cdots b_{j-1}\in\sigma\|\tau$, then $b_j$ (or $b$) is a $P$-move in either $A\implies B$ or $B\implies C$, and $b_{j-1}$ is an $O$-move in that same component.  
+  Write $X$ for the component ($A\implies B$ or $B\implies C$) in which $b_j$ is a $P$-move.
+  Repeating the argument above, we see that $\pv{\t a b_1\cdots b_{j-1}} = \pv{\s a b_1\cdots b_{j-1}}$, and so we have that $\pv{\t a b_1\cdots b_{j-1}\vert_X}=\pv{\s a b_1\cdots b_{j-1}\vert_X}$ by Lemma \ref{LemHarmerProjection}.  
+  Therefore, by innocence of $\sigma$ (if $X=A\implies B$) or $\tau$ (if $X=B\implies C$), we see that $\t a b_1 \cdots b_j\in \sigma\|\tau$.  
+  It follows that $\t a b_1 \cdots b_n b\in\sigma\|\tau$, and therefore that $t a b\in\sigma;\tau$.
+\end{proof}
+
+\subsection{Associativity of composition}
+
+In this section, we will prove that composition is associative; i.e., that if $\sigma\from A \implies B$, $\tau\from B\implies C$ and $\upsilon \from C \implies D$ are strategies, then $(\sigma;\tau);\upsilon=\sigma;(\tau;\upsilon)$.  
+To do this, if $A,B,C,D$ are arenas, we define the set $\Int(A,B,C,D)$ to be the set of all sequences $\u$ of moves such that $\u\vert_{A,B}\in L_{A\implies B}$, $\u\vert_{B,C}\in L_{B\implies C}$ and $\u\vert_{C,D}\in L_{C \implies D}$.  
+Given such a sequence $\u$, we define $\u\vert_{A,D}$ as before; i.e., we take all moves from $\u$ occurring in $A$ and $D$, together with justification pointers within these games, and if an initial move in $A$ is justified by an initial move in $B$, which is justified by an initial move in $C$, which is justified by an initial move in $D$, then we add a justification pointer from that move in $A$ to that move in $D$.
+
+Given strategies $\sigma,\tau,\upsilon$ as above, we define $\sigma\|\tau\|\upsilon$ to be the set of all $\u\in\Int(A,B,C,D)$ such that $\u\vert_{A,B}\in\sigma$, $\u\vert_{B,C}\in\tau$ and $\u\vert_{C,D}\in\upsilon$.
+We then claim that:
+
+\begin{lemma}
+  \[
+    (\sigma;\tau);\upsilon = \{\u\vert_{A,C}\suchthat \u\in\sigma\|\tau\|\upsilon\} = \sigma;(\tau;\upsilon)\,.
+    \]
+\end{lemma}
+\begin{proof}
+  Firstly, if $\u\in\sigma\|\tau\|\upsilon$, then it is clear to see that $\u\vert_{A,B,C}\in\sigma\|\tau$ and that $\u\vert_{B,C,D}\in\tau\|\upsilon$, and therefore that $\{\u\vert_{A,C}\suchthat \u\in\sigma\|\tau\|\upsilon\}\subset (\sigma;\tau);\upsilon$ and $\{\u\vert_{A,C}\suchthat \u\in\sigma\|\tau\|\upsilon\}\subset \sigma;(\tau;\upsilon)$. 
+
+  Conversely, suppose that $\t\in(\sigma;\tau)\|\upsilon$, so that $\t\vert_{A,C}\in\sigma;\tau$ and $\t\vert_{C,D}\in\upsilon$, and choose some $\s\in\sigma\|\tau$ such that $\s\vert_{A,C}=\t\vert_{A,C}$.
+  We may write 
+  \[
+    \s=\ccc_1\bbb_1\aaa_1\cdots \ccc_n\bbb_n\aaa_n
+    \]
+  for some (possibly empty) sequences of moves $\aaa_i$ from $A$, $\bbb_i$ from $B$ and $\ccc_i$ from $C$.  
+  We may then write 
+  \[
+    \t=\ddd_1\ccc_1\aaa_1\cdots\ddd_n\ccc_n\aaa_n
+    \]
+  (for the same $\aaa_i$, $\ccc_i$), and we can therefore interleave these sequences into the sequence
+  \[
+    \u = \ddd_1\ccc_1\bbb_1\aaa_1\cdots\ddd_n\ccc_n\bbb_n\aaa_n\,,
+    \]
+  which is in $\sigma\|\tau\|\upsilon$.
+  Then we have $\u\vert_{A,D}=\t\vert_{A,D}$, and it follows that $(\sigma;\tau);\upsilon\subset\{\u\vert_{A,C}\suchthat \u\in\sigma\|\tau\|\upsilon\}$, and the case for $\sigma;(\tau;\upsilon)$ is identical.
+\end{proof}
+
+\subsection{Copycat strategies}
+
+\begin{definition}
+  Let $A,B$ be games.  
+  Then a \emph{structural isomorphism} from $A$ to $B$ is a bijection $f\from M_A \to M_B$ such that $a\ts_A b$ if and only if $f(a)\ts_B f(b)$ and $*\ts_A a$ if and only if $*\ts_B f(a)$, and such that the plays of $B$ are precisely the plays of $A$, after applying the function $f$ pointwise to the moves (and keeping the justification indices as they are).  
+  
+  Given a structural isomorphism $f$ from $A$ to $B$, the \emph{copycat strategy} $\cc_f \from A \to B$ is given by
+  \[
+    \cc_f = \{s\in P_{A\implies B}^{\textit{even}} \suchthat\text{for all even-length $t\prefix s$, $t\vert_B=f^*(t\vert_A)$}\}\,,
+    \]
+  where $f^*$ denotes $f$ applied pointwise.
+\end{definition}
+
+\begin{proposition}
+  $\cc_f$ is an innocent strategy for $A\implies B$.  
+  Moreover, if $\sigma\from C\implies A$ is a strategy, then
+  \[
+    \sigma;\cc_f = \{[\id_{M_C},f]^*(s)\suchthat s\in\sigma\}\,,
+    \]
+  and if $\tau \from B \implies D$ is a strategy, then
+  \[
+    \cc_f;\tau = \{[f\inv,\id_{M_D}]^*(s)\suchthat s\in\tau\}\,.
+    \]
+  \label{PropCopycat}
+\end{proposition}
+\begin{proof}
+  $\cc_f$ is clearly prefix-closed by definition.  
+  Suppose that $sab,sac\in\cc_f$; then $s\vert_B=f^*(s\vert_A)$ and $sab\vert_B=f^*(sab\vert_A)=f^*(s\vert_A)f^*(ab\vert_A)=s\vert_Bf^*(ab\vert_A)$.  
+  It follows that either $ab\vert_B=f^*(ab\vert_A)$, so either $a$ is a move in $A$ and $b=f(a)$ or $a$ is a move in $b$ and $a=f(b)$.  
+  Since the same applies to $c$, we have $b=c$.
+
+  This argument shows that $\cc_f$ is \emph{history-free} -- i.e., that its reply to an $O$-position is entirely determined by the last $O$-move -- and therefore it is certainly innocent.
+
+  Now let $\sigma\from C \implies A$ be a strategy.
+  Suppose that $\s\in\sigma\|\cc_f$.  
+  Then $\s\vert_{C,A}\in\sigma$ and $\s\vert_B=f^*(\s\vert_A)$.
+  It follows that $\s\vert_{C,B}=[\id_{M_C},f]^*(\s\vert_{C,A})$.  
+
+  Conversely, given $s\in\sigma$, for each $P$-move $a$ in $s$ occurring in the component $A$, insert the move $f(a)$ immediately after it, and for each $O$-move $b$ in $s$ occurring in the component $A$, insert the move $f(b)$ immediately before it.  
+  Let these extra moves in $B$ be justified according to the original moves in $A$.
+  Then the resulting sequence $\s$ is contained in $\sigma\|\cc_f$, and $\s\vert_{A,C}=[\id_{M_C},f]^*(s)$.
+
+  The case for composition in the other direction is exactly the same.
+\end{proof}
+
+An easy corollary of this fact is that composition of copycat strategies respects composition of the underlying structural isomorphisms.
+
+\begin{corollary}
+  Let $f$ be a structural isomorphism from $A$ to $B$ and let $g$ be a structural isomorphism from $B$ to $C$.  
+  Then $g\circ f$ is a structural isomorphism from $A$ to $C$ and $\cc_{g\circ f}=\cc_f;\cc_g$.
+\end{corollary}
+
+It is also easy to see from Proposition \ref{PropCopycat} that the identity function $\id\from M_A \to M_A$ is a structural isomorphism from $A$ to itself, and that the resulting copycat strategy $\cc_{\id}$ is an identity for composition.  
+Combining this with our result for associativity in the previous section, we get that
+\begin{theorem}
+  The collection of games forms a category $\G$, where the morphisms $A \to B$ are strategies for $A\implies B$, composition is as above and the identity morphisms are the copycat strategies induced from the identity functions on moves.
+\end{theorem}
+
+In this setting, Proposition \ref{PropCopycat} tells us that structural isomorphism gives rise to an isomorphism in $\G$.
+\begin{proposition}
+  Let $f$ be a structural isomorphism from a game $A$ to a game $B$.  
+  Then $\cc_f$ is an isomorphim in $\G$ from $A$ to $B$.
+\end{proposition}
+
+\subsection{Symmetric Monoidal Closed Structure of $\G$}
+
+We now claim that the tensor product connective $\tensor$ makes $\G$ into a symmetric monoidal closed category, with inner hom given by $\implies$.  
+
+\begin{definition}
+  Let $\sigma\from A \implies B$ and $\tau\from C \implies D$ be strategies.  
+  We define a strategy $\sigma\tensor\tau\from (A\tensor C) \implies (B \tensor D)$ by
+  \[
+    \sigma\tensor\tau = \{s\in P_{(A\tensor C)\implies (B\tensor D)}\suchthat s\vert_{A,B}\in\sigma\text{ and }s\vert_{C,D}\in\tau\}\,.
+    \]
+\end{definition}
+
+To prove that this is a strategy, we prove a lemma analogous to our Lemma \ref{LemCompositionLemma}.  
+
+\begin{lemma}
+  Let $s\in P_{A\tensor B}$.  
+  Then $\lambda^{OP}_{A\tensor B}(s)=\lambda^{OP}_A(s\vert_A)\wedge\lambda^{OP}_B(s\vert_B)$, where $\wedge$ is the binary operator on $\OP$ given by
+  \[
+    \begin{array}{cc|c}
+      p & q & p\wedge q \\
+      \hline
+      P & P & P \\
+      O & P & O \\
+      P & O & O \\
+      O & O & O
+    \end{array}\,.
+    \]
+  Moreover, either $\lambda_A^{OP}(s\vert_A)=P$ or $\lambda_B^{OP}(s\vert_B)=P$.
+  \label{LemTensorAnalogue}
+\end{lemma}
+\begin{proof}
+  Mutual induction on the length of $s$.  
+  This is obvious if $s$ is empty.  
+  Suppose that $sa\in P_{A\tensor B}$, where $a$ is an $O$-move.  
+  By induction, since $\lambda_{A\tensor B}(s)=P$, we must have $\lambda_{A\tensor B}(s\vert_A)=P$ and $\lambda_{A\tensor B}(s\vert_B)=P$.  
+  Therefore, depending on which game $a$ is played in, either $\lambda_A(sa\vert_A)=O$ and $\lambda_B(sa\vert_B)=P$ or $\lambda_A(sa\vert_A)=P$ and $\lambda_B(sa\vert_B)=O$.  
+
+  If $sb\in P_{A\tensor B}$, where $b$ is a $P$-move, then by induction either $\lambda_A(s\vert_A)=O$ and $\lambda_B(s\vert_B)=P$ or $\lambda_A(s\vert_A)=P$ and $\lambda_B(s\vert_B)=O$.  
+  In either case, player $P$ must play in whichever game is currently in an $O$-position, returning us to configuration $PP$.
+\end{proof}
+
+The above proof gives us the following result analogous to Corollary \ref{CorSwitchingCondition}.
+
+\begin{corollary}[Switching condition for {$\tensor$}]
+  Player $O$ switches games in $A\tensor B$; i.e., if $sab\in P_{A\tensor B}$, where $a$ and $b$ take place in different games (i.e., $a$ in $A$ and $b$ in $B$ or $a$ in $B$ and $b$ in $A$), then $b$ is an $O$-move.
+\end{corollary}
+
+\begin{proposition}
+  $\sigma\tensor\tau$ is a strategy for $(A\tensor C)\implies (B\tensor D)$.
+  \label{PropTensorWellDefined}
+\end{proposition}
+\begin{proof}
+  $\sigma\tensor\tau$ is certainly an even-prefix-closed subset of $P_{(A\tensor C)\implies (B\tensor D)}^{\textit{even}}$.  
+
+  Let $s$ be a play of $P_{(A\tensor B)\implies (C\tensor D)}$.  
+  We consider the possible configurations of $s$; i.e., the tuples $(\lambda_A(s\vert_A),\lambda_B(s\vert_B),\lambda_C(s\vert_C),\lambda_D(s\vert_D))$.
+
+  By Lemma \ref{LemCompositionLemma} we must avoid the overall configuration $OP$ for the linear implication, and by Lemma \ref{LemTensorAnalogue} we must avoid the configuration $OO$ inside either tensor product, so we end up with the following possibilities.
+  \scriptsize
+  \[
+\arraycolsep=4.8pt\def\arraystretch{1.5}
+    \begin{array}{cccc|cc|c}
+      \lambda_A(s\vert_A) & \lambda_C(s\vert_C) & \lambda_B(s\vert_B) & \lambda_D(s\vert_D) & \lambda_{A\tensor C}(s\vert_{A,C}) & \lambda_{B\tensor D}(s\vert_{B,C}) & \lambda_{(A\tensor C)\implies (B\tensor D)}(s) \\
+      \hline
+      P & P & P & P & P & P & P \\
+      P & P & P & O & P & O & O \\
+      P & P & O & P & P & O & O \\
+      P & O & P & O & O & O & P \\
+      O & P & O & P & O & O & P \\
+      P & O & O & P & O & O & P \\
+      O & P & P & O & O & O & P \\
+    \end{array}
+    \]
+  \normalsize
+  Now, if $s\in\sigma\tensor\tau$, or an odd-length sequence formed by adding an $O$-move to the end of a sequence in $\sigma\tensor\tau$, then we also know that $s\vert_{A,B}\in\sigma\subset P_{A\implies B}$ and that $s\vert_{C,D}\in\tau\subset P_{C\implies D}$.  
+  This means that we can discount the last two configurations in the table above, since one contains the illegal configuration $OP$ in $C\implies D$ and the other contains the illegal configuration $OP$ in $A \implies B$.
+
+  Now suppose that $sab,sac\in\sigma\tensor\tau$.  
+  Then $sa$ is an $O$-position in $P_{(A\tensor C)\implies (B\tensor D)}$, and is therefore in configuration $PPPO$ or $PPOP$.  
+  By inspecting the table above, we see that if $sa$ is in configuration $PPPO$, then $b$ and $c$ must both occur either in $C$ or in $D$, and that if $sa$ is in configuration $PPOP$, then $b$ and $c$ must both occur either in $A$ or in $B$.  
+  In either case, we must have $b=c$, by determinism of $\tau$ (in the first case) or of $\sigma$ (in the second case).
+\end{proof}
+
+We need a lemma to prove that the tensor product of two innocent strategies is innocent.
+
+\begin{lemma}
+  Let $s\in\sigma\tensor\tau$.  
+
+  i) If $s$ ends with a move in $A$ or $B$, then $\pv{s}^{(A\tensor C)\implies (B\tensor D)}=\pv{s\vert_{A,B}}^{A\implies B}$.
+
+  ii) If $s$ ends with a move in $C$ or $D$, then $\pv{s}^{(A\tensor C)\implies (B\tensor D)}=\pv{s\vert_{C,D}}^{C\implies D}$.
+\end{lemma}
+\begin{proof}
+  Induction on the length of $s$.  
+  We prove (i); (ii) is exactly the same.
+
+  If $a$ is a $P$-move, then we have $\pv{sa}=\pv{s}a$.  
+  By our analysis in the proof of Proposition \ref{PropTensorWellDefined}, player $P$ only switches moves between $A$ and $B$, and between $C$ and $D$, so $s$ must end with a move from $A$ or $B$.  
+  Therefore, by the inductive hypothesis, $\pv{s}=\pv{s\vert_{A,B}}$.  
+  Then $\pv{sa}=\pv{s}a=\pv{s\vert_{A,B}}a=\pv{sa\vert_{A,B}}$.  
+
+  If $a$ is an initial move, then $\pv{sa}=a=\pv{sa\vert_{A,B}}$.
+
+  If $a$ is an $O$-move justified by $b$ in $sbta$, then $\pv{sbta}=\pv{s}ba$.  
+  Then $b$ is a $P$-move, so $s$ must end with a move in $A$ or $B$, as before.  
+  Therefore, by the inductive hypothesis, $\pv{s}=\pv{s\vert_{A,B}}$.  
+  Then $\pv{sbta}=\pv{s}ba=\pv{s\vert_{A,B}}ba=\pv{sbta\vert_{A,B}}$.
+\end{proof}
+
+\begin{proposition}
+  Let $\sigma\from A \to B$, $\tau\from C \to D$ be innocent strategies.  
+  Then $\sigma\tensor\tau$ is innocent.
+\end{proposition}
+\begin{proof}
+  Suppose $sab,t\in\sigma\tensor\tau$ such that $ta\in P_{(A\tensor C)\implies (B\tensor D)}$ and $\pv{sa}=\pv{ta}$.  
+  Suppose without loss of generality that $a$ is a move in $A$ or $B$.  
+  Then $\pv{sa}=\pv{sa\vert_{A,B}}$ and $\pv{ta}=\pv{ta\vert_{A,B}}$, and therefore $tab\vert_{A,B}\in\tau$ by innocence of $\tau$, and so $tab\in\sigma\tensor\tau$.  
+\end{proof}
+
+The most important thing we need to prove is that $\tensor$ is a functor.
+
+\begin{proposition}
+  Let $\sigma'\from A'' \implies A'$, $\sigma\from A' \implies A$, $\tau'\from B'' \implies B'$ and $\tau \from B' \implies B$ be strategies.  
+  Then $(\sigma'\tensor\tau');(\sigma\tensor\tau)=(\sigma';\sigma)\tensor(\tau';\tau)$.
+
+  Moreover, if $A',A,B',B$ are games, $f$ is a structural isomorphism from $A'$ to $A$ and $g$ is a structural isomorphism from $B'$ to $B$, then $\cc_f\tensor\cc_g = \cc_{[f,g]}$.
+  In particular, if $A$ and $B$ are games, then $\id_A\tensor \id_B=\id_{A\tensor B}$.
+\end{proposition}
+\begin{proof}
+  First suppose that $s\in(\sigma'\tensor\tau');(\sigma\tensor\tau)$; so $s=\s\vert_{A'',B'',A,B}$, where $\s\in(\sigma'\tensor\tau')\|(\sigma\tensor\tau)$.  
+  Then $\s\vert_{A'',A'}\in\sigma'$ and $\s\vert_{A',A}\in\sigma$, so $\s\vert_{A'',A',A}\in\sigma'\|\sigma$ and therefore $s\vert_{A'',A}=\s\vert_{A'',A}\in\sigma';\sigma$.  
+  Similarly, $s\vert_{B'',B}\in\tau';\tau$, and therefore $s\in(\sigma';\sigma)\tensor(\tau';\tau)$.
+
+  Conversely, suppose that $s\in(\sigma';\sigma)\tensor (\tau';\tau)$.  
+  Choose some $\s\in\sigma'\|\sigma$, $\t\in\tau'\|\tau$ such that $s\vert_{A'',A}=\s\vert_{A'',A}$ and $s\vert_{B'',B}=\s\vert_{B'',B}$.  
+  By our analysis, the only time we switch from the $A'',A$-component to the $B'',B$ component in $s$, or \emph{vice versa}, is when player $O$ switches between the games $A$ and $B$.  
+  Thus, we may divide $s$ up into blocks, each starting and ending with a move in the outer component $A \tensor B$.  
+  This then gives us a way to divide up $\s$ and $\t$ into blocks, such that each block of $\s$ or $\t$ projects on to a block of $s$.  
+  Lastly, we can string these blocks together to give us some $\u\in(\sigma'\tensor\tau')\|(\sigma\tensor\tau)$ such that $\u\vert_{A'',B'',A,B}=s$.
+
+  For the second part, let $A',A,B',B$ be games, let $f$ be a structural isomorphism from $A'$ to $A$ and let $g$ be a structural isomorphism from $B'$ to $B$.  
+  Then we have
+  \begin{IEEEeqnarray*}{CCL}
+    \cc_f\tensor\cc_g & = & \{s\in P_{(A'\tensor B')\implies (A\tensor B)} \suchthat \text{$s\vert_{A',A}\in\cc_f$ and $s\vert_{B',B}\in \cc_g$}\} \\
+    & = & \left\{s\in P_{(A'\tensor B')\implies (A\tensor B)}\,\middle|\, \mbox{\pbox{\textwidth}{for all even $t\prefix s\vert_{A',A}$, $u\prefix s\vert_{B',B}$,\\ $t\vert_A=f^*(t\vert_{A'})$ and $u\vert_B=g^*(u\vert_{B'})$}}\right\}
+  \end{IEEEeqnarray*}
+\end{proof}
+
+\bibliographystyle{alpha2}
+\bibliography{../common/phd_bibliography}
+
+\end{document}

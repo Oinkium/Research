@@ -8,6 +8,9 @@
 
 \begin{document}
 
+\tableofcontents
+\newpage
+
 \section{Monads and Kleisli categories}
 \label{SecMonads}
 
@@ -1091,7 +1094,7 @@ We can now prove computational adequacy for our model.
   in \IAX.
 \end{proof}
 
-\subsection{Full abstraction}
+\subsection{Full Abstraction}
 
 To prove full abstraction of our semantics for \IAX, we introduce the usual intrinsic equivalence on terms.
 
@@ -1238,7 +1241,7 @@ This seems like a purely combinatorial construction, but it can actually be subs
 
 Therefore, we see that the category of games and strategies with costs is isomorphic to the Kleisli category $\G_\bC$, which we have already shown to be fully abstract for a language with time complexity.
 
-\subsection{Alternative reduction rules - may testing}
+\subsection{Alternative Reduction Rules - May Testing}
 
 We remarked above that if $X\in\{\bB,\bN\}$, then \IAX is a model of nondeterminism, finite in the case of $\bB$ and countable in the case of $\bN$.  
 However, our operational semantics is not the usual one for these languages.
@@ -1427,7 +1430,7 @@ for every $x\in X$.
 
 It is already known (see \cite{mcCHFiniteND}) that this model is fully abstract for (finitely or countably) nondeterministic Idealized Algol with may-contextual equivalence.
 
-\subsection{Alternative reduction rules - must testing}
+\subsection{Alternative Reduction Rules - Must Testing}
 
 A more interesting, and more complicated, reduction rule for nondeterministic IA is the \emph{must-convergence} relation.
 
@@ -1997,7 +2000,7 @@ As an application of this fully abstract semantics, we clear up a loose end from
 
 Note that we certainly have $\sigma_\phi;\deno M\downarrow_{\must}$, while $\sigma_\phi;\deno N\not\downarrow_{\must}$, demonstrating that the recursivity requirement is essential to the full abstraction result in this case.
 
-\subsection{The intrinsic equivalence relation in $\G_X$}
+\subsection{The Intrinsic Equivalence Relation}
 
 We conclude this section by examining the intrinsic equivalence relation in $\G_X$.
 

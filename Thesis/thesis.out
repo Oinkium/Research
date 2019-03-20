@@ -5,10 +5,10 @@
 \BOOKMARK [2][-]{subsection.1.4}{Operational Semantics}{section.1}% 5
 \BOOKMARK [2][-]{subsection.1.5}{Soundness}{section.1}% 6
 \BOOKMARK [2][-]{subsection.1.6}{Computational Adequacy}{section.1}% 7
-\BOOKMARK [2][-]{subsection.1.7}{Full abstraction}{section.1}% 8
+\BOOKMARK [2][-]{subsection.1.7}{Full Abstraction}{section.1}% 8
 \BOOKMARK [2][-]{subsection.1.8}{Comparison with Ghica's slot games}{section.1}% 9
-\BOOKMARK [2][-]{subsection.1.9}{Alternative reduction rules - may testing}{section.1}% 10
-\BOOKMARK [2][-]{subsection.1.10}{Alternative reduction rules - must testing}{section.1}% 11
+\BOOKMARK [2][-]{subsection.1.9}{Alternative Reduction Rules - May Testing}{section.1}% 10
+\BOOKMARK [2][-]{subsection.1.10}{Alternative Reduction Rules - Must Testing}{section.1}% 11
 \BOOKMARK [2][-]{subsection.1.11}{Full Abstraction for Nondeterminism and Must Testing}{section.1}% 12
-\BOOKMARK [2][-]{subsection.1.12}{The intrinsic equivalence relation in GX}{section.1}% 13
-\BOOKMARK [1][-]{section*.3}{References}{}% 14
+\BOOKMARK [2][-]{subsection.1.12}{The Intrinsic Equivalence Relation}{section.1}% 13
+\BOOKMARK [1][-]{section*.4}{References}{}% 14

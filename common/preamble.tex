@@ -27,6 +27,7 @@
 \usepackage{multirow,bigdelim} % for \multirow
 \usepackage{lettrine} % For the drop cap
 \usepackage{mathpartir} % for \inferrule
+\usepackage{listings}
 
 \usepackage{caption}
 \captionsetup{singlelinecheck=off}
@@ -295,6 +296,10 @@
 \let\sec\S
 \renewcommand{\S}{{\mathfrak{S}}}
 \DeclareMathOperator{\cc}{cc}
+\newcommand{\aaa}{\mathbf{a}}
+\newcommand{\bbb}{\mathbf{b}}
+\newcommand{\ccc}{\mathbf{c}}
+\newcommand{\ddd}{\mathbf{d}}
 \newcommand{\B}{\mathcal B}
 \newcommand{\BB}{\mathbf B}
 \renewcommand{\H}{\mathcal H}
@@ -448,6 +453,13 @@
     \else \advance \gnArgHgt by -\gnCornerHgt%
     \fi \raise\gnArgHgt\hbox{$\ulcorner$} \box\gnBoxA %
     \raise\gnArgHgt\hbox{$\urcorner$}}
+\def\ov #1{%
+    \setbox\gnBoxA=\hbox{$#1$}%
+    \gnArgHgt=\ht\gnBoxA%
+    \ifnum     \gnArgHgt<\gnCornerHgt \gnArgHgt=0pt%
+    \else \advance \gnArgHgt by -\gnCornerHgt%
+    \fi \raise\gnArgHgt\hbox{$\llcorner$} \box\gnBoxA %
+    \raise\gnArgHgt\hbox{$\lrcorner$}}
 \DeclareMathOperator{\Int}{int}
 
 %% Nondeterministic Factorization things

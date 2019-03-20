@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Monads and Kleisli categories}{2}{section.1}% 
+\contentsline {subsection}{\numberline {1.1}Monads}{2}{subsection.1.1}% 
+\contentsline {subsection}{\numberline {1.2}Kleisli Categories}{3}{subsection.1.2}% 
+\contentsline {subsection}{\numberline {1.3}Denotational Semantics}{5}{subsection.1.3}% 
+\contentsline {subsection}{\numberline {1.4}Operational Semantics}{7}{subsection.1.4}% 
+\contentsline {subsection}{\numberline {1.5}Soundness}{9}{subsection.1.5}% 
+\contentsline {subsection}{\numberline {1.6}Computational Adequacy}{15}{subsection.1.6}% 
+\contentsline {subsection}{\numberline {1.7}Full Abstraction}{19}{subsection.1.7}% 
+\contentsline {subsection}{\numberline {1.8}Comparison with Ghica's slot games}{20}{subsection.1.8}% 
+\contentsline {subsection}{\numberline {1.9}Alternative Reduction Rules - May Testing}{21}{subsection.1.9}% 
+\contentsline {subsection}{\numberline {1.10}Alternative Reduction Rules - Must Testing}{25}{subsection.1.10}% 
+\contentsline {subsection}{\numberline {1.11}Full Abstraction for Nondeterminism and Must Testing}{30}{subsection.1.11}% 
+\contentsline {subsection}{\numberline {1.12}The Intrinsic Equivalence Relation}{36}{subsection.1.12}% 
+\contentsline {section}{References}{37}{section*.4}% 

@@ -1,0 +1,52 @@
+
+\subsection{Game semantics for countable nondeterminism with must testing}
+
+In general, it is harder to model terms up to must equivalence than it is up to may equivalence.
+For the finite nondeterminism case, the model of Harmer and McCusker \cite{mcCHFiniteND} uses nondeterministic strategies to model terms, as with may-testing, but these are not enough on their own: for instance, the terms $\skipp$ and $\If \ask_\bB \Then \skipp \Else \Omega$ are both denoted by the strategy
+\[
+  \{\epsilon,qa\}
+  \]
+for $\bC$, but while these terms are may equivalent, $\skipp \mustconverge$, while $\If \ask_\bB \Then \skipp \Else \Omega\diverges$.
+Harmer and McCusker's solution is to augment each strategy $\sigma$ to include a set $D_\sigma$ of $O$-positions after which play may diverge.  
+Then the denotation of $\skipp$ is
+\[
+  (\{\epsilon,qa\},\emptyset)\,,
+  \]
+while the denotation of $\If \ask_\bB \Then \skipp \Else \Omega$ is
+\[
+  (\{\epsilon,qa\},\{q\}\}\,,
+  \]
+where the divergence set $\{q\}$ signifies the fact that there is a possible divergence after the initial question move.
+
+For countable nondeterminism, there is an additional subtlety.  
+Consider the term
+\[
+  c \from\com \ts M = (\Y_{\nat \to \com} \lambda f.\lambda n.\IfO n \Then \skipp \Else c;f(\pred n)) \ask_\bN \from \com\,.
+  \]
+So $M$ nondeterministically chooses an arbitrarily large number and then calls its argument that many times.
+Then consider also the term
+\[
+  c \from \com \ts N = \IfO \ask_\bN \Then M \Else \Y_{\com} (\lambda f.c;f) \from \com\,,
+  \]
+which exhibits all the behaviours of $M$, but may also call its argument infinitely many times.
+
+The denotation of $M$ is as the strategy with maximal plays
+\[
+  q(qa)^na
+  \]
+for all $n\in\bN$, and no divergences.  
+The denotation of $N$ should be the same as that of $M$, except that we must add an extra infinite sequence of increasing plays to capture the divergent behaviour.  
+But this infinite sequence of plays is precisely those plays of the form
+\[
+  q(qa)^mq\,,
+  \]
+and these are already contained in the denotation of $N$.  
+In other words, $M$ and $N$ have the same denotation, because the semantics is not able to distinguish between infinite (divergent) computations, and those that are convergent but may take an arbitrarily long time.
+This is a problem, because while $(\lambda c.M)\skipp\mustconverge$, $(\lambda c.N)\skipp\diverges$.
+
+Following Roscoe \cite{RoscoeCspInfinite} and Levy \cite{LevyGsInfinite}, Jim Laird and I published a fully abstract game semantics for IA with countable nondeterminism \cite{CslPaper}, in which a strategy is allowed to contain infinite as well as finite plays.
+Our semantics distinguishes between the terms $M$ and $N$ above, in that only $\deno N$ contains the infinite play
+\[
+  qqaqaqa\cdots\,.
+  \]
+A problem then arises
