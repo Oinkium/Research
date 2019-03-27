@@ -1,7 +1,9 @@
 \documentclass{article}
 
 \def\FEWFONTS{1}
+\def\THESIS{1}
 \input{../common/preamble}
+\usepackage{lua-visual-debug}
 
 \begin{document}
 
@@ -14,7 +16,7 @@ In keeping with the spirit of this thesis, we will aim to use category theoretic
 
 The ground types of Idealized Algol are called $\com$, $\bool$, $\nat$ and $\Var$.  
 The first three are data types corresponding to the sets $\bC = \{a\}$, $\bB = \{\true,\false\}$ and $\bN = \{0,1,2,\cdots\}$.
-$\com$ takes the role of a command or void type; typically, although the return value of a function $T \to \com$ will not convey any information, the function will have useful side effects.
+$\com$ takes the role of a command or void type; typically, although the return value of a function $T \to \com$ will not convey any information, the function will have side effects that \emph{do} make a difference.
 
 The type $\Var$ is the type of a variable that holds elements of $\bN$.
 It is best understood as corresponding to the following pseudo-Java `interface'.
@@ -161,6 +163,7 @@ We shall call an odd-length sequence $s\in P_A$ an \emph{$O$-position} and an ev
     (\emptyset,\emptyset,\emptyset,\{\epsilon\})\,,
     \]
   where $\epsilon$ is the empty sequence.
+  \label{ExEmptyGame}
 \end{example}
 
 \begin{example}[Data-type games]
@@ -192,6 +195,7 @@ We write $\sigma\from A$ to denote that $\sigma$ is a strategy for the game $A$.
 \end{definition}
 
 \subsection{Connectives on Games}
+\label{SecConnectives}
 
 In the \emph{product} $A\times B$ of games $A$ and $B$, player $O$ chooses either $A$ or $B$ on the first move and subsequent play is that game.
 
@@ -203,6 +207,9 @@ In the \emph{product} $A\times B$ of games $A$ and $B$, player $O$ chooses eithe
     \item $* \ts_{A\times B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\times B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, and
     \item $P_{A\times B} = \{s\in L_{A\times B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B=\epsilon$ or $s\vert_A=\epsilon$ and $s\vert_B\in P_B$}\}$.
   \end{itemize}
+  We extend this to arbitrary products $\prod_i A_i$ in the obvious way.
+  In particular, the product $1$ of the empty collection is the same as the empty game $I$ defined in Example \ref{ExEmptyGame}.
+  \label{DefProduct}
 \end{definition}
 
 Here, we have written $s\vert_A$ for the subsequence of $s$ consisting of all moves from $M_A$ and $s\vert_B$ for the subsequence consisting of all moves from $M_B$.
@@ -579,55 +586,62 @@ We then claim that:
 \end{proof}
 
 \subsection{Copycat strategies}
+\label{SecCopycat}
 
 \begin{definition}
   Let $A,B$ be games.  
-  Then a \emph{structural isomorphism} from $A$ to $B$ is a bijection $f\from M_A \to M_B$ such that $a\ts_A b$ if and only if $f(a)\ts_B f(b)$ and $*\ts_A a$ if and only if $*\ts_B f(a)$, and such that the plays of $B$ are precisely the plays of $A$, after applying the function $f$ pointwise to the moves (and keeping the justification indices as they are).  
-  
-  Given a structural isomorphism $f$ from $A$ to $B$, the \emph{copycat strategy} $\cc_f \from A \to B$ is given by
+  Then a \emph{subset inclusion} of $A$ into $B$ is a partial injection $i\from M_A\hookrightarrow M_B$ such that
+  \begin{itemize}
+    \item if $i$ is defined at $a$ and $b$ then $*\ts_A a$ if and only if $*\ts_B i(a)$, and $a\ts_A b$ if and only if $i(a)\ts_B i(b)$;
+    \item $i(a)$ is defined for every move $a$ occurring in a play in $P_A$; and
+    \item $i_*(s)\in P_B$ for every $s\in P_A$.
+  \end{itemize}
+  Here, $i_*(s)$ means the function $i$ applied pointwise to the elements of the string $s$.
+
+  If $i$ is a subset incusion of $A$ into $B$, then we get an innocent strategy $\subs_i\from B \implies A$ defined by
   \[
-    \cc_f = \{s\in P_{A\implies B}^{\textit{even}} \suchthat\text{for all even-length $t\prefix s$, $t\vert_B=f^*(t\vert_A)$}\}\,,
+    \subs_i = \{s\in P_{B\implies A}\suchthat\text{for all even-length $t\prefix s$, $t\vert_B=i_*(t\vert_A)$}\}\,.
     \]
-  where $f^*$ denotes $f$ applied pointwise.
+  If $P_B=\{i_*(s)\suchthat s\in P_A\}$, then we call it a \emph{structural isomorphism}, and we write $\cc_i$ (`copycat') for $\subs_i$.
 \end{definition}
 
 \begin{proposition}
-  $\cc_f$ is an innocent strategy for $A\implies B$.  
-  Moreover, if $\sigma\from C\implies A$ is a strategy, then
+  $\subs_i$ is an innocent strategy.
+
+  Moreover, if $\sigma\from C \implies B$ is a strategy, then
   \[
-    \sigma;\cc_f = \{[\id_{M_C},f]^*(s)\suchthat s\in\sigma\}\,,
+    \sigma;\subs_i = \{[\id_{M_C},i\inv]_*(s)\suchthat s\in\sigma,\,s\vert_B\in i_*(P_A)\}\,,
     \]
-  and if $\tau \from B \implies D$ is a strategy, then
+  where $i\inv\from M_B \pfun M_A$ is the canonical partial right-inverse to $i$, and if $\tau \from A \implies D$ is a strategy, then
   \[
-    \cc_f;\tau = \{[f\inv,\id_{M_D}]^*(s)\suchthat s\in\tau\}\,.
+    \subs_i;\tau = \{[i,\id_{M_D}]_*(s)\suchthat s\in\tau\}\,.
     \]
   \label{PropCopycat}
 \end{proposition}
 \begin{proof}
-  $\cc_f$ is clearly prefix-closed by definition.  
-  Suppose that $sab,sac\in\cc_f$; then $s\vert_B=f^*(s\vert_A)$ and $sab\vert_B=f^*(sab\vert_A)=f^*(s\vert_A)f^*(ab\vert_A)=s\vert_Bf^*(ab\vert_A)$.  
-  It follows that either $ab\vert_B=f^*(ab\vert_A)$, so either $a$ is a move in $A$ and $b=f(a)$ or $a$ is a move in $b$ and $a=f(b)$.  
-  Since the same applies to $c$, we have $b=c$.
+  $\subs_i$ is clearly prefix-closed by definition.  
+  Suppose that $sab,sac\in\subs_i$; then $s\vert_A=i_*(s\vert_B)$ and $sab\vert_A=i_*(sab\vert_B)$.  
+  It follows that $ab\vert_A=i_*(ab\vert_B)$, so either $a$ is a move in $A$ and $b=i(a)$ or $a$ is a move in $B$ and $a=i(b)$.  
+  Since the same applies to $c$, and since $i$ is injective, we have $b=c$.
 
-  This argument shows that $\cc_f$ is \emph{history-free} -- i.e., that its reply to an $O$-position is entirely determined by the last $O$-move -- and therefore it is certainly innocent.
+  This argument also shows that $\subs_i$ is \emph{history-free} -- i.e., that its reply to an $O$-position is entirely determined by the last $O$-move -- and therefore it is certainly innocent.
 
-  Now let $\sigma\from C \implies A$ be a strategy.
-  Suppose that $\s\in\sigma\|\cc_f$.  
-  Then $\s\vert_{C,A}\in\sigma$ and $\s\vert_B=f^*(\s\vert_A)$.
-  It follows that $\s\vert_{C,B}=[\id_{M_C},f]^*(\s\vert_{C,A})$.  
+  Now let $\sigma \from C \implies B$ be a strategy.  
+  Suppose that $\s\in\sigma\|\subs_i$.  
+  Then $\s\vert_{C,B}\in\sigma$ and $\s\vert_B=i_*(\s\vert_A)$; i.e., $\s\vert_{C,B}=[\id_{M_C},i]_*(\s\vert_{C,A})$, and therefore $\s\vert_{C,A}=[\id_{M_C},i]_*(\s\vert_{C,B})$, where $\s\vert_B\in i_*(P_A)$.
 
-  Conversely, given $s\in\sigma$, for each $P$-move $a$ in $s$ occurring in the component $A$, insert the move $f(a)$ immediately after it, and for each $O$-move $b$ in $s$ occurring in the component $A$, insert the move $f(b)$ immediately before it.  
-  Let these extra moves in $B$ be justified according to the original moves in $A$.
-  Then the resulting sequence $\s$ is contained in $\sigma\|\cc_f$, and $\s\vert_{A,C}=[\id_{M_C},f]^*(s)$.
+  Conversely, given $s\in\sigma$, where $s\vert_B\in i_*(P_A)$, for each $P$-move $b=i(a)$ in $s$ occurring in the component $B$, insert the move $a$ immediately after it, and for each $O$-move $b'=i(a')$ in $s$ occurring in the component $B$, insert the move $a'$ immediately before it.
+  Let these extra moves in $B$ be justified according to the original moves in $A$, and let all initial moves in $B$ be justified by the initial moves in $A$ that occur immediately before them.
+  Then the resulting sequence $\s$ is contained in $\sigma\|\subs_i$, and $\s\vert_{A,C}=[\id_{M_C},i\inv]_*(s)$.
 
-  The case for composition in the other direction is exactly the same.
+  The case for composition in the other direction is similar.
 \end{proof}
 
-An easy corollary of this fact is that composition of copycat strategies respects composition of the underlying structural isomorphisms.
+An easy corollary of this fact is that composition of copycat strategies respects composition of the underlying subset inclusions.
 
 \begin{corollary}
-  Let $f$ be a structural isomorphism from $A$ to $B$ and let $g$ be a structural isomorphism from $B$ to $C$.  
-  Then $g\circ f$ is a structural isomorphism from $A$ to $C$ and $\cc_{g\circ f}=\cc_f;\cc_g$.
+  Let $i$ be a subset inclusion from $A$ to $B$ and let $j$ be a subset inclusion from $B$ to $C$.  
+  Then $j\circ i$ is a subset inclusion from $A$ to $C$ and $\cc_{j\circ i}=\subs_j;\subs_i\from C \implies A$.
 \end{corollary}
 
 It is also easy to see from Proposition \ref{PropCopycat} that the identity function $\id\from M_A \to M_A$ is a structural isomorphism from $A$ to itself, and that the resulting copycat strategy $\cc_{\id}$ is an identity for composition.  
@@ -636,15 +650,118 @@ Combining this with our result for associativity in the previous section, we get
   The collection of games forms a category $\G$, where the morphisms $A \to B$ are strategies for $A\implies B$, composition is as above and the identity morphisms are the copycat strategies induced from the identity functions on moves.
 \end{theorem}
 
-In this setting, Proposition \ref{PropCopycat} tells us that structural isomorphism gives rise to an isomorphism in $\G$.
+In this setting, Proposition \ref{PropCopycat} tells us that a structural isomorphism gives rise to an isomorphism in $\G$.
 \begin{proposition}
   Let $f$ be a structural isomorphism from a game $A$ to a game $B$.  
   Then $\cc_f$ is an isomorphim in $\G$ from $A$ to $B$.
 \end{proposition}
+\begin{proof}
+  The underlying partial injection $f\from M_A \hookrightarrow M_B$ has an inverse partial injection $f\inv\from M_B \to M_A$, inducing a structural isomorphism from $B$ to $A$.  
+  Then Proposition \ref{PropCopycat} tells us that $\cc_f$ and $\cc_{f\inv}$ are inverses in $\G$.
+\end{proof}
 
-\subsection{Symmetric Monoidal Closed Structure of $\G$}
+General subset inclusions are not, of course, isomorphisms, but we can still say something category-theoretic about them.
 
-We now claim that the tensor product connective $\tensor$ makes $\G$ into a symmetric monoidal closed category, with inner hom given by $\implies$.  
+\begin{proposition}
+  Let $i$ be a subset inclusion from a game $A$ to a game $B$.  
+  Then the strategy $\subs_i$ is an epimorphism from $B$ to $A$.
+  \label{PropSubsetInclusionEpic}
+\end{proposition}
+\begin{proof}
+  In fact, it is a split epimorphism: we can define a retract
+  \[
+    \ret_i = \{s\in P_{A\implies B}\suchthat\text{for all even-length $t\prefix s$, $t\vert_A=i_*(t\vert_B)$}\}\,.
+    \]
+  The same argument as in Proposition \ref{PropCopycat} tells us that this is indeed a strategy for $A\implies B$.
+  Note that although $\subs_i$ is always a total strategy (i.e., if $s\in\subs_i$ and $sa\in P_{B\implies A}$, then there is always $sab\in\subs_i$ for some $b$), the same is not in general true about $\ret_i$.  
+
+  In any case, if $\s\in\ret_i\|\subs_i$, then $\s\vert_{A^L} = i_*(\s\vert_B) = \s\vert_{A^R}$, and the same is true of any even-length substring of $\s$, and so $\s\vert_{A,A}\in\id_A$.  
+  Conversely, given any $s\in \id_A$, we can form some $\s\in\ret_i\|\subs_i$ such that $\s\vert_{A,A}=s$ as in Proposition \ref{PropCopycat}.
+
+  We can also prove that $\subs_i$ is an epimorphism directly, which might be useful, for example, in a setting in which non-total strategies such as $\ret_i$ are disallowed.  
+  In this setting, let $\sigma,\tau\from A \implies C$ be strategies such that $\subs_i;\sigma=\subs_i;\tau$.  
+  Then, by Proposition \ref{PropCopycat}, we know that
+  \[
+    \{[i,\id_{M_C}]_*(s)\suchthat s\in\sigma\}
+    =
+    \{[i,\id_{M_C}]_*(s)\suchthat s\in\tau\}\,.
+    \]
+  Then, since the function $[i,\id_{M_D}]_* \from P_{A\implies C} \to P_{B\implies C}$ is an injection, we deduce that $\sigma=\tau$.
+\end{proof}
+
+\subsection{Tree Embeddings}
+
+We can generalize the subset inclusions of the previous section to \emph{tree embeddings}.  
+Tree embeddings are similar to subset inclusions, but generated by a function between plays, rather than between moves.  
+A consequence of this is that while tree embeddings do give rise to strategies, these strategies are not in general innocent.
+
+\begin{definition}
+  Let $A,B$ be games.  
+  A \emph{tree embedding} from $A$ to $B$ is a length-preserving function $\phi\from P_A \hookrightarrow P_B$ such that for all sequences $s,t\in P_A$, if $t\prefix s$ then $\phi(t)\prefix\phi(s)$ and such that if $\phi(sb)=\phi(sc)$, where $b,c$ are $P$-moves in $A$, then $b=c$.
+
+  Given a tree embedding $\phi$ from $A$ to $B$, we define a strategy $\tree_\phi\from B \implies A$ by
+  \[
+    \tree_\phi = \{s\in P_{B\implies A}\suchthat\text{for all even-length $t\prefix s$, $t\vert_B=\phi(t\vert_A)$}\}\,.
+    \]
+\end{definition}
+\begin{example}
+  If $i$ is a subset inclusion from $A$ to $B$, then $i_*$ is a tree embedding from $A$ to $B$.
+\end{example}
+
+\begin{proposition}
+  $\tree_\phi$ is a strategy.  
+
+  If $\phi$ is a tree embedding from $A$ to $B$ and $\psi$ is a tree embedding from $B$ to $C$, then $\psi\circ\phi$ is a tree embedding from $A$ to $C$ and $\tree_{\psi\circ\phi}=\tree_\psi;\tree_\phi$.
+  \label{PropTree}
+\end{proposition}
+\begin{proof}
+  $\tree_\phi$ is a prefix-closed subset of $P_{B\implies A}$ by definition.  
+  If $sab,sac\in\tree_\phi$, then we have $s\vert_B=\phi(s\vert_A)$ and $sab\vert_B=\phi(sab\vert_A)$.
+  Since $\phi$ is length-preserving, $s\vert_A$ and $s\vert_B$ must have the same length, and the same is true of $sab\vert_A$ and $sab\vert_B$.  
+  Therefore, either $a$ is a move in $A$ and $s\vert_Bb=\phi(s\vert_Aa)$ or $a$ is a move in $B$ and $s\vert_Ba=\phi(s\vert_Ab)$.  
+  The same applies to $c$: so either $s\vert_Bb=\phi(s\vert_Aa)=s\vert_Bc$ or $\phi(s\vert_Ab)=s\vert_Ba=\phi(s\vert_Ac)$.  
+  In either case, we have $b=c$.
+
+  Now suppose that $\phi$ is a tree embedding from $A$ to $B$ and that $\psi$ is a tree embedding from $B$ to $C$.  
+  Then $\psi\circ\phi$ certainly preserves length and the prefix relation.  
+  Let $\s\in\tree_\psi\|\tree_\phi$, and let $t\prefix \s\vert_{C,A}$ have even length.  
+  Let $\t$ be a prefix of $\s$ such that $\t\vert_{C,A}=t$.
+  Then, by the argument above, $\t\vert_{C,B}$ and $\t\vert_{B,A}$ have even length, and so $\t\vert_C=\psi(\t\vert_B)$ and $\t\vert_B=\phi(\t\vert_A)$.  
+  Therefore, $t\vert_C=(\psi\circ\phi)(t\vert_A)$.  
+  Since $t$ was arbitrary, this means that $\s\vert_{A,C}\in\tree_{\psi\circ\phi}$.
+
+  Conversely, suppose that $s\in\tree_{\psi\circ\phi}$: so $t\vert_C = \psi(\phi(t\vert_A))$ for all even-length $t\prefix s$.
+  By induction on the length of $s$, we build up a sequence $\s(s)\in\tree_\psi\|\tree_\phi$ such that $\s(s)\vert_{C,A}=s$.
+  \begin{itemize}
+    \item $\s(\epsilon) = \epsilon$.
+    \item Given a sequence $sab\in\tree_{\psi\circ\phi}$, we have $s\vert_C=\psi(\phi(s\vert_A))$.  
+      By our discussion above, we know that $sab\vert_A$ is one move longer than $s\vert_A$, so $\phi(sab\vert_A)=\phi(s\vert_A)c$ for some move $c$ in $B$, justified by some move in $B$.
+      Then we set $\s(sab)=\s(s)acb$, where the justifier of $c$ is as above.
+  \end{itemize}
+  It is clearly true that $\s(s)\vert_{C,A}=s$ for all sequences $s\in\tree_{\psi\circ\phi}$.  
+
+  We claim that $\s(s)\in\tree_\psi\|\tree_\phi$ for all $s$.  
+  This is clearly true for the empty sequence; for $sab$, we have $\s(sab)\vert_{B,A} = \s(s)acb\vert_{B,A}$, where $\phi(sab\vert_A)=\phi(s\vert_A)c$.  
+
+  By induction, $\s(s)\in\psi(\phi(s\vert_A))$, and so for all even-length $t\prefix \s(s)\vert_{B,A}$ we have $t\vert_B=\phi(t\vert_A)$, and for all even-length $u\prefix\s(s)\vert_{C,B}$ we have $u\vert_C=\psi(u\vert_B)$.  
+  All we need to show is that $\s(s)acb\vert_B=\phi(\s(s)acb\vert_A)$ and that $\s(s)acb\vert_C=\psi(\s(s)acb\vert_B)$.  
+  Indeed, $\phi(\s(s)acb\vert_A)=\phi(sab\vert_A)=\phi(s\vert_A)c=\phi(\s(s)\vert_A)c=\s(s)\vert_Bc=\s(s)acb\vert_V$, and, in addition, we have that $\psi(\s(s)acb\vert_B) = \psi(\s(s)\vert_Bc) = \psi(\phi(\s(s)\vert_A)c) = \psi(\phi(sab\vert_A))=sab\vert_C=\s(s)acb\vert_C$.
+\end{proof}
+
+\begin{definition}
+  We say that a tree embedding $\phi$ is a \emph{tree isomorphism} if it is a bijection.
+\end{definition}
+
+\begin{proposition}
+  If $\phi$ is a tree isomorphism from a game $A$ to a game $B$, then $\tree_\phi$ is an isomorphism in $\G$.
+\end{proposition}
+\begin{proof}
+  If $\phi$ is a tree isomorphism, then its inverse $\phi\inv$ is also a tree isomorphism, and Proposition \ref{PropTree} tells us that $\tree_\phi$ and $\tree_{\phi\inv}$ are inverses in $\G$.
+\end{proof}
+
+\subsection{$\G$ as a Symmetric Monoidal Category}
+
+We now claim that the tensor product connective $\tensor$ makes $\G$ into a symmetric monoidal closed category, with internal hom given by $\implies$.  
 
 \begin{definition}
   Let $\sigma\from A \implies B$ and $\tau\from C \implies D$ be strategies.  
@@ -733,6 +850,7 @@ We need a lemma to prove that the tensor product of two innocent strategies is i
   i) If $s$ ends with a move in $A$ or $B$, then $\pv{s}^{(A\tensor C)\implies (B\tensor D)}=\pv{s\vert_{A,B}}^{A\implies B}$.
 
   ii) If $s$ ends with a move in $C$ or $D$, then $\pv{s}^{(A\tensor C)\implies (B\tensor D)}=\pv{s\vert_{C,D}}^{C\implies D}$.
+  \label{LemTensorViewLemma}
 \end{lemma}
 \begin{proof}
   Induction on the length of $s$.  
@@ -758,7 +876,7 @@ We need a lemma to prove that the tensor product of two innocent strategies is i
 \begin{proof}
   Suppose $sab,t\in\sigma\tensor\tau$ such that $ta\in P_{(A\tensor C)\implies (B\tensor D)}$ and $\pv{sa}=\pv{ta}$.  
   Suppose without loss of generality that $a$ is a move in $A$ or $B$.  
-  Then $\pv{sa}=\pv{sa\vert_{A,B}}$ and $\pv{ta}=\pv{ta\vert_{A,B}}$, and therefore $tab\vert_{A,B}\in\tau$ by innocence of $\tau$, and so $tab\in\sigma\tensor\tau$.  
+  Then $\pv{sa}=\pv{sa\vert_{A,B}}$ and $\pv{ta}=\pv{ta\vert_{A,B}}$ by Lemma \ref{LemTensorViewLemma}, and therefore $tab\vert_{A,B}\in\sigma$ by innocence of $\sigma$, and so $tab\in\sigma\tensor\tau$.  
 \end{proof}
 
 The most important thing we need to prove is that $\tensor$ is a functor.
@@ -767,8 +885,9 @@ The most important thing we need to prove is that $\tensor$ is a functor.
   Let $\sigma'\from A'' \implies A'$, $\sigma\from A' \implies A$, $\tau'\from B'' \implies B'$ and $\tau \from B' \implies B$ be strategies.  
   Then $(\sigma'\tensor\tau');(\sigma\tensor\tau)=(\sigma';\sigma)\tensor(\tau';\tau)$.
 
-  Moreover, if $A',A,B',B$ are games, $f$ is a structural isomorphism from $A'$ to $A$ and $g$ is a structural isomorphism from $B'$ to $B$, then $\cc_f\tensor\cc_g = \cc_{[f,g]}$.
+  Moreover, if $A',A,B',B$ are games, $i$ is a subset inclusion from $A$ to $A'$ and $j$ is a structural isomorphism from $B$ to $B'$, then $\subs_i\tensor\subs_j = \subs_{[i,j]}$.
   In particular, if $A$ and $B$ are games, then $\id_A\tensor \id_B=\id_{A\tensor B}$.
+  \label{PropTensorProductIsFunctor}
 \end{proposition}
 \begin{proof}
   First suppose that $s\in(\sigma'\tensor\tau');(\sigma\tensor\tau)$; so $s=\s\vert_{A'',B'',A,B}$, where $\s\in(\sigma'\tensor\tau')\|(\sigma\tensor\tau)$.  
@@ -782,13 +901,926 @@ The most important thing we need to prove is that $\tensor$ is a functor.
   This then gives us a way to divide up $\s$ and $\t$ into blocks, such that each block of $\s$ or $\t$ projects on to a block of $s$.  
   Lastly, we can string these blocks together to give us some $\u\in(\sigma'\tensor\tau')\|(\sigma\tensor\tau)$ such that $\u\vert_{A'',B'',A,B}=s$.
 
-  For the second part, let $A',A,B',B$ be games, let $f$ be a structural isomorphism from $A'$ to $A$ and let $g$ be a structural isomorphism from $B'$ to $B$.  
-  Then we have
-  \begin{IEEEeqnarray*}{CCL}
-    \cc_f\tensor\cc_g & = & \{s\in P_{(A'\tensor B')\implies (A\tensor B)} \suchthat \text{$s\vert_{A',A}\in\cc_f$ and $s\vert_{B',B}\in \cc_g$}\} \\
-    & = & \left\{s\in P_{(A'\tensor B')\implies (A\tensor B)}\,\middle|\, \mbox{\pbox{\textwidth}{for all even $t\prefix s\vert_{A',A}$, $u\prefix s\vert_{B',B}$,\\ $t\vert_A=f^*(t\vert_{A'})$ and $u\vert_B=g^*(u\vert_{B'})$}}\right\}
+  For the second part, let $A',A,B',B$ be games, let $i$ be a structural isomorphism from $A$ to $A'$ and let $j$ be a structural isomorphism from $B$ to $B'$.  
+  Suppose that $s\in\subs_i\tensor \subs_j$.  
+  Then $s\vert_{A',A}\in\subs_i$ and $s\vert_{B',B}\in\subs_j$ -- so if $u\prefix s\vert_{A,A}$ has even length, then $u\vert_{A'}=i_*(u\vert_A)$, and if $v\prefix s\vert_{B,B}$ has even length, then $v\vert_{B'}=i_*(v\vert_B)$.  
+  Suppose that $t\prefix s$ is of even length.  
+  Then, since only player $O$ swtiches between the $A',A$-component and the $B',B$-component, both $t\vert_{A',A}$ and $t\vert_{B',B}$ are of even length, it follows that $t\vert_{A',B'}=[i,j]_*(t\vert_{A,B})$.  
+  Since $t$ was arbitrary, this means that $s\in \subs_{[i,j]}$.
+
+  Conversely, suppose that $s\in\subs_{[i,j]}$.  
+  Then for all even-length $t\prefix s$, $t\vert_{A'}=i_*(t\vert_{A})$ and $t\vert_{B'}=j_*(t\vert_{B})$.  
+  Since any play in $\sigma$ or in $\tau$ is itself a play of $\sigma\tensor\tau$, then if $u\prefix s\vert_{A',A}$ has even length, then $u\vert_{A'}=i_*(u\vert_{A})$, and if $v\prefix s\vert_{B',B}$, then $v\vert_{B'}=j_*(v\vert_{B})$.  
+  It follows that $s\vert_{A',A}\in \subs_i$ and $s\vert_{B',B}\in\subs_j$, and therefore that $s\in \subs_i\tensor\subs_j$.  
+\end{proof}
+
+Now it is fairly clear that if $A,B,C$ are games, then we have structural isomorphisms
+\begin{mathpar}
+  (A \tensor B) \tensor C \cong A \tensor (B\tensor C)
+  \\
+  A \cong A \tensor I \and A \cong I \tensor A
+  \\
+  A \tensor B \cong B \tensor A\,,
+\end{mathpar}
+induced by the associators, unitors and symmetry of the category of sets with coproduct.
+We claim that these are natural transformations.
+
+\begin{proposition}
+  The families of morphisms
+  \begin{mathpar}
+    \cc_{\assoc_{M_A,M_B,M_C}} \from (A \tensor B) \tensor C \to A \tensor (B \tensor C)
+    \\
+    \cc_{\lunit_{M_A}} \from A \to I \tensor A \and \cc_{\runit_{M_A}} \from A \to A \tensor I
+    \\
+    \cc_{\sym{M_A,M_B}} \from A \tensor B \to B \tensor A
+  \end{mathpar}
+  are natural transformations in $\G$.
+  \label{PropCoherencesAreNatural}
+\end{proposition}
+\begin{proof}
+  We prove this for the associator; the other cases are similar.
+
+  Let $\sigma\from A' \implies A$, $\tau\from B' \implies B$, $\upsilon\from C' \implies C$ be strategies.  
+  By Proposition \ref{PropCopycat}, we have
+  \begin{IEEEeqnarray*}{Cl}
+    & ((\sigma\tensor\tau)\tensor\upsilon);\cc_{\assoc_{M_{A},M_{B},M_{C}}} \\
+    = & \{[\id_{M_{(A'\tensor B')\tensor C'}},\assoc_{M_A,M_B,M_C}]_*(s)\suchthat s\in (\sigma\tensor\tau)\tensor\upsilon\} \\
+    = & \left\{[\id_{M_{(A'\tensor B')\tensor C'}},\assoc_{M_A,M_B,M_C}]_*(s) \,\middle|\,\mbox{\pbox{\textwidth}{
+      $s\in P_{((A'\tensor B')\tensor C')\implies ((A \tensor B) \tensor C)}$\\
+      $s\vert_{A',A}\in\sigma$, $s\vert_{B',B}\in\tau$, $s\vert_{C',C}\in\upsilon$
+    }}\right\} \\
+    = & \{s\in P_{((A'\tensor B') \tensor C') \implies (A \tensor (B \tensor C))} \suchthat s\vert_{A',A}\in\sigma,s\vert_{B',B}\in\tau,s\vert_{C',C}\in\upsilon\} \\
+    = & \left\{[\assoc_{M_{A'},M_{B'},M_{C'}},\id_{M_{A\tensor (B\tensor C)}}]_*(s) \,\middle|\,\mbox{\pbox{\textwidth}{
+      $s\in P_{(A'\tensor (B'\tensor C'))\implies (A \tensor (B \tensor C))}$\\
+      $s\vert_{A',A}\in\sigma$, $s\vert_{B',B}\in\tau$, $s\vert_{C',C}\in\upsilon$
+    }}\right\} \\
+    = & \{[\assoc_{M_{A'},M_{B'},M_{C'}},\id_{M_{A\tensor (B\tensor C)}}]_*(s)\suchthat s\in \sigma\tensor (\tau\tensor \upsilon)\} \\
+    = & \cc_{\assoc_{M_{A'},M_{B'},M_{C'}}};(\sigma\tensor(\tau\tensor\upsilon))\,.\hspace{1pt plus 1fill} \qedhere
   \end{IEEEeqnarray*}
 \end{proof}
+
+Then, by Proposition \ref{PropCopycat} again, these natural transformations satisfy the same coherence diagrams (pentagon, triangles, hexagon etc.) satisfied by the original associators, unitors and symmetry in $(\Set,+)$.  
+
+It follows that $\tensor$ makes $\G$ into a symmetric monoidal category.
+
+\subsection{$\G$ as a Symmetric Monoidal Closed Category}
+
+\begin{definition}
+  Let $A,B,C,D$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $C\implies D$.  
+  Then we define a strategy $\sigma\implies \tau\from (B\implies C) \implies (A\implies D)$ by
+  \[
+    \sigma\implies \tau = \{s\in P_{(B\implies C) \implies (A \implies D)}\suchthat \text{$s\vert_{A,B}\in\sigma$, $s\vert_{C,D}\in\tau$}\}\,.
+    \]
+\end{definition}
+
+\begin{proposition}
+  $\sigma\implies\tau$ is a strategy for $(B\implies C) \implies (A \implies D)$.
+  \label{PropImpliesWellDefined}
+\end{proposition}
+\begin{proof}
+  $\sigma\implies\tau$ is certainly a prefix-closed subset of $P_{(B\implies C)\implies (A \implies D)}^{\textit{even}}$.
+  
+  We examine the sign configuration of a play in $(B\implies C)\implies (A\implies D)$, using Lemma \ref{LemCompositionLemma}.  
+  Since we must avoid the configuration $OP$ in either $B\implies C$, $A\implies D$ or in $(B\implies C)\implies (A\implies D)$, we arrive at the following list of possibilities.
+  \scriptsize
+  \[
+\arraycolsep=2.7pt\def\arraystretch{1.5}
+    \begin{array}{cccc|cc|c}
+      \lambda_B^{OP}(s\vert_B) & \lambda_C^{OP}(s\vert_C) & \lambda_A^{OP}(s\vert_A) & \lambda_D^{OP}(s\vert_D) & \lambda_{B\implies C}^{OP}(s\vert_{B,C}) & \lambda_{A\implies D}^{OP}(s\vert_{A,D}) & \lambda_{(B\implies C)\implies (A\implies D)}^{OP}(s) \\
+      \hline
+      P & O & P & O & O & O & P \\
+      P & P & P & O & P & O & O \\
+      O & O & P & O & P & O & O \\
+      P & P & P & P & P & P & P \\
+      O & O & O & O & P & P & P \\
+      P & P & O & O & P & P & P \\
+      O & O & P & P & P & P & P
+    \end{array}
+    \]
+  \normalsize
+  If $s\in\sigma\implies\tau$, then we can immediately discount the last two of these possibilities, since one includes the illegal configuration $OP$ in $A\implies B$, and the other includes the illegal configuration $OP$ in $B\implies D$.
+
+  By examining the remaining possibilities, we arrive at the conclusion that any $O$-position in configuration $PPPO$ constrains player $P$ to play in $C$ (to reach configuration $POPO$) or to play in $D$ (to reach configuration $PPPP$), and that any $O$-position in configuration $OOPO$ constrains player $P$ to play in $A$ (to reach configuration $OOOO$) or to play in $C$ (to reach configuration $POPO$).  
+
+  Now suppose that $sab,sac\in\sigma\implies\tau$.  
+  Then, by our above analysis, $b$ and $c$ must either both take place in the $B,A$-component, in which case $b = c$ by determinism of $\sigma$, or both in the $C,D$-component, in which case $b = c$ by determinism of $\tau$.  
+\end{proof}
+
+To prove that $\sigma\implies\tau$ is innocent if $\sigma$ and $\tau$ are, we need a lemma analogous to Lemma \ref{LemTensorViewLemma}.
+
+\begin{lemma}
+  Let $s\in \sigma\implies \tau$.  
+
+  i) If $s$ ends with a move in $A$ or $B$, then $\pv{s}^{(B\implies C) \implies (A\implies D)} = \pv{s\vert_{A,B}}^{A\implies B}$.  
+
+  ii) If $s$ ends with a move in $C$ or $D$, then $\pv{s}^{(B\implies C) \implies (A\implies D)} = \pv{s\vert_{C,D}}^{C\implies D}$.
+  \label{LemImpliesViewLemma}
+\end{lemma}
+\begin{proof}
+  Exactly the same as in Lemma \ref{LemTensorViewLemma}, using the analysis from the proof of Proposition \ref{PropImpliesWellDefined} to show that player $P$ only switches moves between $A$ and $B$, and between $C$ and $D$, in $\sigma\implies\tau$.
+\end{proof}
+
+\begin{proposition}
+  Let $\sigma\from A \implies B$, $\tau\from C\implies D$ be innocent strategies.  
+  Then $\sigma\implies\tau$ is innocent.
+\end{proposition}
+\begin{proof}
+  Suppose $sab,t\in\sigma\implies\tau$ such that $ta\in P_{(B\implies C)\implies (A \implies D)}$ and $\pv{sa}=\pv{ta}$.  
+  Suppose without loss of generality that $a$ is a move in $A$ or $B$.  
+  Then $\pv{sa}=\pv{sa\vert_{A,B}}$ and $\pv{ta}=\pv{ta\vert_{A,B}}$ by Lemma \ref{LemImpliesViewLemma}, and therefore $tab\vert_{A,B}\in\sigma$ by innocence of $\sigma$, and so $tab\in\sigma\implies\tau$.
+\end{proof}
+
+We now need to prove that $\implies$ is a functor $\oppcat\G\times\G\to\G$.
+
+\begin{proposition}
+  Let $\sigma'\from A''\implies A'$, $\sigma\from A'\implies A$, $\tau'\from B'' \implies B'$ and $\tau\from B'\implies B$ be strategies.  
+  Then $(\sigma\implies\tau');(\sigma'\implies\tau) = (\sigma';\sigma)\implies(\tau';\tau)$.
+
+  Moreover, if $A',A,B',B$ are games, $f$ is a structural isomorphism from $A'$ to $A$ and $g$ is a structural isomorphism from $B'$ to $B$, then $\cc_f\implies\cc_g = \cc_{[f\inv,g]}$.
+  In particular, if $A,B$ are games than $\id_A\implies\id_B=\id_{A\implies B}$.
+\end{proposition}
+\begin{proof}
+  As in Proposition \ref{PropTensorProductIsFunctor}.
+\end{proof}
+
+Now it is easy to see that the associator $\assoc_{M_A,M_B,M_C}$ is a structural isomorphism from $(A\tensor B) \implies C$ to $A\implies (B\implies C)$, so it induces a copycat isomorphism $\Lambda_{A,B,C}=\cc_{\assoc_{M_A,M_B,M_C}} \from (A\tensor B) \implies C \to A \implies (B\implies C)$.
+
+\begin{proposition}
+  $\Lambda_{A,B,C}$ is natural in $A,B,C$.
+\end{proposition}
+\begin{proof}
+  The same argument as in Proposition \ref{PropCoherencesAreNatural}.
+\end{proof}
+
+We have proved the following.
+
+\begin{theorem}
+  $\G$ is a symmetric monoidal closed category, with tensor product given by $\tensor$ and internal hom given by $\implies$.
+\end{theorem}
+
+\subsection{Products in $\G$}
+
+\begin{proposition}
+  Given some family $A_i$ of games, the game $\prod_i A_i$, as defined in Definition \ref{DefProduct}, is the category-theoretic product of the $A_i$.
+  \label{PropProductOfGames}
+\end{proposition}
+\begin{proof}
+  We have natural injections $\inj_j \from M_{A_j} \hookrightarrow M_{\prod_i A_i}$ giving rise to subset inclusions.  
+  Then our projections are given by the morphisms 
+  \[
+    \pr_j \coloneqq \subs_{\inj_j}\from \prod_i A_i \to A_j\,.
+    \]
+  Now suppose we have some game $B$, and strategies $\sigma_i \from B \implies A_i$ for each $i$.
+  Define a strategy
+  \[
+    \langle \sigma_i \rangle = \bigcup_i [\id_{M_B},\inj_i]_*(\sigma_i)\,.
+    \]
+  We claim that this is indeed a strategy for $B \implies \prod_i A_i$.
+  Indeed, it is certainly a prefix-closed subset of $P_{C\implies\prod_i A_i}$.
+
+  Moreover, if $sab,sac\in\langle \sigma_i \rangle$, then there is some unique $j$ such that $a$ comes from a move in $A_j$, and therefore $sab,sac$ are both plays in $\sigma_j$, so $b=c$.
+
+  Next, we claim that $\langle\sigma_i\rangle;\pr_j = \sigma_j$.  
+  Indeed, we have
+  \begin{IEEEeqnarray*}{rCl?u}
+    \langle\sigma_i\rangle;\pr_j & = & \langle\sigma_i\rangle;\subs_{\inj_j} \\
+    & = & \{[\id_{M_B},\inj_j\inv]_*(s)\suchthat s\in\langle\sigma_i\rangle,\,s\vert_{\prod_iAi}\in(\inj_j)_*(P_{A_j})\} & \textit{Prop. \ref{PropCopycat}} \\
+    & = & \sigma_j\,.
+  \end{IEEEeqnarray*}
+  Lastly, suppose $\tau\from B\implies\prod_iA_i$ is a strategy such that $\tau;\pr_j=\sigma_j$ for each $j$.
+  We claim that $\tau=\langle\sigma_i\rangle$.
+  Indeed, by the argument above, we must have
+  \[
+    \{[\id_{M_B},\inj_j\inv]_*(s)\suchthat s\in\tau,\,s\vert_{\prod_iA_i}\in(\inj_j)_*(P_{A_j})\} = \sigma_j
+    \]
+  for each $j$.
+  Suppose that $s\in\tau$.  
+  Then $s\vert_{\prod_iA_i}\in(\inj_j)_*(P_{A_j})$ for some $j$, by the definition of $\prod_iA_i$.  
+  Therefore, $s\in[\id_{M_B},\inj_j]_*(\sigma_j)$.  
+
+  Conversely, let $t\in \sigma_j$.  
+  By the above equation, we know that there is some $s\in\tau$ such that $s\vert_{\prod_iA_i}\in(\inj_j)_*(P_{A_j})$ and $[\id_{M_B},\inj_j\inv]_*(s)=t$.  
+  It follows that $[\id_{M_B},\inj_j]_*(t)=s\in\tau$.
+\end{proof}
+
+An examination of the definitions tells us that
+\begin{proposition}
+  Let $A_i,B$ be games and let $\phi_i$ be tree embeddings from $A_i$ to $B$.  
+  Then $\langle \tree_{\phi_i} \rangle = \tree_\phi$, where $\phi$ is the tree embeddings from $\prod_iA_i$ to $B$ given by
+  \[
+    \phi(s) = \begin{cases}
+      \epsilon & \text{if $s=\epsilon$} \\
+      \phi_i(s\vert_{A_i}) & \text{if $s$ starts with a move from $A_i$}
+    \end{cases}
+    \]
+  \label{PropProductOfTreeEmbeddings}
+\end{proposition}
+\begin{proof}
+  The only thing we really need to check is that this is indeed a tree embedding.  
+  Let $sb,sc$ be positions in $\prod_iA_i$, where $b,c$ are $P$-moves.
+  Then $sb,sc$ must start with the same move, so if $\phi(sb)=\phi(sc)$ then we have $\phi_i(sb)=\phi_i(sc)$ for some $i$ and therefore $b=c$.
+\end{proof}
+
+Note that $\langle\sigma_i\rangle$ is not in general innocent, even if all the $\sigma_i$ are, and there is no version of Proposition \ref{PropProductOfTreeEmbeddings} that works for subset inclusion strategies.
+Of course, since a subset inclusion is a special case of a tree embedding, then $\langle \subs_i\rangle$ is always a tree embedding strategy.
+
+\subsection{Sequoidal categories}
+
+We have now given the category-theoretic properties of all the connectives from Section \ref{SecConnectives}, with the exception of the sequoid $\sequoid$ and the exponential $\oc$.
+
+We would like to say that $\blank\sequoid\blank$ is a functor from $\G \times \G \to \G$, as is the case with the tensor product $\blank\tensor\blank$.  
+However, this does not quite work: given strategies $\sigma\from A \implies B$ and $\tau\from C \implies D$, we may not get a well-formed strategy for $(A \sequoid C) \implies (B \sequoid D)$ by `playing according to $\sigma$ in $A$ and $B$ and according to $\tau$ in $C$ and $D$'.  
+The reason is that the constraint that player $O$ plays in $B$ before $D$ is not strong enough to force player $P$ to play in $A$ before $C$; indeed, suppose that $\sigma$ tells player $P$ to respond to an initial move in $B$ with another move in $B$.  
+Suppose that player $O$ then decides to make a move in $D$.  
+If $\tau$ tells player $P$ to respond to this move in $D$ with a move in $C$, then she will be stuck, unable to play this move because no move has yet been played in $A$.
+
+We can fix this problem by imposing some constraints on the strategies $\sigma$ and $\tau$.  
+The problem occurs when player $O$'s initial move in $B$ is not reflected by an initial move by player $P$ in $A$; therefore, if $\sigma$ is such that player $P$ always responds to the initial move in $B$ with a move in $A$, then we can form a strategy $\sigma\sequoid\tau$ for $(A\sequoid C)\implies (B\sequoid D)$.  
+Moreover, this strategy $\sigma\sequoid\tau$ will inherit this property that the first move on the right is always replied to by a move on the left.
+
+\begin{definition}
+  Let $A,B$ be games.  
+  A \emph{strict morphism} from $A$ to $B$ is a strategy $\sigma$ for $A\implies B$ such that any player $P$ response to an opening move in $B$ is a move in $A$; i.e., such that if $b$ is an initial $O$-move in $B$ and $ba\in\sigma$, then $a$ is a move in $A$.
+\end{definition}
+
+We will call such a $\sigma$ a \emph{strict strategy} for $A\implies B$, although this is a slight abuse of language, since the definition depends on the constituent games $A$ and $B$, which may not be recoverable from $A\implies B$.
+
+It is clear that the composition of strict morphisms is again a strict morphism , as is any morphism of the form $\subs_i$, and so we get a wide subcategory $\G_s$ of $\G$ whose objects are games and where the morphisms are the strict strategies.
+We then have a natural inclusion functor $J\from \G_s\to \G$.  
+
+\begin{definition}
+  Given games $A,B,C,D$, a strict morphism $\sigma\from A \implies B$ and a strategy $\tau\from C\implies D$, we define a strict morphism $\sigma\sequoid\tau\from (A \sequoid C)\implies (B \sequoid D)$ by
+  \[
+    \sigma\sequoid\tau = \{s\in P_{(A\sequoid C)\implies (B\sequoid D)}\suchthat s\vert_{A,B}\in\sigma,\,s\vert_{C,D}\in\tau\}\,.
+    \]
+  \label{DefSequoidOfStrategies}
+\end{definition}
+
+\begin{proposition}
+  $\sigma\sequoid\tau$ is a strategy.  
+\end{proposition}
+\begin{proof}
+  $\sigma\sequoid\tau$ is certainly a prefix-closed subset of $P_{(A\sequoid C)\implies (B\sequoid D)}$.  
+  Moreover, if $sab,sac\in\sigma\sequoid\tau$, then $sab,sac\in\sigma\tensor\tau$, so $b=c$.  
+\end{proof}
+
+Of course, $P_{A\sequoid B}$ is a subset of $P_{A\tensor B}$, which means that the identity function $M_A + M_B \to M_A + M_B$ gives us a subset inclusion from $A \sequoid B$ to $A \tensor B$, and hence a strategy $\subs_{\id_{M_A+M_B}}$ for $A\tensor B \implies A \sequoid B$, which we shall refer to as $\wk_{A,B}$.  
+
+\begin{proposition}
+  Let $A,B,C,D$ be games, let $\sigma\from A \implies B$ be a strict strategy and let $\tau\from C \implies D$ be a strategy.  
+  Then the following diagram commutes.
+  \[
+    \begin{tikzcd}
+      A \tensor C \arrow[r, "\sigma\tensor\tau"] \arrow[d, "{\wk_{A,C}}"']
+        & B \tensor D \arrow[d, "{\wk_{B,D}}"] \\
+      A \sequoid C \arrow[r, "\sigma\sequoid\tau"]
+        & B \sequoid D
+    \end{tikzcd}
+    \]
+  \label{PropWkCommutativeDiagram}
+\end{proposition}
+\begin{proof}
+  By Proposition \ref{PropCopycat} and the definition of $\wk$, we know that
+  \begin{IEEEeqnarray*}{rCl}
+    \sigma\tensor\tau;\wk_{B,D} & = & \{s\in \sigma\tensor\tau,\,s\vert_{B,D}\in P_{B\sequoid D}\}
+    \\
+    \wk_{A,C};\sigma\sequoid\tau & = & \sigma\sequoid\tau\,,
+  \end{IEEEeqnarray*}
+  as sets of plays.
+
+  Now we know that $\sigma\sequoid\tau = \{s\in\sigma\tensor\tau\suchthat s\in P_{(A\sequoid C)\implies (B\sequoid D)}\}$, so it suffices to show that if $s\in\sigma\tensor\tau$ is such that $s\vert_{B,D}\in P_{B\sequoid D}$ then $s\in P_{(A\sequoid C)\implies (B\sequoid D)}$.
+
+  Indeed, if $s\vert_{B,D}\in P_{B\sequoid D}$ then $s$ begins with an initial $O$-move in $B$.  
+  Then, \emph{since $\sigma$ is strict}, the next move in $s$ must be a move in $A$, and therefore $s\vert_{A,C}$ begins with a move in $A$.
+  Since we also have $s\vert_{A,C}\in P_{A\tensor C}$, we must have that $s\vert_{A,C}\in P_{A\sequoid C}$.
+\end{proof}
+\begin{remark}
+  This is the main place where we have used the assumption that $\sigma$ is a strict strategy: if we drop the strictness requirement from Definitionk \ref{DefSequoidOfStrategies}, then we get a valid (if nonsensical) strategy that has a partiality (`gives up') if playing according to $\sigma$ and $\tau$ would lead to it creating an invalid play.  
+  But such a strategy would not satisfy the conclusion of Proposition \ref{PropWkCommutativeDiagram}, since $\sigma\tensor\tau;\wk_{B,D}$ would contain these extra plays where $\wk_{A,C};\sigma\sequoid\tau$ had `given up'.
+\end{remark}
+\begin{remark}
+  Of course, we would \emph{like} to restate Proposition \ref{PropWkCommutativeDiagram} by saying that $\wk$ is some sort of natural transformation, but that doesn't make sense until we've shown that $\blank\sequoid\blank$ is a functor.
+\end{remark}
+
+\begin{proposition}
+  If we have strict strategies $\sigma'\from A'' \implies A'$ and $\sigma\from A' \implies A$, and strategies $\tau' \from B'' \implies B'$ and $\tau \from B' \implies B$, then we have
+  \[
+    (\sigma'\sequoid\tau');(\sigma\sequoid\tau) = (\sigma';\sigma)\sequoid(\tau';\tau)\,.
+    \]
+  If $A',A,B',B$ are games, $i$ is a subset inclusion from $A$ into $A'$ and $j$ is a subset inclusion from $B$ into $B'$, then
+  \[
+    \subs_i\sequoid\subs_j = \subs_{[i,j]}\from A'\sequoid B' \implies A \sequoid B\,.
+    \]
+  In particular, if $A,B$ are games, then $\id_A\sequoid\id_B=\id_{A\sequoid B}$.
+  \label{PropSequoidIsFunctor}
+\end{proposition}
+\begin{proof}
+  Let $A'',A',A,B'',B',B$ and $\sigma',\sigma,\tau',\tau$ be as above.  
+
+  We have
+  \begin{IEEEeqnarray*}{rCl?u}
+    \wk_{A'',B''};(\sigma'\sequoid\tau');(\sigma\sequoid\tau) & = & (\sigma'\tensor\tau');\wk_{A',B'};(\sigma\sequoid\tau) & \textit{Prop. \ref{PropWkCommutativeDiagram}} \\
+    & = & (\sigma'\tensor\tau');(\sigma\tensor\tau);\wk_{A,B} & \textit{Prop. \ref{PropWkCommutativeDiagram}} \\
+    & = & ((\sigma';\sigma)\tensor(\tau';\tau));\wk_{A,B} & \textit{Prop. \ref{PropTensorProductIsFunctor}} \\
+    & = & \wk_{A'',B''};((\sigma';\sigma)\sequoid(\tau';\tau))\,. & \textit{Prop. \ref{PropWkCommutativeDiagram}} \\
+  \end{IEEEeqnarray*}
+  By Proposition \ref{PropSubsetInclusionEpic}, $\wk_{A'',B''}$ is an epimorphism, and therefore we have that
+  \[
+    (\sigma'\sequoid\tau');(\sigma\sequoid\tau) = (\sigma';\sigma)\sequoid(\tau';\tau)\,.
+    \]
+
+  Now let $A',A,B',B$ be games, let $i$ be a subset inclusion from $A$ into $A'$ and let $j$ be a subset inclusion from $B$ into $B'$.  
+  Then, since subset inclusion strategies are automatically strict, we have
+  \begin{IEEEeqnarray*}{rCl?u}
+    \wk_{A',B'};(\subs_i\sequoid\subs_j) & = & (\subs_i\tensor\subs_j);\wk_{A,B} & \textit{Prop. \ref{PropWkCommutativeDiagram}} \\
+    & = & \subs_{[i,j]};\wk_{A,B} & \textit{Prop. \ref{PropTensorProductIsFunctor}} \\
+    & = & \subs_{[i,j]} & \textit{Prop. \ref{PropCopycat}} \\
+    & = & \wk_{A',B'};\subs_{[i,j]}\,. & \textit{Prop. \ref{PropCopycat}} \\
+  \end{IEEEeqnarray*}
+  As before, we know from Proposition \ref{PropSubsetInclusionEpic} that $\wk_{A',B'}$ is an epimorphism, and so
+  \[
+    \subs_i\sequoid\subs_j = \subs_{[i,j]}\,.\qedhere
+    \]
+\end{proof}
+
+Proposition \ref{PropSequoidIsFunctor} tells us that $\blank\sequoid\blank$ is a functor $\G_s\times\G\to \G$.  
+As before, write $J$ for the inclusion functor $\G_s\hookrightarrow\G$.
+Then we can restate Proposition \ref{PropWkCommutativeDiagram} in a more \emph{natural} way.
+
+\begin{proposition}
+  $\wk_{A,B}$ is a natural transformation $JA \tensor B \to J(A \sequoid B)$.
+  \label{PropWkNatural}
+\end{proposition}
+
+We have some additional structure on the $\tensor$ and $\sequoid$ operators.  
+By inspecting the definitions that if $A,X,Y$ are games then the associator $\assoc_{M_A,M_X,M_Y}$ and unitor $\runit_{M_A}$ in $(\Set,+)$ give rise to structural isomorphisms
+\begin{mathpar}
+  (A \sequoid X) \sequoid Y \cong A \sequoid (X \tensor Y)
+  \and
+  A \cong A \sequoid I\,.
+\end{mathpar}
+Indeed, in the first case, both games are the game in which $A$, $X$ and $Y$ are played in parallel, but where the first move must take place in $A$.  
+In the second case, we have $A\sequoid I=A\tensor I$, because there are no moves in $I$ anyway, and the copycat morphism induced from the right unitor in $(\Set,+)$ is the same strategy as the right unitor $A \toisom A \tensor I$.
+
+We formalize the structure we have uncovered so far in the concept of a \emph{sequoidal category}.
+
+\begin{definition}
+  A \emph{sequoidal category} $\C$ is given by
+  \begin{itemize}
+    \item a monoidal category $(\C,\tensor, I)$ (with coherences $\assoc,\lunit,\runit$);
+    \item a (strong) right action of $\C$ on a category $\C_s$; i.e., a functor $\blank\sequoid\blank\from\C_s\times\C\to\C_s$ together with natural isomorphisms
+      \begin{mathpar}
+        \passoc_{a,x,y}\from (a \sequoid x) \sequoid y \toisom a \sequoid (x \tensor y)
+        \and
+        \run_a \from a \toisom a \sequoid I
+      \end{mathpar}
+      that make the diagrams
+      \begin{mathpar}
+        \begin{tikzcd}[column sep=36pt]
+          ((a \sequoid x) \sequoid y) \sequoid z \arrow[r, "{\passoc_{a,x,y}\sequoid z}"] \arrow[d, "{\passoc_{a\sequoid x,y,z}}"' description]
+            & (a \sequoid (x \tensor y)) \sequoid z \arrow[r, "{\passoc_{a,x\tensor y,z}}"]
+              & a \sequoid ((x\tensor y) \tensor z)  \arrow[dl, "{a \sequoid \assoc_{x,y,z}}"] \\
+          (a \sequoid x) \sequoid (y \tensor z) \arrow[r, "{\passoc_{a,x,(y\tensor z)}}"]
+            & a \sequoid (x \tensor (y \tensor z))
+              &
+        \end{tikzcd}
+        \and
+        \begin{tikzcd}
+          a \sequoid x \arrow[r, "{a \sequoid \lunit_x}"] \arrow[d, "\run_a \sequoid x"']
+            & a \sequoid (I \tensor x) \\
+          (a \sequoid I) \sequoid x \arrow[ur, "{\passoc_{a,I,x}}"']
+            &
+        \end{tikzcd}
+        \and
+        \begin{tikzcd}
+          a \sequoid x \arrow[r, "{a \sequoid \runit_x}"] \arrow[d, "\run_{a \sequoid x}"']
+            & a \sequoid (x \tensor I) \\
+          (a \sequoid x) \sequoid I \arrow[ur, "{\passoc_{a,x,I}}"']
+            &
+        \end{tikzcd}
+      \end{mathpar}
+      commute; and
+    \item a lax morphism of actions from $\blank\sequoid\blank$ to the right tensor multiplication action $\blank\tensor\blank$ of $\C$ on itself; i.e., a functor $J\from \C_s \to \C$ and a natural transformation $\wk_{a,x} \from Ja \tensor x \to J(a \sequoid x)$ that makes the following diagrams commute.
+      \begin{mathpar}
+        \begin{tikzcd}[column sep=30pt]
+          (Ja \tensor x) \tensor y \arrow[r, "{\wk_{a,x}\tensor y}"] \arrow[d, "{\assoc_{Ja,x,y}}"'] & J(a \sequoid x) \tensor y \arrow[r, "{\wk_{a\sequoid x,y}}"]
+              & J((a \sequoid x) \sequoid y) \arrow[dl, "{J\passoc_{a,x,y}}"] \\
+          Ja \tensor (x \tensor y) \arrow[r, "{\wk_{a,x\tensor y}}"]
+            & J(a \sequoid (x \tensor y))
+              &
+        \end{tikzcd}
+        \and
+        \begin{tikzcd}
+          Ja \arrow[r, "J\run_a"] \arrow[d, "\runit_{Ja}"']
+            & J(a \sequoid I) \\
+          Ja \tensor I \arrow[ur, "{\wk_{a,I}}"']
+            &
+        \end{tikzcd}
+      \end{mathpar}
+  \end{itemize}
+  \label{DefSequoidalCategory}
+\end{definition}
+\begin{remark}
+  The definitions of \emph{lax action} can be found at the start of Section \ref{SecParametricMonads}, whie that of an \emph{oplax morphism of actions} is found at Definition \ref{DefOplaxMorphismOfActions}.  
+  The definitions we have used are similar: a \emph{strong action} is a lax action in which the coherences (called $m$ and $e$ in Section \ref{SecParametricMonads} and $\passoc$ and $\run$ here) are isomorphims.  
+  A \emph{lax morphism of actions} is defined in the same way as an oplax morphism, except that the coherence (called $\mu$ in Definition \ref{DefOplaxMorphismOfActions} and $\wk$ here) goes in the opposite direction.
+\end{remark}
+
+\begin{proposition}
+  The monoidal category $\G$, together with the category $\G_s$, the natural transformations
+  \begin{mathpar}
+    \passoc_{A,X,Y} = \cc_{\assoc_{M_A,M_X,M_Y}} \from (A \sequoid X) \sequoid Y \toisom A \sequoid (X \tensor Y)
+    \and
+    \run_A = \cc_{\runit_{M_A}} \from A \toisom A \sequoid I\,,
+  \end{mathpar}
+  the inclusion functor $J\from \G_s \to G$ and the natural transformation
+  \begin{mathpar}
+    \wk_{A,X}=\subs_{j} \from JA \tensor X = A \tensor X \to A \sequoid X = J(A \sequoid X)
+  \end{mathpar}
+  form a sequoidal category.
+\end{proposition}
+\begin{proof}
+  We have shown most of this already; all that remains is to show that $\passoc$ and $\run$ are natural transformations and that the five diagrams in Definition \ref{DefSequoidalCategory} commute.  
+
+  Let us start with the diagrams.  
+  By Proposition \ref{PropCopycat}, commutativity of these diagrams follows from commutativity of the diagrams formed from the corresponding subset inclusion functions in $\Set$.  
+  For example, to show that the first diagram commutes in $\G$, we must show that the following diagram commutes in $\Set$.
+  \scriptsize
+  \[
+    \begin{tikzcd}[column sep=19pt, row sep=30pt]
+      ((M_A + M_X) + M_Y) + M_Z \arrow[r, "{[\assoc_{M_A,M_X,M_Y},\id_{M_Z}]}" yshift=3pt] \arrow[d, "{\assoc_{M_A+M_X,M_Y,Z}}" description]
+        & (M_A + (M_X + M_Y)) + M_Z \arrow[r, "{\assoc_{M_A,M_X+M_Y,M_Z}}" yshift=3pt]
+          & M_A + ((M_X + M_Y) + M_Z) \arrow[dl, "{[\id_{M_A},\assoc_{M_X,M_Y,M_Z}]}"] \\
+      (M_A + M_X) + (M_Y + M_Z) \arrow[r, "{\assoc_{M_A,M_X,M_Y+M_Z}}" yshift=3pt]
+        & M_A + (M_X + (M_Y + M_Z))
+          &
+    \end{tikzcd}
+    \]
+  \normalsize
+  This diagram is, of course, none other than the pentagram diagram for the coproduct $+$ in $\Set$.  
+  Similarly, the second and third diagrams in Definition \ref{DefSequoidalCategory} reduce in this case to the triangle diagrams for the coproduct $+$ in $\Set$.
+
+  For the fourth diagram in Definition \ref{DefSequoidalCategory}, since $\wk$ is a subset inclusion strategy induced from an identity map, Proposition \ref{PropCopycat} tells us that both arms of the diagram are the strategy induced by the subset inclusion $\assoc_{M_A,M_X,M_Y}\from (M_A + M_X) + M_Y \to M_A + (M_X + M_Y)$ from $(A \tensor X) \tensor Y$ to $A \sequoid (X \tensor Y)$.
+  Similarly, both arms of the last diagram in Definition \ref{DefSequoidalCategory} are the strategies induced by the subset inclusion $\runit_{M_A} \from M_A \to M_A + \emptyset$ from $A$ to $A \sequoid I$.
+
+  It now remains only to show that $\passoc$ and $\run$ are natural transformations.  
+  For $\passoc$, suppose that $A',X',Y',A,X,Y$ are games, that $\sigma\from A'\implies A$ is a strict strategy and that $\tau\from B'\implies B,\upsilon\from C'\implies C$ are strategies.  
+  Then we need to show that the following diagram commutes.
+  \[
+    \begin{tikzcd}[column sep=50pt]
+      (A' \sequoid X') \sequoid Y' \arrow[r, "{\passoc_{A',X',Y'}}"] \arrow[d, "(\sigma\sequoid\tau)\sequoid\upsilon"']
+        & A' \sequoid (X' \tensor Y') \arrow[d, "\sigma\sequoid (\tau\tensor\upsilon)"] \\
+      (A \sequoid X) \sequoid Y \arrow[r, "{\passoc_{A,X,Y}}"]
+        & A \sequoid (X \tensor Y)
+    \end{tikzcd}
+    \]
+  Indeed, we have
+  \begin{IEEEeqnarray*}{rCl?u}
+    && (\wk_{A',X'}\tensor Y');\wk_{A'\sequoid X',Y'};\passoc_{A',X',Y'};(\sigma\sequoid(\tau\tensor\upsilon)) \\
+    & = & \assoc_{A',X',Y'};\wk_{A',X'\tensor Y'};(\sigma\sequoid(\tau\tensor\upsilon)) & (see above) \\
+    & = & \assoc_{A',X',Y'};(\sigma\tensor(\tau\tensor\upsilon));\wk_{A,X\tensor Y} & \textit{Prop. \ref{PropWkNatural}} \\
+    & = & ((\sigma\tensor\tau)\tensor\upsilon);\assoc_{A,X,Y};\wk_{A,X\tensor Y} & \textit{Prop. \ref{PropCoherencesAreNatural}} \\
+    & = & ((\sigma\tensor\tau)\tensor\upsilon);(\wk_{A,X}\tensor Y);\wk_{A\sequoid X,Y};\passoc_{A,X,Y} & (see above) \\
+    & = & (\wk_{A',X'}\tensor Y');((\sigma\sequoid\tau)\tensor\upsilon);\wk_{A\sequoid X,Y};\passoc_{A,X,Y} & \textit{Prop. \ref{PropWkNatural}} \\
+    & = & (\wk_{A',X'}\tensor Y');\wk_{A'\sequoid X',Y'};((\sigma\sequoid\tau)\sequoid\upsilon);\passoc_{A,X,Y}\,. & \textit{Prop. \ref{PropWkNatural}}
+  \end{IEEEeqnarray*}
+  Now observe that $\wk_{A',X'}\tensor Y=\subs_{[\id_{M_{A'}+M_{X'}},\id_{M_{Y'}}]}$ by Proposition \ref{PropTensorProductIsFunctor}, so it is an epimorphism by Proposition \ref{PropSubsetInclusionEpic}.  
+  Proposition \ref{PropSubsetInclusionEpic} also tells us that $\wk_{A'\sequoid X',Y'}$ is an epimorphism.  
+  Therefore, we have
+  \[
+    \passoc_{A',X',Y'};(\sigma\sequoid(\tau\tensor\upsilon)) = ((\sigma\sequoid\tau)\sequoid\upsilon);\passoc_{A,X,Y}
+    \]
+  for any $A',X',Y',A,X,Y,\sigma,\tau,\upsilon$ as above.  
+  It follows that $\passoc$ is a natural transformation.
+
+  The proof that $\run$ is a natural transformation is similar.  
+  Let $A',A$ be games and let $\sigma\from A'\implies A$ be a strict strategy.  
+  We need to show that the following diagram commutes.
+  \[
+    \begin{tikzcd}
+      A' \arrow[r, "\run_{A'}"] \arrow[d, "\sigma"']
+        & A' \sequoid I \arrow[d, "\sigma\sequoid I"] \\
+      A \arrow[r, "\run_A"]
+        & A \sequoid I
+    \end{tikzcd}
+    \]
+  Indeed, we have
+  \begin{IEEEeqnarray*}{rCl?u}
+    \run_{A'};(\sigma\sequoid I) & = & \runit_{A'};\wk_{A',I};(\sigma\tensor I) & (see above) \\
+    & = & \runit_{A'};(\sigma\tensor I);\wk_{A,I} & \textit{Prop. \ref{PropWkNatural}} \\
+    & = & \sigma;\runit_A;\wk_{A,I} & \textit{Prop. \ref{PropCoherencesAreNatural}} \\
+    & = & \sigma;\run_A\,. & (see above)
+  \end{IEEEeqnarray*}
+
+  Therefore, $\run$ is a natural transformation, which completes our check of the criteria required by Definition \ref{DefSequoidalCategory}.
+\end{proof}
+
+\subsection{Sequoidally decomposable categories}
+
+We will now consider some important additional category-theoretic properties of the sequoid operator on games that do not follow from the fact that $\G$ is a sequoidal category.
+
+\begin{definition}[\cite{martinsthesis}]
+  Let $\C$ be a sequoidal category such that $C_s$ has arbitrary products (including a terminal object $1$).
+  We say that $\C$ is \emph{distributive} if whenever $a_i$ is a collection of objects of $\C'$ and $x$ is an object of $\C$, the morphism
+  \[
+    \dec_{(a_i),x} = \langle \pr_i\sequoid x \rangle \from \prod_ia_i \sequoid x \to \prod_i (a_i \sequoid x)
+    \]
+  is an isomorphism.
+\end{definition}
+\begin{remark}
+  In particular, taking $(a_i)$ to be the empty collection, the morphism $\lun_x = () \from 1 \sequoid x \to 1$ is an isomorphism.
+\end{remark}
+
+\begin{proposition}
+  $\G$ is a distributive sequoidal category.
+\end{proposition}
+\begin{proof}
+  Let $(A_i),X$ be games.
+  By Proposition \ref{PropProductOfTreeEmbeddings}, the morphism $\langle \pr_i\sequoid X\rangle$ is given by the tree embedding $\phi\from P_{\prod_iA_i\sequoid X}\to P_{\prod_i(A_i\sequoid X)}$ defined as follows.
+  \[
+    \phi(s) = \begin{cases}
+      \epsilon & \text{if $s=\epsilon$} \\
+      [\inj_{A_j},\inj_{X^j}]_*(s) & \text{if $s$ begins with a move in $A_j$}
+    \end{cases}
+    \]
+  When we say $[\inj_{A_j},\inj_{X^j}]_*(s)$, we have considered $s$ as a sequence in $(M_{A_j} + X)^*$.
+
+  We claim that $\phi$ is a bijection.  
+  Indeed, it is certainly injective.
+  Then, if we have a non-empty sequence $s\in P_{\prod_i(A_i \sequoid X)}$, then $s$ must start with a move in some $A_j$, and must thereafter take place in the games $A_j$ and $X^j$.  
+  Then $s=\phi([\inj_{A_j},\inj_X]_*(s))$, where we have considered $s$ as a sequence in $(M_{A_j} + M_{X^j})^*$.
+
+  Therefore, $\phi$ is a tree isomorphism, so $\dec_{(A_i),X} = \tree_\phi$ is an isomorphism by Proposition \ref{PropTree}.
+\end{proof}
+
+We can get a distributivity result in the other direction, but this one is not as strong, since the morphism we get is only a monomorphism, not an isomorphism.
+\begin{definition}
+  Let $\C$ be a distributive sequoidal category.  
+  We say that $\C$ is \emph{strongly distributive} if whenever $A,B,C$ are objects of $\C_s$, the morphism
+  \[
+    \langle A \sequoid J(\pr_1),A \sequoid J(\pr_2)\rangle \from A \sequoid J(B \times C) \to (A \sequoid JB) \times (A \sequoid JC)
+    \]
+  is a monomorphism.
+\end{definition}
+
+\begin{proposition}
+  $\G$ is a strongly distributive sequoidal category.
+\end{proposition}
+\begin{proof}
+  Let $\sigma,\tau\from D\implies (A \sequoid (B \times C))$ be strategies and suppose that 
+  \[
+    \sigma;\langle A\sequoid\pr_1,A\sequoid\pr_2\rangle=\tau;\langle A\sequoid \pr_1,A\sequoid \pr_2\rangle\,.
+    \]
+  Let $s\in\sigma$.
+  Without loss of generality, suppose that $s\vert_{B\times C}\in P_B$.  
+  Then we have
+  \[
+    [\id_{M_D},\inj_{M_{A^L}},\inj_{M_B},\bot]_*(s)\in\sigma;\langle A\sequoid\pr_1,A\sequoid\pr_2\rangle=\tau;\langle A\sequoid \pr_1,A\sequoid \pr_2\rangle\,.
+    \]
+  It follows that $s\in\tau$.  
+  Since $s$ was arbitrary, we get $\sigma\subset\tau$.  
+  By an identical argument, we get that $\tau\subset\sigma$, and therefore that $\sigma=\tau$.
+\end{proof}
+
+\begin{definition}
+  A sequoidal category $\C$ is \emph{inclusive} if $\C_s$ is a full-on-objects subcategory of $\C$ containing $\wk$ and all isomorphisms of $\G$, and the functor $J$ is the inclusion functor.
+\end{definition}
+In such a situation, we will sometimes drop the mention of the functor $J$.
+
+\begin{proposition}
+  $\G$ is an inclusive sequoidal category.
+\end{proposition}
+\begin{proof}
+  The only thing we really need to check is that isomorphisms in $\G$ are always strict strategies.  
+  Indeed, if $\sigma$ is a strategy for $A \implies B$ and $\tau$ a strategy for $B \implies A$ such that $\sigma;\tau=\id_A$, then for any opening move $a$ in $A$ on the right of $\tau$ there is some $\s\in\int(A,B,A)$ such that $\s\vert_{A,A}=aa$, and therefore the reply to $a$ in $\tau$ must take place in $B$.
+\end{proof}
+
+An important fact about the sequoid operator for games is that it gives us a way to decompose the tensor product as
+\[
+  A \tensor B \cong (A \sequoid B) \times (B \sequoid A)\,.
+  \]
+Informally, this is because both sides allow player $O$ to start either in $A$ or in $B$, and thereafter to continue in that game.
+
+\begin{definition}
+  Let $\C$ be a distributive inclusive sequoidal category, where $\C$ is a symmetric monoidal category.
+  We say that $\C$ is \emph{decomposable} if the morphisms
+  \begin{mathpar}
+    \dec_{a,b}=\langle \wk_{a,Jb},\sym_{Ja,Jb};\wk_{b,Ja} \rangle \from Ja \tensor Jb \to (a \sequoid Jb) \times (b \sequoid Ja)
+    \and
+    () \from I \to 1
+  \end{mathpar}
+  are isomorphisms in $\C_s$.
+\end{definition}
+
+\begin{proposition}
+  Let $\C$ be a decomposable sequoidal category and suppose that $a_1,\cdots,a_n$ is a list of objects of $\C_s$.  
+  Then we have an isomorphism
+  \[
+    a_1 \tensor \cdots \tensor a_n \cong \prod_{i=1}^n (a_i \sequoid (a_1 \tensor \cdots \tensor a_{i-1} \tensor a_{i+1} \tensor \cdots \tensor a_n))\,.
+    \]
+  \label{PropDecSeq}
+\end{proposition}
+\begin{proof}
+  Induction on $n$.  
+  If $n=0$, then we have the isomorphism $() \from I \to 1$.  
+  More generally, we have
+  \begin{IEEEeqnarray*}{Cl}
+    & a_1 \tensor \cdots \tensor a_{n+1}\\
+    \cong & (a_1 \tensor \cdots \tensor a_n) \tensor a_{n+1} \\
+    \xrightarrow{\dec} & (a_1 \tensor \cdots \tensor a_n) \sequoid a_{n+1} \times a_{n+1} \sequoid (a_1 \tensor \cdots \tensor a_n) \\
+    \cong & \left(\prod_{i=1}^n\left(a_i \sequoid \Tensor_{j\ne i}^{j\le n} a_j\right)\right) \sequoid a_{n+1} \times a_{n+1} \sequoid (a_1 \tensor \cdots \tensor a_n) \\
+    \xrightarrow{\dist\times\id} & \prod_{i=1}^n\left(\left(a_i \sequoid \Tensor_{j\ne i}^{j\le n} a_j \right) \sequoid a_{n+1}\right) \times a_{n+1} \sequoid (a_1 \tensor \cdots \tensor a_n) \\
+    \xrightarrow{\langle\passoc\rangle\times\id} & \prod_{i=1}^n \left(a_i \sequoid \left(\Tensor_{j\ne i}^{j\le n} a_j \tensor a_{n+1}\right)\right) \times a_{n+1} \sequoid (a_1\tensor \cdots \tensor a_n) \\
+    \cong & \prod_{i=1}^{n+1} \left(a_i \times \Tensor_{j\ne i}^{j\le n+1} a_j\right) \times a_{n+1} \sequoid (a_1 \tensor \cdots \tensor a_n) \\
+    \cong & \prod_{i=1}^{n+1} (a_i \sequoid (a_1 \tensor \cdots \tensor a_{i-1} \tensor a_{i+1} \tensor \cdots \tensor a_{n+1}))\,,
+  \end{IEEEeqnarray*}
+  where each of the arrows is an isomorphism.
+\end{proof}
+
+The specific isomorphism in Proposition \ref{PropDecSeq} is rather complicated at the moment, but we can simplify it.
+
+\begin{definition}
+  Given objects $a_1,\cdots,a_n$ of a monoidal category, we write $\sym_i^n$ for the unique symmetric coherence isomorphism
+  \[
+    a_1 \tensor \cdots \tensor a_n \cong a_i \tensor a_1 \cdots \tensor a_{i-1} \tensor a_{i+1} \tensor a_n\,.
+    \]
+\end{definition}
+
+\begin{proposition}
+  The isomorphism in the proof of Proposition \ref{PropDecSeq} is given by
+  \[
+    \dec_{(a_i)}^n = \langle \sym_i^{n};\wk_{a_i,a_1\tensor\cdots\tensor a_{i-1}\tensor a_{i+1}\tensor \cdots\tensor a_n}\rangle\,.
+    \]
+  \label{PropDecSeqFormula}
+\end{proposition}
+\begin{proof}
+  Induction on $n$.
+  We will make use of the coherence theorem for symmetric monoidal categories \cite[\sec 11]{WorkingMathematician} to allow us to elide associators.  
+  The base case is obviously true, because $()\from I \to 1$ is the unique morphism between these objects.  
+  Otherwise, we observe that the morphism into $\prod_{i=1}^{n+1} \left(a_i \sequoid \Tensor_{j\ne i}^{j\le n+1} a_j\right)$ is given component-wise by morphisms $a_1 \tensor \cdots \tensor a_{n+1} \to a_i \sequoid \Tensor_{j\ne i}^{j\le n+1}$ for each $i=1,\cdots,n+1$; we need to check that each of these components is equal to $\sym_i^{n+1};\wk_{a_i,\Tensor_{j\ne i}a_j}$.
+
+  If $i\le n$, then the $i$-th component of the morphism in the proof of Proposition \ref{PropDecSeq} is given by the composite thick dashed arrows in Figure \ref{FigDecSeqFormula}, and is therefore equal to the composite of the solid arrows, which is $\sym_i^{n+1};\wk_{a_i,\Tensor_{j\ne i}a_j}$ as desired.  
+  The $n+1$-th component of the morphism in the proof of Proposition \ref{PropDecSeq} is given by the composite
+  \small
+  \[
+    \Tensor_{j=1}^{n+1}a_j \to \Tensor_{j=1}^n a_j \tensor a_{n+1} \xrightarrow{\sym_{\Tensor_{j=1}^na_j,a_{n+1}}} a_{n+1} \tensor \Tensor_{j=1}^n a_j \xrightarrow{\wk_{a_{n+1},\Tensor_{j=1}^n a_j}} a_{n+1} \sequoid \Tensor_{j=1}^n a_j\,,
+    \]
+  \normalsize
+  and then we use the fact that the leftmost two morphisms in this composite compose to give us $\sym_{n+1}^{n+1}$.
+  \begin{SidewaysFigure}
+    \[
+      \begin{tikzcd}[ampersand replacement=\&, column sep=10pt, row sep=30pt]
+        \Tensor_{j=1}^{n+1}a_j \arrow[r, thick, dashed] \arrow[dd, "\sym_i^{n+1}"']
+          \& \Tensor_{j=1}^n a_j \tensor a_{n+1} \arrow[r, "{\wk_{\Tensor_{j=1}^na_j,a_{n+1}}}", thick, dashed] \arrow[d, "\sym_i^n\tensor a_{n+1}" description, dotted]
+            \&[45pt] \Tensor_{j=1}^n a_j \sequoid a_{n+1} \arrow[d, "\sym_i^n\sequoid a_{n+1}", thick, dashed]
+              \&[34pt] \\
+        %
+          \& \left(a_i \tensor \Tensor_{j\ne i}^{j\le n} a_j\right)\tensor a_{n+1} \arrow[r, "{\wk_{a_i\tensor\Tensor_{j\ne i}^{j\le n} a_j,a_{n+1}}}" xshift=-10pt, dotted] \arrow[d, "{\assoc_{a_i,\Tensor_{j\ne i}^{j\le n}a_j,a_{n+1}}}" description, dotted] \arrow[dr, "{\wk_{a_i,\Tensor_{j\ne i}^{j\le n}a_j}\tensor a_{n+1}}" description, dotted]
+            \& |[alias=Z]| \left(a_i \tensor \Tensor_{j\ne i}^{j\le n} a_j\right)\sequoid a_{n+1} \arrow[dr, from=Z.east, bend left=25, "{\wk_{a_i,\Tensor_{j\ne i}^{j\le n}a_j}\sequoid a_{n+1}}", thick, dashed]
+              \& \\
+        a_i \tensor \Tensor_{j\ne i}^{j\le n+1} a_j \arrow[ddrrr, bend right=15, "{\wk_{a_i,\Tensor_{j\ne i}^{j\le n+1}a_j}}"']
+          \& a_i \tensor \left(\tensor_{j\ne i}^{j\le n}a_j \tensor a_{n+1}\right) \arrow[l, dotted] \arrow[drr, to=Y.west, bend right=10, "{\wk_{a_i,\Tensor_{j\ne i}^{j\le n}a_j\tensor a_{n+1}}}" description, dotted]
+            \& \left(a_i \sequoid \Tensor_{j\ne i}^{j\le n}\right)\tensor a_{n+1} \arrow[r, "{\wk_{a_i\sequoid \Tensor_{j\ne i}^{j\le n},a_{n+1}}}" xshift=-10pt, dotted]
+              \& \left(a_i \sequoid \Tensor_{j\ne i}^{j\le n} a_j\right) \sequoid a_{n+1} \arrow[d, "{\passoc_{a_i,\Tensor_{j\ne i}^{j\le n}a_j,a_{n+1}}}", thick, dashed] \\
+        %
+          \&
+            \&
+              \& |[alias=Y]| a_i \sequoid \left(\Tensor_{j\ne i}^{j\le n} a_j \tensor a_{n+1}\right) \arrow[d, thick, dashed] \\
+        %
+          \&
+            \&
+              \& a_i \sequoid \Tensor_{j\ne i}^{j\le n+1}a_j
+      \end{tikzcd}
+      \]
+    \caption[Diagram used in the proof of Proposition \ref{PropDecSeqFormula}]{Diagram used in the proof of Proposition \ref{PropDecSeqFormula}.  
+    The pentagon at the heart of the diagram is the coherence diagram for $\passoc$ and $\wk$ from Definition \ref{DefSequoidalCategory}.}
+    \label{FigDecSeqFormula}
+  \end{SidewaysFigure}
+\end{proof}
+
+\begin{proposition}
+  $\G$ is a decomposable sequoidal category.
+\end{proposition}
+\begin{proof}
+  Let $A,B$ be games.  
+  By Proposition \ref{PropProductOfTreeEmbeddings}, the strategy 
+  \[
+    \langle \wk_{A,B},\sym_{A,B};\wk_{A,B}\rangle
+    \]
+  is given by the tree embedding $\phi$ from $(A \sequoid B) \times (B \sequoid A)$ to $A \tensor B)$ given by
+  \[
+    \phi(s) = \begin{cases}
+      \epsilon & \text{if $s=\epsilon$} \\
+      s\vert_{A \sequoid B} & \text{if $s$ takes place entirely within $A\sequoid B$} \\
+      s\vert_{B \sequoid A} & \text{if $s$ takes place entirely within $B\sequoid A$}
+    \end{cases}\,.
+    \]
+  We claim that this tree embedding is a bijection.  
+  Indeed, it is certainly injective.
+  Now let $s\in P_{A\tensor B}$ be a non-empty play.  
+  Then, if $s$ begins with a move in $A$, we have $s=\phi((\inj_{A\sequoid B})_*(s))$, and if $s$ begins with a move in $B$, we have $s=\phi((\inj_{B\sequoid A})_*(s)$.  
+  Therefore, $\phi$ is a tree isomorphism, so $\dec_{A,B}=\tree_\phi$ is an isomorphism in $\G$.
+
+  Lastly, we have $I=1$ in $\G$, and the unique morphism $I\to 1$ is the identity.
+\end{proof}
+
+\subsection{A Formula for the Exponential}
+
+\begin{definition}
+  Let $\C$ be a symmetric monoidal category.  
+  Given objects $A_1,\cdots,A_n$ of $\C$ and a permutation $\pi\in \S_n$, there is a unique canonical symmetry isomorphism
+  \[
+    \sym^\pi \from A_1 \tensor \cdots \tensor A_n \toisom A_{\pi(1)} \tensor \cdots \tensor A_{\pi(n)}\,.
+    \]
+  Given an object $A$ of $\C$, an \emph{$n$-th symmetrized tensor power} of $A$ is an equalizer $(A^n,\eq^n)$ for the diagram given by all morphisms of the form
+  \[
+    \sym_\pi \from A ^{\tensor n} \to A ^{\tensor n}\,.
+    \]
+  We say that the symmetrized tensor power $A^n$ \emph{commutes with the tensor product} if $(B\tensor A^n,B\tensor \eq_n)$ is an equalizer for the diagram given by morphisms of the form
+  \[
+    B\tensor\sym_\pi \from B\tensor A ^{\tensor n} \to B\tensor A ^{\tensor n}\,.
+    \]
+\end{definition}
+
+\begin{proposition}[\cite{CalcoPaper}]
+  Let $\C$ be an inclusive, strongly distributive, decomposable sequoidal category.  
+  Then $\C$ has all symmetrized tensor powers.
+\end{proposition}
+\begin{proof}
+  Let $A$ be an object of $\C$ (equivalently, an object of $\C_s$).  
+  We inductively define objects $A^{\sequoid n}$ by
+  \begin{itemize}
+    \item $A^{\sequoid 0} = I$; and
+    \item $A^{\sequoid (n+1)}=J(A\sequoid A^{\sequoid n})$.
+  \end{itemize}
+  We claim that $A^{\sequoid n}$ is a symmetrized tensor power of $A$.
+
+  Given $n$, we inductively define a morphism $\wk^n\from A^{\tensor n} \to A^{\sequoid n}$, where $\wk^0=\id_I$, and $\wk^{n+1}$ is given by the composite
+  \[
+    A^{\tensor (n+1)} \to A \tensor A^{\tensor n} \xrightarrow{A \tensor \wk^n} A \tensor A^{\sequoid n} \xrightarrow{\wk_{A,A^{\sequoid n}}} A \sequoid A^{\sequoid n}\,.
+    \]
+  We show by induction on $n$ that if $B$ is an object of $\C$ and $k\ge 0$ then the composite
+  \scriptsize
+  \begin{mathpar}
+    B\tensor (A \sequoid\blank)^kA^{\tensor n}
+    \xrightarrow{\langle B\tensor(A \sequoid\blank)^k \sym^\pi \rangle}
+    (B\tensor(A \sequoid\blank)^kA^{\tensor n})^{n!}
+    \xrightarrow{(B\tensor(A\sequoid\blank)^k\wk^n)^{n!}}
+    (B\tensor A^{\sequoid (k+n)})^{n!}
+  \end{mathpar}
+  \normalsize
+  (i.e., the morphism $\langle B\tensor(A\sequoid\blank)^k(\sym^\pi;\wk^n)\rangle$) is a monomorphism.
+  In particular, taking $k=0$, we will have shown that $\langle B\tensor (\sym^\pi;\wk^n)\rangle$ is a monomorphism.
+
+  The hypothesis is clearly true for $n=0$; otherwise, we have a composite
+  \begin{mathpar}
+    B\tensor (A\sequoid\blank)^kA^{\tensor (n+1)}
+    \xrightarrow{B\tensor (A\sequoid\blank)^k\langle \sym^{n+1}_i;\wk_{A,A^{\tensor n}}\rangle}
+    B\tensor (A \sequoid\blank)^k(A\sequoid A^{\tensor n})^{n+1}
+    \xrightarrow{\langle B\tensor (A\sequoid\blank)^k;\pr_i\rangle}
+    (B\tensor(A \sequoid\blank)^{k+1} A^{\tensor n})^{n+1}
+    \to
+    (B\tensor A ^{\sequoid (k + n + 1)})^{(n+1)!}\,,
+  \end{mathpar}
+  where the last arrow is the tensor product of $B$ with the $(n+1)$-th power of the composite given by
+  \footnotesize
+  \[
+    (A \sequoid\blank)^{k+1}A^{\tensor n}
+    \xrightarrow{\langle (A \sequoid \blank)^{k+1}\sym^\sigma\rangle}
+    ((A \sequoid\blank)^{k+1}A^{\tensor n})^{n!}
+    \xrightarrow{((A \sequoid\blank)^{k+1}\wk^n)^{n!}}
+    (A^{\sequoid (k+n+1)})^{n!}\,,
+    \]
+  \normalsize
+  which is a monomorphism by the induction hypothesis.
+  Then the previous composite is the composite of monomorphisms (by our assumptions on $\C$), and is therefore itself a monomorphism.  
+  Now this composite may be written as
+  \[
+    \langle B\tensor(A\sequoid\blank)^k(\sym_i^{n+1};\wk_{A,A^{\tensor n}};(A\sequoid\sym^\sigma);(A\sequoid\wk^n)) \rangle\,,
+    \]
+  which, since $\wk$ is a natural transformation, is equal to
+  \[
+    \langle B\tensor(A \sequoid\blank)^k(\sym_i^{n+1};(A\tensor\sym^\sigma);(A\tensor\wk^n);\wk_{A,A^{\sequoid n}})\rangle\,,
+    \]
+  where $\sigma$ ranges over the permutations in $\S_n$.
+  Moreover, by the definition of $\wk^n$, this is equal to
+  \[
+    \langle B\tensor(A \sequoid\blank)^k(\sym_i^{n+1};(A \tensor \sym^\sigma);\wk^{n+1}\rangle\,.
+    \]
+
+  Now, given $i\in\{1,\cdots n+1\}$ and $\sigma\in\S_n$, there is a unique permutation $\pi\in\S_{n+1}$ such that $\sym_i^{n+1};(A\tensor\sym^\sigma=\sym^\pi)$; moreover, this defines a bijection from $\{1,\cdots,n+1\}\times\S_n \to \S_{n+1}$.  
+  Therefore (after choosing an appropriate enumeration of our permutations), we see that this composite is in fact equal to
+  \[
+    \langle B\tensor(A \sequoid\blank)^k (\sym^\pi;\wk^{n+1})\rangle\,.
+    \]
+  Therefore, $\langle B\tensor(A \sequoid\blank)^k(\sym^\pi;\wk^{n+1})\rangle$ is a monomorphism as desired, completing the induction.
+
+  Next, we define morphisms $\eq_n\from A^{\sequoid n} \to A^{\tensor n}$ inductively, where $\eq_0=\id$ and $\eq_{n+1}$ is defined by the following composite
+  \[
+    A^{\sequoid (n+1)} = A\sequoid A^{\sequoid n} \xrightarrow{\langle (A\sequoid \eq_n)_1^n\rangle} (A \sequoid A^{\tensor n})^n \cong A^{\tensor (n+1)}\,,
+    \]
+  where the final isomorphism is as in Propositions \ref{PropDecSeq} and \ref{PropDecSeqFormula}.
+
+  First, we show inductively that $\eq_n;\sym^\pi;\wk^n=\id_{A^{\sequoid n}}$ for all permutations $\pi$ of $S_n$.
+  This is certainly true for $n=0$; otherwise, let $\pi\in \S_{n+1}$ be a permutation.  
+  Let $j=\pi\inv(1)$ be the element sent to $1$ by $\pi$ and let $\sigma$ be the permutation of $1,\cdots,n$ such that applying $\sigma$ to the elements $2,\cdots,n+1$ and composing with $\pi$ gives us the $j$-cycle $(1\,\dots\,j)$.  
+  Then we have
+  \[
+    \sym_j^{n+1};(A\tensor\sym^\sigma) = \sym^\pi\,.
+    \]
+  Now we get
+  \begin{IEEEeqnarray*}{Cl}
+    & \eq_{n+1};\sym^\pi;\wk^{n+1} \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym^\pi;(A \tensor \wk^n);\wk_{A,A^{\sequoid n}} \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym_j^{n+1};(A\tensor\sym^\sigma);(A \tensor \wk^n);\wk_{A,A^{\sequoid n}} \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym_j^{n+1};\wk_{A,A^{\tensor n}};(A \sequoid \sym^\sigma);(A \sequoid \wk^n) \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\langle \sym_i^{n+1};\wk_{A,A^{\tensor n}}\rangle;\pr_j;(A \sequoid \sym^\sigma);(A \sequoid \wk^n) \\
+    = & A \sequoid (\eq_n;\sym^\sigma;\wk^n)\,,
+  \end{IEEEeqnarray*}
+  which is equal to the identity on $A^{\sequoid (n+1)}$ by the induction hypothesis.
+
+  Now let $\rho$ be a permutation in $\S_n$.  
+  We claim that $\eq_n=\eq_n;\sym^{\rho}$.  
+
+  Indeed, we have
+  \begin{IEEEeqnarray*}{rCl}
+    \eq_n;\langle \sym^{\pi} ; \wk^n \rangle
+    & = & \langle \eq_n;\sym^{\pi};\wk^n \rangle \\
+    & = & \langle \id \rangle \\
+    & = & \langle \eq_n;\sym^{\rho\pi};\wk^n \rangle \\
+    & = & \eq_n;\sym^{\rho};\langle \sym^\pi ; \wk^n \rangle\,.
+  \end{IEEEeqnarray*}
+  Since $\langle \sym^\pi;\wk^n\rangle$ is a monomorphism, this means that $\eq_n=\eq_n;\sym^{\rho}$, as desired.
+  Therefore, $\eq_n$ equalizes the morphisms $\eq_n$.  
+  We claim that it is an equalizer, and that this equalizer is preserved by the tensor product.
+
+  Indeed, let $B,C$ be objects of $\C$, and let $f \from C \to B \tensor A^{\tensor n}$ be a morphism such that $f=f;(B\tensor\sym^{\pi})$ for all $\pi\in\S_n$.
+
+  Let $\tilde f = f;(B \tensor \wk^n)\from C \to B \tensor A^{\sequoid n}$.  
+  We claim that $\tilde f;(B\tensor\eq_n)=f$; indeed, we have
+  \begin{IEEEeqnarray*}{rCl}
+    \tilde f;(B \tensor\eq_n);\langle B\tensor(\sym^\pi;\wk^n)\rangle 
+    & = & \langle f;(B \tensor (\wk^n;\eq_n;\sym^\pi;\wk^n)) \rangle \\
+    & = & \langle f;(B\tensor \wk^n)\rangle \\
+    & = & f;\langle B \tensor (\sym^\pi;\wk^n)\rangle\,.
+  \end{IEEEeqnarray*}
+  Therefore, since $\langle B \tensor (\sym^\pi;\wk^n)\rangle$ is a monomorphism, we know that $\tilde f;(B\tensor \eq_n)=f$.
+
+  Now suppose that $h\from C \to B \tensor A^{\sequoid n}$ is such that $h;(B\tensor eq_n)=f$.  
+  We claim that $h=\tilde f$.  
+  Indeed, we have 
+  \[
+    \tilde f = f;(B \tensor \wk^n) = h;(B \tensor \eq_n);(B \tensor \wk^n) = h\,.
+    \]
+  Therefore, $(B\tensor A^{\sequoid n},B\tensor \eq_n)$ is an equalizer of the arrows $B\tensor \sym^\pi\from B \tensor A^{\tensor n} \to B \tensor A^{\tensor n}$, as desired.
+\end{proof}
+
+We are interested in symmetrized tensor powers because of an important result of \Mellies, Tabareau and Tasson.
+Suppose $\C$ is a monoidal category, and that $\C$ has symmetrized tensor powers that commute with the tensor product.  
+Given $n$, we have a morphism
+\[
+  ()\tensor A^{\tensor n} \from A^{\tensor (n+1)} \to A^{\tensor n}\,;
+  \]
+then, if $A^n$ and $A^{n+1}$ are the $n$-th and $n+1$-th symmetrized tensor powers of $A$, and $\eq_{n+1},\eq$ the corresponding equalization, for any $\pi\in\S_n$ we have a commutative diagram
+\[
+  \begin{tikzcd}[column sep=50pt]
+    B \tensor A^{n+1} \arrow[r, "B\tensor\eq_{n+1}"]
+      & B \tensor A^{\tensor (n+1)} \arrow[r, "B\tensor()\tensor A^{\tensor n}"] \arrow[d, "\sym^{\pi'}"']
+        & B \tensor A^{\tensor n} \arrow[d, "\sym^\pi"] \\
+    %
+      & B \tensor A^{\tensor (n+1)} \arrow[r, "B \tensor()\tensor A^{\tensor n}"]
+        & B \tensor A^{\tensor n}
+  \end{tikzcd}\,,
+  \]
+where $\pi'$ is the permutation of $1,\cdots,n+1$ that fixes $1$ and applies $\pi$ to the remaining elements $2,\cdots,n+1$.
+
+This means that for each $\pi\in \S_n$ we have
+\begin{IEEEeqnarray*}{rCl}
+  (B\tensor\eq_{n+1});(B\tensor ()\tensor A^{\tensor n})
+  & = & (B \tensor\eq_{n+1});(B\tensor \sym^{\pi'});(B\tensor ()\tensor A^{\tensor n}) \\
+  & = & (B\tensor\eq_{n+1});(B\tensor()\tensor A^{\tensor n});(B\tensor \sym^\pi)\,,
+\end{IEEEeqnarray*}
+and that there is therefore an induced morphism
+\[
+  B\tensor A^{n+1} \to B \tensor A^n\,,
+  \]
+by the universal property of the equalizer.
+
+\begin{theorem}[\cite{MelliesCofCommCom}]
+  Let $\C$ be a monoidal category in which the monoidal unit is a terminal object.
+  Suppose that $\C$ has symmetrized tensor powers that commute with the tensor product.  
+
+  Then, for any objects $A,B$ of $\C$, there is a natural sequence
+  \[
+    B \leftarrow B\tensor A \leftarrow B\tensor A^2 \leftarrow B \tensor A^3 \leftarrow \cdots\,.
+    \]
+  In particular, there is a sequence
+  \[
+    I \leftarrow A \leftarrow A^2 \leftarrow A^3 \leftarrow \cdots\,.
+    \]
+  Suppose that this sequence has a limit $\oc A$, and that $B\tensor \oc A$ is the limit of the first sequence for all $B$.  
+  Then $\oc A$ has the structure of the cofree commutative comonoid on $A$.
+\end{theorem}
 
 \bibliographystyle{alpha2}
 \bibliography{../common/phd_bibliography}
