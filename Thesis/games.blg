@@ -3,52 +3,48 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: games.aux
 The style file: alpha2.bst
 Database file #1: ../common/phd_bibliography.bib
-I was expecting a `,' or a `}'---line 969 of file ../common/phd_bibliography.bib
- :   
- :   URL = {http://math.andrej.com/wp-content/uploads/2006/05/kleene-tree.pdf}
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
+Warning--empty institution in RusssThesis
 Warning--empty booktitle in Harmer2006InnocentGS
 Warning--empty year in LairdCofCommCom
-You've used 9 entries,
+You've used 13 entries,
             2549 wiz_defined-function locations,
-            624 strings with 6026 characters,
-and the built_in function-call counts, 3308 in all, are:
-= -- 321
-> -- 139
-< -- 6
-+ -- 46
-- -- 44
-* -- 209
-:= -- 547
-add.period$ -- 31
-call.type$ -- 9
-change.case$ -- 50
-chr.to.int$ -- 9
-cite$ -- 11
-duplicate$ -- 148
-empty$ -- 267
-format.name$ -- 57
-if$ -- 689
+            651 strings with 6503 characters,
+and the built_in function-call counts, 4700 in all, are:
+= -- 464
+> -- 182
+< -- 9
++ -- 60
+- -- 56
+* -- 309
+:= -- 774
+add.period$ -- 44
+call.type$ -- 13
+change.case$ -- 72
+chr.to.int$ -- 13
+cite$ -- 16
+duplicate$ -- 204
+empty$ -- 380
+format.name$ -- 76
+if$ -- 973
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 11
-newline$ -- 51
-num.names$ -- 27
-pop$ -- 60
+missing$ -- 14
+newline$ -- 72
+num.names$ -- 39
+pop$ -- 73
 preamble$ -- 1
-purify$ -- 61
+purify$ -- 86
 quote$ -- 0
-skip$ -- 114
+skip$ -- 158
 stack$ -- 0
-substring$ -- 142
-swap$ -- 21
-text.length$ -- 6
-text.prefix$ -- 4
+substring$ -- 242
+swap$ -- 24
+text.length$ -- 9
+text.prefix$ -- 7
 top$ -- 0
-type$ -- 64
-warning$ -- 2
-while$ -- 28
-width$ -- 10
-write$ -- 122
-(There was 1 error message)
+type$ -- 96
+warning$ -- 3
+while$ -- 41
+width$ -- 14
+write$ -- 175
+(There were 3 warnings)
