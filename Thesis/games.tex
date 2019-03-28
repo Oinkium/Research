@@ -2395,49 +2395,54 @@ This time, instead of defining a relation $\Gamma,s\ts M\converges c,s'$, we def
   \item $\Gamma\ts M$, $\Gamma'\ts M'$ are Idealized Algol terms-in-context.
 \end{itemize}
 
-The definition of the relation is in Figure \ref{FigIaSsOpSem}.
 As an auxiliary definition, we need the notion of an \emph{evaluation context} (see \cite{Felleisen}).
 This is a single-holed context defined inductively by the following BNF formula, where $M$ ranges over IA terms.
 \begin{center}
-\parbox{0.7\textwidth}{
+\parbox{0.8\textwidth}{
 \begin{mathpar}
-  E \Coloneqq - \mid \suc E \mid \pred E \mid E;M \mid \If E\Then M \Else M \mid \IfO E \Then M \Else M \mid !E \mid M \gets E \mid E \gets n
+  \EE \Coloneqq - \mid \EE\,M \mid \suc \EE \mid \pred \EE \mid \EE;M \mid \If \EE\Then M \Else M \mid \IfO \EE \Then M \Else M \mid !\EE \mid M \gets \EE \mid \EE \gets n
 \end{mathpar}}
 \end{center}
 
+Next, we define a relation $\Gamma,s,M\oopto\Gamma',s',M'$ as in Figure \ref{FigIaSsOpSem}.
+
+We then define the relation $\opto$ as
+\[
+  \inferrule*{ \Gamma,s\ts M\oopto \Gamma',s'\ts M'}{\Gamma,s\ts \EE[M] \opto \EE[M']}
+  \]
+for each evaluation context $\EE$.
+
 \begin{figure}
   \begin{mathpar}
-    \inferrule*{\Gamma,s\ts M \opto \Gamma',s',M'}{\Gamma,s\ts E[M] \opto \Gamma',s'\ts E[M']}
+    \Gamma,s\ts (\lambda x.M)N \oopto \Gamma,s\ts M[N/x]
+    \and
+    \Gamma,s\ts \Y M \oopto \Gamma,s\ts M(\Y M)
+    \and
+    \Gamma,s\ts \suc n \oopto \Gamma,s\ts n+1
     \\
-    \inferrule*{ }{\Gamma,s\ts (\lambda x.M)N \opto \Gamma,s\ts M[N/x]}
+    \Gamma,s \ts \pred n+1 \oopto \Gamma,s\ts n
     \and
-    \inferrule*{ }{\Gamma,s\ts \Y M \opto \Gamma,s\ts M(\Y M)}
-    \and
-    \inferrule*{ }{\Gamma,s\ts \succ n \opto \Gamma,s\ts n+1}
-    \and
-    \inferrule*{ }{\Gamma,s \ts \pred n+1 \opto \Gamma,s\ts n}
-    \and
-    \inferrule*{ }{\Gamma,s\ts \pred 0 \opto \Gamma,s\ts 0}
-    \and
-    \inferrule*{ }{\Gamma,s\ts \skipp;M \opto \Gamma,s\ts M}
-    \and
-    \inferrule*{ }{\Gamma,s\ts \If \true \Then N \Else P \opto \Gamma,s\ts N}
-    \and
-    \inferrule*{ }{\Gamma,s\ts \If \false \Then N \Else P \opto \Gamma,s\ts P}
-    \and
-    \inferrule*{ }{\Gamma,s\ts \IfO 0 \Then N \Else P \opto \Gamma,s\ts N}
-    \and
-    \inferrule*{ }{\Gamma,s\ts \IfO n+1 \Then N \Else P \opto \Gamma,s\ts P}
-    \and
-    \inferrule*{ }{\Gamma,s\ts x \gets n \opto \Gamma,(s\vert x\mapsto n)\ts \skipp}
-    \and
-    \inferrule*[right={$s(x)=n$}]{ }{\Gamma,s\ts \oc x \opto \Gamma,s\ts n}
+    \Gamma,s\ts \pred 0 \oopto \Gamma,s\ts 0
     \\
-    \inferrule*{ }{\Gamma,s\ts \neww \lambda x.M \opto \Gamma,x,(s\vert x\mapsto 0)\ts M}
+    \Gamma,s\ts \skipp;M \oopto \Gamma,s\ts M
     \\
-    \inferrule*{ }{\Gamma,s \ts \mkvar W\,R \gets n \opto \Gamma,s\ts Wn}
+    \Gamma,s\ts \If \true \Then N \Else P \oopto \Gamma,s\ts N
     \and
-    \inferrule*{ }{\Gamma,s \ts \oc\mkvar W\,R \opto \Gamma,s\ts R}
+    \Gamma,s\ts \If \false \Then N \Else P \oopto \Gamma,s\ts P
+    \and
+    \Gamma,s\ts \IfO 0 \Then N \Else P \oopto \Gamma,s\ts N
+    \and
+    \Gamma,s\ts \IfO n+1 \Then N \Else P \oopto \Gamma,s\ts P
+    \and
+    \Gamma,s\ts x \gets n \oopto \Gamma,(s\vert x\mapsto n)\ts \skipp
+    \and
+    \Gamma,s\ts \oc x \oopto \Gamma,s\ts s(x)
+    \\
+    \Gamma,s\ts \neww \lambda x.M \oopto \Gamma,x,(s\vert x\mapsto 0)\ts M
+    \\
+    \Gamma,s \ts (\mkvar W\,R) \gets n \oopto \Gamma,s\ts Wn
+    \and
+    \Gamma,s \ts \oc(\mkvar W\,R) \oopto \Gamma,s\ts R
   \end{mathpar}
   \caption{Felleisen-style small-step operational semantics for Idealized Algol.}
   \label{FigIaSsOpSem}
@@ -2445,31 +2450,256 @@ This is a single-holed context defined inductively by the following BNF formula,
 
 We need to prove that this is equivalent to our original semantics.
 
-\begin{proposition}
-  Let $\Gamma$ be a $\Var$-context, let $s$ be a $\Gamma$-store, and let $\Gamma\ts M$ be an Idealized Algol term-in-context.  
-  If $s'$ is another $\Gamma$-store and $\Gamma\ts c$ is a canonical form, then $\Gamma,s\ts M\converges c,s'$ if and only if there is some sequence
+\begin{lemma}
+  Suppose that $\Gamma,s\ts M \oopto \Gamma',s'\ts M'$ and that $\Gamma',s'\ts \EE[M'] \converges c,s''$.  
+  Then $\Gamma,s\ts \EE[M]\converges c,s''\vert_\Gamma$.
+  \label{LemSmallToBig}
+\end{lemma}
+\begin{proof}
+  Structural induction on $\EE$.
+  The base case, when $\EE$ is a hole, covers the interesting cases, so we shall leave it to last.
+  The remaining cases are quite similar, so we will show the proof for one of them for illustration.
+
+  If $\EE=\EE'\,N$, for some term $N$, then we have $\Gamma',s'\ts \EE'[M']\,N\converges c,s''$.  
+  By inspection of the rules in Figure \ref{FigIaOpSem}, the derivation of this must end with a rule of the form
   \[
-    \Gamma,s\ts M \opto \Gamma_1,s^{(1)},M_1 \opto \cdots \opto \Gamma_n,s^{(n)},M_n \opto \Gamma'',s'',c\,,
+    \inferrule*{\Gamma',s'\ts \EE'[M'] \converges \lambda x.M'',t \\ \Gamma',t \ts M''[N/x] \converges c,s''}
+    {\Gamma',s'\ts \EE'[M']\,N \converges c,s''}\,.
     \]
-  where $\Gamma_1,\cdots,\Gamma_n,\Gamma''$ are $\Var$-contexts, $s^{(i)}$ is a $\Gamma_i$-store, $s''$ is a $\Gamma''$-store, $\Gamma_i\ts M_i$ are Idealized Algol terms in context, and $s''\vert_\Gamma=s'$.
+  Thus, $\Gamma',s'\ts \EE'[M']\converges \lambda x.M'',t$ must be provable for some $M'',t$.
+  By the induction hypothesis, this means that $\Gamma,s\ts \EE'[M]\converges \lambda x.M'',t$ is provable.
+  Then we have a derivation
+  \[
+    \inferrule*{\Gamma',s\ts \EE'[M] \converges \lambda x.M'',t \\ \Gamma',t \ts M''[N/x] \converges c,s''}
+    {\Gamma',s\ts \EE'[M]\,N\converges c,s''\vert_{\Gamma'}}\,.
+    \]
+  Then, because any extra variables in $\Gamma'$ are not mentioned in $\EE'[M]\,N$ or in $c$, we have
+  \[
+    \Gamma,s\ts \EE'[M]\,N\converges c,s''\vert_\Gamma\,.
+    \]
+  Now, let us suppose that $\EE$ is a hole, so that $\EE[M']=M'$.  
+
+  Then there are a number of cases, depending on the particular $\oopto$ rule we are using.  
+  Many of these cases are similar, so we will cover a few of them for the purposes of illustration.
+  \begin{itemize}
+    \item Suppose that $\Gamma,s\ts M[N/x]\converges c,s'$.  
+      Then we have a derivation
+      \[
+        \inferrule*
+        {
+          \inferrule*
+          {
+          }
+          {
+            \Gamma,s \ts \lambda x.M \converges \lambda x.M,s
+          }
+          \\
+          \Gamma,s\ts M[N/x] \converges c,s'
+        }
+        {
+          \Gamma,s\ts (\lambda x.M)N \converges c,s'
+        }\,.
+        \]
+    \item We have a derivation
+      \[
+        \inferrule*
+        {
+          \inferrule*
+          {
+          }
+          {
+            \Gamma,s\ts x\converges x,s
+          }
+          \\
+          \inferrule*
+          {
+          }
+          {
+            \Gamma,s\ts n\converges n,s
+          }
+        }
+        {
+          \Gamma,s\ts x\gets n\converges \skipp,(s\vert x\mapsto n)
+        }\,.
+        \]
+    \item We have a derivation
+      \[
+        \inferrule*
+        {
+          \inferrule*
+          {
+          }
+          {
+            \Gamma,s\ts x \converges x,s'
+          }
+        }
+        {
+          \Gamma,s\ts \oc x\converges s(x),s
+        }\,.
+        \]
+    \item Suppose that $\Gamma,x,(s\vert x\mapsto 0) \ts M\converges c,s'$.  
+      Then we have a derivation
+      \[
+        \inferrule*
+        {
+          \Gamma,x,(s\vert x\mapsto 0) \ts M \converges c,s'
+        }
+        {
+          \Gamma,s\ts \neww\lambda x.M \converges c,s'\vert_\Gamma
+        }\,,
+        \]
+      since $s'=(s'\vert_\Gamma\vert x\mapsto s'(x))$.\qedhere
+  \end{itemize}
+\end{proof}
+
+We have proved:
+
+\begin{proposition}
+  Suppose that we have a sequence
+  \[
+    \Gamma_1,s^{(1)},M_1\opto\cdots\opto\Gamma_n,s^{(n)},M_n\,,
+    \]
+  where $M_n$ is a canonical form.  
+  Then $\Gamma_1,s^{(1)} \ts M_1\converges M_n,s^{(n)}\vert_{\Gamma_1}$.  
+  \label{PropSmallToBig}
 \end{proposition}
 \begin{proof}
-  First, suppose that we have some sequence $\Gamma,s\ts M\opto\cdots\opto \Gamma'',s'',c$, where $s''\vert_\Gamma=\s'$.  
-  We construct a derivation of $\Gamma,s\ts M\converges c,s'$ by induction on the length of this sequence.
-
-  If the sequence has length $0$, then we can use the rule for the canonical form; i.e.
+  Induction on $n$.  
+  The inductive step is Lemma \ref{LemSmallToBig}, while the base case ($n=1$) is given by the derivation
   \[
-    \inferrule*{ }{\Gamma,s\ts c\converges c,\skipp}\,.
+    \inferrule*{ }
+    {\Gamma,s\ts c\converges c,s}\,.\qedhere
     \]
-  Otherwise, suppose that the sequence starts $\Gamma,s\ts M\converges \Gamma_1,s^{(1)}\ts M_1$, and that we already have a derivation of
-  \[
-    \Gamma_1,s^{(1)} \ts M_1 \opto c,s''\vert_{\Gamma_1}\,.
-    \]
-  We split into cases based on the rule used for $\Gamma,s\ts M\converges \Gamma_1,s^{(1)}$.
+\end{proof}
 
+We can also prove the converse.
+
+\begin{proposition}
+  Suppose that $\Gamma,s\ts M\converges c,s'$.  
+  Then there are sequences $\Gamma=\Gamma_1,\cdots,\Gamma_n$, $s=s^{(1)},\cdots,s^{(n)}$, $M=M_1,\cdots,M_n=c$ such that
+  \[
+    \Gamma_1,s^{(1)}\ts M_1 \opto \cdots \opto \Gamma_n,s^{(n)}\ts M_n\,,
+    \]
+  and $s^{(n)}\vert_{\Gamma}=s'$.
+  \label{PropBigToSmall}
+\end{proposition}
+\begin{proof}
+  Induction on the derivation of $\Gamma,s\ts M\converges c,s'$.  
+  Since most of the cases are similar, we cover a selection for illustration.
+
+  \begin{itemize}
+    \item Suppose that the last step in the derivation is
+      \[
+        \inferrule*{ }
+        {\Gamma,s\ts c\converges c,s}\,.
+        \]
+      Then we have the one-element sequence $\Gamma,s\ts c$.  
+    \item Suppose that the last step in the derivation is
+      \[
+        \inferrule*
+        {
+          \Gamma,s\ts M\converges \lambda x.M',s' \\ \Gamma,s' \ts M'[N/x]\converges c,s''
+        }
+        {
+          \Gamma,s \ts MN\converges c,s''
+        }\,.
+        \]
+      Then, by the inductive hypothesis, we have small-step derivations
+      \begin{mathpar}
+        \Gamma,s \ts M \opto \cdots \opto \Gamma',t',\lambda x.M'
+        \and
+        \Gamma,s' \ts M'[N/x]\opto \cdots \opto \Gamma'',t'',c\,,
+      \end{mathpar}
+      where $t'\vert_\Gamma=s'$ and $t''\vert_\Gamma=s''$.
+
+      If we apply the evaluation context $-N$ pointwise to the first small-step derivation, then we have another valid small-step derivation.  
+      Then we can join the two together to get the derivation
+      \begin{center}
+        \parbox{0.8\textwidth}{
+        \begin{mathpar}
+          \Gamma,s \ts MN \opto \cdots \opto \Gamma',t',(\lambda x.M')N \opto \Gamma',t',M'[N/x] \opto \cdots \opto \Gamma'\cup\Gamma'',t''\setminus t',c\,,
+        \end{mathpar}}
+      \end{center}
+      where $t''\setminus t'$ is the $\Gamma'\cup\Gamma''$-store that agrees with $t''$ on $\Gamma''$ and with $t'$ on $\Gamma'\setminus\Gamma''$.
+      Then $(t''\setminus t')\vert_{\Gamma}=s''$.
+    \item Suppose that the last step in the derivation is
+      \[
+        \inferrule*
+        {
+          \Gamma,s\ts E\converges n,s' \\ \Gamma,s'\ts V\converges x,s''
+        }
+        {
+          \Gamma,s \ts V \gets E \converges\skipp,(s''\vert x\mapsto n)
+        }\,.
+        \]
+      By the inductive hypothesis, we have small-step derivations
+      \begin{mathpar}
+        \Gamma,s\ts E \opto \cdots \opto \Gamma',t',n
+        \and
+        \Gamma,s'\ts V \opto \cdots \opto \Gamma'',t'',x\,,
+      \end{mathpar}
+      where $t'\vert_{\Gamma}=s'$ and $t''\vert_{\Gamma}=s''$.
+
+      We may apply the evaluation context $V\gets-$ pointwise to the first derivation and the evaluation context $-\gets n$ pointwise to the second, and then string the two together to get
+      \begin{center}
+        \parbox{0.8\textwidth}{
+        \begin{mathpar}
+          \Gamma,s\ts V\gets E \opto \cdots \opto \Gamma',t',V\gets n \opto \cdots \opto \Gamma'\cup\Gamma'',t''\setminus t',x\gets n \opto \Gamma'\cup\Gamma'',(t''\setminus t'\vert x\mapsto n)\,,
+        \end{mathpar}}
+      \end{center}
+      where we have $(t''\setminus t'\vert x\mapsto n)\vert_\Gamma=(s''\vert x\mapsto n)$.
+    \item Suppose that the last step in the derivation is
+      \[
+        \inferrule*
+        {
+          \Gamma,s\ts V \converges x,s'
+        }
+        {
+          \Gamma,s\ts \oc V \converges s'(x),s'
+        }\,.
+        \]
+      Then, by the induction hypothesis, we have a small-step derivation
+      \[
+        \Gamma,s\ts V \opto \cdots \opto \Gamma',t'\ts x\,,
+        \]
+      where $t'\vert_\Gamma=s'$.  
+      Then we may compose this derivation pointwise with the evaluation context $\oc-$, and add an extra term on the end, to arrive at the derivation
+      \[
+        \Gamma,s\ts \oc V \opto \cdots \opto \Gamma',t'\ts \oc x \opto \Gamma',t'\ts t'(x)\,,
+        \]
+      where $t'(x)=s'(x)$.
+    \item Lastly, suppose that the last step in the derivation is
+      \[
+        \inferrule*
+        {
+          \Gamma,x,(s\vert x\mapsto 0) \ts M \converges c,(s'\vert x\mapsto n)
+        }
+        {
+          \Gamma,s \ts \neww \lambda x.M \converges c,s'
+        }\,.
+        \]
+      By the induction hypothesis, we have a small-step derivation
+      \[
+        \Gamma,x,(s\vert x\mapsto 0) \ts M \opto \cdots \opto \Gamma',x,(t'\vert x\mapsto n),c\,,
+        \]
+      where $t'\vert_\Gamma=s'$.  
+      Then we may add a term at the beginning to give us
+      \[
+        \Gamma,s \ts \neww \lambda x.M \opto \Gamma,x,(s\vert x\mapsto 0) \ts M \opto \cdots \opto \Gamma',x,(t'\vert x\mapsto n),c\,,
+        \]
+      where $(t'\vert x\mapsto n) \vert_\Gamma=s'$.\qedhere
+  \end{itemize}
 \end{proof}
 
 \subsection{Soundness}
+
+To prove soundness of our model, we shall use the small-step formulation.  
+Our reason for this is that the most difficult part of the denotational semantics we are using is the part to do with state.  
+In the big-step formulation, nearly every rule involves the state changing in some way, whereas in the small-step formulation, only the rules that specifically pertain to the stateful components of the language do.
+
+\begin{lemma}
+  Suppose that $\Gamma,s\ts M \opto \Gamma',s'\ts N$.
+\end{lemma}
 
 \bibliographystyle{alpha2}
 \bibliography{../common/phd_bibliography}
