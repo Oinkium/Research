@@ -1,22 +1,22 @@
-\BOOKMARK [1][-]{section.1}{A Fully Abstract Game Semantics for Idealized Algol}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Idealized Algol}{section.1}% 2
-\BOOKMARK [2][-]{subsection.1.2}{Games and Strategies}{section.1}% 3
-\BOOKMARK [2][-]{subsection.1.3}{Connectives on Games}{section.1}% 4
-\BOOKMARK [2][-]{subsection.1.4}{Composition of strategies}{section.1}% 5
-\BOOKMARK [2][-]{subsection.1.5}{Associativity of composition}{section.1}% 6
-\BOOKMARK [2][-]{subsection.1.6}{Copycat strategies}{section.1}% 7
-\BOOKMARK [2][-]{subsection.1.7}{G as a Symmetric Monoidal Category}{section.1}% 8
-\BOOKMARK [2][-]{subsection.1.8}{G as a Symmetric Monoidal Closed Category}{section.1}% 9
-\BOOKMARK [2][-]{subsection.1.9}{Products in G}{section.1}% 10
-\BOOKMARK [2][-]{subsection.1.10}{Sequoidal categories}{section.1}% 11
-\BOOKMARK [2][-]{subsection.1.11}{Tree Embeddings and Zigzag Strategies}{section.1}% 12
-\BOOKMARK [2][-]{subsection.1.12}{Sequoidally decomposable categories}{section.1}% 13
-\BOOKMARK [2][-]{subsection.1.13}{A Formula for the Exponential}{section.1}% 14
-\BOOKMARK [2][-]{subsection.1.14}{The Exponential as a Final Coalgebra}{section.1}% 15
-\BOOKMARK [2][-]{subsection.1.15}{Denotational Semantics of Idealized Algol}{section.1}% 16
-\BOOKMARK [2][-]{subsection.1.16}{Order-Enrichment of G}{section.1}% 17
-\BOOKMARK [2][-]{subsection.1.17}{The Strategy cell}{section.1}% 18
-\BOOKMARK [2][-]{subsection.1.18}{Big-Step Operational Semantics of Idealized Algol}{section.1}% 19
-\BOOKMARK [2][-]{subsection.1.19}{Small-Step Operational Semantics of Idealized Algol}{section.1}% 20
-\BOOKMARK [2][-]{subsection.1.20}{Soundness}{section.1}% 21
-\BOOKMARK [1][-]{section*.4}{References}{}% 22
+\BOOKMARK [0][-]{chapter.1}{A Fully Abstract Game Semantics for Idealized Algol}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Idealized Algol}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Games and Strategies}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Connectives on Games}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Composition of strategies}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{Associativity of composition}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.6}{Copycat strategies}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.7}{G as a Symmetric Monoidal Category}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.8}{G as a Symmetric Monoidal Closed Category}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.9}{Products in G}{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.10}{Sequoidal categories}{chapter.1}% 11
+\BOOKMARK [1][-]{section.1.11}{Tree Embeddings and Zigzag Strategies}{chapter.1}% 12
+\BOOKMARK [1][-]{section.1.12}{Sequoidally decomposable categories}{chapter.1}% 13
+\BOOKMARK [1][-]{section.1.13}{A Formula for the Exponential}{chapter.1}% 14
+\BOOKMARK [1][-]{section.1.14}{The Exponential as a Final Coalgebra}{chapter.1}% 15
+\BOOKMARK [1][-]{section.1.15}{Denotational Semantics of Idealized Algol}{chapter.1}% 16
+\BOOKMARK [1][-]{section.1.16}{Order-Enrichment of G}{chapter.1}% 17
+\BOOKMARK [1][-]{section.1.17}{The Strategy cell}{chapter.1}% 18
+\BOOKMARK [1][-]{section.1.18}{Big-Step Operational Semantics}{chapter.1}% 19
+\BOOKMARK [1][-]{section.1.19}{Small-Step Operational Semantics}{chapter.1}% 20
+\BOOKMARK [1][-]{section.1.20}{Soundness}{chapter.1}% 21
+\BOOKMARK [0][-]{chapter*.7}{Bibliography}{}% 22

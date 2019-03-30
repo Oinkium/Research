@@ -1,23 +1,24 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  28 MAR 2019 21:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  30 MAR 2019 16:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **games
 (./games.tex
 LaTeX2e <2018-12-01>
-(/usr/share/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
-(/usr/share/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+(/usr/share/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2018/09/03 v1.4i Standard LaTeX document class
+(/usr/share/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 )
 \c@part=\count80
-\c@section=\count81
-\c@subsection=\count82
-\c@subsubsection=\count83
-\c@paragraph=\count84
-\c@subparagraph=\count85
-\c@figure=\count86
-\c@table=\count87
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
@@ -80,7 +81,7 @@ Package etexcmds Info: Could not find \expanded.
 )))
 (/usr/share/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count88
+\etb@tempcnta=\count89
 ))
 (/usr/share/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2016/04/27 v1.618033 publication quality tables
@@ -94,12 +95,12 @@ Package: booktabs 2016/04/27 v1.618033 publication quality tables
 \cmidrulesep=\dimen112
 \cmidrulekern=\dimen113
 \defaultaddspace=\dimen114
-\@cmidla=\count89
-\@cmidlb=\count90
+\@cmidla=\count90
+\@cmidlb=\count91
 \@aboverulesep=\dimen115
 \@belowrulesep=\dimen116
-\@thisruleclass=\count91
-\@lastruleclass=\count92
+\@thisruleclass=\count92
+\@lastruleclass=\count93
 \@thisrulewidth=\dimen117
 )
 (/usr/share/texmf-dist/tex/latex/tools/array.sty
@@ -143,26 +144,26 @@ Package caption3 Info: TeX engine: e-TeX on input line 64.
 \caption@parindent=\dimen125
 \caption@hangindent=\dimen126
 )
-\c@caption@flags=\count93
-\c@ContinuedFloat=\count94
+\c@caption@flags=\count94
+\c@ContinuedFloat=\count95
 )
-\c@subfigure=\count95
-\c@subtable=\count96
+\c@subfigure=\count96
+\c@subtable=\count97
 )
 (/usr/share/texmf-dist/tex/latex/mathtools/mathtools.sty
 Package: mathtools 2018/01/08 v1.21 mathematical typesetting tools
 
 (/usr/share/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count97
-\calc@Bcount=\count98
+\calc@Acount=\count98
+\calc@Bcount=\count99
 \calc@Adimen=\dimen127
 \calc@Bdimen=\dimen128
 \calc@Askip=\skip49
 \calc@Bskip=\skip50
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count99
+\calc@Ccount=\count100
 \calc@Cskip=\skip51
 )
 (/usr/share/texmf-dist/tex/latex/mathtools/mhsetup.sty
@@ -188,13 +189,13 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 (/usr/share/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count100
+\inf@bad=\count101
 LaTeX Info: Redefining \frac on input line 223.
-\uproot@=\count101
-\leftroot@=\count102
+\uproot@=\count102
+\leftroot@=\count103
 LaTeX Info: Redefining \overline on input line 385.
-\classnum@=\count103
-\DOTSCASE@=\count104
+\classnum@=\count104
+\DOTSCASE@=\count105
 LaTeX Info: Redefining \ldots on input line 482.
 LaTeX Info: Redefining \dots on input line 485.
 LaTeX Info: Redefining \cdots on input line 606.
@@ -203,15 +204,15 @@ LaTeX Info: Redefining \cdots on input line 606.
 \big@size=\dimen131
 LaTeX Font Info:    Redeclaring font encoding OML on input line 729.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
-\macc@depth=\count105
-\c@MaxMatrixCols=\count106
+\macc@depth=\count106
+\c@MaxMatrixCols=\count107
 \dotsspace@=\muskip10
-\c@parentequation=\count107
-\dspbrk@lvl=\count108
+\c@parentequation=\count108
+\dspbrk@lvl=\count109
 \tag@help=\toks22
-\row@=\count109
-\column@=\count110
-\maxfields@=\count111
+\row@=\count110
+\column@=\count111
+\maxfields@=\count112
 \andhelp@=\toks23
 \eqnshift@=\dimen132
 \alignsep@=\dimen133
@@ -230,7 +231,7 @@ LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
-\g_MT_multlinerow_int=\count112
+\g_MT_multlinerow_int=\count113
 \l_MT_multwidth_dim=\dimen138
 \origjot=\skip55
 \l_MT_shortvdotswithinadjustabove_dim=\dimen139
@@ -288,15 +289,15 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen145
-\Hy@linkcounter=\count113
-\Hy@pagecounter=\count114
+\Hy@linkcounter=\count114
+\Hy@pagecounter=\count115
 
 (/usr/share/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2018/11/30 v6.88e Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count115
+\Hy@SavedSpaceFactor=\count116
 
 (/usr/share/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -308,7 +309,7 @@ Package hyperref Info: Plain pages OFF on input line 4534.
 Package hyperref Info: Backreferencing OFF on input line 4539.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4772.
-\c@Hy@tempcnt=\count116
+\c@Hy@tempcnt=\count117
 
 (/usr/share/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
@@ -316,7 +317,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5125.
 \XeTeXLinkMargin=\dimen146
-\Fld@menulength=\count117
+\Fld@menulength=\count118
 \Field@Width=\dimen147
 \Fld@charsize=\dimen148
 Package hyperref Info: Hyper figures OFF on input line 6380.
@@ -328,16 +329,16 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6405.
 Package hyperref Info: PDF/A mode OFF on input line 6410.
 LaTeX Info: Redefining \ref on input line 6450.
 LaTeX Info: Redefining \pageref on input line 6454.
-\Hy@abspage=\count118
-\c@Item=\count119
-\c@Hfootnote=\count120
+\Hy@abspage=\count119
+\c@Item=\count120
+\c@Hfootnote=\count121
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2018/11/30 v6.88e Hyperref driver for pdfTeX
-\Fld@listcount=\count121
-\c@bookmark@seq@number=\count122
+\Fld@listcount=\count122
+\c@bookmark@seq@number=\count123
 
 (/usr/share/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
@@ -354,9 +355,9 @@ Package: IEEEtrantools 2015/08/26 V1.5 by Michael Shell
 \@IEEEtrantmpdimenA=\dimen149
 \@IEEEtrantmpdimenB=\dimen150
 \@IEEEtrantmpdimenC=\dimen151
-\@IEEEtrantmpcountA=\count123
-\@IEEEtrantmpcountB=\count124
-\@IEEEtrantmpcountC=\count125
+\@IEEEtrantmpcountA=\count124
+\@IEEEtrantmpcountB=\count125
+\@IEEEtrantmpcountC=\count126
 \@IEEEtrantmptoksA=\toks26
 \IEEEnormaljot=\dimen152
 \IEEEquantizedlength=\dimen153
@@ -371,10 +372,10 @@ Package: IEEEtrantools 2015/08/26 V1.5 by Michael Shell
 \IEEEiednormlabelsep=\dimen162
 \IEEEiedmathlabelsep=\dimen163
 \IEEEiedtopsep=\skip57
-\c@IEEEsubequation=\count126
-\@IEEEeqnnumcols=\count127
-\@IEEEeqncolcnt=\count128
-\@IEEEsubeqnnumrollback=\count129
+\c@IEEEsubequation=\count127
+\@IEEEeqnnumcols=\count128
+\@IEEEeqncolcnt=\count129
+\@IEEEsubeqnnumrollback=\count130
 \IEEEPARstartletwidth=\dimen164
 ) (/usr/share/texmf-dist/tex/latex/pbox/pbox.sty
 Package: pbox 2011/12/07 v1.2 Dynamic parboxes
@@ -387,7 +388,7 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 (/usr/share/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2019/01/01 v2.4 Span multiple rows of a table
 \multirow@colwidth=\skip59
-\multirow@cntb=\count130
+\multirow@cntb=\count131
 \multirow@dima=\skip60
 \bigstrutjot=\dimen165
 )
@@ -400,18 +401,18 @@ File: lettrine.sty 2018-08-28 v2.21 (Daniel Flipo)
 (/usr/share/texmf-dist/tex/generic/minifp/minifp.sty
 Package: minifp 2013/12/30 v0.96. Macros for real number operations and a stack
 -based programing language.
-\MFP@loopctr=\count131
+\MFP@loopctr=\count132
 )
-\c@DefaultLines=\count132
-\c@DefaultDepth=\count133
+\c@DefaultLines=\count133
+\c@DefaultDepth=\count134
 \DefaultFindent=\dimen166
 \DefaultNindent=\dimen167
 \DefaultSlope=\dimen168
 \DiscardVskip=\dimen169
 \L@lbox=\box31
 \L@tbox=\box32
-\c@L@lines=\count134
-\c@L@depth=\count135
+\c@L@lines=\count135
+\c@L@depth=\count136
 \L@Pindent=\dimen170
 \L@Findent=\dimen171
 \L@Nindent=\dimen172
@@ -441,23 +442,23 @@ erence Rules
 \mpr@right=\box35
 )
 (/usr/share/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count136
+\lst@mode=\count137
 \lst@gtempboxa=\box36
 \lst@token=\toks29
-\lst@length=\count137
+\lst@length=\count138
 \lst@currlwidth=\dimen185
-\lst@column=\count138
-\lst@pos=\count139
+\lst@column=\count139
+\lst@pos=\count140
 \lst@lostspace=\dimen186
 \lst@width=\dimen187
-\lst@newlines=\count140
-\lst@lineno=\count141
+\lst@newlines=\count141
+\lst@lineno=\count142
 \lst@maxwidth=\dimen188
 
 (/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
-\c@lstnumber=\count142
-\lst@skipnumbers=\count143
+\c@lstnumber=\count143
+\lst@skipnumbers=\count144
 \lst@framebox=\box37
 )
 (/usr/share/texmf-dist/tex/latex/listings/listings.cfg
@@ -467,51 +468,54 @@ Package: listings 2018/09/02 1.7 (Carsten Heinz)
 
 (/usr/share/texmf-dist/tex/latex/tocbibind/tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
-Package tocbibind Info: The document has section divisions on input line 50.
+Package tocbibind Info: The document has chapter divisions on input line 50.
 
 
-Package tocbibind Note: Using section or other style headings.
+Package tocbibind Note: Using chapter style headings, unless overridden.
 
 ) (/usr/share/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
-Package tocloft Info: The document has section divisions on input line 51.
+Package tocloft Info: The document has chapter divisions on input line 51.
 \cftparskip=\skip62
 \cftbeforetoctitleskip=\skip63
 \cftaftertoctitleskip=\skip64
 \cftbeforepartskip=\skip65
 \cftpartnumwidth=\skip66
 \cftpartindent=\skip67
-\cftbeforesecskip=\skip68
-\cftsecindent=\skip69
-\cftsecnumwidth=\skip70
-\cftbeforesubsecskip=\skip71
-\cftsubsecindent=\skip72
-\cftsubsecnumwidth=\skip73
-\cftbeforesubsubsecskip=\skip74
-\cftsubsubsecindent=\skip75
-\cftsubsubsecnumwidth=\skip76
-\cftbeforeparaskip=\skip77
-\cftparaindent=\skip78
-\cftparanumwidth=\skip79
-\cftbeforesubparaskip=\skip80
-\cftsubparaindent=\skip81
-\cftsubparanumwidth=\skip82
-\cftbeforeloftitleskip=\skip83
-\cftafterloftitleskip=\skip84
-\cftbeforefigskip=\skip85
-\cftfigindent=\skip86
-\cftfignumwidth=\skip87
-\cftbeforelottitleskip=\skip88
-\cftafterlottitleskip=\skip89
-\cftbeforetabskip=\skip90
-\cfttabindent=\skip91
-\cfttabnumwidth=\skip92
-\cftbeforesubfigskip=\skip93
-\cftsubfigindent=\skip94
-\cftsubfignumwidth=\skip95
-\cftbeforesubtabskip=\skip96
-\cftsubtabindent=\skip97
-\cftsubtabnumwidth=\skip98
+\cftbeforechapskip=\skip68
+\cftchapindent=\skip69
+\cftchapnumwidth=\skip70
+\cftbeforesecskip=\skip71
+\cftsecindent=\skip72
+\cftsecnumwidth=\skip73
+\cftbeforesubsecskip=\skip74
+\cftsubsecindent=\skip75
+\cftsubsecnumwidth=\skip76
+\cftbeforesubsubsecskip=\skip77
+\cftsubsubsecindent=\skip78
+\cftsubsubsecnumwidth=\skip79
+\cftbeforeparaskip=\skip80
+\cftparaindent=\skip81
+\cftparanumwidth=\skip82
+\cftbeforesubparaskip=\skip83
+\cftsubparaindent=\skip84
+\cftsubparanumwidth=\skip85
+\cftbeforeloftitleskip=\skip86
+\cftafterloftitleskip=\skip87
+\cftbeforefigskip=\skip88
+\cftfigindent=\skip89
+\cftfignumwidth=\skip90
+\cftbeforelottitleskip=\skip91
+\cftafterlottitleskip=\skip92
+\cftbeforetabskip=\skip93
+\cfttabindent=\skip94
+\cfttabnumwidth=\skip95
+\cftbeforesubfigskip=\skip96
+\cftsubfigindent=\skip97
+\cftsubfignumwidth=\skip98
+\cftbeforesubtabskip=\skip99
+\cftsubtabindent=\skip100
+\cftsubtabnumwidth=\skip101
 
 
 Package tocloft Warning: \@starttoc has already been redefined; tocloft bailing
@@ -595,14 +599,14 @@ Package: pgfsys 2019/02/02 v3.1.1 (3.1.1)
 \pgf@yc=\dimen198
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count144
-\c@pgf@countb=\count145
-\c@pgf@countc=\count146
-\c@pgf@countd=\count147
+\c@pgf@counta=\count145
+\c@pgf@countb=\count146
+\c@pgf@countc=\count147
+\c@pgf@countd=\count148
 \t@pgf@toka=\toks35
 \t@pgf@tokb=\toks36
 \t@pgf@tokc=\toks37
-\pgf@sys@id@count=\count148
+\pgf@sys@id@count=\count149
 
 (/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2019/02/02 v3.1.1 (3.1.1)
@@ -617,8 +621,8 @@ File: pgfsys-common-pdf.def 2019/02/02 v3.1.1 (3.1.1)
 )))
 (/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2019/02/02 v3.1.1 (3.1.1)
-\pgfsyssoftpath@smallbuffer@items=\count149
-\pgfsyssoftpath@bigbuffer@items=\count150
+\pgfsyssoftpath@smallbuffer@items=\count150
+\pgfsyssoftpath@bigbuffer@items=\count151
 )
 (/usr/share/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2019/02/02 v3.1.1 (3.1.1)
@@ -648,7 +652,7 @@ Package: pgfcore 2019/02/02 v3.1.1 (3.1.1)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen199
-\pgfmath@count=\count151
+\pgfmath@count=\count152
 \pgfmath@box=\box39
 \pgfmath@toks=\toks38
 \pgfmath@stack@operand=\toks39
@@ -665,7 +669,7 @@ x) (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex)
 (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics
 .code.tex))) (/usr/share/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count152
+\c@pgfmathroundto@lastzeros=\count153
 )) (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2019/02/02 v3.1.1 (3.1.1)
 \pgf@picminx=\dimen256
@@ -697,7 +701,7 @@ File: pgfcorescopes.code.tex 2019/02/02 v3.1.1 (3.1.1)
 \pgfpic=\box40
 \pgf@hbox=\box41
 \pgf@layerbox@main=\box42
-\pgf@picture@serial@count=\count153
+\pgf@picture@serial@count=\count154
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2019/02/02 v3.1.1 (3.1.1)
@@ -725,7 +729,7 @@ File: pgfcorearrows.code.tex 2019/02/02 v3.1.1 (3.1.1)
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2019/02/02 v3.1.1 (3.1.1)
 \pgf@max=\dimen279
-\pgf@sys@shading@range@num=\count154
+\pgf@sys@shading@range@num=\count155
 )
 (/usr/share/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2019/02/02 v3.1.1 (3.1.1)
@@ -780,7 +784,7 @@ Package: tikz 2019/02/02 v3.1.1 (3.1.1)
 (/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.te
 x
 File: pgflibraryplothandlers.code.tex 2019/02/02 v3.1.1 (3.1.1)
-\pgf@plot@mark@count=\count155
+\pgf@plot@mark@count=\count156
 \pgfplotmarksize=\dimen284
 )
 \tikz@lastx=\dimen285
@@ -793,17 +797,17 @@ File: pgflibraryplothandlers.code.tex 2019/02/02 v3.1.1 (3.1.1)
 \tikz@figbox@bg=\box46
 \tikz@tempbox=\box47
 \tikz@tempbox@bg=\box48
-\tikztreelevel=\count156
-\tikznumberofchildren=\count157
-\tikznumberofcurrentchild=\count158
-\tikz@fig@count=\count159
+\tikztreelevel=\count157
+\tikznumberofchildren=\count158
+\tikznumberofcurrentchild=\count159
+\tikz@fig@count=\count160
  (/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2019/02/02 v3.1.1 (3.1.1)
-\pgfmatrixcurrentrow=\count160
-\pgfmatrixcurrentcolumn=\count161
-\pgf@matrix@numberofcolumns=\count162
+\pgfmatrixcurrentrow=\count161
+\pgfmatrixcurrentcolumn=\count162
+\pgf@matrix@numberofcolumns=\count163
 )
-\tikz@expandcount=\count163
+\tikz@expandcount=\count164
 
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 topaths.code.tex
@@ -846,7 +850,7 @@ decorations.code.tex
 \pgfdecoratedinputsegmentcompleteddistance=\dimen297
 \pgfdecoratedinputsegmentremainingdistance=\dimen298
 \pgf@decorate@distancetomove=\dimen299
-\pgf@decorate@repeatstate=\count164
+\pgf@decorate@repeatstate=\count165
 \pgfdecorationsegmentamplitude=\dimen300
 \pgfdecorationsegmentlength=\dimen301
 )
@@ -864,18 +868,18 @@ Package: amsthm 2017/10/31 v2.20.4
 \thm@headfont=\toks45
 \thm@notefont=\toks46
 \thm@headpunct=\toks47
-\thm@preskip=\skip99
-\thm@postskip=\skip100
-\thm@headsep=\skip101
+\thm@preskip=\skip102
+\thm@postskip=\skip103
+\thm@headsep=\skip104
 \dth@everypar=\toks48
 )
-\c@theorem=\count165
+\c@theorem=\count166
 
 (/usr/share/texmf-dist/tex/latex/answers/answers.sty
 Package: answers 2014/08/24 v2.16 Production of solution sheets in LaTeX2e
 )
-\c@exercise=\count166
-\c@answerthm=\count167
+\c@exercise=\count167
+\c@answerthm=\count168
 
 WARNING: environment answerthm already in use
 (/usr/share/texmf-dist/tex/latex/xifthen/xifthen.sty
@@ -888,7 +892,7 @@ Package: ifmtarg 2018/04/16 v1.2b check for an empty argument
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
 \overlongequation=\box50
-\arrow=\skip102
+\arrow=\skip105
 LaTeX Font Info:    Try loading font information for U+msa on input line 369.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -924,7 +928,7 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
-\c@abspage=\count168
+\c@abspage=\count169
 \gnBoxA=\box51
 \gnCornerHgt=\dimen302
 \gnArgHgt=\dimen303
@@ -955,16 +959,16 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
  (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count169
+\scratchcounter=\count170
 \scratchdimen=\dimen304
 \scratchbox=\box52
-\nofMPsegments=\count170
-\nofMParguments=\count171
+\nofMPsegments=\count171
+\nofMParguments=\count172
 \everyMPshowfont=\toks49
-\MPscratchCnt=\count172
+\MPscratchCnt=\count173
 \MPscratchDim=\dimen305
-\MPnumerator=\count173
-\makeMPintoPDFobject=\count174
+\MPnumerator=\count174
+\makeMPintoPDFobject=\count175
 \everyMPtoPDFconversion=\toks50
 ) (/usr/share/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -996,7 +1000,7 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count175
+\c@section@level=\count176
 )
 LaTeX Info: Redefining \ref on input line 8.
 LaTeX Info: Redefining \pageref on input line 8.
@@ -1006,120 +1010,133 @@ LaTeX Info: Redefining \nameref on input line 8.
 \@outlinefile=\write4
 \openout4 = `games.out'.
 
-\c@lstlisting=\count176
+\c@lstlisting=\count177
  ABD: EveryShipout initializing macros
+Chapter 1.
 LaTeX Font Info:    Try loading font information for U+bbm on input line 18.
-
 (/usr/share/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2018/09/02 1.7 listings language file
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 27.
 
 (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 27.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5]
-LaTeX Font Info:    Try loading font information for U+euf on input line 271.
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7]
+LaTeX Font Info:    Try loading font information for U+euf on input line 273.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [6]
-LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 297.
- [7] [8] [9] [10]
-[11] [12] [13] [14]
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 299.
+ [8] [9] [10] [11] [12]
+[13] [14] [15] [16] [17]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 692.
+(hyperref)                removing `math shift' on input line 694.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 692.
+(hyperref)                removing `math shift' on input line 694.
 
-[15] [16] [17] [18]
+[18] [19] [20] [21]
 
 Package amsthm Warning: The \qedhere command may not work correctly here on inp
-ut line 889.
+ut line 891.
+
+[22]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 899.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 897.
+(hyperref)                removing `math shift' on input line 899.
+
+[23] [24]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 994.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 897.
+(hyperref)                removing `math shift' on input line 994.
 
-[19] [20]
+[25] [26] [27] [28] [29] [30]
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 992.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 992.
-
-[21] [22] [23] [24] [25]
-
-LaTeX Warning: Reference `SecParametricMonads' on page 26 undefined on input li
-ne 1255.
+LaTeX Warning: Reference `SecParametricMonads' on page 31 undefined on input li
+ne 1257.
 
 
-LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 26 undefined on in
-put line 1255.
-
-
-LaTeX Warning: Reference `SecParametricMonads' on page 26 undefined on input li
-ne 1256.
-
-
-LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 26 undefined on in
+LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 31 undefined on in
 put line 1257.
 
-[26] [27] [28] [29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40]
-[41] [42]
+
+LaTeX Warning: Reference `SecParametricMonads' on page 31 undefined on input li
+ne 1258.
+
+
+LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 31 undefined on in
+put line 1259.
+
+[31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45]
+[46] [47] [48] [49] [50] [51]
 
 LaTeX Font Warning: Font shape `U/wasy/m/it' undefined
-(Font)              using `U/wasy/m/n' instead on input line 2105.
+(Font)              using `U/wasy/m/n' instead on input line 2131.
 
-[43] [44]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2218.
-
+[52] [53]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2218.
-
-[45] [46]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2276.
+(hyperref)                removing `math shift' on input line 2244.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2276.
+(hyperref)                removing `math shift' on input line 2244.
 
-[47]
-Overfull \hbox (11.72081pt too wide) in paragraph at lines 2318--2318
-[]\OT1/cmr/bx/n/12 Big-Step Op-er-a-tional Se-man-tics of Ide-al-ized Al-gol 
- []
+[54] [55]
 
-[48] [49] [50] [51] [52] [53] (./games.bbl [54]) [55]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2703.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2703.
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 2302.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 2302.
+
+[56] [57]
+
+Package amsthm Warning: The \qedhere command may not work correctly here on inp
+ut line 2370.
+
+[58]
+
+LaTeX Warning: Float too large for page by 26.53055pt on input line 2441.
+
+[59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69]
+
+Package amsthm Warning: The \qedhere command may not work correctly here on inp
+ut line 3000.
+
+[70] [71] (./games.bbl [72] [73
+
+]) [74]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3037.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3037.
  (./games.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2703.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2703.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3037.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3037.
 
 Package rerunfilecheck Info: File `games.out' has not changed.
-(rerunfilecheck)             Checksum: 6A7DB095412C37F80EEC553DDF5150E3;1695.
+(rerunfilecheck)             Checksum: AED40466A744B6855A71E888CA146F35;1599.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -1127,55 +1144,59 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 25090 strings out of 492616
- 467751 string characters out of 6135178
- 714292 words of memory out of 5000000
- 28268 multiletter control sequences out of 15000+600000
- 25833 words of font info for 109 fonts, out of 8000000 for 9000
+ 25790 strings out of 492616
+ 484933 string characters out of 6135178
+ 734566 words of memory out of 5000000
+ 28938 multiletter control sequences out of 15000+600000
+ 29727 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,21n,82p,815b,1349s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/john/.texlive/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk></usr/
+ 57i,21n,82p,815b,1415s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/john/.texlive/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/
 share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/cmextra/cmex7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmextra
-/cmex9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
-sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/sh
-are/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></u
-sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmtt9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm1
+/public/amsfonts/cm/cmbx8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex
+7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
+></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pf
+b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmss12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss
+8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
+are/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm1
 0.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></u
 sr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam5.pfb></usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/share/texmf-dist/
 fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/symbols/msbm5.pfb></usr/share/texmf-dist/fonts/type1/public/
-amsfonts/symbols/msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/s
-tmary10.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary5.pfb></us
-r/share/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb></usr/share/texmf-di
-st/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on games.pdf (55 pages, 585106 bytes).
+e1/public/amsfonts/symbols/msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/
+stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary
+5.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary6.pfb></usr/shar
+e/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb></usr/share/texmf-dist/fon
+ts/type1/public/stmaryrd/stmary8.pfb></usr/share/texmf-dist/fonts/type1/public/
+wasy2-ps/wasy10.pfb>
+Output written on games.pdf (74 pages, 634716 bytes).
 PDF statistics:
- 783 PDF objects out of 1000 (max. 8388607)
- 675 compressed objects within 7 object streams
- 196 named destinations out of 1000 (max. 500000)
+ 894 PDF objects out of 1000 (max. 8388607)
+ 765 compressed objects within 8 object streams
+ 224 named destinations out of 1000 (max. 500000)
  189 words of extra memory for PDF output out of 10000 (max. 10000000)
 
