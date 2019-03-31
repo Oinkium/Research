@@ -2218,6 +2218,9 @@ In order to form the denotation of the next lot of terms, we need a new definiti
   So if $*sab\in\sigma_y$, then $*t'ab\in\sigma_y$ and therefore $tab\in(\sigma_x)$.
 \end{proof}
 
+The most important feature of strategies of the form $(\sigma_x)$ is the most obvious one: given $X$, and $y\in X$, we have a strategy $y$ for the game $X$ with maximal play $qx$.  
+Then $y;(\sigma_x) = \sigma_y$.
+
 Now we define morphisms
 \begin{itemize}
   \item $\seq_X = (\id_X) \from \bC \to (X \to X)$;
@@ -2444,11 +2447,11 @@ The definition of this relation is shown in Figure \ref{FigIaOpSem}.
 
 We also give a small-step operational semantics for Idealized Algol, which will sometimes be easier to work with.  
 
-This time, instead of defining a relation $\Gamma,s\ts M\converges c,s'$, we define a relation $\Gamma,s\ts M\opto \Gamma',s'\ts M'$, where
+This time, instead of defining a relation $\Gamma,s\ts M\converges c,s'$, we define a relation $\Gamma,s\ts M\opto \Gamma,\Delta,s'\ts M'$, where
 \begin{itemize}
-  \item $\Gamma,\Gamma'$ are $\Var$-contexts; 
-  \item $s$ is a $\Gamma$-store and $s'$ a $\Gamma'$-store;  and
-  \item $\Gamma\ts M$, $\Gamma'\ts M'$ are Idealized Algol terms-in-context.
+  \item $\Gamma,\Delta$ are disjoint $\Var$-contexts; 
+  \item $s$ is a $\Gamma$-store and $s'$ a $\Gamma,\Delta$-store;  and
+  \item $\Gamma\ts M$, $\Gamma,\Delta\ts M'$ are Idealized Algol terms-in-context.
 \end{itemize}
 
 As an auxiliary definition, we need the notion of an \emph{evaluation context} (see \cite{Felleisen}).
@@ -2460,11 +2463,11 @@ This is a single-holed context defined inductively by the following BNF formula,
 \end{mathpar}}
 \end{center}
 
-Next, we define a relation $\Gamma,s,M\oopto\Gamma',s',M'$ as in Figure \ref{FigIaSsOpSem}.
+Next, we define a relation $\Gamma,s,M\oopto\Gamma,\Delta,s',M'$ as in Figure \ref{FigIaSsOpSem}.
 
 We then define the relation $\opto$ as
 \[
-  \inferrule*{ \Gamma,s\ts M\oopto \Gamma',s'\ts M'}{\Gamma,s\ts \EE[M] \opto \EE[M']}
+  \inferrule*{ \Gamma,s\ts M\oopto \Gamma,\Delta,s'\ts M'}{\Gamma,s\ts \EE[M] \opto \Gamma,\Delta,s'\ts\EE[M']}
   \]
 for each evaluation context $\EE$.
 
@@ -2476,7 +2479,7 @@ for each evaluation context $\EE$.
     \and
     \Gamma,s\ts \suc n \oopto \Gamma,s\ts n+1
     \\
-    \Gamma,s \ts \pred n+1 \oopto \Gamma,s\ts n
+    \Gamma,s \ts \pred (n+1) \oopto \Gamma,s\ts n
     \and
     \Gamma,s\ts \pred 0 \oopto \Gamma,s\ts 0
     \\
@@ -2488,7 +2491,7 @@ for each evaluation context $\EE$.
     \and
     \Gamma,s\ts \IfO 0 \Then N \Else P \oopto \Gamma,s\ts N
     \and
-    \Gamma,s\ts \IfO n+1 \Then N \Else P \oopto \Gamma,s\ts P
+    \Gamma,s\ts \IfO (n+1) \Then N \Else P \oopto \Gamma,s\ts P
     \and
     \Gamma,s\ts x \gets n \oopto \Gamma,(s\vert x\mapsto n)\ts \skipp
     \and
@@ -2505,10 +2508,10 @@ for each evaluation context $\EE$.
 \end{figure}
 
 We need to prove that this is equivalent to our original semantics.
-Given a $\Gamma'$-store $s$, and a sub-context $\Gamma$ of $\Gamma'$, write $s\vert_{\Gamma}$ for the restriction of $s$ to $\Gamma$.
+Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction of $s$ to $\Gamma$.
 
 \begin{lemma}
-  Suppose that $\Gamma,s\ts M \oopto \Gamma',s'\ts M'$ and that $\Gamma',s'\ts \EE[M'] \converges c,s''$.  
+  Suppose that $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts M'$ and that $\Gamma,\Delta,s'\ts \EE[M'] \converges c,s''$.  
   Then $\Gamma,s\ts \EE[M]\converges c,s''\vert_\Gamma$.
   \label{LemSmallToBig}
 \end{lemma}
@@ -2517,20 +2520,20 @@ Given a $\Gamma'$-store $s$, and a sub-context $\Gamma$ of $\Gamma'$, write $s\v
   The base case, when $\EE$ is a hole, covers the interesting cases, so we shall leave it to last.
   The remaining cases are quite similar, so we will show the proof for one of them for illustration.
 
-  If $\EE=\EE'\,N$, for some term $N$, then we have $\Gamma',s'\ts \EE'[M']\,N\converges c,s''$.  
+  If $\EE=\EE'\,N$, for some term $N$, then we have $\Gamma,\Delta,s'\ts \EE'[M']\,N\converges c,s''$.  
   By inspection of the rules in Figure \ref{FigIaOpSem}, the derivation of this must end with a rule of the form
   \[
-    \inferrule*{\Gamma',s'\ts \EE'[M'] \converges \lambda x.M'',t \\ \Gamma',t \ts M''[N/x] \converges c,s''}
-    {\Gamma',s'\ts \EE'[M']\,N \converges c,s''}\,.
+    \inferrule*{\Gamma,\Delta,s'\ts \EE'[M'] \converges \lambda x.M'',t \\ \Gamma,\Delta,t \ts M''[N/x] \converges c,s''}
+    {\Gamma,\Delta,s'\ts \EE'[M']\,N \converges c,s''}\,.
     \]
-  Thus, $\Gamma',s'\ts \EE'[M']\converges \lambda x.M'',t$ must be provable for some $M'',t$.
+  Thus, $\Gamma,\Delta,s'\ts \EE'[M']\converges \lambda x.M'',t$ and $\Gamma,\Delta\ts M''[N/x]\converges c,s''$ must be provable for some $M'',t$.
   By the induction hypothesis, this means that $\Gamma,s\ts \EE'[M]\converges \lambda x.M'',t$ is provable.
   Then we have a derivation
   \[
-    \inferrule*{\Gamma',s\ts \EE'[M] \converges \lambda x.M'',t \\ \Gamma',t \ts M''[N/x] \converges c,s''}
-    {\Gamma',s\ts \EE'[M]\,N\converges c,s''\vert_{\Gamma'}}\,.
+    \inferrule*{\Gamma,\Delta,s\ts \EE'[M] \converges \lambda x.M'',t \\ \Gamma,\Delta,t \ts M''[N/x] \converges c,s''}
+    {\Gamma,\Delta,s\ts \EE'[M]\,N\converges c,s''\vert_{\Gamma,\Delta}}\,.
     \]
-  Then, because any extra variables in $\Gamma'$ are not mentioned in $\EE'[M]\,N$ or in $c$, we have
+  Then, because any variables in $\Delta$ are not mentioned in $\EE'[M]\,N$ or in $c$, we have
   \[
     \Gamma,s\ts \EE'[M]\,N\converges c,s''\vert_\Gamma\,.
     \]
@@ -2663,9 +2666,9 @@ We can also prove the converse.
         \]
       Then, by the inductive hypothesis, we have small-step derivations
       \begin{mathpar}
-        \Gamma,s \ts M \opto \cdots \opto \Gamma',t',\lambda x.M'
+        \Gamma,s \ts M \opto \cdots \opto \Gamma,\Delta,t',\lambda x.M'
         \and
-        \Gamma,s' \ts M'[N/x]\opto \cdots \opto \Gamma'',t'',c\,,
+        \Gamma,s' \ts M'[N/x]\opto \cdots \opto \Gamma,\Delta',t'',c\,,
       \end{mathpar}
       where $t'\vert_\Gamma=s'$ and $t''\vert_\Gamma=s''$.
 
@@ -2674,10 +2677,10 @@ We can also prove the converse.
       \begin{center}
         \parbox{0.8\textwidth}{
         \begin{mathpar}
-          \Gamma,s \ts MN \opto \cdots \opto \Gamma',t',(\lambda x.M')N \opto \Gamma',t',M'[N/x] \opto \cdots \opto \Gamma'\cup\Gamma'',t''\setminus t',c\,,
+          \Gamma,s \ts MN \opto \cdots \opto \Gamma,\Delta,t',(\lambda x.M')N \opto \Gamma,\Delta,t',M'[N/x] \opto \cdots \opto \Gamma,\Delta\cup\Delta',t''\setminus t',c\,,
         \end{mathpar}}
       \end{center}
-      where $t''\setminus t'$ is the $\Gamma'\cup\Gamma''$-store that agrees with $t''$ on $\Gamma''$ and with $t'$ on $\Gamma'\setminus\Gamma''$.
+      where $t''\setminus t'$ is the $\Gamma,\Delta\cup\Delta'$-store that agrees with $t''$ on $\Gamma,\Delta'$ and with $t'$ on $\Delta\setminus\Delta'$.
       Then $(t''\setminus t')\vert_{\Gamma}=s''$.
     \item Suppose that the last step in the derivation is
       \[
@@ -2691,9 +2694,9 @@ We can also prove the converse.
         \]
       By the inductive hypothesis, we have small-step derivations
       \begin{mathpar}
-        \Gamma,s\ts E \opto \cdots \opto \Gamma',t',n
+        \Gamma,s\ts E \opto \cdots \opto \Gamma,\Delta,t',n
         \and
-        \Gamma,s'\ts V \opto \cdots \opto \Gamma'',t'',x\,,
+        \Gamma,s'\ts V \opto \cdots \opto \Gamma,\Delta',t'',x\,,
       \end{mathpar}
       where $t'\vert_{\Gamma}=s'$ and $t''\vert_{\Gamma}=s''$.
 
@@ -2701,7 +2704,7 @@ We can also prove the converse.
       \begin{center}
         \parbox{0.8\textwidth}{
         \begin{mathpar}
-          \Gamma,s\ts V\gets E \opto \cdots \opto \Gamma',t',V\gets n \opto \cdots \opto \Gamma'\cup\Gamma'',t''\setminus t',x\gets n \opto \Gamma'\cup\Gamma'',(t''\setminus t'\vert x\mapsto n)\,,
+          \Gamma,s\ts V\gets E \opto \cdots \opto \Gamma,\Delta,t',V\gets n \opto \cdots \opto \Gamma,\Delta\cup\Delta',t''\setminus t',x\gets n \opto \Gamma,\Delta\cup\Delta',(t''\setminus t'\vert x\mapsto n)\,,
         \end{mathpar}}
       \end{center}
       where we have $(t''\setminus t'\vert x\mapsto n)\vert_\Gamma=(s''\vert x\mapsto n)$.
@@ -2717,12 +2720,12 @@ We can also prove the converse.
         \]
       Then, by the induction hypothesis, we have a small-step derivation
       \[
-        \Gamma,s\ts V \opto \cdots \opto \Gamma',t'\ts x\,,
+        \Gamma,s\ts V \opto \cdots \opto \Gamma,\Delta,t'\ts x\,,
         \]
       where $t'\vert_\Gamma=s'$.  
       Then we may compose this derivation pointwise with the evaluation context $\oc-$, and add an extra term on the end, to arrive at the derivation
       \[
-        \Gamma,s\ts \oc V \opto \cdots \opto \Gamma',t'\ts \oc x \opto \Gamma',t'\ts t'(x)\,,
+        \Gamma,s\ts \oc V \opto \cdots \opto \Gamma,\Delta,t'\ts \oc x \opto \Gamma,\Delta,t'\ts t'(x)\,,
         \]
       where $t'(x)=s'(x)$.
     \item Lastly, suppose that the last step in the derivation is
@@ -2737,13 +2740,16 @@ We can also prove the converse.
         \]
       By the induction hypothesis, we have a small-step derivation
       \[
-        \Gamma,x,(s\vert x\mapsto 0) \ts M \opto \cdots \opto \Gamma',x,(t'\vert x\mapsto n),c\,,
+        \Gamma,x,(s\vert x\mapsto 0) \ts M \opto \cdots \opto \Gamma,\Delta,x,(t'\vert x\mapsto n),c\,,
         \]
       where $t'\vert_\Gamma=s'$.  
       Then we may add a term at the beginning to give us
-      \[
-        \Gamma,s \ts \neww \lambda x.M \opto \Gamma,x,(s\vert x\mapsto 0) \ts M \opto \cdots \opto \Gamma',x,(t'\vert x\mapsto n),c\,,
-        \]
+      \begin{center}
+        \parbox{0.6\textwidth}{
+        \begin{mathpar}
+          \Gamma,s \ts \neww \lambda x.M \opto \Gamma,x,(s\vert x\mapsto 0) \ts M \opto \cdots \opto \Gamma,\Delta,x,(t'\vert x\mapsto n),c\,,
+        \end{mathpar}}
+      \end{center}
       where $(t'\vert x\mapsto n) \vert_\Gamma=s'$.\qedhere
   \end{itemize}
 \end{proof}
@@ -2757,15 +2763,15 @@ In the big-step formulation, nearly every rule involves the state changing in so
 Given a $\Var$-context $\Gamma$, we will write $S_\Gamma$ for $\bN \times \cdots \times \bN$ and $\V_\Gamma$ for $\Varr \times \cdots \times \Varr$, where in each case the terms of the tensor product are indexed by the variables in $\Gamma$.  
 Then, given some term $\Gamma\ts M$ in context, its denotation will be a morphism $\deno{\Gamma\ts M\from T} \from \oc \V_\Gamma \implies \deno{T}$.
 
-Given $\Gamma$, we have a morphism $\cell^n\from \oc S_\Gamma \implies \oc V_\Gamma$, given by
+Given $\Gamma$, we have a morphism $\cell^\Gamma\from \oc S_\Gamma \implies \oc V_\Gamma$, given by
 \[
   \oc S_\Gamma \cong \oc \bN \tensor \cdots \tensor \oc \bN \xrightarrow{\cell \tensor \cdots \tensor \cell} \oc \Varr \tensor \cdots \tensor \oc \Varr \cong \oc V_\Gamma\,.
   \]
 \begin{lemma}
-  For $j=1,\cdots,n$, the following diagram commutes.
+  For $j=1,\cdots,|\Gamma|$, the following diagram commutes.
   \[
     \begin{tikzcd}
-      \oc S_\Gamma \arrow[r, "\cell^n"] \arrow[d, "\oc\pr_j"']
+      \oc S_\Gamma \arrow[r, "\cell^\Gamma"] \arrow[d, "\oc\pr_j"']
         & \oc V_\Gamma \arrow[d, "\oc \pr_j"] \\
       \oc \bN \arrow[r, "\cell"]
         & \oc \Varr
@@ -2795,7 +2801,7 @@ We start our proof of soundness with a result about evaluation contexts.
 This result captures the fact that the term filling the hole of an evaluation context is the first thing to be computed, using the sequoid operator to capture this notion of precedence.
 \begin{lemma}
   Let $\Gamma\ts M\from T$ be an Idealized Algol term-in-context, and let $\EE$ be an evaluation context with a hole of type $T$, where $\EE[M]\from U$.  
-  Then there is a game $A$ and strategies $\sigma\from \oc\V_\Gamma \implies A$, $\tau\from\deno{T}\sequoid A \implies \deno{S}$ such that $\tau$ is a strict strategy and the denotation $\deno{\Gamma\ts\EE[M]}$ factors as
+  Then there is a game $A$ and strategies $\sigma\from \oc\V_\Gamma \implies A$, $\tau\from\deno{T}\sequoid A \implies \deno{S}$, where $\tau$ is a strict strategy, such that the denotation $\deno{\Gamma\ts\EE[M]}$ factors as
   \[
     \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc \V_\Gamma \tensor \oc \V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma} \deno{T}\tensor A \xrightarrow{\wk_{\deno{T},A}} \deno{T} \sequoid A \xrightarrow{\tau} \deno{U}\,.
     \]
@@ -2949,7 +2955,7 @@ This result captures the fact that the term filling the hole of an evaluation co
       \begin{SidewaysFigure}
         \small
         \[
-          \begin{tikzcd}[ampersand replacement=\&, column sep=78pt, row sep=20pt]
+          \begin{tikzcd}[ampersand replacement=\&, column sep=78pt, row sep=30pt]
             \oc \V_\Gamma \arrow[rr, "\mu_{\V_\Gamma}"] \arrow[d, "\mu_{\V_\Gamma}"', thick, dashed]
               \&
                 \& \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\oc\V_\Gamma \tensor\mu_{\V_\Gamma}"] \\
@@ -2977,8 +2983,8 @@ This result captures the fact that the term filling the hole of an evaluation co
           \end{tikzcd}
           \]
           \normalsize
-        \caption[The property in Lemma \ref{LemEvContexLemma} is preserved by conditionals.]{The property in Lemma \ref{LemEvContexLemma} is preserved by sequencing and variable assignment.
-        We use the fact that $\eta\in\{\If_X,\IfO_X\}$ is a strict strategy, and that the $\Lambda_s\inv$ is a function from strict strategies to strict strategies, so that $\Lambda_s\inv(\eta)$ is well-defined.}
+        \caption[The property in Lemma \ref{LemEvContexLemma} is preserved by conditionals.]{The property in Lemma \ref{LemEvContexLemma} is preserved by conditionals.
+        We use the fact that $\eta\in\{\If_X,\IfO_X\}$ is a strict strategy, and that the $\Lambda_s\inv$ is a function from strict strategies to strict strategies, so that $\Lambda_s\inv(\Lambda_s\inv(\eta))$ is well-defined.}
         \label{FigEvContextCond}
       \end{SidewaysFigure}
     \item Lastly, suppose that $\EE = \EE' \gets n$ for some numeral $n$, where $\EE'$ is a context of type $\Var$, and suppose that $M\from T$ fits into the hole.  
@@ -3006,28 +3012,143 @@ Our next lemma will help us deal with the base $\oopto$ rules.
 We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ relation.
 
 \begin{lemma}
-  Suppose that $\Gamma,s\ts M \oopto \Gamma',s'\ts N$, where $M,N$ have type $T$.
+  Suppose that $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$.
   Then the following diagram commutes.
   \[
-    \begin{tikzcd}[column sep=40pt]
+    \begin{tikzcd}[column sep=28pt]
       I \arrow[r, "\oc \deno s"] \arrow[d, "\oc \deno s'"']
-        & \oc S_\Gamma \arrow[r, "\cell^n"]
-          & \oc V_\Gamma \arrow[r, "\mu_{V_\Gamma}"]
-            & \oc V_\Gamma \tensor \oc V_\Gamma \arrow[d, "\deno{\Gamma\ts M}\tensor \oc V_\Gamma"] \\
-      \oc \bN \arrow[d, "\cell^n"']
+        & \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
+          & \oc \V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"]
+            &[22pt] \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\deno{\Gamma\ts M}\tensor \oc V_\Gamma"] \\
+      {\oc S_{\Gamma,\Delta}} \arrow[d, "{\cell^{\Gamma,\Delta}}"']
         &
           &
-            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc V_\Gamma}}"] \\
-      \oc V_\Gamma \arrow[r, "\mu_{V_\Gamma}"]
-        & \oc V_\Gamma \tensor \oc V_\Gamma \arrow[r, "\deno{\Gamma\ts N} \tensor \oc V_\Gamma"]
-          & \deno T \tensor \oc V_\Gamma \arrow[r, "{\wk_{\deno T,\oc V_\Gamma}}"]
-            & \deno T \sequoid \oc V_\Gamma
+            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc \V_{\Gamma,\Delta}}}"] \\
+      {\oc \V_{\Gamma,\Delta}} \arrow[d, "{\mu_{\V_{\Gamma,\Delta}}}"']
+        &
+          &
+            &  \deno{T}\sequoid \oc\V_\Gamma \arrow[d, "{\deno{T} \sequoid (\Gamma+0_\Delta)}"] \\
+      {\oc \V_{\Gamma,\Delta} \tensor \oc \V_{\Gamma,\Delta}} \arrow[rr, "{\deno{\Gamma,\Delta\ts N} \tensor \oc \V_{\Gamma,\Delta}}"]
+        &
+          & {\deno T \tensor \oc \V_{\Gamma,\Delta}} \arrow[r, "{\wk_{\deno T,\oc \V_{\Gamma,\Delta}}}"]
+            & {{\deno T \sequoid \oc \V_{\Gamma,\Delta}}\,,}
     \end{tikzcd}
     \]
+  where $\Gamma+0_\Delta\from \oc \V_\Gamma \to \oc \V_{\Gamma,\Delta}$ is the composite
+  \[
+    \oc \V_\Gamma \xrightarrow{\runit_{\oc\V_\Gamma}} \oc \V_\Gamma \tensor I \xrightarrow{\oc\V_\Gamma\tensor \oc0} \oc\V_\Gamma \tensor \oc S_\Delta \xrightarrow{\oc\V_\Gamma\tensor \cell^\Delta} \oc \V_\Gamma \tensor \oc \V_\Delta \to \oc \V_{\Gamma,\Delta}\,;
+    \]
+  i.e., the morphism given by initializing new storage cells to $0$ for all the new variables in $\Delta$.
+  \label{LemSoundnessOopto}
 \end{lemma}
 \begin{proof}
+  We prove this on a case-by-case basis.
   \begin{itemize}
-    \item For most of the rules, 
+    \item For most of the rules, $\Delta=\_$ and $s=s'$; i.e., the rule is of the form
+      \[
+        \Gamma,s\ts M \oopto \Gamma,s \ts N
+        \]
+      for some $M,N$.
+      In such a case, it suffices to show that $\deno{\Gamma\ts M}=\deno{\Gamma\ts N}$.
+      Indeed, we have
+      \begin{itemize}
+        \item $\deno{\Gamma\ts(\lambda x.M)N} = \deno{\Gamma\ts M[N/x]}$ (by a usual substitution-lemma argument);
+        \item $\deno{\Gamma\ts\Y M} = \deno{\Gamma\ts (\lambda F.\lambda f.f(F f)) \Y M} = \deno{\Gamma\ts M(\Y M)}$;
+        \item $\deno{\Gamma\ts \suc n} = \deno{\Gamma \ts n+1}$;
+        \item $\deno{\Gamma\ts \pred (n+1)} = \deno{\Gamma\ts n}$;
+        \item $\deno{\Gamma\ts \pred 0} = \deno{\Gamma\ts 0}$;
+        \item $\deno{\Gamma\ts\skipp;M} = \deno{\Gamma\ts M}$;
+        \item $\deno{\Gamma\ts\If \true \Then N \Else P} = \deno{\Gamma\ts (\lambda x.\lambda y.x)NP} = \deno{\Gamma\ts N}$;
+        \item $\deno{\Gamma\ts\If \false \Then N \Else P} = \deno{\Gamma\ts (\lambda x.\lambda y.y)NP} = \deno{\Gamma\ts P}$;
+        \item $\deno{\Gamma\ts\IfO 0 \Then N \Else P} = \deno{\Gamma\ts (\lambda x.\lambda y.x)NP} = \deno{\Gamma\ts N}$;
+        \item $\deno{\Gamma\ts\IfO (n+1) \Then N \Else P} = \deno{\Gamma\ts (\lambda x.\lambda y.y)NP} = \deno{\Gamma\ts P}$;
+        \item \parbox[t][][t]{0.8\textwidth}{$\deno{\Gamma\ts(\mkvar W\,R)\gets n} = \langle \deno{\Gamma\ts Wn}_{n\in\bN},\deno{\Gamma\ts R}\rangle;\pr_n = \deno{\Gamma\ts Wn}$; and}
+        \item $\deno{\Gamma\ts\oc(\mkvar W\,R)} = \langle \deno{\Gamma\ts Wn}_{n\in\bN},\deno{\Gamma\ts R}\rangle;\pr_{\bN} = \deno{\Gamma\ts R}$.
+      \end{itemize}
+    \item Now consider the rule
+      \[
+        \Gamma,s\ts\neww \lambda x.M\oopto \Gamma,x,(s\vert x\mapsto 0)\ts M\,,
+        \]
+      where $\Gamma\ts M\from T$.
+      The first observation to make is that the denotation $\deno{\Gamma\ts \neww \lambda x.M}$ may be written as
+      \[
+        \oc\V_\Gamma \xrightarrow{\Gamma + 0_x} \oc\V_{\Gamma,x} \xrightarrow{\Lambda\inv(\deno{\Gamma \ts \lambda x.M})} \deno{T}\,,
+        \]
+      where $\Gamma+0_x$ is as defined in the statement of this Lemma.
+      Of course, $\Lambda\inv(\deno{\Gamma\ts \lambda x.M})=\deno{\Gamma,x\ts M}$.
+
+      Next, we claim that we have a commutative diagram
+      \[
+        \begin{tikzcd}
+          \oc S_\Gamma \arrow[r, "\cell^\Gamma"] \arrow[d, "{\oc\langle S_\Gamma,0\rangle}"']
+            & \oc \V_\Gamma \arrow[d, "\Gamma+0_x"] \\
+          {\oc S_{\Gamma,x}} \arrow[r, "{\cell^{\Gamma,x}}"]
+            & {\oc \V_{\Gamma,x}\,.}
+        \end{tikzcd}
+        \]
+      Indeed, we have the diagram
+      \[
+        \begin{tikzcd}[column sep=2pt, row sep=20pt]
+          \oc S_\Gamma \arrow[r] \arrow[dddd, "{\oc\langle S_\Gamma,0\rangle}"' description]
+            &[5pt] \oc \bN \tensor \cdots \tensor \oc \bN \arrow[r, "\cell\tensor \cdots \tensor \cell"] \arrow[d, "\runit" description]
+              &[10pt] \oc\Varr \tensor \cdots \tensor \oc\Varr \arrow[r] \arrow[d, "\runit" description]
+                & \oc\V_\Gamma \arrow[d, "\runit" description] \\
+          %
+            & \oc \bN \tensor \cdots \tensor \oc\bN \tensor I \arrow[r, "\cell \tensor \cdots \tensor \cell \tensor I" yshift=6pt] \arrow[ddd, "\oc\bN \tensor \cdots \tensor \oc\bN \tensor \oc0" description]
+              & \oc \Varr \tensor \cdots \tensor \oc\Varr\tensor I \arrow[d, "\oc\Varr \tensor \cdots \tensor \oc\Varr \tensor I" description] \arrow[r]
+                & \oc\V_\Gamma \tensor I \arrow[d, "\oc\V_\Gamma\tensor\oc0" description] \\
+          %
+            &
+              & \oc\Varr \tensor \cdots \tensor \oc\Varr\tensor \oc\bN \arrow[r] \arrow[dd, "\oc\Varr\tensor\cdots\tensor\oc\Varr\tensor\cell" description]
+                & \oc\V_\Gamma \tensor \oc\bN \arrow[d, "\oc\V_\Gamma\tensor\cell" description] \\
+          %
+            &
+              &
+                & \oc\V_\Gamma\tensor\oc\Varr \arrow[d] \\
+          {\oc S_{\Gamma,x}} \arrow[r]
+            & \oc\bN \tensor\cdots \tensor\oc\bN \tensor\oc\bN \arrow[uur, "\cell\tensor\cdots\tensor\cell\tensor\oc\bN" {description, near start}] \arrow[r, "\cell\tensor\cdots\tensor\cell\tensor\cell"' yshift=-3pt]
+              & \oc\Varr \tensor \cdots\tensor\oc\Varr \tensor \oc\Varr \arrow[ur] \arrow[r]
+                & {\oc\V_{\Gamma,x}\,.}
+        \end{tikzcd}
+        \]
+      Now the diagram in Figure \ref{FigSoundnessOoptoNew} shows us that the conclusion of the lemma is satisfied for this rule.
+      \begin{SidewaysFigure}
+        \[
+          \begin{tikzcd}[ampersand replacement=\&, column sep=50pt, row sep=40pt]
+            I \arrow[r, "\oc\deno s"] \arrow[d, "\oc(\deno s\times 0)"']
+              \& \oc S_\Gamma \arrow[dl, "{\oc\langle S_\Gamma,0\rangle}" description] \arrow[dr, "\mu_{S_\Gamma}" description] \arrow[r, "\cell^\Gamma" description]
+                \& \oc \V_\Gamma \arrow[rr, "\mu_{\V_\Gamma}"]
+                  \&
+                    \& \oc \V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "(\Gamma + 0_x)\tensor\oc\V_\Gamma"] \arrow[ddddllll, "(\Gamma+0_x)\tensor(\Gamma+0_x)" description, bend left=12] \\
+            {\oc S_{\Gamma,x}} \arrow[dr, "\mu_{S_\Gamma}" description] \arrow[d, "{\cell^{\Gamma,x}}"']
+              \&
+                \& \oc S_\Gamma \tensor \oc S_\Gamma \arrow[urr, "\cell^{\Gamma} \tensor \cell^{\Gamma}" {description, near start}, bend left=10] \arrow[dl, "{\oc\langle S_\Gamma,0\rangle\tensor\oc\langle S_\Gamma,0\rangle}" description]
+                  \& 
+                    \& {\oc\V_{\Gamma,x}\tensor\oc\V_\Gamma} \arrow[d, "{\deno{\Gamma,x\ts M}\tensor\oc\V_\Gamma}"] \\
+            {\oc\V_{\Gamma,x}} \arrow[dd, "{\mu_{\V_{\Gamma,x}}}"']
+              \& {\oc S_{\Gamma,x}\tensor\oc S_{\Gamma,x}} \arrow[ddl, "{\cell^{\Gamma,x}\tensor\cell^{\Gamma,x}}"' {description, near start}, bend right=10]
+                \&
+                  \&
+                    \& \deno T \tensor \oc\V_{\Gamma} \arrow[d, "{\wk_{\deno T,\oc\V_\Gamma}}"] \arrow[ddll, "\deno T \tensor (\Gamma + 0_x)" description, bend left=8] \\
+            %
+              \&
+                \&
+                  \&
+                    \& \deno T \sequoid \oc\V_\Gamma\arrow[d, "{\deno T \sequoid (\Gamma + 0)}"] \\
+            {\oc \V_{\Gamma,x} \tensor \oc \V_{\Gamma,x}} \arrow[rr, "{\deno{\Gamma,x\ts M}\tensor \oc\V_{\Gamma,x}}"]
+              \&
+                \& {\deno T \tensor \oc\V_{\Gamma,x}} \arrow[rr, "{\wk_{\deno T,\oc\V_{\Gamma,x}}}"]
+                  \&
+                    \& {\deno T\sequoid\oc\V_{\Gamma,x}}
+          \end{tikzcd}
+          \]
+        \caption{The reduction $\Gamma,s\ts\neww\lambda x.M\oopto\Gamma,x,(s\vert x\mapsto 0)\ts M$ satisfies the conclusion of Lemma \ref{LemSoundnessOopto}.}
+        \label{FigSoundnessOoptoNew}
+      \end{SidewaysFigure}
+    \item Now consider the rule
+      \[
+        \Gamma,s\ts x\gets n \oopto \Gamma,(s\vert x\mapsto n) \ts \skipp\,.
+        \]
   \end{itemize}
 \end{proof}
 
