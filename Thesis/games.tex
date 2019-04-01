@@ -2493,9 +2493,9 @@ for each evaluation context $\EE$.
     \and
     \Gamma,s\ts \IfO (n+1) \Then N \Else P \oopto \Gamma,s\ts P
     \and
-    \Gamma,s\ts x \gets n \oopto \Gamma,(s\vert x\mapsto n)\ts \skipp
+    x,\Gamma,s\ts x \gets n \oopto x,\Gamma,(s\vert x\mapsto n)\ts \skipp
     \and
-    \Gamma,s\ts \oc x \oopto \Gamma,s\ts s(x)
+    x,\Gamma,s\ts \oc x \oopto x,\Gamma,s\ts s(x)
     \\
     \Gamma,s\ts \neww \lambda x.M \oopto \Gamma,x,(s\vert x\mapsto 0)\ts M
     \\
@@ -3012,8 +3012,11 @@ Our next lemma will help us deal with the base $\oopto$ rules.
 We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ relation.
 
 \begin{lemma}
-  Suppose that $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$.
-  Then the following diagram commutes.
+  The relation $\oopto$ betwen triples $\Gamma,s\ts M$ preserves the composite
+  \[
+    \oc\deno{s};\cell^\Gamma;\mu_{\V_\Gamma};(\deno{\Gamma\ts M}\tensor\oc\V_\Gamma);\wk_{\deno T,\oc\V_{\Gamma}}\,.
+    \]
+  In other words, if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$, then the following diagram commutes.
   \[
     \begin{tikzcd}[column sep=28pt]
       I \arrow[r, "\oc \deno s"] \arrow[d, "\oc \deno s'"']
@@ -3023,7 +3026,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
       {\oc S_{\Gamma,\Delta}} \arrow[d, "{\cell^{\Gamma,\Delta}}"']
         &
           &
-            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc \V_{\Gamma,\Delta}}}"] \\
+            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc \V_{\Gamma}}}"] \\
       {\oc \V_{\Gamma,\Delta}} \arrow[d, "{\mu_{\V_{\Gamma,\Delta}}}"']
         &
           &
@@ -3145,10 +3148,72 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
         \caption{The reduction $\Gamma,s\ts\neww\lambda x.M\oopto\Gamma,x,(s\vert x\mapsto 0)\ts M$ satisfies the conclusion of Lemma \ref{LemSoundnessOopto}.}
         \label{FigSoundnessOoptoNew}
       \end{SidewaysFigure}
-    \item Now consider the rule
+    \item Now consider the rules
+      \begin{mathpar}
+        x,\Gamma,s\ts x\gets n \oopto x,\Gamma,(s\vert x\mapsto n) \ts \skipp
+        \and
+        x,\Gamma,s\ts \oc x\oopto x,\Gamma,s\ts s(x)\,.
+      \end{mathpar}
+      In each of these cases, the outer context $\Gamma$ is unchanged by the rule; moreover, each term ignores the variables in $\Gamma$.
+      So the denotations terms-in-context $x,\Gamma\ts M\from T$ on either side of each rule are of the form
       \[
-        \Gamma,s\ts x\gets n \oopto \Gamma,(s\vert x\mapsto n) \ts \skipp\,.
+        \oc\V_{x,\Gamma} \xrightarrow{\oc\pr_1} \oc \Varr \xrightarrow{\deno{x\ts M}} \deno{T}\,.
         \]
+      Now the diagram in Figure \ref{FigSoundnessOoptoContext} tells us that each
+      \[
+        \oc\deno{s};\cell^{x,\Gamma};\mu_{\V_{x,\Gamma}};(\deno{x,\Gamma\ts M}\tensor\oc\V_{x,\Gamma});\wk_{\deno T,\oc\V_{x,\Gamma}}\,\text{--}
+        \]
+      i.e., the composites we are trying to show are preserved by the $\oopto$ relation -- may be written as
+      \begin{mathpar}
+        \oc\deno{s\vert_\Gamma};\cell^\Gamma;\lunit_{\oc\V_\Gamma};\\((\oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr})\tensor\oc\V_\Gamma);\\\wk_{\deno T\sequoid \oc\Varr,\oc\V_\Gamma};\passoc_{\deno T,\oc\Varr,\oc\V_\Gamma};\cong
+      \end{mathpar}
+      (where $\cong$ represents the natural isomorpism between $\deno T\sequoid(\oc\Varr\tensor\oc\V_\Gamma)$ and $\deno T \sequoid\oc\V_{x,\Gamma}$),
+      and so is determined by the composite
+      \[
+        \oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr}\,;
+        \]
+      i.e., the composite that we would get if $\Gamma$ were empty.
+      This tells us that we can assume that $\Gamma$ is the empty context when we want to deal with these two cases.
+      \begin{SidewaysFigure}
+        \[
+          \begin{tikzcd}[ampersand replacement=\&, column sep=5pt]
+            I \arrow[r, "\oc\deno{s\vert_\Gamma}"] \arrow[d, "\oc\deno s"' {description, yshift=2pt}, thick, dashed]
+              \& \oc S_\Gamma \arrow[r, "\cell^\Gamma"] \arrow[dr, "\lunit_{\oc S_\Gamma}" description, dotted]
+                \&[18pt] \oc \V_\Gamma \arrow[r, "\lunit_{\oc\V_\Gamma}"] 
+                  \&[18pt] I \tensor \oc\V_\Gamma \arrow[dd, "\oc\deno{s\vert_x}\tensor\oc\V_\Gamma" description, thick] \\
+            {\oc S_{x,\Gamma}} \arrow[drr, Isom, dotted] \arrow[dd, "{\cell^{x,\Gamma}}"' description, thick, dashed]
+              \&
+                \& I \tensor \oc S_\Gamma \arrow[ur, "I \tensor\cell^\Gamma" description, dotted] \arrow[d, "\oc\deno{s\vert_x}\tensor\oc S_\Gamma" description, dotted]
+                  \& \\
+            %
+              \&
+                \& \oc\bN\tensor\oc S_\Gamma \arrow[r, "\oc\bN\tensor\cell^\Gamma" description, dotted] \arrow[dr, "\cell\tensor\cell^\Gamma" description, dotted]
+                  \& \oc\bN \tensor\oc\V_\Gamma \arrow[d, "\cell\tensor\oc\V_\Gamma" description, thick] \\
+            {\oc\V_{x,\Gamma}} \arrow[rrr, Isom, dotted] \arrow[d, "{\mu_{\V_{x,\Gamma}}}"' description, thick, dashed]
+              \&
+                \&
+                  \& \oc\Varr \tensor \oc\V_\Gamma \arrow[d, "\mu_{\Varr}\tensor\oc\V_\Gamma" description, thick] \arrow[dl, "\mu_{\Varr}\tensor\mu_{\V_\Gamma}" description, bend right=15, dotted] \\[10pt]
+            {\oc\V_{x,\Gamma}\tensor\oc\V_{x,\Gamma}} \arrow[r, dotted] \arrow[d, "{\oc\pr_1\tensor\oc\V_{x,\Gamma}}" description, dotted] \arrow[dd, "{\deno{x,\Gamma\ts M}\tensor\oc\V_{x,\Gamma}}" description, bend right=68, thick, dashed, end anchor={[xshift=-3pt]}]
+              \& (\oc\Varr \tensor \oc\V_\Gamma) \tensor (\oc\Varr \tensor\oc\V_\Gamma) \arrow[r, dotted] \arrow[d, "(\oc\Varr\tensor())\tensor(\oc\Varr\tensor\oc\V_{\Gamma})" description, dotted]
+                \& (\oc\Varr \tensor \oc\Varr) \tensor (\oc\V_\Gamma \tensor\oc\V_\Gamma) \arrow[r, "(\oc\Varr\tensor\oc\Varr)\tensor(()\tensor\oc\V_\Gamma)" yshift=5pt, dotted]
+                  \& (\oc\Varr \tensor \oc\Varr) \tensor\oc\V_\Gamma \arrow[d, "(\deno{x\ts M}\tensor \oc\Varr) \tensor \oc\V_\Gamma" description, thick] \\[30pt]
+            {\oc\Varr \tensor \oc\V_{x,\Gamma}} \arrow[r, Isom, dotted] \arrow[d, "{\deno{x\ts M} \tensor \oc\V_{x,\Gamma}}"' {description, yshift=1pt}, dotted]
+              \& \oc\Varr \tensor (\oc\Varr \tensor\oc\V_\Gamma) \arrow[urr, "{\assoc_{\oc\Varr,\oc\Varr,\oc\V_\Gamma}\inv}" {description, xshift=-5pt, yshift=5pt}, start anchor={[xshift=-25pt, dotted]}, bend left=5] \arrow[r, "\deno{x\ts M} \tensor (\oc\Varr\tensor\oc\V_\Gamma)" yshift=2pt, dotted]
+                \& \deno{T} \tensor (\oc\Varr \tensor \oc\V_\Gamma) \arrow[r, "{\assoc_{\deno T,\oc\Varr,\oc\V_\Gamma}}" yshift=2pt, dotted] \arrow[ddl, "{\wk_{\deno T,(\oc\Varr\tensor\oc\V_\Gamma}}" description, dotted]
+                  \& (\deno T \tensor \oc\Varr) \tensor \oc\V_\Gamma\arrow[d, "{\wk_{\deno T,\oc\Varr}\tensor\oc\V_\Gamma}" {description, yshift=1pt}, thick] \\
+            {\deno T \tensor \oc\V_{x,\Gamma}} \arrow[d, "{\wk_{\deno T,\oc\V_{x,\Gamma}}}"' {description, yshift=2pt}, thick, dashed] \arrow[urr, Isom, dotted]
+              \&
+                \&
+                  \& (\deno T \sequoid \oc\Varr) \tensor \oc\V_\Gamma \arrow[d, "{\wk_{(\deno T\sequoid\oc\Varr),\oc\V_\Gamma}}" {description, yshift=2pt}] \\[5pt]
+            {\deno T \sequoid \oc\V_{x,\Gamma}} \arrow[r, Isom]
+              \& \deno T \sequoid (\oc\Varr \tensor\oc\V_\Gamma)
+                \&
+                  \& (\deno T \sequoid \oc\Varr) \sequoid\oc\V_\Gamma \arrow[ll, "{\passoc_{\deno T,\oc\Varr,\oc\V_\Gamma}}"]
+          \end{tikzcd}
+          \]
+          \caption{Diagram proving that if we want to prove the conclusion of Lemma \ref{LemSoundnessOopto} for a small-step rule that does not change the context and only mentions one variable, then it suffices to assume that that variable is the only variable in the context.}
+          \label{FigSoundnessOoptoContext}
+      \end{SidewaysFigure}
   \end{itemize}
 \end{proof}
 
