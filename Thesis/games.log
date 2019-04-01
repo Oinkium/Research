@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  1 APR 2019 14:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  1 APR 2019 23:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1092,56 +1092,52 @@ put line 1259.
 [46] [47] [48] [49] [50] [51]
 
 LaTeX Font Warning: Font shape `U/wasy/m/it' undefined
-(Font)              using `U/wasy/m/n' instead on input line 2131.
+(Font)              using `U/wasy/m/n' instead on input line 2152.
 
-[52] [53]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2247.
-
+[52] [53] [54]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2247.
-
-[54] [55]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2305.
+(hyperref)                removing `math shift' on input line 2286.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 2305.
+(hyperref)                removing `math shift' on input line 2286.
 
-[56] [57]
+[55] [56]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 2344.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 2344.
+
+[57]
 
 Package amsthm Warning: The \qedhere command may not work correctly here on inp
-ut line 2373.
+ut line 2412.
 
 [58]
 
-LaTeX Warning: Float too large for page by 26.53055pt on input line 2444.
+LaTeX Warning: Float too large for page by 26.53055pt on input line 2483.
 
 [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70]
 
 Package amsthm Warning: The \qedhere command may not work correctly here on inp
-ut line 3006.
+ut line 3045.
 
-[71] [72] [73] [74]
-Overfull \hbox (1.02005pt too wide) detected at line 3216
-[]
- []
+[71] [72] [73] [74] [75] [76] (./games.bbl [77] [78] [79] [80
 
-[75] [76] (./games.bbl [77] [78] [79
+]) [81]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3290.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3290.
 
-]) [80]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3223.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3223.
- (./games.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3223.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3223.
+(./games.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3290.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3290.
 
 Package rerunfilecheck Info: File `games.out' has not changed.
-(rerunfilecheck)             Checksum: 94C3787C740A230C51B917AED511CA3E;1599.
+(rerunfilecheck)             Checksum: 3C32F4BDCE311930CF1C02FBE6C85585;1600.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -1151,10 +1147,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 26369 strings out of 492616
- 499508 string characters out of 6135178
- 752021 words of memory out of 5000000
- 29509 multiletter control sequences out of 15000+600000
+ 26555 strings out of 492616
+ 504353 string characters out of 6135178
+ 752055 words of memory out of 5000000
+ 29692 multiletter control sequences out of 15000+600000
  29727 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,22n,82p,815b,1415s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1195,10 +1191,10 @@ stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary
 e/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb></usr/share/texmf-dist/fon
 ts/type1/public/stmaryrd/stmary8.pfb></usr/share/texmf-dist/fonts/type1/public/
 wasy2-ps/wasy10.pfb>
-Output written on games.pdf (80 pages, 654364 bytes).
+Output written on games.pdf (81 pages, 661687 bytes).
 PDF statistics:
- 926 PDF objects out of 1000 (max. 8388607)
- 791 compressed objects within 8 object streams
- 232 named destinations out of 1000 (max. 500000)
+ 934 PDF objects out of 1000 (max. 8388607)
+ 798 compressed objects within 8 object streams
+ 235 named destinations out of 1000 (max. 500000)
  189 words of extra memory for PDF output out of 10000 (max. 10000000)
 

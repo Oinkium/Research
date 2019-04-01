@@ -1873,6 +1873,17 @@ and that there is therefore an induced morphism
   \]
 by the universal property of the equalizer.
 
+Note also that if $m,n$ are integers, then any permutations $\sigma$ of $1,\cdots,m$ and $\pi$ of $1,\cdots,n$ induce a permutation $[\sigma,\pi]$ of $1,\cdots,m+n$.  
+Then we get morphisms
+\[
+  A^{m+n} \to A^{\tensor (m+n)} \to A^{\tensor m} \tensor A^{\tensor n}\,,
+  \]
+which are equalized by all symmetries on $A^{\tensor m}$ and $A^{\tensor n}$ individually.  
+Since the equalizers $A^m$ and $A^n$ are preserved by the tensor product, then we get an induced morphisms
+\[
+  A^{m+n}\to A^m\tensor A^n\,.
+  \]
+
 \begin{theorem}[\cite{MelliesCofCommCom}]
   Let $\C$ be a monoidal category such that the monoidal unit for $\C$ is a terminal object.
   Suppose that $\C$ has symmetrized tensor powers that commute with the tensor product.  
@@ -1886,7 +1897,17 @@ by the universal property of the equalizer.
     I \leftarrow A \leftarrow A^2 \leftarrow A^3 \leftarrow \cdots\,.
     \]
   Suppose that this sequence has a limit $\oc A$, and that $B\tensor \oc A$ is the limit of the first sequence for all $B$.  
-  Then $\oc A$ has the structure of the cofree commutative comonoid on $A$.
+
+  For each $m$, we can define morphisms
+  \[
+    \oc A \to A^{m+n} \to A^m \tensor A^n
+    \]
+  for each $n$, which commute with the morphisms $A^{n+1}\to A^n$ and hence induce a morphism $\oc A \to A^m \tensor \oc A$.  
+  Then these morphisms themselves commute with the morphisms $A^{m+1}\tensor \oc A \to A^m \tensor \oc A$, and so we get a morphism $\mu_A\from \oc A \to \oc A \tensor \oc A$.
+  
+  The morphisms $\mu_A\from \oc A \to \oc A \tensor \oc A$ and $()\from A \to I$ give $\oc A$ the structure of a commutative comonoid in $\C$.  
+  In fact, this is the \emph{cofree commutative comonoid} over $A$ in $\C$.  
+  The counit $\der_A\from \oc A \to A$ of the adjunction is the map in the limiting cone.
   \label{TheMtt}
 \end{theorem}
 
@@ -2153,6 +2174,24 @@ In this case, the morphism $\oc A \to A \sequoid \oc A$ is the zigzag strategy t
 \[
   \phi(s) = [\inj_{M_A},\id]_*(s)\,.
   \]
+
+One small thing we need to do is to relate the two structures on the exponential.
+
+\begin{proposition}
+  The final coalgebra
+  \[
+    \alpha\from \oc A \to A \sequoid \oc A
+    \]
+  is given by the composite
+  \[
+    \oc A \xrightarrow{\mu_A} \oc A \tensor \oc A \xrightarrow{\der_A\tensor \oc A} A \tensor \oc A \xrightarrow{\wk_A,\oc A} A \sequoid \oc A\,.
+    \]
+  \label{PropFormulaForAlpha}
+\end{proposition}
+\begin{proof}
+  By Theorem \ref{TheMtt}, we can tell that this composite is a copycat strategy between $\oc A$ and $A \sequoid \oc A$, as is $\alpha$.  
+  Since $A$ is well-opened, there is a unique such strategy.
+\end{proof}
 
 \section{Denotational Semantics of Idealized Algol}
 
@@ -3180,7 +3219,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
             I \arrow[r, "\oc\deno{s\vert_\Gamma}"] \arrow[d, "\oc\deno s"' {description, yshift=2pt}, thick, dashed]
               \& \oc S_\Gamma \arrow[r, "\cell^\Gamma"] \arrow[dr, "\lunit_{\oc S_\Gamma}" description, dotted]
                 \&[18pt] \oc \V_\Gamma \arrow[r, "\lunit_{\oc\V_\Gamma}"] 
-                  \&[18pt] I \tensor \oc\V_\Gamma \arrow[dd, "\oc\deno{s\vert_x}\tensor\oc\V_\Gamma" description, thick] \\
+                  \&[17pt] I \tensor \oc\V_\Gamma \arrow[dd, "\oc\deno{s\vert_x}\tensor\oc\V_\Gamma" description, thick] \\
             {\oc S_{x,\Gamma}} \arrow[drr, Isom, dotted] \arrow[dd, "{\cell^{x,\Gamma}}"' description, thick, dashed]
               \&
                 \& I \tensor \oc S_\Gamma \arrow[ur, "I \tensor\cell^\Gamma" description, dotted] \arrow[d, "\oc\deno{s\vert_x}\tensor\oc S_\Gamma" description, dotted]
@@ -3214,6 +3253,34 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
           \caption{Diagram proving that if we want to prove the conclusion of Lemma \ref{LemSoundnessOopto} for a small-step rule that does not change the context and only mentions one variable, then it suffices to assume that that variable is the only variable in the context.}
           \label{FigSoundnessOoptoContext}
       \end{SidewaysFigure}
+
+      Now we have a commutative diagram
+      \begin{figure}[htbp]
+        \[
+          \begin{tikzcd}[column sep=41pt, row sep=30pt]
+            I \arrow[r, "\oc s(x)"] \arrow[d, "\oc n" description] \arrow[dr, Rightarrow, no head]
+              & \oc \bN \arrow[r, "\cell"] \arrow[d, "()" description] \arrow[dr, "\cell_0" description]
+                & \oc\Varr \arrow[r, "\mu_{\Varr}"] \arrow[dd, "\alpha_{\Varr}" description, controls={+(1,-0.25) and +(0.8,0.75)}, start anchor={[yshift=-1pt]}, end anchor = {[xshift=25pt]}]
+                  & \oc \Varr \tensor \oc \Varr \arrow[d, "\der_{\Varr} \tensor \oc\Varr" description]  \\
+            \oc\bN \arrow[dd, "\cell" description] \arrow[ddr, "\lunit_{\oc\bN}" description, end anchor={[xshift=-3pt, yshift=-2pt]}]
+              & I \arrow[l, "\oc n" description]
+                & \Varr \sequoid \oc\bN \arrow[d, "\Varr\sequoid\cell" description] \arrow[dd, "\pr_n\sequoid\oc\bN" {description, pos=0.44}, controls={+(-2.5,-0.2) and (-0.5,0.5)}]
+                  & \Varr \tensor \oc\Varr \arrow[dl, "{\wk_{\Varr,\oc\Varr}}" description] \arrow[dd, "\pr_n\tensor\oc\Varr" description] \\
+            %
+              & \bC \tensor \oc\bN \arrow[dr, "{\wk_{\bC,\oc\bN}}" description] \arrow[ddr, "\bC \tensor \cell" description]
+                & \Varr \sequoid\oc\Varr \arrow[ddr, "\pr_n\sequoid\oc\Varr" description]
+                  & \\
+            \oc\Varr \arrow[d, "\mu_{\Varr}" description] \arrow[dr, "\lunit_{\oc\Varr}" description]
+              & I \tensor \oc\bN \arrow[u, "\skipp\tensor\oc\bN" {description, pos=0.44}] \arrow[d, "I\tensor \cell" description]
+                & \bC \sequoid \oc\bN \arrow[dr, "\bC \sequoid \cell" description]
+                  & \bC \tensor \oc\Varr \arrow[d, "{\wk_{\bC,\oc\Varr}}" {description, pos=0.44}] \\
+            \oc\Varr \tensor \oc\Varr \arrow[r, "()\tensor\oc\Varr"']
+              & I \tensor \oc\Varr \arrow[r, "\skipp \tensor \oc\Varr"']
+                & \oc\bC \tensor \oc\Varr \arrow[r, "{\wk_{\bC,\oc\Varr}}"']
+                  & \bC \sequoid \oc\Varr
+          \end{tikzcd}
+          \]
+      \end{figure}
   \end{itemize}
 \end{proof}
 
