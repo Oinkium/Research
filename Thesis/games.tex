@@ -2351,6 +2351,10 @@ Given $n\in\bN$, we define a strategy $\wwrite_n\from \oc\bN \implies \bC \sequo
   \wwrite_n = \oc\bN \xrightarrow{()} I \xrightarrow{\skipp\tensor \oc n} \bC \tensor \oc\bN \xrightarrow{\wk} \bC \sequoid\oc\bN\,.
   \]
 Let $\rread \from \oc\bN \implies \bN \sequoid \oc\bN$ be the morphism part $\alpha$ of the limiting coalgebra.  
+In other words, by Proposition \ref{PropFormulaForAlpha}, $\rread$ is the composite
+\[
+  \rread = \oc\bN \xrightarrow{\mu_\bN} \oc\bN \tensor \oc\bN \xrightarrow{\der_\bN\tensor\oc\bN} \bN \tensor \oc\bN \xrightarrow{\wk_{\bN,\oc\bN}} \bN \sequoid\oc\bN\,.
+  \]
 Then we get a coalgebra $\cell_0\from \oc \bN \implies \Varr \sequoid \oc \bN$ given by
 \[
   \oc\bN \xrightarrow{\langle (\wwrite_n)_{n\in\bN}, \rread\rangle}
@@ -3256,7 +3260,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
 
       Now we have a commutative diagram
       \begin{figure}[htbp]
-        \[
+        \begin{mathpar}
           \begin{tikzcd}[column sep=41pt, row sep=30pt]
             I \arrow[r, "\oc s(x)"] \arrow[d, "\oc n" description] \arrow[dr, Rightarrow, no head]
               & \oc \bN \arrow[r, "\cell"] \arrow[d, "()" description] \arrow[dr, "\cell_0" description]
@@ -3279,7 +3283,30 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
                 & \oc\bC \tensor \oc\Varr \arrow[r, "{\wk_{\bC,\oc\Varr}}"']
                   & \bC \sequoid \oc\Varr
           \end{tikzcd}
-          \]
+          \and
+          \begin{tikzcd}[row sep=30pt]
+            I \arrow[r, "\oc s(x)"] \arrow[d, "\oc s(x)" description] \arrow[dr]
+              &[-31pt] \oc\bN \arrow[r, "\cell"] \arrow[dr, "\mu_\bN" description] \arrow[ddr, "\cell_0" {description, near end}, bend left=50]
+                &[-100pt] \oc\Varr \arrow[r, "\mu_{\Varr}"] \arrow[ddd, "\alpha_{\Varr}" description]
+                  &[-21pt] \oc\Varr \tensor \oc\Varr \arrow[d, "\der_{\Varr}\tensor\oc\Varr" description] \\
+            |[alias=Z]| \oc\bN \arrow[d, "\lunit_{\oc\bN}" description] \arrow[dd, "\cell" description]
+              & |[left=40pt of Z.east]| I \tensor I \arrow[dl, "I \tensor \oc s(x)" description] \arrow[r, "\oc s(x) \tensor \oc s(x)"] \arrow[d, "s(x)\tensor \oc s(x)" description]
+                & |[left=50pt of Z.west]| \oc \bN \tensor \oc\bN \arrow[dl, "\der_\bN \tensor \oc\bN" description]
+                  & \Varr \tensor \oc\Varr \arrow[ddl, "{\wk_{\Varr,\oc\Varr}}" {description, pos=0.65}] \arrow[dd, "\pr_{\bN}\tensor\oc\Varr" description] \\
+            |[right=of Z.west]| I \tensor \oc\bN \arrow[r, "s(x)\tensor\oc\bN"'] \arrow[ddr, "I \tensor \cell" description]
+              & \bN \tensor \oc\bN \arrow[d, "{\wk_{\bN,\oc\bN}}" description] \arrow[ddr, "\bN \tensor\cell" {description, pos=0.4, xshift=-5pt}, bend right=30]
+                & |[left=of Z]| \Varr \sequoid \oc\bN \arrow[dl, "\pr_\bN \sequoid \oc\bN" {description, pos=0.65}, bend left=30] \arrow[d, "\Varr\sequoid\cell" {description, xshift=-5pt}, bend left=30]
+                  & \\
+            \oc\Varr \arrow[d, "\mu_{\Varr}" description] \arrow[dr, "\lunit_{\Varr}" description]
+              & |[right=of Z]| \bN \sequoid \oc\bN \arrow[drr, "\bN \sequoid \cell" {description, pos=0.4}, controls={+(0.2,-1.2) and +(-0.3,0.2)}, to=Y.north west, end anchor={[yshift=-2pt]}]
+                & \Varr \sequoid\oc\Varr \arrow[dr, "\pr_\bN \sequoid \oc\Varr" {description, pos=0.35}]
+                  & \bN \tensor \oc\Varr \arrow[d, "{\wk_{\bN},\oc\Varr}" description] \\
+            \oc\Varr \tensor \oc\Varr \arrow[r, "()\tensor\oc\Varr"']
+              & I \tensor \oc\Varr \arrow[r, "s(x)\tensor\oc\Varr"']
+                & \bN \tensor \oc\Varr \arrow[r, "{\wk_{\bN,\oc\Varr}}"']
+                  & |[alias=Y]| \bN \sequoid \oc\Varr
+          \end{tikzcd}
+        \end{mathpar}
       \end{figure}
   \end{itemize}
 \end{proof}
