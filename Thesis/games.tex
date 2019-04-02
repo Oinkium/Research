@@ -2342,6 +2342,7 @@ Recall that a directed-complete partial order $P$ is said to be \emph{algebraic}
 \end{proof}
 
 \section{The Strategy $\cell$}
+\label{SecCell}
 
 Now we come to the denotation of $\neww$.  
 For this, we shall define a strategy $\cell\from \oc\bN \implies \oc \Varr$ by using the property of $\oc \Varr$ as a final coalgebra.
@@ -3217,7 +3218,12 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
         \oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr}\,;
         \]
       i.e., the composite that we would get if $\Gamma$ were empty.
-      This tells us that we can assume that $\Gamma$ is the empty context when we want to deal with these two cases.
+      This tells us that we can assume that $\Gamma$ is the empty context, so that the rules take on the form
+      \begin{mathpar}
+        x,s\ts x\gets n \oopto x,(x\mapsto n)\ts \skipp
+        \and
+        x,s \ts \oc x \oopto x,s\ts s(x)\,.
+      \end{mathpar}
       \begin{SidewaysFigure}
         \[
           \begin{tikzcd}[ampersand replacement=\&, column sep=5pt]
@@ -3242,7 +3248,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
                 \& (\oc\Varr \tensor \oc\Varr) \tensor (\oc\V_\Gamma \tensor\oc\V_\Gamma) \arrow[r, "(\oc\Varr\tensor\oc\Varr)\tensor(()\tensor\oc\V_\Gamma)" yshift=5pt, dotted]
                   \& (\oc\Varr \tensor \oc\Varr) \tensor\oc\V_\Gamma \arrow[d, "(\deno{x\ts M}\tensor \oc\Varr) \tensor \oc\V_\Gamma" description, thick] \\[30pt]
             {\oc\Varr \tensor \oc\V_{x,\Gamma}} \arrow[r, Isom, dotted] \arrow[d, "{\deno{x\ts M} \tensor \oc\V_{x,\Gamma}}"' {description, yshift=1pt}, dotted]
-              \& \oc\Varr \tensor (\oc\Varr \tensor\oc\V_\Gamma) \arrow[urr, "{\assoc_{\oc\Varr,\oc\Varr,\oc\V_\Gamma}\inv}" {description, xshift=-5pt, yshift=5pt}, start anchor={[xshift=-25pt, dotted]}, bend left=5] \arrow[r, "\deno{x\ts M} \tensor (\oc\Varr\tensor\oc\V_\Gamma)" yshift=2pt, dotted]
+              \& \oc\Varr \tensor (\oc\Varr \tensor\oc\V_\Gamma) \arrow[urr, "{\assoc_{\oc\Varr,\oc\Varr,\oc\V_\Gamma}\inv}" {description, xshift=-5pt, yshift=5pt}, start anchor={[xshift=-25pt]}, bend left=5, dotted] \arrow[r, "\deno{x\ts M} \tensor (\oc\Varr\tensor\oc\V_\Gamma)" yshift=2pt, dotted]
                 \& \deno{T} \tensor (\oc\Varr \tensor \oc\V_\Gamma) \arrow[r, "{\assoc_{\deno T,\oc\Varr,\oc\V_\Gamma}}" yshift=2pt, dotted] \arrow[ddl, "{\wk_{\deno T,(\oc\Varr\tensor\oc\V_\Gamma}}" description, dotted]
                   \& (\deno T \tensor \oc\Varr) \tensor \oc\V_\Gamma\arrow[d, "{\wk_{\deno T,\oc\Varr}\tensor\oc\V_\Gamma}" {description, yshift=1pt}, thick] \\
             {\deno T \tensor \oc\V_{x,\Gamma}} \arrow[d, "{\wk_{\deno T,\oc\V_{x,\Gamma}}}"' {description, yshift=2pt}, thick, dashed] \arrow[urr, Isom, dotted]
@@ -3259,7 +3265,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
           \label{FigSoundnessOoptoContext}
       \end{SidewaysFigure}
 
-      Now we have a commutative diagram
+      Now the commutative diagrams in Figure \ref{FigSoundnessOoptoStorage} deal with these last two cases.\qedhere
       \begin{figure}[htbp]
         \begin{mathpar}
           \begin{tikzcd}[column sep=41pt, row sep=30pt]
@@ -3308,8 +3314,63 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
                   & |[alias=Y]| \bN \sequoid \oc\Varr
           \end{tikzcd}
         \end{mathpar}
+        \caption[Diagrams to prove that the conclusion of Lemma \ref{LemSoundnessOopto} holds for the storage cell rules.]{Diagrams to prove that the conclusion of Lemma \ref{LemSoundnessOopto} holds for the storage cell rules.  
+        References in the middle of a shape refer to Lemma \ref{LemCellProjections} and Proposition \ref{PropFormulaForAlpha} above.  
+        Note the prominent role played in both diagrams by the anamorphism square for $\cell$ as in Section \ref{SecCell}.}
+        \label{FigSoundnessOoptoStorage}
       \end{figure}
   \end{itemize}
+\end{proof}
+
+Now that we have dealt with the base rules, we can move on to the full relation $\opto$.
+
+\begin{lemma}
+  The relation $\opto$ between triples $\Gamma,s\ts M$ preserves the composite
+  \[
+    \oc\deno s;\cell^\Gamma;\mu_{\V_\Gamma};(\deno{\Gamma\ts M}\tensor\oc\V_\Gamma);\wk_{\deno T,\oc\V_\Gamma}\,.
+    \]
+  I.e., if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$, and $\EE$ is a context of type $U$ with a hole of type $T$, then the following diagram commutes.
+  \[
+    \begin{tikzcd}[column sep=24pt]
+      I \arrow[r, "\oc \deno s"] \arrow[d, "\oc \deno s'"']
+        & \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
+          & \oc \V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"]
+            &[22pt] \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\deno{\Gamma\ts \EE[M]}\tensor \oc V_\Gamma"] \\
+      {\oc S_{\Gamma,\Delta}} \arrow[d, "{\cell^{\Gamma,\Delta}}"']
+        &
+          &
+            & \deno U \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno U,\oc \V_{\Gamma}}}"] \\
+      {\oc \V_{\Gamma,\Delta}} \arrow[d, "{\mu_{\V_{\Gamma,\Delta}}}"']
+        &
+          &
+            &  \deno{U}\sequoid \oc\V_\Gamma \arrow[d, "{\deno{U} \sequoid (\Gamma+0_\Delta)}"] \\
+      {\oc \V_{\Gamma,\Delta} \tensor \oc \V_{\Gamma,\Delta}} \arrow[rr, "{\deno{\Gamma,\Delta\ts \EE[N]} \tensor \oc \V_{\Gamma,\Delta}}"]
+        &
+          & {\deno U \tensor \oc \V_{\Gamma,\Delta}} \arrow[r, "{\wk_{\deno U,\oc \V_{\Gamma,\Delta}}}"]
+            & {{\deno U \sequoid \oc \V_{\Gamma,\Delta}}\,,}
+    \end{tikzcd}
+    \]
+\end{lemma}
+\begin{proof}
+  We use Lemma
+  \[
+    \begin{tikzcd}
+      I \arrow[r, "\deno s"] \arrow[d, "\deno s"']
+        & \oc S_\Gamma \arrow[r, "\cell^\Gamma"] \arrow[d, "\lunit_{S_\Gamma}" description]
+          & \oc \V_\Gamma \arrow[d, "\lunit_{\oc\V_\Gamma}"'] \\
+      \oc S_\Gamma \arrow[d, "\cell"'] \arrow[dr, "\mu_{S_\Gamma}" description]
+        & I \tensor \oc S_\Gamma \arrow[r, "I\tensor \cell" description] \arrow[d, "\deno s \tensor \oc S_\Gamma" description]
+          & I \tensor \oc\V_\Gamma \arrow[d, "\deno s \tensor \oc\V_\Gamma"] \\
+      \oc\V_\Gamma \arrow[d, "\mu_{\V_\Gamma}"'] \arrow[dr, "\mu_{\V_\Gamma}" description]
+        & \oc S_\Gamma \tensor \oc S_\Gamma \arrow[d, "\cell\tensor\cell" description] \arrow[r, "\oc S_\Gamma\tensor \cell" description]
+          & \oc S_\Gamma \tensor \oc\V_\Gamma \arrow[dl, "\cell\tensor\oc \V_\Gamma"] \\
+      \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "\mu_{\V_\Gamma}\tensor\oc\V_\Gamma"']
+        & \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "\mu_{\V_\Gamma}\tensor\oc\V_\Gamma"]
+          & \\
+      (\oc\V_\Gamma\tensor\oc\V_\Gamma) \tensor\oc\V_\Gamma \arrow[r, "{\sym^{(23)}_{\oc\V_\Gamma,\oc\V_\Gamma,\oc\V_\Gamma}}" description] \arrow[d, "\deno{\Gamma\ts M}\tensor\oc\V_\Gamma"']
+        & (\oc\V_\Gamma\tensor\oc\V_\Gamma) \tensor\oc\V_\Gamma \arrow[r, "(\deno{\Gamma\ts M}\tensor\sigma)\tensor\oc\V_\Gamma"] \arrow[d, "\deno{\Gamma\ts M}\tensor\oc\V_\Gamma" description]
+          & (\deno T\tensor A)\tensor\oc\V_\Gamma \arrow[d, "{\wk_{\deno T,A}\tensor\oc\V_\Gamma}"] \\
+      (\deno T \tensor \oc\V_\Gamma)\tensor\oc\V_\Gamma \arrow[r, "{\sym^{(23)}_{\deno T,\oc\V_\Gamma,\oc\V_\Gamma}}" description] \arrow[d, "{
 \end{proof}
 
 \bibliographystyle{alpha2}
