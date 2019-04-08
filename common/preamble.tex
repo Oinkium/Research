@@ -361,6 +361,48 @@
 \DeclareMathOperator{\CCom}{CCom}
 \newcommand{\power}{\mathfrak P}
 
+% Slanty things
+\newcommand*{\xslant}[2][76]{%
+  \begingroup
+    \sbox0{#2}%
+    \pgfmathsetlengthmacro\wdslant{\the\wd0 + cos(#1)*\the\wd0}%
+    \leavevmode
+    \hbox to \wdslant{\hss
+      \tikz[
+        baseline=(X.base),
+        inner sep=0pt,
+        transform canvas={xslant=cos(#1)},
+      ] \node (X) {\usebox0};%
+      \hss
+      \vrule width 0pt height\ht0 depth\dp0 %
+    }%
+  \endgroup
+}
+
+\makeatletter
+\newcommand*{\xslantmath}{}
+\def\xslantmath#1#{%
+  \@xslantmath{#1}%
+}
+\newcommand*{\@xslantmath}[2]{%
+  % #1: optional argument for \xslant including brackets
+  % #2: math symbol
+  \ensuremath{%
+    \mathpalette{\@@xslantmath{#1}}{#2}%
+  }%
+}
+\newcommand*{\@@xslantmath}[3]{%
+  % #1: optional argument for \xslant including brackets
+  % #2: math style
+  % #3: math symbol
+  \xslant#1{$#2#3\m@th$}%
+}
+\makeatother
+
+\newcommand{\seqdeno}[1]{\xslantmath{\llbracket}#1\xslantmath{\rrbracket}}
+
+% Empty set etc.
+
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
 
@@ -483,7 +525,8 @@
 \newcommand{\exlub}{\bigsqcup}
 \newcommand{\dv}{{\text{\lightning}}}
 \DeclareMathOperator{\pocl}{pocl}
-\newcommand{\plot}{\triangleleft}
+\newcommand{\plot}{\mathrel{\triangleleft}}
+\newcommand{\semicom}{\mathbin{\mathbf{;}}}
 \newcommand{\shad}{\mathfrak{S}}
 %\newcommand{\tree}{\mathfrak{T}}
 \newcommand{\Tau}{T}
