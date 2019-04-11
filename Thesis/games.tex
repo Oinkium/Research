@@ -3563,13 +3563,8 @@ It is then easy to see the following.
       
     \item If $\sigma \from \oc\V_\Gamma \implies (\oc\deno{S} \implies \deno T)$ and $M\from S \to T$, we say that $\sigma\plot_{S\to T}^\Gamma M$ if whenever $\tau\from \oc\V_\Gamma \implies \deno S$ is a strategy and $N\from S$ is a term such that $\tau\plot_S^\Gamma N$, then
       \[
-        \left(\oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\sigma\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,,
+        \left(\oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\sigma\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,.
         \]
-      and in addition if $S=\Var$ and $T=X$ for some datatype $X$, where $M=\lambda x.M'$, then
-      \begin{align*}
-        \left(\oc\V_\Gamma \xrightarrow{\runit_{\oc\V_\Gamma}} \oc\V_\Gamma \tensor I \xrightarrow{\sigma\tensor (\oc 0;\cell)} (\oc\Varr \implies X) \tensor \oc\Varr \xrightarrow{\ev} X\right)\qquad\\
-        \plot_X^\Gamma \neww_X M\,.
-      \end{align*}
   \end{itemize}
 \end{definition}
 
@@ -3602,14 +3597,6 @@ It is then easy to see the following.
   Indeed, let $\tau\from\oc\V_\Gamma\implies\deno S$ be a strategy and let $\Gamma \ts P\from S$ be a term in context such that $\tau\plot_S^\Gamma P$.  
   Then, since $\sigma\plot_{S\to T} N$, we must have that $\mu_{\V_\Gamma};(\sigma\tensor\tau^\dag);\ev \plot_T^\Gamma N\,P$.  
   Since $\Gamma,s\ts M\opto\Gamma,s\ts N$, we must have $\Gamma,s\ts M\,P\opto\Gamma,s\ts N\,P$, and therefore $\mu_{\V_\Gamma};(\sigma\tensor\tau^\dag);\ev\plot_T^\Gamma M\,P$ by induction.
-
-  In the case that $S=\Var$ and $T=X$ is a datatype, we also need to show that $\runit_{\oc\V_\Gamma};(\sigma\tensor(\oc 0;\cell));\ev\plot_X^\Gamma\neww_X(\lambda x.M\,x)$.  
-  Writing $\sigma'$ for the composite $\runit_{\oc\V_\Gamma};(\sigma\tensor(\oc 0;\cell));\ev$, we know already that $\sigma'\plot_X^\Gamma \neww_X(\lambda x.N\,x)$.
-  Let $s$ be a $\Gamma$-store.  
-  Then we know that if $\seqdeno{s,\sigma'}\ne\bot_{\oc\V_\Gamma\implies X}$, then $\seqdeno{s,\sigma'}=\seqdeno{s',u}$ for some $s'$, $u$ such that $\Gamma,\neww_X \lambda x.N\,x\converges u,s'$.
-  It follows that $\Gamma,x,(s\vert x\mapsto 0)\ts N\,x\converges u,s'$; then, since $\Gamma,x,(s\vert x\mapsto 0)\ts M\,x\opto \Gamma,x(s\vert_x\mapsto 0)\ts N\,x$, we have $\Gamma,x\ts M\,x\converges u,s'$ by Lemma \ref{LemSoundnessOpto}.
-  Therefore, $\Gamma,s\ts \neww_X \lambda x.M\,x \ts u,s'$.  
-  Since $s$ was arbitrary, it follows that $\sigma'\plot_X^\Gamma \new_X(\lambda x.M\,x)$.
 \end{proof}
 
 \begin{lemma}
@@ -3641,13 +3628,6 @@ It is then easy to see the following.
     \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma\tensor\oc\V_\Gamma \xrightarrow{\oc\V_\Gamma \tensor \tau^\dag} \oc\V_\Gamma\tensor\oc\deno S \xrightarrow{\Lambda\inv(\bot_{\oc\V_\Gamma \implies (\oc\deno S \implies \deno T))}} \deno T\,,
     \]
   which is equal to $\bot_{\oc\V_\Gamma\implies\deno T}$.
-
-  Lastly, in the special case that $S=\Var$ and $T=X$ is a datatype, we need to show that
-  \begin{align*}
-    \left(\oc\V_\Gamma \xrightarrow{\runit_{\oc\V_\Gamma}} \oc\V_\Gamma \tensor I \xrightarrow{\sigma\tensor (\oc 0;\cell)} (\oc\Varr \implies X) \tensor \oc\Varr \xrightarrow{\ev} X\right)\qquad\\
-    \plot_X^\Gamma \neww_X M\,.
-  \end{align*}
-  Indeed, this composite is equal to $\bot_{\oc\V_\Gamma\implies X}$ by an identical argument.
 \end{proof}
 
 \begin{lemma}
@@ -3840,7 +3820,7 @@ It is then easy to see the following.
   \begin{itemize}
     \item Suppose $\Gamma,\Delta\ts V\from\Var$, and suppose we already know that
       \[
-        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts V} \plot_{\Var} V[N_i/x_i]\,.
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts V} \plot_{\Var}^\Gamma V[N_i/x_i]\,.
         \]
       Then by definition we have
       \[
@@ -3856,9 +3836,9 @@ It is then easy to see the following.
       \begin{IEEEeqnarray*}{Cl}
         & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V \gets E})} \\
         = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V\gets n}} \\
-        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_n)} \\
-        \plot_{\Var}^\Gamma & V[N_i/x_i]\gets n\,.
+        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_n)}\,.
       \end{IEEEeqnarray*}
+      Now we have $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_n\plot_{\Var}^\Gamma V[N_i/x_i]$ by induction, so this composite is either equal to 
       Then, since we have $\Gamma,s,V[N_i/x_i]\gets E[N_i/x_i] \opto \cdots \opto \Gamma,s',V[N_i/x_i]\gets n$, the claim follows by Lemma \ref{LemAdequacyOpto}.
     \item Suppose that $\Gamma,\Delta\ts W \from \nat \to \com$ and that $\Gamma,\Delta \ts R \from \nat$.
       We claim that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts\mkvar\,W\,R};\pr_n\plot_\com^\Gamma (\mkvar\,W[N_i/x_i]\,R[N_i/x_i])\gets n$ for each $n$ and that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_\bN\plot_\nat^\Gamma \oc(\mkvar\,W[N_i/x_i]\,R[N_i/x_i])$.
