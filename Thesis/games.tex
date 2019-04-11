@@ -76,9 +76,9 @@ At type $\nat$ we have numerals, arithmetic operators and a conditional that tes
 
 At type $\Var$, we have terms that call the read and write `methods' to dereference the variable or to assign a new value to it.
 \begin{mathpar}
-  \inferrule*{\Gamma\ts V \from \Var}{\Gamma \ts \oc V \from \nat}
-  \and
   \inferrule*{\Gamma\ts V \from \Var \\ \Gamma \ts E \from \nat}{\Gamma \ts V\gets E \from \com}
+  \and
+  \inferrule*{\Gamma\ts V \from \Var}{\Gamma \ts \oc V \from \nat}
 \end{mathpar}
 
 We also have the ability to create a new variable.
@@ -3472,6 +3472,7 @@ It is then an easy corollary to show the sense in which our semantics is sound.
   \[
     \deno s;\cell^\Gamma;\deno{\Gamma\ts M} = \deno{s'};\cell^\Gamma;\deno{\Gamma\ts c}\,.
     \]
+  \label{PropSoundness}
 \end{proposition}
 \begin{proof}
   Lemma \ref{LemSoundness}, plus the fact that if $\Gamma,s\ts P\from T$, then we have a commutative diagram
@@ -3528,6 +3529,8 @@ It is then easy to see the following.
   \begin{itemize}
     \item Given $\sigma\from A \implies B$, $\sigma;\bot_{B\implies C}=\bot_{A\implies C}$.
     \item Given a strict strategy $\tau\from B\implies C$, $\bot_{A\implies B};\tau=\bot_{A\implies C}$.
+    \item $\bot_{A\implies B}$ is a strict strategy and $\bot_{A\implies B}\sequoid\sigma=\bot_{(A\sequoid C)\implies (B\sequoid D)}$ for any $\sigma\from C\implies D$.
+    \item $\Lambda(\bot_{A\tensor B\implies C})=\bot_{A\implies(B\implies C)}$.
     \item Given a zigzag (copycat) strategy $\zz_\phi\from B \implies C$ and a strategy $\sigma\from A\implies B$, if $\sigma;\zz_\phi=\bot_{A\implies C}$ then $\sigma=\bot_{A\implies B}$.
   \end{itemize}
 \end{proposition}
@@ -3547,7 +3550,7 @@ It is then easy to see the following.
 \begin{definition}
   We inductively define a relation $\plot_T^\Gamma$, where $\Gamma$ is a $\Var$-store and $T$ a type, between strategies for $\oc\V_\Gamma \implies \deno T$ and terms $\Gamma\ts M\from T$ in context as follows.
   \begin{itemize}
-    \item If $X\in\{\bC,\bB,\bN\}$ is a datatype, $M\from X$ and $\sigma\from \oc\V_\Gamma\implies X$, then we say that $\sigma \plot_X^\Gamma u$ if for all $\Gamma$-stores $s$, either $\seqdeno{s,\sigma}=\bot_{A\sequoid\oc\V_\Gamma}$ or $\seqdeno{s,\sigma}=\seqdeno{s',u}$ for some $\Gamma$-store $s'$ and some canonical form $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
+    \item If $X\in\{\bC,\bB,\bN\}$ is a datatype, $M\from X$ and $\sigma\from \oc\V_\Gamma\implies X$, then we say that $\sigma \plot_X^\Gamma u$ if for all $\Gamma$-stores $s$, either $\seqdeno{s,\sigma}=\bot_{A\sequoid\oc\V_\Gamma}$ or $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ and some canonical form $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
 
     \item If $\sigma\from \oc\V_\Gamma \implies \Varr$ and $\Gamma\ts M\from \Var$, we say that $\sigma\plot_{\Var}^\Gamma M$ if
       \[
@@ -3562,12 +3565,11 @@ It is then easy to see the following.
       \[
         \left(\oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\sigma\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,,
         \]
-      and in addition if $S=\Var$ and $T=X$ for some datatype $X$, then
-      \small
-      \[
-        \left(\oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\sigma\tensor \cell} (\oc\Varr \implies X) \tensor \oc\Varr \xrightarrow{\ev} X\right) \plot_X^\Gamma \neww_X (\lambda x.M\,x)\,.
-        \]
-      \normalsize
+      and in addition if $S=\Var$ and $T=X$ for some datatype $X$, where $M=\lambda x.M'$, then
+      \begin{align*}
+        \left(\oc\V_\Gamma \xrightarrow{\runit_{\oc\V_\Gamma}} \oc\V_\Gamma \tensor I \xrightarrow{\sigma\tensor (\oc 0;\cell)} (\oc\Varr \implies X) \tensor \oc\Varr \xrightarrow{\ev} X\right)\qquad\\
+        \plot_X^\Gamma \neww_X M\,.
+      \end{align*}
   \end{itemize}
 \end{definition}
 
@@ -3579,6 +3581,7 @@ It is then easy to see the following.
   for all $\Gamma$-stores $s$.  
   Suppose $\sigma\from\oc\V_\Gamma\implies\deno T$ is a strategy such that $\sigma\plot_T^\Gamma N$.  
   Then $\sigma\plot_T^\Gamma M$.
+  \label{LemAdequacyOpto}
 \end{lemma}
 \begin{proof}
   Induction on $T$.
@@ -3593,7 +3596,73 @@ It is then easy to see the following.
   If $\Gamma,s\ts M\opto \Gamma,s\ts N$, then $\Gamma,s\ts M\gets n\opto\Gamma,s\ts N\gets n$ for each $n$ and $\Gamma,s\ts \oc M\opto\Gamma,s\ts \oc N$.  
   Then, by the previous paragraph, we must have $\sigma;\pr_n\plot_{\com}^\Gamma M\gets n$ for each $n$ and $\sigma;\pr_\bN\plot_{\nat}^\Gamma \oc M$, and therefore $\sigma\plot_{\Var}^\Gamma M$.
 
-  Lastly, suppose that 
+  Lastly, suppose that $\Gamma,s\ts M,N\from S \to T$ and suppose that $\Gamma,s\ts M \opto \Gamma,s\ts N$.
+  Let $\sigma\from \oc\V_\Gamma \implies (\oc\deno S \implies \deno T)$ be a strategy and suppose that $\sigma \plot_{S\to T} N$.  
+  We claim that $\sigma \plot_{S\to T} M$.  
+  Indeed, let $\tau\from\oc\V_\Gamma\implies\deno S$ be a strategy and let $\Gamma \ts P\from S$ be a term in context such that $\tau\plot_S^\Gamma P$.  
+  Then, since $\sigma\plot_{S\to T} N$, we must have that $\mu_{\V_\Gamma};(\sigma\tensor\tau^\dag);\ev \plot_T^\Gamma N\,P$.  
+  Since $\Gamma,s\ts M\opto\Gamma,s\ts N$, we must have $\Gamma,s\ts M\,P\opto\Gamma,s\ts N\,P$, and therefore $\mu_{\V_\Gamma};(\sigma\tensor\tau^\dag);\ev\plot_T^\Gamma M\,P$ by induction.
+
+  In the case that $S=\Var$ and $T=X$ is a datatype, we also need to show that $\runit_{\oc\V_\Gamma};(\sigma\tensor(\oc 0;\cell));\ev\plot_X^\Gamma\neww_X(\lambda x.M\,x)$.  
+  Writing $\sigma'$ for the composite $\runit_{\oc\V_\Gamma};(\sigma\tensor(\oc 0;\cell));\ev$, we know already that $\sigma'\plot_X^\Gamma \neww_X(\lambda x.N\,x)$.
+  Let $s$ be a $\Gamma$-store.  
+  Then we know that if $\seqdeno{s,\sigma'}\ne\bot_{\oc\V_\Gamma\implies X}$, then $\seqdeno{s,\sigma'}=\seqdeno{s',u}$ for some $s'$, $u$ such that $\Gamma,\neww_X \lambda x.N\,x\converges u,s'$.
+  It follows that $\Gamma,x,(s\vert x\mapsto 0)\ts N\,x\converges u,s'$; then, since $\Gamma,x,(s\vert x\mapsto 0)\ts M\,x\opto \Gamma,x(s\vert_x\mapsto 0)\ts N\,x$, we have $\Gamma,x\ts M\,x\converges u,s'$ by Lemma \ref{LemSoundnessOpto}.
+  Therefore, $\Gamma,s\ts \neww_X \lambda x.M\,x \ts u,s'$.  
+  Since $s$ was arbitrary, it follows that $\sigma'\plot_X^\Gamma \new_X(\lambda x.M\,x)$.
+\end{proof}
+
+\begin{lemma}
+  Let $T$ be a type of Idealized Algol, and let $\Gamma$ be a $\Var$-context.  
+  Then $\bot_{\oc\V_\Gamma\implies \deno T}\plot_T^\Gamma M$ for any term-in-context $\Gamma\ts M\from T$.
+  \label{LemAdequacyBot}
+\end{lemma}
+\begin{proof}
+  Induction on $T$.  
+  If $T$ is a datatype and $s$ a store, then for any $\sigma\from \oc\V_\Gamma\implies \deno T$ we have
+  \[
+    \oc\deno s;\cell^\Gamma;\sigma = \seqdeno{s,\sigma};(\deno T\sequoid ());\run_{\deno T}\,,
+    \]
+  as in the proof of Proposition \ref{PropSoundness}; since $(\deno T\sequoid());\run_{\deno T}$ is a zigzag strategy, if $\sigma=\bot_{\oc\V_\Gamma\implies\deno T}$, then $\oc\deno s;\cell^\Gamma;\sigma=\bot_{\deno T}$, and therefore $\seqdeno{s,\sigma}=\bot_{T\sequoid\oc\V_\Gamma}$.
+
+  Suppose $\Gamma\ts M\from\Var$.  
+  Since the projections are strict strategies, we have $\bot_{\oc\V_\Gamma\implies\Varr};\pr_n=\bot_{\oc\V_\Gamma\implies\bC}\plot_{\Var}^\Gamma M$ and $\bot_{\oc\V_\Gamma\implies\Varr};\pr_{\bC}=\bot_{\oc\V_\Gamma\implies\bN}\plot_{\bN}^\Gamma M$, and therefore $\bot_{\oc\V_\Gamma\implies\Varr}\plot_{\Var}^\Gamma M$.
+
+  Suppose that $\Gamma\ts M\from S\to T$.  
+  Fix some $N\from S$ and $\tau\from \oc\V_\Gamma\implies \deno S$ such that $\tau\plot_S^\Gamma N$.  
+
+  We are required to show that
+  \[
+    \left(\oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\bot\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,,
+    \]
+  which, by induction, we can do by showing that it is equal to $\bot_{\oc\V_\Gamma\implies\deno T}$.
+  Indeed, we may write this composite as
+  \[
+    \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma\tensor\oc\V_\Gamma \xrightarrow{\oc\V_\Gamma \tensor \tau^\dag} \oc\V_\Gamma\tensor\oc\deno S \xrightarrow{\Lambda\inv(\bot_{\oc\V_\Gamma \implies (\oc\deno S \implies \deno T))}} \deno T\,,
+    \]
+  which is equal to $\bot_{\oc\V_\Gamma\implies\deno T}$.
+
+  Lastly, in the special case that $S=\Var$ and $T=X$ is a datatype, we need to show that
+  \begin{align*}
+    \left(\oc\V_\Gamma \xrightarrow{\runit_{\oc\V_\Gamma}} \oc\V_\Gamma \tensor I \xrightarrow{\sigma\tensor (\oc 0;\cell)} (\oc\Varr \implies X) \tensor \oc\Varr \xrightarrow{\ev} X\right)\qquad\\
+    \plot_X^\Gamma \neww_X M\,.
+  \end{align*}
+  Indeed, this composite is equal to $\bot_{\oc\V_\Gamma\implies X}$ by an identical argument.
+\end{proof}
+
+\begin{lemma}
+  Let $T$ be an idealized Algol type, and let $\Gamma\ts M\from T$ be a typing judgement, where $\Gamma$ is a $\Var$-context.
+  Suppose that $\sigma_1\subset\sigma_2\subset\cdots$ is a nested sequence of strategies for $\oc\V_\Gamma$ such that $\sigma_i\plot_T^\Gamma M$ for all $i$.  
+  Let $\sigma=\bigcup_i \sigma_i$.  
+  Then $\sigma\plot_T^\Gamma M$.
+  \label{LemAdequacyLimits}
+\end{lemma}
+\begin{proof}
+  If $X$ is a datatype, $\Gamma$ is a $\Var$-context, $s$ is a $\Gamma$-store and $\Gamma\ts M\from X$ is a typing judgement, then if $\seqdeno{s,\sigma_i}=\bot_{X\sequoid\oc\V_\Gamma}$ for all $i$, then we must have $\seqdeno{s,\sigma_i}=\bot_{X\sequoid\oc\V_\Gamma} = \bot_{X\sequoid\oc\V_\Gamma}$ by continuity of composition.  
+  Otherwise, $\seqdeno{s,\sigma_i}=\seqdeno{\Gamma,s'\ts u}$ for some $i$, some $\Gamma$-store $s'$ and some $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
+  In that case, since $\seqdeno{\Gamma,s'\ts u}$ is a maximal strategy for $X\sequoid\oc\V_\Gamma$, we must have $\seqdeno{s,\sigma_j}=\seqdeno{\Gamma,s'\ts u}$ for all $j\ge i$, and therefore that $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$.
+
+  By induction on $T$, this extends to higher types by continuity of composition.
 \end{proof}
 
 \begin{lemma}
@@ -3607,14 +3676,227 @@ It is then easy to see the following.
     \]
   for the composite
   \[
-    \oc\V_\Gamma \xrightarrow{\langle \oc\V_\Gamma,\sigma_1^\dag,\cdots,\sigma_n^\dag\rangle} \oc\V_{\Gamma,\Delta} \xrightarrow{\sigma} \deno{T}\,.
+    \oc\V_\Gamma \xrightarrow{\langle \der,\sigma_1,\cdots,\sigma_n^\dag\rangle^\dag} \oc\V_{\Gamma,\Delta} \xrightarrow{\sigma} \deno{T}\,.
     \]
 
   Then for any term-in-context $\Gamma,\Delta \ts M\from T$, we have
   \[
-    (\sigma_i)\semicom\deno{\Gamma\ts M} \plot_T^{\Gamma} M[N_i/x_i]\,.
+    (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M} \plot_T^{\Gamma} M[N_i/x_i]\,.
     \]
+  \label{LemAdequacy}
 \end{lemma}
+\begin{proof}
+  Induction on the typing derivation $\Gamma,\Delta \ts M\from T$.
+
+  \begin{itemize}
+    \item Let $x_j\from T_j$ be a variable occurring in $\Delta$.  
+      Then $x_j[N_i/x_i]=N_j$.  
+      Moreover, it is clear that $(\sigma_i)\semicom \deno{\Gamma,\Delta\ts x_j} = \sigma_j$.
+      And we have $\sigma_j\plot_{T_j}^\Gamma N_j$ by hypothesis.
+
+    \item Next, suppose that $x\from\Var$ is a variable occurring in $\Gamma$.
+      Then we have $x[N_i/x_i]=x$, and it is easy to see that we have
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts x} = \deno{\Gamma\ts x}\,.
+        \]
+      Now we have $\deno{\Gamma\ts x};\pr_n = \deno{\Gamma\ts x\gets n}$ and $\deno{\Gamma\ts x};\pr_{\bN} = \deno{\Gamma \ts \oc\bN}$.  
+      From Lemma \ref{LemSoundnessOpto} (in particular, Figures \ref{FigSoundnessOoptoContext} and \ref{FigSoundnessOoptoStorage}), we know that if $s$ is a $\Gamma$-store, then
+      \[
+        \seqdeno{s,\deno{\Gamma\ts x\gets n}} = \seqdeno{\Gamma,s\ts x\gets n} = \seqdeno{\Gamma, (s\vert x\mapsto n)\ts \skipp}\,,
+        \]
+      where we have that $\Gamma,s\ts x\gets n\converges \skipp,(s\vert x\mapsto n)$, and that
+      \[
+        \seqdeno{s,\deno{\Gamma\ts \oc x}} = \seqdeno{\Gamma,s\ts \oc x} = \seqdeno{\Gamma,s\ts s(x)}\,,
+        \]
+      where we have that $\Gamma,s\ts \oc x \converges s(x),s$.
+
+    \item Next, suppose that $\Gamma,\Delta\ts M\from S\to T$ and $\Gamma,\Delta\ts N\from S$, where we already know that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}\plot_{S\to T}^\Gamma M[N_i/x_i]
+        \]
+      and that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts N}\plot_S^\Gamma N[N_i/x_i]\,.
+        \]
+      Then it easy to see that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M\,N}
+        \]
+      is given by the composite
+      \small
+      \[
+        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}) \tensor ((\sigma_i)\semicom\deno{\Gamma,\Delta\ts N})} (\oc\deno S \implies \deno T) \tensor \oc\deno {S} \xrightarrow{\ev} \deno T.
+        \]
+      \normalsize
+      Therefore, by the definition of $\plot_{S\to T}^\Gamma$, it must be the case that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M\,N} \plot_{T}^\Gamma M[N_i/x_i]\,N[N_i/x_i] = (M\,N)[N_i/x_i],.
+        \]
+    \item Next, suppose that $\Gamma,\Delta,x\from S \ts M\from T$.  
+      We claim that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta,\lambda x.M} \plot_{S\to T}^\Gamma (\lambda x.M)[N_i/x_i]\,.
+        \]
+      Let $\sigma'\from \oc\V_\Gamma \implies \deno S$ be a strategy and let $\Gamma\ts N\from S$ be a term in context such that $\sigma\plot_S^\Gamma N$.  
+      Then, by the inductive hypothesis (with $x$ lying in the `$\Delta$-part', we know that
+      \[
+        (\sigma_i,\sigma')\semicom\deno{\Gamma,\Delta,x\from S\ts M\from T}\plot_T^\Gamma M[N_i/x_i,N'/x]\,.
+        \]
+      Then, since $\Gamma,s\ts (\lambda x.M[N_i/x_i])\,N'\opto \Gamma,s\ts M[N_i/x_i,N'/x]$ for any $\Gamma$-store $s$, by Lemma \ref{LemAdequacyOpto} we know that
+      \[
+        (\sigma_i,\sigma')\semicom\deno{\Gamma,\Delta,x\from S\ts M} \plot_T^\Gamma ((\lambda x.M)[N_i/x_i])\,N'\,.
+        \]
+      Finally, observe that $(\sigma_i,\sigma')\semicom\deno{\Gamma,\Delta,x\from S\ts M\from T}$ is the composite
+      \[
+        \oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n,\sigma'\rangle^\dag} \oc\V_{\Gamma,\Delta,x} \xrightarrow{\deno{\Gamma,\Delta,x\from S\ts M}} \deno T\,,
+        \]
+      which can alternatively be written as
+      \begin{mathpar}
+        \oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag} \oc\V_{\Gamma,\Delta} \xrightarrow{\mu_{\V_{\Gamma,\Delta}}} \oc\V_{\Gamma,\Delta}\tensor\oc\V_{\Gamma,\Delta}\\ \xrightarrow{\deno{\Gamma,\Delta\ts \lambda x.M} \tensor (\sigma')^\dag} (\oc\deno S\implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\,.
+      \end{mathpar}
+
+      In the special case that $S=\Var$ and $T=X$ is a datatype, we need to show that we also have
+      \begin{mathpar}
+        \bigg(\oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag}
+        \oc\V_{\Gamma,\Delta} \xrightarrow{\runit_{\oc\V_{\Gamma,\Delta}}}
+        \oc\V_{\Gamma,\Delta}\tensor I \xrightarrow{\oc\V_{\Gamma,\Delta} \tensor \oc0}
+        \oc\V_{\Gamma,\Delta}\tensor\oc\bN \xrightarrow{\oc\V_{\Gamma,\Delta}\tensor\cell}
+        \oc\V_{\Gamma,\Delta}\tensor\oc\Var \xrightarrow{\deno{\Gamma,\Delta\ts\lambda x.M}\tensor \oc\Var}\\
+        (\oc\Var \implies X) \tensor \oc\Var \xrightarrow{\ev}
+        X\bigg)
+        \plot_X^\Gamma \neww_X \lambda x.M[N_i/x_i]\,.
+      \end{mathpar}
+      Call this composite (in brackets) $\zeta$.
+
+      By induction (taking $x$ to be in the `$\Gamma$-component'), we know already that
+      \begin{mathpar}
+        \left(
+        \oc\V_{\Gamma,x} \xrightarrow{\langle\pr_\Gamma,\sigma_1,\cdots,\sigma_n,\pr_x\rangle^\dag}
+        \oc\V_{\Gamma,\Delta,x} \xrightarrow{\deno{\Gamma,\Delta,x\ts M}}
+        X
+        \right)
+        \plot_X^{\Gamma,x} M[N_i/x_i]\,.
+      \end{mathpar}
+      Call this composite $\xi$.  
+      Then we can write the first composite $\zeta$ as
+      \begin{mathpar}
+        \oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag}
+        \oc\V_{\Gamma,\Delta} \xrightarrow{\runit_{\oc\V_{\Gamma,\Delta}}}
+        \oc\V_{\Gamma,\Delta}\tensor I \xrightarrow{\oc\V_{\Gamma,\Delta} \tensor \oc0}
+        \oc\V_{\Gamma,\Delta}\tensor\oc\bN \xrightarrow{\oc\V_{\Gamma,\Delta}\tensor\cell}
+        \oc\V_{\Gamma,\Delta}\tensor\oc\Var \xrightarrow{\xi}
+        X\,.
+      \end{mathpar}
+      Therefore, for any $\Gamma$-store $s$, either $\seqdeno{s,\xi}=\bot$, in which case $\seqdeno{s,\zeta}=\bot$, or $\seqdeno{(s\vert x\mapsto 0),\xi}=\seqdeno{s',u}$ for some $u$ in $X$ and some $\Gamma,x$-store $s'$ such that $\Gamma,x,(s\vert x\mapsto 0) \ts M \converges u,s'$.  
+      In the second case, we have $\seqdeno{s,\zeta} = \seqdeno{s'\vert_\Gamma,u}$, and $\Gamma,s\ts M \converges u,s'\vert_\Gamma$.
+  \end{itemize}
+
+  Now we move on to the structural constants for the datatypes.  
+  We deal with the case of the type $\nat$ (i.e., the terms $n$, $\suc M$, $\pred M$ and $\IfO M\Then N \Else P$, and it should be clear how our ideas translate to the corresponding rules at the types $\com$ and $\bool$.
+
+  \begin{itemize}
+    \item Given a numeral $n$ and a $\Gamma$-store $s$, we have $(\sigma_i)\semicom \deno{\Gamma,\Delta\ts n} = \deno{\Gamma\ts n}$ and $\seqdeno{s,\deno{\Gamma\ts n}} = \seqdeno{\Gamma,s\ts n}$, where $\Gamma,s\ts n\converges n,s$.
+
+    \item Suppose $\Gamma,\Delta\ts M\from \nat$, and that we already know that 
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}\plot_{\nat}^\Gamma M[N_i/x_i]\,.
+        \]
+      So for all $\Gamma$-stores $s$, either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})} = \bot_{\bN\sequoid\oc\V_\Gamma}$ or it is equal to $\seqdeno{\Gamma,s'\ts n}$ for some numeral $n$.  
+
+      Now we have 
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M} = (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M};(\suc\tensor\oc\V_\Gamma)\,;
+        \]
+      since $\suc\from\bN \implies \bN$ is a strict strategy, we know that either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \suc M})} = \bot_{\bN\sequoid\oc\V_\Gamma}$ or it is equal to $\seqdeno{\Gamma,s'\ts n};(\suc\tensor\oc\V_\Gamma) = \seqdeno{\Gamma,s'\ts n+1}$, and we have $\Gamma,s\ts \suc M[N_i/x_i]\converges n+1$.
+      Therefore, 
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M} \plot_{\nat}^\Gamma \suc M[N_o/x_i]\,.
+        \]
+
+      A similar argument proves that 
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\pred M} \plot_{\nat}^\Gamma \pred M[N_i/x_i]\,.
+        \]
+
+    \item Now we move on to the conditional.  
+      Suppose that we have $\Gamma,\Delta\ts M\from \nat$ and $\Gamma,\Delta\ts N,P\from X$ for some datatype $X$.  
+      Let $s$ be a $\Gamma$-store.  
+      Since $\IfO$ is a strict strategy, if $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})}=\bot_{\oc\V_\Gamma\ts \bN}$, then
+      \[
+        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO M \Then N \Else P}} = \bot_{\oc\V_\Gamma \ts X}\,.
+        \]
+      Otherwise, by induction we know that $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}}=\seqdeno{\Gamma,s'\ts n}$ for some numeral $n$ such that $\Gamma,s\ts M[N_i/x_i]\converges n,s'$.
+      Without loss of generality, suppose that $n=0$.  
+      Then we have
+      \begin{IEEEeqnarray*}{Cl}
+        & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma\,\Delta\ts \IfO M \Then N \Else P})} \\
+        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO 0 \Then N \Else P})} \\
+        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta \ts N})}\,. \\
+      \end{IEEEeqnarray*}
+      Then, by induction, this last term is either equal to $\bot_{X\sequoid\V_\Gamma}$,or is equal to $\seqdeno{\Gamma,s''\ts u}$ for some $u\in X$ such that $\Gamma,s'\ts N[N_i/x_i]\converges u,s''$.
+      In this second case, we have $\Gamma,s\ts \IfO M[N_i/x_i] \Then N[N_i/x_i] \Else P[N_i/x_i] \converges u,s''$.
+  \end{itemize}
+  Next, we deal with the rules for variables.
+  \begin{itemize}
+    \item Suppose $\Gamma,\Delta\ts V\from\Var$, and suppose we already know that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts V} \plot_{\Var} V[N_i/x_i]\,.
+        \]
+      Then by definition we have
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts \oc V} = (\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_{\bN} \plot_{\bN}^\Gamma \oc\V[N_i/x_i]\,.
+        \]
+      Suppose $\Gamma,\Delta\ts E\from \nat$, and suppose we know already that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts E} \plot_{\bN} E[N_i/x_i]$.  
+      Then, for all $s$, either $\seqdeno{s,(\sigma_i)\semicom\deno{\Gamma,\Delta\ts E}}=\bot_{\bN \sequoid\oc\V_\Gamma}$ -- in which case
+      \[
+        \seqdeno{s,(\sigma_i)\semicom\deno{\Gamma,\Delta\ts V\gets E}} = \bot_{\bC \sequoid \oc\V_\Gamma}
+        \]
+      (since $\assign$ is a strict strategy) -- or it is equal to $\seqdeno{s',n}$ for some $n\in \bN$ such that $\Gamma,s\ts E[N_i/x_i]\converges n,s'$.
+      In the second case, we have
+      \begin{IEEEeqnarray*}{Cl}
+        & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V \gets E})} \\
+        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V\gets n}} \\
+        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_n)} \\
+        \plot_{\Var}^\Gamma & V[N_i/x_i]\gets n\,.
+      \end{IEEEeqnarray*}
+      Then, since we have $\Gamma,s,V[N_i/x_i]\gets E[N_i/x_i] \opto \cdots \opto \Gamma,s',V[N_i/x_i]\gets n$, the claim follows by Lemma \ref{LemAdequacyOpto}.
+    \item Suppose that $\Gamma,\Delta\ts W \from \nat \to \com$ and that $\Gamma,\Delta \ts R \from \nat$.
+      We claim that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts\mkvar\,W\,R};\pr_n\plot_\com^\Gamma (\mkvar\,W[N_i/x_i]\,R[N_i/x_i])\gets n$ for each $n$ and that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_\bN\plot_\nat^\Gamma \oc(\mkvar\,W[N_i/x_i]\,R[N_i/x_i])$.
+
+      For the first of these, let $s$ be a $\Gamma$-store.  
+      We have
+      \begin{IEEEeqnarray*}{Cl}
+        & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_n)} \\
+        = & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta \ts W\,n})} \\
+        \plot_{\com}^\Gamma & W[N_i/x_i]\,n\,.
+      \end{IEEEeqnarray*}
+      Since we have $\Gamma,s\ts (\mkvar\,W[N_i/x_i]\,R[N_i/x_i])\gets n \opto \Gamma,s,W[N_i/x_i]\,n$, the claim follows by Lemma \ref{LemAdequacyOpto}.
+
+      For the second, we have
+      \begin{IEEEeqnarray*}{Cl}
+        & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_\bN)} \\
+        = & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta \ts R})} \\
+        \plot_{\com}^\Gamma & R[N_i/x_i]\,.
+      \end{IEEEeqnarray*}
+      Since we have $\Gamma,s\ts\oc(\mkvar\,W\,R)\opto\Gamma,s\ts R$, the claim follows by Lemma \ref{LemAdequacyOpto}.
+      
+    \item We have already proved that if $\Gamma,x\from \Var,\Delta\ts M\from X$, and $(\sigma_i)\semicom\deno{\Gamma,x\from \Var,\Delta\ts M}\plot_X^\Gamma M$ then $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts \neww_X\lambda x.M}\plot_X^\Gamma \neww_X\lambda x.M$.
+  \end{itemize}
+  It remains to deal with the case of the recursion combinator $\Y_T$.  
+  First recall that if $h\from ((\deno T \to \deno T) \to \deno T) \to (\deno T\to \deno T) \to T$ (where we write $A \to B$ for $\oc A \implies B$) is the morphism corresponding to $\lambda F^{(T\to T) \to T}.\lambda f^{T\to T}.f(F\,f)$, then $\Y_T$ is constructed as the limit of the chain
+  \[
+    \bot_{(T\to T)\to T} \subset \bot_{(T\to T) \to T};h \subset \bot_{(T\to T)\to T};h;h \subset \cdots\,.
+    \]
+  By Lemma \ref{LemAdequacyLimits}, then, it suffices to show that if $\Gamma,\Delta \ts M\from T \to T$ then $(\sigma_i)\semicom \deno {\Gamma,\Delta\ts M};\left(\bot_{(T\to T)\to T}\right);h^n\plot_{T}^{\Gamma} \Y_T M[N_i/x_i]$ for each $n$.
+
+  We do this by induction on $n$.  
+  Lemma \ref{LemAdequacyBot} takes care of the initial case, and it will therefore suffice to prove that if $\sigma\plot_T^\Gamma \Y_T M$ then $\sigma;h\plot_T^\Gamma \Y_T M$.
+
+  Suppose first that $T=X$ is a datatype.  
+  We know from above that $\sigma;h\plot_X^\Gamma (\lambda F.\lambda f.f(F\,f))\Y_T M$.
+  Let $s$ be a $\Gamma$-store.  
+  Then either $\seqdeno{s,(\sigma;h)} = \bot_{X\sequoid\oc\V_\Gamma}$ or $\seqdeno{s,(\sigma;h)} = \seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ and some $u\in X$ such that $\Gamma,s\ts (\lambda F.\lambda f.f(F\,f))\Y_t M\converges s',u$.
+\end{proof}
 
 \bibliographystyle{alpha2}
 \bibliography{../common/phd_bibliography}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  8 APR 2019 16:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  11 APR 2019 12:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -932,6 +932,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 \gnBoxA=\box51
 \gnCornerHgt=\dimen302
 \gnArgHgt=\dimen303
+\symbbsymbol=\mathgroup9
 )
 (/usr/share/texmf-dist/tex/luatex/lua-visual-debug/lua-visual-debug.sty
 Package: lua-visual-debug 2019/01/07 v0.7 Visual debugging in LuaLaTeX (PGU)
@@ -1013,7 +1014,10 @@ LaTeX Info: Redefining \nameref on input line 8.
 \c@lstlisting=\count177
  ABD: EveryShipout initializing macros
 Chapter 1.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 17.
+(/usr/share/texmf-dist/tex/latex/bbold/Ubbold.fd)
 LaTeX Font Info:    Try loading font information for U+bbm on input line 18.
+
 (/usr/share/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
@@ -1122,15 +1126,61 @@ ut line 2418.
 Package amsthm Warning: The \qedhere command may not work correctly here on inp
 ut line 3052.
 
-[71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] (./games.bbl
-[84] [85
+[71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85]
+[86] [87] [88]
+Overfull \hbox (26.61783pt too wide) in paragraph at lines 3841--3843
+\OT1/cmr/m/n/10.95 Then, since we have $^^@\OML/cmm/m/it/10.95 ; s; V\OT1/cmr/m
+/n/10.95 [\OML/cmm/m/it/10.95 N[]=x[]\OT1/cmr/m/n/10.95 ] \OMS/cmsy/m/n/10.95  
+ \OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 N[]=x[]\OT1/cmr/m
+/n/10.95 ] [][]\OMS/cmsy/m/n/10.95 ! [] [][]! \OT1/cmr/m/n/10.95 ^^@\OML/cmm/m/
+it/10.95 ; s[]; V\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 N[]=x[]\OT1/cmr/m/n/10
+.95 ] \OMS/cmsy/m/n/10.95  
+ []
 
-]) [86]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3622.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3622.
+
+Overfull \hbox (66.30333pt too wide) in paragraph at lines 3843--3845
+\OML/cmm/m/it/10.95 n$ \OT1/cmr/m/n/10.95 for each $\OML/cmm/m/it/10.95 n$ \OT1
+/cmr/m/n/10.95 and that $(\OML/cmm/m/it/10.95 ^^[[]\OT1/cmr/m/n/10.95 ) \U/bbol
+d/m/n/10.95 ; [] \OT1/cmr/m/n/10.95 ; [][] [][] !([]  \OML/cmm/m/it/10.95 W\OT1
+/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 N[]=x[]\OT1/cmr/m/n/10.95 ] \OML/cmm/m/it/1
+0.95 R\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 N[]=x[]\OT1/cmr/m/n/10.95 ])$. 
+ []
+
+[89]
+Overfull \hbox (11.97404pt too wide) in paragraph at lines 3852--3854
+\OT1/cmr/m/n/10.95 Since we have $^^@\OML/cmm/m/it/10.95 ; s [] \OT1/cmr/m/n/10
+.95 ([]  \OML/cmm/m/it/10.95 W\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 N[]=x[]\O
+T1/cmr/m/n/10.95 ] \OML/cmm/m/it/10.95 R\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95
+ N[]=x[]\OT1/cmr/m/n/10.95 ]) \OMS/cmsy/m/n/10.95   \OML/cmm/m/it/10.95 n [][]\
+OMS/cmsy/m/n/10.95 ! \OT1/cmr/m/n/10.95 ^^@\OML/cmm/m/it/10.95 ; s; W\OT1/cmr/m
+/n/10.95 [\OML/cmm/m/it/10.95 N[]=x[]\OT1/cmr/m/n/10.95 ] \OML/cmm/m/it/10.95 n
+$\OT1/cmr/m/n/10.95 ,
+ []
+
+
+Overfull \hbox (58.63914pt too wide) in paragraph at lines 3863--3864
+[]\OT1/cmr/m/n/10.95 We have al-ready proved that if $^^@\OML/cmm/m/it/10.95 ; 
+x [] [] []; \OT1/cmr/m/n/10.95 ^^A [] \OML/cmm/m/it/10.95 M [] [] X$\OT1/cmr/m/
+n/10.95 , and $(\OML/cmm/m/it/10.95 ^^[[]\OT1/cmr/m/n/10.95 ) \U/bbold/m/n/10.9
+5 ; [] [][]
+ []
+
+
+Overfull \hbox (3.36992pt too wide) in paragraph at lines 3865--3867
+\OML/cmm/m/it/10.95 B$ \OT1/cmr/m/n/10.95 for $!\OML/cmm/m/it/10.95 A \U/msa/m/
+n/10.95 ( \OML/cmm/m/it/10.95 B$\OT1/cmr/m/n/10.95 ) is the mor-phism cor-re-sp
+ond-ing to $\OML/cmm/m/it/10.95 ^^UF[]:^^Uf[]:f\OT1/cmr/m/n/10.95 (\OML/cmm/m/i
+t/10.95 F f\OT1/cmr/m/n/10.95 )$,
+ []
+
+(./games.bbl [90] [91
+
+]) [92]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3884.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3884.
  (./games.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3622.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3622.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3884.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3884.
 
 Package rerunfilecheck Info: File `games.out' has not changed.
 (rerunfilecheck)             Checksum: B5310FD0135DE4445E4BD7825BB37F75;1670.
@@ -1141,56 +1191,60 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 27342 strings out of 492616
- 524067 string characters out of 6135178
- 759672 words of memory out of 5000000
- 30463 multiletter control sequences out of 15000+600000
- 29727 words of font info for 125 fonts, out of 8000000 for 9000
+ 27380 strings out of 492616
+ 524644 string characters out of 6135178
+ 759947 words of memory out of 5000000
+ 30481 multiletter control sequences out of 15000+600000
+ 31212 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,22n,82p,815b,1415s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/john/.texlive/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/
-share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmbx8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex
-7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></us
-r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pf
-b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmss12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss
-8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
-are/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></us
-r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eufm1
-0.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></u
-sr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam5.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/share/texmf-dist/
-fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/symbols/msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/
-stmaryrd/stmary10.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary
-5.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary6.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb></usr/share/texmf-dist/fon
-ts/type1/public/stmaryrd/stmary8.pfb></usr/share/texmf-dist/fonts/type1/public/
-wasy2-ps/wasy10.pfb>
-Output written on games.pdf (86 pages, 696026 bytes).
+share/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/share/texmf-d
+ist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/share/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
+/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.
+pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+s10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmti8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10
+.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/shar
+e/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/amsfonts/symbols/msam5.pfb></usr/share/texmf-dist/fonts/type1/publi
+c/amsfonts/symbols/msam7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr
+/share/texmf-dist/fonts/type1/public/stmaryrd/stmary5.pfb></usr/share/texmf-dis
+t/fonts/type1/public/stmaryrd/stmary6.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/stmaryrd/stmary7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/st
+mary8.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
+Output written on games.pdf (92 pages, 726350 bytes).
 PDF statistics:
- 1006 PDF objects out of 1200 (max. 8388607)
- 852 compressed objects within 9 object streams
- 251 named destinations out of 1000 (max. 500000)
+ 1054 PDF objects out of 1200 (max. 8388607)
+ 892 compressed objects within 9 object streams
+ 259 named destinations out of 1000 (max. 500000)
  197 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -526,7 +526,6 @@
 \newcommand{\dv}{{\text{\lightning}}}
 \DeclareMathOperator{\pocl}{pocl}
 \newcommand{\plot}{\mathrel{\triangleleft}}
-\newcommand{\semicom}{\mathbin{\mathbf{;}}}
 \newcommand{\shad}{\mathfrak{S}}
 %\newcommand{\tree}{\mathfrak{T}}
 \newcommand{\Tau}{T}
@@ -676,6 +675,10 @@
 
 \DeclareMathOperator{\rread}{read}
 \DeclareMathOperator{\wwrite}{write}
+
+\DeclareSymbolFont{bbsymbol}{U}{bbold}{m}{n}
+\DeclareMathSymbol{\bbsemicolon}{\mathbin}{bbsymbol}{"3B}
+\newcommand{\semicom}{\bbsemicolon}
 
 %%% END Article customizations
 
