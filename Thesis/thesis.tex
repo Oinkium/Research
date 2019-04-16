@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[11pt]{report}
 
 \let\FEWFONTS=1
 \let\THESIS=1
@@ -11,10 +11,10 @@
 \tableofcontents
 \newpage
 
-\section{Monads and Kleisli categories}
-\label{SecMonads}
+\chapter{Monads and Kleisli categories}
+\label{ChapMonads}
 
-\subsection{Monads}
+\section{Monads}
 
 Let $\C$ be a category.  
 Then the category $[\C,\C]$ of functors $\C\to\C$ and natural transformations has a (strict) monoidal structure given by composition.  
@@ -76,7 +76,7 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
     \and
     \eta \from 1 \to RL\,.
   \end{mathpar}
-  We will see in the next section that every monad is induced by an adjunction in this way.
+  We will see in the next chapter that every monad is induced by an adjunction in this way.
 
   As an example, if $\M$ is a monoidal closed category and $w$ is an object of $\M$, then the \emph{state monad} $S_w$ on $\M$ is defined by
   \[
@@ -98,7 +98,7 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
     \]
 \end{example}
 
-\subsection{Kleisli Categories}
+\section{Kleisli Categories}
 
 Let $\C$ be a category and let $M$ be a monad on $\C$.  
 Then \cite{Kleisli} there is a category $\Kl_M$, called the \emph{Kleisli category} of $M$, whose objects are the objects of $\C$ and where a morphism from an object $a$ to an object $b$ is a morphism $a \to Mb$ in $\C$.
@@ -218,10 +218,16 @@ A particularly important fact about the reader monad in Cartesian closed categor
 
 The \emph{functional completeness} theorem \cite{FunctionalCompleteness} can be thought of as a special case of our remarks above.
 
-\subsection{Denotational Semantics}
+\section{Denotational Semantics}
 
-From now till the end of the chapter, we fix an (order-enriched) Cartesian closed category $\G$ that admits a denotational semantics of Idealized Algol satisfying Computational Adequacy and in which every compact element is definable.
+Having given an overview of the general theory of monads and Kleisli categories, we now examine the relationship between Kleisli categories and Full Abstraction.  From now till the end of the chapter, we fix an base Cartesian closed category $\G$ that admits a denotational semantics of Idealized Algol satisfying Computational Adequacy.  
+In addition, we require that $\G$ can be interpreted as being enriched in directed-complete partial orders, in such a way that any compact morphism between the denotation of IA types is the denotation of some IA term.
 The prototypical example, of course, will be the category of games and visible strategies, but we will not exploit any properties of this model beyond the ones we have already mentioned, mentioning it only in examples where appropriate.
+
+In addition, we will specialize to reader monads.  
+The rationale behind this is twofold: firstly, we do not wish to assume too much about the underlying category $\G$ beyond the fact that it gives us a good model of Idealized Algol.  
+Secondly, in order to get a compositional semantics for the $\lambda$-calculus, it is important that the Kleisli categories we consider are themselves Cartesian closed.  
+
 
 Let $X\in \{\bB,\bN,\bC\}$ be a set that has an interpretation as an Idealized Algol type $X$, and write $X$ also for the corresponding object of $\G$.
 Write $\G_X$ as a shorthand for $\Kl_{R_X}\G$, the Kleisli category for the reader monad on $\G$ corresponding to the object $X$.  
@@ -268,7 +274,7 @@ is given by the composite
 Now this last term is $\beta$-equivalent to our original term-in-context $\Gamma\ts M$.  
 Since $\G_X$ is Cartesian closed (by Theorem \ref{FunctionalCompletenessCcc}), the $\beta$ rule is valid in $\G_X$, and this means that the composite above is an alternative definition of the denotation of $\Gamma\ts M$.
 
-\subsection{Operational Semantics}
+\section{Operational Semantics}
 
 We now define the operational semantics of \IAX and prove a computational adequacy result for our denotational semantics.
 
@@ -367,7 +373,7 @@ We now define the operational semantics of \IAX and prove a computational adequa
   as saying that $M$ converges to $c$ in the case that the sequence of values returned by the nondeterministic oracle is given by the sequence $u$.
 \end{example}
 
-\subsection{Soundness}
+\section{Soundness}
 \label{SecSoundness}
 
 To prove our adequacy result for the operational semantics of \IAX, we first give some definitions.
@@ -744,7 +750,7 @@ First recall the statement of Computational Adequacy for $\G$:
 
 \begin{definition}
   Let $n$ be a natural number.  
-  We define terms $\test_n\from \nat \to \com$ inductively by
+  We inductively define terms $\test_n\from \nat \to \com$ by
   \begin{mathpar}
     \test_0 = \lambda m.\IfO m \Then \skipp \Else \Omega
     \and
@@ -785,7 +791,6 @@ First recall the statement of Computational Adequacy for $\G$:
   converges to $|u|$ in IA.
   
   We can prove this using the following derivation tree.
-  \tiny
   \[
     \inferrule*
     {
@@ -819,7 +824,6 @@ First recall the statement of Computational Adequacy for $\G$:
       ,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
     }\qedhere
     \]
-  \normalsize
 \end{proof}
 
 The statement of Proposition \ref{PropKleisliSoundness} looks a bit strange.  
@@ -912,7 +916,7 @@ is not equal to $\bot$ if and only if $\sigma$ contains the sequence
   \]
 Since complete plays in the game $\oc X \implies \bC$ are always of the form $q$, followed by some sequence of pairs of the form $qx_i$ for $x\in X$, followed by $a$, this is a very natural condition to consider when dealing with a strategy $\sigma\from \oc X \implies \bC$.
 
-\subsection{Computational Adequacy}
+\section{Computational Adequacy}
 
 Now we want to prove Computational Adequacy; i.e., the converse to Proposition \ref{PropKleisliSoundness}.
 To do this, we need to prove a converse to Lemma \ref{LemSoundness}.
@@ -1094,7 +1098,7 @@ We can now prove computational adequacy for our model.
   in \IAX.
 \end{proof}
 
-\subsection{Full Abstraction}
+\section{Full Abstraction}
 
 To prove full abstraction of our semantics for \IAX, we introduce the usual intrinsic equivalence on terms.
 
@@ -1189,7 +1193,7 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
   Therefore, $M$ and $N$ are observationally inequivalent in \IAX.
 \end{proof}
 
-\subsection{Comparison with Ghica's slot games}
+\section{Comparison with Ghica's slot games}
 
 Let us suppose now that $\G$ is the category of games and visible strategies, and that $X=\bC$.  
 As we remarked above, this means that \IAX can be interpreted as a language for modelling time complexity.
@@ -1241,7 +1245,7 @@ This seems like a purely combinatorial construction, but it can actually be subs
 
 Therefore, we see that the category of games and strategies with costs is isomorphic to the Kleisli category $\G_\bC$, which we have already shown to be fully abstract for a language with time complexity.
 
-\subsection{Alternative Reduction Rules - May Testing}
+\section{Alternative Reduction Rules - May Testing}
 
 We remarked above that if $X\in\{\bB,\bN\}$, then \IAX is a model of nondeterminism, finite in the case of $\bB$ and countable in the case of $\bN$.  
 However, our operational semantics is not the usual one for these languages.
@@ -1430,7 +1434,7 @@ for every $x\in X$.
 
 It is already known (see \cite{mcCHFiniteND}) that this model is fully abstract for (finitely or countably) nondeterministic Idealized Algol with may-contextual equivalence.
 
-\subsection{Alternative Reduction Rules - Must Testing}
+\section{Alternative Reduction Rules - Must Testing}
 
 A more interesting, and more complicated, reduction rule for nondeterministic IA is the \emph{must-convergence} relation.
 
@@ -1659,7 +1663,7 @@ We have shown the following adequacy result.
   Then $,()\ts M\mustconverge$ if and only if this strategy is winning.
 \end{corollary}
 
-\subsection{Full Abstraction for Nondeterminism and Must Testing}
+\section{Full Abstraction for Nondeterminism Under Must Testing}
 
 We now extend our earlier definitions using the new $\mustconverge$ rule.
 
@@ -2000,9 +2004,9 @@ As an application of this fully abstract semantics, we clear up a loose end from
 
 Note that we certainly have $\sigma_\phi;\deno M\downarrow_{\must}$, while $\sigma_\phi;\deno N\not\downarrow_{\must}$, demonstrating that the recursivity requirement is essential to the full abstraction result in this case.
 
-\subsection{The Intrinsic Equivalence Relation}
+\section{The Intrinsic Equivalence Relation}
 
-We conclude this section by examining the intrinsic equivalence relation in $\G_X$.
+We conclude this chapter by examining the intrinsic equivalence relation in $\G_X$.
 
 \begin{proposition}
   Let $\sigma,\tau\from A \to B$ be two morphisms in $\G_X$,

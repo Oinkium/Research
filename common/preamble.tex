@@ -510,6 +510,7 @@
     \else \advance \gnArgHgt by -\gnCornerHgt%
     \fi \raise\gnArgHgt\hbox{$\llcorner$} \box\gnBoxA %
     \raise\gnArgHgt\hbox{$\lrcorner$}}
+\newcommand{\ct}[1]{\lceil#1\rceil}
 \DeclareMathOperator{\Int}{int}
 
 %% Nondeterministic Factorization things
@@ -679,6 +680,8 @@
 \DeclareSymbolFont{bbsymbol}{U}{bbold}{m}{n}
 \DeclareMathSymbol{\bbsemicolon}{\mathbin}{bbsymbol}{"3B}
 \newcommand{\semicom}{\bbsemicolon}
+
+\newcommand{\ms}{\makebox[-1pt]{}}
 
 %%% END Article customizations
 

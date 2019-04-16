@@ -20,4 +20,8 @@
 \BOOKMARK [1][-]{section.1.19}{Small-Step Operational Semantics}{chapter.1}% 20
 \BOOKMARK [1][-]{section.1.20}{Soundness}{chapter.1}% 21
 \BOOKMARK [1][-]{section.1.21}{Computational Adequacy}{chapter.1}% 22
-\BOOKMARK [0][-]{chapter*.11}{Bibliography}{}% 23
+\BOOKMARK [1][-]{section.1.22}{Innocent Factorization}{chapter.1}% 23
+\BOOKMARK [1][-]{section.1.23}{Arena-only Semantics}{chapter.1}% 24
+\BOOKMARK [1][-]{section.1.24}{Full Abstraction}{chapter.1}% 25
+\BOOKMARK [1][-]{section.1.25}{The Intrinsic Equivalence Relation}{chapter.1}% 26
+\BOOKMARK [0][-]{chapter*.11}{Bibliography}{}% 27

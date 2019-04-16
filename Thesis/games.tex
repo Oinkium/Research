@@ -142,19 +142,19 @@ As a shorthand, we write $\lambda_A^{OP}\from M_A \to \OP$ for $\pr_1\circ\lambd
 
   We say that a well-formed justified sequence is \emph{visible} if whenever $ta\prefix s$, and $a$ is a $P$-move, then the justifier of $a$ occurs in the $P$-view of $t$, and if whenever $tb\prefix s$, and $b$ is a non-initial $O$-move, then the justifier of $b$ occurs in the $O$-view of $t$.
 
-  We say that a justified sequence $s$ is \emph{legal} if it is well-formed and visible, and write $L_A$ for the set of legal sequences occurring in $A$.
+  We say that a justified sequence $s$ is \emph{legal} if it is well-formed and visible, and write $\L_A$ for the set of legal sequences occurring in $A$.
 \end{definition}
 
 Note that since every non-initial move in a justified sequence $s$ must be justified by some previous move, then the first move in the sequence must be initial and therefore an $O$-question.  
 If $s$ is alternating, this means that $s$ ends with an $O$-move if it has odd length and with a $P$-move if it has even length.  
 
 \begin{definition}
-  Given a legal sequence $s\in L_A$, and a move $b$ in $s$, we say that a move $a$ in $s$ is \emph{hereditarily justified by $b$} if there is a chain of justification pointers going back from $a$ to $b$.
+  Given a legal sequence $s\in \L_A$, and a move $b$ in $s$, we say that a move $a$ in $s$ is \emph{hereditarily justified by $b$} if there is a chain of justification pointers going back from $a$ to $b$.
 
   We write $s\vert_b$ for the subsequence of $s$ given by all moves in $s$ that are hereditarily justified by $b$.
   Given a set $I$ of initial moves, we write $s\vert_I$ for the subsequence of $s$ given by all moves that are hereditarily justified by some $b\in I$.
 
-  A \emph{game} is given by a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$ where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed subset of $L_A$ such that if $s\in P_A$ and $I$ is a set of initial moves, then $s\vert_I\in P_A$.
+  A \emph{game} is given by a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$ where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed subset of $\L_A$ such that if $s\in P_A$ and $I$ is a set of initial moves, then $s\vert_I\in P_A$.
 \end{definition}
 
 We shall call an odd-length sequence $s\in P_A$ an \emph{$O$-position} and an even-length sequence a \emph{$P$-position}
@@ -207,7 +207,7 @@ In the \emph{product} $A\times B$ of games $A$ and $B$, player $O$ chooses eithe
     \item $M_{A\times B} = M_A + M_B$,
     \item $\lambda_{A\times B} = [\lambda_A,\lambda_B]$,
     \item $* \ts_{A\times B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\times B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, and
-    \item $P_{A\times B} = \{s\in L_{A\times B} \suchthat \text{$s\vert_A\in P_A$ \& $s\vert_B=\epsilon$ or $s\vert_A=\epsilon$ \& $s\vert_B\in P_B$}\}$.
+    \item $P_{A\times B} = \{s\in \L_{A\times B} \suchthat \text{$s\vert_A\in P_A$ \& $s\vert_B=\epsilon$ or $s\vert_A=\epsilon$ \& $s\vert_B\in P_B$}\}$.
   \end{itemize}
   We extend this to arbitrary products $\prod_i A_i$ in the obvious way.
   In particular, the product $1$ of the empty collection is the same as the empty game $I$ defined in Example \ref{ExEmptyGame}.
@@ -224,7 +224,7 @@ In the \emph{tensor product} $A\tensor B$ of games $A$ and $B$, the games $A$ an
     \item $M_{A\tensor B} = M_A + M_B$,
     \item $\lambda_{A\tensor B} = [\lambda_A,\lambda_B]$,
     \item $* \ts_{A\tensor B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\tensor B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, and
-    \item $P_{A\tensor B} = \{s\in L_{A\tensor B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
+    \item $P_{A\tensor B} = \{s\in \L_{A\tensor B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
   \end{itemize}
 \end{definition}
 
@@ -236,7 +236,7 @@ In the \emph{linear implication} $A\implies B$, the game $B$ is played in parall
     \item $M_{A\implies B} = M_A + M_B$,
     \item $\lambda_{A\implies B} = [\neg\circ\lambda_A,\lambda_B]$,
     \item $* \ts_{A\implies B} a$ if and only if $*\ts_B a$, and $a \ts_{A\implies B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, or if $a$ is initial in $B$ and $b$ is initial in $a$, and
-    \item $P_{A\implies B} = \{s\in L_{A\implies B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
+    \item $P_{A\implies B} = \{s\in \L_{A\implies B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
   \end{itemize}
 \end{definition}
 
@@ -250,7 +250,7 @@ In the \emph{exponential} of a game $A$, infinitely many copies of $A$ are playe
     \item $M_{\oc A}=M_A$,
     \item $\lambda_{\oc A} = \lambda_A$,
     \item $\ts_{\oc A} = \ts_A$ and
-    \item $P_{\oc A} = \{s\in L_{\oc A} \suchthat \text{$s\vert_b\in P_A$ for each initial move $b$ occurring in $s$}\}$.
+    \item $P_{\oc A} = \{s\in \L_{\oc A} \suchthat \text{$s\vert_b\in P_A$ for each initial move $b$ occurring in $s$}\}$.
   \end{itemize}
 \end{definition}
 
@@ -270,7 +270,7 @@ Lastly, the \emph{sequoid} $A\sequoid B$ of two games $A$ and $B$ behaves like t
 
 \begin{definition}
   Let $A,B,C$ be arenas.  
-  An \emph{interaction sequence} between $A,B,C$ is a justified sequence $\s$ of moves drawn from $M_A$, $M_B$ and $M_C$ such that $\s\vert_{A,B}\in L_{A\implies B}$ and $\s\vert_{B,C}\in L_{B\implies C}$.  
+  An \emph{interaction sequence} between $A,B,C$ is a justified sequence $\s$ of moves drawn from $M_A$, $M_B$ and $M_C$ such that $\s\vert_{A,B}\in \L_{A\implies B}$ and $\s\vert_{B,C}\in \L_{B\implies C}$.  
   Here, $\s\vert_{A,B}$ is the subsequence of $\s$ consisting of those moves from $\s$ that occur in $A$ or $B$, together with all justification pointers between moves in $A$ and $B$, and $\s\vert_{B,C}$ is defined similarly.
 
   We write $\Int(A,B,C)$ for the set of all interaction sequences between $A,B,C$.
@@ -403,7 +403,7 @@ It follows that
 \end{lemma}
 \begin{proof}
   Induction on the length of $s$.
-  If $s=\epsilon$, then $bs$ ends with an $O$-move in $B$, and we have $\pv{b}^{A\implies B} = b = \pv{b}^{B}$.  
+  If $s=\epsilon$, then $bs$ ends with an $O$-move in $B$, and we have $\ov{b}^{A\implies B} = b = \ov{b}^{B}$.  
 
   Otherwise, suppose that $bs$ ends with a $P$-move $c$ in $B$.  
   Let $d$ be the justifier of $c$.  
@@ -424,10 +424,11 @@ It follows that
 
 \begin{proposition}
   $\sigma;\tau$ is a strategy for $A\implies C$.  
+  \label{PropComposition}
 \end{proposition}
 \begin{proof}
   First, we claim that $\s\vert_{A,C}\in P_{A\implies B}$ for any $\s\in \sigma\|\tau$.
-  Since we certainly have $\s\vert_{A,C}\vert_A = \s\vert_{A,B}\vert_A\in P_A$ and $\s\vert_{A,C}\vert_C = \s\vert_C = \s\vert_{B,C}\vert_C\in P_C$, it suffices to show that $\s\vert_{A,C}\in L_{A\implies C}$.
+  Since we certainly have $\s\vert_{A,C}\vert_A = \s\vert_{A,B}\vert_A\in P_A$ and $\s\vert_{A,C}\vert_C = \s\vert_C = \s\vert_{B,C}\vert_C\in P_C$, it suffices to show that $\s\vert_{A,C}\in \L_{A\implies C}$.
 
   Suppose that $ta\prefix \s\vert_{A,C}$.  We claim that $\lambda_{A\implies C}(t) = \neg\lambda_{A\implies C}(a)$.
   By Lemma \ref{LemCompositionLemma}, we are in one of the following configurations.
@@ -474,20 +475,20 @@ It follows that
 
   Lastly, we need to show that $\s\vert_{A,C}$ satisfies the visibility condition.
   Let $ta\prefix\s\vert_{A,C}$.
-  Choose some $\t\prefix\s$ such that $\t\vert_{A,C}=t$.  
+  Choose some $\t a\prefix\s$ such that $\t a\vert_{A,C}=ta$.  
 
   Suppose $a$ is a $P$-move.
   Then by Lemma \ref{LemHarmersLemma}, $\pv{\t a}\in\Int(A,B,C)$.  
-  By Lemma \ref{LemHarmerRestriction}, $\pv{t}a=\pv{ta}=\pv{\t a}\vert_{A,C}$, and therefore that the justifier of $a$ must be inside $\pv{t}$.
+  By Lemma \ref{LemHarmerRestriction}, we know that $\pv{t}a=\pv{ta}=\pv{\t a}\vert_{A,C}$, and therefore that the justifier of $a$ must be inside $\pv{t}$.
 
   Secondly, suppose that $a$ is an $O$-move.
-  If $a$ is an $O$-move in $C$, then either it is initial or $t$ ends with some $P$-move in $B$, and therefore $\ov{t}_{A\implies C}=\ov{t\vert_B}_B = \ov{\t\vert_{B,C}}_B$.  
-  Therefore, since $t\vert_{B,C}$ satisfies visibility, the justifier of $a$ must lie in $\ov{t}_{A\implies C}$.  
+  If $a$ is an $O$-move in $C$, then either it is initial or $\t$ ends with some $P$-move in $C$, and therefore $\ov{t}_{A\implies C} = \ov{t\vert_C}_C = \ov{\t\vert_{B,C}}_C$ by Lemma \ref{LemProjectionLemma}.
+  Therefore, since $\t\vert_{B,C}$ satisfies visibility, the justifier of $a$ must lie in $\ov{t}_{A\implies C}$.  
   If $a$ is an $O$-move in $A$, then write $t=cu$ and $\t=c\u$, where $c$ is the starting move in $C$.
   We have $\ov{cua}_{A\implies C}=c\pv{u\vert_A a}^A = \ov{c\u\vert_{A,B}}_{A\implies B}$.  
   Therefore, the justifier of $a$ must lie in $\ov{t}_{A\implies C}$.
 
-  Therefore, $\s\vert_{A,C}\in L_{A\implies C}$, so $\s\vert_{A,C}\in P_{A\implies C}$.
+  Therefore, $\s\vert_{A,C}\in \L_{A\implies C}$, so $\s\vert_{A,C}\in P_{A\implies C}$.
 
   It is fairly clear that $\sigma;\tau$ is even-prefix closed, since $\sigma$ and $\tau$ are.  
   Indeed, if $\s\vert_{A,C}\in\sigma;\tau$ and $t\prefix\s\vert_{A,C}$, then we may choose some prefix $\t$ of $\s$ such that $t=\t\vert_{A,C}$.  
@@ -555,7 +556,7 @@ First, we use a lemma.
 \section{Associativity of composition}
 
 In this section, we shall prove that composition of strategies is associative; i.e., that if $\sigma\from A \implies B$, $\tau\from B\implies C$ and $\upsilon \from C \implies D$ are strategies, then $(\sigma;\tau);\upsilon=\sigma;(\tau;\upsilon)$.  
-To do this, if $A,B,C,D$ are arenas, we define the set $\Int(A,B,C,D)$ to be the set of all sequences $\u$ of moves such that $\u\vert_{A,B}\in L_{A\implies B}$, $\u\vert_{B,C}\in L_{B\implies C}$ and $\u\vert_{C,D}\in L_{C \implies D}$.  
+To do this, if $A,B,C,D$ are arenas, we define the set $\Int(A,B,C,D)$ to be the set of all sequences $\u$ of moves such that $\u\vert_{A,B}\in \L_{A\implies B}$, $\u\vert_{B,C}\in \L_{B\implies C}$ and $\u\vert_{C,D}\in \L_{C \implies D}$.  
 Given such a sequence $\u$, we define $\u\vert_{A,D}$ as before; i.e., we take all moves from $\u$ occurring in $A$ and $D$, together with justification pointers within these games, and if an initial move in $A$ is justified by an initial move in $B$, which is justified by an initial move in $C$, which is justified by an initial move in $D$, then we add a justification pointer from that move in $A$ to that move in $D$.
 
 Given strategies $\sigma,\tau,\upsilon$ as above, we define $\sigma\|\tau\|\upsilon$ to be the set of all $\u\in\Int(A,B,C,D)$ such that $\u\vert_{A,B}\in\sigma$, $\u\vert_{B,C}\in\tau$ and $\u\vert_{C,D}\in\upsilon$.
@@ -1254,8 +1255,8 @@ We formalize the structure we have uncovered so far in the concept of a \emph{se
   \label{DefSequoidalCategory}
 \end{definition}
 \begin{remark}
-  The definitions of \emph{lax action} can be found at the start of chapter \ref{SecParametricMonads}, whie that of an \emph{oplax morphism of actions} is found at Definition \ref{DefOplaxMorphismOfActions}.  
-  The definitions we have used are similar: a \emph{strong action} is a lax action in which the coherences (called $m$ and $e$ in chapter \ref{SecParametricMonads} and $\passoc$ and $\run$ here) are isomorphims.  
+  The definitions of \emph{lax action} can be found at the start of Chapter \ref{ChapParametricMonads}, whie that of an \emph{oplax morphism of actions} is found at Definition \ref{DefOplaxMorphismOfActions}.  
+  The definitions we have used are similar: a \emph{strong action} is a lax action in which the coherences (called $m$ and $e$ in Chapter \ref{ChapParametricMonads} and $\passoc$ and $\run$ here) are isomorphims.  
   A \emph{lax morphism of actions} is defined in the same way as an oplax morphism, except that the coherence (called $\mu$ in Definition \ref{DefOplaxMorphismOfActions} and $\wk$ here) goes in the opposite direction.
 \end{remark}
 
@@ -2371,7 +2372,7 @@ We then take the anamorphism $\cell=\fcoal{\cell_0}\from \oc\bN \implies \oc\Var
       & \Varr \sequoid \oc\Varr
   \end{tikzcd}
   \]
-Concretely, the strategy $\cell$ behaves as follows.  
+Concretely, the strategy $\cell$ behaves as follows, as we shall prove in Proposition \ref{PropCellComb}.
 When player $O$ plays in $\oc\Var$, he chooses to play either in one of the copies of $\bC$ or in $\bN$.  
 If he plays the initial move $q_n$ in the $n$-th copy of $\bC$, player $P$ updates the value she has stored in her head to $n$.  
 If he plays the initial move $q$ in $\bN$, then player $P$ replies with this stored value.  
@@ -2417,6 +2418,72 @@ We use this to provide the denotation of the term $\neww$.
     = & \langle (\wwrite_n)_{n\in\bN},\rread\rangle;\pr_\bN \\
     = & \rread\,.\hspace{1em plus 1fill}\qedhere
   \end{IEEEeqnarray*}
+\end{proof}
+
+This coalgebraic definition of the $\cell$ strategy will be sufficient for most of our purposes, it will also be convenient to have a more direct definition.
+
+\begin{proposition}
+  The strategy $\cell$ is the strategy on $\oc\bN \implies \oc\Varr$ that behaves as follows.  
+  It replies to a move $q_n$ (i.e., the initial move in the $n$-th component of $\bC$ in $\Varr$) with the unique answer $a$, and replies to the move $q$ in the $\bN$ component of $\Varr$ with that number $n$ such that $q_n$ was the most recently played $O$-move in the $\bC^\bN$ component, or, if no such move has been played, it interrogates $\oc\bN$ on the left and copies the value back on to the right.
+  \label{PropCellComb}
+\end{proposition}
+\begin{proof}
+  It will suffice to show that the strategy $\cell$ as described in the statement makes the diagram
+  \[
+    \begin{tikzcd}
+      \oc\bN \arrow[r, "\cell_0"] \arrow[d, "\cell"']
+        & \Varr \sequoid \oc\bN \arrow[d, "\Varr \sequoid \cell"] \\
+      \oc\Varr \arrow[r, "\alpha_{\Varr}"]
+        & \Varr \sequoid \oc\Varr
+    \end{tikzcd}
+    \]
+  commute.
+  Since $\dist_{(\bC)_\bN,\bN}$ is an isomorphism, it will suffice to show commutativity of the diagram formed by composing by it on the right; i.e.:
+  \[
+    \begin{tikzcd}[column sep=60pt]
+      \oc\bN \arrow[rr, "{\langle (\wwrite_n)_{n\in\bN},\rread \rangle}"] \arrow[d, "\cell"']
+        &
+          & (\bC \sequoid\oc\bN)^\bN \times (\oc\bN \sequoid \oc\bN) \arrow[d, "(\bC \sequoid \cell)^\bN \times (\bN \sequoid \cell)"] \\
+      \oc\Varr \arrow[r, "\alpha_{\Varr}"]
+        & \Varr\sequoid\oc\Varr \arrow[r, "{\dist_{(\bC)_{\bN},\bN}}"]
+          & {(\bC \sequoid \oc\Varr)^{\bN} \times (\bN \sequoid \oc\Varr)\,.}
+    \end{tikzcd}
+    \]
+  That is, we need to show that the following diagrams commute, where $n$ in the first diagram ranges over the natural numbers.
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=40pt]
+      \oc\bN \arrow[rr, "\wwrite_n"] \arrow[d, "\cell"']
+        &
+          & \bC \sequoid \oc\bN \arrow[d, "\bC \sequoid \cell"] \\
+      \oc\Varr \arrow[r, "\alpha_{\Varr}"]
+        & \Varr \sequoid \oc\Varr \arrow[r, "\pr_n \sequoid \oc\Varr"]
+          & \bC \sequoid \oc\Varr
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}[column sep=40pt]
+      \oc\bN \arrow[rr, "\rread"] \arrow[d, "\cell"']
+        &
+          & \bN \sequoid \oc\bN \arrow[d, "\bN \sequoid \cell"] \\
+      \oc\Varr \arrow[r, "\alpha_{\Varr}"]
+        & \Varr \sequoid \oc\Varr \arrow[r, "\pr_\bN \sequoid \oc\Varr"]
+          & \bN \sequoid \oc\Varr
+    \end{tikzcd}
+  \end{mathpar}
+  Consider the first diagram.  
+  We may identify plays of $\cell;\alpha_{\Varr};(\pr_n\sequoid\oc\Varr)$ with those plays in $\cell$ that begin with the initial move $q_n$ in $\Varr$ (i.e., the initial move $q$ in the $n$-th copy of $\bC$).
+  We need to show that plays in $\wwrite_n;(\bC\sequoid\cell)$ take the same form.  
+  Indeed, the response to the initial move in $\bC$ in $\wwrite_n;(\bC\sequoid\cell)$ is the unique response $a$, by the definition of $\wwrite_n$; thereafter, play continues in $\oc\Varr$ according to $\cell$ -- so the response to a move $q_m$ will be $a$, while the response to $q$, if some $q_m$ has been played already in $\oc\Varr$, will be the most recently occurring value of $m$.  
+
+  If no $q_m$ has been played in $\oc\Varr$, then the behaviour of $\cell$ tells us that we must interrogate the $\oc\bN$ in $\bC\sequoid\oc\bN$ in order to get the value.  
+  By the definition of $\wwrite_n$, the value returned will be $n$, mirroring the behaviour in $\cell;\alpha_{\Varr};(\pr_n\sequoid\oc\Varr)$.
+
+  Now consider the second diagram.  
+  We may identify plays of the strategy $\cell;\alpha_{\Varr};(\pr_n\sequoid\oc\Varr)$ with those plays in $\cell$ that begin with the initial move $q$ in $\Varr$ (i.e., the initial move $q$ in the copy of $\bN$).
+  We need to show that plays in $\rread;(\bN\sequoid\cell)$ take the same form.  
+  Indeed, the response to the initial move will be to interrogate $\oc\bN$ on the left to get the value.  
+  Thereafter, play will continue between $\oc\bN$ and $\oc\Varr$ according to the $\cell$ strategy -- so once again the response to a move $q_m$ will be $a$, while the response to $q$, if some $q_m$ has been played, will be the most recently occurring value $m$.
+
+  If no $q_m$ has been played in $\oc\Varr$, then, by the definition of $\rread$, the strategy will interrogate $\oc\bN$ in order to get its response, just as in the strategy $\cell;\alpha_{\Varr};(\pr_\bN\sequoid\oc\Varr)$.
 \end{proof}
 
 \section{Big-Step Operational Semantics}
@@ -2806,12 +2873,11 @@ To prove soundness of our model, we shall use the small-step formulation.
 Our reason for this is that the most difficult part of the denotational semantics we are using is the part to do with state.  
 In the big-step formulation, nearly every rule involves the state changing in some way, whereas in the small-step formulation, only the rules that specifically pertain to the stateful components of the language do.
 
-Given a $\Var$-context $\Gamma$, we will write $S_\Gamma$ for $\bN \times \cdots \times \bN$ and $\V_\Gamma$ for $\Varr \times \cdots \times \Varr$, where in each case the terms of the tensor product are indexed by the variables in $\Gamma$.  
-Then, given some term $\Gamma\ts M$ in context, its denotation will be a morphism $\deno{\Gamma\ts M\from T} \from \oc \V_\Gamma \implies \deno{T}$.
+Given a $\Var$-context $\Gamma$, we will write $S_\Gamma$ for $\bN \times \cdots \times \bN$.
 
-Given $\Gamma$, we have a morphism $\cell^\Gamma\from \oc S_\Gamma \implies \oc V_\Gamma$, given by
+Given $\Gamma$, we have a morphism $\cell^\Gamma\from \oc S_\Gamma \implies \oc \deno{\Gamma}$, given by
 \[
-  \oc S_\Gamma \cong \oc \bN \tensor \cdots \tensor \oc \bN \xrightarrow{\cell \tensor \cdots \tensor \cell} \oc \Varr \tensor \cdots \tensor \oc \Varr \cong \oc V_\Gamma\,.
+  \oc S_\Gamma \cong \oc \bN \tensor \cdots \tensor \oc \bN \xrightarrow{\cell \tensor \cdots \tensor \cell} \oc \Varr \tensor \cdots \tensor \oc \Varr \cong \oc \deno{\Gamma}\,.
   \]
 \begin{lemma}
   For $j=1,\cdots,|\Gamma|$, the following diagram commutes.
@@ -2846,10 +2912,10 @@ Given a $\Gamma$-store $s$, we will write $\deno{s}$ for the corresponding morph
 We start our proof of soundness with a result about evaluation contexts.
 This result captures the fact that the term filling the hole of an evaluation context is the first thing to be computed, using the sequoid operator to capture this notion of precedence.
 \begin{lemma}
-  Let $\Gamma\ts M\from T$ be an Idealized Algol term-in-context, and let $\EE$ be an evaluation context with a hole of type $T$, where $\EE[M]\from U$.  
-  Then there is a game $A$ and strategies $\sigma\from \oc\V_\Gamma \implies A$, $\tau\from\deno{T}\sequoid A \implies \deno{S}$, where $\tau$ is a strict strategy, such that the denotation $\deno{\Gamma\ts\EE[M]}$ factors as
+  Let $\Gamma\ts M\from T$ be an Idealized Algol term-in-context (where $\Gamma$ is an arbitrary context), and let $\EE$ be an evaluation context with a hole of type $T$, where $\EE[M]\from U$.  
+  Then there is a game $A$ and strategies $\sigma\from \oc{\deno{\Gamma}} \implies A$, $\tau\from\deno{T}\sequoid A \implies \deno{S}$, where $\tau$ is a strict strategy, such that the denotation $\deno{\Gamma\ts\EE[M]}$ factors as
   \[
-    \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc \V_\Gamma \tensor \oc \V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma} \deno{T}\tensor A \xrightarrow{\wk_{\deno{T},A}} \deno{T} \sequoid A \xrightarrow{\tau} \deno{U}\,.
+    \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma} \deno{T}\tensor A \xrightarrow{\wk_{\deno{T},A}} \deno{T} \sequoid A \xrightarrow{\tau} \deno{U}\,.
     \]
   \label{LemEvContexLemma}
 \end{lemma}
@@ -2860,12 +2926,12 @@ This result captures the fact that the term filling the hole of an evaluation co
 
     \item If $\EE=\EE' N$ for some term $N$, where $\EE'$ has type $S\to T$, $N$ has type $S$, and $M\from S'$ fits into the hole, then the denotation $\deno{\Gamma \ts \EE[M]} = \deno{\Gamma \ts \EE'[M]\,N}$ is given by the composite
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\deno{\Gamma \ts \EE'[M]}\tensor \deno{\Gamma \ts N}} (\oc\deno{S} \implies \deno{T}) \tensor \oc\deno{S} \xrightarrow{\ev_{\oc\deno{S},\deno{T}}} \deno{T}.
+        \oc{\deno{\Gamma}} \xrightarrow{\mathmakebox[9pt]{\mu_{{\deno{\Gamma}}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma \ts \EE'[M]}\tensor \deno{\Gamma \ts N}} (\oc\deno{S} \implies \deno{T}) \tensor \oc\deno{S} \xrightarrow{\mathmakebox[-4pt]{}\ev_{\oc\deno{S},\deno{T}}} \deno{T}.
         \]
       By the inductive hypothesis, $\deno{\Gamma\ts\EE' M}$ factors as
       \small
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc \V_\Gamma \tensor \oc \V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{S'}\tensor A' \xrightarrow{\wk_{\deno{S'},A'}} \deno{S'} \sequoid A' \xrightarrow{\tau'} (\oc\deno{S}\implies\deno{T}),
+        \oc{\deno{\Gamma}} \xrightarrow{\mathmakebox[-1pt]{}\mu_{{\deno{\Gamma}}}\mathmakebox[-1pt]{}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{S'}\tensor A' \xrightarrow{\mathmakebox[-1pt]{}\wk_{\deno{S'},A'}} \deno{S'} \sequoid A' \xrightarrow{\mathmakebox[-1pt]{}\tau'\mathmakebox[-1pt]{}} (\oc\deno{S}\implies\deno{T}),
         \]
       \normalsize
       for appropriate $A',\sigma',\tau'$.  
@@ -2874,7 +2940,7 @@ This result captures the fact that the term filling the hole of an evaluation co
       \begin{mathpar}
         A = A' \tensor \oc\deno{S}
         \and
-        \sigma = \mu_{\V_\Gamma};(\sigma'\tensor\deno{\Gamma\ts N}^\dag)
+        \sigma = \mu_{{\deno{\Gamma}}};(\sigma'\tensor\deno{\Gamma\ts N}^\dag)
         \and
         \tau = \passoc_{\deno{S'},A',\oc\deno{S}}\inv;(\tau'\sequoid\oc\deno{S});\ev_{s\;\oc\deno{S},\deno{T}}\,.
       \end{mathpar}
@@ -2882,11 +2948,11 @@ This result captures the fact that the term filling the hole of an evaluation co
         \small
         \[
           \begin{tikzcd}[column sep=79pt]
-            \oc\V_\Gamma \arrow[d, "\mu_{\V_\Gamma}"' yshift=3pt, thick, dashed] \arrow[r, "\mu_{\V_\Gamma}"]
-              & \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "\oc\V_\Gamma\tensor\mu_{\V_\Gamma}"] \\
-            \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\mu_{\V_\Gamma}\tensor \oc\V_\Gamma"' yshift=3pt, thick, dashed]
-              & \oc \V_\Gamma \tensor (\oc \V_\Gamma \tensor \oc \V_\Gamma) \arrow[d, "\deno{\Gamma \ts M}\tensor (\sigma' \tensor \deno{\Gamma\ts N}^\dag)"] \\
-            (\oc \V_\Gamma \tensor \oc \V_\Gamma) \tensor \oc \V_\Gamma \arrow[d, "(\deno{\Gamma\ts M} \tensor \sigma')\tensor\deno{\Gamma\ts N}^\dag"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{\V_\Gamma,\V_\Gamma,\V_\Gamma}" description, dotted]
+            \oc{\deno{\Gamma}} \arrow[d, "\mu_{{\deno{\Gamma}}}"' yshift=3pt, thick, dashed] \arrow[r, "\mu_{{\deno{\Gamma}}}"]
+              & \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \arrow[d, "\oc{\deno{\Gamma}}\tensor\mu_{{\deno{\Gamma}}}"] \\
+            \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \arrow[d, "\mu_{{\deno{\Gamma}}}\tensor \oc{\deno{\Gamma}}"' yshift=3pt, thick, dashed]
+              & \oc {\deno{\Gamma}} \tensor (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \arrow[d, "\deno{\Gamma \ts M}\tensor (\sigma' \tensor \deno{\Gamma\ts N}^\dag)"] \\
+            (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \tensor \oc {\deno{\Gamma}} \arrow[d, "(\deno{\Gamma\ts M} \tensor \sigma')\tensor\deno{\Gamma\ts N}^\dag"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{{\deno{\Gamma}},{\deno{\Gamma}},{\deno{\Gamma}}}" description, dotted]
               & \deno{S'} \tensor (A' \tensor \oc\deno{S}) \arrow[d, "{\wk_{\deno{S'},A' \tensor \oc \deno{S}}}"] \\
             (\deno{S'} \tensor A') \tensor \oc\deno{S} \arrow[d, "{\wk_{\deno{S'},A'}\tensor \oc\deno{S}}"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{\deno{S'},A',\oc\deno{S}}" description, dotted]
               & \deno{S'} \sequoid (A' \tensor \oc\deno{S}) \arrow[d, "{\passoc_{\deno{S'},A',\oc\deno{S}}\inv}"] \\
@@ -2905,12 +2971,12 @@ This result captures the fact that the term filling the hole of an evaluation co
       \end{figure}
     \item If $\EE=\suc \EE'$ or $\pred \EE'$, where $\EE'$ is a context of type $\nat$, and $M\from T$ is a term that fits into the hole, then the denotation $\deno{\Gamma\ts\EE[M]}$ is given by the composite
       \[
-        \oc \V_\Gamma \xrightarrow{\deno{\Gamma \ts \EE'[M]}} \bN \xrightarrow{\theta} \bN\,,
+        \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma \ts \EE'[M]}} \bN \xrightarrow{\theta} \bN\,,
         \]
       where $\theta$ is either $\pred$ or $\suc$.
       By the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ factors as
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc \V_\Gamma \tensor \oc \V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} \bN\,,
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} \bN\,,
         \]
       for appropriate $A',\sigma',\tau'$.  
       Then we can compose on the right by $\theta$, and we are already in the required form, for
@@ -2919,11 +2985,11 @@ This result captures the fact that the term filling the hole of an evaluation co
       \end{mathpar}
     \item Similarly, if $\EE = \oc\EE'$, where $\EE'$ is a context of type $\Var$, and $M\from T$ is a term that fits into the hole, then the denotation $\deno{\Gamma\ts\EE[M]}$ is given by the composite
       \[
-        \oc \V_\Gamma \xrightarrow{\deno{\Gamma \ts \EE'[M]}} \Varr \xrightarrow{\dereff} \bN\,.
+        \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma \ts \EE'[M]}} \Varr \xrightarrow{\dereff} \bN\,.
         \]
       By the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ factors as
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc \V_\Gamma \tensor \oc \V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} \Varr\,,
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} \Varr\,,
         \]
       for appropriate $A',\sigma',\tau'$.  
       Then we can compose on the right by $\dereff$, and we are already in the required form, for
@@ -2932,16 +2998,16 @@ This result captures the fact that the term filling the hole of an evaluation co
       \end{mathpar}
     \item If $\EE=\EE';N$ for some term $N$ of type $X\in\{\com,\bool,\nat\}$, where $\EE'$ is an evaluation context of type $\com$, and if $M\from T$ fits into the hole in $\EE'$, then the denotation $\deno{\Gamma\ts\EE[M]}$ is given by the composite
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bC \times X \xrightarrow{\Lambda\inv(\seq_X)} X\,.
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bC \times X \xrightarrow{\Lambda\inv(\seq_X)} X\,.
         \]
       If $\EE = N\gets\EE'$, for some term $N$ of type $\Var$, where $\EE'$ is an evaluation context of type $\com$, and if $M\from T$ fits into the hole in $\EE'$, then the denotation $\deno{\Gamma\ts\EE[M]}$ is given by the composite
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bN \times \Var \xrightarrow{\Lambda\inv(\assign)} \bC\,.
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bN \times \Var \xrightarrow{\Lambda\inv(\assign)} \bC\,.
         \]
       Write $Y=\bC$, $X'=X$, $Z=X$ and $\upsilon=\seq_X$ in the sequencing case, and $Y=\bN$, $X'=\Var$, $Z=\bC$ and $\upsilon=\assign$ in the variable assignment case.
       Then, by the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ factors as
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc \V_\Gamma \tensor \oc \V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} Y\,,
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} Y\,,
         \]
       for suitable $A',\sigma',\tau'$.
       Then $\deno{\Gamma\ts\EE[M]}$ is given by the thick dashed arrows in the diagram in Figure \ref{FigEvContextSeqAss}.  
@@ -2949,7 +3015,7 @@ This result captures the fact that the term filling the hole of an evaluation co
       \begin{mathpar}
         A = A' \tensor X'
         \and
-        \sigma = \mu_{\V_\Gamma};(\sigma'\tensor\deno{\Gamma\ts N})
+        \sigma = \mu_{{\deno{\Gamma}}};(\sigma'\tensor\deno{\Gamma\ts N})
         \and
         \tau = \passoc_{\deno{T},A',X'}\inv;(\tau'\sequoid X');\Lambda_s\inv(\upsilon)\,.
       \end{mathpar}
@@ -2957,11 +3023,11 @@ This result captures the fact that the term filling the hole of an evaluation co
         \small
         \[
           \begin{tikzcd}[column sep=79pt]
-            \oc\V_\Gamma \arrow[d, "\mu_{\V_\Gamma}"' yshift=3pt, thick, dashed] \arrow[r, "\mu_{\V_\Gamma}"]
-              & \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "\oc\V_\Gamma\tensor\mu_{\V_\Gamma}"] \\
-            \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\mu_{\V_\Gamma}\tensor \oc\V_\Gamma"' yshift=3pt, thick, dashed]
-              & \oc \V_\Gamma \tensor (\oc \V_\Gamma \tensor \oc \V_\Gamma) \arrow[d, "\deno{\Gamma \ts M}\tensor (\sigma' \tensor \deno{\Gamma\ts N})"] \\
-            (\oc \V_\Gamma \tensor \oc \V_\Gamma) \tensor \oc \V_\Gamma \arrow[d, "(\deno{\Gamma\ts M} \tensor \sigma')\tensor\deno{\Gamma\ts N}"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{\V_\Gamma,\V_\Gamma,\V_\Gamma}" description, dotted]
+            \oc{\deno{\Gamma}} \arrow[d, "\mu_{{\deno{\Gamma}}}"' yshift=3pt, thick, dashed] \arrow[r, "\mu_{{\deno{\Gamma}}}"]
+              & \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \arrow[d, "\oc{\deno{\Gamma}}\tensor\mu_{{\deno{\Gamma}}}"] \\
+            \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \arrow[d, "\mu_{{\deno{\Gamma}}}\tensor \oc{\deno{\Gamma}}"' yshift=3pt, thick, dashed]
+              & \oc {\deno{\Gamma}} \tensor (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \arrow[d, "\deno{\Gamma \ts M}\tensor (\sigma' \tensor \deno{\Gamma\ts N})"] \\
+            (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \tensor \oc {\deno{\Gamma}} \arrow[d, "(\deno{\Gamma\ts M} \tensor \sigma')\tensor\deno{\Gamma\ts N}"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{{\deno{\Gamma}},{\deno{\Gamma}},{\deno{\Gamma}}}" description, dotted]
               & \deno{T} \tensor (A' \tensor X') \arrow[d, "{\wk_{\deno{T},A' \tensor X'}}"] \\
             (\deno{T} \tensor A') \tensor X' \arrow[d, "{\wk_{\deno{T},A'}\tensor X'}"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{\deno{T},A',X'}" description, dotted]
               & \deno{T} \sequoid (A' \tensor X') \arrow[d, "{\passoc_{\deno{T},A',X'}\inv}"] \\
@@ -2982,11 +3048,11 @@ This result captures the fact that the term filling the hole of an evaluation co
       If $\EE = \IfO \EE' \Then N \Else P$ for a context $\EE'$ of type $\nat$, where $N$ and $P$ are terms of type $X\in\{\bool,\com,\nat\}$, then write $Y=\nat$ and $\eta=\IfO_X$.  
       In either case, if $M\from T$ is a term that fits into the hole, then the denotation $\deno{\Gamma\ts\EE[M]}$ is given by
       \begin{mathpar}
-        \oc\V_\Gamma \xrightarrow{\mu_{V_\Gamma}} \oc\V_\Gamma\tensor\oc\V_\Gamma \xrightarrow{\mu_\Gamma \tensor \V_\Gamma} (\oc \V_\Gamma \tensor \oc \V_\Gamma) \tensor \oc\V_\Gamma \\\xrightarrow{(\deno{\Gamma\ts\EE'[M]} \tensor \deno{\Gamma\ts N}) \tensor \deno{\Gamma \ts P}} (Y \tensor X) \tensor X \xrightarrow{\Lambda\inv(\Lambda\inv(\eta))} X\,.
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{V_\Gamma}} \oc{\deno{\Gamma}}\tensor\oc{\deno{\Gamma}} \xrightarrow{\mu_\Gamma \tensor {\deno{\Gamma}}} (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \tensor \oc{\deno{\Gamma}} \\\xrightarrow{(\deno{\Gamma\ts\EE'[M]} \tensor \deno{\Gamma\ts N}) \tensor \deno{\Gamma \ts P}} (Y \tensor X) \tensor X \xrightarrow{\Lambda\inv(\Lambda\inv(\eta))} X\,.
       \end{mathpar}
       By the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ factors as
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc \V_\Gamma \tensor \oc \V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} Y\,,
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} Y\,,
         \]
       for appropriate $A',\sigma',\tau'$.  
       Then $\deno{\Gamma\ts\EE[M]} = \deno{\Gamma\ts\EE'[M]\,N}$ is given by the thick dashed arrows in the diagram in Figure \ref{FigEvContextCond}.  
@@ -2994,24 +3060,24 @@ This result captures the fact that the term filling the hole of an evaluation co
       \begin{mathpar}
         A = (A' \tensor X)\tensor X
         \and
-        \sigma = \mu_{\V_\Gamma};(\mu_{\V_\Gamma}\tensor\oc\V_\Gamma);((\sigma'\tensor\deno{\Gamma\ts N})\tensor \deno{\Gamma\ts P})
+        \sigma = \mu_{{\deno{\Gamma}}};(\mu_{{\deno{\Gamma}}}\tensor\oc{\deno{\Gamma}});((\sigma'\tensor\deno{\Gamma\ts N})\tensor \deno{\Gamma\ts P})
         \and
         \tau = \passoc_{\deno T,A'\tensor X,X}\inv;(\passoc_{\deno T,A',X}\inv\sequoid X);((\tau'\sequoid X)\sequoid X);\Lambda_s\inv(\Lambda_s\inv(\eta))\,.
       \end{mathpar}
       \begin{SidewaysFigure}
         \small
         \[
-          \begin{tikzcd}[ampersand replacement=\&, column sep=78pt, row sep=30pt]
-            \oc \V_\Gamma \arrow[rr, "\mu_{\V_\Gamma}"] \arrow[d, "\mu_{\V_\Gamma}"', thick, dashed]
+          \begin{tikzcd}[ampersand replacement=\&, column sep=68pt, row sep=30pt]
+            \oc {\deno{\Gamma}} \arrow[rr, "\mu_{{\deno{\Gamma}}}"] \arrow[d, "\mu_{{\deno{\Gamma}}}"', thick, dashed]
               \&
-                \& \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\oc\V_\Gamma \tensor\mu_{\V_\Gamma}"] \\
-            \oc \V_\Gamma \tensor \oc\V_\Gamma \arrow[r, "\mu_{\V_\Gamma}\tensor \oc\V_\Gamma", dotted] \arrow[d, "\mu_{\V_\Gamma}\tensor\oc\V_\Gamma"', thick, dashed]
-              \& (\oc \V_\Gamma \tensor \oc\V_\Gamma) \tensor \oc\V_\Gamma \arrow[r, "{\assoc_{\oc\V_\Gamma,\oc\V_\Gamma,\oc\V_\Gamma}}", dotted] \arrow[d, "(\oc\V_\Gamma \tensor \mu_{\V_\Gamma}) \tensor \oc\V_\Gamma" description, dotted]
-                \& \oc \V_\Gamma \tensor (\oc \V_\Gamma \tensor \oc\V_\Gamma) \arrow[d, "\oc\V_\Gamma \tensor (\mu_{\V_\Gamma}\tensor \oc\V_\Gamma)"] \\
-            (\oc \V_\Gamma \tensor \oc\V_\Gamma)\tensor \oc\V_\Gamma \arrow[d, "(\mu_{\V_\Gamma}\tensor\oc\V_\Gamma)\tensor \oc\V_\Gamma"', thick, dashed]
-              \& |[alias=Z]| (\oc \V_\Gamma \tensor(\oc\V_\Gamma\tensor \oc\V_\Gamma)) \tensor \oc\V_\Gamma \arrow[r, "{\assoc_{\oc\V_\Gamma,\oc\V_\Gamma\tensor\oc\V_\Gamma,\oc\V_\Gamma}}", dotted] \arrow[d, "(\deno{\Gamma\ts M}\tensor (\sigma'\tensor\deno{\Gamma\ts N})) \tensor \deno{\Gamma\ts P}" description, dotted]
-                \& \oc\V_\Gamma \tensor ((\oc\V_\Gamma \tensor \oc\V_\Gamma) \tensor \oc\V_\Gamma) \arrow[d, "\deno{\Gamma\ts M} \tensor ((\sigma'\tensor\deno{\Gamma\ts N})\tensor \deno{\Gamma\ts P})" description] \\
-            ((\oc\V_\Gamma \tensor \oc\V_\Gamma) \tensor \oc\V_\Gamma) \tensor \oc\V_\Gamma \arrow[d, "((\deno{\Gamma\ts M} \tensor \sigma') \tensor \deno{\Gamma\ts N}) \tensor \deno{\Gamma\ts P}" {description, xshift=-20pt}, thick, dashed] \arrow[ur, "{\assoc_{\oc\V_\Gamma,\oc\V_\Gamma,\oc\V_\Gamma}\tensor\oc\V_\Gamma}" description, to=Z.west, dotted]
+                \& \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \arrow[d, "\oc{\deno{\Gamma}} \tensor\mu_{{\deno{\Gamma}}}"] \\
+            \oc {\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \arrow[r, "\mu_{{\deno{\Gamma}}}\tensor \oc{\deno{\Gamma}}", dotted] \arrow[d, "\mu_{{\deno{\Gamma}}}\tensor\oc{\deno{\Gamma}}"', thick, dashed]
+              \& (\oc {\deno{\Gamma}} \tensor \oc{\deno{\Gamma}}) \tensor \oc{\deno{\Gamma}} \arrow[r, "{\assoc_{\oc{\deno{\Gamma}},\oc{\deno{\Gamma}},\oc{\deno{\Gamma}}}}", dotted] \arrow[d, "(\oc{\deno{\Gamma}} \tensor \mu_{{\deno{\Gamma}}}) \tensor \oc{\deno{\Gamma}}" description, dotted]
+                \& \oc {\deno{\Gamma}} \tensor (\oc {\deno{\Gamma}} \tensor \oc{\deno{\Gamma}}) \arrow[d, "\oc{\deno{\Gamma}} \tensor (\mu_{{\deno{\Gamma}}}\tensor \oc{\deno{\Gamma}})"] \\
+            (\oc {\deno{\Gamma}} \tensor \oc{\deno{\Gamma}})\tensor \oc{\deno{\Gamma}} \arrow[d, "(\mu_{{\deno{\Gamma}}}\tensor\oc{\deno{\Gamma}})\tensor \oc{\deno{\Gamma}}"', thick, dashed]
+              \& |[alias=Z]| (\oc {\deno{\Gamma}} \tensor(\oc{\deno{\Gamma}}\tensor \oc{\deno{\Gamma}})) \tensor \oc{\deno{\Gamma}} \arrow[r, "{\assoc_{\oc{\deno{\Gamma}},\oc{\deno{\Gamma}}\tensor\oc{\deno{\Gamma}},\oc{\deno{\Gamma}}}}", dotted] \arrow[d, "(\deno{\Gamma\ts M}\tensor (\sigma'\tensor\deno{\Gamma\ts N})) \tensor \deno{\Gamma\ts P}" description, dotted]
+                \& \oc{\deno{\Gamma}} \tensor ((\oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}}) \tensor \oc{\deno{\Gamma}}) \arrow[d, "\deno{\Gamma\ts M} \tensor ((\sigma'\tensor\deno{\Gamma\ts N})\tensor \deno{\Gamma\ts P})" description] \\
+            ((\oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}}) \tensor \oc{\deno{\Gamma}}) \tensor \oc{\deno{\Gamma}} \arrow[d, "((\deno{\Gamma\ts M} \tensor \sigma') \tensor \deno{\Gamma\ts N}) \tensor \deno{\Gamma\ts P}" {description, xshift=-20pt}, thick, dashed] \arrow[ur, "{\assoc_{\oc{\deno{\Gamma}},\oc{\deno{\Gamma}},\oc{\deno{\Gamma}}}\tensor\oc{\deno{\Gamma}}}" description, to=Z.west, dotted]
               \& |[alias=Y]| (\deno T \tensor (A' \tensor X)) \tensor X \arrow[r, "{\assoc_{\deno T,A'\tensor X,X}}" description, dotted] \arrow[d, "{\wk_{T,A'\tensor X}\tensor X}" description, dotted]
                 \& \deno T \tensor ((A' \tensor X) \tensor X) \arrow[d, "{\wk_{\deno T,(A'\tensor X)\tensor X}}"] \\
             ((\deno T\tensor A') \tensor X)\tensor X \arrow[ur, "{\assoc_{\deno T,A',X}\tensor X}" description, to=Y.west, dotted] \arrow[d, "{(\wk_{\deno T,A'}\tensor X)\tensor X}"', thick, dashed]
@@ -3036,12 +3102,12 @@ This result captures the fact that the term filling the hole of an evaluation co
     \item Lastly, suppose that $\EE = \EE' \gets n$ for some numeral $n$, where $\EE'$ is a context of type $\Var$, and suppose that $M\from T$ fits into the hole.  
       The denotation $\deno{\Gamma\ts \EE[M]}$ is given by
       \[
-        \oc\V_\Gamma \xrightarrow{\deno{\Gamma\ts \EE'[M]}} \Varr \xrightarrow{\lunit_{\Varr}} I \tensor \Varr \xrightarrow{n\tensor\Varr} \bN \tensor \Varr \xrightarrow{\assign} \bC\,.
+        \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts \EE'[M]}} \Varr \xrightarrow{\lunit_{\Varr}} I \tensor \Varr \xrightarrow{n\tensor\Varr} \bN \tensor \Varr \xrightarrow{\assign} \bC\,.
         \]
       By the induction hypothesis, $\deno{\Gamma\ts\EE'[M]}$ takes the form
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}}
-        \oc\V_\Gamma\tensor\oc\V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'}
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}}
+        \oc{\deno{\Gamma}}\tensor\oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'}
         \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}}
         \deno T\sequoid A' \xrightarrow{\tau'}
         \Varr\,,
@@ -3061,7 +3127,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
   Let $\Gamma,s\ts M\from T$ be a term with store.  
   Then the \emph{sequoidal denotation} $\seqdeno{\Gamma,s\ts M}$ is the composite
   \[
-    I \xrightarrow{\deno s} \oc S_\Gamma \xrightarrow{\cell^\Gamma} \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\oc\V_\Gamma} \deno T \tensor\oc\V_\Gamma \xrightarrow{\wk_{\deno T,\oc\V_\Gamma}} \deno T \sequoid \oc\V_\Gamma\,.
+    I \xrightarrow{\ms\ms\ms\oc\deno s\ms\ms} \oc S_\Gamma \xrightarrow{\ms\ms\ms\cell^\Gamma\ms\ms} \oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\mu_{\deno{\Gamma}}\ms\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\ms\ms\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma}\ms\ms} \deno T \tensor\oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\ms\ms\wk_{\deno T,\oc\deno{\Gamma}}\ms\ms} \deno T \sequoid \oc\deno{\Gamma}.
     \]
 \end{definition}
 
@@ -3070,23 +3136,23 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
 
   In other words, if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$, then the following diagram commutes.
   \[
-    \begin{tikzcd}[column sep=28pt]
+    \begin{tikzcd}[column sep=25pt, row sep=25pt]
       I \arrow[r, "\oc \deno s"] \arrow[d, "\oc \deno s'"']
         & \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
-          & \oc \V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"]
-            &[22pt] \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\deno{\Gamma\ts M}\tensor \oc V_\Gamma"] \\
+          & \oc \deno{\Gamma} \arrow[r, "\mu_{\deno{\Gamma}}"]
+            &[22pt] \oc \deno{\Gamma} \tensor \oc \deno{\Gamma} \arrow[d, "\deno{\Gamma\ts M}\tensor \oc V_\Gamma" description] \\
       {\oc S_{\Gamma,\Delta}} \arrow[d, "{\cell^{\Gamma,\Delta}}"']
         &
           &
-            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc \V_{\Gamma}}}"] \\
-      {\oc \V_{\Gamma,\Delta}} \arrow[d, "{\mu_{\V_{\Gamma,\Delta}}}"']
+            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc {\deno{\Gamma}}}}" description] \\
+      {\oc {\deno{\Gamma,\Delta}}} \arrow[d, "{\mu_{{\deno{\Gamma,\Delta}}}}"']
         &
           &
-            &  \deno{T}\sequoid \oc\V_\Gamma \\
-      {\oc \V_{\Gamma,\Delta} \tensor \oc \V_{\Gamma,\Delta}} \arrow[rr, "{\deno{\Gamma,\Delta\ts N} \tensor \oc \V_{\Gamma,\Delta}}"]
+            &  \deno{T}\sequoid \oc\deno{\Gamma} \\
+      {\oc {\deno{\Gamma,\Delta}} \tensor \oc {\deno{\Gamma,\Delta}}} \arrow[rr, "{\deno{\Gamma,\Delta\ts N} \tensor \oc {\deno{\Gamma,\Delta}}}"]
         &
-          & {\deno T \tensor \oc \V_{\Gamma,\Delta}} \arrow[r, "{\wk_{\deno T,\oc \V_{\Gamma,\Delta}}}"]
-            & {{\deno T \sequoid \oc \V_{\Gamma,\Delta}}\,.} \arrow[u, "\deno{T}\sequoid\oc\pr_\Gamma"']
+          & {\deno T \tensor \oc {\deno{\Gamma,\Delta}}} \arrow[r, "{\wk_{\deno T,\oc {\deno{\Gamma,\Delta}}}}"]
+            & {{\deno T \sequoid \oc {\deno{\Gamma,\Delta}}}\,.} \arrow[u, "\deno{T}\sequoid\oc\pr_\Gamma"' description]
     \end{tikzcd}
     \]
   I.e., if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, then $\seqdeno{\Gamma,s\ts M} = \seqdeno{\Gamma,\Delta,s'\ts N};\oc\pr_\Gamma$.
@@ -3123,44 +3189,44 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
       where $\Gamma\ts M\from T$.
       The first observation to make is that the denotation $\deno{\Gamma\ts \neww \lambda x.M}$ may be written as
       \[
-        \oc\V_\Gamma \xrightarrow{\runit_{\oc\V_\Gamma}} \oc\V_\Gamma \tensor I \xrightarrow{\oc\V_\Gamma\tensor (0;\cell)} \oc\V_\Gamma \tensor \oc\Varr \to \oc\V_{\Gamma,x} \xrightarrow{\Lambda\inv(\deno{\Gamma \ts \lambda x.M})} \deno{T}\,,
+        \oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\ms\runit_{\oc\deno{\Gamma}}\ms\ms\ms} \oc\deno{\Gamma} \tensor I \xrightarrow{\ms\ms\ms\ms\oc\deno{\Gamma}\tensor (0;\cell)\ms\ms\ms\ms} \oc\deno{\Gamma} \tensor \oc\Varr \to \oc{\deno{\Gamma,x}} \xrightarrow{\ms\ms\ms\ms\Lambda\inv(\deno{\Gamma \ts \lambda x.M})\ms\ms\ms} \deno{T},
         \]
-      where, of course $\Lambda\inv(\deno{\Gamma\ts\lambda x.M})=\deno{\Gamma,x\ts M}$, and that the projection $\pr_\Gamma \from \oc\V_{\Gamma,x}$ is a right inverse for the composite $\runit_{\oc\V_\Gamma};(\oc\V_{\Gamma}\tensor(0;\cell));\cong$, since we have a commutative diagram
+      where, of course $\Lambda\inv(\deno{\Gamma\ts\lambda x.M})=\deno{\Gamma,x\ts M}$, and that the projection $\pr_\Gamma \from \oc{\deno{\Gamma,x}}$ is a right inverse for the composite $\runit_{\oc\deno{\Gamma}};(\oc{\deno{\Gamma}}\tensor(0;\cell));\cong$, since we have a commutative diagram
       \[
         \begin{tikzcd}[column sep=50pt]
-          \oc\V_\Gamma \arrow[r, "\runit_{\oc\V_\Gamma}"] \arrow[d, Rightarrow, no head]
-            & \oc\V_\Gamma \tensor I \arrow[r, "\oc\V_\Gamma\tensor(0;\cell)"] \arrow[d, "\id_{\oc\V_\Gamma\tensor I}" description]
-              & \oc\V_\Gamma \tensor \oc\Varr \arrow[d] \arrow[dl, "\oc\V_\Gamma\tensor()" description] \\
-          \oc\V_\Gamma
-            & \oc\V_\Gamma \tensor I \arrow[l, "\runit\inv"']
-              & {\oc\V_{\Gamma,x}\,.} \arrow[ll, "\oc\pr_\Gamma", bend left=20]
+          \oc\deno{\Gamma} \arrow[r, "\runit_{\oc\deno{\Gamma}}"] \arrow[d, Rightarrow, no head]
+            & \oc\deno{\Gamma} \tensor I \arrow[r, "\oc\deno{\Gamma}\tensor(0;\cell)"] \arrow[d, "\id_{\oc\deno{\Gamma}\tensor I}" description]
+              & \oc\deno{\Gamma} \tensor \oc\Varr \arrow[d] \arrow[dl, "\oc\deno{\Gamma}\tensor()" description] \\
+          \oc\deno{\Gamma}
+            & \oc\deno{\Gamma} \tensor I \arrow[l, "\runit\inv"']
+              & {\oc{\deno{\Gamma,x}}\,.} \arrow[ll, "\oc\pr_\Gamma", bend left=20]
         \end{tikzcd}
         \]
       Then we may prove this case using the commutative diagram in Figure \ref{FigSoundnessOoptoNew}.
-      \begin{figure}[htbp]
+      \begin{SidewaysFigure}
         \[
-          \begin{tikzcd}[column sep=34pt, row sep=30pt]
+          \begin{tikzcd}[ampersand replacement=\&, column sep=50pt, row sep=50pt]
             I \arrow[r, "\oc\deno s"] \arrow[d, "{\oc\langle\deno s,0\rangle}" description]
-              &[5pt] \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
-                &[-5pt] \oc\V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"] \arrow[d, "\mu_{\V_\Gamma}" description]
-                  & \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "\runit_{\oc\V_\Gamma};(\oc\V_\Gamma\tensor (0;\cell));\cong" {description, xshift=-16pt}] \\
+              \&[5pt] \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
+                \&[-5pt] \oc\deno{\Gamma} \arrow[r, "\mu_{\deno{\Gamma}}"] \arrow[d, "\mu_{\deno{\Gamma}}" description]
+                  \& \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \arrow[d, "\runit_{\oc\deno{\Gamma}};(\oc\deno{\Gamma}\tensor (0;\cell));\cong" {description, xshift=-16pt}] \\
             {\oc S_{\Gamma,x}} \arrow[ur, "\oc\pr_\Gamma" description] \arrow[d, "{\cell^{\Gamma,x}}" description]
-              &
-                & \oc\V_\Gamma\tensor\oc\V_\Gamma
-                  & {\oc\V_{\Gamma,x}\tensor\oc\V_\Gamma} \arrow[d, "{\deno{\Gamma,x\ts M}\tensor\oc\V_\Gamma}" description] \arrow[l, "\pr_\Gamma\tensor\oc\V_\Gamma"'] \\
-            {\oc\V_{\Gamma,x}} \arrow[uurr, "\oc\pr_\Gamma" description] \arrow[d, "{\mu_{\V_{\Gamma,x}}}"]
-              &
-                &
-                  & \deno T \tensor \oc\V_\Gamma \arrow[d, "{\wk_{\deno T,\oc\V_\Gamma}}" description] \\
-            {\oc\V_{\Gamma,x}\tensor\oc\V_{\Gamma,x}} \arrow[uurr, "\oc\pr_\Gamma\tensor\oc\pr_\Gamma" {description, pos=0.7}] \arrow[uurrr, "{\V_{\Gamma,x}\tensor\pr_\Gamma}" {description, pos=0.7}] \arrow[r, "{\deno{\Gamma,x\ts M}\tensor\oc\V_{\Gamma,x}}"' yshift=-3pt]
-              & {\deno T \tensor \oc\V_{\Gamma,x}} \arrow[r, "{\wk_{\deno T,\oc\V_{\Gamma,x}}}"' yshift=-3pt]
-                & {\deno T \sequoid \oc\V_{\Gamma,x}} \arrow[r, "\deno T \sequoid\pr_\Gamma"' yshift=-3pt]
-                  & \deno T \sequoid\oc\V_\Gamma
+              \&
+                \& \oc\deno{\Gamma}\tensor\oc\deno{\Gamma}
+                  \& {\oc{\deno{\Gamma,x}}\tensor\oc\deno{\Gamma}} \arrow[d, "{\deno{\Gamma,x\ts M}\tensor\oc\deno{\Gamma}}" description] \arrow[l, "\pr_\Gamma\tensor\oc\deno{\Gamma}"'] \\
+            {\oc{\deno{\Gamma,x}}} \arrow[uurr, "\oc\pr_\Gamma" description] \arrow[d, "{\mu_{{\deno{\Gamma,x}}}}"']
+              \&
+                \&
+                  \& \deno T \tensor \oc\deno{\Gamma} \arrow[d, "{\wk_{\deno T,\oc\deno{\Gamma}}}" description] \\
+            {\oc{\deno{\Gamma,x}}\tensor\oc{\deno{\Gamma,x}}} \arrow[uurr, "\oc\pr_\Gamma\tensor\oc\pr_\Gamma" {description, pos=0.7}] \arrow[uurrr, "{{\deno{\Gamma,x}}\tensor\pr_\Gamma}" {description, pos=0.7}] \arrow[r, "{\deno{\Gamma,x\ts M}\tensor\oc{\deno{\Gamma,x}}}"' yshift=-3pt]
+              \& {\deno T \tensor \oc{\deno{\Gamma,x}}} \arrow[r, "{\wk_{\deno T,\oc{\deno{\Gamma,x}}}}"' yshift=-3pt]
+                \& {\deno T \sequoid \oc{\deno{\Gamma,x}}} \arrow[r, "\deno T \sequoid\pr_\Gamma"' yshift=-3pt]
+                  \& \deno T \sequoid\oc\deno{\Gamma}
           \end{tikzcd}
           \]
         \caption{The conclusion of Lemma \ref{LemSoundnessOopto} holds for the $\neww$ rule.}
         \label{FigSoundnessOoptoNew}
-      \end{figure}
+      \end{SidewaysFigure}
     \item Now consider the rules
       \begin{mathpar}
         x,\Gamma,s\ts x\gets n \oopto x,\Gamma,(s\vert x\mapsto n) \ts \skipp
@@ -3170,13 +3236,13 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
       In each of these cases, the outer context $\Gamma$ is unchanged by the rule; moreover, each term ignores the variables in $\Gamma$.
       So the denotations terms-in-context $x,\Gamma\ts M\from T$ on either side of each rule are of the form
       \[
-        \oc\V_{x,\Gamma} \xrightarrow{\oc\pr_1} \oc \Varr \xrightarrow{\deno{x\ts M}} \deno{T}\,.
+        \oc{\deno{x,\Gamma}} \xrightarrow{\oc\pr_1} \oc \Varr \xrightarrow{\deno{x\ts M}} \deno{T}\,.
         \]
       Now the diagram in Figure \ref{FigSoundnessOoptoContext} tells us that each $\seqdeno{\Gamma,x,s\ts M}$ may be written as the composite
       \begin{mathpar}
-        \oc\deno{s\vert_\Gamma};\cell^\Gamma;\lunit_{\oc\V_\Gamma};\\((\oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr})\tensor\oc\V_\Gamma);\\\wk_{\deno T\sequoid \oc\Varr,\oc\V_\Gamma};\passoc_{\deno T,\oc\Varr,\oc\V_\Gamma};\cong
+        \oc\deno{s\vert_\Gamma};\cell^\Gamma;\lunit_{\oc\deno{\Gamma}};\\((\oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr})\tensor\oc\deno{\Gamma});\\\wk_{\deno T\sequoid \oc\Varr,\oc\deno{\Gamma}};\passoc_{\deno T,\oc\Varr,\oc\deno{\Gamma}};\cong
       \end{mathpar}
-      (where $\cong$ represents the natural isomorpism between $\deno T\sequoid(\oc\Varr\tensor\oc\V_\Gamma)$ and $\deno T \sequoid\oc\V_{x,\Gamma}$),
+      (where $\cong$ represents the natural isomorpism between the games $\deno T\sequoid(\oc\Varr\tensor\oc\deno{\Gamma})$ and $\deno T \sequoid\oc{\deno{x,\Gamma}}$),
       and so is completely determined by the value of the composite
       \[
         \oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr}\,;
@@ -3190,12 +3256,13 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
         x,s \ts \oc x \oopto x,s\ts s(x)\,.
       \end{mathpar}
       \begin{SidewaysFigure}
+        \small
         \[
           \begin{tikzcd}[ampersand replacement=\&, column sep=5pt]
             I \arrow[r, "\oc\deno{s\vert_\Gamma}"] \arrow[d, "\oc\deno s"' {description, yshift=2pt}, thick, dashed]
               \& \oc S_\Gamma \arrow[r, "\cell^\Gamma"] \arrow[dr, "\lunit_{\oc S_\Gamma}" description, dotted]
-                \&[18pt] \oc \V_\Gamma \arrow[r, "\lunit_{\oc\V_\Gamma}"] 
-                  \&[17pt] I \tensor \oc\V_\Gamma \arrow[dd, "\oc\deno{s\vert_x}\tensor\oc\V_\Gamma" description, thick] \\
+                \&[18pt] \oc \deno{\Gamma} \arrow[r, "\lunit_{\oc\deno{\Gamma}}"] 
+                  \&[17pt] I \tensor \oc\deno{\Gamma} \arrow[dd, "\oc\deno{s\vert_x}\tensor\oc\deno{\Gamma}" description, thick] \\
             {\oc S_{x,\Gamma}} \arrow[drr, Isom, dotted] \arrow[dd, "{\cell^{x,\Gamma}}"' description, thick, dashed]
               \&
                 \& I \tensor \oc S_\Gamma \arrow[ur, "I \tensor\cell^\Gamma" description, dotted] \arrow[d, "\oc\deno{s\vert_x}\tensor\oc S_\Gamma" description, dotted]
@@ -3203,29 +3270,30 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
             %
               \&
                 \& \oc\bN\tensor\oc S_\Gamma \arrow[r, "\oc\bN\tensor\cell^\Gamma" description, dotted] \arrow[dr, "\cell\tensor\cell^\Gamma" description, dotted]
-                  \& \oc\bN \tensor\oc\V_\Gamma \arrow[d, "\cell\tensor\oc\V_\Gamma" description, thick] \\
-            {\oc\V_{x,\Gamma}} \arrow[rrr, Isom, dotted] \arrow[d, "{\mu_{\V_{x,\Gamma}}}"' description, thick, dashed]
+                  \& \oc\bN \tensor\oc\deno{\Gamma} \arrow[d, "\cell\tensor\oc\deno{\Gamma}" description, thick] \\
+            {\oc{\deno{x,\Gamma}}} \arrow[rrr, Isom, dotted] \arrow[d, "{\mu_{{\deno{x,\Gamma}}}}"' description, thick, dashed]
               \&
                 \&
-                  \& \oc\Varr \tensor \oc\V_\Gamma \arrow[d, "\mu_{\Varr}\tensor\oc\V_\Gamma" description, thick] \arrow[dl, "\mu_{\Varr}\tensor\mu_{\V_\Gamma}" description, bend right=15, dotted] \\[10pt]
-            {\oc\V_{x,\Gamma}\tensor\oc\V_{x,\Gamma}} \arrow[r, dotted] \arrow[d, "{\oc\pr_1\tensor\oc\V_{x,\Gamma}}" description, dotted] \arrow[dd, "{\deno{x,\Gamma\ts M}\tensor\oc\V_{x,\Gamma}}" description, bend right=68, thick, dashed, end anchor={[xshift=-3pt]}]
-              \& (\oc\Varr \tensor \oc\V_\Gamma) \tensor (\oc\Varr \tensor\oc\V_\Gamma) \arrow[r, dotted] \arrow[d, "(\oc\Varr\tensor())\tensor(\oc\Varr\tensor\oc\V_{\Gamma})" description, dotted]
-                \& (\oc\Varr \tensor \oc\Varr) \tensor (\oc\V_\Gamma \tensor\oc\V_\Gamma) \arrow[r, "(\oc\Varr\tensor\oc\Varr)\tensor(()\tensor\oc\V_\Gamma)" yshift=5pt, dotted]
-                  \& (\oc\Varr \tensor \oc\Varr) \tensor\oc\V_\Gamma \arrow[d, "(\deno{x\ts M}\tensor \oc\Varr) \tensor \oc\V_\Gamma" description, thick] \\[30pt]
-            {\oc\Varr \tensor \oc\V_{x,\Gamma}} \arrow[r, Isom, dotted] \arrow[d, "{\deno{x\ts M} \tensor \oc\V_{x,\Gamma}}"' {description, yshift=1pt}, dotted]
-              \& \oc\Varr \tensor (\oc\Varr \tensor\oc\V_\Gamma) \arrow[urr, "{\assoc_{\oc\Varr,\oc\Varr,\oc\V_\Gamma}\inv}" {description, xshift=-5pt, yshift=5pt}, start anchor={[xshift=-25pt]}, bend left=5, dotted] \arrow[r, "\deno{x\ts M} \tensor (\oc\Varr\tensor\oc\V_\Gamma)" yshift=2pt, dotted]
-                \& \deno{T} \tensor (\oc\Varr \tensor \oc\V_\Gamma) \arrow[r, "{\assoc_{\deno T,\oc\Varr,\oc\V_\Gamma}}" yshift=2pt, dotted] \arrow[ddl, "{\wk_{\deno T,(\oc\Varr\tensor\oc\V_\Gamma)}}" description, dotted]
-                  \& (\deno T \tensor \oc\Varr) \tensor \oc\V_\Gamma\arrow[d, "{\wk_{\deno T,\oc\Varr}\tensor\oc\V_\Gamma}" {description, yshift=1pt}, thick] \\
-            {\deno T \tensor \oc\V_{x,\Gamma}} \arrow[d, "{\wk_{\deno T,\oc\V_{x,\Gamma}}}"' {description, yshift=2pt}, thick, dashed] \arrow[urr, Isom, dotted]
+                  \& \oc\Varr \tensor \oc\deno{\Gamma} \arrow[d, "\mu_{\Varr}\tensor\oc\deno{\Gamma}" description, thick] \arrow[dl, "\mu_{\Varr}\tensor\mu_{\deno{\Gamma}}" description, bend right=15, dotted] \\[10pt]
+            {\oc{\deno{x,\Gamma}}\tensor\oc{\deno{x,\Gamma}}} \arrow[r, dotted] \arrow[d, "{\oc\pr_1\tensor\oc{\deno{x,\Gamma}}}" description, dotted] \arrow[dd, "{\deno{x,\Gamma\ts M}\tensor\oc{\deno{x,\Gamma}}}" description, bend right=68, thick, dashed, end anchor={[xshift=-3pt]}]
+              \& (\oc\Varr \tensor \oc\deno{\Gamma}) \tensor (\oc\Varr \tensor\oc\deno{\Gamma}) \arrow[r, dotted] \arrow[d, "(\oc\Varr\tensor())\tensor(\oc\Varr\tensor\oc{\deno{\Gamma}})" description, dotted]
+                \& (\oc\Varr \tensor \oc\Varr) \tensor (\oc\deno{\Gamma} \tensor\oc\deno{\Gamma}) \arrow[r, "(\oc\Varr\tensor\oc\Varr)\tensor(()\tensor\oc\deno{\Gamma})" yshift=5pt, dotted]
+                  \& (\oc\Varr \tensor \oc\Varr) \tensor\oc\deno{\Gamma} \arrow[d, "(\deno{x\ts M}\tensor \oc\Varr) \tensor \oc\deno{\Gamma}" description, thick] \\[30pt]
+            {\oc\Varr \tensor \oc{\deno{x,\Gamma}}} \arrow[r, Isom, dotted] \arrow[d, "{\deno{x\ts M} \tensor \oc{\deno{x,\Gamma}}}"' {description, yshift=1pt}, dotted]
+              \& \oc\Varr \tensor (\oc\Varr \tensor\oc\deno{\Gamma}) \arrow[urr, "{\assoc_{\oc\Varr,\oc\Varr,\oc\deno{\Gamma}}\inv}" {description, xshift=-5pt, yshift=5pt}, start anchor={[xshift=-25pt]}, bend left=5, dotted] \arrow[r, "\deno{x\ts M} \tensor (\oc\Varr\tensor\oc\deno{\Gamma})" yshift=2pt, dotted]
+                \& \deno{T} \tensor (\oc\Varr \tensor \oc\deno{\Gamma}) \arrow[r, "{\assoc_{\deno T,\oc\Varr,\oc\deno{\Gamma}}}" yshift=2pt, dotted] \arrow[ddl, "{\wk_{\deno T,(\oc\Varr\tensor\oc\deno{\Gamma})}}" description, dotted]
+                  \& (\deno T \tensor \oc\Varr) \tensor \oc\deno{\Gamma}\arrow[d, "{\wk_{\deno T,\oc\Varr}\tensor\oc\deno{\Gamma}}" {description, yshift=1pt}, thick] \\
+            {\deno T \tensor \oc{\deno{x,\Gamma}}} \arrow[d, "{\wk_{\deno T,\oc{\deno{x,\Gamma}}}}"' {description, yshift=2pt}, thick, dashed] \arrow[urr, Isom, dotted]
               \&
                 \&
-                  \& (\deno T \sequoid \oc\Varr) \tensor \oc\V_\Gamma \arrow[d, "{\wk_{(\deno T\sequoid\oc\Varr),\oc\V_\Gamma}}" {description, yshift=2pt}] \\[5pt]
-            {\deno T \sequoid \oc\V_{x,\Gamma}} \arrow[r, Isom]
-              \& \deno T \sequoid (\oc\Varr \tensor\oc\V_\Gamma)
+                  \& (\deno T \sequoid \oc\Varr) \tensor \oc\deno{\Gamma} \arrow[d, "{\wk_{(\deno T\sequoid\oc\Varr),\oc\deno{\Gamma}}}" {description, yshift=2pt}] \\[5pt]
+            {\deno T \sequoid \oc{\deno{x,\Gamma}}} \arrow[r, Isom]
+              \& \deno T \sequoid (\oc\Varr \tensor\oc\deno{\Gamma})
                 \&
-                  \& (\deno T \sequoid \oc\Varr) \sequoid\oc\V_\Gamma \arrow[ll, "{\passoc_{\deno T,\oc\Varr,\oc\V_\Gamma}}"]
+                  \& (\deno T \sequoid \oc\Varr) \sequoid\oc\deno{\Gamma} \arrow[ll, "{\passoc_{\deno T,\oc\Varr,\oc\deno{\Gamma}}}"]
           \end{tikzcd}
           \]
+          \normalsize
           \caption{Diagram proving that if we want to prove the conclusion of Lemma \ref{LemSoundnessOopto} for a small-step rule that does not change the context and only mentions one variable, then it suffices to assume that that variable is the only variable in the context.}
           \label{FigSoundnessOoptoContext}
       \end{SidewaysFigure}
@@ -3300,27 +3368,27 @@ Now that we have dealt with the base rules, we can move on to the full relation 
 \begin{lemma}
   The relation $\opto$ between triples $\Gamma,s\ts M$ preserves the composite
   \[
-    \oc\deno s;\cell^\Gamma;\mu_{\V_\Gamma};(\deno{\Gamma\ts M}\tensor\oc\V_\Gamma);\wk_{\deno T,\oc\V_\Gamma}\,.
+    \oc\deno s;\cell^\Gamma;\mu_{\deno{\Gamma}};(\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma});\wk_{\deno T,\oc\deno{\Gamma}}\,.
     \]
   I.e., if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$, and $\EE$ is a context of type $U$ with a hole of type $T$, then the following diagram commutes.
   \[
     \begin{tikzcd}[column sep=24pt]
       I \arrow[r, "\oc \deno s"] \arrow[d, "\oc \deno {s'}"']
         & \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
-          & \oc \V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"]
-            &[22pt] \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\deno{\Gamma\ts \EE[M]}\tensor \oc V_\Gamma"] \\
+          & \oc \deno{\Gamma} \arrow[r, "\mu_{\deno{\Gamma}}"]
+            &[22pt] \oc \deno{\Gamma} \tensor \oc \deno{\Gamma} \arrow[d, "\deno{\Gamma\ts \EE[M]}\tensor \oc V_\Gamma" description] \\
       {\oc S_{\Gamma,\Delta}} \arrow[d, "{\cell^{\Gamma,\Delta}}"']
         &
           &
-            & \deno U \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno U,\oc \V_{\Gamma}}}"] \\
-      {\oc \V_{\Gamma,\Delta}} \arrow[d, "{\mu_{\V_{\Gamma,\Delta}}}"']
+            & \deno U \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno U,\oc {\deno{\Gamma}}}}" description] \\
+      {\oc {\deno{\Gamma,\Delta}}} \arrow[d, "{\mu_{{\deno{\Gamma,\Delta}}}}"']
         &
           &
-            &  \deno{U}\sequoid \oc\V_\Gamma \arrow[d, "{\deno{U} \sequoid (\Gamma+0_\Delta)}"] \\
-      {\oc \V_{\Gamma,\Delta} \tensor \oc \V_{\Gamma,\Delta}} \arrow[rr, "{\deno{\Gamma,\Delta\ts \EE[N]} \tensor \oc \V_{\Gamma,\Delta}}"]
+            &  \deno{U}\sequoid \oc\deno{\Gamma} \\
+      {\oc {\deno{\Gamma,\Delta}} \tensor \oc {\deno{\Gamma,\Delta}}} \arrow[rr, "{\deno{\Gamma,\Delta\ts \EE[N]} \tensor \oc {\deno{\Gamma,\Delta}}}"]
         &
-          & {\deno U \tensor \oc \V_{\Gamma,\Delta}} \arrow[r, "{\wk_{\deno U,\oc \V_{\Gamma,\Delta}}}"]
-            & {{\deno U \sequoid \oc \V_{\Gamma,\Delta}}\,,}
+          & {\deno U \tensor \oc {\deno{\Gamma,\Delta}}} \arrow[r, "{\wk_{\deno U,\oc {\deno{\Gamma,\Delta}}}}"]
+            & {{\deno U \sequoid \oc {\deno{\Gamma,\Delta}}}\,,} \arrow[u, "\deno U \sequoid \oc\pr_\Gamma" description]
     \end{tikzcd}
     \]
   \label{LemSoundnessOpto}
@@ -3329,50 +3397,46 @@ Now that we have dealt with the base rules, we can move on to the full relation 
   We use Lemma \ref{LemEvContexLemma} to reduce this to Lemma \ref{LemSoundnessOpto}.  
   Indeed, Lemma \ref{LemEvContexLemma} tells us that for any $\Gamma,s\ts M$, $\deno{\Gamma\ts \EE[M]}$ may be written as
   \[
-    \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma\tensor\oc\V_\Gamma \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma} \deno T \tensor A \xrightarrow{\wk_{\deno T,A}} \deno T \sequoid A \xrightarrow{\tau} \deno U
+    \oc\deno{\Gamma} \xrightarrow{\mu_{\deno{\Gamma}}} \oc\deno{\Gamma}\tensor\oc\deno{\Gamma} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma} \deno T \tensor A \xrightarrow{\wk_{\deno T,A}} \deno T \sequoid A \xrightarrow{\tau} \deno U
     \]
   for suitably chosen $A,\sigma,\tau$.
 
   Let us write $\seqdeno{\Gamma,s\ts M}$ for the composite
   \[
-    \oc\deno s;\cell^\Gamma;\mu_{\V_\Gamma};(\deno{\Gamma\ts M}\tensor\oc\V_\Gamma);\wk_{\deno T,\oc\V_\Gamma};(\deno T \sequoid (\Gamma+0_\Delta))\,.
+    \oc\deno s;\cell^\Gamma;\mu_{\deno{\Gamma}};(\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma});\wk_{\deno T,\oc\deno{\Gamma}};(\deno T \sequoid (\Gamma+0_\Delta))\,.
     \]
   So we are trying to show that $\seqdeno{\Gamma,s\ts \EE[M]}=\seqdeno{\Gamma,\Delta,s'\ts \EE[N]};(\deno U \sequoid \oc\pr_\Gamma)$.
 
   Now the diagram in Figure \ref{FigSoundnessOpto} shows us that for any $\Gamma,s\ts M$ we may write
   \[
-    \seqdeno{\Gamma,s\ts \EE[M]} = \seqdeno{\Gamma,s\ts M};(\deno T \sequoid (\mu_{\V_\Gamma};(\sigma\tensor\oc\V_\Gamma));\passoc_{\deno T,A,\oc\V_\Gamma}\inv;(\tau\sequoid\oc\V_\Gamma)\,.
+    \seqdeno{\Gamma,s\ts \EE[M]} = \seqdeno{\Gamma,s\ts M};(\deno T \sequoid (\mu_{\deno{\Gamma}};(\sigma\tensor\oc\deno{\Gamma}));\passoc_{\deno T,A,\oc\deno{\Gamma}}\inv;(\tau\sequoid\oc\deno{\Gamma})\,.
     \]
 
   \begin{SidewaysFigure}
     \[
-      \begin{tikzcd}[column sep=45pt, row sep=30pt, ampersand replacement=\&]
-        \oc S_\Gamma \arrow[d, "\cell^\Gamma"', thick]
-          \& I \arrow[l, "\oc\deno s"', thick]
-            \&
-              \& \\
-        \oc\V_\Gamma \arrow[r, "\mu_{\V_\Gamma}", thick] \arrow[d, "\mu_{\V_\Gamma}"', thick, dashed]
-          \& \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[r, "\deno{\Gamma\ts M}\tensor\oc\V_\Gamma", thick] \arrow[dd, "\oc\V_\Gamma\tensor\mu_{\V_\Gamma}" description, dotted]
-            \& \deno T \tensor \oc\V_\Gamma \arrow[r, "{\wk_{\deno T,\oc\V_\Gamma}}", thick] \arrow[dd, "\deno T \tensor \mu_{\V_\Gamma}" description, dotted]
-              \& \deno T \sequoid \oc\V_\Gamma \arrow[dd, "\deno T \sequoid \mu_{\V_\Gamma}"] \\
-        \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "\mu_{\V_\Gamma}\tensor\oc\V_\Gamma"', thick, dashed]
+      \begin{tikzcd}[column sep=46pt, row sep=30pt, ampersand replacement=\&]
+        \oc{\deno{\Gamma}} \arrow[r, "\mu_{{\deno{\Gamma}}}", thick] \arrow[d, "\mu_{{\deno{\Gamma}}}"' description, thick, dashed]
+          \& \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \arrow[r, "\deno{\Gamma\ts M}\tensor\oc{\deno{\Gamma}}", thick] \arrow[dd, "\oc{\deno{\Gamma}}\tensor\mu_{{\deno{\Gamma}}}" description, dotted]
+            \& \deno T \tensor \oc{\deno{\Gamma}} \arrow[r, "{\wk_{\deno T,\oc{\deno{\Gamma}}}}", thick] \arrow[dd, "\deno T \tensor \mu_{{\deno{\Gamma}}}" description, dotted]
+              \& \deno T \sequoid \oc{\deno{\Gamma}} \arrow[dd, "\deno T \sequoid \mu_{{\deno{\Gamma}}}" description] \\
+        \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \arrow[d, "\mu_{{\deno{\Gamma}}}\tensor\oc{\deno{\Gamma}}"' description, thick, dashed]
           \&
             \&
               \& \\
-        (\oc\V_\Gamma \tensor \oc\V_\Gamma) \tensor \oc\V_\Gamma \arrow[r, "{\assoc_{\oc\V_\Gamma,\oc\V_\Gamma,\oc\V_\Gamma}}" yshift=3pt, dotted] \arrow[d, "(\deno{\Gamma\ts M}\tensor \sigma) \tensor\oc\V_\Gamma"', thick, dashed]
-          \& \oc\V_\Gamma \tensor (\oc\V_\Gamma \tensor \oc\V_\Gamma) \arrow[r, "\deno{\Gamma\ts M} \tensor (\oc\V_\Gamma\tensor \oc\V_\Gamma)" yshift=3pt, dotted] \arrow[d, "\deno{\Gamma\ts M}\tensor (\sigma\tensor\oc\V_\Gamma)" description, dotted]
-            \& \deno T \tensor (\oc\V_\Gamma\ \tensor \oc\V_\Gamma) \arrow[r, "{\wk_{\deno T,\oc\V_\Gamma\tensor\oc\V_\Gamma}}" yshift=3pt, dotted] \arrow[dl, "\deno T \tensor (\sigma \tensor\oc\V_\Gamma)" description, dotted]
-              \& \deno T \sequoid (\oc\V_\Gamma \tensor \oc\V_\Gamma) \arrow[d, "\deno T \sequoid (\sigma \tensor \oc\V_\Gamma)"] \\
-        (\deno T \tensor A) \tensor \oc\V_\Gamma \arrow[d, "{\wk_{\deno T,A}\tensor\oc\V_\Gamma}"', thick, dashed] \arrow[r, "{\assoc_{\deno T,A,\oc\V_\Gamma}}", dotted]
-          \& \deno T \tensor (A \tensor \oc\V_\Gamma) \arrow[rr, "{\wk_{\deno T,A\tensor\oc\V_\Gamma}}", dotted]
+        (\oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}}) \tensor \oc{\deno{\Gamma}} \arrow[r, "{\assoc_{\oc{\deno{\Gamma}},\oc{\deno{\Gamma}},\oc{\deno{\Gamma}}}}" yshift=3pt, dotted] \arrow[d, "(\deno{\Gamma\ts M}\tensor \sigma) \tensor\oc{\deno{\Gamma}}"' description, thick, dashed]
+          \& \oc{\deno{\Gamma}} \tensor (\oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}}) \arrow[r, "\deno{\Gamma\ts M} \tensor (\oc{\deno{\Gamma}}\tensor \oc{\deno{\Gamma}})" yshift=3pt, dotted] \arrow[d, "\deno{\Gamma\ts M}\tensor (\sigma\tensor\oc{\deno{\Gamma}})" description, dotted]
+            \& \deno T \tensor (\oc{\deno{\Gamma}}\ \tensor \oc{\deno{\Gamma}}) \arrow[r, "{\wk_{\deno T,\oc{\deno{\Gamma}}\tensor\oc{\deno{\Gamma}}}}" yshift=3pt, dotted] \arrow[dl, "\deno T \tensor (\sigma \tensor\oc{\deno{\Gamma}})" description, dotted]
+              \& \deno T \sequoid (\oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}}) \arrow[d, "\deno T \sequoid (\sigma \tensor \oc{\deno{\Gamma}})" description] \\
+        (\deno T \tensor A) \tensor \oc{\deno{\Gamma}} \arrow[d, "{\wk_{\deno T,A}\tensor\oc{\deno{\Gamma}}}"' description, thick, dashed] \arrow[r, "{\assoc_{\deno T,A,\oc{\deno{\Gamma}}}}", dotted]
+          \& \deno T \tensor (A \tensor \oc{\deno{\Gamma}}) \arrow[rr, "{\wk_{\deno T,A\tensor\oc{\deno{\Gamma}}}}", dotted]
             \&
-              \& \deno T \sequoid (A \tensor \oc\V_\Gamma) \\
-        (\deno T \sequoid A) \tensor \oc\V_\Gamma \arrow[r, "{\wk_{\deno T\sequoid A,\oc\V_\Gamma}}", dotted] \arrow[d, "\tau\tensor\oc\V_\Gamma", thick, dashed]
-          \& (\deno T \sequoid A) \sequoid \oc\V_\Gamma \arrow[d, "\tau\sequoid\oc\V_\Gamma"] \arrow[urr, "{\passoc_{\deno T,A,\oc\V_\Gamma}}"']
+              \& \deno T \sequoid (A \tensor \oc{\deno{\Gamma}}) \\
+        (\deno T \sequoid A) \tensor \oc{\deno{\Gamma}} \arrow[r, "{\wk_{\deno T\sequoid A,\oc{\deno{\Gamma}}}}", dotted] \arrow[d, "\tau\tensor\oc{\deno{\Gamma}}" description, thick, dashed]
+          \& (\deno T \sequoid A) \sequoid \oc{\deno{\Gamma}} \arrow[d, "\tau\sequoid\oc{\deno{\Gamma}}"] \arrow[urr, "{\passoc_{\deno T,A,\oc{\deno{\Gamma}}}}"']
             \&
               \& \\
-        \deno U \tensor \oc\V_\Gamma \arrow[r, "{\wk_{\deno U,\oc\V_\Gamma}}", thick, dashed]
-          \& \deno U \sequoid \oc\V_\Gamma
+        \deno U \tensor \oc{\deno{\Gamma}} \arrow[r, "{\wk_{\deno U,\oc{\deno{\Gamma}}}}", thick, dashed]
+          \& \deno U \sequoid \oc{\deno{\Gamma}}
             \&
               \&
       \end{tikzcd}
@@ -3384,10 +3448,10 @@ Now that we have dealt with the base rules, we can move on to the full relation 
   Therefore, Lemma \ref{LemSoundnessOopto} tells us that if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, then we have
   \begin{IEEEeqnarray*}{Cl}
     & \seqdeno{\Gamma,s\ts \EE[M]} \\
-    = & \seqdeno{\Gamma,s\ts M};(\deno T\sequoid(\mu_{\V_\Gamma};(\sigma\tensor\oc\V_\Gamma));\passoc\inv;(\tau\sequoid\oc\V_\Gamma) \\
-    = & \seqdeno{\Gamma,s\ts N};(\deno T \sequoid \oc\pr_\Gamma);(\deno T\sequoid(\mu_{\V_\Gamma};(\sigma\tensor\oc\V_\Gamma));\passoc\inv;(\tau\sequoid\oc\V_\Gamma) \\
-    = & \seqdeno{\Gamma,s\ts N};(\deno T \sequoid (\mu_{\V_{\Gamma,\Delta}};((\pr_\Gamma;\sigma)\tensor\oc\V_{\Gamma,\Delta})));\passoc\inv; \\
-    &\qquad(\tau\sequoid\oc\V_\Gamma);(\deno U\sequoid\oc\pr_\Gamma) \\
+    = & \seqdeno{\Gamma,s\ts M};(\deno T\sequoid(\mu_{\deno{\Gamma}};(\sigma\tensor\oc\deno{\Gamma}));\passoc\inv;(\tau\sequoid\oc\deno{\Gamma}) \\
+    = & \seqdeno{\Gamma,s\ts N};(\deno T \sequoid \oc\pr_\Gamma);(\deno T\sequoid(\mu_{\deno{\Gamma}};(\sigma\tensor\oc\deno{\Gamma}));\passoc\inv;(\tau\sequoid\oc\deno{\Gamma}) \\
+    = & \seqdeno{\Gamma,s\ts N};(\deno T \sequoid (\mu_{{\deno{\Gamma,\Delta}}};((\pr_\Gamma;\sigma)\tensor\oc{\deno{\Gamma,\Delta}})));\passoc\inv; \\
+    &\qquad(\tau\sequoid\oc\deno{\Gamma});(\deno U\sequoid\oc\pr_\Gamma) \\
     = & \seqdeno{\Gamma,s\ts \EE[N]};(\deno U\sequoid\oc\pr_\Gamma)\,,
   \end{IEEEeqnarray*}
   as desired.
@@ -3399,19 +3463,19 @@ It is now a simple induction to show that we can extend this to the $\converges$
   Suppose that $\Gamma,s\ts M \converges c,s'$, where $M,c\from T$.
   Then the following diagram commutes.
   \[
-    \begin{tikzcd}[column sep=40pt]
-      I \arrow[r, "\oc\deno s"] \arrow[d, "\oc\deno{s'}"']
+    \begin{tikzcd}[column sep=47pt]
+      I \arrow[r, "\oc\deno s"] \arrow[d, "\oc\deno{s'}" description]
         & \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
-          & \oc\V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"]
-            & \oc\V_\Gamma\tensor\oc\V_\Gamma \arrow[d, "\deno{\Gamma\ts M}\tensor\oc\V_\Gamma"] \\
-      \oc S_\Gamma \arrow[d, "\cell^\Gamma"']
+          & \oc\deno{\Gamma} \arrow[r, "\mu_{\deno{\Gamma}}"]
+            & \oc\deno{\Gamma}\tensor\oc\deno{\Gamma} \arrow[d, "\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma}" description] \\
+      \oc S_\Gamma \arrow[d, "\cell^\Gamma"' description]
         &
           &
-             & \deno{T} \tensor \oc\V_\Gamma \arrow[d, "{\wk_{\deno T,\oc\V_\Gamma}}"] \\
-      \oc\V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"]
-        & \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[r, "\deno{\Gamma\ts c}\tensor\oc\V_\Gamma"]
-          & \deno T \tensor \oc\V_\Gamma \arrow[r, "{\wk_{\deno T,\oc\V_\Gamma}}"]
-            & \deno T \sequoid \oc\V_\Gamma
+             & \deno{T} \tensor \oc\deno{\Gamma} \arrow[d, "{\wk_{\deno T,\oc\deno{\Gamma}}}" description] \\
+      \oc\deno{\Gamma} \arrow[r, "\mu_{\deno{\Gamma}}"]
+        & \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \arrow[r, "\deno{\Gamma\ts c}\tensor\oc\deno{\Gamma}"]
+          & \deno T \tensor \oc\deno{\Gamma} \arrow[r, "{\wk_{\deno T,\oc\deno{\Gamma}}}"]
+            & \deno T \sequoid \oc\deno{\Gamma}
     \end{tikzcd}
     \]
   \label{LemSoundness}
@@ -3425,23 +3489,23 @@ It is now a simple induction to show that we can extend this to the $\converges$
 
   By inductively applying Lemma \ref{LemSoundnessOpto}, we see that we have a commutative diagram
   \[
-    \begin{tikzcd}[column sep=28pt]
+    \begin{tikzcd}[column sep=25pt]
       I \arrow[r, "\oc \deno s"] \arrow[d, "\oc \deno {s^{(n)}}"']
         & \oc S_\Gamma \arrow[r, "\cell^\Gamma"]
-          & \oc \V_\Gamma \arrow[r, "\mu_{\V_\Gamma}"]
-            &[22pt] \oc \V_\Gamma \tensor \oc \V_\Gamma \arrow[d, "\deno{\Gamma\ts M}\tensor \oc V_\Gamma"] \\
+          & \oc \deno{\Gamma} \arrow[r, "\mu_{\deno{\Gamma}}"]
+            &[22pt] \oc \deno{\Gamma} \tensor \oc \deno{\Gamma} \arrow[d, "\deno{\Gamma\ts M}\tensor \oc V_\Gamma" description] \\
       {\oc S_{\Gamma,\Delta}} \arrow[d, "{\cell^{\Gamma,\Delta}}"']
         &
           &
-            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc \V_{\Gamma}}}"] \\
-      {\oc \V_{\Gamma,\Delta}} \arrow[d, "{\mu_{\V_{\Gamma,\Delta}}}"']
+            & \deno T \tensor \oc V_\Gamma \arrow[d, "{\wk_{\deno T,\oc {\deno{\Gamma}}}}" description] \\
+      {\oc {\deno{\Gamma,\Delta}}} \arrow[d, "{\mu_{{\deno{\Gamma,\Delta}}}}"']
         &
           &
-            &  \deno{T}\sequoid \oc\V_\Gamma \\
-      {\oc \V_{\Gamma,\Delta} \tensor \oc \V_{\Gamma,\Delta}} \arrow[rr, "{\deno{\Gamma,\Delta\ts c} \tensor \oc \V_{\Gamma,\Delta}}"]
+            &  \deno{T}\sequoid \oc\deno{\Gamma} \\
+      {\oc {\deno{\Gamma,\Delta}} \tensor \oc {\deno{\Gamma,\Delta}}} \arrow[rr, "{\deno{\Gamma,\Delta\ts c} \tensor \oc {\deno{\Gamma,\Delta}}}"]
         &
-          & {\deno T \tensor \oc \V_{\Gamma,\Delta}} \arrow[r, "{\wk_{\deno T,\oc \V_{\Gamma,\Delta}}}"]
-            & {{\deno T \sequoid \oc \V_{\Gamma,\Delta}}\,,} \arrow[u, "\deno T \sequoid \oc\pr_\Gamma"]
+          & {\deno T \tensor \oc {\deno{\Gamma,\Delta}}} \arrow[r, "{\wk_{\deno T,\oc {\deno{\Gamma,\Delta}}}}"]
+            & {{\deno T \sequoid \oc {\deno{\Gamma,\Delta}}}\,,} \arrow[u, "\deno T \sequoid \oc\pr_\Gamma" description]
     \end{tikzcd}
     \]
   Now, since $s^{(n)}\vert_\Gamma = s'$, we have a commutative diagram
@@ -3451,14 +3515,14 @@ It is now a simple induction to show that we can extend this to the $\converges$
         & \oc S_\Gamma \arrow[dd, "\cell^\Gamma"] \\
       {\oc S_{\Gamma,\Delta}} \arrow[ur, "\oc\pr_\Gamma" description] \arrow[d, "{\cell^{\Gamma,\Delta}}"']
         & \\
-      {\oc\V_{\Gamma,\Delta}} \arrow[r, "\oc\pr_\Gamma"] \arrow[d, "{\mu_{\V_{\Gamma,\Delta}}}"']
-        & \oc\V_\Gamma \arrow[d, "\mu_{\V_\Gamma}"] \\
-      {\oc\V_{\Gamma,\Delta}\tensor\oc\V_{\Gamma,\Delta}} \arrow[d, "{\deno{\Gamma,\Delta\ts c}\tensor\oc\V_{\Gamma,\Delta}}"'] \arrow[r, "\oc\pr_\Gamma\tensor\oc\pr_\Gamma"]
-        & \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[d, "\deno{\Gamma\ts c}\tensor\oc\V_\Gamma"]  \\
-      {\deno T \tensor \oc\V_{\Gamma,\Delta}} \arrow[r, "\deno T \tensor \oc\pr_\Gamma"] \arrow[d, "{\wk_{\deno T,\oc\V_{\Gamma,\Delta}}}"']
-        & \deno T \tensor \oc\V_\Gamma \arrow[d, "{\wk_{\deno T,\oc\V_\Gamma}}"] \\
-      {\deno T \sequoid \oc\V_{\Gamma,\Delta}} \arrow[r, "\deno T \sequoid \oc\pr_\Gamma"]
-        & \deno T \sequoid \oc\V_\Gamma \\
+      {\oc{\deno{\Gamma,\Delta}}} \arrow[r, "\oc\pr_\Gamma"] \arrow[d, "{\mu_{{\deno{\Gamma,\Delta}}}}"']
+        & \oc\deno{\Gamma} \arrow[d, "\mu_{\deno{\Gamma}}"] \\
+      {\oc{\deno{\Gamma,\Delta}}\tensor\oc{\deno{\Gamma,\Delta}}} \arrow[d, "{\deno{\Gamma,\Delta\ts c}\tensor\oc{\deno{\Gamma,\Delta}}}"'] \arrow[r, "\oc\pr_\Gamma\tensor\oc\pr_\Gamma"]
+        & \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \arrow[d, "\deno{\Gamma\ts c}\tensor\oc\deno{\Gamma}"]  \\
+      {\deno T \tensor \oc{\deno{\Gamma,\Delta}}} \arrow[r, "\deno T \tensor \oc\pr_\Gamma"] \arrow[d, "{\wk_{\deno T,\oc{\deno{\Gamma,\Delta}}}}"']
+        & \deno T \tensor \oc\deno{\Gamma} \arrow[d, "{\wk_{\deno T,\oc\deno{\Gamma}}}"] \\
+      {\deno T \sequoid \oc{\deno{\Gamma,\Delta}}} \arrow[r, "\deno T \sequoid \oc\pr_\Gamma"]
+        & \deno T \sequoid \oc\deno{\Gamma} \\
     \end{tikzcd}
     \]
   which, together with the diagram above, gives us the commutative diagram in the statement.
@@ -3477,25 +3541,25 @@ It is then an easy corollary to show the sense in which our semantics is sound.
 \begin{proof}
   Lemma \ref{LemSoundness}, plus the fact that if $\Gamma,s\ts P\from T$, then we have a commutative diagram
   \[
-    \begin{tikzcd}[column sep=14.5pt]
+    \begin{tikzcd}[column sep=10.8pt]
       I \arrow[r, "\deno{s}", thick]
         & \oc S_\Gamma \arrow[r, "\cell^\Gamma", thick]
-          & \oc\V_\Gamma \arrow[rr, "\mu_{\V_\Gamma}", thick, dashed] \arrow[ddd, "\deno{\Gamma\ts P}"', thick] \arrow[drr, "\runit_{\oc\V_\Gamma}" description, dotted]
+          & \oc\deno{\Gamma} \arrow[rr, "\mu_{\deno{\Gamma}}", thick, dashed] \arrow[ddd, "\deno{\Gamma\ts P}"', thick] \arrow[drr, "\runit_{\oc\deno{\Gamma}}" description, dotted]
             &
-              & \oc\V_\Gamma \tensor \oc\V_\Gamma \arrow[rr, "\deno{\Gamma\ts P}\tensor\oc\V_\Gamma", thick, dashed] \arrow[d, "\oc\V_\Gamma\tensor()" description, dotted]
+              & \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \arrow[rr, "\deno{\Gamma\ts P}\tensor\oc\deno{\Gamma}", thick, dashed] \arrow[d, "\oc\deno{\Gamma}\tensor()" description, dotted]
                 &
-                  & \deno T \tensor\oc\V_\Gamma \arrow[ddd, "{\wk_{\deno T,\oc\V_\Gamma}}" description, thick, dashed] \arrow[ddl, "\deno T \tensor ()" description, dotted] \\
+                  & \deno T \tensor\oc\deno{\Gamma} \arrow[ddd, "{\wk_{\deno T,\oc\deno{\Gamma}}}" description, thick, dashed] \arrow[ddl, "\deno T \tensor ()" description, dotted] \\
       %
         &
           &
             &
-              & \oc\V_\Gamma \tensor I \arrow[dr, "\deno{\Gamma\ts P}\tensor I" description, dotted] \arrow[dl, "{\wk_{\oc\V_\Gamma,I}}" description, dotted]
+              & \oc\deno{\Gamma} \tensor I \arrow[dr, "\deno{\Gamma\ts P}\tensor I" description, dotted] \arrow[dl, "{\wk_{\oc\deno{\Gamma},I}}" description, dotted]
                 &
                   & \\
       %
         &
           &
-            & \oc\V_\Gamma \sequoid I \arrow[dr, "\deno{\Gamma\ts P}\sequoid I" description, dotted] \arrow[uul, "\run_{\oc\V_\Gamma}" description, dotted]
+            & \oc\deno{\Gamma} \sequoid I \arrow[dr, "\deno{\Gamma\ts P}\sequoid I" description, dotted] \arrow[uul, "\run_{\oc\deno{\Gamma}}" description, dotted]
               &
                 & \deno T \tensor I \arrow[dl, "{\wk_{\deno T,I}}" description, dotted]
                   & \\
@@ -3505,12 +3569,12 @@ It is then an easy corollary to show the sense in which our semantics is sound.
             &
               & \deno T \sequoid I \arrow[ll, "{\run_{\deno T}}"']
                 &
-                  & \deno T \sequoid \oc\V_\Gamma \arrow[ll, "\deno T \sequoid()"']\,,
+                  & \deno T \sequoid \oc\deno{\Gamma} \arrow[ll, "\deno T \sequoid()"']\,,
     \end{tikzcd}
     \]
   allowing us to recover $\deno{s};\cell^\Gamma;\deno{\Gamma\ts P}$ from 
   \[
-    \seqdeno{\Gamma,s\ts P} = \deno{s};\cell^\Gamma;\mu_{\V_\Gamma};(\deno{\Gamma\ts P}\tensor\oc\V_\Gamma);\wk_{\deno T,\oc\V_\Gamma}\,,
+    \seqdeno{\Gamma,s\ts P} = \deno{s};\cell^\Gamma;\mu_{\deno{\Gamma}};(\deno{\Gamma\ts P}\tensor\oc\deno{\Gamma});\wk_{\deno T,\oc\deno{\Gamma}}\,,
     \]
   for $P=M,c$.
 \end{proof}
@@ -3536,23 +3600,23 @@ It is then easy to see the following.
 \end{proposition}
 
 \begin{definition}
-  Given a $\Var$-store $\Gamma$, a strategy $\sigma\from\oc\V_\Gamma \implies A$ and a $\Gamma$-store $s$, we write
+  Given a $\Var$-store $\Gamma$, a strategy $\sigma\from\oc\deno{\Gamma} \implies A$ and a $\Gamma$-store $s$, we write
   \[
     \seqdeno{s,\sigma}
     \]
   for the composite
   \[
-    I \xrightarrow{\oc\deno s} \oc S_\Gamma \xrightarrow{\cell^\Gamma} \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\sigma\tensor\oc\V_\Gamma} A \tensor \oc\V_\Gamma \xrightarrow{\wk_{A,\oc\V_\Gamma}} A \sequoid \oc\V_\Gamma\,.
+    I \xrightarrow{\oc\deno s} \oc S_\Gamma \xrightarrow{\cell^\Gamma} \oc\deno{\Gamma} \xrightarrow{\mu_{\deno{\Gamma}}} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\sigma\tensor\oc\deno{\Gamma}} A \tensor \oc\deno{\Gamma} \xrightarrow{\wk_{A,\oc\deno{\Gamma}}} A \sequoid \oc\deno{\Gamma}\,.
     \]
   In particular, if $\Gamma\ts M\from T$ is a term in context, then $\seqdeno{s,\deno{\Gamma\ts M}}$ is equal to the sequoidal denotation $\seqdeno{\Gamma,s\ts M}$.
 \end{definition}
 
 \begin{definition}
-  We inductively define a relation $\plot_T^\Gamma$, where $\Gamma$ is a $\Var$-store and $T$ a type, between strategies for $\oc\V_\Gamma \implies \deno T$ and terms $\Gamma\ts M\from T$ in context as follows.
+  We inductively define a relation $\plot_T^\Gamma$, where $\Gamma$ is a $\Var$-store and $T$ a type, between strategies for $\oc\deno{\Gamma} \implies \deno T$ and terms $\Gamma\ts M\from T$ in context as follows.
   \begin{itemize}
-    \item If $X\in\{\bC,\bB,\bN\}$ is a datatype, $M\from X$ and $\sigma\from \oc\V_\Gamma\implies X$, then we say that $\sigma \plot_X^\Gamma u$ if for all $\Gamma$-stores $s$, either $\seqdeno{s,\sigma}=\bot_{A\sequoid\oc\V_\Gamma}$ or $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ and some canonical form $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
+    \item If $X\in\{\bC,\bB,\bN\}$ is a datatype, $M\from X$ and $\sigma\from \oc\deno{\Gamma}\implies X$, then we say that $\sigma \plot_X^\Gamma u$ if for all $\Gamma$-stores $s$, either $\seqdeno{s,\sigma}=\bot_{A\sequoid\oc\deno{\Gamma}}$ or $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ and some canonical form $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
 
-    \item If $\sigma\from \oc\V_\Gamma \implies \Varr$ and $\Gamma\ts M\from \Var$, we say that $\sigma\plot_{\Var}^\Gamma M$ if
+    \item If $\sigma\from \oc\deno{\Gamma} \implies \Varr$ and $\Gamma\ts M\from \Var$, we say that $\sigma\plot_{\Var}^\Gamma M$ if
       \[
         \sigma;\pr_n\plot_{\com}^\Gamma M\gets n
         \]
@@ -3561,9 +3625,9 @@ It is then easy to see the following.
         \sigma;\pr_{\bN}\plot_{\nat}^\Gamma \oc M\,.
         \]
       
-    \item If $\sigma \from \oc\V_\Gamma \implies (\oc\deno{S} \implies \deno T)$ and $M\from S \to T$, we say that $\sigma\plot_{S\to T}^\Gamma M$ if whenever $\tau\from \oc\V_\Gamma \implies \deno S$ is a strategy and $N\from S$ is a term such that $\tau\plot_S^\Gamma N$, then
+    \item If $\sigma \from \oc\deno{\Gamma} \implies (\oc\deno{S} \implies \deno T)$ and $M\from S \to T$, we say that $\sigma\plot_{S\to T}^\Gamma M$ if whenever $\tau\from \oc\deno{\Gamma} \implies \deno S$ is a strategy and $N\from S$ is a term such that $\tau\plot_S^\Gamma N$, then
       \[
-        \left(\oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\sigma\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,.
+        \left(\oc\deno{\Gamma} \xrightarrow{\ms\mu_{\deno{\Gamma}}\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\sigma\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N.
         \]
   \end{itemize}
 \end{definition}
@@ -3574,7 +3638,7 @@ It is then easy to see the following.
     \Gamma,s\ts M\opto \Gamma,s\ts N
     \]
   for all $\Gamma$-stores $s$.  
-  Suppose $\sigma\from\oc\V_\Gamma\implies\deno T$ is a strategy such that $\sigma\plot_T^\Gamma N$.  
+  Suppose $\sigma\from\oc\deno{\Gamma}\implies\deno T$ is a strategy such that $\sigma\plot_T^\Gamma N$.  
   Then $\sigma\plot_T^\Gamma M$.
   \label{LemAdequacyOpto}
 \end{lemma}
@@ -3582,9 +3646,9 @@ It is then easy to see the following.
   Induction on $T$.
 
   Suppose that $\Gamma,s\ts M,N\ts X$, where $X$ is some datatype, and that $\Gamma,s\ts M\opto \Gamma,s\ts N$ for all $\Gamma$-stores $s$.  
-  Fix some $\Gamma$-store $s$ and some strategy $\sigma\from \oc\V_\Gamma\implies \deno T$, and suppose that $\sigma\plot_T^\Gamma N$.  
+  Fix some $\Gamma$-store $s$ and some strategy $\sigma\from \oc\deno{\Gamma}\implies \deno T$, and suppose that $\sigma\plot_T^\Gamma N$.  
 
-  If $\seqdeno{s,\sigma}\ne\bot_{\oc\V_\Gamma\implies X}$, then by hypothesis it is equal to $\seqdeno{s',u}$ for some $u$ such that $\Gamma,s\ts N\converges u,s'$.  
+  If $\seqdeno{s,\sigma}\ne\bot_{\oc\deno{\Gamma}\implies X}$, then by hypothesis it is equal to $\seqdeno{s',u}$ for some $u$ such that $\Gamma,s\ts N\converges u,s'$.  
   Then, by Lemma \ref{LemSmallToBig}, $\Gamma,s\ts M\converges u,s'$.
 
   If $\Gamma,s\ts M,N\from \Var$ and $\sigma\plot_\Var^\Gamma N$, then we have $\sigma;\pr_n\plot_\com^\Gamma N\gets n$ for each $n$ and $\sigma;\pr_\bN\plot_\nat^\Gamma \oc N$.  
@@ -3592,55 +3656,55 @@ It is then easy to see the following.
   Then, by the previous paragraph, we must have $\sigma;\pr_n\plot_{\com}^\Gamma M\gets n$ for each $n$ and $\sigma;\pr_\bN\plot_{\nat}^\Gamma \oc M$, and therefore $\sigma\plot_{\Var}^\Gamma M$.
 
   Lastly, suppose that $\Gamma,s\ts M,N\from S \to T$ and suppose that $\Gamma,s\ts M \opto \Gamma,s\ts N$.
-  Let $\sigma\from \oc\V_\Gamma \implies (\oc\deno S \implies \deno T)$ be a strategy and suppose that $\sigma \plot_{S\to T} N$.  
+  Let $\sigma\from \oc\deno{\Gamma} \implies (\oc\deno S \implies \deno T)$ be a strategy and suppose that $\sigma \plot_{S\to T} N$.  
   We claim that $\sigma \plot_{S\to T} M$.  
-  Indeed, let $\tau\from\oc\V_\Gamma\implies\deno S$ be a strategy and let $\Gamma \ts P\from S$ be a term in context such that $\tau\plot_S^\Gamma P$.  
-  Then, since $\sigma\plot_{S\to T} N$, we must have that $\mu_{\V_\Gamma};(\sigma\tensor\tau^\dag);\ev \plot_T^\Gamma N\,P$.  
-  Since $\Gamma,s\ts M\opto\Gamma,s\ts N$, we must have $\Gamma,s\ts M\,P\opto\Gamma,s\ts N\,P$, and therefore $\mu_{\V_\Gamma};(\sigma\tensor\tau^\dag);\ev\plot_T^\Gamma M\,P$ by induction.
+  Indeed, let $\tau\from\oc\deno{\Gamma}\implies\deno S$ be a strategy and let $\Gamma \ts P\from S$ be a term in context such that $\tau\plot_S^\Gamma P$.  
+  Then, since $\sigma\plot_{S\to T} N$, we must have that $\mu_{\deno{\Gamma}};(\sigma\tensor\tau^\dag);\ev \plot_T^\Gamma N\,P$.  
+  Since $\Gamma,s\ts M\opto\Gamma,s\ts N$, we must have $\Gamma,s\ts M\,P\opto\Gamma,s\ts N\,P$, and therefore $\mu_{\deno{\Gamma}};(\sigma\tensor\tau^\dag);\ev\plot_T^\Gamma M\,P$ by induction.
 \end{proof}
 
 \begin{lemma}
   Let $T$ be a type of Idealized Algol, and let $\Gamma$ be a $\Var$-context.  
-  Then $\bot_{\oc\V_\Gamma\implies \deno T}\plot_T^\Gamma M$ for any term-in-context $\Gamma\ts M\from T$.
+  Then $\bot_{\oc\deno{\Gamma}\implies \deno T}\plot_T^\Gamma M$ for any term-in-context $\Gamma\ts M\from T$.
   \label{LemAdequacyBot}
 \end{lemma}
 \begin{proof}
   Induction on $T$.  
-  If $T$ is a datatype and $s$ a store, then for any $\sigma\from \oc\V_\Gamma\implies \deno T$ we have
+  If $T$ is a datatype and $s$ a store, then for any $\sigma\from \oc\deno{\Gamma}\implies \deno T$ we have
   \[
     \oc\deno s;\cell^\Gamma;\sigma = \seqdeno{s,\sigma};(\deno T\sequoid ());\run_{\deno T}\,,
     \]
-  as in the proof of Proposition \ref{PropSoundness}; since $(\deno T\sequoid());\run_{\deno T}$ is a zigzag strategy, if $\sigma=\bot_{\oc\V_\Gamma\implies\deno T}$, then $\oc\deno s;\cell^\Gamma;\sigma=\bot_{\deno T}$, and therefore $\seqdeno{s,\sigma}=\bot_{T\sequoid\oc\V_\Gamma}$.
+  as in the proof of Proposition \ref{PropSoundness}; since $(\deno T\sequoid());\run_{\deno T}$ is a zigzag strategy, if $\sigma=\bot_{\oc\deno{\Gamma}\implies\deno T}$, then $\oc\deno s;\cell^\Gamma;\sigma=\bot_{\deno T}$, and therefore $\seqdeno{s,\sigma}=\bot_{T\sequoid\oc\deno{\Gamma}}$.
 
   Suppose $\Gamma\ts M\from\Var$.  
-  Since the projections are strict strategies, we have $\bot_{\oc\V_\Gamma\implies\Varr};\pr_n=\bot_{\oc\V_\Gamma\implies\bC}\plot_{\Var}^\Gamma M$ and $\bot_{\oc\V_\Gamma\implies\Varr};\pr_{\bC}=\bot_{\oc\V_\Gamma\implies\bN}\plot_{\bN}^\Gamma M$, and therefore $\bot_{\oc\V_\Gamma\implies\Varr}\plot_{\Var}^\Gamma M$.
+  Since the projections are strict strategies, we have $\bot_{\oc\deno{\Gamma}\implies\Varr};\pr_n=\bot_{\oc\deno{\Gamma}\implies\bC}\plot_{\Var}^\Gamma M$ and $\bot_{\oc\deno{\Gamma}\implies\Varr};\pr_{\bC}=\bot_{\oc\deno{\Gamma}\implies\bN}\plot_{\bN}^\Gamma M$, and therefore $\bot_{\oc\deno{\Gamma}\implies\Varr}\plot_{\Var}^\Gamma M$.
 
   Suppose that $\Gamma\ts M\from S\to T$.  
-  Fix some $N\from S$ and $\tau\from \oc\V_\Gamma\implies \deno S$ such that $\tau\plot_S^\Gamma N$.  
+  Fix some $N\from S$ and $\tau\from \oc\deno{\Gamma}\implies \deno S$ such that $\tau\plot_S^\Gamma N$.  
 
   We are required to show that
   \[
-    \left(\oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{\bot\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,,
+    \left(\oc\deno{\Gamma} \xrightarrow{\mu_{\deno{\Gamma}}} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\bot\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,,
     \]
-  which, by induction, we can do by showing that it is equal to $\bot_{\oc\V_\Gamma\implies\deno T}$.
+  which, by induction, we can do by showing that it is equal to $\bot_{\oc\deno{\Gamma}\implies\deno T}$.
   Indeed, we may write this composite as
   \[
-    \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma\tensor\oc\V_\Gamma \xrightarrow{\oc\V_\Gamma \tensor \tau^\dag} \oc\V_\Gamma\tensor\oc\deno S \xrightarrow{\Lambda\inv(\bot_{\oc\V_\Gamma \implies (\oc\deno S \implies \deno T))}} \deno T\,,
+    \oc\deno{\Gamma} \xrightarrow{\mu_{\deno{\Gamma}}} \oc\deno{\Gamma}\tensor\oc\deno{\Gamma} \xrightarrow{\oc\deno{\Gamma} \tensor \tau^\dag} \oc\deno{\Gamma}\tensor\oc\deno S \xrightarrow{\Lambda\inv(\bot_{\oc\deno{\Gamma} \implies (\oc\deno S \implies \deno T))}} \deno T\,,
     \]
-  which is equal to $\bot_{\oc\V_\Gamma\implies\deno T}$.
+  which is equal to $\bot_{\oc\deno{\Gamma}\implies\deno T}$.
 \end{proof}
 
 \begin{lemma}
   Let $T$ be an idealized Algol type, and let $\Gamma\ts M\from T$ be a typing judgement, where $\Gamma$ is a $\Var$-context.
-  Suppose that $\sigma_1\subset\sigma_2\subset\cdots$ is a nested sequence of strategies for $\oc\V_\Gamma$ such that $\sigma_i\plot_T^\Gamma M$ for all $i$.  
+  Suppose that $\sigma_1\subset\sigma_2\subset\cdots$ is a nested sequence of strategies for $\oc\deno{\Gamma}$ such that $\sigma_i\plot_T^\Gamma M$ for all $i$.  
   Let $\sigma=\bigcup_i \sigma_i$.  
   Then $\sigma\plot_T^\Gamma M$.
   \label{LemAdequacyLimits}
 \end{lemma}
 \begin{proof}
-  If $X$ is a datatype, $\Gamma$ is a $\Var$-context, $s$ is a $\Gamma$-store and $\Gamma\ts M\from X$ is a typing judgement, then if $\seqdeno{s,\sigma_i}=\bot_{X\sequoid\oc\V_\Gamma}$ for all $i$, then we must have $\seqdeno{s,\sigma_i}=\bot_{X\sequoid\oc\V_\Gamma} = \bot_{X\sequoid\oc\V_\Gamma}$ by continuity of composition.  
+  If $X$ is a datatype, $\Gamma$ is a $\Var$-context, $s$ is a $\Gamma$-store and $\Gamma\ts M\from X$ is a typing judgement, then if $\seqdeno{s,\sigma_i}=\bot_{X\sequoid\oc\deno{\Gamma}}$ for all $i$, then we must have $\seqdeno{s,\sigma_i}=\bot_{X\sequoid\oc\deno{\Gamma}} = \bot_{X\sequoid\oc\deno{\Gamma}}$ by continuity of composition.  
   Otherwise, $\seqdeno{s,\sigma_i}=\seqdeno{\Gamma,s'\ts u}$ for some $i$, some $\Gamma$-store $s'$ and some $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
-  In that case, since $\seqdeno{\Gamma,s'\ts u}$ is a maximal strategy for $X\sequoid\oc\V_\Gamma$, we must have $\seqdeno{s,\sigma_j}=\seqdeno{\Gamma,s'\ts u}$ for all $j\ge i$, and therefore that $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$.
+  In that case, since $\seqdeno{\Gamma,s'\ts u}$ is a maximal strategy for $X\sequoid\oc\deno{\Gamma}$, we must have $\seqdeno{s,\sigma_j}=\seqdeno{\Gamma,s'\ts u}$ for all $j\ge i$, and therefore that $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$.
 
   By induction on $T$, this extends to higher types by continuity of composition.
 \end{proof}
@@ -3648,15 +3712,15 @@ It is then easy to see the following.
 \begin{lemma}
   Let $\Gamma$ be a $\Var$-context, let $\Delta$ be an arbitrary context and let $T$ be an Idealized Algol type.
   Write $\Delta=x_1\from T_1,\cdots,x_n\from T_n$.  
-  Suppose that $\sigma_i\from \oc\V_\Gamma \implies \deno{T_i}$ are strategies and $\Gamma\ts N_i\from T_i$ are terms-in-context such that $\sigma_i\plot_{T_i}^\Gamma N_i$ for each $i$.  
+  Suppose that $\sigma_i\from \oc\deno{\Gamma} \implies \deno{T_i}$ are strategies and $\Gamma\ts N_i\from T_i$ are terms-in-context such that $\sigma_i\plot_{T_i}^\Gamma N_i$ for each $i$.  
 
-  Given a strategy $\sigma\from \oc\V_{\Gamma,\Delta}\implies \deno{T}$, we write
+  Given a strategy $\sigma\from \oc{\deno{\Gamma,\Delta}}\implies \deno{T}$, we write
   \[
     (\sigma_i)\semicom \sigma
     \]
   for the composite
   \[
-    \oc\V_\Gamma \xrightarrow{\langle \der,\sigma_1,\cdots,\sigma_n^\dag\rangle^\dag} \oc\V_{\Gamma,\Delta} \xrightarrow{\sigma} \deno{T}\,.
+    \oc\deno{\Gamma} \xrightarrow{\langle \der,\sigma_1,\cdots,\sigma_n^\dag\rangle^\dag} \oc{\deno{\Gamma,\Delta}} \xrightarrow{\sigma} \deno{T}\,.
     \]
 
   Then for any term-in-context $\Gamma,\Delta \ts M\from T$, we have
@@ -3705,19 +3769,19 @@ It is then easy to see the following.
       is given by the composite
       \small
       \[
-        \oc\V_\Gamma \xrightarrow{\mu_{\V_\Gamma}} \oc\V_\Gamma \tensor \oc\V_\Gamma \xrightarrow{((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}) \tensor ((\sigma_i)\semicom\deno{\Gamma,\Delta\ts N})} (\oc\deno S \implies \deno T) \tensor \oc\deno {S} \xrightarrow{\ev} \deno T.
+        \oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\mu_{\deno{\Gamma}}\ms\ms\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\ms\ms\ms((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}) \tensor ((\sigma_i)\semicom\deno{\Gamma,\Delta\ts N})\ms\ms\ms} (\oc\deno S \implies \deno T) \tensor \oc\deno {S} \xrightarrow{\ms\ms\ms\ev\ms\ms\ms} \deno T.
         \]
       \normalsize
       Therefore, by the definition of $\plot_{S\to T}^\Gamma$, it must be the case that
       \[
-        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M\,N} \plot_{T}^\Gamma M[N_i/x_i]\,N[N_i/x_i] = (M\,N)[N_i/x_i],.
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M\,N} \plot_{T}^\Gamma M[N_i/x_i]\,N[N_i/x_i] = (M\,N)[N_i/x_i]\,.
         \]
     \item Next, suppose that $\Gamma,\Delta,x\from S \ts M\from T$.  
       We claim that
       \[
         (\sigma_i)\semicom\deno{\Gamma,\Delta,\lambda x.M} \plot_{S\to T}^\Gamma (\lambda x.M)[N_i/x_i]\,.
         \]
-      Let $\sigma'\from \oc\V_\Gamma \implies \deno S$ be a strategy and let $\Gamma\ts N\from S$ be a term in context such that $\sigma\plot_S^\Gamma N$.  
+      Let $\sigma'\from \oc\deno{\Gamma} \implies \deno S$ be a strategy and let $\Gamma\ts N\from S$ be a term in context such that $\sigma\plot_S^\Gamma N$.  
       Then, by the inductive hypothesis (with $x$ lying in the `$\Delta$-part', we know that
       \[
         (\sigma_i,\sigma')\semicom\deno{\Gamma,\Delta,x\from S\ts M\from T}\plot_T^\Gamma M[N_i/x_i,N'/x]\,.
@@ -3728,51 +3792,35 @@ It is then easy to see the following.
         \]
       Finally, observe that $(\sigma_i,\sigma')\semicom\deno{\Gamma,\Delta,x\from S\ts M\from T}$ is the composite
       \[
-        \oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n,\sigma'\rangle^\dag} \oc\V_{\Gamma,\Delta,x} \xrightarrow{\deno{\Gamma,\Delta,x\from S\ts M}} \deno T\,,
+        \oc\deno{\Gamma} \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n,\sigma'\rangle^\dag} \oc{\deno{\Gamma,\Delta,x}} \xrightarrow{\deno{\Gamma,\Delta,x\from S\ts M}} \deno T\,,
         \]
       which can alternatively be written as
       \begin{mathpar}
-        \oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag} \oc\V_{\Gamma,\Delta} \xrightarrow{\mu_{\V_{\Gamma,\Delta}}} \oc\V_{\Gamma,\Delta}\tensor\oc\V_{\Gamma,\Delta}\\ \xrightarrow{\deno{\Gamma,\Delta\ts \lambda x.M} \tensor (\sigma')^\dag} (\oc\deno S\implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\,.
+        \oc\deno{\Gamma} \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag} \oc{\deno{\Gamma,\Delta}} \xrightarrow{\mu_{{\deno{\Gamma,\Delta}}}} \oc{\deno{\Gamma,\Delta}}\tensor\oc{\deno{\Gamma,\Delta}}\\ \xrightarrow{\deno{\Gamma,\Delta\ts \lambda x.M} \tensor (\sigma')^\dag} (\oc\deno S\implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\,.
       \end{mathpar}
-
-      In the special case that $S=\Var$ and $T=X$ is a datatype, we need to show that we also have
-      \begin{mathpar}
-        \bigg(\oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag}
-        \oc\V_{\Gamma,\Delta} \xrightarrow{\runit_{\oc\V_{\Gamma,\Delta}}}
-        \oc\V_{\Gamma,\Delta}\tensor I \xrightarrow{\oc\V_{\Gamma,\Delta} \tensor \oc0}
-        \oc\V_{\Gamma,\Delta}\tensor\oc\bN \xrightarrow{\oc\V_{\Gamma,\Delta}\tensor\cell}
-        \oc\V_{\Gamma,\Delta}\tensor\oc\Var \xrightarrow{\deno{\Gamma,\Delta\ts\lambda x.M}\tensor \oc\Var}\\
-        (\oc\Var \implies X) \tensor \oc\Var \xrightarrow{\ev}
-        X\bigg)
-        \plot_X^\Gamma \neww_X \lambda x.M[N_i/x_i]\,.
-      \end{mathpar}
-      Call this composite (in brackets) $\zeta$.
-
-      By induction (taking $x$ to be in the `$\Gamma$-component'), we know already that
-      \begin{mathpar}
-        \left(
-        \oc\V_{\Gamma,x} \xrightarrow{\langle\pr_\Gamma,\sigma_1,\cdots,\sigma_n,\pr_x\rangle^\dag}
-        \oc\V_{\Gamma,\Delta,x} \xrightarrow{\deno{\Gamma,\Delta,x\ts M}}
-        X
-        \right)
-        \plot_X^{\Gamma,x} M[N_i/x_i]\,.
-      \end{mathpar}
-      Call this composite $\xi$.  
-      Then we can write the first composite $\zeta$ as
-      \begin{mathpar}
-        \oc\V_\Gamma \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag}
-        \oc\V_{\Gamma,\Delta} \xrightarrow{\runit_{\oc\V_{\Gamma,\Delta}}}
-        \oc\V_{\Gamma,\Delta}\tensor I \xrightarrow{\oc\V_{\Gamma,\Delta} \tensor \oc0}
-        \oc\V_{\Gamma,\Delta}\tensor\oc\bN \xrightarrow{\oc\V_{\Gamma,\Delta}\tensor\cell}
-        \oc\V_{\Gamma,\Delta}\tensor\oc\Var \xrightarrow{\xi}
-        X\,.
-      \end{mathpar}
-      Therefore, for any $\Gamma$-store $s$, either $\seqdeno{s,\xi}=\bot$, in which case $\seqdeno{s,\zeta}=\bot$, or $\seqdeno{(s\vert x\mapsto 0),\xi}=\seqdeno{s',u}$ for some $u$ in $X$ and some $\Gamma,x$-store $s'$ such that $\Gamma,x,(s\vert x\mapsto 0) \ts M \converges u,s'$.  
-      In the second case, we have $\seqdeno{s,\zeta} = \seqdeno{s'\vert_\Gamma,u}$, and $\Gamma,s\ts M \converges u,s'\vert_\Gamma$.
   \end{itemize}
 
   Now we move on to the structural constants for the datatypes.  
-  We deal with the case of the type $\nat$ (i.e., the terms $n$, $\suc M$, $\pred M$ and $\IfO M\Then N \Else P$, and it should be clear how our ideas translate to the corresponding rules at the types $\com$ and $\bool$.
+  We deal with the case of the type $\nat$ (i.e., the terms $n$, $\suc M$, $\pred M$ and $\IfO M\Then N \Else P$), and it should be clear how our ideas translate to the corresponding rules at the types $\com$ and $\bool$ (i.e., $\skipp$, $\true$/$\false$, sequencing and the boolean conditional).
+
+  Before we cover these cases, we make an important observation.  
+  Suppose that $\Gamma,\Delta\ts M,N\from T$, and that
+  \[
+    \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})} = \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts N}}\,.
+    \]
+  Let $\EE$ be an evaluation context of type $U$ with a hole of type $T$.  
+  Then
+  \[
+    \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \EE[M]})} = \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \EE[N]}}\,.
+    \]
+  We can see this by precomposing both directions of the diagram in Figure \ref{FigSoundnessOpto} (with $\Gamma$ in that diagram standing for $\Gamma,\Delta$) with the composite
+  \[
+    I \xrightarrow{\oc\deno{s}}
+    \oc S_\Gamma \xrightarrow{\cell^\Gamma}
+    \oc\deno{\Gamma} \xrightarrow{\langle\der,\sigma_1,\cdots,\sigma_n\rangle^\dag}
+    \oc\deno{\Gamma,\Delta}\,,
+    \]
+  in order to prove that the value of $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts\EE[M]}}$ depends only on the value of $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})}$ and $\EE$.
 
   \begin{itemize}
     \item Given a numeral $n$ and a $\Gamma$-store $s$, we have $(\sigma_i)\semicom \deno{\Gamma,\Delta\ts n} = \deno{\Gamma\ts n}$ and $\seqdeno{s,\deno{\Gamma\ts n}} = \seqdeno{\Gamma,s\ts n}$, where $\Gamma,s\ts n\converges n,s$.
@@ -3781,13 +3829,13 @@ It is then easy to see the following.
       \[
         (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}\plot_{\nat}^\Gamma M[N_i/x_i]\,.
         \]
-      So for all $\Gamma$-stores $s$, either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})} = \bot_{\bN\sequoid\oc\V_\Gamma}$ or it is equal to $\seqdeno{\Gamma,s'\ts n}$ for some numeral $n$.  
+      So for all $\Gamma$-stores $s$, either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})} = \bot_{\bN\sequoid\oc\deno{\Gamma}}$ or it is equal to $\seqdeno{\Gamma,s'\ts n}$ for some numeral $n$.  
 
       Now we have 
       \[
-        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M} = (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M};(\suc\tensor\oc\V_\Gamma)\,;
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M} = (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M};(\suc\tensor\oc\deno{\Gamma})\,;
         \]
-      since $\suc\from\bN \implies \bN$ is a strict strategy, we know that either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \suc M})} = \bot_{\bN\sequoid\oc\V_\Gamma}$ or it is equal to $\seqdeno{\Gamma,s'\ts n};(\suc\tensor\oc\V_\Gamma) = \seqdeno{\Gamma,s'\ts n+1}$, and we have $\Gamma,s\ts \suc M[N_i/x_i]\converges n+1$.
+      since $\suc\from\bN \implies \bN$ is a strict strategy, we know that either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \suc M})} = \bot_{\bN\sequoid\oc\deno{\Gamma}}$ or it is equal to $\seqdeno{\Gamma,s'\ts n};(\suc\tensor\oc\deno{\Gamma}) = \seqdeno{\Gamma,s'\ts n+1}$, and we have $\Gamma,s\ts \suc M[N_i/x_i]\converges n+1$.
       Therefore, 
       \[
         (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M} \plot_{\nat}^\Gamma \suc M[N_o/x_i]\,.
@@ -3801,19 +3849,20 @@ It is then easy to see the following.
     \item Now we move on to the conditional.  
       Suppose that we have $\Gamma,\Delta\ts M\from \nat$ and $\Gamma,\Delta\ts N,P\from X$ for some datatype $X$.  
       Let $s$ be a $\Gamma$-store.  
-      Since $\IfO$ is a strict strategy, if $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})}=\bot_{\oc\V_\Gamma\ts \bN}$, then
+      Since $\IfO$ is a strict strategy, if $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})}=\bot_{\oc\deno{\Gamma}\ts \bN}$, then
       \[
-        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO M \Then N \Else P}} = \bot_{\oc\V_\Gamma \ts X}\,.
+        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO M \Then N \Else P}} = \bot_{\oc\deno{\Gamma} \ts X}\,.
         \]
       Otherwise, by induction we know that $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}}=\seqdeno{\Gamma,s'\ts n}$ for some numeral $n$ such that $\Gamma,s\ts M[N_i/x_i]\converges n,s'$.
       Without loss of generality, suppose that $n=0$.  
       Then we have
       \begin{IEEEeqnarray*}{Cl}
-        & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma\,\Delta\ts \IfO M \Then N \Else P})} \\
+        & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO M \Then N \Else P})} \\
         = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO 0 \Then N \Else P})} \\
-        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta \ts N})}\,. \\
+        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta \ts N})}\,, \\
       \end{IEEEeqnarray*}
-      Then, by induction, this last term is either equal to $\bot_{X\sequoid\V_\Gamma}$,or is equal to $\seqdeno{\Gamma,s''\ts u}$ for some $u\in X$ such that $\Gamma,s'\ts N[N_i/x_i]\converges u,s''$.
+      where the first equality is by our observation above (since $\IfO - \Then N \Else P$ is an evaluation context), and the second is by the definition of $\IfO$.
+      Then, by induction, this last term is either equal to $\bot_{X\sequoid\deno{\Gamma}}$,or is equal to $\seqdeno{\Gamma,s''\ts u}$ for some $u\in X$ such that $\Gamma,s'\ts N[N_i/x_i]\converges u,s''$.
       In this second case, we have $\Gamma,s\ts \IfO M[N_i/x_i] \Then N[N_i/x_i] \Else P[N_i/x_i] \converges u,s''$.
   \end{itemize}
   Next, we deal with the rules for variables.
@@ -3827,9 +3876,9 @@ It is then easy to see the following.
         (\sigma_i)\semicom\deno{\Gamma,\Delta\ts \oc V} = (\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_{\bN} \plot_{\bN}^\Gamma \oc\V[N_i/x_i]\,.
         \]
       Suppose $\Gamma,\Delta\ts E\from \nat$, and suppose we know already that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts E} \plot_{\bN} E[N_i/x_i]$.  
-      Then, for all $s$, either $\seqdeno{s,(\sigma_i)\semicom\deno{\Gamma,\Delta\ts E}}=\bot_{\bN \sequoid\oc\V_\Gamma}$ -- in which case
+      Then, for all $s$, either $\seqdeno{s,(\sigma_i)\semicom\deno{\Gamma,\Delta\ts E}}=\bot_{\bN \sequoid\oc\deno{\Gamma}}$ -- in which case
       \[
-        \seqdeno{s,(\sigma_i)\semicom\deno{\Gamma,\Delta\ts V\gets E}} = \bot_{\bC \sequoid \oc\V_\Gamma}
+        \seqdeno{s,(\sigma_i)\semicom\deno{\Gamma,\Delta\ts V\gets E}} = \bot_{\bC \sequoid \oc\deno{\Gamma}}
         \]
       (since $\assign$ is a strict strategy) -- or it is equal to $\seqdeno{s',n}$ for some $n\in \bN$ such that $\Gamma,s\ts E[N_i/x_i]\converges n,s'$.
       In the second case, we have
@@ -3838,32 +3887,60 @@ It is then easy to see the following.
         = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V\gets n}} \\
         = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_n)}\,.
       \end{IEEEeqnarray*}
-      Now we have $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_n\plot_{\Var}^\Gamma V[N_i/x_i]$ by induction, so this composite is either equal to 
-      Then, since we have $\Gamma,s,V[N_i/x_i]\gets E[N_i/x_i] \opto \cdots \opto \Gamma,s',V[N_i/x_i]\gets n$, the claim follows by Lemma \ref{LemAdequacyOpto}.
+      Now we have $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts V};\pr_n\plot_{\com}^\Gamma V[N_i/x_i]\gets n$ by induction, so this composite is either equal to $\bot_{\bC\sequoid\oc\deno\Gamma}$ or it is equal to $\seqdeno{\Gamma,s''\ts \skipp}$ for $s''$ such that $\Gamma,s'\ts V[N_i/x_i]\gets n\converges \skipp,s''$.  
+      In this second case, we have $\Gamma,s\ts V[N_i/x_i]\gets E[N_i/x_i]\converges \skipp,s''$.
+
     \item Suppose that $\Gamma,\Delta\ts W \from \nat \to \com$ and that $\Gamma,\Delta \ts R \from \nat$.
-      We claim that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts\mkvar\,W\,R};\pr_n\plot_\com^\Gamma (\mkvar\,W[N_i/x_i]\,R[N_i/x_i])\gets n$ for each $n$ and that $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_\bN\plot_\nat^\Gamma \oc(\mkvar\,W[N_i/x_i]\,R[N_i/x_i])$.
+      We claim that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\mkvar\,W\,R};\pr_n\plot_\com^\Gamma (\mkvar\,W[N_i/x_i]\,R[N_i/x_i])\gets n
+        \]
+      for each $n$ and that 
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_\bN\plot_\nat^\Gamma \oc(\mkvar\,W[N_i/x_i]\,R[N_i/x_i])\,.
+        \]
 
       For the first of these, let $s$ be a $\Gamma$-store.  
       We have
       \begin{IEEEeqnarray*}{Cl}
         & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_n)} \\
-        = & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta \ts W\,n})} \\
-        \plot_{\com}^\Gamma & W[N_i/x_i]\,n\,.
+        = & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta \ts W\,n})}\,. \\
       \end{IEEEeqnarray*}
-      Since we have $\Gamma,s\ts (\mkvar\,W[N_i/x_i]\,R[N_i/x_i])\gets n \opto \Gamma,s,W[N_i/x_i]\,n$, the claim follows by Lemma \ref{LemAdequacyOpto}.
+      By induction, we have $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts W\,n} \plot_{\com}^\Gamma W[N_i/x_i]\,n$.  
+      Therefore, this last composite is either equal to $\bot_{\bC\sequoid\oc\deno{\Gamma}}$, or it is equal to $\seqdeno{\Gamma,s',\skipp}$ for some $s'$ such that $\Gamma,s\ts W\,n\converges \skipp,s'$.  
+      In this second case, we have $\Gamma,s\ts (\mkvar W\,R)\gets n\converges \skipp,s'$.
 
       For the second, we have
       \begin{IEEEeqnarray*}{Cl}
         & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \mkvar\,W\,R};\pr_\bN)} \\
-        = & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta \ts R})} \\
-        \plot_{\com}^\Gamma & R[N_i/x_i]\,.
+        = & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta \ts R})}\,.
       \end{IEEEeqnarray*}
-      Since we have $\Gamma,s\ts\oc(\mkvar\,W\,R)\opto\Gamma,s\ts R$, the claim follows by Lemma \ref{LemAdequacyOpto}.
+      By induction, we have $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts R} \plot_{\nat}^\Gamma R[N_i/x_i]$.  
+      Therefore, this last composite is either equal to $\bot_{\bC\sequoid\oc\deno{\Gamma}}$, or it is equal to $\seqdeno{\Gamma,s',n}$ for some $s',n$ such that $\Gamma,s,R \converges n,s'$.  
+      In this second case, we have $\Gamma,s\ts \oc(\mkvar W\,R) \converges n,s'$.
       
-    \item We have already proved that if $\Gamma,x\from \Var,\Delta\ts M\from X$, and $(\sigma_i)\semicom\deno{\Gamma,x\from \Var,\Delta\ts M}\plot_X^\Gamma M$ then $(\sigma_i)\semicom\deno{\Gamma,\Delta\ts \neww_X\lambda x.M}\plot_X^\Gamma \neww_X\lambda x.M$.
+    \item Suppose that $\Gamma,x\from\Var,\Delta\ts M\from X$, where $X$ is a datatype, and suppose we already know that
+      \[
+        (\sigma_i)\semicom\deno{\Gamma,x\from\Var,\Delta\ts M} \plot_X^{\Gamma,x} M\,,
+        \]
+      where $x$ is considered as belonging to the `$Gamma$-component'.
+      Let $s$ be a $\Gamma$-store -- then we get a $\Gamma,x$-store $(s\vert x\mapsto 0)$.
+      So either $\seqdeno{(s\vert x\mapsto 0),((\sigma_i)\semicom\deno{\Gamma,x,\Delta\ts M})}=\bot_{X\sequoid\oc\deno\Gamma}$, or it is equal to $\seqdeno{\Gamma,x,(s'\vert x\mapsto n),u}$ for some $s',n,u$ such that $\Gamma,(s\vert x\mapsto 0)\ts M[N_i/x_i] \converges u,(s'\vert x\mapsto n)$.
+
+      But by the definition of $\new$, we have
+      \begin{IEEEeqnarray*}{Cl}
+        & \seqdeno{(s\vert x\mapsto 0),((\sigma_i)\semicom\deno{\Gamma,x,\Delta\ts M})};(X\sequoid\oc\pr_\Gamma) \\
+        = & \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \neww\lambda x.M})}\,.
+      \end{IEEEeqnarray*}
+      It follows that either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts\neww\lambda x.M})}=\bot_{X\sequoid \oc\deno{\Gamma}}$ or it is equal to $\seqdeno{\Gamma,x,(s'\vert x\mapsto n),u};(X\sequoid\oc\pr_\Gamma) = \seqdeno{\Gamma,s',u}$ for some $u$ such that $\Gamma,(s\vert x\mapsto 0)\ts M[N_i/x_i]\converges u,(s'\vert x\mapsto n)$.  
+      In this case, $\Gamma,s\ts\neww \lambda x.M\converges u,s'$.
   \end{itemize}
   It remains to deal with the case of the recursion combinator $\Y_T$.  
-  First recall that if $h\from ((\deno T \to \deno T) \to \deno T) \to (\deno T\to \deno T) \to T$ (where we write $A \to B$ for $\oc A \implies B$) is the morphism corresponding to $\lambda F^{(T\to T) \to T}.\lambda f^{T\to T}.f(F\,f)$, then $\Y_T$ is constructed as the limit of the chain
+  First recall that if $h\from ((\deno T \to \deno T) \to \deno T) \to (\deno T\to \deno T) \to T$ (where we write $A \to B$ for $\oc A \implies B$) is the morphism corresponding to the $\lambda$-term 
+  \[
+    \lambda F^{(T\to T) \to T}.\lambda f^{T\to T}.f(F\,f)\,,
+    \]
+  then $\Y_T$ is constructed as the limit of the chain
   \[
     \bot_{(T\to T)\to T} \subset \bot_{(T\to T) \to T};h \subset \bot_{(T\to T)\to T};h;h \subset \cdots\,.
     \]
@@ -3872,10 +3949,334 @@ It is then easy to see the following.
   We do this by induction on $n$.  
   Lemma \ref{LemAdequacyBot} takes care of the initial case, and it will therefore suffice to prove that if $\sigma\plot_T^\Gamma \Y_T M$ then $\sigma;h\plot_T^\Gamma \Y_T M$.
 
-  Suppose first that $T=X$ is a datatype.  
-  We know from above that $\sigma;h\plot_X^\Gamma (\lambda F.\lambda f.f(F\,f))\Y_T M$.
-  Let $s$ be a $\Gamma$-store.  
-  Then either $\seqdeno{s,(\sigma;h)} = \bot_{X\sequoid\oc\V_\Gamma}$ or $\seqdeno{s,(\sigma;h)} = \seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ and some $u\in X$ such that $\Gamma,s\ts (\lambda F.\lambda f.f(F\,f))\Y_t M\converges s',u$.
+  Suppose $T=T_1\to \cdots\to T_n \to X$, where $X$ is a datatype.
+  Fix terms $M_i\from T_i$ and strategies $\tau_i\from \deno{\Gamma}\to \deno{T_i}$ such that $\tau_i\plot_{T_i}^\Gamma M_i$ for each $i$.
+
+  Since $\sigma\plot_T^\Gamma \Y_T M$, we know that $\langle \tau_1,\cdots,\tau_n\rangle;\sigma \plot_X^\Gamma \Y_T M\,M_1\,\cdots\,M_n$.
+  It follows that $\langle \tau_1,\cdots,\tau_n\rangle;\sigma;h \plot_X^\Gamma M(\Y_T M)\,M_1,\cdots\,M_n$.  
+  Then, since
+  \[
+    \Gamma,s,\Y_T M\,M_1,\cdots\,M_n\opto\Gamma,s,M(\Y_T M)\,M_1\,\cdots\,\M_n
+    \]
+  for any $\Gamma$-store $s$, by Lemma \ref{LemAdequacyOpto} we have that
+  \[
+    \langle\tau_1,\cdots,\tau_n\rangle;\sigma;h \plot_X^\Gamma \Y_T M\,M_1,\cdots,M_n\,,
+    \]
+  and therefore that $\sigma;h\plot_X^\Gamma \Y_T M$, since the $M_i,\tau_i$ were arbitrary.
+\end{proof}
+
+This is now enough to prove a \emph{computational adequacy result} for our denotational semantics.
+
+\begin{definition}[Computational Adequacy Result]
+  Suppose we have a programming language $\L$ and a denotational semantics $\deno{-}$ of $\L$ in some category $\C$.  
+  Let $o$ be a ground type of $\L$ and let $\converges$ be some operational predicate on closed terms of $\L$ of type $o$.  
+  Let $\downarrow$ be a predicate on morphisms $1 \to \deno{L}$ in $\C$.  
+  Then a \emph{computational adequacy} result for the semantics is a result that says that for all terms $M\from o$ in $\L$, 
+  \[
+    M\converges \text{ if and only if } \deno{M}\downarrow\,.
+    \]
+\end{definition}
+
+We will prove a computational adequacy result for our semantics of IA, taking $o=\com$.  
+If $M\from\com$ is a term of IA, we say that $M\converges$ if $\blank,()\ts M\converges \skipp,()$.
+If $\sigma\from 1 \implies \bC$ is a strategy, we say that $\sigma\downarrow$ if $\sigma\ne\bot_{\com}$.
+
+\begin{theorem}[Computational Adequacy]
+  Let $M\from\com$ be a closed term of Idealized Algol.
+  Then $M\converges$ if and only if $\deno{M}\ne\bot_{\com}$.
+  \label{TheComputationalAdequacyIA}
+\end{theorem}
+\begin{proof}
+  First suppose that $M\converges$.  
+  Then Proposition \ref{PropSoundness} tells us that $\deno{M} = \deno{\skipp}\ne\bot_{\com}$.
+
+  Conversely, suppose that $\deno{M}\ne\bot_{\com}$.  
+  Lemma \ref{LemAdequacy} tells us that $\deno{M}\plot_{\com} M$.  
+  Since $\deno{M}\ne\bot_{\com}$, the only possibility is that $\blank,()\ts M\converges\skipp,()$.
+\end{proof}
+
+We can then prove an \emph{equational soundness} result.
+First, we recall the definition of \emph{observational equivalence} of terms.
+
+\begin{definition}[Observational Equivalence]
+  Suppose we have a language $\L$, together with a distinguished ground type $o$ and operational predicate $\converges$ as above.  
+  Given two closed terms $M,N\from T$ in $\L$, we say that $M$ and $N$ are \emph{observationally equivalent} if for all contexts $C[-]\from o$ in $\L$ with a hole of type $T$, $C[M]\converges$ if and only if $C[N] \converges$.
+\end{definition}
+
+Next, we create a definition that mirrors this one within the denotational semantics.
+
+\begin{definition}[Intrinsic Equivalence]
+  Suppose we have a language $\L$, together with a denotational semantics $\deno{-}$ in a Cartesian closed category $\C$, a distinguished ground type $o$ and a predicate $\downarrow$ on morphisms $1 \to \deno{o}$ as above.  
+
+  Given objects $A,B$ of $\C$, and morphisms $\sigma,\tau\from A \to B$, we say that $\sigma,\tau$ are \emph{intrinisically equivalent}, and write $\sigma\sim\tau$, if for all $\alpha\from (A \to B) \to \deno{o}$, $\Lambda(\sigma);\alpha\downarrow$ if and only if $\Lambda(\tau);\alpha\downarrow$.
+\end{definition}
+
+\begin{definition}[Equational Soundness Result]
+  An \emph{inequational soundness result} for a semantics as above is a result that says that if $M,N\from T$ are such that $\deno{M}\sim\deno{N}$, then $M$ and $N$ are observationally equivalent.
+\end{definition}
+
+\begin{proposition}
+  Any semantics satisfying Computational Adequacy satisfies Inequational Soundness.
+\end{proposition}
+\begin{proof}
+  Suppose that $\deno{M}\sim\deno{N}$.  
+  Let $C[-]\from o$ be a context with a hole of type $T$.
+  Then, since $\C$ is Cartesian closed, the $\beta$-rule is valid in $\C$, and therefore we have
+  \[
+    \deno{C[M]} = 1 \xrightarrow{\deno{M}} \deno{T} \xrightarrow{\deno{x\from T\ts C[x]}} \deno{o}\,,
+    \]
+  and similarly for $C[N]$.  
+  Therefore, taking $\alpha=\deno{x\ts C[x]}$ in the definition of $\sim$, we get that $\deno{C[M]}\downarrow$ if and only if $\deno{C[N]}\downarrow$.  
+  By Computational Adequacy, this means that $C[M]\converges$ if and only if $C[N]\converges$.  
+  Since $C$ was arbitrary, it follows that $M$ and $N$ are observationally equivalent.
+\end{proof}
+
+This proof relies on the fact that the context $C$ gives rise to a morphism $\alpha = \deno{x\ts C[x]}$.  
+To go in the other direction (full abstraction), we need a \emph{definability} result, to allow us to transform a morphism in $\G$ into an Idealized Algol context.  
+This will be the subject of the next section.
+
+\section{Innocent Factorization}
+
+The aim of this section will be to show that any strategy between the denotations of Idealized Algol types may be factorized as the composite of some innocent strategy with the strategy $\cell$.  
+This will reduce the problem to showing that certain innocent strategies are definable, for which we can use known results.
+
+Again, we follow the proof from \cite{SamsonGuyIAActive} very closely.  
+
+\begin{proposition}[Innocent Factorization, {\cite[14]{SamsonGuyIAActive}}]
+  Let $A$ be a game, and suppose $A$ has the property that whenever $sb\in P_A$ is an $O$-position and $tbc\in P_A$ is a $P$-position such that $\pv{sb}=\pv{tb}$, then $sbc\in P_A$.
+  Suppose also that $M_A$ is a countable set.
+  Let $\sigma$ be a strategy for $A$.  
+  Then there is an innocent strategy $\hat\sigma$ for $\oc\Varr \implies A$ such that $\sigma$ factorizes as the composite
+  \[
+    I \xrightarrow{\oc 0} \oc\bN \xrightarrow{\cell} \oc\Varr \xrightarrow{\hat\sigma} A\,.
+    \]
+  \label{PropInnocentFactorization}
+\end{proposition}
+\begin{proof}
+  Fix some injection $\L_A \hookrightarrow \bN$, thought of as giving a `code' to each legal sequence, such that the code of the empty sequence is $0$.
+  $\hat{\sigma}$ proceeds as follows.  
+  At each position $sb$ ending with an $O$-move $a$ in $A$, player $P$ first plays the move $q$ in $\oc\Varr$, after which player $O$ returns some natural number $n$.  
+  If $n$ is not the code of a sequence in $P_A$, or if it encodes some sequence $t$ such that $\pv{tb}\ne\pv{s\vert_Ab}$, then player $P$ has no reply.  
+  Otherwise, let $c$ be the reply to $t a$ that player $P$ would have made under $\sigma$.  
+  Player $P$ computes the code $k$ of the sequence $tbc$ and plays $q_k$ in $\oc\Varr$.  
+  After the $O$-reply $a$, player $P$ then plays the move $b$ in $\oc\Varr$.  
+
+  Since $tbc\in P_A$ and $\pv{tb}=\pv{tc}$, we have $s\vert_Abc\in P_A$ by our hypothesis on $A$, which implies that this is a valid strategy.
+  We claim that it is innocent.  
+  Moreover, since player $P$'s moves depend only on the number $n$ returned and on the current $P$-view within $A$, this strategy is innocent.
+
+  Lastly, if we compose with $\oc0;\cell$, then we ensure that this number $n$ that is returned is always the code of the current sequence in $A$, and therefore that $\oc 0;\cell;\hat{\sigma}=\sigma$ by the explicit description of the $\cell$ strategy given in Proposition \ref{PropCellComb}.
+\end{proof}
+
+We want to apply this result in the case that $A$ is the denotation of an IA type, so we need to show that for any IA type $T$, the game $\deno T$ satisfies the hypotheses of Proposition \ref{PropInnocentFactorization}.
+In fact, we show something stronger.
+
+\begin{lemma}
+  Let $T$ be a type of Idealized Algol.  
+  Then $P_{\deno T}$ is the set of all sequences in $\L_{\deno T}$ that contain at most a single initial move.
+  \label{LemTypeCharacterization}
+\end{lemma}
+\begin{proof}
+  This is obvious for the dataypes and for $\Var$.  
+  Let $S,T$ be types -- so $\deno{S \to T} = \oc\deno S \implies \deno T$ -- and let $s\in P_{\oc\deno S\implies \deno T}$.  
+  An initial move in $\oc\deno S \implies \deno T$ is an initial move in $\deno T$; by induction, $s\vert_{\deno T}\in P_{\deno T}$ contains at most one initial move, and so $s$ contains at most one initial move.
+
+  Conversely, suppose that $s\in \L_{\oc\deno S \implies \deno T}$ contains at most one initial move.
+  We show by induction on the length of $s$ that $s\in P_{\oc\deno S \implies \deno T}$.  
+  This is obvious if $s=\epsilon$; if $s=ta$ for some $t$, then by induction we have $t\in P_{\oc\deno S \implies \deno T}$, so $t\vert_{\oc\deno S}\in P_{\oc\deno S}$ and $t\vert_{\deno T}\in P_{\deno T}$.  
+  We need to show that $ta\in P_{\oc\deno S}$, for which it suffices by induction to show that $ta\vert_{\oc\deno S}$ and $ta\vert_{\deno T}$ are both legal positions, $ta\vert_{\oc\deno S}\vert_n$ has a unique initial move in $\deno S$ for each initial move $n$ of $\deno S$, and $ta\vert_{\deno T}$ has a unique initial move in $\deno T$.  
+  Indeed, we can show that they are alternating using the same arguments we used in Proposition \ref{PropComposition}, and they are clearly well-bracketed sequences.  
+  Visibility then follows from Lemma \ref{LemProjectionLemma}, and from Proposition 4.3 from \cite{hoPcf}, which states that if $s$ is a play in $A\implies B$, then $\pv{s}^{A\implies B}\vert_A$ is a subsequence of $\pv{s\vert_A}^A$ and $\pv{s}^{A\implies B}\vert_B$ is a subsequence of $\pv{s\vert_B}^B$.  
+  This means that the justifier of the move $a$ must occur within the appropriate $O$- or $P$-view, since we know that $t\vert_{\oc\deno S}$ and $t\vert_{\deno T}$ are both visible sequences.
+\end{proof}
+
+\begin{proposition}
+  Let $T$ be a type of Idealized Algol.  
+  Then $\deno T$ satisfies the hypotheses of Proposition \ref{PropInnocentFactorization}.
+\end{proposition}
+\begin{proof}
+  Suppose that $sb,tbc\in P_{\deno T}$, where $c$ is a $P$-move, are such that $\pv{sb}=\pv{tb}$.  
+  It is clear that $sbc$ is an alternating and visible sequence; moreover, it is well-bracketed, since the most recently unanswered question in $sb$ is the same as in $tb$.  
+  Therefore, $sbc$ is a legal sequence with a unique initial move, and so it is contained in $P_{\deno T}$ by Lemma \ref{LemTypeCharacterization}.
+\end{proof}
+
+\section{Arena-only Semantics}
+
+Before we complete our Full Abstraction result, we take a detour to consider a variation of our game semantics in which we do away with the sets of plays $P_A$.  
+We call this an \emph{arena-only semantics}, since the objects of our category are plain arenas.
+Since the semantics given in \cite{hoPcf} are of this form, and since we want to quote definability results from this work, it makes sense to cast our own work in this form.
+
+\begin{definition}
+  Let $A$ be a game.  
+  We say that $A$ is \emph{full} if $P_A=\L_A$.
+\end{definition}
+
+Let $A$ be a game.  
+Since the underlying arena of $\oc A$ is the same as that of $A$, and since we have $P_A \subset P_{\oc A}$, we have the following result.
+
+\begin{proposition}
+  If $A$ is full, then we have $A=\oc A$.
+\end{proposition}
+
+Note that the definition of the $\oc$ connective, together with Lemma \ref{LemTypeCharacterization}, implies the following.
+
+\begin{proposition}
+  Let $T$ be an Idealized Algol type.  
+  Then $\oc\deno{T}$ is full.
+\end{proposition}
+
+This Proposition on its own does not seem to be much use, since we want to consider the game $\deno T$ without the $\oc$ in front of it.  
+But recall that the `co-Kleisli'-style morphisms in our category, which are strategies for $\oc A \implies B$, may alternatively be regarded as comonoid homomorphisms from the comonoid on $\oc A$ to the comonoid on $\oc B$.  
+Thus, if $S,T$ are Idealized Algol types, then the set of morphisms $\oc\deno S \implies \deno T$ in our original category is precisely the same as the set of morphisms $\oc\deno S \implies \oc\deno T$ that are comonoid homomorphisms.
+
+\begin{definition}
+  Let $A$ be a game and let $sa$ be a play in $A$.  
+  Then the \emph{current thread} $\ct{sa}$ of $sa$ is $sa\vert_n$, where $n$ is the unique initial move that hereditarily justifies $a$.
+
+  Let $\sigma$ be a strategy for $A$.
+  We say that $\sigma$ is \emph{single-threaded} if player $P$'s moves only depend on the current thread; i.e., if whenever $sab\in\sigma$, $t\in\sigma$ and $ta\in P_A$ such that $\ct{sa}=\ct{ta}$, then we have $tab\in\sigma$.
+\end{definition}
+
+Note the similarity with the definition of innocence, where the only difference is that we use the $P$-views $\pv{sa}$ and $\pv{ta}$ rather than the current threads $\ct{sa}$ and $\ct{ta}$.
+Since $\pv{s}$ is a subsequence of $\ct{s}$ for any sequence $s$, we get:
+\begin{proposition}
+  Any innocent strategy is single-threaded.
+\end{proposition}
+
+\begin{lemma}[{\cite[3.5.1]{RusssThesis}}]
+  Let $\sigma \from A$ be a single-threaded strategy.  
+  Suppose $s\in \sigma$, and let $I$ be a set of occurrences of initial moves in $s$.  
+  Then $s\vert_I\in\sigma$.
+  \label{LemRuss1}
+\end{lemma}
+\begin{proof}
+  Induction on the length of $s$.
+  Suppose that $sab\in\sigma$.  
+  Since $sab$ is a visible sequence, we know that the justifier of $b$ occurs in $\pv{sa}$, and in particular in $\ct{sa}$.
+  Now $a$ must be hereditarily justified by that initial move that hereditarily justifies $b$; if this initial move is not contained in $I$, then we have $sab\vert_I=s\vert_I\in\sigma$ by induction.  
+  Otherwise, we have $sab\vert_I=s\vert_Iab$.  
+  Then, since we have $\ct{sa}=\ct{s\vert_I a}$, we must have $s\vert_Iab\in\sigma$ by single-threadedness of $\sigma$.
+\end{proof}
+
+We now link the combinatorial definition of single-threadedness to a definition about comonoid homomorphisms.
+
+\begin{proposition}
+  Let $A,B$ be well-opened games.
+  Given a strategy $\sigma\from \oc A \implies \oc B$, $\sigma$ is single-threaded if and only if it is a comonoid homomorphism with respect to the natural comonoid structures on $\oc A$ and $\oc B$; i.e., it makes the following diagrams commute.
+  \begin{mathpar}
+    \begin{tikzcd}
+      \oc A \arrow[r, "\sigma"] \arrow[d, "\mu_A"']
+        & \oc B \arrow[d, "\mu_B"] \\
+      \oc A \tensor \oc A \arrow[r, "\sigma \tensor \sigma"]
+        & \oc B \tensor \oc B
+    \end{tikzcd}
+    \and
+    \begin{tikzcd}
+      \oc A \arrow[r, "\sigma"] \arrow[d, "()"']
+        & \oc B \arrow[dl, "()"] \\
+      I
+        &
+    \end{tikzcd}
+  \end{mathpar}
+\end{proposition}
+\begin{proof}
+  Of course, the second diagram is automatically satisfied by any strategy $\sigma$, since $I$ is a terminal object.
+
+  Since $A,B$ are well-opened, $\oc A$ and $\oc B$ are the cofree commutative comonoids on $A,B$, and therefore the comonoid homomorphisms $\sigma\from \oc A \implies \oc B$ are precisely the strategies of the form $\tau^\dag$, where $\tau\from\oc A \implies B$ is an arbitrary morphism.  
+  It is easy to check that such a strategy is single-threaded; indeed, the plays of $\tau^\dag$ are precisely those plays $s\in P_{\oc A \implies \oc B}$ such that $s\vert_n\in\tau$ for any occurrence $n$ of an initial move in $s$.  
+
+  Conversely, let $\sigma\from \oc A \implies \oc B$ be single-threaded.  
+  Let $\tau=\sigma\cap P_{\oc A \implies B}$ -- so $\tau$ consists of all sequences in $\sigma$ that have at most one initial move.  
+  Then $\tau$ is clearly a strategy, since it is a prefix-closed subset of $\sigma$.
+  We claim that $\sigma=\tau^\dag$.  
+  Indeed, suppose that $s\in\sigma$.  
+  ket $n$ be an occurrence of an initial move in $s$.  
+  Then, by Lemma \ref{LemRuss1}, $s\vert_n\in\sigma$ and has a unique initial move, and is therefore contained in $\tau$.  
+  Therefore, $\sigma=\tau^\dag$.
+\end{proof}
+
+Now consider the category whose objects are arenas and where the morphisms from $A$ to $B$ are single-threaded strategies for $A\implies B$, where we identify $A$ and $B$ with their corresponding full games.  
+Then, if $T$ is any Idealized Algol type, there is some corresponding arena such that the full game on that arena is isomorphic to $\oc\deno T$.  
+We will call this arena $\deno T$ as well, relying on context to distinguish them.
+This means that our semantics of Idealized Algol lives within the new category, since a single-threaded strategy for $\deno S \to \deno T$ is the same thing as a strategy for $\oc \deno S \implies \deno T$ in the original semantics.
+
+This semantics is much closer to the game semantics of PCF developed by Hyland and Ong in \cite{hoPcf}; the difference there is that they use innocent rather than single-threaded strategies.
+
+Note that it is impossible to define the tensor product of games, let alone the sequoid, in the arena-only semantics, so our Computational Adequacy proof would not have worked had we adopted this approach from the start.
+
+\section{Full Abstraction}
+
+We now quote a definability result from \cite{hoPcf}.
+
+\begin{theorem}[{\cite[7.1]{hoPcf}}]
+  Let $T$ be a PCF type, and let $\sigma$ be a compact innocent strategy for $\deno T$ (within the arena-only semantics).  
+  Then there is some closed PCF term $M\from T$ such that $\deno M=\sigma$.
+  \label{ThePcfDefinability}
+\end{theorem}
+
+Here, PCF is the sub-language of PCF generated by the types $\nat$ and $\bool$, together with their structural constants.  
+We will take it as read that this result may be extended to the types $\com$ and $\Varr$, so that we can say that if $T$ is an Idealized Algol type, then any compact innocent strategy for $\deno T$ is the denotation of some IA term.
+Then our factorization result (Proposition \ref{PropInnocentFactorization}) gives us the following definability result.
+
+\begin{proposition}
+  Let $T$ be an Idealized Algol type, and let $\sigma\from \deno T$ be a compact strategy.
+  Then there is some closed IA term $M\from T$ such that $\deno M=\sigma$.
+  \label{PropIaDefinability}
+\end{proposition}
+\begin{proof}
+  We work in the arena-only semantics so that we can apply Theorem \ref{ThePcfDefinability}.  
+  By Proposition \ref{PropInnocentFactorization}, we know that $\sigma=\oc 0;\cell;\hat{\sigma}$ for some innocent strategy $\hat\sigma \from \Varr \to \deno T$.
+  By looking at the proof of Proposition \ref{PropInnocentFactorization}, we can see that $\hat\sigma$ is compact if $\sigma$ is.
+  Then, by Theorem \ref{ThePcfDefinability}, we know that there is some IA term $\lambda x.M\from \Var \to T$ such that $\deno{\lambda x.M}=\hat\sigma$.  
+  It follows that $\sigma$ is the denotation of the term $\new(\lambda x.M)\from T$.
+\end{proof}
+
+\begin{definition}[Full Abstraction result]
+  A \emph{full abstraction result} encompasses both an equational soundness result and its converse, asserting that two programs are observationally equivalent if and only if their denotations are intrinsically equivalent.
+\end{definition}
+
+\begin{theorem}[Full Abstraction]
+  Let $M,N\from T$ be closed terms of Idealized Algol.  
+  Then $M$ and $N$ are observationally equivalent if and only if $\deno M\sim\deno N$.
+\end{theorem}
+\begin{proof}
+  We have already proved that our semantics is computationally adequate, and therefore that the reverse direction (equational soundness) holds.  
+  Now suppose instead that $\deno M\not\sim\deno N$.
+  Without loss of generality, suppose there is $\alpha\from \deno T\to \bC$ such that $\deno{M}^\dag;\alpha\ne\bot_{\bC}$ and $\deno{N}^\dag;\alpha=\bot_{\bC}$.
+
+  Since $\deno{M}^\dag$ is the supremum of all its compact sub-strategies, if $\deno{M}^\dag;\alpha'=\bot_{\bC}$ for all compact $\alpha'\subset \alpha$, then $\deno{M}^\dag;\alpha=\bot_{\bC}$ by continuity of composition.  
+  Therefore, there is some compact $\alpha'\subset\alpha$ such that $\deno M^\dag;\alpha\ne\bot_{\bC}$; moreover, we have that $\deno{N}^\dag;\alpha'=\bot_{\bC}$ by monotonicity of composition.  
+
+  Then $\alpha'$ is the denotation of some term $P\from T \to \com$, and we have $P\,M\converges$ and $P\,N\not\converges$ by Computational Adequacy.  
+  Therefore, $M$ and $N$ are not observationally equivalent.
+\end{proof}
+
+\section{The Intrinsic Equivalence Relation}
+
+We conclude by giving a more concrete description of the intrinsic equivalence relation on strategies.
+
+\begin{definition}
+  We say that a justified sequence $s$ is \emph{complete} if every question move $q$ occurring in $s$ has some answer move $a$ justified by $q$.
+\end{definition}
+
+\begin{proposition}[{\cite[25]{SamsonGuyIAActive}}]
+  Let $\sigma,\tau\from \oc A \implies B$ be strategies, where $A,B$ are well-opened games.  
+  Then $\sigma\sim\tau$ if and only if $\sigma$ and $\tau$ contain the same complete plays.
+\end{proposition}
+\begin{proof}
+  Suppose first that $\sigma$ and $\tau$ do not contain the same complete plays.  
+  So, without loss of generality, there is some complete $s\in\sigma\setminus\tau$.
+  Then we may define a strategy $\alpha \from \oc(\oc A \implies B) \implies \bC$ that behaves as follows.  
+  After the opening move $q$ in $\bC$, player $P$ plays precisely those moves in $\oc A \implies B$ that make up the sequence $s$.  
+  If player $O$ deviates from the sequence $s$ at any point, then player $P$ has no response under $\alpha$; if player $P$ succeeds in building up the entire sequence $s$, then she finishes by playing $a$ in $\bC$.  
+  Note that $\alpha$ is not innocent in general.
+  It is clear then that $\sigma^\dag;\alpha=\skipp$ and $\tau^\dag;\alpha=\bot_{\bC}$.
+
+  Conversely, suppose that $\sigma\not\sim\tau$.  
+  Then, without loss of generality, there is some $\alpha \from \oc(\oc A\implies B) \implies \bC$ such that $\sigma^\dag;\alpha=\skipp$ and $\tau^\dag;\alpha=\bot_{\bC}$.  
+  Then we have some $\s\in\sigma^\dag\|\alpha$ such that $\s\vert_{\bC}=qa$, and $\s\vert_{\oc A \implies B}$ decomposes into `threads' which are plays of $\oc A \implies B$, one for each initial move occurring in that sequence.  
+  By the well bracketing condition, every one of these threads is itself a complete play in $\oc A \implies B$.  
+  Every one of these sequences is contained in $\sigma$; if they were all contained in $\tau$, then we would have $\s\in\\tau^\dag\|\alpha$, which would be a contradiction, so we end up with a complete sequence contained in $\sigma\setminus\tau$.
 \end{proof}
 
 \bibliographystyle{alpha2}

@@ -1,14 +1,14 @@
-\BOOKMARK [1][-]{section.1}{Monads and Kleisli categories}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Monads}{section.1}% 2
-\BOOKMARK [2][-]{subsection.1.2}{Kleisli Categories}{section.1}% 3
-\BOOKMARK [2][-]{subsection.1.3}{Denotational Semantics}{section.1}% 4
-\BOOKMARK [2][-]{subsection.1.4}{Operational Semantics}{section.1}% 5
-\BOOKMARK [2][-]{subsection.1.5}{Soundness}{section.1}% 6
-\BOOKMARK [2][-]{subsection.1.6}{Computational Adequacy}{section.1}% 7
-\BOOKMARK [2][-]{subsection.1.7}{Full Abstraction}{section.1}% 8
-\BOOKMARK [2][-]{subsection.1.8}{Comparison with Ghica's slot games}{section.1}% 9
-\BOOKMARK [2][-]{subsection.1.9}{Alternative Reduction Rules - May Testing}{section.1}% 10
-\BOOKMARK [2][-]{subsection.1.10}{Alternative Reduction Rules - Must Testing}{section.1}% 11
-\BOOKMARK [2][-]{subsection.1.11}{Full Abstraction for Nondeterminism and Must Testing}{section.1}% 12
-\BOOKMARK [2][-]{subsection.1.12}{The Intrinsic Equivalence Relation}{section.1}% 13
-\BOOKMARK [1][-]{section*.4}{References}{}% 14
+\BOOKMARK [0][-]{chapter.1}{Monads and Kleisli categories}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Monads}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Kleisli Categories}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Denotational Semantics}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Operational Semantics}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{Soundness}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.6}{Computational Adequacy}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.7}{Full Abstraction}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.8}{Comparison with Ghica's slot games}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.9}{Alternative Reduction Rules - May Testing}{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.10}{Alternative Reduction Rules - Must Testing}{chapter.1}% 11
+\BOOKMARK [1][-]{section.1.11}{Full Abstraction for Nondeterminism Under Must Testing}{chapter.1}% 12
+\BOOKMARK [1][-]{section.1.12}{The Intrinsic Equivalence Relation}{chapter.1}% 13
+\BOOKMARK [0][-]{chapter*.4}{Bibliography}{}% 14
