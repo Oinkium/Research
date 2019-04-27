@@ -1,25 +1,25 @@
-\documentclass{article}
+\documentclass{report}[11pt]
 
 \input{../common/preamble}
 
 \begin{document}
 
-\section{Promonads and parametric promonads}
+\chapter{Promonads and parametric promonads}
 \label{SecPromonads}
 
-The purpose of this section is to shine some light on the definition of the \Mellies category, showing why it is natural to think about $[\X,\Set]$-enriched categories and why the \Mellies category may be considered analogous to the Kleisli category.
+The purpose of this chapter is to shine some light on the definition of the \Mellies category, showing why it is natural to think about $[\X,\Set]$-enriched categories and why the \Mellies category may be considered analogous to the Kleisli category.
 
 As a technical tool to prove the results we want, we shall introduce multicategories, which are a small generalization of monoidal categories.  
 The main purpose of this generalization is to allow us to do without coends wherever possible: for example, while we need coends to make $[\X,\Set]$ into a monoidal category, we do not need them to make it into a multicategory.  
 
-The first half of this section is, in the interests of completeness, fairly technical, and may be skimmed over on a first reading.  
-In section \ref{SecEndoprofunctors}, we introduce the multicategory of endoprofunctors on a category $\C$, which generalizes the monoidal category of endofunctors on $\C$.  
+The first half of this chapter is, in the interests of completeness, fairly technical, and may be skimmed over on a first reading.  
+In chapter \ref{SecEndoprofunctors}, we introduce the multicategory of endoprofunctors on a category $\C$, which generalizes the monoidal category of endofunctors on $\C$.  
 As monoids in $\End(\C)$ are called monads on $\C$, so we will call monoids in $\Endoprof(\C)$ \emph{promonads} on $\C$.  
 We will observe that a promonad may be regarded as a sort of category, and that the Kleisli category may be characterized as the embedding of monads on $\C$ into promonads on $\C$.  
 
 The main result will then be to show that an $\X$-parametric promonad on a category $\C$ -- i.e., a multifunctor $\X \to \Endoprof(\C)$ -- may be regarded as a sort of $[\X,\Set]$-enriched category, and that the \Mellies category may similarly be regarded as an embedding of $\X$-parametric monads on $\C$ into $\X$-parametric promonads on $\C$.
 
-\subsection{Multicategories}
+\section{Multicategories}
 
 \begin{definition}[\cite{Multicategories}]
   A \emph{multicategory} $\M$ is given by a set of objects $\text{Ob}(\M)$ whose elements are called \emph{objects} and, for each (possibly empty) list $a_1,\cdots,a_n$ of objects and each object $b$, a set
@@ -101,7 +101,7 @@ The main result will then be to show that an $\X$-parametric promonad on a categ
   where the first arrow is induced from the normal monoidal coherences (exactly which ones depends on how we choose to interpret the iterated tensor product).
 \end{example}
 
-\subsection{Representable multicategories}
+\section{Representable multicategories}
 
 We call a multicategory \emph{representable} if it isomorphic to a multicategory that arises from a monoidal category in this way.  
 The next theorem gives a criterion for a multicategory to be representable.
@@ -174,7 +174,7 @@ The next theorem gives a criterion for a multicategory to be representable.
   A monoidal category is a symmetric multicategory if and only if it is a symmetric monoidal category.  
 \end{example}
 
-\subsection{Product and unit multicategories}
+\section{Product and unit multicategories}
 
 \begin{definition}
   Let $\M,\N$ be multicategories.  
@@ -196,7 +196,7 @@ The next theorem gives a criterion for a multicategory to be representable.
   This is a representable multicategory; indeed, it may be identified with the usual unit monoidal category.
 \end{definition}
 
-\subsection{Multifunctors and multinatural transformations}
+\section{Multifunctors and multinatural transformations}
 
 \begin{definition}
   Let $\M,\N$ be multicategories.  
@@ -249,7 +249,7 @@ The next theorem gives a criterion for a multicategory to be representable.
   that sends $(i,j)$ to $(j,i)$.
 \end{definition}
 
-\subsection{Monoids in multicategories}
+\section{Monoids in multicategories}
 
 \begin{definition}
   \label{DefMonoidMulticategory}
@@ -288,7 +288,7 @@ Let $\M$ be a multicategory.
 
 Note that a monoid in a multicategory $\M$ may also be defined to be a multifunctor $1 \to \M$ \cite[2.1.11]{Multicategories}.
 
-\subsection{Categories enriched over multicategories}
+\section{Categories enriched over multicategories}
 
 \begin{definition}
   \label{DefEnrichedCategoryMulticategory}
@@ -350,7 +350,7 @@ Note that a monoid in a multicategory $\M$ may also be defined to be a multifunc
   where $\tau$ is the permutation that transposes the two values.
 \end{remark}
 
-\subsection{Multicategory-enriched functors and natural transformations}
+\section{Multicategory-enriched functors and natural transformations}
 
 \begin{definition}
   Let $\C,\D$ be categories enriched over some multicategory $\V$.  
@@ -393,7 +393,7 @@ Note that a monoid in a multicategory $\M$ may also be defined to be a multifunc
     \]
 \end{definition}
 
-\subsection{The categories enriched over a symmetric multicategory form a multicategory}
+\section{The categories enriched over a symmetric multicategory form a multicategory}
 
 \begin{definition}
   Let $\V$ be a symmetric multicategory.
@@ -441,7 +441,7 @@ Note that a monoid in a multicategory $\M$ may also be defined to be a multifunc
   We will use the word `functor' to refer to the more general multimorphisms between $\V$-enriched categories in the case that $\V$ is symmetric.
 \end{definition}
 
-\subsection{Change of base}
+\section{Change of base}
 
 Let $\M,\N$ be multicategories, let $F\from \M \to \N$ be a multifunctor and let $\C$ be an $\M$-enriched category.  
 Then we can form an $\N$-enriched category $F_*\C$ whose objects are the objects of $\C$ and where the morphisms are given by the formula
@@ -453,7 +453,7 @@ By functoriality of $F$, these composition and identities are associative and un
 
 This process is called \emph{base change along $F$}.
 
-\subsection{Closed multicategories}
+\section{Closed multicategories}
 
 \begin{definition}[\cite{ClosedMulticategories}]
   We say that a multicategory $\M$ is \emph{closed} if for any pair $a,c$ of objects, there exists an object
@@ -496,7 +496,7 @@ We might ask the question, then: why make this generalization?
 
 To answer this question, we introduce some natural multicategories that are not representable.
 
-\subsection{The multicategory of endoprofunctors}
+\section{The multicategory of endoprofunctors}
 \label{SecEndoprofunctors}
 
 Let $\C,\D$ be ordinary categories.  
@@ -596,7 +596,7 @@ The following proposition shows that this is indeed a well-defined composition.
       %
         \& F_1,\cdots,F_n \arrow[ur, "{\phi^{(1)},\cdots,\phi^{(m)}}"']
           \&
-            \& \\
+            \&
     \end{tikzcd}
     \]
   \caption{Proof that extranaturality is preserved by composition.  
@@ -632,7 +632,7 @@ We have only considered profunctors going from a category into itself.
 We might ask what structure is carried by more general profunctors enriched in a multicategory.
 The answer is that they form an \emph{fc-multicategory} \cite{Multicategories}.  
 
-\subsection{Functors are a special case of profunctors}
+\section{Functors are a special case of profunctors}
 
 The reason why we refer to a functors $F\from \oppcat\C,\D \to \V$ as a \emph{profunctors} $\C \pto \D$ is that they generalize ordinary functors $\C \to \D$.  
 Specifically, if $F \from \C \to \D$ is a functor, then we can identify it with the profunctor
@@ -684,7 +684,7 @@ This gives us an embedding of the monoidal category of endofunctors $\C \to \C$ 
   It is easy to check that these two constructions are inverses and that they respect composition of natural transformations.
 \end{proof}
 
-\subsection{Promonads are categories}
+\section{Promonads are categories}
 
 Since a monad was defined to be a monoid in the category of endofunctors on a category $\C$, we can define a \emph{promonad} to be a monoid in the multicategory of endoprofunctors on $\C$.
 
@@ -770,7 +770,7 @@ In other words, $\D$ is precisely the Kleisli category for the monad $F$:
   The Kleisli category is the category we get by considering functors as profunctors.
 \end{slogan}
 
-\subsection{The multicategory of functors}
+\section{The multicategory of functors}
 
 Let $\X$ be a monoidal category and let $\M$ be a multicategory.
 We define a multicategory $[\X,\M]$ where the objects are ordinary functors
@@ -810,7 +810,7 @@ and where multimorphisms $F_1,\cdots,F_n\to G$ are natural transformations
   However, this multicategory is not representable in general, particularly in the cases when we are working with enriched multicategories (not defined here), where the enriching multicategory is not cocomplete, or when the category $\M$ is not the enriching category.
 \end{remark}
 
-\subsection{Monoids on functors are multifunctors}
+\section{Monoids on functors are multifunctors}
 It might seem strange that the objects of the multicategory of functors are ordinary functors, ignoring the monoidal structure of $\X$ and the multicategory structure of $\M$.  
 One way to make sense of this fact is to note that an object of a category $\C$ is the same thing as a functor
 \[
@@ -836,9 +836,9 @@ This can be proved by setting $\N=1$ in the following stronger result.
   Then a multifunctor $\N \to [\X,\M]$ is the same thing as a multifunctor $\N\times\X \to \M$.
 \end{proposition}
 
-\subsection{Two perspectives on monoids in $\Set$}
+\section{Two perspectives on monoids in $\Set$}
 
-We now come to our main result of the section.  
+We now come to our main result of the chapter.  
 By way of motivation, consider the two ways of generalizing the notion of an internal monoid in $\Set$.
 
 \begin{enumerate}

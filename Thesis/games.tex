@@ -4012,11 +4012,12 @@ Next, we create a definition that mirrors this one within the denotational seman
 \end{definition}
 
 \begin{definition}[Equational Soundness Result]
-  An \emph{inequational soundness result} for a semantics as above is a result that says that if $M,N\from T$ are such that $\deno{M}\sim\deno{N}$, then $M$ and $N$ are observationally equivalent.
+  An \emph{equational soundness result} for a semantics as above is a result that says that if $M,N\from T$ are such that $\deno{M}\sim\deno{N}$, then $M$ and $N$ are observationally equivalent.
 \end{definition}
 
 \begin{proposition}
-  Any semantics satisfying Computational Adequacy satisfies Inequational Soundness.
+  Any semantics satisfying Computational Adequacy satisfies Equational Soundness.
+  \label{PropEquationalSoundness}
 \end{proposition}
 \begin{proof}
   Suppose that $\deno{M}\sim\deno{N}$.  

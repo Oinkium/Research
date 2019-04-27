@@ -3,7 +3,7 @@
 \bibitem[AM96]{SamsonGuyIAActive}
 Samson Abramsky and Guy McCusker.
 \newblock Linearity, sharing and state: a fully abstract game semantics for
-  idealized algol with active expressions: Extended abstract.
+  {Idealized Algol} with active expressions: Extended abstract.
 \newblock {\em Electronic Notes in Theoretical Computer Science}, 3:2 -- 14,
   1996.
 \newblock Linear Logic 96 Tokyo Meeting.
@@ -26,12 +26,6 @@ Soichiro Fujii, Shin-ya Katsumata, and Paul-Andr{\'e} Melli{\`e}s.
 \bibitem[GHN15]{Gepner}
 David Gepner, Rune Haugseng, and Thomas Nikolaus.
 \newblock Lax colimits and free fibrations in $\infty$-categories, 2015.
-
-\bibitem[Gra04]{AdjointsInDoubleCategories}
-Pare~Robert Grandis, Marco.
-\newblock Adjoint for double categories.
-\newblock {\em Cahiers de Topologie et Géométrie Différentielle
-  Catégoriques}, 45(3):193--240, 2004.
 
 \bibitem[SGA1]{SGA1}
 Alexander Grothendieck.
@@ -61,9 +55,11 @@ Tom Leinster.
 
 \bibitem[Mel12]{MelliesCategory}
 Paul-Andr\'{e} Melli\`{e}s.
-\newblock Parametric monads and enriched adjunctions, 2012.
-\newblock preprint on webpage at
-  \url{https://www.irif.fr/~mellies/tensorial-logic/8-parametric-monads-and-enriched-adjunctions.pdf}.
+\newblock Parametric monads and enriched adjunctions.
+\newblock
+  \url{https://www.irif.fr/~mellies/tensorial-logic/8-parametric-monads-and-enriched-adjunctions.pdf},
+  2012.
+\newblock {Preprint on webpage}.
 
 \bibitem[Mel17]{ParametricMonads}
 Paul-Andr\'{e} Melli\`{e}s.

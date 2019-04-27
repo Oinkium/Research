@@ -226,8 +226,9 @@ The prototypical example, of course, will be the category of games and visible s
 
 In addition, we will specialize to reader monads.  
 The rationale behind this is twofold: firstly, we do not wish to assume too much about the underlying category $\G$ beyond the fact that it gives us a good model of Idealized Algol.  
+Reader monads can be constructed for any object inside any Cartesian closed category.
 Secondly, in order to get a compositional semantics for the $\lambda$-calculus, it is important that the Kleisli categories we consider are themselves Cartesian closed.  
-
+Theorem \ref{FunctionalCompletenessCcc} tells us that this is the case for the Kleisli categories of reader monads on categories that are themselves Cartesian closed, but this may not be the case for other monads we can build from the Cartesian closed structure on our base category, such as state monads.
 
 Let $X\in \{\bB,\bN,\bC\}$ be a set that has an interpretation as an Idealized Algol type $X$, and write $X$ also for the corresponding object of $\G$.
 Write $\G_X$ as a shorthand for $\Kl_{R_X}\G$, the Kleisli category for the reader monad on $\G$ corresponding to the object $X$.  
@@ -379,10 +380,9 @@ We now define the operational semantics of \IAX and prove a computational adequa
 To prove our adequacy result for the operational semantics of \IAX, we first give some definitions.
 
 \begin{definition}
-  Fix some constant value $\top \in X$ (the precise value does not matter).
   We inductively define terms in context $\tr_u\from \nat \to X$ of \emph{ordinary deterministic} Idealized Algol for each $u\in X^*$ as follows.
   \begin{mathpar}
-    \tr_\epsilon = \lambda n.\top
+    \tr_\epsilon = \lambda n.\Omega
     \and
     \tr_{xu} = \lambda n.\neww (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u (\pred !v))
   \end{mathpar}
@@ -486,7 +486,7 @@ To prove our adequacy result for the operational semantics of \IAX, we first giv
         {
           \inferrule*
           {
-            \inferrule*
+            \inferrule*[sep=5pt]
             {
               \inferrule*
               {
@@ -503,7 +503,7 @@ To prove our adequacy result for the operational semantics of \IAX, we first giv
                 \Gamma,v,(s\vert v\mapsto 0) \ts v \gets M \converges \skipp,(s'\vert v\mapsto m+1)
               }
               \\
-              \inferrule*
+              \inferrule*[sep=5pt]
               {
                 \inferrule*
                 {
@@ -728,15 +728,16 @@ We can now state and prove our soundness lemma.
 
 In light of Lemma \ref{LemSoundness}, we can state our soundness result.
 
-First recall the statement of Computational Adequacy for $\G$:
+First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheComputationalAdequacyIA} if $\G$ is the category of games):
 
-\begin{proposition}
-  Let $M\from \com$ be a closed term of Idealized Algol and suppose that
+\begin{theorem}
+  Let $M\from \com$ be a closed term of Idealized Algol.  
+  Then
   \[
-    ,()\ts M\converges \skipp,()\,.
+    \blank,()\ts M\converges \skipp,()\,.
     \]
-  Then $\deno{M} \ne \bot$.
-\end{proposition}
+  if and only if $\deno{M} \ne \bot$.
+\end{theorem}
 
 \begin{definition}
   Let $u\in X^*$.
@@ -761,13 +762,26 @@ First recall the statement of Computational Adequacy for $\G$:
   We then define $t_n\from \bN \to \bC$ to be the denotation of $\test_n$ in $\G$.
 \end{definition}
 
-\begin{proposition}[Soundness]
+\begin{definition}
+  Let $\sigma \from 1 \to \bC$ be a morphism in $\G_X$, considered as a morphism $(X \to \bC)$ in $\G$.  
+  We say that $\sigma\downarrow_u$ if the composite
+  \[
+    1 \xrightarrow{\sigma}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.
+\end{definition}
+
+\begin{proposition}
   Let $M\from\com$ be a closed term of \IAX, let $u\in X^*$ be a sequence and suppose that
   \[
-    ,()\ts M\converges_u\skipp,()\,.
+    \blank,()\ts M\converges_u\skipp,()\,.
     \]
   Let the denotation $\deno{M} \from 1 \to \com$ in $\G_X$ be considered as a morphism $1 \to (X \to \bC)$ in $\G$.
-  Then the composite
+  Then $\deno{M}\downarrow_u$; i.e., the composite
   \[
     1 \xrightarrow{\deno{M}}
     (X \to \bC) \xrightarrow{\eta_u}
@@ -791,10 +805,11 @@ First recall the statement of Computational Adequacy for $\G$:
   converges to $|u|$ in IA.
   
   We can prove this using the following derivation tree.
+  \tiny
   \[
     \inferrule*
     {
-      \inferrule*[sep=1.7em]
+      \inferrule*[sep=0em]
       {
         \inferrule*[left={Lem. \ref{LemSoundness}}]
         {
@@ -821,9 +836,10 @@ First recall the statement of Computational Adequacy for $\G$:
       }
     }
     {
-      ,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
+      \blank,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
     }\qedhere
     \]
+  \normalsize
 \end{proof}
 
 The statement of Proposition \ref{PropKleisliSoundness} looks a bit strange.  
@@ -849,27 +865,7 @@ take the form
               &     &  k  \\
   \end{array}\,,
   \]
-for $k\le |u|$ or
-\[
-  \begin{array}{ccc}
-    X         & \bC & \bN \\
-              &     &  q  \\
-              &  q  &     \\
-    q         &     &     \\
-    u^{(0)}   &     &     \\
-    \vdots    &     &     \\
-    q         &     &     \\
-    u^{(|u|-1)}&     &     \\
-    q         &     &     \\
-    \top      &     &     \\
-    \vdots    &     &     \\
-    q         &     &     \\
-    \top      &     &     \\
-              &  a  &     \\
-              &     &  k  \\
-  \end{array}\,,
-  \]
-for $k>|u|$, where the component in $X,\bC$ is a valid play of $\sigma$.
+for $k\le |u|$, where the component in $X,\bC$ is a valid play of $\sigma$.
 Moreover, the strategy $t_n$ is the one with maximal plays of the form
 \[
   \begin{array}{cc}
@@ -1056,6 +1052,7 @@ Now we can state and prove our adequacy lemma.
 \end{proof}
 
 We can now prove computational adequacy for our model.
+We have proved one direction already in Proposition \ref{PropKleisliSoundness}, so it suffices to prove the other direction.
 
 \begin{proposition}[Computational adequacy]
   Let $M\from \com$ be a closed term of \IAX.  
@@ -1071,7 +1068,7 @@ We can now prove computational adequacy for our model.
   is not equal to $\bot$.  
   Then
   \[
-    ,()\ts M\converges_u \skipp,()\,.
+    \blank,()\ts M\converges_u \skipp,()\,.
     \]
   \label{PropKleisliAdequacy}
 \end{proposition}
@@ -1093,7 +1090,7 @@ We can now prove computational adequacy for our model.
   Now $u$ is the subsequence of $u^\top$ going from position $1$ to position $|u|$.  
   So Lemma \ref{LemAdequacy} tells us that we must have
   \[
-    ,()\ts M \converges_u \skipp,()
+    \blank,()\ts M \converges_u \skipp,()
     \]
   in \IAX.
 \end{proof}
@@ -1126,7 +1123,7 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
   Let $M,N\from T$ be closed terms of \IAX.  
   Then $M,N$ are observationally equivalent -- i.e., for all contexts $C[-]\from\com$ of \IAX with a hole of type $T$ and for all sequences $u\in X^*$, 
   \[
-    ,()\ts C[M] \converges_u \skipp,() \Longleftrightarrow ,()\ts C[N] \converges_u \skipp,()\,\text{--}
+    \blank,()\ts C[M] \converges_u \skipp,() \Longleftrightarrow \blank,()\ts C[N] \converges_u \skipp,()\,\text{--}
     \]
   if and only if $\deno{M}\sim\deno{N}$.
   \label{TheKleisliFullAbstraction}
@@ -1298,7 +1295,7 @@ Firstly, an obvious consequence of Propositions \ref{PropKleisliSoundness} and \
     \]
   is not equal to $\bot$, if and only if
   \[
-    ,()\ts M \converges \skipp,()\,.
+    \blank,()\ts M \converges \skipp,()\,.
     \]
   \label{CorMayAdequacy}
 \end{corollary}
@@ -1329,7 +1326,7 @@ Then exactly the same argument as before gives us a full abstraction result for 
 
 \begin{theorem}
   Let $M,N\from T$ be closed terms of \IAX. Then $M,N$ are may-observationally equivalent -- i.e., for all contexts $C[-]\from \com$ of \IAX with a hole of type $T$, \[
-    ,()\ts C[M] \converges \skipp,() \Leftrightarrow ,()\ts C[N] \converges \skipp,()\,\text{--}
+    \blank,()\ts C[M] \converges \skipp,() \Leftrightarrow \blank,()\ts C[N] \converges \skipp,()\,\text{--}
     \]
   if and only if $\deno M \sim_{\may} \deno N$.
 \end{theorem}
@@ -1337,8 +1334,8 @@ Then exactly the same argument as before gives us a full abstraction result for 
   Suppose that $\deno M\sim_{\may}\deno N$.  
   Let $C[-]$ be a context of \IAX, interpreted as a morphism $\alpha \from \deno T \to \bC$.
 
-  Suppose that $,()\ts C[M] \converges \skipp,()$.  
-  So there is some sequence $u\in X^*$ such that $,()\ts C[M] \converges_u \skipp,()$ and therefore the composite
+  Suppose that $\blank,()\ts C[M] \converges \skipp,()$.  
+  So there is some sequence $u\in X^*$ such that $\blank,()\ts C[M] \converges_u \skipp,()$ and therefore the composite
   \[
     1 \xrightarrow{\deno M;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
@@ -1355,7 +1352,7 @@ Then exactly the same argument as before gives us a full abstraction result for 
     \bN \xrightarrow{t_{|v|}}
     \bC
     \]
-  Therefore, $,()\ts C[N] \converges_v \skipp,()$ and so $,()\ts C[N] \converges \skipp,()$.
+  Therefore, $\blank,()\ts C[N] \converges_v \skipp,()$ and so $\blank,()\ts C[N] \converges \skipp,()$.
   The reverse direction is identical.
 
   Conversely, suppose that $M,N$ are may-observationally equivalent.  
@@ -1473,7 +1470,7 @@ We shall define this indirectly via its negation.
 \end{example}
 
 \begin{example}
-  $,()\ts \Y(\lambda x.x)\diverges$ because it has the following infinite derivation tree.
+  $\blank,()\ts \Y(\lambda x.x)\diverges$ because it has the following infinite derivation tree.
   \[
     \inferrule*
     {
@@ -1483,7 +1480,7 @@ We shall define this indirectly via its negation.
         {
         }
         {
-          ,()\ts (\lambda x.x) \converges (\lambda x.x),()
+          \blank,()\ts (\lambda x.x) \converges (\lambda x.x),()
         }
         \\
         \inferrule*
@@ -1491,15 +1488,15 @@ We shall define this indirectly via its negation.
           \vdots
         }
         {
-          ,() \ts \Y(\lambda x.x)\diverges
+          \blank,() \ts \Y(\lambda x.x)\diverges
         }
       }
       {
-        ,()\ts (\lambda x.x)(\Y(\lambda x.x)) \diverges
+        \blank,()\ts (\lambda x.x)(\Y(\lambda x.x)) \diverges
       }
     }
     {
-      ,()\ts \Y(\lambda x.x)\diverges
+      \blank,()\ts \Y(\lambda x.x)\diverges
     }
     \]
 \end{example}
@@ -1633,7 +1630,7 @@ We therefore get an adequacy result for must testing.
 
 \begin{corollary}
   Let $M\from \com$ be a closed term of \IAX and consider the denotation $\deno M \from 1 \to \bC$ in $\G_X$ as a morphism $1 \to (X \to \bC)$ in $\G$.
-  Then $,()\ts M\mustconverge$ if and only if $\deno{M}\downarrow_{\must}$.
+  Then $\blank,()\ts M\mustconverge$ if and only if $\deno{M}\downarrow_{\must}$.
   \label{CorAdeqMust}
 \end{corollary}
 
@@ -1660,7 +1657,7 @@ Or, $\sigma$ contains an infinite increasing sequence of plays, whose limit is t
 We have shown the following adequacy result.
 \begin{corollary}
   Let $M\from \com$ be a closed term of \IAX and consider the denotation $\deno M \from 1 \to \bC$ in $\G_X$ as a morphism $X \to \bC$ in $\G$.
-  Then $,()\ts M\mustconverge$ if and only if this strategy is winning.
+  Then $\blank,()\ts M\mustconverge$ if and only if this strategy is winning.
 \end{corollary}
 
 \section{Full Abstraction for Nondeterminism Under Must Testing}

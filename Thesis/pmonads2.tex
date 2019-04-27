@@ -1,0 +1,844 @@
+\documentclass{report}[11pt]
+\let\FEWFONTS=1
+
+\input{../common/preamble}
+\usepackage{lua-visual-debug}
+
+\begin{document}
+
+\chapter{Parametric Monads and Full Abstraction}
+
+Let a monoidal category $\X$ act on a category $\G$, where $\G$ is a suitable model of some programming language.  
+In this chapter we will investigate the adequacy and full abstraction properties of the resulting category $\G/\X$, as we did with Kleisli categories in Chapter \ref{ChapMonads}.  
+Once again, we will pass to a special case of the general theory.  
+As in Chapter \ref{ChapMonads}, we will require $\G$ to be a Cartesian closed category that admits a computationally adequate denotational semantics of Idealized Algol, and we shall require that $\G$ may be regarded as being enriched in algebraic directed-complete partial orders in such a way that every compact morphism between the denotations of types is the denotation of some term.
+As hinted at in Chapter \ref{ChapParametricMonads}, we shall require the action of $\X$ on $\G$ to be a reader action corresponding to an oplax symmetric monoidal functor that satisfies the condition in Theorem \ref{TheCartesianClosedCx}, so that the category $\G/\X$ is Cartesian closed.
+
+We fix a symmetric monoidal category $\X$ and an oplax monoidal functor $j\from \X \to \Set$ such that for any object $p$ of $\X$ there are morphisms $h\from p \to p \tensor p$ and $h_0 \from p \to I$ such that the composite
+\[
+  j(p) \xrightarrow{jh} j(p\tensor p) \xrightarrow{m^j_{p,p}} j(p) \times j(p)
+  \]
+is equal to the diagonal on $j(p)$.
+
+We fix a model $\G$ of Idealized Algol as above, and suppose that the datatypes in $\G$ are interpreted via an oplax monoidal functor $\Set \to \G$.  
+Then we get an oplax monoidal functor $\X \to \G$, inducing a reader action of $\oppcat\X$ on $\G$ such that the category $\G/\oppcat\X$ is Cartesian closed.  
+We will define a language and an interpretation of this language in the category $\G/\oppcat\X$.
+
+\newcommand{\IAX}{{IA${}_{X}$}\xspace}
+\newcommand{\IAXX}{{IA${}_{\X}$}\xspace}
+\section{The language \IAXX}
+
+\begin{definition}[{The language \IAXX}]
+  The language \IAXX is formed by taking Idealized Algol, and adding to it new constants
+  \[
+    \choose_p
+    \]
+  for each object $p$ of $\X$ such that $j(p)\in\{\bC,\bB,\bN\}$, with typing rule
+  \[
+    \inferrule{ }{\Gamma \ts \choose_p \from j(p)}\,.
+    \]
+\end{definition}
+
+The interpretation of $\choose_p$ is that it requests an element $a$ of the set $j(p)$.
+
+Let $\G$ be a model of Idealized Algol as described above, and suppose that there is an oplax monoidal functor $\Set \to \G$ that is used to interpret datatypes.  
+We will use an underline to indicate thies functor; so, for example, the object of $\G$ that is used to denote the natural number type is written $\ul\bN$.
+
+By our description of $\G/\oppcat \X$ as a lax colimit in $\Cat$ (i.e., Corollary \ref{CorTheConstructionUniversalProperty}), we have a natual functor $J\from \G\to\G/\oppcat \X$ and a natural transformation $\phi_{p,a}\from J(jp\to a) \to Ja$.  
+Our denotational semantics of \IAXX is then given in the category $\G/\oppcat X$ as follows.  
+The denotation of any type $T$ of Idealized Algol is given by $J(\deno{T}_\G)$, where $\deno{T}_\G$ is the original denotation in $\G$.
+The denotation of any sequent $\Gamma\ts M$ is given by $\deno{\Gamma\ts M} = J(\deno{\Gamma\ts M}_\G)$, where $\deno{-}_\G$ is the original denotation in $\G$.
+The denotation of $\choose_p$ is given by the morphism $\omega_p \from 1 \to j(p)$ given by the composite
+\[
+  I \xrightarrow{\Lambda(\id_{Jjp})} (Jjp \to Jjp)  \to J(jp \to jp) \xrightarrow{\phi_{p,jp}} Jjp\,.
+  \]
+
+This denotation may alternatively be defined in a non-compositional way: given a term $\Gamma\ts M\from T$ in context of \IAXX, we can write
+\[
+  M = N[\choose_p/x_p]\,,
+  \]
+where $(x_p)$ is a finite collection of free variables in $M$.
+
+Since the categories $\G$ and $\G/\X$ are Cartesian closed, the $\beta$-rule is valid in the semantics, and so if $N$ is a term of \IAXX that refers to $(\choose_p)_{p\in\P}$ for some finite collection $\P$ of objects of $\X$, then we may write the denotation of $\Gamma \ts N$ as the composite
+\[
+  \deno{\Gamma} \xrightarrow{\langle \id,(\omega_p)\rangle} \deno{\Gamma,(x_p)} \xrightarrow{\deno{\Gamma,(x_p)\ts N[x_p/\choose_p}} \deno{T}\,,
+  \]
+where the denotation at the right is that of ordinary Idealized Algol.
+
+This is a morphism in $\G/\oppcat\X$.  
+If we consider it as a morphism in $\G$, we see that it is given by the curried form of the composite
+\[
+  \deno{\Gamma}\times j\left(\Tensor_p p\right) \xrightarrow{\deno{\Gamma}\times m^j} \deno \Gamma \times \prod_p j(p) \xrightarrow{\deno{\Gamma,(x_p)\ts N[x_p/\choose_p]}} \deno T\,.
+  \]
+
+The example to have in mind is that of probability; here, the objects of our category $\X$ are discrete random variables, with $j(p)$ giving the codomain of the random variable, and the term $\choose_p\from j(p)$ can be thought of as choosing an element of that set.
+
+\section{Operational Semantics}
+
+We inductively define a relation
+\[
+  \Gamma,s\ts M\converges_U c,s'\,,
+  \]
+where $\Gamma$ is a $\Var$-context, $s,s'$ are $\Gamma$-stores, $\Gamma\ts M,\Gamma\ts c$ are \IAXX terms-in-context such that $c$ is an IA canonical form, and $U$ is a sequence of pairs of the form $(p:a)$, where $p$ is an object of $\X$ and $a\in j(p)$.
+The definition of this rule is shown in Figure \ref{FigIaxxOpSem}.
+
+\begin{figure}
+  \begin{mathpar}
+    \inferrule*{ }{\Gamma,s\ts c \converges_\epsilon c,s}
+    \and
+    \inferrule*{\Gamma,s \ts M \converges_U \lambda x.M',s' \\ \Gamma,s' \ts M'[N/x] \converges_V c,s''}{\Gamma,s \ts MN \converges_{U\cat V} c,s''}
+    \and
+    \inferrule*{\Gamma,s \ts M(\Y M) \converges_U c,s'}{\Gamma,s \ts \Y M \converges_U c,s'}
+    \and
+    \inferrule*{\Gamma,s\ts M \converges_U n,s'}{\Gamma,s\ts \suc M \converges_U n+1,s'}
+    \\\and
+    \inferrule*{\Gamma,s\ts M \converges_U n+1,s'}{\Gamma,s\ts \pred M \converges_U n,s'}
+    \and
+    \inferrule*{\Gamma,s\ts M \converges_U 0,s'}{\Gamma,s\ts \pred M \converges_U 0,s'}
+    \and
+    \inferrule*{\Gamma,s\ts M \converges_U \skipp,s' \\ \Gamma,s'\ts N \converges_V c,s''}{\Gamma,s \ts M;N \converges_{U\cat V} c,s''}
+    \and
+    \inferrule*{\Gamma,s\ts M \converges_U \true,s' \\ \Gamma,s' \ts N \converges_V c,s''}{\Gamma,s \ts \If M \Then N \Else P \converges_{U\cat V} c,s''}
+    \and
+    \inferrule*{\Gamma,s\ts M \converges_U \false,s' \\ \Gamma,s' \ts P \converges_V c,s''}{\Gamma,s \ts \If M \Then N \Else P \converges_{U\cat V} c,s''}
+    \and
+    \inferrule*{\Gamma,s\ts M \converges_U 0,s' \\ \Gamma,s' \ts N \converges_V c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges_{U\cat V} c,s''}
+    \and
+    \inferrule*{\Gamma,s\ts M \converges_U n+1,s' \\ \Gamma,s' \ts P \converges_V c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges_{U \cat V} c,s''}
+    \and
+    \inferrule*[right=$x\in\Gamma$]{\Gamma,s\ts E \converges_U n,s' \\ \Gamma,s' \ts V \converges_V x,s''}{\Gamma,s\ts V \gets E \converges_{U \cat V} \skipp,(s''\vert x \mapsto n)}
+    \and
+    \inferrule*[right={$s'(x)=n$}]{\Gamma,s\ts V \converges_U x,s'}{\Gamma,s\ts !V \converges_U n,s'}
+    \and
+    \inferrule*{\Gamma,x\from\Var,(s\vert x\mapsto 0)\ts M \converges_U c,(s'\vert x\mapsto n)}{\Gamma,s\ts \neww \lambda x.M \converges_U c,s'}
+    \and
+    \inferrule*{\Gamma,s\ts E \converges_U n,s' \\ \Gamma,s'\ts V \converges_V \mkvar W R,s'' \\ \Gamma,s'' \ts Wn \converges_W \skipp,s'''}
+    {\Gamma,s \ts V\gets E \converges_{U \cat V \cat W} \skipp,s'''}
+    \and
+    \inferrule*{\Gamma,s\ts V \converges_U \mkvar W R,s' \\ \Gamma,s'\ts R \converges_V n,s''}{\Gamma,s\ts !V \converges_{U \cat V} n,s''}
+    \\\and
+    \inferrule*[right=$a\in j(p)$]{ }{\Gamma,s\ts \choose_p \converges_{(p:a)} a,s}
+  \end{mathpar}
+  \caption[Operational semantics for \IAXX]{Operational semantics for \IAXX.}
+  \label{FigIaxxOpSem}
+\end{figure}
+
+We notice immediately that all but one of these rules are exactly the same as the corresponding rules from \IAX, the only difference being the form the form that the associated sequence takes.  
+The one difference is the rule for $\choose_p$.
+
+\section{Translation into \IAX}
+
+We make the connection between the languages \IAX and \IAXX more explicit in the following series of lemmas.
+In this section, we will make use of an encoding between an object of the form $jp$ and an Idealized Algol datatype $N$.  
+The case we have in mind is when $jp$ is some finite set and $N$ is the natural number object, so that we can choose some way of representing elements of $jp$ as elements of $N$.
+
+\begin{definition}
+  Let $p_1,\cdots,p_n$ be a sequence of objects of $\X$ and let $N$ be an object of $\X$ such that $j(N)$ is a datatype of Idealized Algol (i.e., $j(N)\in\{\bC,\bB,\bN\}$).  
+  Suppose we have a morphism
+  \[
+    f \from N \to p_1 \tensor \cdots \tensor p_n
+    \]
+  in $\X$ such that $jf$ is a surjection.  
+  Define functions $\pi_i\from j(N) \to j(p_i)$ to be given by the composites
+  \[
+    j(N) \xrightarrow{jf} j(p_1 \tensor \cdots \tensor p_n) \xrightarrow{m^j} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\pr_i} j(p_i)\,.
+    \]
+
+  Let $u\in j(N)^*$ be a sequence of elements of $j(N)$, and let $U$ be a sequence of pairs $(p:a)$, where each $p$ is one of the $p_i$.  
+  We say that $u$ \emph{covers $U$ with respect to $f$} if $U$ and $u$ have the same length and if whenever $U^{(k)}=(p_i:a)$, we have $a = \pi_i(u^{(k)})$.
+  \label{DefCovers}
+\end{definition}
+
+Recall that, in the definition of the category $\G/\oppcat\X$, the \Mellies morphisms are left unchanged by precomposing with a morphism in the image of the functor $j$; therefore, if $M\from T$ is a closed term of \IAXX referring to $\choose_{p_1},\cdots,\choose_{p_n}$, then we may write the denotation of $M$ as the composite
+\[
+  j(N) \xrightarrow{jf} j(p_1 \tensor \cdots \tensor p_n) \xrightarrow{m^j} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \deno T\,;
+  \]
+i.e., as
+\[
+  j(N) \xrightarrow{\langle \pi_1,\cdots,\pi_n\rangle} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \deno T\,.
+  \]
+
+\begin{lemma}
+  Let $\Gamma \ts M$ be an \IAXX term-in-context, where $M$ refers to terms $\choose_{p_1},\cdots,\choose_{p_n}$, and no other $\choose$ terms.
+  Let $N$ be an object of $\X$ such that $j(N)$ is an IA datatype and let $f\from N \to p_1\tensor \cdots \tensor p_n$ be a morphism, as in Definition \ref{DefCovers}.  
+  Suppose that the functions $\pi_i$ are all definable in Idealized Algol; that is, that there are terms $\Pi_i\from j(N) \to j(p_i)$ of IA such that the following inference is valid.
+  \[
+    \inferrule{ \Gamma,s\ts M \converges m,s'}{\Gamma,s\ts \Pi_i M\converges \pi_i(m),s'}
+    \]
+
+  Let $s,s'$ be $\Gamma$-stores, and let $\Gamma\ts c$ be a canonical form.  
+  Suppose $U$ is a sequence such that we have
+  \[
+    \Gamma,s\ts M\converges_U c,s'\,.
+    \]
+  Then
+  \[
+    \Gamma,s\ts M[\neww (\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)/\choose_{p_i}] \converges_u c,s'
+    \]
+  in IA${}_{j(N)}$ for all sequences $u\in j(N)^*$ that cover $U$.
+  \label{LemSoundnessIaxx}
+\end{lemma}
+\begin{proof}
+  Induction on the derivation of $\Gamma,s\ts M\converges_U c,s'$.  
+  Suppose that the last rule in the derivation takes the following form.
+  \[
+    \inferrule{\Gamma_1,s^{(0)}\ts M_1\converges_{U_1} c_1,s^{(1)} \\ \cdots \\ \Gamma_n,s^{(n-1)}\ts M \converges_{U_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges_{U_1 \cat \cdots \cat U_n} c,s^{(n)}}
+    \]
+  Suppose a sequence $u$ covers $U_1\cat \cdots \cat U_n$.  
+  Then we may write $u = u_1 \cat \cdots \cat u_n$, where $u_i$ covers $U_i$.  
+
+  By induction, then, we may derive that
+  \[
+    \Gamma_k,s^{(k)}\ts M_k[\neww (\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)/\choose_{p_i}]  \converges_{u_k} c_k,s^{(k)}
+    \]
+  for $k=1,\cdots,n$.
+  Now note that Lemma \ref{LemFirstSubstitution} still holds if we use the terms $\choose_{p_i}$ instead of the $\ask_X$; this means that we have a valid IA${}_j(N)$ inference given by
+  \[
+    \inferrule*{\Gamma_1,s^{(0)}\ts M_1[\new(\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)/\choose_{p_i}] \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma_n,s^{(n-1)}\ts M_n[\new(\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)/\choose_{p_i}] \converges_{u_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)}\ts M[(\lambda z.\Pi_i) \ask_{j(N)}.\choose_{p_i}] \converges_u c,s^{(n)}}\,,
+    \]
+  from which we can deduce that
+  \[
+    \Gamma,s^{(0)}\ts M[\new(\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)/\choose_{p_i}] \converges_i c,s^{(n)}\,,
+    \]
+  as desired.
+
+  The other possibility is that the final step in the derivation takes the form
+  \[
+    \inferrule*{ }{\Gamma,s \ts \choose_{p_j} \converges_{(p_j:a)} a,s}\,.
+    \]
+  Let $U$ be a (length $1$) sequence covering $(p_j:a)$.  
+  So $U=t$, where $t\in j(P)$ is such that $\pi_j(t)=a$.
+
+  Then 
+  \[
+    \choose_{p_j}[\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)/\choose_{p_i}] = \neww(\lambda v.v\gets \ask_{j(N)};\Pi_j \oc v)\,,
+    \]
+  and we may derive
+  \[
+    \Gamma,s\ts \new(\lambda v.v\gets \ask_{j(N)};\Pi_j\oc v) \converges_t a,s\,.\qedhere
+    \]
+\end{proof}
+
+To prove the converse, we prove a lemma about substitution analogous to  Lemma \ref{LemSecondSubstitution}.
+
+\begin{lemma}
+  Let
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1\converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges_{u_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges_{u_1\cat \cdots \cat u_n} c,s^{(n)}}
+    \]
+  be an inference of IA${}_{j(N)}$, where every instance of $\ask_{j(N)}$ occurs as part of some term $\neww (\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)$, and suppose that $M\ne \neww(\lambda v.v\gets\ask_{j(N)};\Pi_j\oc v)$ for any $j$.  
+  Suppose we have sequences $U_1,\cdots,U_n$ such that $u_k$ covers $U_k$ for $k=1,\cdots,n$.
+  Then
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges_{U_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges_{U_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges_{U_1\cat \cdots \cat U_n} c,s^{(n)}}
+    \]
+  is a valid inference of \IAXX.
+  \label{LemThirdSubstitution}
+\end{lemma}
+\begin{proof}
+  As in Lemma \ref{LemSecondSubstitution}, we can prove this by looking at cases.  
+  For example, consider the sequencing rule
+  \[
+    \inferrule{\Gamma,s\ts M\converges_u \skipp,s' \\ \Gamma,s' \ts N \converges_v c,s''}{\Gamma,s\ts M;N \converges c,s''}\,.
+    \]
+  We have
+  \begin{IEEEeqnarray*}{Cl}
+    &(M;N)[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \\
+    = &M[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)];\\&N[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)]\,,
+  \end{IEEEeqnarray*}
+  and so we certainly get a rule
+  \[
+    \inferrule*{\Gamma,s\ts M[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)]\converges_U \skipp,s' \\ \Gamma,s' \ts N[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges_V c,s''}{\Gamma,s\ts (M;N)[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges c,s''}\,.
+    \]
+  The only case where we need to be careful is for the $\neww$ rule:
+  \[
+    \inferrule*{\Gamma,x,(s\vert x\mapsto 0)\ts M\converges_u c,(s'\vert x\mapsto n)}
+    {\Gamma,s\ts \neww \lambda x.M \converges_u c,s'}\,.
+    \]
+  If $\neww\lambda x.M \ne \neww(\lambda v.v\gets \ask_{j(N)};\Pi_j \oc v)$, then we have
+  \begin{IEEEeqnarray*}{Cl}
+    &(\neww \lambda x.M)[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \\
+    = & \neww \lambda x. (M[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)])\,.
+  \end{IEEEeqnarray*}
+  Then we can apply the rule
+  \[
+    \inferrule*{\Gamma,x,(s\vert x\mapsto 0)\ts M[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges_U c,(s'\vert x\mapsto n)}
+    {\Gamma,s\ts (\neww\lambda x.M)[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges U c,s'}.\qedhere
+    \]
+\end{proof}
+
+We now prove the converse to Lemma \ref{LemSoundnessIaxx}.
+
+\begin{lemma}
+  Let $\Gamma,y_1\from j(p_1),\cdots,y_n\from j(p_n) \ts M \from T$ be a term-in-context of ordinary Idealized Algol, where $\Gamma$ is a $\Var$-context.  
+  Let $U$ be a sequence and let $N,\pi_i,\Pi_i$ be as above.
+  Suppose that there exists some sequence $u\in j(N)^*$ such that $u$ covers $U$ and such that
+  \[
+    \Gamma,s\ts M[\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)/y_i]\converges_u c,s'\,.
+    \]
+  Then
+  \[
+    \Gamma,s\ts M[\choose_{p_i}/y_i] \converges_U c,s'\,.
+    \]
+  \label{LemAdequacyIaxx}
+\end{lemma}
+\begin{proof}
+  Induction on the derivation.
+  Suppose that $M$ is not one of the $y_i$; then $M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v)/y_i]$ is not equal to $\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v)$.
+  Moreover, every instance of $\ask_{j(N)}$ in $M$ occurs as part of an expression of the form $\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v)$, and so we win by Lemma \ref{LemThirdSubstitution} and the inductive hypothesis.
+
+  Otherwise, $M=\new\lambda v.v\gets \ask_{j(N)};\Pi_j\oc v)$ for some $j$.  
+  Now, if we have
+  \[
+    \Gamma,s\ts \neww(\lambda v.v\gets\ask_{j(N)};\Pi_j\oc v)\converges_u c,s'\,,
+    \]
+  then a simple examination of the reduction tells us that we must have $s'=s$, and that $u$ must have length $1$ -- say $u=m$ -- where the single element $n$ of $u$ satisfies $\pi_j(m)=c$.
+
+  But now we certainly have
+  \[
+    \Gamma,s\ts \choose_{p_j} \converges_{(p_j:c)} c,s\,,
+    \]
+  and the sequence $m$ covers the sequence $(p_j:c)$.
+\end{proof}
+
+Lemmas \ref{LemSoundnessIaxx} and \ref{LemAdequacyIaxx} together prove the following.
+
+\begin{lemma}
+  Let $\Gamma,x_1,\cdots,x_n\ts M$ be a term-in-context of Idealized Algol, where $\Gamma$ is a $\Var$-context.
+  Then the following are equivalent.
+
+  i) $\Gamma,s\ts M[\choose_{p_i/x_i}]\converges_U c,s'$.
+  
+  ii) $\Gamma,s\ts M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v/x_i]\converges_u c,s'$ for all $u$ covering $U$.
+
+  iii) $\Gamma,s\ts M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v/x_i]\converges_u c,s'$ for some $u$ covering $U$.
+  \label{LemComputationalAdequacyIaxx}
+\end{lemma}
+\begin{proof}
+  (i) $\Rightarrow$ (ii): Lemma \ref{LemSoundnessIaxx}.
+
+  (ii) $\Rightarrow$ (iii): By assumption, the function $j(f) \from N \to j(\Tensor_i p_i)$ is surjective, so for any $U$ there is some $u\in j(N)^*$ covering $U$.
+
+  (iii) $\Rightarrow$ (i): Lemma \ref{LemAdequacyIaxx}.
+\end{proof}
+
+\section{Computational Adequacy}
+
+We are now ready to make the definitions we need to state our Computational Adequacy result.
+
+Recall that if $\sigma$ was a Kleisli morphism $1 \to \bC$ (i.e., a morphism $1 \to (X \to \bC)$ in the original category, where $X$ was an Idealized Algol datatype), then we wrote $\sigma\downarrow_u$ if the composite
+\[
+  1 \xrightarrow{\sigma} (X \to \bC) \xrightarrow{\eta_u} (\Varr \to \bN) \xrightarrow{\neww} \bN \xrightarrow{t_{|u|}} \bC
+  \]
+was not equal to $\bot$, where $\eta_u$ was the denotation of the Idealized Algol term-in-context
+\[
+  f \from X \to \com \ts \lambda v.v\gets 0;f(v\gets\suc\oc v;\tr_u \oc v);\oc v \from \Var \to \nat\,.
+  \]
+
+We want to extend this definition to morphisms in the category $\G/\oppcat \X$.  
+There are a couple of problems here.  
+
+Firstly, the morphisms in $\G/\oppcat \X$ are equivalence classes of \Mellies morphisms, and the equivalence relation does not respect this predicate $\downarrow_u$ -- especially since the $X$ in the above formula could change when we choose a different representative of the equivalence class.
+
+Secondly, a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an (equivalence class of) morphisms $1 \to (j(p) \to \bC)$ in $\G$, and the object $j(p)$ need not be an Idealized Algol datatype.
+
+To solve the second problem, we make an additional small assumption on our category $\G$.  
+We require that there exist morphisms
+\[
+  \xi_u \from (X \to \bC) \to \bC
+  \]
+for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f \from X \to Y$, we have $(f\to \bC);\xi_u = \xi_{f_*u}$, where $f_*u$ is the sequence formed by applying $f$ pointwise to $u$, and such that if $X$ is an IA datatype, then
+\[
+  \xi_u = (X \to \bC) \xrightarrow{\eta_u} (\Varr \to \bN) \xrightarrow{\neww} \bN \xrightarrow{t_{|u|}} \bC\,.
+  \]
+
+\begin{example}
+  In the category of games, the morphisms $\xi_u$ are the strategies containing the plays $\epsilon$, $qq$ and plays of the form
+  \begin{mathpar}
+    \begin{array}{ccc}
+      X           & \bC & \bC \\
+                  &     &  q  \\
+                  &  q  &     \\
+      q           &     &     \\
+      u^{(0)}     &     &     \\
+      \vdots      &     &     \\
+      q           &     &     \\
+      u^{(k)}       &     &    
+    \end{array}
+    \and
+    \begin{array}{ccc}
+      X           & \bC & \bC \\
+                  &     &  q  \\
+                  &  q  &     \\
+      q           &     &     \\
+      u^{(0)}     &     &     \\
+      \vdots      &     &     \\
+      q           &     &     \\
+      u^{(|u|-1)} &     &     \\
+                  &  a  &     \\
+                  &     &  a  
+    \end{array}
+  \end{mathpar}
+  (so the strategy has no reply if player $O$ asks the question in $X$ fewer than $|u|$ times, or tries to ask it more than $|u|$ times).
+\end{example}
+
+\begin{definition}
+  Given a set $X$ and a \Mellies morphism $\sigma \from 1 \to (X \to \bC)$, we say that $\sigma$ \emph{accepts} a sequence $u\in X^*$ if $\sigma;\xi_u\ne\bot$.
+  We write $\Acc(\sigma)$ for the set of all sequences accepted by $\sigma$.
+\end{definition}
+
+Recall that a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an equivalence class of \Mellies morphisms $1 \to (j(p) \to \bC)$ in $\G$, where $p$ ranges over the objects of $\X$, and where the equivalence relation is generated by identifying all pairs of morphisms $\sigma \from 1 \to (j(p) \to \bC)$ and $\tau \from 1 \to (j(q) \to \bC)$ such that there is a morphism $f \from p \to q$ such that $\tau;(j(f)\to\bC)=\sigma$.
+
+\begin{definition}
+  We define an equivalence relation on pairs $(p,\U)$, where $p$ is an object of $\X$ and $\U\subset j(p)^*$ is a set of finite sequences drawn from $j(p)$ to be the equivalence relation generated by identifying $(p,\U)$ and $(q,\V)$ whenever there is a morphism $f\from p \to q$ in $\X$ such that for all $u\in j(p)^*$, we have $u\in\U$ if and only if $j(f)_*u\in\V$.
+  \label{DefEquivalenceOfPairs}
+\end{definition}
+
+It is instructive to consider the equivalence relation on pairs $(p,\U)$ in the case that $\X = \Rv_\Omega$ is the category of random variables on some probability space $\Omega$.
+Given a random variable $V$ on a set $X$, we get an induced random variable taking values in $X^*$.  
+If we have a random variable $W$ on a set $Y$ and a function $f\from X \to Y$ such that $W=f\circ X$, and if $\U\subset X^*$ and $\V\subset Y^*$ are such that $u\in\U$ if and only if $f_*u\in\V$, then the induced probabilities of the sets $\U$ and $\V$ are the same.  
+So, in this case, the equivalence relation on sets of sequences is subsumed into the very natural equivalence relation of having the same probability.
+
+\begin{proposition}
+  Let $\sigma\from 1 \to (j(p) \to \bC)$, $\tau\from 1 \to (j(q) \to \bC)$ be two representatives of the same morphism $1 \to \bC$ in $\G/\oppcat\X$.  
+  Then $(p,\Acc(\sigma))$ and $(q,\Acc(\tau))$ are equivalent.
+  \label{PropAccEquivalent}
+\end{proposition}
+\begin{proof}
+  Since the relation on pairs $(p,\U)$ is an equivalence relation, it suffices to assume that $\sigma$ and $\tau$ are related by the relation that generates the equivalence relation on \Mellies morphisms; i.e., that there is a morphism $f\from p \to q$ such that $\sigma = \tau;(j(f)\to \bC)$.  
+
+  Let $u\in j(p)^*$.  
+  Then we have
+  \begin{IEEEeqnarray*}{rCl}
+    u\in\Acc(\sigma) & \Leftrightarrow & \sigma;\xi_u\ne\bot \\
+    & \Leftrightarrow & \tau;(j(f)\to\bC);\xi_u\ne\bot \\
+    & \Leftrightarrow & \tau;\xi_{j(f)_*u}\ne\bot \\
+    & \Leftrightarrow & j(f)_*u \in \Acc(\tau)\,.
+  \end{IEEEeqnarray*}
+  Therefore, $(p,\Acc(\sigma))$ and $(q,\Acc(\tau))$ are equivalent.
+\end{proof}
+
+We can now state and prove our Computational Adequacy result.
+For this result, given a term $M\from \com$ mentioning objects $p_1,\cdots,p_n$, we shall assume the existence of some IA datatype $N$ admitting a morphism $f \from N \to p_1 \tensor \cdots \tensor p_n$ such that the definable projections $\pi_i$ on to the objects $j(p_i)$ are IA-definable.
+
+\begin{definition}
+  Let $M$ be a closed term of \IAXX of type $\com$ mentioning $p_1,\cdots,p_n$.
+  Let $S(M)$ be the set of all sequences $U$ such that $M\converges_U\skipp$.
+
+  We define $B(M)$, the \emph{behaviours of $M$}, to be the equivalence class corresponding to the pair
+  \[
+    (p_1\tensor \cdots \tensor p_n, \U)\,,
+    \]
+  where $\U$ is the set of all sequences $u\in j(p_1\tensor \cdots \tensor p_n)^*$ that cover some sequence $U\in S(M)$, via the projections
+  \[
+    j(p_1\tensor \cdots \tensor p_n) \xrightarrow{m^j} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\pr_i} j(p_i)\,.
+    \]
+\end{definition}
+
+
+\begin{theorem}[Computational Adequacy for \IAXX]
+  Let $M \from \com$ be a closed term of \IAXX referring to $p_1,\cdots,p_n$.  
+  Suppose the denotation of $M$ is given by a morphism $1 \to (j(p) \to \bC)$ in $\G/\oppcat\X$.  
+
+  Then $(p,\Acc(\deno M))$ is equivalent to $B(M)$.
+  \label{TheComputationalAdequacyIAXX}
+\end{theorem}
+\begin{proof}
+  By Proposition \ref{PropAccEquivalent}, we may assume that the denotation of $M$ is in a particular form, namely the (curried form of) the composite
+  \[
+    j(N) \xrightarrow{\langle\pi_1,\cdots,\pi_n\rangle} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \bC\,.
+    \]
+  But if we consider this as a Kleisli morphism in the category $\Kl_{R_{j(N)}}\G$, then this is the denotation of the IA${}_{j(N)}$ term
+  \[
+    M[\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)/\choose_{p_i}]\,.
+    \]
+  By Lemma \ref{LemComputationalAdequacyIaxx}, if $u\in j(N)^*$ is a sequence, then
+  \[
+    M[\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)/\choose_{p_i}]\converges_u \skipp
+    \]
+  if and only if $u$ covers a sequence $U$ such that $M\converges_U\skipp$.
+  By our Computational Adequacy result for \IAX (Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy}), this means that for all $u\in j(N)^*$, $u\in \Acc(\deno M)$ (for this particular form of $\deno M$) if and only if $u\in \U$.
+  Therefore, $(N,\Acc(\deno M)) = (N,\U')$, where $\U'\subset j(N)^*$ is the set of all sequences $u$ that cover some $U$ such that $M\converges_U\skipp$ via the projections $\pi_i$.
+  Lastly, we note that $(N,\U')$ is equivalent to $B(M)$, through the morphism $f\from N \to p_1\tensor\cdots\tensor p_n$.
+\end{proof}
+
+\section{Equational Soundness}
+
+We transfer to an Equational Soundness result in our standard way.
+First, we make a definition of observational equivalence of \IAXX terms.
+
+\begin{definition}
+  Let $M$ be a closed term of \IAXX of type $\com$ mentioning $p_1,\cdots,p_n$.
+  Let $S(M)$ be the set of all sequences $U$ such that $M\converges_U\skipp$.
+
+  We define $B(M)$, the \emph{behaviours of $M$}, to be the equivalence class corresponding to the pair
+  \[
+    (p_1\tensor \cdots \tensor p_n, \U)\,,
+    \]
+  where $\U$ is the set of all sequences $u\in j(p_1\tensor \cdots \tensor p_n)^*$ that cover some sequence $U\in S(M)$, via the projections
+  \[
+    j(p_1\tensor \cdots \tensor p_n) \xrightarrow{m^j} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\pr_i} j(p_i)\,.
+    \]
+\end{definition}
+
+\begin{definition}[Observational Equivalence]
+  Let $M,M'\from T$ be closed terms of \IAXX.  
+  We say that $M$ and $M'$ are \emph{observationally equivalent} if $B(C[M])$ and $B(C[M'])$ are equivalent for all contexts $C\from \com$ with a hole of type $T$.
+\end{definition}
+
+We then make definitions that will mirror this equivalence in the denotational semantics.
+
+\begin{definition}[Equivalence of morphisms $1 \to \bC$]
+  Let $\sigma,\tau\from 1 \to \bC$ be morphisms in $\G/\oppcat\X$, considered as morphisms $\sigma\from j(p) \to \bC$ and $\tau \from j(q) \to \bC$ in $\G$.  
+  We say that $\sigma\approx\tau$ if $(p,\Acc(\sigma))$ is equivalent to $(q,\Acc(\tau))$.
+\end{definition}
+
+\begin{definition}[Intrinsic Equivalence]
+  Let $\sigma,\tau\from A \to B$ be morphisms in $\G/\oppcat\X$.  
+  Then we say that $\sigma\sim\tau$ if for all $\alpha\from (A\to B) \to \bC$, we have $\Lambda(\sigma);\alpha \approx \Lambda(\tau);\alpha$.
+\end{definition}
+
+Now we can prove Equational Soundness as we did in Proposition \ref{PropEquationalSoundness}.
+
+\begin{theorem}[Equational Soundness for \IAXX]
+  Let $M,M'\from T$ be closed terms of \IAXX such that $\deno{M}\sim\deno{N}$.
+  Then $M$ and $M'$ are observationally equivalent.
+\end{theorem}
+\begin{proof}
+  First suppose that $M$ and $M'$ are not observationally equivalent -- so there is some context $C$ such that $B(C[M])$ and $B(C[M'])$ are inequivalent.
+  Now $B(C[M])$ is equivalent to $(N,\U)$ and $B(C[M'])$ is equivalent to $(N,\U')$, where $\U\subset j(N)^*$ is the set of sequences that cover some $U\in S(C[M])$ and $\U'$ the set of sequences that cover some $U\in S(C[M'])$ via the projections $\pi_i$.
+
+  Let $\alpha$ be the denotation of the term-in-context $f\from T \ts C[f]$.  
+  Then $\Lambda(\deno{M});\alpha$ is the denotation of $C[M]$ and $\Lambda(\deno{M'});\alpha$ the denotation of $C[M']$.  
+  By Theorem \ref{TheComputationalAdequacyIAXX}, the sets $(N,\Acc(\Lambda(\deno{M});\alpha))$ and $(N,\Acc(\Lambda(\deno{M'})))$ are inequivalent, and so $\deno M \not\sim\deno{M'}$.
+\end{proof}
+
+Our setup is too general for us to prove Full Abstraction, but we will be able to prove a Full Abstraction result in an important special case: that of Probabilistic Algol.
+
+\section{Probability}
+
+We now specialize to the case where $\X$ is a category of random variables on some fixed probability space $(\Omega,\F,\bP)$, in order to model a probabilistic language.
+For our purposes, it will suffice to take $\Omega$ to be the real interval $(0,1)$ with its Borel $\sigma$-algebra and measure.
+A \emph{random variable} on $\Omega$ is a measurable function $V \from \Omega \to X$.  
+Given such a random variable, and $A\subset X$, we write $\bP(V \in A)$ for $\bP(V\inv(A))$, and $\bP(V = x)$ for $\bP(V \in \{x\})$.
+
+The category $\X = \Rv_\Omega^{FS}$ will then be the category whose objects are random variables of \emph{finite support}; that is, measurable functions $V\from\Omega \to X$, where $X$ is a discrete space, such that there is some finite subset $Y\subset X$ such that $\bP(V\in Y) = 1$.
+
+The morphisms in $\Rv_\Omega^{FS}$ from $V\from \Omega \to X$ to $W \from \Omega \to Y$ are probability-preserving functions $X \to Y$; i.e., functions $X \to Y$ such that for all $A \subset Y$, we have $\bP(f(V) \in A) = \bP(W \in A)$.
+
+Recall that the tensor product of two random variables $V\from \Omega \to X$ and $W \from \Omega \to Y$ is their pairing $V \tensor W = \langle V,W\rangle \from \Omega \to X \times Y$.
+
+We define a language Probabilistic Algol (PA) to be the sublanguage of IA${}_{\Rv_\Omega^{FS}}$ generated by the terms of Idealized Algol and the terms
+\[
+  \choose_{V_p}\,,
+  \]
+where $p\in [0,1]$, and where we have identified $V_p$ is the Bernoulli random variable
+\[
+  \Omega \to \bB
+  \]
+that returns $\true$ if its input is less than $p$ and $\false$ if it is greater than or equal to $p$.
+
+The denotation of any term of PA, then, will be an (equivalence class of) morphisms
+\[
+  \ul{\bB^n} \xrightarrow{m} \ul{\bB}^n \to \deno{T}\,,
+  \]
+together with some random variable taking values in $\bB^n$.
+We have used an underline to distinguish between the object $\ul{\bB^n}$ of $\G$ corresponding to the set $\bB^n$ of $n$-tuples of booleans and the $n$-fold Cartesian power $\ul{\bB}^n$ in $\G$ of the object $\bB$ corresponding to the set of booleans.
+
+Lastly, given such a random variable $V\from\Omega \to \bB^n$, there is a random variable $\tilde{V} \from \Omega \to \bN$ such that for each $\vec{v}\in\bB^n$, we have
+\[
+  \bP\left(\tilde{V} = \sum_{i=1}^n 2^{i-1}\vec{v}_i\right) = \bP(V = \vec{v})
+  \]
+and such that $\bP(\tilde{V}=k)=0$ for any $k\ge 2^n$.
+Then we have a function $f \from \bN \to \bB^n$ that sends $\sum_{i=1}^n 2^{i-1}a_i$ to $(a_1,\cdots,a_n)$ and sends $k\ge 2^n$ to some fixed value (say, $(\false,\cdots,\false)$), and then we have
+\[
+  f\circ\tilde{V}=V\,.
+  \]
+Moreover, $\tilde{V}$ has finite support.
+
+Now suppose that $X$ is a finite discrete probability space.  
+Then the set $X^\omega$ of all infinite sequences of elements of $X$ may be given the product topology, and equipped with the resulting Borel $\sigma$-algebra.  
+A basic open subset of $X^\omega$ is a set $\S\subset X^\omega$ for which there exists some $n$ such that if $s\in \S$ and $t$ is a sequence such that $s$ and $t$ are identical on the first $n$ terms, then $t\in\S$.
+We can define a pre-probability measure on these basic open sets by setting
+\[
+  \bP(\S) = \sum_{u\in \S\vert_n} \prod_{i=0}^{n-1} \bP(u^{(i)})\,,
+  \]
+where $\S\vert_n$ is the set of all length-$n$ prefixes of elements of $\S$.
+
+Then the Carath\'{e}odory Extension Theorem tells us that there is a unique extension of this to a probability measure on the whole space (see, for example, \cite[1.1.4]{StochasticCalculusII}).
+
+If $V \from \Omega \to Z$ is a finitely-supported random variable, then $V$ induces a probability measure on its support $\im(V)\subset Z$.
+This gives us a probability measure on $\im(V)^*$, which we can extend to a probability measure on $Z^*$ by setting
+\[
+  \bP(A) = \bP(A \cap \im(V)^*)
+  \]
+for any $A \subset Z^*$.
+
+\begin{definition}
+  Let $V\from \Omega \to X$ be a finitely supported random variable and let $\U\subset X^*$ be a set of sequences.  
+  Then we define
+  \[
+    \bP(V,\U) = \bP(\U^\omega)\,,
+    \]
+  where $\U^\omega\subset X^\omega$ is the set of all infinite sequences having some prefix in $\U$.
+  Note that $\U^\omega$ is an open subset of $X^\omega$, so is in particular measurable.
+
+  An easier way to define $\bP(V,\U)$ is that it is the sum of the probabilities of all the sequences in $\U$; i.e.:
+  \[
+    \bP(V,\U) = \sum_{u\in \U} \prod_{i=0}^{|u|-1} \bP(u^{(i)})\,,
+    \]
+  where the infinite sum refers to the supremum of the sums of all finite subsets of $\U$.
+\end{definition}
+
+\begin{proposition}
+  Suppose that $(V,\U)$ and $(W,\V)$ are equivalent pairs, in the sense of Definition \ref{DefEquivalenceOfPairs}, where $V \from \Omega \to X$, $W \from \Omega \to Y$ are finitely-supported random variables, and $\U\subset X^*$, $\V\subset Y^*$ are sets of sequences.
+  Then $\bP(V,\U) = \bP(W, \V)$.
+  \label{PropProbabilityWellDefined}
+\end{proposition}
+\begin{proof}
+  Without loss of generality, we may assume that there is a probability-preserving function $f \from X \to Y$; i.e., a function such that for any $A \subset Y$ we have $\bP(W \in A) = \bP(f(V) \in A)$ and such that $\U = f_*\inv(\V)$.
+  Then we have
+  \begin{IEEEeqnarray*}{rCl}
+    \bP(V,\U) & = & \bP(V,f_*\inv(\V)) \\
+    & = & \sum_{\stackrel{u\in X^*}{f_*u\in\V}} \prod_{i=0}^{|u|-1} \bP(V = u^{(i)}) \\
+    & = & \sum_{v\in \V}\sum_{\stackrel{u\in X^*}{f_*u = v}} \prod_{i=0}^{|u|-1} \bP(V = u^{(i)}) \\
+    & = & \sum_{v\in \V}\prod_{i=0}^{|v|-1} \sum_{\stackrel{x\in X }{ f(x) = v}} \bP(V = x) \\
+    & = & \sum_{v\in \V} \prod_{i=0}^{|v|-1} \bP(f(V) = v^{(i)}) \\
+    & = & \sum_{v\in \V} \prod_{i=0}^{|v|-1} \bP(W = v^{(i)}) \\
+    & = & \bP(W,\V)\,.\hspace{1em plus 1fill}\qedhere
+  \end{IEEEeqnarray*}
+\end{proof}
+
+We now make a definition relating the operational behaviour we have defined for \IAXX to probability.
+
+\begin{definition}
+  Let $M\from \com$ be a closed term of PA mentioning probabilities $p_1,\cdots,p_n$.
+  We define $\bP(M\converges)$ to be $\bP(B(M))$; i.e.,
+  \[
+    \bP(V_{p_1}\tensor \cdots \tensor V_{p_n},\U)\,,
+    \]
+  where $\U$ is the set of all sequences $u\in j(V_{p_1}\tensor \cdots \tensor V_{p_n})^*$ that cover some sequence $U$ such that $M\converges_U\skipp$.
+  \label{DefProbConverges}
+\end{definition}
+
+We can define a corresponding notion for morphisms in the denotational semantics.
+
+\begin{definition}
+  Let $\sigma \from 1 \to \bC$ be a morphism in $\G/\oppcat{(\Rv_\Omega^{FS})}$, considered as a morphism $\sigma \from 1 \to (X \to \bC)$ in $\G$, together with a finitely-supported random variable $V \from \Omega \to X$.  
+
+  Then we define $\bP(\sigma\downarrow)$ to be
+  \[
+    \bP(V, \Acc(\sigma)\,.
+    \]
+  \label{DefProbNonBot}
+\end{definition}
+
+\begin{remark}
+  By Propositions \ref{PropProbabilityWellDefined} and \ref{PropAccEquivalent}, Definitions \ref{DefProbConverges} and \ref{DefProbNonBot} are well defined.
+\end{remark}
+
+Now we are ready to prove computational adequacy.
+
+\begin{proposition}[Computational Adequacy for PA]
+  Let $M\from \com$ be a closed term of PA.  
+  Then $\bP(M\converges) = \bP(\deno M \downarrow)$.
+  \label{PropComputationalAdequacyPa}
+\end{proposition}
+\begin{proof}
+  By Theorem \ref{TheComputationalAdequacyIAXX}, $B(M)$ is equivalent to $(p,\Acc(\deno M))$.  
+  Therefore, by Proposition \ref{PropProbabilityWellDefined}, $\bP(M\converges) = \bP(B(M)) = \bP(V,\Acc(\deno M)) = \bP(\deno M\downarrow)$.
+\end{proof}
+
+We can define observational equivalence for terms.
+
+\begin{definition}
+  Let $M,N\from T$ be closed terms of PA.  
+  Then we say that $M$ and $N$ are (probabilistically) \emph{observationally equivalent} if for all contexts $C\from \com$ with a hole of type $T$, we have
+  \[
+    \bP(C[M]\converges) = \bP(C[N]\converges)\,.
+    \]
+\end{definition}
+
+We then have the usual corresponding definition in the denotational semantics.
+
+\begin{definition}
+  Let $\sigma,\tau\from A \to B$ be morphisms in $\G/\oppcat{(\Rv_\Omega^{FS})}$.  
+  We write $\sigma\sim_{\bP}\tau$ if for all morphisms $\alpha \from (A \to B) \to \bC$ in $\G/\oppcat{(\Rv_\Omega^{FS})}$ we have
+  \[
+    \bP(\Lambda(\sigma);\alpha\downarrow) = \bP(\Lambda(\tau);\alpha\downarrow)\,.
+    \]
+\end{definition}
+
+Then, by our standard argument, we may derive Equational Soundness from Computational Adequacy.
+
+\begin{proposition}
+  Let $M,N\from T$ be closed terms of PA such that $\deno M \sim_{\bP} \deno N$.  
+  Then $M$ and $N$ are probabilistically observationally equivalent.
+\end{proposition}
+
+Our next goal will be to prove the converse to this result: Full Abstraction.
+
+\section{Full Abstraction for Probabilistic Algol}
+
+\begin{proposition}
+  Let $V\from \Omega \to X$ be a finitely supported random variable.  
+  Then there exist $p_1,\cdots,p_n$ and a function
+  \[
+    f \from \bB^n \to X
+    \]
+  such that for all $x\in X$ we have $\bP(V = x) = \bP(f(V_{p_1},\cdots,V_{p_n}) = x)$.
+  \label{PropFiniteSupport}
+\end{proposition}
+\begin{proof}
+  Recall that the $V_p$ are not independent in our formulation; indeed, if $p<q$, then $V_p = \true \Rightarrow V_q = \true$.
+
+  Enumerate those elements $x\in X$ such that $\bP(V = x) \ne 0$ as $x_1,\cdots,x_n$, and for each $k = 1,\cdots,n$, define
+  \[
+    p_k = \sum_{i=1}^n \bP(X = x_i)\,.
+    \]
+  Note that we must have $p_n = 1$.  
+  Then we define
+  \[
+    f(\vec{b}) = \begin{cases}
+      x_1 & \text{if $\vec{b} = \vec{\false}$} \\
+      \min\{k \suchthat b_k = \true\} & \text{otherwise}\,.
+    \end{cases}
+    \]
+  Fix $x\in X$.  
+  If $x$ is not one of the $x_i$, then we have $\bP(f(V_{p_1},\cdots,V_{p_n}) = x) = 0 = \bP(V = x)$.  
+  Otherwise, suppose $x = x_k$.  
+  If $\omega\in\Omega$ and $p_{k-1}\le\omega<p_k$, then $V_{p_k}(\omega) = \true$, and $V_{p_i}(\omega) = \false$ for all $i \le k$.  
+  So $f((V_{p_1}\tensor\cdots\tensor V_{p_n})(\omega)) = x_k$.
+  If $\omega<p_{k-1}$, then $V_{p_{k-1}}(\omega) = \true$, so $f((V_{p_1}\tensor\cdots\tensor V_{p_n})(\omega)) \ne x_k$.
+  If $\omega\ge p_k$, then $V_{p_k}(\omega) = \false$, so $f((V_{p_1}\tensor\cdots\tensor V_{p_n})(\omega)) \ne x_k$.  
+  Therefore, 
+  \[
+    \bP(f(V_{p_1},\cdots,V_{p_k}) = x_k) = \bP([p_{k-1},p_k)) = p_k - p_{k-1} = \bP(X = x_k)\,.
+    \]
+  It follows that $f$ is probability preserving in the sense required.
+\end{proof}
+
+The most important consequence of Proposition \ref{PropFiniteSupport} is that it tells us that any morphism $A\to B$ in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$ may be considered as a pair 
+\[
+  (V_{p_1}\tensor\cdots\tensor V_{p_n},f \from A \to (\bB^n \to B))
+  \]
+for appropriately chosen $p_1,\cdots,p_n$.
+
+\begin{definition}
+  Let $\sigma\from A \to B$ be a morphism in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
+  We say that $\sigma$ is \emph{compact} if it is compact when considered as a morphism in $\G$.
+\end{definition}
+
+\begin{remark}
+  When we say `considered as a morphism in $\G$' in the above definition, we mean `in at least one of its possible interpretations as a morphism in $\G$'.  
+  Note, however, that the continuous image of a compact element is compact, and so if we pass to a new representative of $\sigma$ by composing on the left by the image of some morphism in $\Rv_{\Omega}^{FS}$, then the resulting representative of $\sigma$ will also be compact.
+
+  Note that if $\G$ is the category of games, this compactness property is invariant under the choice of representative for $\sigma$.
+\end{remark}
+
+\begin{proposition}[Compact definability]
+  Let $T$ be an Idealized Algol type and let $\sigma \from 1 \to \deno{T}$ be a compact morphism in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
+  Then there is some closed term $M\from T$ such that $\sigma = \deno{M}$.
+  \label{PropProbabilityCompactDefinability}
+\end{proposition}
+\begin{proof}
+  Let $(V, \sigma \from 1 \to (X \to \deno{T})$ be a compact representative of $\sigma$, where $X$ is a set and $V$ is a finitely-supported random variable taking values in $X$.  
+  By Proposition \ref{PropFiniteSupport}, we may choose $p_1,\cdots,p_n$ such that there is a probability-preserving function
+  \[
+    f \from V_{p_1} \tensor \cdots \tensor V_{p_n} \to \deno{T}\,.
+    \]
+  After composing on the right by $(\sigma \to \deno{T})$, we may assume that $\sigma$ is of the form
+  \[
+    (V_{p_1}\tensor\cdots\tensor V_{p_n}, \sigma \from 1 \to (\ul{\bB^n} \to \deno{T}))\,.
+    \]
+
+  Now this $\sigma$ necessarily factors as
+  \[
+    1 \xrightarrow{\hat{\sigma}}
+    (\ul{\bB}^n \to \deno T) \xrightarrow{(m \to \deno T)}
+    (\ul{\bB^n} \to \deno T)\,,
+    \]
+  where $\hat{\sigma}$ is compact.  
+  Then, by compact definability in $\G$, $\hat\sigma$ is the denotation of some term $N \from \bool \to \cdots \to \bool \to T$, and it follows that our original morphism $\sigma$ in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$ is the denotation of
+  \[
+    N\,\choose_{p_1}\,\cdots\,\choose_{p_n}\,.\qedhere
+    \]
+\end{proof}
+
+\begin{theorem}[Full Abstraction for PA]
+  Let $M,N \from T$ be observationally equivalent terms of PA.  
+  Then $\deno M \sim_{\bP} \deno N$.
+  \label{TheFullAbstractionPa}
+\end{theorem}
+\begin{proof}
+  Suppose that $\deno M \not\sim_{\bP} \deno N$.
+  So there is some $\alpha \from \deno T \to \bC$ such that $\bP(\deno{M};\alpha\downarrow) \ne \bP(\deno{N};\alpha\downarrow)$.
+
+  Let $\bP(\deno M;\alpha\downarrow) = p$ and $\bP(\deno N;\alpha\downarrow) = q$, and suppose without loss of generality that $p>q$.
+  Now there must be some finite subset $\V$ of $\Acc(\deno M;\alpha\downarrow)$ such that the combined probability of the sequences in $\V$ is still greater than $q$.  
+  For each $u\in \V$, we can choose some compact $\alpha_u\subset \alpha$ such that $u$ is still accepted by $\deno M;\alpha_u$, by algebraicity.
+  Since the set of compact elements below $\alpha$ is directed, there is some $\alpha'\subset \alpha$ such that $\alpha_u\subset \alpha'$ for each $u\in \V$.  
+  Then we have
+  \begin{mathpar}
+    \bP(\deno{M};\alpha'\downarrow) > q
+    \and
+    \bP(\deno{N};\alpha'\downarrow) \le q\,,
+  \end{mathpar}
+  and therefore $\bP(\deno{M};\alpha'\downarrow) \ne \bP(\deno{N};\alpha'\downarrow)$.
+
+  By Proposition \ref{PropProbabilityCompactDefinability}, $\alpha'$ is the denotation of some term $L\from T \to \com$, and our Computational Adequacy result (Proposition \ref{PropComputationalAdequacyPa}) then tells us that 
+  \[
+    \bP(L\,M\converges)=\bP(\deno M;\alpha'\downarrow)\ne\bP(\deno N;\alpha'\downarrow) = \bP(L\,N\converges)\,.
+    \]
+  Therefore, $M$ and $N$ are not observationally equivalent.
+\end{proof}
+
+\section{Comparison with a Kleisli Category Model}
+
+An alternative way to model probability is using the Kleisli category construction that we considered in Chapter \ref{ChapMonads}.  
+Specifically, we can consider the language IA${}_\bB$ as a probabilistic Algol variant, by treating the term $\ask_\bB$ as a coin flip that returns $\true$ or $\false$ each with probability $\frac12$.
+
+Given a closed term $M\from\com$ of IA${}_\bB$, we define
+\[
+  \bP(M\converges) = \sum_{u\in\bB^*\colon M\converges_u\skipp} 2^{-|u|}\,,
+  \]
+since $2^{-|u|}$ is the probability of a particular sequence $u$ of $\true$ and $\false$ values occurring.
+Here, the infinite sum means the supremum over all sums of finite subsets.
+Similarly, given a Kleisli morphism $\sigma\from 1 \to \bC$ -- i.e., a morphism $\sigma\from 1 \to (\bB \to \bC)$ in $\G$, we can define
+\[
+  \bP(\sigma\downarrow) = \sum_{u\in\Acc(\sigma)} 2^{-|u|}\,.
+  \]
+Our Computational Adequacy result for IAX (Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy}) then gives us a Computational adequacy result for this model.
+
+\begin{proposition}
+  Let $M\from \com$ be a closed term of IA${}_\bB$.  
+  Then $\bP(M\converges) = \bP(\deno M\downarrow)$.
+\end{proposition}
+\begin{proof}
+  Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy} tell us that the set of sequences $u$ such that $M\converges_u\skipp$ is the same as the set $\Acc(\deno{M})$.
+\end{proof}
+
+We can define probabilistic observational equivalence and the probabilistic intrinsic equivalence $\sim_{\bP}$ in exactly the same way as we did for PA.  
+Then the same argument we used in Theorem \ref{TheFullAbstractionPa} proves Full Abstraction for this model.
+
+\begin{theorem}
+  Let $M,N\from T$ be closed terms of IA${}_\bB$.  
+  Then $M$ and $N$ are probabilistically observationally equivalent if and only if $\deno{M}\sim_{\bP}\deno{N}$.
+\end{theorem}
+
+This model is much easier to realize.  
+What do we gain, then, from our more complicated model?  
+
+The most obvious answer is that our original model allowed us to work with arbitrary probabilities, rather than using a fixed coin with probability $\frac12$.  
+This is not such a great advantage as it might seem, since if $p\in[0,1]$ is any real number whose binary expansion is computable as a function $\bN \to \bB$, then we can simulate $\choose_p$ within the probabilistic version of IA${}_\bB$\footnote{Idea: build up a sequence of intervals $I_n$ of width $2^n$ by repeatedly flipping the coin and using the result to choose either the lower or the upper half of $I_{n-1}$.  
+If at any point the upper bound of $I_n$ is less than or equal to $p$ (which can be checked by computing the first $n$ terms of the binary expansion of $p$, then return $\true$.  
+If at any point the lower bound of $I_n$ is greater than or equal to $p$, return $\false$.}.
+
+\bibliographystyle{alpha2}
+\bibliography{../common/phd_bibliography}
+
+\end{document}
