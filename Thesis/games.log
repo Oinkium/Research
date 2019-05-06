@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  16 APR 2019 19:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  5 MAY 2019 12:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1066,34 +1066,34 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 900.
 
-[23] [24]
+[23] [24] [25] [26]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 995.
+(hyperref)                removing `math shift' on input line 1092.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 995.
+(hyperref)                removing `math shift' on input line 1092.
 
-[25] [26] [27] [28] [29] [30]
+[27] [28] [29] [30] [31] [32]
 
-LaTeX Warning: Reference `ChapParametricMonads' on page 31 undefined on input l
-ine 1258.
-
-
-LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 31 undefined on in
-put line 1258.
+LaTeX Warning: Reference `ChapParametricMonads' on page 33 undefined on input l
+ine 1355.
 
 
-LaTeX Warning: Reference `ChapParametricMonads' on page 31 undefined on input l
-ine 1259.
+LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 33 undefined on in
+put line 1355.
 
 
-LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 31 undefined on in
-put line 1260.
+LaTeX Warning: Reference `ChapParametricMonads' on page 33 undefined on input l
+ine 1356.
 
-[31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45]
-[46] [47] [48] [49] [50] [51]
+
+LaTeX Warning: Reference `DefOplaxMorphismOfActions' on page 33 undefined on in
+put line 1357.
+
+[33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47]
+[48] [49] [50] [51]
 
 LaTeX Font Warning: Font shape `U/wasy/m/it' undefined
 (Font)              using `U/wasy/m/n' instead on input line 2153.
@@ -1127,32 +1127,19 @@ Package amsthm Warning: The \qedhere command may not work correctly here on inp
 ut line 3118.
 
 [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85] [86] [87]
-[88] [89] [90] [91] [92] [93] [94]
-Overfull \hbox (0.54456pt too wide) in paragraph at lines 4015--4016
-[][]\OT1/cmr/bx/n/10.95 Definition 1.21.12 \OT1/cmr/m/n/10.95 (Equa-tional Soun
-d-ness Re-sult)\OT1/cmr/bx/n/10.95 . []\OT1/cmr/m/n/10.95 An \OT1/cmr/m/it/10.9
-5 in-equa-tional sound-
- []
-
-[95] [96] [97] [98] [99] [100] [101] (./games.bbl [102] [103
+[88] [89] [90] [91] [92] [93] [94] [95] [96] [97] [98] [99] [100] [101]
+(./games.bbl [102] [103
 
 ]) [104]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 4285.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 4285.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 4287.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 4287.
+ (./games.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 4287.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 4287.
 
-(./games.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 4285.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 4285.
+Package rerunfilecheck Info: File `games.out' has not changed.
+(rerunfilecheck)             Checksum: 6C889EAD1A9963F11EBCEA2C33EE203F;1954.
 
-
-
-Package rerunfilecheck Warning: File `games.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `games.out':
-(rerunfilecheck)             Before: 479106AC67238737A16D72724C4B1FA5;1872
-(rerunfilecheck)             After:  E543EFC03067BA9D3C7FD4E942E8E46C;1954.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -1161,10 +1148,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 27661 strings out of 492616
- 531127 string characters out of 6135178
- 781342 words of memory out of 5000000
- 30723 multiletter control sequences out of 15000+600000
+ 27668 strings out of 492616
+ 531186 string characters out of 6135178
+ 780455 words of memory out of 5000000
+ 30730 multiletter control sequences out of 15000+600000
  31212 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,22n,82p,815b,1415s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1206,10 +1193,10 @@ msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr
 t/fonts/type1/public/stmaryrd/stmary6.pfb></usr/share/texmf-dist/fonts/type1/pu
 blic/stmaryrd/stmary7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/st
 mary8.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on games.pdf (104 pages, 767537 bytes).
+Output written on games.pdf (104 pages, 767784 bytes).
 PDF statistics:
- 1173 PDF objects out of 1200 (max. 8388607)
- 998 compressed objects within 10 object streams
+ 1177 PDF objects out of 1200 (max. 8388607)
+ 1001 compressed objects within 11 object streams
  298 named destinations out of 1000 (max. 500000)
- 221 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 229 words of extra memory for PDF output out of 10000 (max. 10000000)
 
