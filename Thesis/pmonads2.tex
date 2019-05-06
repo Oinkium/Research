@@ -389,12 +389,6 @@ for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f
 \begin{definition}
   Given a set $X$ and a \Mellies morphism $\sigma \from 1 \to (X \to \bC)$, we say that $\sigma$ \emph{accepts} a sequence $u\in X^*$ if $\sigma;\xi_u\ne\bot$.
   We write $\Acc(\sigma)$ for the set of all sequences accepted by $\sigma$.
-
-  More generally, if $\sigma\from 1 \to (X \to A)$ is a \Mellies morphism and $\tau\from 1 \to A$ is an ordinary morphism in $\G$, we write
-  \[
-    \Acc_\tau(\sigma) = \{u\in X^*\suchthat \sigma;\xi_u = \tau\}\,.
-    \]
-  When $A=\bC$, we have $\Acc(\sigma) = \Acc_{\deno{\skipp}}(\sigma)$.
   \label{DefAcc}
 \end{definition}
 
@@ -411,24 +405,22 @@ If we have a random variable $W$ on a set $Y$ and a function $f\from X \to Y$ su
 So, in this case, the equivalence relation on sets of sequences is subsumed into the very natural equivalence relation of having the same probability.
 
 \begin{proposition}
-  Let $\sigma\from 1 \to (j(p) \to A)$, $\sigma'\from 1 \to (j(q) \to A)$ be two representatives of the same morphism $1 \to A$ in $\G/\oppcat\X$.  
-  Let $\tau\from 1 \to A$ be an ordinary morphism in $\G$.
-  Then $(p,\Acc_\tau(\sigma))$ and $(q,\Acc_\tau(\sigma'))$ are equivalent.
-  In particular, if $A=\bC$, then $(p,\Acc(\sigma))$ and $(q,\Acc(\sigma')$ are equivalent.
+  Let $\sigma\from 1 \to (j(p) \to A)$, $\tau\from 1 \to (j(q) \to A)$ be two representatives of the same morphism $1 \to A$ in $\G/\oppcat\X$.  
+  Then $(p,\Acc(\sigma))$ and $(q,\Acc(\tau)$ are equivalent.
   \label{PropAccEquivalent}
 \end{proposition}
 \begin{proof}
-  Since the relation on pairs $(p,\U)$ is an equivalence relation, it suffices to assume that $\sigma$ and $\sigma'$ are related by the relation that generates the equivalence relation on \Mellies morphisms; i.e., that there is a morphism $f\from p \to q$ such that $\sigma = \sigma';(j(f)\to \bC)$.  
+  Since the relation on pairs $(p,\U)$ is an equivalence relation, it suffices to assume that $\sigma$ and $\sigma'$ are related by the relation that generates the equivalence relation on \Mellies morphisms; i.e., that there is a morphism $f\from p \to q$ such that $\sigma = \tau;(j(f)\to \bC)$.  
 
   Let $u\in j(p)^*$.  
   Then we have
   \begin{IEEEeqnarray*}{rCl}
-    u\in\Acc_\tau(\sigma) & \Leftrightarrow & \sigma;\xi_u=\tau \\
-    & \Leftrightarrow & \sigma';(j(f)\to A);\xi_u=\tau \\
-    & \Leftrightarrow & \sigma';\xi_{j(f)_*u}=\tau \\
-    & \Leftrightarrow & j(f)_*u \in \Acc_\tau(\sigma')\,.
+    u\in\Acc(\sigma) & \Leftrightarrow & \sigma;\xi_u\ne\bot \\
+    & \Leftrightarrow & \tau;(j(f)\to A);\xi_u\ne\bot \\
+    & \Leftrightarrow & \tau\xi_{j(f)_*u}\ne\bot \\
+    & \Leftrightarrow & j(f)_*u \in \Acc(\tau)\,.
   \end{IEEEeqnarray*}
-  Therefore, $(p,\Acc_\tau(\sigma))$ and $(q,\Acc_\tau(\sigma'))$ are equivalent.
+  Therefore, $(p,\Acc(\sigma))$ and $(q,\Acc(\tau))$ are equivalent.
 \end{proof}
 
 We can now state and prove our Computational Adequacy result.
@@ -873,6 +865,170 @@ In $\G/\Rv_{\Omega}^{FS}$, however, we can model a term that has the same behavi
   \]
 which makes it much clearer what the probabilistic behaviour is.
 
+\section{Game Semantics and Probability}
+
+We now specialize to the case that $\G$ is the category of arenas and single-threaded strategies that we developed in Chapters \ref{ChapGames} and \ref{ChapFullAbstraction}.
+This will allow us to capture the close relationship between the sequences $u$ that we have been considering and the plays in a strategy.
+
+\begin{definition}
+  Let $X$ be a set and let $u\in X^*$ be a sequence.  
+  Consider $X$ as an arena $\ul X$.  
+  Then we write $qu$ for the play in $\ul X$ given by
+  \[
+    q\,u^{(1)}\,\cdots\,q\,u^{(|u|-1)}\,.
+    \]
+  Note that any $P$-position in $\ul X$ is of the form $qu$ for some sequence $u$.  
+\end{definition}
+
+\begin{definition}
+  Let $A$ be an arena, let $V$ be a random variable taking values in a set $X$, and let $\sigma \from X \to A$ be a single-threaded strategy.  
+  We may consider $X$ as a game $\ul X$.  
+  Let $s$ be a legal play of $A$.  
+  If $t\in\sigma$, we write $t/s$ if $t\vert_A = s$ and if the last move of $t$ is the last move of $s$ (this implies in particular that $t\vert_{\ul X}$ is a $P$-position in $\ul X$).
+  Then we define
+  \[
+    \Acc_s(\sigma) = \{u\in X^*\suchthat \exists t\in\sigma\esuchthat t/s,\,t\vert_{\ul X} = qu\}\,.
+    \]
+  We define
+  \[
+    \bP_V(s\in\sigma) = \bP(V, \Acc_s(\sigma))\,.
+    \]
+\end{definition}
+
+We would like use this definition to define $\bP(s\in\sigma)$ for $\sigma$ a morphism in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$, but we first need to check that this is well-defined with respect to the equivalence relation on \Mellies morphisms.
+
+\begin{proposition}
+  Let
+  \begin{mathpar}
+    (V\from \Omega \to X, \sigma \from \ul X \to A)
+    \and
+    (W\from \Omega \to Y, \sigma \from \ul Y \to A)
+  \end{mathpar}
+  be representatives of the same morphism $A \to B$ in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$, where $X$ and $Y$ are sets.  
+  Let $s$ be a legal play of $A$.
+  Then $(V,\Acc_s(\sigma))$ and $(W,\Acc_s(\sigma'))$ are equivalent as pairs in the sense of Definition \ref{DefEquivalenceOfPairs}.
+\end{proposition}
+\begin{proof}
+  It suffices by induction to prove this in the case that the two representatives are related by the relation that generates the equivalence relation on morphisms; i.e., that there is a probability-preserving function $f\from X \to Y$ such that $\sigma=\sigma';(j(f) \to A)$.
+
+  Let $u\in X^*$.  
+  Then we have
+  \begin{IEEEeqnarray*}{rCl}
+    u \in \Acc_s(\sigma) & \Leftrightarrow & \exists t\in \sigma \esuchthat t/s,\,t\vert_{\ul X}=qu \\
+    & \Leftrightarrow & \exists t \in \sigma';(j(f) \to A) \esuchthat t/s,\,t\vert_{\ul X}=qu \\
+    & \Leftrightarrow & \exists t' \in \sigma' \esuchthat t/s,\,t\vert_{\ul Y} = q(f_*u) \\
+    & \Leftrightarrow & f_*u \in \Acc_s(\sigma')\,.
+  \end{IEEEeqnarray*}
+  Therefore, $(V,\Acc_s(\sigma))$ and $(W,\Acc_s(\sigma'))$ are equivalent.
+\end{proof}
+
+It follows by Proposition \ref{PropProbabilityWellDefined} that $\bP_V(s\in\sigma)=\bP_W(s\in\sigma')$ for all $s$.  
+Therefore, the following is well-defined.
+
+\begin{definition}
+  Let $\sigma \from A \to B$ be a morphism in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$, where $\G$ is the category of arenas and single-threaded strategies, and suppose that $\sigma$ is given (after currying) by a morphism
+  \[
+    \tilde\sigma \from \ul X \to (A \to B)
+    \]
+  in $\G$, together with a random variable $V$ taking values in $X$.
+  Then we define
+  \[
+    \bP(s\in\sigma) = \bP_V(s\in\tilde\sigma)\,.
+    \]
+\end{definition}
+
+\begin{definition}
+  Let $\sigma,\sigma'\from A \to B$ be morphisms in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$, where $\G$ is the category of arenas and single-threaded strategies.  
+  We say that $\sigma\approx_{\bP}\sigma'$ if for all legal plays $s$ of $A \to B$ we have
+  \[
+    \bP(s\in\sigma) = \bP(s\in\sigma')\,.
+    \]
+\end{definition}
+
+We now relate this definition to \Mellies composition of strategies.
+
+\begin{definition}
+  Let $A,B,C$ be arenas and let $s$ be a play in $A\to C$.  
+  We write
+  \[
+    \wit_B(s) = \{\s\in\Int(A,B,C)\suchthat \s\vert_{A,C}=s\}\,.
+    \]
+\end{definition}
+
+\begin{proposition}
+  Let $\sigma\from A \to B$, $\tau\from B \to C$ be morphisms in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
+  Let $s$ be a legal play in $A \to C$.
+  Then
+  \[
+    \bP(s\in\sigma;\tau) = \sum_{\s\in\wit_B(s)}\bP(\s\vert_{A,B}\in\sigma)\bP(\s\vert_{B,C}\in\tau)\,.
+    \]
+\end{proposition}
+\begin{proof}
+  Suppose that $\sigma$ and $\tau$ are given by (equivalence classes of) pairs
+  \begin{mathpar}
+    (V\from\Omega\to X, \tilde \sigma \from A \to (\ul X \to B))
+    \and
+    (W\from\Omega\to Y, \tilde \tau \from B \to (\ul Y \to C))\,,
+  \end{mathpar}
+  where $V$ and $W$ are random variables and $\tilde \sigma,\tilde\tau$ are strategies in $\G$.
+  Then the composition $\sigma;\tau$ in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$ is given by $V\tensor W\from\Omega \to X\times Y$, together with the \Mellies composition
+  \[
+    A \xrightarrow{\tilde\sigma}
+    (\ul{X} \to B) \xrightarrow{\ul{X} \to \tilde\tau}
+    (\ul X \to (\ul Y \to C)) \to
+    ((\ul X \times \ul Y) \to C) \xrightarrow{\mu\to C}
+    (\ul{X\times Y} \to C)\,,
+    \]
+  where $\mu$ is $\langle\ul{\pr_X},\ul{\pr_Y}\rangle$.
+
+  First suppose that $s$ is a sequence in $A \to C$, and let $\s\in\wit_B(s)$.  
+  Let $\t$ be a sequence in $\sigma\|(\ul X \to \tau)$ such that $\t\vert_{A,B,C}=\s$.  
+  Then $\t\vert_{A,\ul X \to B}\in\sigma$ and $\t\vert_{B,\ul Y,C}\in\tau$.
+\end{proof}
+
+We want to prove that this is preserved by composition of strategies.  
+First, we prove a lemma.
+
+\begin{lemma}
+  Let $\sigma\from A \to (\ul{X} \to B)$, $\tau \from B \to (\ul{Y} \to C)$ be strategies, where $X,Y$ are sets.
+  Write $\sigma\semicom_{\text{Mell}}\tau \from A \to (\ul{X\times Y} \to C)$ for the \Mellies composition of $\sigma$ and $\tau$.
+
+  Let $s\in\sigma\semicom_{\text{Mell}}\tau$.  
+  Then there exist four sequence $s_X,s_Y,\s_X,\s_Y$ such that
+  \begin{itemize}
+    \item $s$ is an interleaving of the sequences $s_X$ and $s_Y$;
+    \item $\s_X\in\sigma$ and $\s_Y\in\tau$;
+    \item $s_X\vert_{A,X} = \s_X\vert_{A,X}$; and
+    \item $s_Y\vert_{C,Y} = \s_Y\vert_{C,Y}$.
+  \end{itemize}
+  \label{LemMelliesDecomposition}
+\end{lemma}
+\begin{proof}
+  Recall that $\sigma\semicom_{\text{Mell}}\tau$ is given by the following composite in $\G$, where $\mu$ is the composite $\langle\ul{\pr_X},\ul{\pr_Y}\rangle$.
+  \[
+    A \xrightarrow{\sigma}
+    (\ul{X} \to B) \xrightarrow{\ul{X} \to \tau}
+    (\ul X \to (\ul Y \to C)) \to
+    ((\ul X \times \ul Y) \to C) \xrightarrow{\mu\to C}
+    (\ul{X\times Y} \to C)
+    \]
+  We consider the composite of the first two morphisms.  
+  We know that a play $t\in \sigma;(\ul X\to \tau)$ is given by $\s\vert_{A,X,Y,C}$, where $\s\vert_{A,X,B}\in\sigma$ and $\s\vert_{B,Y,C}\in\tau$.
+  Write $\s_X$ for $\s\vert_{A,X,B}$ and $\s_Y$ for $\s\vert_{B,Y,C}$.
+
+  Now suppose that $s$ is a sequence in the whole composition, and let
+  \[
+    \t\in ((A\times\mu);\cong)\|((\sigma\times \ul Y);\tau)
+    \]
+  be such that $\t\vert_{A,\ul{X \times Y}\to C}=s$.
+  Write $t=\t\vert_{A,\ul X \to (\ul Y \to C)}\in\sigma;(\ul X \to \tau)$ and let $\s$ cover $t$ as above.
+  Then $\t$ is formed from $t$ by inserting between every pair $q\,x$ of moves in $\ul X$ a pair $q\,(x,y_0)$ in $\ul{X\times Y}$ for some $y_0$, and between every pair $q\,y$ of moves in $\ul Y$ a pair $q\,(x_0,y)$ in $\ul{X \times Y}$ for some $x_0$.
+  This gives a partitition of $s\vert_{\ul {X \times Y}}$ into moves that occur before a move in $\ul X$ and moves that occur before a move in $\ul Y$ in the sequence $\t$.
+  We then define $s_X$ to be the sequence formed from $\s_X\vert_A$, together with those moves in $\ul{X \times Y}$ that occur before a move in $\ul X$ in $\t$, and $s_Y$ fto be formed from $\s_Y\vert_C$, together with those moves in $\ul{X\times Y}$ that occur before a move in $\ul Y$ in $\t$.
+
+  Then we have $s_X\vert_{A,X}=\s_X\vert_{A,X}$ and $s_Y\vert_{C,Y} = \s_Y\vert_{C,Y}$ as desired.
+\end{proof}
+
 \section{The Probabilistic Equivalence Relation on Morphisms}
 
 \begin{definition}
@@ -955,46 +1111,6 @@ More specifically, we shall use the arena-only semantics which we developed in \
   Recall that we have written $s\vert_A$ for the restriction of a sequence in a compound game to the moves occurring in some constituent part $A$, and similarly for a list $s\vert_{A_1,\cdots,A_n}$.
   If $s$ is a sequence in an arena of the form $\ul{X\times Y}$; i.e., the arena in which player $O$ has an initial move $q$ to which player $P$ replies with some pair $(x,y)\in X\times Y$, the we write $s\vert_X$ for the play formed by projecting every such pair $(x,y)$ on to its first component $x$.
 \end{definition}
-
-\begin{lemma}
-  Let $\sigma\from A \to (\ul{X} \to B)$, $\tau \from B \to (\ul{Y} \to C)$ be strategies, where $X,Y$ are sets.
-  Write $\sigma\semicom_{\text{Mell}}\tau \from A \to (\ul{X\times Y} \to C)$ for the \Mellies composition of $\sigma$ and $\tau$.
-
-  Let $s\in\sigma\semicom_{\text{Mell}}\tau$.  
-  Then there exist four sequence $s_X,s_Y,\s_X,\s_Y$ such that
-  \begin{itemize}
-    \item $s$ is an interleaving of the sequences $s_X$ and $s_Y$;
-    \item $\s_X\in\sigma$ and $\s_Y\in\tau$;
-    \item $s_X\vert_{A,X} = \s_X\vert_{A,X}$; and
-    \item $s_Y\vert_{C,Y} = \s_Y\vert_{C,Y}$.
-  \end{itemize}
-  \label{LemMelliesDecomposition}
-\end{lemma}
-\begin{proof}
-  Recall that $\sigma\semicom_{\text{Mell}}\tau$ is given by the following composite in $\G$, where $\mu$ is the composite $\langle\ul{\pr_X},\ul{\pr_Y}\rangle$.
-  \[
-    A \xrightarrow{\sigma}
-    (\ul{X} \to B) \xrightarrow{\ul{X} \to \tau}
-    (\ul X \to (\ul Y \to C)) \to
-    ((\ul X \times \ul Y) \to C) \xrightarrow{\mu\to C}
-    (\ul{X\times Y} \to C)
-    \]
-  We consider the composite of the first two morphisms.  
-  We know that a play $t\in \sigma;(\X\to \tau)$ is given by $\s\vert_{A,X,Y,C}$, where $\s\vert_{A,X,B}\in\sigma$ and $\s\vert_{B,Y,C}\in\tau$.
-  Write $\s_X$ for $\s\vert_{A,X,B}$ and $\s_Y$ for $\s\vert_{B,Y,C}$.
-
-  Now suppose that $s$ is a sequence in the whole composition, and let
-  \[
-    \t\in ((A\times\mu);\cong)\|((\sigma\times \ul Y);\tau)
-    \]
-  be such that $\t\vert_{A,\ul{X \times Y}\to C}=s$.
-  Write $t=\t\vert_{A,\ul X \to (\ul Y \to C)}\in\sigma;(\ul X \to \tau)$ and let $\s$ cover $t$ as above.
-  Then $\t$ is formed from $t$ by inserting between every pair $q\,x$ of moves in $\ul X$ a pair $q\,(x,y_0)$ in $\ul{X\times Y}$ for some $y_0$, and between every pair $q\,y$ of moves in $\ul Y$ a pair $q\,(x_0,y)$ in $\ul{X \times Y}$ for some $x_0$.
-  This gives a partitition of $s\vert_{\ul {X \times Y}}$ into moves that occur before a move in $\ul X$ and moves that occur before a move in $\ul Y$ in the sequence $\t$.
-  We then define $s_X$ to be the sequence formed from $\s_X\vert_A$, together with those moves in $\ul{X \times Y}$ that occur before a move in $\ul X$ in $\t$, and $s_Y$ fto be formed from $\s_Y\vert_C$, together with those moves in $\ul{X\times Y}$ that occur before a move in $\ul Y$ in $\t$.
-
-  Then we have $s_X\vert_{A,X}=\s_X\vert_{A,X}$ and $s_Y\vert_{C,Y} = \s_Y\vert_{C,Y}$ as desired.
-\end{proof}
 
 \begin{proposition}
   Let $\sigma,\sigma'\from A \to B$ and $\tau,\tau'\from B \to C$ be morphisms in $\G/\Rv_{\Omega}^{FS}$, where $\G$ is the category of games and single-threaded strategies.

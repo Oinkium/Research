@@ -7,7 +7,8 @@
 
 \begin{document}
 
-\chapter{A Fully Abstract Game Semantics for Idealized Algol}
+\chapter{A Sequoidal Game Semantics for Idealized Algol}
+\label{ChapGames}
 
 To introduce our material, we will go back over some old ground, namely the fully abstract game semantics for Idealized Algol developed by Abramsky and McCusker in \cite{SamsonGuyIAActive}.  
 In keeping with the spirit of this thesis, we will aim to use category theoretic methods, and so our proofs of soundness and adequacy will depart from those given by Abramsky and McCusker, and will instead involve coalgebraic ideas developed by Laird in \cite{laird02} and \cite{LairdCofCommCom}.
@@ -2485,6 +2486,9 @@ This coalgebraic definition of the $\cell$ strategy will be sufficient for most 
 
   If no $q_m$ has been played in $\oc\Varr$, then, by the definition of $\rread$, the strategy will interrogate $\oc\bN$ in order to get its response, just as in the strategy $\cell;\alpha_{\Varr};(\pr_\bN\sequoid\oc\Varr)$.
 \end{proof}
+
+\chapter{Operational Semantics, Computational Adequacy and Full Abstraction}
+\label{ChapFullAbstraction}
 
 \section{Big-Step Operational Semantics}
 
