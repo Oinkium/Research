@@ -984,6 +984,36 @@ We now relate this definition to \Mellies composition of strategies.
   First suppose that $s$ is a sequence in $A \to C$, and let $\s\in\wit_B(s)$.  
   Let $\t$ be a sequence in $\sigma\|(\ul X \to \tau)$ such that $\t\vert_{A,B,C}=\s$.  
   Then $\t\vert_{A,\ul X \to B}\in\sigma$ and $\t\vert_{B,\ul Y,C}\in\tau$.
+
+  Moreover, since we have $\t\vert_{A,B}=\s\vert_{A,B}$ and $\t\vert_{B,C}=\s\vert_{B,C}$, we must have
+  \begin{mathpar}
+    \t\vert_{\ul X} \in \Acc_{\s\vert_{A,B}}(\sigma)
+    \and
+    \t\vert_{\ul Y} \in \Acc_{\s\vert_{B,C}}(\tau)\,,
+  \end{mathpar}
+  where we have identified a play $qu$ occurring in the arena $\ul X$ with its underlying sequence $u$ of elements of $X$, and likewise for $Y$.
+
+  This gives us a function
+  \[
+    \{\t\in\sigma\|(\ul X \to \tau)\suchthat \t\vert_{A,B,C}=\s\} \to \Acc_{\s\vert_{A,B}}(\sigma)\times\Acc_{\s\vert_{B,C}}(\tau)\,.
+    \]
+  We claim that this function is a bijection.
+
+  Indeed, suppose that $\t,\t'$ are two interactions in $\sigma\|(\ul X \to \tau)$ such that $\t\vert_{A,B,C}=\t'\vert_{A,B,C}=\s$, $\t\vert_{\ul X} = \t'\vert_{\ul X}$ and $\t\vert_{\ul Y}=\t'\vert_{\ul Y}$.
+  We claim that $\t = \t'$.
+
+  Indeed, suppose for a contradiction that $\t\ne\t'$: then there are prefixes $\r p\prefix \t$ and $\r q \prefix \t'$, where $\r$ is the longest common subsequence of $\t$ and $\t'$ and $p\ne q$ are moves.
+
+  By our earlier analysis (see, for example, the proof of \ref{PropComposition}), we know that $p$ and $q$ must either both occur in the $A \to (\ul X \to B)$-component, or both in the $(\ul X \to B) \to (\ul X \to (\ul Y \to C))$-component.
+  But since $\t,\t'\in\sigma\|(\ul X \to \tau)$ are both interactions of deterministic strategies, we also know that they must both be $O$-moves in that component -- otherwise, they would have to be equal.
+  In particular, neither $p$ nor $q$ may be a move in the middle component $\ul X \to B$, since then it would be a $P$-move in one of the two components.
+
+  Therefore, $p$ and $q$ are both $O$-moves in one of the outer components $A$ and $\ul X \to (\ul Y \to C)$.  
+  By Corollary \ref{CorSwitchingCondition}, we know that only Player $P$ may switch between games in $\ul X \to (\ul Y \to C)$, and therefore $p$ and $q$ must occur in the same component game -- i.e., both in $A$, both in $\ul X$, both in $\ul Y$ or both in $C$.  
+  But now the conditions that $\t\vert_{A,B,C}=\t'\vert_{A,B,C}$, $\t\vert_{\ul X}=\t'\vert_{\ul X}$ and $\t\vert_{\ul Y}=\t'\vert_{\ul Y}$ mean that we must have $p=q$, which is the desired contradiction.
+
+  For surjectivity, let $u\in\Acc_{\s\vert_{A,B}}(\sigma)$ and $v\in\Acc_{\s\vert_{B,C}}(\tau)$.  
+  We seek a sequence $\t\in\sigma\|(\ul X \to \tau)$ such that $\t\vert_{A,B,C}=\s$, $\t\vert_{\ul X}=qu$ and $\t\vert_{\ul Y}=qv$.
 \end{proof}
 
 We want to prove that this is preserved by composition of strategies.  
