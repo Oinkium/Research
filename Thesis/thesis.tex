@@ -1243,6 +1243,7 @@ This seems like a purely combinatorial construction, but it can actually be subs
 Therefore, we see that the category of games and strategies with costs is isomorphic to the Kleisli category $\G_\bC$, which we have already shown to be fully abstract for a language with time complexity.
 
 \section{Alternative Reduction Rules - May Testing}
+\label{SecMayTesting}
 
 We remarked above that if $X\in\{\bB,\bN\}$, then \IAX is a model of nondeterminism, finite in the case of $\bB$ and countable in the case of $\bN$.  
 However, our operational semantics is not the usual one for these languages.
@@ -1282,7 +1283,7 @@ We can reflect this operational relation in the semantics by modifying the defin
 
 Firstly, an obvious consequence of Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy} is that
 
-\begin{corollary}
+\begin{corollary}[Computational Adequacy for May Testing]
   Let $M\from\com$ be a closed term of \IAX.  
   Consider the denotation $\deno M\from 1 \to \bC$ in $\G_X$ as a morphism $1 \to (X \to \bC)$ in $\G$.  
   Then there exists some sequence $u\in X^*$ such that the composite

@@ -4,11 +4,11 @@
 \contentsline {section}{\numberline {1.3}Denotational Semantics}{7}{section.1.3}% 
 \contentsline {section}{\numberline {1.4}Operational Semantics}{8}{section.1.4}% 
 \contentsline {section}{\numberline {1.5}Soundness}{11}{section.1.5}% 
-\contentsline {section}{\numberline {1.6}Computational Adequacy}{17}{section.1.6}% 
-\contentsline {section}{\numberline {1.7}Full Abstraction}{21}{section.1.7}% 
-\contentsline {section}{\numberline {1.8}Comparison with Ghica's slot games}{23}{section.1.8}% 
+\contentsline {section}{\numberline {1.6}Computational Adequacy}{18}{section.1.6}% 
+\contentsline {section}{\numberline {1.7}Full Abstraction}{22}{section.1.7}% 
+\contentsline {section}{\numberline {1.8}Comparison with Ghica's slot games}{24}{section.1.8}% 
 \contentsline {section}{\numberline {1.9}Alternative Reduction Rules - May Testing}{25}{section.1.9}% 
 \contentsline {section}{\numberline {1.10}Alternative Reduction Rules - Must Testing}{29}{section.1.10}% 
-\contentsline {section}{\numberline {1.11}Full Abstraction for Nondeterminism Under Must Testing}{34}{section.1.11}% 
-\contentsline {section}{\numberline {1.12}The Intrinsic Equivalence Relation}{42}{section.1.12}% 
-\contentsline {chapter}{Bibliography}{44}{chapter*.4}% 
+\contentsline {section}{\numberline {1.11}Full Abstraction for Nondeterminism Under Must Testing}{35}{section.1.11}% 
+\contentsline {section}{\numberline {1.12}The Intrinsic Equivalence Relation}{43}{section.1.12}% 
+\contentsline {chapter}{Bibliography}{45}{chapter*.4}% 

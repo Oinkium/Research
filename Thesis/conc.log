@@ -1,14 +1,14 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  12 MAY 2019 13:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  27 MAY 2019 15:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**pmonads2
-(./pmonads2.tex
+**conc
+(./conc.tex
 LaTeX2e <2018-12-01>
 (/usr/share/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2018/09/03 v1.4i Standard LaTeX document class
-(/usr/share/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+(/usr/share/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 )
 \c@part=\count80
 \c@chapter=\count81
@@ -904,21 +904,21 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
 \overlongequation=\box50
 \arrow=\skip110
-LaTeX Font Info:    Try loading font information for U+msa on input line 411.
+LaTeX Font Info:    Try loading font information for U+msa on input line 414.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 411.
+LaTeX Font Info:    Try loading font information for U+msb on input line 414.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+cmllr on input line 411.
+LaTeX Font Info:    Try loading font information for U+cmllr on input line 414.
 
 
 (/usr/share/texmf-dist/tex/latex/cmll/ucmllr.fd)
-LaTeX Font Info:    Try loading font information for U+stmry on input line 411.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 414.
 
 
 (/usr/share/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
@@ -944,32 +944,25 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 \gnCornerHgt=\dimen303
 \gnArgHgt=\dimen304
 \symbbsymbol=\mathgroup9
-)
-(/usr/share/texmf-dist/tex/luatex/lua-visual-debug/lua-visual-debug.sty
-Package: lua-visual-debug 2019/01/07 v0.7 Visual debugging in LuaLaTeX (PGU)
+) (./conc.aux)
+\openout1 = `conc.aux'.
 
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
 
-Package lua-visual-debug Warning: You are using this package without LuaTeX. Th
-is is not supported, so you don't get any visual debugging. on input line 32.
-
-) (./pmonads2.aux)
-\openout1 = `pmonads2.aux'.
-
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
- (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count175
 \scratchdimen=\dimen305
@@ -1005,7 +998,7 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box53
-Package hyperref Info: Link coloring OFF on input line 7.
+Package hyperref Info: Link coloring OFF on input line 6.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1015,213 +1008,144 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count181
 )
-LaTeX Info: Redefining \ref on input line 7.
-LaTeX Info: Redefining \pageref on input line 7.
-LaTeX Info: Redefining \nameref on input line 7.
-
-(./pmonads2.out) (./pmonads2.out)
+LaTeX Info: Redefining \ref on input line 6.
+LaTeX Info: Redefining \pageref on input line 6.
+LaTeX Info: Redefining \nameref on input line 6.
+ (./conc.out)
+(./conc.out)
 \@outlinefile=\write4
-\openout4 = `pmonads2.out'.
+\openout4 = `conc.out'.
 
 \c@lstlisting=\count182
  ABD: EveryShipout initializing macros
 Chapter 1.
-LaTeX Font Info:    Try loading font information for U+bbold on input line 11.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 18.
 (/usr/share/texmf-dist/tex/latex/bbold/Ubbold.fd)
+LaTeX Font Info:    Try loading font information for U+bbm on input line 19.
 
-LaTeX Warning: Reference `ChapMonads' on page 1 undefined on input line 12.
-
-
-LaTeX Warning: Reference `ChapMonads' on page 1 undefined on input line 14.
-
-
-LaTeX Warning: Reference `ChapParametricMonads' on page 1 undefined on input li
-ne 15.
-
-
-LaTeX Warning: Reference `TheCartesianClosedCx' on page 1 undefined on input li
-ne 15.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 29.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 29.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 29.
-
-[1
+(/usr/share/texmf-dist/tex/latex/bbm-macros/ubbm.fd
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+) [1
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: Reference `CorTheConstructionUniversalProperty' on page 2 undefi
-ned on input line 47.
-
-[2]
-LaTeX Font Info:    Try loading font information for U+bbm on input line 101.
- (/usr/share/texmf-dist/tex/latex/bbm-macros/ubbm.fd
-File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 85.
+ (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 85.
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 129.
+[2] [3]
 
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 129.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 129.
-
-[3] [4]
-
-LaTeX Warning: Reference `LemFirstSubstitution' on page 5 undefined on input li
-ne 196.
-
-[5]
-
-LaTeX Warning: Reference `LemSecondSubstitution' on page 6 undefined on input l
-ine 224.
+LaTeX Warning: Reference `SecMayTesting' on page 4 undefined on input line 125.
 
 
-LaTeX Warning: Reference `LemSecondSubstitution' on page 6 undefined on input l
-ine 243.
 
-[6] [7] [8] [9] [10]
-
-LaTeX Warning: Reference `PropKleisliSoundness' on page 11 undefined on input l
-ine 465.
+LaTeX Warning: Reference `CorMayAdequacy' on page 4 undefined on input line 132
+.
 
 
-LaTeX Warning: Reference `PropKleisliAdequacy' on page 11 undefined on input li
-ne 465.
+LaTeX Warning: Reference `CorMayAdequacy' on page 4 undefined on input line 133
+.
+
+[4]
+
+LaTeX Warning: Reference `CorMayAdequacy' on page 5 undefined on input line 148
+.
+
+LaTeX Font Info:    Try loading font information for U+euf on input line 167.
+(/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
+File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
+) [5]
+
+LaTeX Warning: Reference `SecMayTesting' on page 6 undefined on input line 188.
+
+
+[6] [7]
+
+LaTeX Warning: Reference `ChapGames' on page 8 undefined on input line 367.
+
+
+LaTeX Warning: Reference `ChapFullAbstraction' on page 8 undefined on input lin
+e 367.
+
+[8] [9]
+
+LaTeX Warning: Reference `PropColimitOfActionIsMonoidalFunctor' on page 10 unde
+fined on input line 429.
+
+
+LaTeX Warning: Reference `PropMonoidalFunctorIsColimitOfReaderAction' on page 1
+0 undefined on input line 429.
+
+[10]
+
+LaTeX Warning: Reference `ChapParametricMonads' on page 11 undefined on input l
+ine 450.
 
 [11]
 
-LaTeX Warning: Reference `PropEquationalSoundness' on page 12 undefined on inpu
-t line 506.
-
-[12]
-LaTeX Font Info:    Try loading font information for U+euf on input line 566.
- (/usr/share/texmf-dist/tex/latex/amsfonts/ueuf.fd
-File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [13]
-
-Package amsthm Warning: The \qedhere command may not work correctly here on inp
-ut line 613.
-
-[14] [15] [16] [17]
-
-LaTeX Warning: Reference `ChapMonads' on page 18 undefined on input line 803.
-
-[18]
-
-LaTeX Warning: Reference `PropKleisliSoundness' on page 19 undefined on input l
-ine 816.
+LaTeX Warning: Reference `ChapMonads' on page 12 undefined on input line 455.
 
 
-LaTeX Warning: Reference `PropKleisliAdequacy' on page 19 undefined on input li
-ne 816.
+LaTeX Warning: Reference `ChapParametricMonadsFullAbstraction' on page 12 undef
+ined on input line 455.
 
-
-LaTeX Warning: Reference `PropKleisliSoundness' on page 19 undefined on input l
-ine 823.
-
-
-LaTeX Warning: Reference `PropKleisliAdequacy' on page 19 undefined on input li
-ne 823.
-
-[19]
-
-LaTeX Warning: Reference `ChapGames' on page 20 undefined on input line 870.
-
-
-LaTeX Warning: Reference `ChapFullAbstraction' on page 20 undefined on input li
-ne 870.
-
-[20] [21]
-
-LaTeX Warning: Reference `PropComposition' on page 22 undefined on input line 1
-009.
-
-
-LaTeX Warning: Reference `CorSwitchingCondition' on page 22 undefined on input 
-line 1014.
-
-[22]
-
-LaTeX Warning: Reference `PropComposition' on page 23 undefined on input line 1
-039.
-
-[23]
-Overfull \hbox (4.24464pt too wide) in paragraph at lines 1085--1085
-[]\OT1/cmr/bx/n/14.4 The Prob-a-bilis-tic Game Se-man-tics of Danos
+(./conc.bbl [12]
+Underfull \hbox (badness 2856) in paragraph at lines 41--47
+\OT1/cmr/m/n/10.95 https://www.irif.fr/ mellies/mpri/mpri-m2/mpri-mellies-lectu
+re-
  []
 
-[24] (./pmonads2.bbl [25]) [26
+[13
 
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1134.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1134.
- (./pmonads2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1134.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1134.
-
-Package rerunfilecheck Info: File `pmonads2.out' has not changed.
-(rerunfilecheck)             Checksum: 031C97200E45F90D3CA9A2222E53434B;857.
+]) [14]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 473.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 473.
+ (./conc.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 473.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 473.
+Package rerunfilecheck Info: File `conc.out' has not changed.
+(rerunfilecheck)             Checksum: A006CD4AF2989C9AA154A234043EB64D;352.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 23856 strings out of 492616
- 443131 string characters out of 6135178
- 535176 words of memory out of 5000000
- 27138 multiletter control sequences out of 15000+600000
- 26353 words of font info for 113 fonts, out of 8000000 for 9000
+ 24372 strings out of 492616
+ 456058 string characters out of 6135178
+ 543745 words of memory out of 5000000
+ 27711 multiletter control sequences out of 15000+600000
+ 26421 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,17n,82p,818b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/john/.texlive/texmf-var/fonts/pk/ljfour/public/bbm/bbm8.600pk> </home
-/john/.texlive/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk></usr/share/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex
-10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></u
-sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></u
-sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pf
-b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
-t10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/euler/eufm5.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/euler/eufm7.pfb></usr/share/texmf-dist/fonts/type1/public/
-amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-symbols/msbm5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-bm7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/stmaryrd/stmary7.pfb>
-Output written on pmonads2.pdf (26 pages, 405790 bytes).
+ 57i,18n,82p,863b,996s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/john/.texlive/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmbx8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
+b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.
+pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/euler/eufm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+</usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr/share/tex
+mf-dist/fonts/type1/public/stmaryrd/stmary8.pfb>
+Output written on conc.pdf (14 pages, 251305 bytes).
 PDF statistics:
- 418 PDF objects out of 1000 (max. 8388607)
- 348 compressed objects within 4 object streams
- 86 named destinations out of 1000 (max. 500000)
- 109 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 247 PDF objects out of 1000 (max. 8388607)
+ 202 compressed objects within 3 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

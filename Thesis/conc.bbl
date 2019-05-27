@@ -1,0 +1,70 @@
+\begin{thebibliography}{EPT18}
+
+\bibitem[DE11]{ProbabilisticCoherenceSpaces}
+Vincent Danos and Thomas Ehrhard.
+\newblock Probabilistic coherence spaces as a model of higher-order
+  probabilistic computation.
+\newblock {\em Information and Computation}, 209(6):966 -- 991, 2011.
+
+\bibitem[EPT18]{ProbabilisicPcf}
+Thomas Ehrhard, Michele Pagani, and Christine Tasson.
+\newblock Full abstraction for probabilistic pcf.
+\newblock {\em J. ACM}, 65(4):23:1--23:44, April 2018.
+
+\bibitem[Har99]{RusssThesis}
+Russell~S. Harmer.
+\newblock Games and full abstraction for nondeterministic languages.
+\newblock Technical report, 1999.
+
+\bibitem[HO00]{hoPcf}
+J.M.E. Hyland and C.-H.L. Ong.
+\newblock On full abstraction for {PCF}: {I}, {II}, and {III}.
+\newblock {\em Information and Computation}, 163(2):285 -- 408, 2000.
+
+\bibitem[Lai15]{LairdOrdinalGames}
+J.~Laird.
+\newblock Sequential algorithms for unbounded nondeterminism.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 319:271 --
+  287, 2015.
+
+\bibitem[Lev01]{PaulsThesis}
+Paul~Blain Levy.
+\newblock Call-by-push-value.
+\newblock Technical report, Queen Mary College, 2001.
+
+\bibitem[Lev14]{levy2014morphisms}
+Paul~Blain Levy.
+\newblock Morphisms between plays.
+\newblock Lecture slides, GaLoP, 2014.
+
+\bibitem[Mel14]{MelliesCoherence}
+Paul-Andr\'{e} Melli\`{e}s.
+\newblock A survival guide on coherence spaces.
+\newblock
+  https://www.irif.fr/~mellies/mpri/mpri-m2/mpri-mellies-lecture-notes-2.pdf,
+  2014.
+\newblock {Preprint on webpage}.
+
+\bibitem[Mes77]{CocompleteDcpo}
+J.~Meseguer.
+\newblock On order-complete universal algebra and enriched functorial
+  semantics.
+\newblock In Marek Karpi{\'{n}}ski, editor, {\em Fundamentals of Computation
+  Theory}, pages 294--301, Berlin, Heidelberg, 1977. Springer Berlin
+  Heidelberg.
+
+\bibitem[PP02]{PlotkinPower}
+Gordon Plotkin and John Power.
+\newblock Notions of computation determine monads.
+\newblock In Mogens Nielsen and Uffe Engberg, editors, {\em Foundations of
+  Software Science and Computation Structures}, pages 342--356, Berlin,
+  Heidelberg, 2002. Springer Berlin Heidelberg.
+
+\bibitem[TO15]{TsukadaSheaves}
+Takeshi Tsukada and C.~H.~Luke Ong.
+\newblock Nondeterminism in game semantics via sheaves.
+\newblock In {\em Proceedings of the 2015 30th Annual ACM/IEEE Symposium on
+  Logic in Computer Science (LICS)}, LICS '15, pages 220--231, Washington, DC,
+  USA, 2015. IEEE Computer Society.
+
+\end{thebibliography}

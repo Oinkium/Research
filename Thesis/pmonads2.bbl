@@ -1,4 +1,10 @@
-\begin{thebibliography}{Shr04}
+\begin{thebibliography}{DH00}
+
+\bibitem[DH00]{DanosHarmer}
+V.~Danos and R.~Harmer.
+\newblock Probabilistic game semantics.
+\newblock In {\em Proceedings Fifteenth Annual IEEE Symposium on Logic in
+  Computer Science (Cat. No.99CB36332)}, pages 204--213, June 2000.
 
 \bibitem[Shr04]{StochasticCalculusII}
 Steven~E Shreve.

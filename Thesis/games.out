@@ -1,4 +1,4 @@
-\BOOKMARK [0][-]{chapter.1}{A Fully Abstract Game Semantics for Idealized Algol}{}% 1
+\BOOKMARK [0][-]{chapter.1}{A Sequoidal Game Semantics for Idealized Algol}{}% 1
 \BOOKMARK [1][-]{section.1.1}{Idealized Algol}{chapter.1}% 2
 \BOOKMARK [1][-]{section.1.2}{Games and Strategies}{chapter.1}% 3
 \BOOKMARK [1][-]{section.1.3}{Connectives on Games}{chapter.1}% 4
@@ -16,12 +16,13 @@
 \BOOKMARK [1][-]{section.1.15}{Denotational Semantics of Idealized Algol}{chapter.1}% 16
 \BOOKMARK [1][-]{section.1.16}{Order-Enrichment of G}{chapter.1}% 17
 \BOOKMARK [1][-]{section.1.17}{The Strategy cell}{chapter.1}% 18
-\BOOKMARK [1][-]{section.1.18}{Big-Step Operational Semantics}{chapter.1}% 19
-\BOOKMARK [1][-]{section.1.19}{Small-Step Operational Semantics}{chapter.1}% 20
-\BOOKMARK [1][-]{section.1.20}{Soundness}{chapter.1}% 21
-\BOOKMARK [1][-]{section.1.21}{Computational Adequacy}{chapter.1}% 22
-\BOOKMARK [1][-]{section.1.22}{Innocent Factorization}{chapter.1}% 23
-\BOOKMARK [1][-]{section.1.23}{Arena-only Semantics}{chapter.1}% 24
-\BOOKMARK [1][-]{section.1.24}{Full Abstraction}{chapter.1}% 25
-\BOOKMARK [1][-]{section.1.25}{The Intrinsic Equivalence Relation}{chapter.1}% 26
-\BOOKMARK [0][-]{chapter*.11}{Bibliography}{}% 27
+\BOOKMARK [0][-]{chapter.2}{Operational Semantics, Computational Adequacy and Full Abstraction}{}% 19
+\BOOKMARK [1][-]{section.2.1}{Big-Step Operational Semantics}{chapter.2}% 20
+\BOOKMARK [1][-]{section.2.2}{Small-Step Operational Semantics}{chapter.2}% 21
+\BOOKMARK [1][-]{section.2.3}{Soundness}{chapter.2}% 22
+\BOOKMARK [1][-]{section.2.4}{Computational Adequacy}{chapter.2}% 23
+\BOOKMARK [1][-]{section.2.5}{Innocent Factorization}{chapter.2}% 24
+\BOOKMARK [1][-]{section.2.6}{Arena-only Semantics}{chapter.2}% 25
+\BOOKMARK [1][-]{section.2.7}{Full Abstraction}{chapter.2}% 26
+\BOOKMARK [1][-]{section.2.8}{The Intrinsic Equivalence Relation}{chapter.2}% 27
+\BOOKMARK [0][-]{chapter*.11}{Bibliography}{}% 28

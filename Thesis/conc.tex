@@ -1,0 +1,473 @@
+\documentclass[11pt]{report}
+
+\let\FEWFONTS=1
+\input{../common/preamble}
+
+\begin{document}
+
+\chapter{Further Directions}
+
+\section{Stateless Languages}
+\label{SecStatelessLanguages}
+
+In this thesis, the base language we have used has been the stateful language Idealized Algol.  
+One area to explore is whether the techniques we have developed allow us to build models of effectful versions of stateless languages such as PCF.
+
+One immediate problem we face is that the addition of nondeterministic effects to PCF allows us to distinguish terms that cannot be distinguished within PCF itself.  
+Consider, for instance, the PCF term
+\[
+  M = \lambda x^{\bool}.\If x \Then \Omega \Else (\If x \Then \true \Else \Omega)
+  \]
+is observationally equivalent (in PCF) to $\Omega$ -- informally, because the term $x$ must have the same `value' both time it is called, so if it is false the first time, then it must be false the second time.
+However, the same term inside PCF with finite nondeterminism is not observationally equivalent to $\Omega$: if we substitute nondeterministic choice in for $x$, then it could be false the first time and true the second, causing the term to converge to $\true$.
+
+This means that if $\G$ is a `truly fully abstract' model of PCF -- i.e., one in which observational equivalence of terms corresponds to equality of morphisms rather than intrinsic equivalence\footnote{As an example, take any model that is full abstract in our sense, and take the quotient by the intrinsic equivalence relation.} -- then there can be no natural inclusion functor from $\G$ into a model of PCF with finite nondeterminism.  
+Indeed, in such a model $\deno{M}$ and $\deno{\Omega}$ are the same morphism, so they would have to be sent to the same morphism in the model of nondeterministic PCF.
+
+This is a problem for us, since both our techniques -- the Kleisli category and the $\G/\X$ construction -- have a natural functor coming out of the original category $\G$.
+
+All is not lost, however, since we can still try and impose some condition on the original model $\G$ of PCF to say that it is still fine-grained enough to distinguish between certain morphisms that are denotations of observationally equivalent PCF terms.  
+One convenient way to do this is to ask that $\G$ should embed into some model $\G^{IA}$ of Idealized Algol.  
+An obvious case when this holds is when $\G$ is the (unquotiented) Hyland-Ong category of arenas and innocent strategies, and $\G^{IA}$ is the category of arenas and single-threaded strategies.
+
+For example, fix $X\in\{\bB,\bN\}$ and let \emph{Nondeterministic PCF} be the langauge PCF, together with a constant $\ask_X \from \bool$ that plays the role of a nondeterministic oracle.  
+I.e., it is the language with types given by the following inductive grammar.
+\[
+  T \Coloneqq \bool \mid \nat \mid T \to T
+  \]
+And with a type theory as shown in Figure \ref{FigNDPcfTypeTheory}.
+\begin{figure}
+  \begin{mathpar}
+    \inferrule*{ }{\Gamma,x\from T \ts x \from T}
+    \and
+    \inferrule*{\Gamma\ts M \from S \to T \\ \Gamma \ts N \from S}{\Gamma\ts MN \from T}
+    \and
+    \inferrule*{\Gamma,x\from S \ts M \from T}{\Gamma \ts \lambda x^S.M \from S \to T}
+    \and
+    \inferrule*{ }{\Gamma\ts\true\from\bool}
+    \and
+    \inferrule*{ }{\Gamma\ts\false\from\bool}
+    \\
+    \inferrule*[right={$T\in\{\bool,\nat\}$}]{\Gamma\ts M \from \bool \\ \Gamma \ts N \from T \\ \Gamma \ts P \from T}{\Gamma\ts \If M \Then N \Else P \from T}
+    \\
+    \inferrule*{ }{\Gamma\ts n\from\nat}
+    \and
+    \inferrule*{\Gamma\ts M \from \nat}{\Gamma\ts \suc M \from \nat}
+    \and
+    \inferrule*{\Gamma\ts M \from \nat}{\Gamma\ts \pred M\from \nat}
+    \\
+    \inferrule*[right={$T\in\{\bool,\nat\}$}]{\Gamma\ts M \from \nat \\ \Gamma\ts N \from T \\ \Gamma \ts P \from T}{\Gamma \ts \IfO M \Then N \Else P \from T}
+    \and
+    \inferrule*{\Gamma \ts M \from T \to T}{\Gamma \ts \Y_T M \from T}
+    \and
+    \inferrule*{ }
+    {\ask_X \from\bool}
+  \end{mathpar}
+  \caption[Type theory for a variant of PCF with nondeterminism.]
+  {Type theory for a variant of PCF with nondeterminism.
+  Note that if the nondeterminism is infinite (i.e., $X=\bN$), then it is common (see \cite{LairdOrdinalGames} for nondeterminism and \cite{ProbabilisicPcf} for the probabilistic case) to modify the conditional construct $\IfO M\Then N \Else P$ so that the value of $M$ is passed into $P$ (so that the typing rule for $\IfO$ becomes
+  \[
+    \inferrule*[right={$T\in\{\bool,\nat\}$}]{\Gamma\ts M \from \nat \\ \Gamma \ts N \from T \\ \Gamma \ts P \from \nat \to T}
+    {\Gamma \ts \IfO M \Then N \Else P \from T}\,.
+    \]
+  The idea behind this is that if $M$ evaluates to $0$ then $N$ will be evaluated, and if it evaluates to $n+1$ then $P\,n$ will be evaluated.
+  In ordinary deterministic PCF, this does not change the expressive power of the language, since we could always write
+  \[
+    \IfO M \Then N \Else (P\,M)\,.
+    \]
+  However, this does not work if $M$ may exhibit nondeterministic behaviour, since it may evaluate to two different values the two times it is called.
+  We will stick with the variant shown above for the sake of simplicity, but nothing changes in our proofs if we choose the other version.}
+  \label{FigNDPcfTypeTheory}
+\end{figure}
+We endow this language with an operational semantics of may testing.  
+Define a \emph{canonical form} of the language to be a term taking one of the following forms.
+\begin{itemize}
+  \item At type $\bool$, the constants $\true$ and $\false$;
+  \item at type $\nat$, the numerals $n$; and
+  \item at type $S \to T$, terms of the form $\lambda x^S.M$.
+\end{itemize}
+We then define a relation $M \converges c$ (read `$M$ \emph{may converge to} $c$'), for $M$ a term of Nondeterministic PCF and $c$ a canonical form, inductively as in Figure \ref{FigNDPCFOpSem}.
+\begin{figure}
+  \begin{mathpar}
+    \inferrule*{ }{c\converges c}
+    \and
+    \inferrule*{M\converges\lambda x.M' \\ M'[N/x] \converges c}{M\,N\converges c}
+    \\
+    \inferrule*{M\converges \true \\ N \converges c}{\If M \Then N \Else P \converges c}
+    \and
+    \inferrule*{M\converges \false \\ P \converges c}{\If M \Then N \Else P \converges c}
+    \\
+    \inferrule*{M \converges n}{\suc M \converges n+1}
+    \and
+    \inferrule*{M \converges n+1}{\pred M \converges n}
+    \and
+    \inferrule*{M \converges 0}{\pred M \converges 0}
+    \\
+    \inferrule*{M \converges 0 \\ N \converges c}{\IfO M \Then N \Else P \converges c}
+    \and
+    \inferrule*{M \converges n+1 \\ P \converges c}{\IfO M \Then N \Else P \converges c}
+    \\
+    \inferrule*{M(\Y M) \converges c}{\Y M \converges c}
+    \and
+    \inferrule*{ }{\ask_X \converges \true}
+    \and
+    \inferrule*{ }{\ask_X \converges \false}
+  \end{mathpar}
+  \caption{Big-step operational semantics for Nondeterministic PCF with may testing}
+  \label{FigNDPCFOpSem}
+\end{figure}
+
+It is a quick check to see that every term of Nondeterministic PCF may be regarded as a term of IA${}_X$, giving us a denotational semantics of the language within $\Kl_{R_X}\G$, where $\G$ is the category of arenas and single-threaded strategies.
+But we can be more precise than this: we know from \cite{hoPcf} that the denotation of any term of ordinary PCF is an innocent strategy, so that the denotational semantics of PCF within $\G$ factors through the inclusion $\G_{inn}\hookrightarrow\G$, where $\G_{inn}$ is the category of arenas and innocent strategies.
+In particular, the denotation within $\Kl_{R_X}\G$ of any term of ordinary PCF lives within $\Kl_{R_X}\G_{inn}$.
+Moreover, the denotation of the new term $\ask_X$, being given by the identity morphism in $\G$, also lives in $\Kl_{R_X}\G_{inn}$, meaning that the whole of Nondeterministic PCF is interpreted within this category.
+
+It is also quick to check that our operational semantics in Figure \ref{FigNDPCFOpSem} may be regarded as a subset of the rules for IA${}_X$ with May Testing, as we studied in \sec \ref{SecMayTesting}.
+Specifically, if $M$ is a term of PCF and $c$ a canonical form, then $M\converges c$ if and only if
+\[
+  \blank,()\ts M\converges c,()
+  \]
+in IA${}_X$.
+
+We want to use our Computational Adequacy result for IA${}_X$ with May Testing (Corollary \ref{CorMayAdequacy}) to get a Computational Adequacy result for Nondeterministic PCF.
+The only slight problem is that Corollary \ref{CorMayAdequacy} is stated for terms of type $\com$, whereas our language has no such type.  
+We get around this by using $\nat$ as our main ground type rather than $\com$, and by using the following easy lemma.
+
+\begin{lemma}
+  Let $M\from\nat$ be a term of IA${}_X$.  
+  Then there exists $n$ such that $\Gamma,s\ts M\converges n,s'$ if and only if
+  \[
+    \Gamma,s\ts \IfO M \Then \skipp \Else \skipp \converges \skipp, s'\,.
+    \]
+\end{lemma}
+
+We will write $\delta\from \bN \to \bC$ for the denotation of the term-in-context 
+\[
+  x\from\nat \ts \IfO x \Then \skipp \Else \skipp \from \com\,.
+  \]
+Then we immediately get the following result as a special case of Corollary \ref{CorMayAdequacy}.
+
+\begin{corollary}[Computational Adequacy for Nondeterministic PCF]
+  Let $M\from\nat$ be a closed term of Nondeterministic PCF.
+  Consider the denotation $\deno M \from 1 \to \bN$ in $\Kl_{R_X}\G_{inn}$ as a morphism $1 \to (X \to \bN)$ in $\G_{inn}$, and thence as a morphism $1 \to (X \to \bN)$ in $\G$.
+
+  Then there exists some sequence $u\in X^*$ such that the composite
+  \[
+    1 \xrightarrow{\deno M}
+    (X \to \bN) \xrightarrow{X \to \delta}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Varr \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$, if and only if $M\converges n$ for some $n$.
+  \label{CorMayAdequacyPCF}
+\end{corollary}
+
+Note that Corollary \ref{CorMayAdequacyPCF}, which does not depend on any specific details of the models $\G_{inn}$ and $\G$ beyond the fact that they are computationally adequate for ordinary PCF and Idealized Algol, uses morphisms $\delta$, $\eta_u$, $\deno{\neww}$ and $\t_{|u|}$ that do not occur in the category $\G_{inn}$.
+
+In the case that $\G$ is the category of arenas and single-threaded strategies, and $\G_{inn}$ the category of arenas and innocent strategies, we can restate Corollary \ref{CorMayAdequacyPCF} in a way that does not refer to Idealized Algol terms at all.
+
+\begin{corollary}
+  Let $M\from\nat$ be a closed term of Nondeterministic PCF and consider the denotation $\deno M \from 1 \to \bN$ in $\Kl_{R_X}\G_{inn}$ as a morphism $1 \to (X \to \bN)$ in $\G_{inn}$.  
+
+  Then, for all $n\in\bN$, there exists some sequence $s\in\deno M$ such that $s\vert_{\bN} = qn$ if and only if $M\converges n$.
+  \label{CorMayAdequacyPcfComb}
+\end{corollary}
+\begin{proof}
+  Corollary \ref{CorMayAdequacyPCF}, together with our earlier analysis, immediately tells us that we have
+  \[
+    \exists s\in \deno M \esuchthat s\vert_\bN = qn\text{ for some $n$} \Leftrightarrow \exists n\esuchthat M\converges n\,.
+    \]
+  The problem is that the two $n$'s might be different.  
+  However, we can obtain the desired result for a given $n$ from this one by composing with an appropriate term $\nat \to \nat$ that converges if and only if its input is equal to $n$.
+\end{proof}
+
+The passage to full abstraction, via innocent definability for PCF is essentially the same as for Idealized Algol (though if $X=\bN$, then we need to cut down to a category of \emph{recursive} strategies).
+
+If we so desire, we can continue with the programme from \sec\ref{SecMayTesting}, declaring two Kleisli strategies $A \to (X \to B)$ to be equivalent if they contain the same plays after restriction to $A \to B$.
+We can then do away with the plays in $X$ altogether and give a model that involves only nondeterministic strategies.
+
+At this point, we run into a well-known problem: under what circumstances should a nondeterministic strategy be described as \emph{innocent}? 
+The answer that we get from our model is that it is innocent if and only if it takes the form
+\[
+  A \xrightarrow{\sigma} (X \to B) \xrightarrow{\deno{\ask_X} \to B} B\,,
+  \]
+where $\sigma$ is an innocent deterministic strategy.  
+This is the definition considered -- and ultimately rejected for being too indirect -- by Harmer in his thesis \cite[\sec 3.7]{RusssThesis}.  
+This definition is correct, but, perhaps surprisingly, does not coincide with the same definition that we would get by naively applying the usual definition of innocence to nondeterministic strategies.
+
+Consider, for example, the denotation of the term 
+\[
+  \If \ask_\bB \Then (\lambda f.f\true) \Else (\lambda f.f\false)\,,
+  \]
+which has maximal plays taking one of the following two forms.
+\begin{mathpar}
+  \begin{tikzcd}[row sep=5pt]
+    %
+      &
+        & q \\
+    %
+      & q \arrow[ur, bend left=10]
+        & \\
+    |[alias=A]| q \arrow[ur, bend left=10]
+      &
+        & \\
+    |[alias=B]| \true \arrow[u, bend left=45, from=B.west, to=A.west]
+      &
+        & \\
+    \vdots
+      &
+        & \\
+    |[alias=C]| q  \arrow[uuuur, from=C.east, bend right=10]
+      & 
+        & \\
+    |[alias=D]| \true \arrow[u, bend left=45, from=D.west, to=C.west]
+      &
+        & \\
+    %
+      & a \arrow[uuuuuu, bend right=10]
+        & \\
+    %
+      &
+        & a \arrow[uuuuuuuu, bend right=10]
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}[row sep=5pt]
+    %
+      &
+        & q \\
+    %
+      & q \arrow[ur, bend left=10]
+        & \\
+    |[alias=A]| q \arrow[ur, bend left=10]
+      &
+        & \\
+    |[alias=B]| \false \arrow[u, bend left=45, from=B.west, to=A.west]
+      &
+        & \\
+    \vdots
+      &
+        & \\
+    |[alias=C]| q  \arrow[uuuur, from=C.east, bend right=10]
+      & 
+        & \\
+    |[alias=D]| \false \arrow[u, bend left=45, from=D.west, to=C.west]
+      &
+        & \\
+    %
+      & a \arrow[uuuuuu, bend right=10]
+        & \\
+    %
+      &
+        & a \arrow[uuuuuuuu, bend right=10]
+  \end{tikzcd}
+\end{mathpar}
+Note that this strategy displays typically non-innocent behaviour: if player $P$ has played $\true$ on the left, then she must play $\true$ again whenever player $O$ asks, even though the original move $\true$ occurs outside the current $P$-view.
+
+In the Kleisli category, the innocence of this strategy becomes clear: plays are either of the form
+\[
+  \begin{tikzcd}[row sep=5pt]
+    %
+      &
+        &
+          & q \\
+    |[alias=Y]| q  \arrow[urrr, bend left=10] \\
+    |[alias=Z]| \true \arrow[u, bend left=45, from=Z.west, to=Y.west] \\
+    %
+      &
+        & q \arrow[uuur, bend left=10]
+          & \\
+    %
+      & |[alias=A]| q \arrow[ur, bend left=10]
+        &
+          & \\
+    %
+      & |[alias=B]| \true \arrow[u, bend left=45, from=B.west, to=A.west]
+        &
+          & \\
+    %
+      & \vdots
+        &
+          & \\
+    %
+      & |[alias=C]| q  \arrow[uuuur, from=C.east, bend right=10]
+        & 
+          & \\
+    %
+      & |[alias=D]| \true \arrow[u, bend left=45, from=D.west, to=C.west]
+        &
+          & \\
+    %
+      &
+        & a \arrow[uuuuuu, bend right=10]
+          & \\
+    %
+      &
+        &
+          & a \arrow[uuuuuuuuuu, bend right=10]
+  \end{tikzcd}
+  \]
+or of the form
+\[
+  \begin{tikzcd}[row sep=5pt]
+    %
+      &
+        &
+          & q \\
+    |[alias=Y]| q  \arrow[urrr, bend left=10] \\
+    |[alias=Z]| \false \arrow[u, bend left=45, from=Z.west, to=Y.west] \\
+    %
+      &
+        & q \arrow[uuur, bend left=10]
+          & \\
+    %
+      & |[alias=A]| q \arrow[ur, bend left=10]
+        &
+          & \\
+    %
+      & |[alias=B]| \false \arrow[u, bend left=45, from=B.west, to=A.west]
+        &
+          & \\
+    %
+      & \vdots
+        &
+          & \\
+    %
+      & |[alias=C]| q  \arrow[uuuur, from=C.east, bend right=10]
+        & 
+          & \\
+    %
+      & |[alias=D]| \false \arrow[u, bend left=45, from=D.west, to=C.west]
+        &
+          & \\
+    %
+      &
+        & a \arrow[uuuuuu, bend right=10]
+          & \\
+    %
+      &
+        &
+          & {a\,,} \arrow[uuuuuuuuuu, bend right=10]
+  \end{tikzcd}
+  \]
+where now the move $\true$ or $\false$ in the nondeterministic oracle game (on the very left) locks the `branching-time information' into the $P$-view.
+
+There is a surprising and elegant definition of nondeterministic innocence (see Levy \cite{levy2014morphisms}, with the correction given by Tsukada and Ong in \cite[Proposition 46]{TsukadaSheaves}), which we shall not detail here.
+Tsukada and Ong have also demonstrated that it is instructive to consider strategies as presheaves over plays, where we assign to each individual play a set of possible branches that lead us to that play.  
+In this formalism, the innocent nondeterministic strategies are preciesly those presheaves that are sheaves with respect to a certain natural Grothendieck topology.
+
+What, then, can our Kleisli category model do for us?
+One answer is that it provides a general setting in which we can prove results such as adequacy without worrying about the specific details of a nondeterministic construction.  
+For example, we can prove a computational adequacy result for Tsukada and Ong's model $\G_{TO}$ from Corollary \ref{CorMayAdequacyPcfComb} by noting that the denotational semantics in that category factors through the natural functor $\Kl_{R_\bB}\G \to \G_{TO}$.  
+Of course, Tsukada and Ong have provided their own proof of Computational Adequacy in the finite nondeterminism case, but this method could be useful if, for example, we wanted to extend their model to deal with countable nondeterminism.
+
+\section{Stateful Effects}
+
+In Chapters \ref{ChapGames} and \ref{ChapFullAbstraction}, we presented a categorical algebra of scoped state via sequoidal categories.  
+A natural question to ask is whether we could use the techniques we have developed in the remainder of this thesis in the stateful case.  
+Indeed, the state monad
+\[
+  A \mapsto (W \to (A \times W))
+  \]
+can be constructed in categories of games.  
+More ambitiously, we might hope to capture a parametric notion of local state, via the action
+\[
+  (R,W).A = R \to (A \times W)\,.
+  \]
+of $\oppcat \G \times \G$ on $\G$.
+
+In this section, we will present some of the problems involved in this case.  
+
+One issue, which we have touched on already, is that the state monad is not a monoidal functor, which was the condition we needed in order to ensure that its Kleisli category inherited a monoidal structure.  
+Indeed, there is not obvious natural morphism
+\[
+  (W \to (A \times W)) \times (W \to (B \times W)) \to (W \to ((A \times B) \times W)\,.
+  \]
+
+The parametric version suffers from a different problem.  
+Suppose we have two \Mellies morphisms
+\begin{mathpar}
+  f \from A \to (R \to (B \times W))
+  \and
+  g \from B \to (R' \to (C \times W'))\,.
+\end{mathpar}
+Then their composition will be given by a \Mellies morphism
+\[
+  f;g \from A \to ((R \times R') \to (C \times (W \times W')))\,:
+  \]
+in other words, we will have combined the two inputs $R$ and $R'$ and the two outputs $W$ and $W'$, without any way of specifying that the output state $W$ from $f$ should be used as the input state $R'$ from $g$.
+
+The difficulty is that we might want $W$ and $R'$ to represent different variables, in which case this is the right thing to do, but we might want them to represent the same storage cell, in which case, the output from $W$ should be fed into $R'$.  
+It's not clear how to deal with this in a category-theoretic way.
+
+Linear type theory provides a perspective on this problem.  
+Note that the state monad and the parametric action above can both be defined inside an arbitrary monoidal category.  
+However, if we want our language to exhibit any typically stateful behaviour, then we need to be able to refer to the same variable more than once: there is little point writing a value into a cell if we are not able to read from it later.  
+This is not a problem in a monolithic stateful system -- such as we have with the state monad -- but if we want to refer to individual storage cells using variables in the language, then we need our category to admit diagonals, to allow us to refer to a storage cell twice.
+Since the state action above does not interact in any way with the Cartesian structure of the category (i.e., the diagonals and terminal morphisms), it cannot hope to capture local state in this way.
+
+One avenue that could shed some light on this issue is the sequoidal semantics which we developed for game semantics, in which the stateful behaviour is intimately connected to the Cartesian structure of the category, via the exponential.
+
+There is also a \emph{local state monad}, due to Plotkin and Power \cite{PlotkinPower} and based on a construction by Levy \cite{PaulsThesis}, which is defined on the category $[\Inj,\Set]$ of functors from $\Inj$, the category of natural numbers and injections, into the category of sets.  
+It is given by the following formula, where $V$ denotes a fixes set of values.
+\[
+  (TA)(n) = V^n \to \left( \int^{p\from\Inj} V^p \times A(p) \times \Inj(n, p) \right)
+  \]
+Here, if $A \from \Inj \to \Set$ is a functor, then we think of $A(n)$ as the set of all values that $A$ takes on in the presence of $n$ local variables taking values in $V$.
+
+We cannot construct this coend in the category of games, but there is a clear link with our constructions with probabilistic monads.  
+Note that the `state action'
+\[
+  (W, A) \mapsto W \to (A \times W)
+  \]
+has mixed variance in $W$, suggesting a modification of our $\C/\X$ construction that uses a coend rather than an ordinary colimit.
+
+\section{Relational Models}
+
+The archetypal Cartesian closed category is the category $\Set$ of sets and functions.  
+Most of the work in this thesis has been to do with reader actions (including reader monads as a special case), and we have already provided a classification of the reader actions on $\Set$ -- up to the equivalence relation that identifies actions of monoidal categories $\X$ and $\YY$ if the resulting categories $\Set/\oppcat\X$ and $\Set/\oppcat\YY$ are isomorphic -- in Propositions \ref{PropColimitOfActionIsMonoidalFunctor} and \ref{PropMonoidalFunctorIsColimitOfReaderAction}: namely, they are classified by lax monoidal functors $F\from\Set \to \Set$, in such a way that if a reader action given by an oplax monoidal functor $j\from\X \to \Set$ corresponds to the functor $F \from \Set \to \Set$, then $\Set/\oppcat\X$ is isomorphic to the category $F_*\Set$ formed from $\Set$ by base change along $F$.
+Thus, the theory in the case of $\Set$ reduces to the theory of $\Set$-enriched base change.
+
+There are, however, many more examples in the literature of models of programming languages that ultimately derive from Kleisli categories for monads not of the reader kind.  
+The problem with this, from our point of view, is that the resulting Kleisli categories will not be automatically Cartesian.  
+This means that we need different methods to ensure that we end up with a category suitable for modelling a compositional semantics.
+
+For example, the Kleisli category for the powerset monad on $\Set$ is the category $\Rel$ of sets and relations.  
+This is a monoidal closed category, so can be used to model multiplicative linear type theory.
+By using a linear exponential comonad based on finite multisets, we can transform it into a Cartesian closed category.
+
+An important category derived from the category of sets and relations is the category $\Coh$ of coherence spaces.  
+A coherence space is a set with some additional structure on it -- namely, the structure of an undirected graph -- and a morphism between coherence spaces is a relation between sets that respects this structure in a particular way (see \cite{MelliesCoherence} for details).  
+
+Danos and Ehrhard in \cite{ProbabilisticCoherenceSpaces} develop a probabilistic version of coherence spaces, which is still monoidal closed.  
+By using the finite multiset comonad, we can transform it into a Cartesian closed category.  
+A striking result of Ehrhard, Pagani and Tasson \cite{ProbabilisicPcf} is that this category is already fully abstract for a probabilistic variant of PCF.
+
+This suggests an alternative way to get round the Cartesianness hurdle when adding effects: start with a model of the base language that is constructed by applying a linear exponential comonad to a monoidal closed category, and then delay application of the linear exponential comonad until after we have added the effect.
+
+Unfortunately, there is no real guarantee that a linear exponential comonad on the base category will give us a linear exponential comonad on a Kleisli category or one of the other effectful categories we have considered.  
+Some work is required to investigate the conditions in which we can lift an exponential construction in this way, given the functorial results from Chapter \ref{ChapParametricMonads}.  
+This will pave the way for us to understand the relational and coherence-space models using the ideas developed in this thesis.
+
+\section{Adequacy Proofs}
+
+In Chapters \ref{ChapMonads} and \ref{ChapParametricMonadsFullAbstraction} we proved Computational Adequacy via a factorization and operational techniques.  
+This is good, because it allows us to assume very little about the underlying model, other than that it is itself computationally adequate.  
+Nevertheless, our techniques rely very heavily on the fact that our base language is Idealized Algol.  
+Although we outlined ways to get around this in Section \ref{SecStatelessLanguages}, it would also be useful to have a conventional logical relations-based proof of Computational Adequacy.
+
+Assume that $\G$ is a Cartesian closed category enriched in directed-complete partial orders (dcpos).
+If $M\from\G \to \G$ is a monoidal monad, then the Kleisli category associated to $M$ inherits an order, whereby $\sigma\le\tau\from A \to B$ in $\Kl_M\G$ if $\sigma\le\tau\from A \to MB$ in $\G$.
+Moreover, since composition in the Kleisli category is given by a composition in the base category, this partial order will be respected by composition, as will be limits of directed sets.
+
+Suppose again that $\G$ is a dcpo-enriched category, and that a monoidal category $\X$ acts on $\G$ via a lax action.  
+Then the construction of \Mellies yields an $[\X,\Dcpo]$-enriched category $\Mell_\X\G$.
+Since $\Dcpo$ is cocomplete \cite{CocompleteDcpo}, we can construct the coends we need to define the Day convolution product in $[\X,\Dcpo]$.
+
+If $\X$ is small, or if the required colimits exist for other reasons, then we may take the change of base with respect to the colimit functor $[\X,\Dcpo] \to \Dcpo$ to $\Mell_\X\G$ to give us a $\Dcpo$-enriched category $\G/\X$.
+
+\bibliographystyle{alpha2}
+\bibliography{../common/phd_bibliography}
+
+\end{document}
