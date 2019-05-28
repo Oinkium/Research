@@ -1,5 +1,17 @@
 \begin{thebibliography}{EPT18}
 
+\bibitem[AP81]{PlotkinApt}
+K.~R. Apt and G.~D. Plotkin.
+\newblock A cook's tour of countable nondeterminism.
+\newblock In Shimon Even and Oded Kariv, editors, {\em Automata, Languages and
+  Programming}, pages 479--494, Berlin, Heidelberg, 1981. Springer Berlin
+  Heidelberg.
+
+\bibitem[AP86]{Apt}
+K.~R. Apt and G.~D. Plotkin.
+\newblock Countable nondeterminism and random assignment.
+\newblock {\em J. ACM}, 33(4):724--767, August 1986.
+
 \bibitem[DE11]{ProbabilisticCoherenceSpaces}
 Vincent Danos and Thomas Ehrhard.
 \newblock Probabilistic coherence spaces as a model of higher-order
@@ -10,6 +22,11 @@ Vincent Danos and Thomas Ehrhard.
 Thomas Ehrhard, Michele Pagani, and Christine Tasson.
 \newblock Full abstraction for probabilistic pcf.
 \newblock {\em J. ACM}, 65(4):23:1--23:44, April 2018.
+
+\bibitem[Fie96]{Fiech}
+Adrian Fiech.
+\newblock Colimits in the category dcpo.
+\newblock {\em Mathematical Structures in Computer Science}, 6:455--468, 1996.
 
 \bibitem[Har99]{RusssThesis}
 Russell~S. Harmer.
@@ -31,6 +48,11 @@ J.~Laird.
 Paul~Blain Levy.
 \newblock Call-by-push-value.
 \newblock Technical report, Queen Mary College, 2001.
+
+\bibitem[Lev08]{LevyGsInfinite}
+Paul~Blain Levy.
+\newblock Infinite trace equivalence.
+\newblock {\em Annals of Pure and Applied Logic}, 151(2):170 -- 198, 2008.
 
 \bibitem[Lev14]{levy2014morphisms}
 Paul~Blain Levy.

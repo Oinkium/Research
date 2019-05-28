@@ -467,6 +467,30 @@ Since $\Dcpo$ is cocomplete \cite{CocompleteDcpo}, we can construct the coends w
 
 If $\X$ is small, or if the required colimits exist for other reasons, then we may take the change of base with respect to the colimit functor $[\X,\Dcpo] \to \Dcpo$ to $\Mell_\X\G$ to give us a $\Dcpo$-enriched category $\G/\X$.
 
+Concretely, the morphisms in $\G/\X$ are the same as usual, while the order structure is given by a transfinite construction as in \cite[2.17]{Fiech}.  
+In particular, if $\sigma,\tau\from A \to B$ in $\G/\X$ are given by morphisms
+\begin{mathpar}
+  \tilde{\sigma}\from A \to X.B
+  \and
+  \tilde{\tau} \from A \to Y.B
+\end{mathpar}
+in $\G$, and if there are morphisms $h\from X \to Z$, $k\from Y \to Z$ in $\X$ such that
+\[
+  \sigma;(h.B)\le\tau;(k.B)\,,
+  \]
+then $\sigma\le\tau$ in $\G/\X$.
+
+In either case, we now define the interpretation of the fixpoint combinator $\Y$ using the properties of this new order, which will be enough to prove adequacy along the lines of Theorem \ref{TheComputationalAdequacyIA}.
+
+It is worth mentioning that although we can prove computational adequacy for our various Kleisli categories (and categories of the form $\G/\X$), it does not automatically follow that we can prove adequacy in the same way for the various quotiented categories.  
+An important example is our model of countable nondeterminism with must testing.  
+It is well known (see, e.g., \cite{Apt,PlotkinApt}) that countable nondeterminism is inextricably linked to dicontinuity of composition, which robs us of an important ingredient in the standard order-theoretic proof of adequacy.
+
+The solution is to prove adequacy in the normal way for the semantics of IA${}_\bN$ in $\G_\bN$, and then to apply the argument from Corollary \ref{CorAdeqMust} to reduce this to a Computational Adequacy result for the semantics of Idealized Algol with countable nondeterminism and must testing.
+Here, we are using an idea due to Levy \cite{LevyGsInfinite}: that if we want to prove adequacy for countable nondeterminism, then we need a form of \emph{explicit forcing}, in which we uncover some information about the points at which we have made an infinite nondeterministic branch.  
+In our case, the explicit forcing is done through the language IA${}_\bN$, which creates a complete record of the nondeterministic values we have chosen along the way.  
+We have then applied the second part of Levy's technique -- \emph{hiding} -- to remove the explicit information and yield a pure, computationally adequate model of countable nondeterminism.
+
 \bibliographystyle{alpha2}
 \bibliography{../common/phd_bibliography}
 

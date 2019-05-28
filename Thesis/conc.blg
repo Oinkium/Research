@@ -4,45 +4,45 @@ The top-level auxiliary file: conc.aux
 The style file: alpha2.bst
 Database file #1: ../common/phd_bibliography.bib
 Warning--empty institution in RusssThesis
-You've used 11 entries,
+You've used 15 entries,
             2549 wiz_defined-function locations,
-            642 strings with 6226 characters,
-and the built_in function-call counts, 4441 in all, are:
-= -- 462
-> -- 161
-< -- 9
-+ -- 49
-- -- 48
-* -- 289
-:= -- 709
-add.period$ -- 37
-call.type$ -- 11
-change.case$ -- 63
-chr.to.int$ -- 11
-cite$ -- 12
-duplicate$ -- 182
-empty$ -- 354
-format.name$ -- 65
-if$ -- 947
+            670 strings with 6664 characters,
+and the built_in function-call counts, 6159 in all, are:
+= -- 641
+> -- 223
+< -- 12
++ -- 68
+- -- 66
+* -- 413
+:= -- 977
+add.period$ -- 50
+call.type$ -- 15
+change.case$ -- 85
+chr.to.int$ -- 15
+cite$ -- 16
+duplicate$ -- 252
+empty$ -- 492
+format.name$ -- 89
+if$ -- 1313
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 7
-newline$ -- 59
-num.names$ -- 37
-pop$ -- 59
+missing$ -- 11
+newline$ -- 79
+num.names$ -- 51
+pop$ -- 75
 preamble$ -- 1
-purify$ -- 72
+purify$ -- 98
 quote$ -- 0
-skip$ -- 159
+skip$ -- 219
 stack$ -- 0
-substring$ -- 289
-swap$ -- 36
-text.length$ -- 9
-text.prefix$ -- 6
+substring$ -- 423
+swap$ -- 49
+text.length$ -- 12
+text.prefix$ -- 8
 top$ -- 0
-type$ -- 88
+type$ -- 120
 warning$ -- 1
-while$ -- 43
-width$ -- 14
-write$ -- 151
+while$ -- 61
+width$ -- 18
+write$ -- 205
 (There was 1 warning)

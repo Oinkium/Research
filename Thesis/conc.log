@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  27 MAY 2019 15:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  28 MAY 2019 22:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1092,20 +1092,28 @@ LaTeX Warning: Reference `ChapMonads' on page 12 undefined on input line 455.
 LaTeX Warning: Reference `ChapParametricMonadsFullAbstraction' on page 12 undef
 ined on input line 455.
 
-(./conc.bbl [12]
-Underfull \hbox (badness 2856) in paragraph at lines 41--47
+[12]
+
+LaTeX Warning: Reference `TheComputationalAdequacyIA' on page 13 undefined on i
+nput line 483.
+
+
+LaTeX Warning: Reference `CorAdeqMust' on page 13 undefined on input line 489.
+
+(./conc.bbl [13] [14
+
+]
+Underfull \hbox (badness 2856) in paragraph at lines 63--69
 \OT1/cmr/m/n/10.95 https://www.irif.fr/ mellies/mpri/mpri-m2/mpri-mellies-lectu
 re-
  []
 
-[13
-
-]) [14]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 473.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 473.
+) [15]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 497.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 497.
  (./conc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 473.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 473.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 497.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 497.
 Package rerunfilecheck Info: File `conc.out' has not changed.
 (rerunfilecheck)             Checksum: A006CD4AF2989C9AA154A234043EB64D;352.
 
@@ -1114,10 +1122,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 24372 strings out of 492616
- 456058 string characters out of 6135178
- 543745 words of memory out of 5000000
- 27711 multiletter control sequences out of 15000+600000
+ 24383 strings out of 492616
+ 456198 string characters out of 6135178
+ 543879 words of memory out of 5000000
+ 27717 multiletter control sequences out of 15000+600000
  26421 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,18n,82p,863b,996s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1142,10 +1150,10 @@ s/euler/eufm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 </usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr/share/tex
 mf-dist/fonts/type1/public/stmaryrd/stmary8.pfb>
-Output written on conc.pdf (14 pages, 251305 bytes).
+Output written on conc.pdf (15 pages, 255887 bytes).
 PDF statistics:
- 247 PDF objects out of 1000 (max. 8388607)
- 202 compressed objects within 3 object streams
- 38 named destinations out of 1000 (max. 500000)
+ 260 PDF objects out of 1000 (max. 8388607)
+ 214 compressed objects within 3 object streams
+ 43 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 
