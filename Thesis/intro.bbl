@@ -1,0 +1,55 @@
+\begin{thebibliography}{CBHDP06}
+
+\bibitem[AJM00]{ajmPcf}
+Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
+\newblock Full abstraction for {PCF}.
+\newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
+
+\bibitem[CBHDP06]{Powerset}
+M~C.~B.~Hennessy and G~D.~Plotkin.
+\newblock {\em Full Abstraction for a Simple Parallel Programming Language},
+  volume~74, pages 108--120.
+\newblock 01 2006.
+
+\bibitem[HO00]{hoPcf}
+J.M.E. Hyland and C.-H.L. Ong.
+\newblock On full abstraction for {PCF}: {I}, {II}, and {III}.
+\newblock {\em Information and Computation}, 163(2):285 -- 408, 2000.
+
+\bibitem[Jon95]{Haskell}
+Mark~P. Jones.
+\newblock Functional programming with overloading and higher-order
+  polymorphism.
+\newblock In {\em Advanced Functional Programming, First International Spring
+  School on Advanced Functional Programming Techniques-Tutorial Text}, pages
+  97--136, Berlin, Heidelberg, 1995. Springer-Verlag.
+
+\bibitem[Nic94]{NickauPcf}
+Hanno Nickau.
+\newblock Hereditarily sequential functionals.
+\newblock In {\em International Symposium on Logical Foundations of Computer
+  Science}, pages 253--264. Springer, 1994.
+
+\bibitem[OR95]{OHearnRieckePcf}
+P.W. Ohearn and J.G. Riecke.
+\newblock Kripke logical relations and pcf.
+\newblock {\em Information and Computation}, 120(1):107 -- 116, 1995.
+
+\bibitem[Plo77]{PlotkinPcf}
+G.D. Plotkin.
+\newblock Lcf considered as a programming language.
+\newblock {\em Theoretical Computer Science}, 5(3):223 -- 255, 1977.
+
+\bibitem[PP02]{PlotkinPower}
+Gordon Plotkin and John Power.
+\newblock Notions of computation determine monads.
+\newblock In Mogens Nielsen and Uffe Engberg, editors, {\em Foundations of
+  Software Science and Computation Structures}, pages 342--356, Berlin,
+  Heidelberg, 2002. Springer Berlin Heidelberg.
+
+\bibitem[Sco76]{ScottDomains}
+D.~Scott.
+\newblock Data types as lattices.
+\newblock {\em SIAM Journal on Computing}, 5(3):522--587, 1976.
+
+\end{thebibliography}

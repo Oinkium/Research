@@ -1,0 +1,204 @@
+\documentclass[11pt]{report}
+
+\input{../common/preamble}
+
+\begin{document}
+
+\chapter{Introduction}
+
+\section{Denotational Semantics and Program Equivalence}
+
+Given two pieces of computer code, in what circumstances can we say that they are interchangeable?
+Clearly, the two pieces of code should return the same output for any choice of input values. 
+But -- depending on the expressive power of the language -- this might not be enough.
+
+For example, the following two Haskell functions appear to do the same thing.
+
+\begin{lstlisting}[language=haskell]
+f :: Int -> Int
+f n = if (n == 0) then 0 else 0
+
+g :: Int -> Int
+g n = 0
+\end{lstlisting}
+
+However, if we introduce a non-terminating function
+\begin{lstlisting}[language=haskell]
+diverge :: Int -> Int
+diverge x = diverge x
+\end{lstlisting}
+then it becomes clear that \lstinline[language=haskell]{f} and \lstinline[language=haskell]{g} are not interchangeable: since \lstinline[language=haskell]{f} always evaluates its argument \lstinline[language=haskell]{n}, \lstinline[language=haskell]{f (diverge 0)} will fail to terminate, whereas \lstinline[language=haskell]{g (diverge 0)} will give us \lstinline[language=haskell]{0}, since inputs to functions are evaluated lazily in Haskell.
+
+We can have another go at answering our original question, then, by adding the requirement that the two programs should behave in the same way if they are passed non-terminating inputs.
+Thus, we add to each datatype an extra distinguished value $\bot$ representing non-termination (so, for example, the type of integers is represented by the set $\bZ_\bot = \bZ + \{\bot\}$), and then function types are interpreted as functions between these sets -- so a term of type \lstinline[language=haskell]{Int -> Int} is reprepresented by a function $\bZ_\bot \to \bZ_\bot$.
+
+We need to be careful, though, since not every such function arises from a program in this way.
+For example, we cannot write a program corresponding to the function $\chi\from\bZ_\bot \to \bZ_\bot$ that sends $\bot$ to $0$ and all other values to $1$since $\chi$ is not constant, such a program would have to evaluate its argument, and would consequently fail to terminate if that argument did not terminate.
+
+If our language admits higher types, then it becomes especially important to exclude such `impossible' functions from our model.
+For example, if $F$ and $G$ are two programs of type \lstinline[language=haskell]{(Int -> Int) -> Int} -- i.e., functions that take in a function from integers to integers and return an integer -- then we do not want to declare that $F$ and $G$ are different on the basis that $F(\chi)\ne G(\chi)$.  
+
+In order to rule out these `impossible' functions, we define a partial order on the sets $T_\bot$ corresponding to types, defined by setting $x\le x$ and $\bot\le x$ for all $x$.
+We then require that functions should be monotonic and continuous with respect to this order. 
+For example, a monotonic function $\bZ_\bot \to \bZ_\bot$ is either constant (correponding to a function that does not evaluate its argument at all) or sends $\bot$ to $\bot$ and is otherwise unconstrained (corresponding to a function that evaluates its argument).
+It turns out that if we order functions pointwise, then we get the correct constraints at higher types as well.
+
+Even if we get round the problems with divergence, there are other language features that we may need to consider if we want to determine whether two pieces of code are equivalent. 
+If our functions have access to global variables, then we need to check that these variables end up taking the same final value, whatever their initial values were.
+If we have IO calls in our language, then we need to check that the functions print out the same text, whatever the user input was.
+If we have a random number generator, then we need to check that our functions return the same \emph{set} of values, whatever the input.
+
+What we have been doing in all these examples is \emph{denotational semantics}: the art of using mathematical objects to study logic and programming languages.  
+In the first case, our denotational semantics was expressed through the mathematics of sets and functions, whereby we captured the behaviour of a (programming language) function via a (mathematical) function.
+
+Then, following Scott \cite{ScottDomains}, we refind this model to one based on partially-ordered sets -- more specifically, \emph{Scott domains} -- in which we modelled the behaviour or a program via an associated Scott-continuous functions between domains.
+
+In our other examples, we need to come up with further refinements to our model in order to incorporate the new computational effects. 
+For example, to handle nondeterminism, we might want to switch to using nondeterministic functions, or \emph{relations}, instead of ordinary functions.
+
+The advantages in all of these cases is that the mathematical objects we use are often fairly simple, whereas computer programs, even in simple `toy' languages, are very complicated to study. 
+A program is, at its heart, a string of symbols governed by a collection of operational rules that govern how such strings should behave. 
+Such an object is very fiddly to reason with directly; indeed, the only way to think about it is as some kind of `function' from input to outputs.
+Denotational takes this basic intuition further, and aims to capture features of programming languages through a diverse collection of different mathematical models.
+
+A word of warning: the principal mode of denotational semantics which we shall be studying in this thesis is game semantics, which is much more complicated than the semantics of sets and functions. 
+However, it is still a very valuable tool for determining equivalence of programs.
+
+\section{Computational Adequacy and Full Abstraction}
+
+In order for a denotational semantics to tell us anything, we first need to prove some results that relate it to the language we are studying. 
+For example, if we are hoping to model a programming language with sets and functions, then we need to define a mapping $\deno{-}$ (the \emph{denotation}) that takes program types to sets and program functions to functions between those sets, and we also need to prove that this denotation respects the operational rules of the language: for example, we might want to prove that if $f \from \Int \to \Int$ is a function and $M \from \Int$ is a term that evaluates to the integer $n$, then the term $f M$ will evaluate to the integer $\deno{f}(n)$.
+This type of result is called \emph{Computational Adequacy}, and relates to programs of a ground or observable type (e.g., a program that returns an integer has ground type, and we can observe that it either returns an integer or fails to teminate, whereas a program that takes in an integer and returns an integer has a function type: it is not possible to `observe' its behaviour without substituting in values).
+
+Briefly speaking, a Computational Adequacy result tells us that the behaviour of a program of ground type may be deduced exactly from its denotation.
+For example, in a domain-theoretic semantics, we might want to say that a program $M$ evaluates to a value $v$ if and only if $\deno M=v$ and that $M$ fails to terminate if and only if $\deno M = \bot$.
+
+Such a computational adequacy result extends readily to terms not of ground type.  
+Given two programs $M$ and $N$ of the same type, we say that $M$ and $N$ are \emph{observationally equivalent} if $C[M]$ and $C[N]$ have the same behaviour for any one-holed context $C[-]$ of ground type.
+If our semantics is \emph{compositional} -- so that the denotation of $C[M]$ is obtained by `applying' the denotation of $C[-]$ to the denotation of $M$ -- and computationally adequate, then it follows that the semantics is \emph{equationally sound}: if two terms $M$ and $N$ have the same denotation, then they are observationally equivalent.
+
+If we have an effective way of computing denotations, then this can give us an easy way to prove observational equivalence of terms.  
+However, there is no guarantee that we are able to use such a trick: the terms $M$ and $N$ might be observationally equivalent despite having distinct denotations.  
+The gold standard of denotational semantics -- \emph{Full Abstraction} -- asserts in addition that the converse of equational soundness holds, so that the denotational semantics completely captures the observational equivalence relation.  
+
+An important early success in this direction came with Plotkin's introduction of the stateless sequential programming language PCF \cite{PlotkinPcf}.  
+Plotkin was unable to provide a fully abstract denotational semantics for PCF itself, but he showed that if we add a simple parallel construct\footnote{Specifically, `parallel or', which evaluates its two boolean arguments in parallel, and is thus able to return true if either the left or the right argument returns true, even if the other fails to terminate.} to PCF, then a denotational semantics based on Scott domains is fully abstract.  
+This astounding result presents us with a world in which we can practically and systematically check observational equivalence (for terms of this extended version of PCF) by computing denotations.  
+This vision is a little rosey-eyed -- deciding observational equivalence is stronger than the halting problem and is hence undecidable in general -- but if the programs in question are finitely presentable in some sense, then we really can use the denotational semantics to check observational equivalence.
+
+Unfortunately, this stop working for PCF itself.  
+PCF is a sub-language of the parallelized version, but this also means that the observational equivalence relation is coarser: there may be terms that can be distinguished by a context including the parallel construct that cannot be distinguished inside any purely sequential context.  
+The enterprise was brought down to earth by Ralph Loader's 2001 theorem that observational equivalence for PCF is undecidable, even if we restrict ourselves to a finitary version of the language with no infinite datatypes or recursion beyond a simple non-termination primitive $\bot$.
+This in particular tells us that no concretely presentable denotational semantics for PCF can possibly be fully abstract, or it would give us an algorithm for deciding observational equivalence in this finite version.
+
+Nevertheless there were, roughly contemporaneous with Loader's result, several fully abstract models of PCF published, in a watershed moment for the subject.
+The models published by Nickau \cite{NickauPcf} and O'Hearn and Riecke \cite{OHearnRieckePcf} were more or less along domain-theoretic lines, while those of Abramsky, Jagadeesan and Malacaria \cite{ajmPcf} and Hyland and Ong \cite{hoPcf} used the relatively new Game Semantics.
+
+These models took a slightly oblique approach to Full Abstraction.  
+First, they defined the notion of \emph{intrinsic equivalence} of terms of the same type $T$ in a denotational model, where two elements $\sigma$ and $\tau$ of the denotation of $T$ are intrinsically equivalent if $\alpha(\sigma)=\alpha(\tau)$ for all functions $\alpha\from\deno{T}\to\deno{o}$ from the denotation of $T$ to the denotation of some fixed ground type $o$.
+This definition is very closely linked to that of observational equivalence; indeed, if two terms $M$ and $N$ are observationally equivalent, and we are working in a computationally adequate and compositional denotational semantics, then the denotations of $M$ and $N$ will be intrinsically equivalent, since for any ground-type context $C[-]$, we can take $\alpha$ to be the denotation of $C[-]$ in the above definition.
+
+Proving the converse -- that intrinsic equivalence of denotations implies observational equivalence -- entails going in the opposite direction; i.e., starting with some element $\alpha$ in the model and coming up with a context $C[-]$ in the language whose denotation is $\alpha$.  
+Thus, proving this direction normally reduces to some kind of \emph{definability} result.  
+Typically, we only need to prove definability for a restricted class of elements $\alpha$ of the denotational model -- the \emph{compact} elements.
+
+If we can prove, for some denotational model of a language, that observational equivalence of terms is equivalent to intrinsic equivalence of their denotations, then we can form a fully abstract model by passing to equivalence classes under the intrinsic equivalence relation.  
+This is the approach taken by the fully abstract semantics that have been given for PCF; there is no contradiction of Loader's theorem, because the intrinsic equivalence relation is itself undecidable.
+
+In this thesis, we shall skip the final step of passing to equivalence classes and declare a denotational semantics to be fully abstract for a language if we can prove that observational equivalence of terms is equivalent to intrinsic equivalence of their denotations.  
+Thus, the Full Abstraction results that we prove will have three main ingredients: compositionality, computational adequacy and definability.
+
+\section{Categorical Semantics}
+
+There is a close link between (typed) programming langauges and categories.
+Programming languages have things called \emph{types}, and they have \emph{functions} that go from one type to another. 
+Typically, it will be possible to compose two functions together in the language in an associative way, giving us a category.
+It should come as no surprise, then, that a very important branch of denotational semantics is \emph{categorical semantics}, in which we take some existing category from mathematics, and use its objects and morphisms to represent the types and terms of a programming language.
+
+We can then use concepts from category theory to inform our denotational semantics. 
+The most important of these is that if the category we choose is Cartesian closed, then we can automatically interpret terms of the simply typed lambda calculus as morphisms.
+This is particularly useful, since many of the languages that we are most interested in studying from a mathematical point of view -- in particular, PCF and Idealized Algol -- are based upon the simply typed lambda calculus.
+Thus, if we make sure that our base category is Cartesian closed, then we get a denotational semantics for the lambda calculus-part of the language for free, allowing us to concentrate on the other parts of the language.
+
+Category-theoretic topics have taken on a new importance within functional programminging.
+In 1991, Eugenio Moggi observed that \emph{monads} on categories provide a way to study computational effects. 
+For example, we have already alluded to the fact that a stateful function $A \to B$ may be identified with an ordinary stateless function
+\[
+	A \times W \to B \times W\,,
+	\]
+where $W$ is some fixed set (the \emph{state}). 
+Such a function may alternatively be written as a function
+\[
+	A \to (W \to (B \times W))\,;
+	\]
+thus, a morphism $A \to B$ in the Kleisli category for the \emph{state monad}
+\[
+	B \mapsto W \to (B \times W)\,.
+	\]
+Similarly, a nondeterministic function $A\to B$ may be thought of as a function from elements of $A$ to subsets of $B$, and thus as a morphism in the Kleisli category for the \emph{powerset monad} $\powerset-$.
+
+The link between monads and computational effects has not been confined to the theoretical domain; indeed, monads quickly became the main way of expressing effectful programming in languages such as Haskell \cite{Haskell}.
+
+In 2001, Plotkin and Power \cite{PlotkinPower} made this idea more precise by demonstrating that if a computational effect can be given by algebraic operations and equations, then it determines a monad. 
+
+More specifically, a \emph{signature} $\Sigma$ is made up of a set of \emph{operations} $\sigma$ with (possibly infinite) \emph{arities} $\text{ar}(\sigma)$ and \emph{equations} that encode the rules that hese operations must follow.
+An \emph{interpretation} of a signature $\Sigma$ in a category $\C$ with products is given by an object $A$ of $\C$, together with morphisms
+\[
+	A^\text{ar}(\sigma) \to A
+	\]
+for each operation $\sigma$ in $\Sigma$, such that the equations all hold when interpreted as equalities of morphisms in $\C$.
+
+A \emph{homomorphism} between $\Sigma$-algebras $A$ and $B$ is a morphism $A \to B$ that respects the $\Sigma$-algebra structure on $A$ and $B$ in a natural way. 
+Thus, we get a category of $\Sigma$-algebras.
+Moreover, the natural forgetful functor from this category into $\C$ admits a left adjoint, inducing a monad on $\C$.
+This monad sends a set $A$ to the underlying set of the \emph{free $\Sigma$-algebra} on $A$, given by taking the set of all terms that can be formed from the operations in $\Sigma$, with the elements of $A$ as variables, and quotienting by the equivalence generated by the equations in $\Sigma$.
+
+For example (see \cite{Powerset}, for instance), the powerset monad for countable sets is induced from the signature $\Sigma_\powerset$ consisting of a single infinitary operator $\sum$ (i.e., nondeterministic choice between the infinite collection of values), together with equations for infinitary commutativity (reordering the $a_i$ should not change the observed behaviour), associativity ($\sum_i \sum_j a_{ij} = \sum_{i,j} a_{ij}$) and idempotence (repeat entries do not change the behaviour).
+
+If $A$ is a set, then we may identify an element $\phi$ of the free $\Sigma_\powerset$-algebra on $A$ with the subset of $A$ consisting of all elements $a\in A$ that appear in the term-description of $\phi$.
+For example, if $A=\bN$, then we can identify
+\[
+	\sum_i 2i
+	\]
+with the set of even natural numbers, and
+\[
+	\sum_i \sum_j \pi(i)^j
+	\]
+with the set of all prime powers.
+The axioms for commutativity, associativity and idempotence mean that this is a well-defined operation, giving us an equivalence between the free $\Sigma_\powerset$-algebra monad and the powerset monad $\powerset$.
+
+\newcommand{\lku}{\operatorname{lookup}}
+\newcommand{\upd}{\operatorname{update}}
+
+The state monad with state given by a set $W$ is induced from the signature given by a $W$-ary operation $\lku$, corresponding to choosing between $W$-many options based on the value of the state; and $W$-many nullary operations $\upd_w$, each corresponding to updating the state to a particular value $w$.
+There are four axioms relating these two operations, which we adapt from \cite{PlotkinPower}.
+\begin{description}
+	\item[Update with current value] 
+          \[
+            \lku(\upd_w(x)\suchthat w\in W) = x\,.
+            \]
+          Looking up the current value and rewriting it is a no-op.
+	\item[Idempotence of lookup]
+          \[
+            \lku(\lku(x_{vw}\suchthat v\in W)\suchthat w\in W)=\lku(x_{ww}\suchthat w\in W)\,.
+            \]
+          If we look up the state twice in succession, then we will get the same value both times.
+	\item[Double update] 
+          \[
+            \upd_v(\upd_w(x))=\upd_w(x)\,.
+            \]
+          If we update the value twice in succession, then the first update has no effect.
+	\item[Lookup] 
+          \[
+            \upd_w(\lku(x_v\suchthat v\in W)) = \upd_w(x_w)\,.
+            \]
+          If we update the value to $w$ and then look up the state, we get $w$ back.
+\end{description}
+
+Plotkin and Power prove in \cite{PlotkinPower} that the free algebra monad for this signature is isomorphic to the usual state monad $(W \times -)^W$.
+We therefore get a strong connection between some very concrete syntactic concepts about what state should look like and the abstract category-theoretic concept of a monad.
+
+\bibliographystyle{alpha2}
+\bibliography{../common/phd_bibliography}
+
+\end{document}
