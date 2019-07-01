@@ -467,7 +467,7 @@ Since $\Dcpo$ is cocomplete \cite{CocompleteDcpo}, we can construct the coends w
 
 If $\X$ is small, or if the required colimits exist for other reasons, then we may take the change of base with respect to the colimit functor $[\X,\Dcpo] \to \Dcpo$ to $\Mell_\X\G$ to give us a $\Dcpo$-enriched category $\G/\X$.
 
-Concretely, the morphisms in $\G/\X$ are the same as usual, while the order structure is given by a transfinite construction as in \cite[2.17]{Fiech}.  
+Concretely, the underling set of morphisms in $\G/\X$ contains all the usual morphisms from the $\Set$-enriched case, while the order structure is given by a transfinite construction as in \cite[2.17]{Fiech}.  
 In particular, if $\sigma,\tau\from A \to B$ in $\G/\X$ are given by morphisms
 \begin{mathpar}
   \tilde{\sigma}\from A \to X.B
@@ -480,7 +480,28 @@ in $\G$, and if there are morphisms $h\from X \to Z$, $k\from Y \to Z$ in $\X$ s
   \]
 then $\sigma\le\tau$ in $\G/\X$.
 
-In either case, we now define the interpretation of the fixpoint combinator $\Y$ using the properties of this new order, which will be enough to prove adequacy along the lines of Theorem \ref{TheComputationalAdequacyIA}.
+A slight problem is that it is not true in general that the colimit of cpos with bottom elements has itself a bottom element.  
+For example, let $-[n]$ be the partial order $\{-n<\cdots<0\}$.  
+Then, $-[n]$ is a dcpo with a bottom element for each $n$, but the colimit of the chain
+\[
+  -[0] \hookrightarrow -[1] \hookrightarrow -[2] \hookrightarrow \cdots
+  \]
+is the partial order of non-positive integers.
+
+However, if all the morphisms in a diagram of dcpos are such that they preserve bottom elements, then the colimit of that diagram will have a bottom element.
+
+In particular, if the action of $\X$ on $\G$ is a reader-style action that factors through the category of sets (as in all our examples), then every arrow in the colimit diagram that defines $\G/\X(A,B)$ will be of the form
+\[
+  \G(A, \ul Y \to B) \xrightarrow{\G(A,\ul f.B)} \G(A, \ul X \to B)
+  \]
+for some sets $X,Y$, considered as objects $\ul X,\ul Y$ of $\G$, and some function $f \from X \to B$ considered as a morphism $\ul f \from \ul A \to \ul B$ such that composition with $\ul f$ preserves bottom elements.
+Therefore, the map $\G(A,\ul f.B)$ of dcpos will also preserve bottom elements.
+
+A second problem is that the setwise colimit of the $\G(A,X.B)$, with the order from \cite{Fiech}, is not necessarily itself a dcpo.  
+In fact, to get the correct colimit of the diagram, we need to perform an extra step of \emph{completion}.  
+However, with a little more care, we can show that if the action is a reader action that factors through the category of sets, then the colimit is already directed complete under the order, at least in the category of games.
+
+Having given the definition of the order-enriched structure of $\G$, we may define the interpretation of the fixpoint combinator $\Y$ using the properties of this new order, which will be enough to prove adequacy along the lines of Theorem \ref{TheComputationalAdequacyIA}.
 
 It is worth mentioning that although we can prove computational adequacy for our various Kleisli categories (and categories of the form $\G/\X$), it does not automatically follow that we can prove adequacy in the same way for the various quotiented categories.  
 An important example is our model of countable nondeterminism with must testing.  
