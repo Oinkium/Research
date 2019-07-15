@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.3.7)  19 MAY 2019 15:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.6.8)  4 JUL 2019 11:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -893,21 +893,21 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
 \overlongequation=\box50
 \arrow=\skip105
-LaTeX Font Info:    Try loading font information for U+msa on input line 411.
+LaTeX Font Info:    Try loading font information for U+msa on input line 415.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 411.
+LaTeX Font Info:    Try loading font information for U+msb on input line 415.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+cmllr on input line 411.
+LaTeX Font Info:    Try loading font information for U+cmllr on input line 415.
 
 
 (/usr/share/texmf-dist/tex/latex/cmll/ucmllr.fd)
-LaTeX Font Info:    Try loading font information for U+stmry on input line 411.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 415.
 
 
 (/usr/share/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
@@ -1158,10 +1158,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 27675 strings out of 492616
- 531198 string characters out of 6135178
- 781668 words of memory out of 5000000
- 30735 multiletter control sequences out of 15000+600000
+ 27679 strings out of 492616
+ 531210 string characters out of 6135178
+ 781699 words of memory out of 5000000
+ 30739 multiletter control sequences out of 15000+600000
  31212 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,22n,82p,815b,1415s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1203,7 +1203,7 @@ msbm7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb></usr
 t/fonts/type1/public/stmaryrd/stmary6.pfb></usr/share/texmf-dist/fonts/type1/pu
 blic/stmaryrd/stmary7.pfb></usr/share/texmf-dist/fonts/type1/public/stmaryrd/st
 mary8.pfb></usr/share/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on games.pdf (105 pages, 768547 bytes).
+Output written on games.pdf (105 pages, 768553 bytes).
 PDF statistics:
  1185 PDF objects out of 1200 (max. 8388607)
  1008 compressed objects within 11 object streams

@@ -1,15 +1,21 @@
-\begin{thebibliography}{CBHDP06}
+\begin{thebibliography}{AJM00}
 
 \bibitem[AJM00]{ajmPcf}
 Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
 \newblock Full abstraction for {PCF}.
 \newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
 
-\bibitem[CBHDP06]{Powerset}
-M~C.~B.~Hennessy and G~D.~Plotkin.
-\newblock {\em Full Abstraction for a Simple Parallel Programming Language},
-  volume~74, pages 108--120.
-\newblock 01 2006.
+\bibitem[DH00]{DanosHarmer}
+V.~Danos and R.~Harmer.
+\newblock Probabilistic game semantics.
+\newblock In {\em Proceedings Fifteenth Annual IEEE Symposium on Logic in
+  Computer Science (Cat. No.99CB36332)}, pages 204--213, June 2000.
+
+\bibitem[HM99]{mcCHFiniteND}
+R.~Harmer and G.~McCusker.
+\newblock A fully abstract game semantics for finite nondeterminism.
+\newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
+  (Cat. No. PR00158)}, pages 422--430, 1999.
 
 \bibitem[HO00]{hoPcf}
 J.M.E. Hyland and C.-H.L. Ong.
@@ -23,6 +29,11 @@ Mark~P. Jones.
 \newblock In {\em Advanced Functional Programming, First International Spring
   School on Advanced Functional Programming Techniques-Tutorial Text}, pages
   97--136, Berlin, Heidelberg, 1995. Springer-Verlag.
+
+\bibitem[Lam68]{Lambek}
+Joachim Lambek.
+\newblock A fixpoint theorem for complete categories.
+\newblock {\em Mathematische Zeitschrift}, 103(2):151--161, 1968.
 
 \bibitem[Nic94]{NickauPcf}
 Hanno Nickau.
