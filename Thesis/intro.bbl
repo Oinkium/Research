@@ -1,15 +1,40 @@
-\begin{thebibliography}{AJM00}
+\begin{thebibliography}{AHM98}
+
+\bibitem[AHM98]{HondaMcCusker}
+S.~Abramsky, K.~Honda, and G.~McCusker.
+\newblock A fully abstract game semantics for general references.
+\newblock In {\em Proceedings of the 13th Annual IEEE Symposium on Logic in
+  Computer Science}, LICS '98, pages 334--, Washington, DC, USA, 1998. IEEE
+  Computer Society.
 
 \bibitem[AJM00]{ajmPcf}
 Samson Abramsky, Radha Jagadeesan, and Pasquale Malacaria.
 \newblock Full abstraction for {PCF}.
 \newblock {\em Information and Computation}, 163(2):409 -- 470, 2000.
 
+\bibitem[AM96]{SamsonGuyIAActive}
+Samson Abramsky and Guy McCusker.
+\newblock Linearity, sharing and state: a fully abstract game semantics for
+  {Idealized Algol} with active expressions: Extended abstract.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 3:2 -- 14,
+  1996.
+\newblock Linear Logic 96 Tokyo Meeting.
+
+\bibitem[Bla92]{blassgames}
+Andreas Blass.
+\newblock A game semantics for linear logic.
+\newblock {\em Annals of Pure and Applied Logic}, 56(1–3):183 -- 220, 1992.
+
 \bibitem[DH00]{DanosHarmer}
 V.~Danos and R.~Harmer.
 \newblock Probabilistic game semantics.
 \newblock In {\em Proceedings Fifteenth Annual IEEE Symposium on Logic in
   Computer Science (Cat. No.99CB36332)}, pages 204--213, June 2000.
+
+\bibitem[Har99]{RusssThesis}
+Russell~S. Harmer.
+\newblock Games and full abstraction for nondeterministic languages.
+\newblock Technical report, 1999.
 
 \bibitem[HM99]{mcCHFiniteND}
 R.~Harmer and G.~McCusker.
@@ -29,6 +54,22 @@ Mark~P. Jones.
 \newblock In {\em Advanced Functional Programming, First International Spring
   School on Advanced Functional Programming Techniques-Tutorial Text}, pages
   97--136, Berlin, Heidelberg, 1995. Springer-Verlag.
+
+\bibitem[Joy77]{joyalgames}
+Andr\'{e} Joyal.
+\newblock Remarques sur la th\'{e}orie des jeux \`{a} deux personnes.
+\newblock {\em Gazette des sciences mathematiques de Quebec}, 1(4), 1977.
+
+\bibitem[Lai01]{Lli}
+J.~Laird.
+\newblock A fully abstract game semantics of local exceptions.
+\newblock In {\em Proceedings of LICS '01}, pages 105--114. IEEE Computer
+  Society Press, 2001.
+
+\bibitem[Lai16]{FunctionalProgramsAsCoroutines}
+James Laird.
+\newblock Higher-order programs as coroutines.
+\newblock to appear, 2016.
 
 \bibitem[Lam68]{Lambek}
 Joachim Lambek.
@@ -57,6 +98,10 @@ Gordon Plotkin and John Power.
 \newblock In Mogens Nielsen and Uffe Engberg, editors, {\em Foundations of
   Software Science and Computation Structures}, pages 342--356, Berlin,
   Heidelberg, 2002. Springer Berlin Heidelberg.
+
+\bibitem[Sch04]{SchalkWhatIs}
+Andrea Schalk.
+\newblock What is a categorical model for linear logic?, October 2004.
 
 \bibitem[Sco76]{ScottDomains}
 D.~Scott.

@@ -187,7 +187,93 @@ This is an algebraic theory akin to the theory of groups, and its category of fr
 
 Game Semantics gives us a particularly fruitful categorical semantics for programming languages.  
 The underlying idea is that a computer program behaves like a strategy for a two-player game, in that it needs to respond to arbitrary inputs (opponent moves) with its own behaviours (proponent moves).  
-Thus, we represent a programming language type by an idealized two-player game and represent a term of that type by a strategy for that game.
+Thus, we represent a programming language type by an idealized game between two players $O$ and $P$\footnote{Another convention is to refer to player $O$ as $\forall{}$belard and player $P$ as $\exists{}$lo\"{i}se, so I will refer to player $O$ as `he' and player $P$ as `she' throughout.}, and represent a term of that type by a strategy for that game.
+
+The power of game semantics comes from the fact, first noted in \cite{blassgames} by Blass, that certain natural operations on games correspond to some of the connectives of linear logic.  
+For example, if $A$ and $B$ are two-player games, then we may form their \emph{tensor product} $A\tensor B$, which is played by running the games $A$ and $B$ together in parallel, with the opposing player $O$ allowed to switch between games when it is his turn.
+
+A closely related construction takes games $A$ and $B$ and forms their \emph{linear implication} $A\implies B$, in which $B$ is played in parallel with the \emph{dual} of $A$, in which the roles of players $P$ and $O$ are swapped round.  
+This time, player $P$ can choose to switch game when it is her turn.
+
+The remarkable thing about the $\implies$ construction, first pointed out by Joyal in \cite{joyalgames}, is that if $A$, $B$ and $C$ are games, then we may compose a $P$-strategy for $A\implies B$ with a $P$-strategy for $B\implies C$ to get a $P$-strategy for $A\implies C$.
+
+In order to form her strategy, player $P$ sets up a `scratchpad' consisting of the games $A\implies B$ and $B\implies C$ side by side.
+Now suppose that player $O$ makes a move in $A\implies C$ that originally came from the game $C$.  
+Then player $P$ treats this move as a move in $B\implies C$, and uses her strategy for that game to come up with a reply.  
+If that reply is a move in $C$, then she plays it as her response.
+Otherwise, if it is a move in $B$, she treats that move as an $O$-move in $A\implies B$, and therefore has a reply in $A\implies B$ according to her strategy for that game.  
+Eventually, if she plays a move in $A$ or $C$, then that will be her reply in the composite strategy.
+See Figure \ref{FigComposition} for an illustration.
+\begin{figure}
+  \[
+    \begin{tikzcd}[arrows={no head, dotted, shorten=-1mm}, row sep=0pt]
+      A
+        & B
+          &[-20pt] B
+            & C \\
+      %
+        & 
+          &
+            & \circ \arrow[d] \\
+      %
+        & 
+          & 
+            & \bullet \\
+      %
+        & 
+          & 
+            & \circ \arrow[dl] \\
+      %
+        & \circ \arrow[d]
+          & \bullet
+            & \\
+      %
+        & \bullet
+          & \circ \arrow[d]
+            & \\
+      %
+        & \circ \arrow[dl]
+          & \bullet
+            & \\
+      \bullet
+        &
+          &
+            & \\
+      \circ \arrow[dr]
+        &
+          &
+            & \\
+      %
+        & \bullet
+          & \circ \arrow[dr]
+            & \\
+      %
+        &
+          &
+            & \bullet
+    \end{tikzcd}
+    \]
+  \caption[Illustration of the composition of strategies in Game Semantics.]{Illustration of the composition of strategies in Game Semantics.  
+  Working top-to-bottom, the symbol $\circ$ denotes a move by $O$ and the symbol $\bullet$ a move by $P$.  
+  A dotted line indicates that a move is determined by one of the strategies for the games $A\implies B$ and $B\implies C$.  
+  Note that the moves in $B$ are duplicated, so that they may always be considered as an $O$-move in either $A\implies B$ or $B\implies C$.  
+  Moves from $B$ are hidden in the composite strategy: in this case, player $P$'s first `real' move is in $C$, her second in $A$ and her third in $C$.}
+  \label{FigComposition}
+\end{figure}
+
+It is possible instead that player $P$ flips between her two strategies for ever, always playing moves in $B$ and never coming out into $A$ or $C$.  
+Computationally, this represents `livelock': a computation that does not terminate because two subroutines are continually deferring to each other without returning values of their own.
+
+This composition of strategies gives us a category $\G$ in which the objects are games and a morphism from a game $A$ to a game $B$ is a strategy for the game $A\implies B$.  
+In this category, the identity morphism on a game $A$ is the \emph{copycat strategy} for $A\implies A$, which responds to an $O$-move in either copy of $A$ with the identical move in the other copy.
+
+What is more, the connectives $\tensor$ and $\implies$ make this into a symmetric monoidal closed category.  
+We typically apply some category-theoretic construction to $\G$ to get a Cartesian closed category, by passing either to the Kleisli category for a linear exponential comonad on $\G$ (as in \cite{ajmPcf}; see \cite{SchalkWhatIs}), or to a subcategory of the category of commutative comonoids in $\G$ (as in \cite{hoPcf,SamsonGuyIAActive}; see \cite[\sec 3.5.2]{RusssThesis}).
+
+\section{Game Semantics for Programming Languages}
+
+The first triumph of Game Semantics was to solve the Full Abstraction problem for PCF, but a more lasting application of the discipline has been to model more general programming languages with effects such as state.
+By making changes to the definitions of game and strategy, Game Semantics has proved to be applicable to a wide variety of programming language effects, including exceptions \cite{Lli}, coroutines and continuations \cite{FunctionalProgramsAsCoroutines}, nondeterminism \cite{mcCHFiniteND}, probability \cite{DanosHarmer}, and general references \cite{HondaMcCusker}.
 
 The precise definition of a strategy that we use depends on the language that we are trying to model -- a language with less expressive power can realize fewer strategies.  
 For example, the denotations of terms in a stateless langauge such as PCF are \emph{history-free} or \emph{innocent}, in which the proponent's moves can only depend on a particular subsequence of the current sequence of moves -- the $P$-view -- rather than on the whole sequence.

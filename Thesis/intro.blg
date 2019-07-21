@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2018/Arch Linux)
+This is BibTeX, Version 0.99d (TeX Live 2019/Arch Linux)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: intro.aux
 The style file: alpha2.bst
@@ -8,45 +8,46 @@ I was expecting a `,' or a `}'---line 1264 of file ../common/phd_bibliography.bi
  :                                                                                                                                                                                                                                                                                                                Kripke logical relations" introduced by Jung and Tiuryn to characterize λ-definability."
 I'm skipping whatever remains of this entry
 Warning--I didn't find a database entry for "Moggi"
-You've used 11 entries,
+Warning--empty institution in RusssThesis
+You've used 19 entries,
             2549 wiz_defined-function locations,
-            640 strings with 6079 characters,
-and the built_in function-call counts, 5009 in all, are:
-= -- 518
-> -- 168
-< -- 10
-+ -- 53
-- -- 51
-* -- 343
-:= -- 764
-add.period$ -- 36
-call.type$ -- 11
-change.case$ -- 62
-chr.to.int$ -- 11
-cite$ -- 11
-duplicate$ -- 217
-empty$ -- 415
-format.name$ -- 67
-if$ -- 1095
+            694 strings with 7312 characters,
+and the built_in function-call counts, 7865 in all, are:
+= -- 816
+> -- 260
+< -- 18
++ -- 83
+- -- 78
+* -- 517
+:= -- 1216
+add.period$ -- 62
+call.type$ -- 19
+change.case$ -- 106
+chr.to.int$ -- 19
+cite$ -- 20
+duplicate$ -- 346
+empty$ -- 644
+format.name$ -- 108
+if$ -- 1703
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 11
-newline$ -- 58
-num.names$ -- 35
-pop$ -- 57
+missing$ -- 16
+newline$ -- 98
+num.names$ -- 59
+pop$ -- 95
 preamble$ -- 1
-purify$ -- 73
+purify$ -- 124
 quote$ -- 0
-skip$ -- 187
+skip$ -- 299
 stack$ -- 0
-substring$ -- 380
-swap$ -- 57
-text.length$ -- 10
-text.prefix$ -- 5
+substring$ -- 539
+swap$ -- 82
+text.length$ -- 18
+text.prefix$ -- 11
 top$ -- 0
-type$ -- 88
-warning$ -- 0
-while$ -- 49
-width$ -- 15
-write$ -- 150
+type$ -- 152
+warning$ -- 1
+while$ -- 75
+width$ -- 24
+write$ -- 255
 (There was 1 error message)
