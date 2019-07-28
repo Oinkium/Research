@@ -1,4 +1,4 @@
-\begin{thebibliography}{AHM98}
+\begin{thebibliography}{CCPW18}
 
 \bibitem[AHM98]{HondaMcCusker}
 S.~Abramsky, K.~Honda, and G.~McCusker.
@@ -25,11 +25,25 @@ Andreas Blass.
 \newblock A game semantics for linear logic.
 \newblock {\em Annals of Pure and Applied Logic}, 56(1–3):183 -- 220, 1992.
 
+\bibitem[CCPW18]{PPCF}
+Simon Castellan, Pierre Clairambault, Hugo Paquet, and Glynn Winskel.
+\newblock The concurrent game semantics of probabilistic pcf.
+\newblock In {\em Proceedings of the 33rd Annual ACM/IEEE Symposium on Logic in
+  Computer Science}, LICS '18, pages 215--224, New York, NY, USA, 2018. ACM.
+
 \bibitem[DH00]{DanosHarmer}
 V.~Danos and R.~Harmer.
 \newblock Probabilistic game semantics.
 \newblock In {\em Proceedings Fifteenth Annual IEEE Symposium on Logic in
   Computer Science (Cat. No.99CB36332)}, pages 204--213, June 2000.
+
+\bibitem[GL18]{CslPaper}
+W.~John Gowers and James~D. Laird.
+\newblock {A Fully Abstract Game Semantics for Countable Nondeterminism}.
+\newblock In Dan Ghica and Achim Jung, editors, {\em 27th EACSL Annual
+  Conference on Computer Science Logic (CSL 2018)}, volume 119 of {\em Leibniz
+  International Proceedings in Informatics (LIPIcs)}, pages 24:1--24:18,
+  Dagstuhl, Germany, 2018. Schloss Dagstuhl--Leibniz-Zentrum fuer Informatik.
 
 \bibitem[Har99]{RusssThesis}
 Russell~S. Harmer.
@@ -60,11 +74,16 @@ Andr\'{e} Joyal.
 \newblock Remarques sur la th\'{e}orie des jeux \`{a} deux personnes.
 \newblock {\em Gazette des sciences mathematiques de Quebec}, 1(4), 1977.
 
-\bibitem[Lai01]{Lli}
+\bibitem[Lai01]{LLi}
 J.~Laird.
 \newblock A fully abstract game semantics of local exceptions.
 \newblock In {\em Proceedings of LICS '01}, pages 105--114. IEEE Computer
   Society Press, 2001.
+
+\bibitem[Lai02]{laird02}
+J.~Laird.
+\newblock A categorical semantics of higher-order store.
+\newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
 
 \bibitem[Lai16]{FunctionalProgramsAsCoroutines}
 James Laird.
@@ -75,6 +94,26 @@ James Laird.
 Joachim Lambek.
 \newblock A fixpoint theorem for complete categories.
 \newblock {\em Mathematische Zeitschrift}, 103(2):151--161, 1968.
+
+\bibitem[Lam74]{FunctionalCompleteness}
+J.~Lambek.
+\newblock Functional completeness of cartesian categories.
+\newblock {\em Annals of Mathematical Logic}, 6(3):259 -- 292, 1974.
+
+\bibitem[Lev08]{LevyGsInfinite}
+Paul~Blain Levy.
+\newblock Infinite trace equivalence.
+\newblock {\em Annals of Pure and Applied Logic}, 151(2):170 -- 198, 2008.
+
+\bibitem[Lev14]{levy2014morphisms}
+Paul~Blain Levy.
+\newblock Morphisms between plays.
+\newblock Lecture slides, GaLoP, 2014.
+
+\bibitem[MT16]{NGS}
+Andrzej~S. Murawski and Nikos Tzevelekos.
+\newblock Nominal game semantics.
+\newblock {\em Found. Trends Program. Lang.}, 2(4):191--269, March 2016.
 
 \bibitem[Nic94]{NickauPcf}
 Hanno Nickau.
@@ -107,5 +146,18 @@ Andrea Schalk.
 D.~Scott.
 \newblock Data types as lattices.
 \newblock {\em SIAM Journal on Computing}, 5(3):522--587, 1976.
+
+\bibitem[TO14]{Sheaves}
+Takeshi Tsukada and C.{-}H.~Luke Ong.
+\newblock Innocent strategies are sheaves over plays - deterministic,
+  non-deterministic and probabilistic innocence.
+\newblock {\em CoRR}, abs/1409.2764, 2014.
+
+\bibitem[TO15]{TsukadaSheaves}
+Takeshi Tsukada and C.~H.~Luke Ong.
+\newblock Nondeterminism in game semantics via sheaves.
+\newblock In {\em Proceedings of the 2015 30th Annual ACM/IEEE Symposium on
+  Logic in Computer Science (LICS)}, LICS '15, pages 220--231, Washington, DC,
+  USA, 2015. IEEE Computer Society.
 
 \end{thebibliography}

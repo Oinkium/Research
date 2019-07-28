@@ -65,6 +65,7 @@ A word of warning: the principal mode of denotational semantics which we shall b
 However, it is still a very valuable tool for determining equivalence of programs.
 
 \section{Computational Adequacy and Full Abstraction}
+\label{SecCAnFA}
 
 In order for a denotational semantics to tell us anything, we first need to prove some results that relate it to the language we are studying. 
 For example, if we are hoping to model a programming language with sets and functions, then we need to define a mapping $\deno{-}$ (the \emph{denotation}) that takes program types to sets and program functions to functions between those sets, and we also need to prove that this denotation respects the operational rules of the language: for example, we might want to prove that if $f \from \Int \to \Int$ is a function and $M \from \Int$ is a term that evaluates to the integer $n$, then the term $f M$ will evaluate to the integer $\deno{f}(n)$.
@@ -109,6 +110,7 @@ In this thesis, we shall skip the final step of passing to equivalence classes a
 Thus, the Full Abstraction results that we prove will have three main ingredients: compositionality, computational adequacy and definability.
 
 \section{Categorical Semantics}
+\label{SecCatSem}
 
 There is a close link between (typed) programming langauges and categories.
 Programming languages have things called \emph{types}, and they have \emph{functions} that go from one type to another. 
@@ -255,7 +257,7 @@ See Figure \ref{FigComposition} for an illustration.
     \]
   \caption[Illustration of the composition of strategies in Game Semantics.]{Illustration of the composition of strategies in Game Semantics.  
   Working top-to-bottom, the symbol $\circ$ denotes a move by $O$ and the symbol $\bullet$ a move by $P$.  
-  A dotted line indicates that a move is determined by one of the strategies for the games $A\implies B$ and $B\implies C$.  
+  A dotted line indicates that a move is determined by one of player $P$'s strategies for the games $A\implies B$ and $B\implies C$.  
   Note that the moves in $B$ are duplicated, so that they may always be considered as an $O$-move in either $A\implies B$ or $B\implies C$.  
   Moves from $B$ are hidden in the composite strategy: in this case, player $P$'s first `real' move is in $C$, her second in $A$ and her third in $C$.}
   \label{FigComposition}
@@ -267,13 +269,14 @@ Computationally, this represents `livelock': a computation that does not termina
 This composition of strategies gives us a category $\G$ in which the objects are games and a morphism from a game $A$ to a game $B$ is a strategy for the game $A\implies B$.  
 In this category, the identity morphism on a game $A$ is the \emph{copycat strategy} for $A\implies A$, which responds to an $O$-move in either copy of $A$ with the identical move in the other copy.
 
-What is more, the connectives $\tensor$ and $\implies$ make this into a symmetric monoidal closed category.  
-We typically apply some category-theoretic construction to $\G$ to get a Cartesian closed category, by passing either to the Kleisli category for a linear exponential comonad on $\G$ (as in \cite{ajmPcf}; see \cite{SchalkWhatIs}), or to a subcategory of the category of commutative comonoids in $\G$ (as in \cite{hoPcf,SamsonGuyIAActive}; see \cite[\sec 3.5.2]{RusssThesis}).
+What is more, the connectives $\tensor$ and $\implies$ make $\G$ into a symmetric monoidal closed category.  
+We typically apply some category-theoretic construction to $\G$ to get a Cartesian closed category, by passing either to the Kleisli category for a linear exponential comonad on $\G$ (as in \cite{ajmPcf}; see \cite{SchalkWhatIs}), or to a subcategory of the category of cocommutative comonoids in $\G$ (as in \cite{hoPcf,SamsonGuyIAActive}; see \cite[\sec 3.5.2]{RusssThesis}).
+Once we have a Cartesian closed category, we automatically have a way to interpret the simply-typed lambda calculus.
 
 \section{Game Semantics for Programming Languages}
 
 The first triumph of Game Semantics was to solve the Full Abstraction problem for PCF, but a more lasting application of the discipline has been to model more general programming languages with effects such as state.
-By making changes to the definitions of game and strategy, Game Semantics has proved to be applicable to a wide variety of programming language effects, including exceptions \cite{Lli}, coroutines and continuations \cite{FunctionalProgramsAsCoroutines}, nondeterminism \cite{mcCHFiniteND}, probability \cite{DanosHarmer}, and general references \cite{HondaMcCusker}.
+By making changes to the definitions of game and strategy, Game Semantics has proved to be applicable to a wide variety of programming language effects, including exceptions \cite{LLi}, coroutines and continuations \cite{FunctionalProgramsAsCoroutines}, nondeterminism \cite{mcCHFiniteND}, probability \cite{DanosHarmer}, and general references \cite{HondaMcCusker}.
 
 The precise definition of a strategy that we use depends on the language that we are trying to model -- a language with less expressive power can realize fewer strategies.  
 For example, the denotations of terms in a stateless langauge such as PCF are \emph{history-free} or \emph{innocent}, in which the proponent's moves can only depend on a particular subsequence of the current sequence of moves -- the $P$-view -- rather than on the whole sequence.
@@ -295,6 +298,97 @@ Thus, they can deduce compact definability for Idealized Algol from Hyland and O
 Harmer and McCusker develop in \cite{mcCHFiniteND} a model of game semantics in which strategies can be nondeterministic.  
 They show that every such strategy can be written as the composite of a deterministic strategy with some particular fixed nondeterministic strategy.  
 Then, to prove compact definability for nondeterministic Idealized Algol, it suffices for them to exhibit a nondeterministic term whose denotation is that fixed strategy.
+
+We can now summarize the typical process of proving a Full Abstraction language for a language $\L'$ that extends a language $\L$ as follows.
+\begin{itemize}
+  \item Starting with an existing computationally adequate model $\C$ of $\L$ that satisfies compact definability, define a categorical model $\C'$ that admits an identity-on-objects functor $J\from \C \to \C'$.  
+    For example, if $\C$ is a category of games and strategies, $\C'$ might be a category whose objects are the same games as $\C$, but where the strategies are less rigidly constrained.
+  \item Prove that the model $\C'$ is a Cartesian closed category and is computationally adequate for $\L'$.
+  \item Prove a factorization result that exhibits every morphism $g$ in $\C'$ as the composition of some morphism $Jf$ in the image of $J$ with one of some fixed collection of morphisms that are known to be definable in $\L'$ (for example, single terms from $\L'\setminus\L$.
+    In addition, if $g$ is compact, then $f$ should be compact in $\C$.
+\end{itemize}
+The third bullet point allows us to deduce a compact definability result for $\L'$ in $\C'$ from the compact definability result of $\L$ in $\C$, and then Full Abstraction follows as we have outlined in Section \ref{SecCAnFA}.
+
+Aside from the proofs of Full Abstraction for stateful and nondeterministic languages that we have mentioned \cite{SamsonGuyIAActive,mcCHFiniteND}, other important Full Abstraction results in Game Semantics that follow this pattern include Danos and Harmer's result for a probabilistic variant of Idealized Algol \cite{DanosHarmer}, the Full Abstraction result for general references of Abramsky, Honda and McCusker \cite{HondaMcCusker}, Laird's result for local exceptions \cite{LLi}, Murawski and Tzevelekos's Nominal Game Semantics \cite{NGS} and the result for countable nondeterminism by Laird and the present author \cite{CslPaper}.
+
+It is also worth mentioning several papers that prove Full Abstraction directly, rather than through a factorization result, usually because they depart more radically from traditional game semantics.  
+Such papers include Tsukada and Ong's sheaf-based models for nondeterministic PCF \cite{TsukadaSheaves,Sheaves}, Laird's categorical semantics for coroutines \cite{FunctionalProgramsAsCoroutines} and the results for probabilistic PCF by Castellan, Clairambault, Paquet and Winskel using concurrent games \cite{PPCF}.
+
+\section{Full Abstraction for Kleisli Categories}
+
+One thing which these Full Abstraction results have in common is that they rely on some degree of human intuition to build the original model.  
+This process can often be very difficult.  
+For instance, it seems obvious that if we want to model a nondeterminstic programming language, then we need to relax the determinism constraint on strategies.  
+However, this turns out not to be enough on its own: recall that we model a nonterminating computation in game semantics by a strategy that has no $P$-reply to a particular $O$-move.  
+How then do we model a term which chooses between terminating at a value $v$ and not terminating, and how do we distinguish it from a term which always terminates at $v$?  
+In both cases, player $P$ has the reply $v$ to player $O$'s initial move, but now there is nothing to indicate the possibility of non-termination.  
+
+Harmer and McCusker are able to solve this problem, in the finite nondeterminism case, by separately keeping track of divergences in the strategy, but further problems arise when we start to consider countable nondeterminism.  
+Since Game Semantics usually keeps track of finite sequences of moves, nondeterministic strategies are unable to distinguish between a program that nondeterministically chooses a number $n$ and prints ``Hello, world'' $n$ times, and a program that either does the same thing, or prints out the message infinitely many times.
+So now we have to add extra information in about infinite sequences of moves (see Levy's work on infinite trace equivalence \cite{LevyGsInfinite} and the work of Laird and the present author on nondeterministic Idealized Algol \cite{CslPaper}).
+
+Things get even more difficult when we consider nondeterministic versions of stateless languages such as PCF.  
+Naively relaxing the determinism constraint on the usual definition of an innocent strategy does not give the right notion of a nondeterministic innocent strategy \cite{TsukadaSheaves}.  
+There are definitions of nondeterministic innocence due to Levy \cite{levy2014morphisms}, and to Tsukada and Ong \cite{TsukadaSheaves} that use the concept of \emph{morphisms between plays}, but these are already some distance removed conceptually from Hyland and Ong's original paper on deterministic innocence.
+Tsukada and Ong's paper involves a complete recasting of strategies as sheaves in order to understand what happens when we add nondeterminism to innocence.
+
+Meanwhile, there is plenty of well-known theory that deals with computational effects in a purely systematic way.  
+We have already met two such techniques in section \ref{SecCatSem}: monads (and Kleisli categories) and Lawvere theories.
+Put simply, the purpose of this thesis is to investigate what happens when we try to use these systematic techniques to prove Full Abstraction results for effectful languages.
+
+Let us start by looking at Kleisli categories for monads.  
+Recall that a monad $M$ on a category $\C$ is a functor $M \from \C \to \C$ that satisfies certain conditions, and that the Kleisli category $\Kl_M\C$ of $M$ has the objects of $\C$ as its objects, and that a morphism $a \to b$ in $\Kl_M\C$ is given by a morphism $a \to Mb$ in $\C$.
+There is a natural identity-on-objects functor $J\from \C \to \Kl_M\C$.
+
+In particular, if $a$ is any object of $\C$, then we have a distinguished Kleisli morphism $\phi_A\from Ma \to a$ in $\Kl_M\C$ given by the identity morphism $Ma \to Ma$ in $\C$.
+Now let $f\from a \to b$ be an arbitrary morphism in $\Kl_M\C$, given by a morphism $\hat f\from a \to Mb$ in $\C$.
+Then we can write $f$ as the following composite in $\Kl_M\C$.
+\[
+  a \xrightarrow{J\hat{f}} Mb \xrightarrow{\phi_b} b
+  \]
+In other words, the Kleisli category $\Kl_M\C$ automatically satisfies a factorization result of the type we have been talking about.  
+So if $\C$ is a model of a language $\L$ that satisfies compact definability, then $\Kl_M\C$ will automatically satisfy compact definability for any denotational semantics for a language language $\L'$ that includes (via the functor $J$) the existing denotational semantics for $\L$ and in which the morphisms $\phi_a$ are all definable.
+
+Proving computational adequacy is not so automatic.  
+One approach is to treat $\Kl_M\C$ like any other model and to apply the usual arguments for proving adequacy.  
+Most computational adequacy arguments rely on order-enriched properties of the underlying categories, particularly for dealing with recursion, and the Kleisli category $\Kl_M\C$ automatically inherits order-enriched structure from $\C$, by saying that $f\le g\from a \to b$ in $\Kl_M\C$ if $f\le g$ when considered as morphisms $a \to Mb$ in $\C$.
+
+An alternative approach, which we shall use in this thesis, is to try and deduce computational adequacy for $\Kl_M\C$ from a computational adequacy result for the original language $\L$ in $\C$.  
+In this approach, we take a term $N$ of the extended language $\L'$ and note that its denotation $\deno{N} \from a \to b$ in $\Kl_M\C$ is given by some morphism $f \from a \to Mb$ in $\C$.  
+Typically, it is easy to construct a term $P$ of $\L$ whose denotation in $\C$ is $f$.
+We then prove results to peg the operational behaviour of $N$ in $\L'$ to that of $P$ in $\L$, allowing us to deduce a computational adequacy result for our model of $\L'$ from the corresponding result for $\L$.
+
+The last ingredient that we need is to prove that $\Kl_M\C$ is a Cartesian closed category.  
+This is not immediate either: $\Kl_M\C$ need not be Cartesian, even if $\C$ is.  
+For the purposes of this thesis, we will be considering only monads of a very special form -- the \emph{reader monads} $R_z$ on Cartesian closed categories, given by $R_za = z \to a$.
+The Kleisli category for a reader monad on a Cartesian closed category is always Cartesian closed \cite{FunctionalCompleteness}.
+
+\section{Plan for this Thesis}
+
+This thesis will develop the theory of Full Abstraction from the point of view of techniques of categorical algebra such as Kleisli categories.
+
+\begin{description}
+  \item[Chapters \ref{ChapGames} and \ref{ChapFullAbstraction}] give a fairly traditional presentation of a Fully Abstract game semantics model for Idealized Algol.  
+    All subsequent results will be for extended versions of Idealized Algol, so this model can serve as the foundation for the rest of our work.  
+    Although these chapters form by some distance the longest part of the thesis, they also contain the smallest amount of new material, and owe much to Abramsky and McCusker's Fully Abstract game semantics for Idealized Algol \cite{SamsonGuyIAActive}.  
+    The main difference, which ties in with the general theme of the thesis, is that we prove Computational Adequacy using techniques of categorical algebra rather than via the ad hoc combinatorial arguments found in \cite{SamsonGuyIAActive}.  
+    Specifically, we use Laird's concept of a \emph{sequoidal category} and of the exponential as a final coalgebra, used to prove Full Abstraction for a language with general references \cite{laird02}.  
+    We present the first application of this technique to a language with purely local state of ground type.
+    The remainder of the Full Abstraction result is largely as in \cite{SamsonGuyIAActive}.
+  \item[Chapter \ref{ChapMonads}] presents the general theory of monads and Kleisli categories.  
+    It then presents a technique which can be used to prove Full Abstraction for several nondeterministic effects, along the lines we outlined in the previous section.
+\end{description}
+For the remainder of the thesis, we deal with a generalization of monads -- \emph{parametric monads}, in which the action of the monad is parameterized by an object of some monoidal category $\X$ (so that we deal with a functor $\X \times \C \to \C$ rather than a functor $\C \to \C$).
+\begin{description}
+  \item[Chapter \ref{ChapParametricMonads}] introduces and defines parametric monads (also known as \emph{lax actions}), and proves a number of technical results which we need.
+    It also introduces the \emph{\Mellies category} and the oplax $2$-limit $\C/\X$, which give us two related analogues of the Kleisli category in the parametric case.
+    The \Mellies category is an enriched category, while $\C/\X$ is an ordinary category obtained from it by change of base.
+    As with monads, we need to specialize to a small class of parametric monads -- the \emph{reader actions} -- in order to ensure that $\C/\X$ is a Cartesian closed category.
+  \item[Chapter \ref{ChapReaderActions}] uncovers a large source of these reader actions, proving that reader actions on the category $\Set$ of sets are equivalent to lax monoidal functors $\Set \to \Set$.
+  \item[Chapter \ref{ChapPromonads}] takes a small detour away from the main narrative to study the \Mellies category from the point of view of profunctors.
+  \item[Chapter \ref{ChapParametricMonadsFullAbstraction}] completes our study of parametric monads by proving a Full Abstraction result for a probabilistic language for a category derived from a particular parametric monad, using similar techniques to Chapter \ref{ChapMonads}.
+\end{description}
+Lastly, our conclusion in {\bf Chapter \ref{ChapFurtherDirections}} provides a glimpse into several further directions that are left unexplored by the rest of the thesis.
 
 \bibliographystyle{alpha2}
 \bibliography{../common/phd_bibliography}

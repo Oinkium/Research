@@ -3,51 +3,47 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: intro.aux
 The style file: alpha2.bst
 Database file #1: ../common/phd_bibliography.bib
-I was expecting a `,' or a `}'---line 1264 of file ../common/phd_bibliography.bib
- : abstract = "Sieber has described a model of PCF consisting of continuous functions that are invariant under certain (finitary) logical relations, and shown that it is fully abstract for closed terms of up to third-order types. We show that one may achieve full abstraction at all types using a form of "
- :                                                                                                                                                                                                                                                                                                                Kripke logical relations" introduced by Jung and Tiuryn to characterize λ-definability."
-I'm skipping whatever remains of this entry
 Warning--I didn't find a database entry for "Moggi"
 Warning--empty institution in RusssThesis
-You've used 19 entries,
+You've used 28 entries,
             2549 wiz_defined-function locations,
-            694 strings with 7312 characters,
-and the built_in function-call counts, 7865 in all, are:
-= -- 816
-> -- 260
-< -- 18
-+ -- 83
-- -- 78
-* -- 517
-:= -- 1216
-add.period$ -- 62
-call.type$ -- 19
-change.case$ -- 106
-chr.to.int$ -- 19
-cite$ -- 20
-duplicate$ -- 346
-empty$ -- 644
-format.name$ -- 108
-if$ -- 1703
+            763 strings with 8831 characters,
+and the built_in function-call counts, 11775 in all, are:
+= -- 1228
+> -- 407
+< -- 27
++ -- 131
+- -- 124
+* -- 786
+:= -- 1816
+add.period$ -- 93
+call.type$ -- 28
+change.case$ -- 158
+chr.to.int$ -- 28
+cite$ -- 29
+duplicate$ -- 513
+empty$ -- 955
+format.name$ -- 167
+if$ -- 2550
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 16
-newline$ -- 98
-num.names$ -- 59
-pop$ -- 95
+missing$ -- 24
+newline$ -- 143
+num.names$ -- 88
+pop$ -- 140
 preamble$ -- 1
-purify$ -- 124
+purify$ -- 185
 quote$ -- 0
-skip$ -- 299
+skip$ -- 446
 stack$ -- 0
-substring$ -- 539
-swap$ -- 82
-text.length$ -- 18
-text.prefix$ -- 11
+substring$ -- 790
+swap$ -- 124
+text.length$ -- 27
+text.prefix$ -- 15
 top$ -- 0
-type$ -- 152
+type$ -- 224
 warning$ -- 1
-while$ -- 75
-width$ -- 24
-write$ -- 255
-(There was 1 error message)
+while$ -- 112
+width$ -- 33
+write$ -- 381
+(There were 2 warnings)
