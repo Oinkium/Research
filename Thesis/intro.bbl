@@ -20,6 +20,20 @@ Samson Abramsky and Guy McCusker.
   1996.
 \newblock Linear Logic 96 Tokyo Meeting.
 
+\bibitem[AP81]{PlotkinApt}
+K.~R. Apt and G.~D. Plotkin.
+\newblock A cook's tour of countable nondeterminism.
+\newblock In Shimon Even and Oded Kariv, editors, {\em Automata, Languages and
+  Programming}, pages 479--494, Berlin, Heidelberg, 1981. Springer Berlin
+  Heidelberg.
+
+\bibitem[Bau06]{KleeneTree}
+Andrej Bauer.
+\newblock K\"{o}nig's lemma and the {K}leene tree.
+\newblock Published via blog post at
+  \url{http://math.andrej.com/2006/04/25/konigs-lemma-and-the-kleene-tree/},
+  April 2006.
+
 \bibitem[Bla92]{blassgames}
 Andreas Blass.
 \newblock A game semantics for linear logic.
@@ -36,6 +50,11 @@ V.~Danos and R.~Harmer.
 \newblock Probabilistic game semantics.
 \newblock In {\em Proceedings Fifteenth Annual IEEE Symposium on Logic in
   Computer Science (Cat. No.99CB36332)}, pages 204--213, June 2000.
+
+\bibitem[Dij97]{DijkstraBook}
+Edsger~Wybe Dijkstra.
+\newblock {\em A Discipline of Programming}.
+\newblock Prentice Hall PTR, Upper Saddle River, NJ, USA, 1st edition, 1997.
 
 \bibitem[GL18]{CslPaper}
 W.~John Gowers and James~D. Laird.
@@ -128,7 +147,7 @@ P.W. Ohearn and J.G. Riecke.
 
 \bibitem[Plo77]{PlotkinPcf}
 G.D. Plotkin.
-\newblock Lcf considered as a programming language.
+\newblock {LCF} considered as a programming language.
 \newblock {\em Theoretical Computer Science}, 5(3):223 -- 255, 1977.
 
 \bibitem[PP02]{PlotkinPower}

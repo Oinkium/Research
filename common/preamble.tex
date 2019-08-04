@@ -15,7 +15,7 @@
 \ifdefined\BEAMER
 \else
 \ifdefined\THESIS
-\usepackage{subcaption}
+\usepackage[list=on]{subcaption}
 \else
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 \fi
@@ -37,7 +37,8 @@
 
 %%% ToC (table of contents) APPEARANCE
 \usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
-\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\usepackage[titles]{tocloft} % Alter the style of the Table of Contents
+\setcounter{lofdepth}{2}
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 

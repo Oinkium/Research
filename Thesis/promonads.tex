@@ -1,9 +1,3 @@
-\documentclass{report}[11pt]
-
-\input{../common/preamble}
-
-\begin{document}
-
 \chapter{Promonads and parametric promonads}
 \label{ChapPromonads}
 
@@ -38,7 +32,7 @@ The main result will then be to show that an $\X$-parametric promonad on a categ
   \[
     (f_1,\cdots, f_n);g \from a_{11},\cdots,a_{1k_1},\cdots,a_{n1}\cdots,a_{nk_n} \to c\,.
     \]
-  Moreover, for each object $a$ of $\M$, there is a distinguished morphism $\id_a \from a \to a$ called the \emph{identity} on $a$.
+  Moreover, for each object $a$ of $\M$, there is a distinguished multimorphism $\id_a \from a \to a$ called the \emph{identity} on $a$.
 
   The composition and identity are subject to associativity and unitality conditions.
   Namely, let
@@ -180,9 +174,9 @@ The next theorem gives a criterion for a multicategory to be representable.
   Let $\M,\N$ be multicategories.  
   The \emph{product multicategory} $\M\times\N$ has, as objects, pairs $(a,b)$, where $a$ is an object of $\M$ and $b$ an object of $\N$.  
   The multimorphisms are given by
-  \[
-    (\M\times\N)_n((a_1,b_1),\cdots,(a_n,b_n);(c,d)) = \M_n(a_1,\cdots,a_n;c)\times\N_n(b_1,\cdots,b_n;d),.
-    \]
+  \begin{mathpar}
+    (\M\times\N)_n((a_1,b_1),\cdots,(a_n,b_n);(c,d)) = \M_n(a_1,\cdots,a_n;c)\times\N_n(b_1,\cdots,b_n;d)\,.
+  \end{mathpar}
   Composition and the identity are easily defined pointwise.
 \end{definition}
 
@@ -196,7 +190,7 @@ The next theorem gives a criterion for a multicategory to be representable.
   This is a representable multicategory; indeed, it may be identified with the usual unit monoidal category.
 \end{definition}
 
-\section{Multifunctors and multinatural transformations}
+\section{Multifunctors \& multinatural transformations}
 
 \begin{definition}
   Let $\M,\N$ be multicategories.  
@@ -208,7 +202,11 @@ The next theorem gives a criterion for a multicategory to be representable.
 \end{definition}
   
 \begin{definition}
-  Given multicategories $\M,\N$ and multifunctors $F,G\from \M \to \N$, a \emph{multinatural transformation} $\phi$ is given by morphisms $\phi_a \from F a \to G a$ for each object $a$ of $\M$, such that if $f\from a_1,\cdots a_n\to b$ is any morphism in $\M$, then the following diagram commutes.
+  Given multicategories $\M,\N$ and multifunctors 
+  \[
+    F,G\from \M \to \N\,,
+    \]
+  a \emph{multinatural transformation} $\phi\from F \Rightarrow G$ is given by morphisms $\phi_a \from F a \to G a$ for each object $a$ of $\M$, such that if $f\from a_1,\cdots a_n\to b$ is any morphism in $\M$, then the following diagram commutes.
   \[
     \begin{tikzcd}[column sep=36pt]
       Fa_1,\cdots, Fa_n \arrow[r, "{\phi_{a_1},\cdots,\phi_{a_n}}"] \arrow[d, "Ff"']
@@ -233,7 +231,7 @@ The next theorem gives a criterion for a multicategory to be representable.
     \]
   such that for any multimorphism $f\from a_1,\cdots,a_m\to b$ in $\M$, the diagram
   \[
-    \begin{tikzcd}[column sep=48pt]
+    \begin{tikzcd}[column sep=46pt]
       F_1(a_1),\cdots,F_n(a_1),\cdots,F_1(a_m),\cdots,F_n(a_m) \arrow[r, "{\phi_{a_1},\cdots,\phi_{a_m}}"] \arrow[d, "\sigma_*"']
         & G(a_1),\cdots,G(a_m) \arrow[dd, "Gf"] \\
       F_1(a_1),\cdots,F_1(a_m),\cdots,F_n(a_1),\cdots,F_n(a_m) \arrow[d, "{F_1f,\cdots,F_nf}"']
@@ -413,12 +411,12 @@ Note that a monoid in a multicategory $\M$ may also be defined to be a multifunc
   \begin{SidewaysFigure}
     \centering
     \begin{mathpar}
-      \begin{tikzcd}[ampersand replacement=\&, column sep=116pt]
+      \begin{tikzcd}[ampersand replacement=\&, column sep=68pt]
         \C_1(a_1,b_1),\C_1(b_1,c_1),\cdots,\C_n(a_n,b_n),\C_n(b_n,c_n) \arrow[r, "{;_{a_1,b_1,c_1},\cdots,;_{a_n,b_n,c_n}}"] \arrow[d, "\sigma_*"']
           \& \C_1(a_1,c_1),\cdots,\C_n(a_n,c_n) \arrow[dd, "F"] \\
         \C_1(a_1,b_1),\cdots,\C_n(a_n,b_n),\C_1(b_1,c_1),\cdots,\C_n(b_n,c_n) \arrow[d, "F"']
           \& \\
-        \D(F(a_1,\cdots,a_n),F(b_1,\cdots,b_n)),\D(F(b_1,\cdots,b_n),F(c_1,\cdots,c_n)) \arrow[r, "{;_{F(a_1,\cdots,a_n),F(b_1,\cdots,b_n),F(c_1,\cdots,c_n)}}" yshift=0.3em]
+        \D(F(a_1,\cdots,a_n),F(b_1,\cdots,b_n)),\D(F(b_1,\cdots,b_n),F(c_1,\cdots,c_n)) \arrow[r, "{;_{F(a_1,\cdots,a_n),F(b_1,\cdots,b_n),F(c_1,\cdots,c_n)}}" yshift=0.5em]
           \& \D(F(a_1,\cdots,a_n),F(c_1,\cdots,c_n))
       \end{tikzcd}
       \\
@@ -431,7 +429,8 @@ Note that a monoid in a multicategory $\M$ may also be defined to be a multifunc
           \& \D(F(a_1,\cdots,a_n),F(a_1,\cdots,a_n))
       \end{tikzcd}
     \end{mathpar}
-    \caption{The rules for preservation of composition and identity by multimorphisms of $\V$-enriched functors are similar to those for ordinary enriched functors.  
+    \caption[Definition of multimorphisms between categories enriched in multicategories.]
+    {The rules for preservation of composition and identity by multimorphisms of $\V$-enriched functors are similar to those for ordinary enriched functors.  
     Note that it is essential for the $\V$ to be a symmetric multicategory.  
     This generalizes the usual construction for categories enriched over a symmetric monoidal category.}
     \label{fig:VEnrichedMulticategoryFunctors}
@@ -515,15 +514,15 @@ that make the diagrams in Figure \ref{FigExtranatural} commute.
 A $0$-ary multimorphism $\to G$ is an ordinary enriched natural transformation $\C(a,c) \to G(a,c)$.
 \begin{figure}
   \begin{mathpar}
-    \begin{tikzcd}[column sep=21pt]
-      {\C(a,a'),F_1(a',b_1),\cdots,F_n(b_{n-1},c),\C(c,c')} \arrow[r, "{\id,\phi_{a',\vec{b},c},\id}", xshift=-2ex, shorten=-1.8ex] \arrow[d, "{p,\id,\cdots,\id,p}"']
+    \begin{tikzcd}[column sep=8pt]
+      {\C(a,a'),F_1(a',b_1),\cdots,F_n(b_{n-1},c),\C(c,c')} \arrow[r, "{\id,\phi_{a',\vec{b},c},\id}", xshift=-2ex, yshift=1pt, shorten=-1.8ex] \arrow[d, "{p,\id,\cdots,\id,p}"']
 
         & \C(a,a'),G(a',c),G(c,c') \arrow[d, "p"] \\
       F_1(a,b_1),\cdots,F_n(b_{n-1},c') \arrow[r, "{\phi_{a,\vec{b},c'}}"]
         & \G(a,c')
     \end{tikzcd}
     \and
-    \begin{tikzcd}[column sep=-120pt]
+    \begin{tikzcd}[column sep=-134pt]
       & F_1(a,b_1),\C(b_1,b_1'),F_2(b_1',b_2),\cdots,F_{n-1}(b_{n-2}',b_{n-1}),\C(b_{n-1},b_{n-1}'),F_n(b_{n-1}',c)
       \arrow[dr, "{\id,p,\cdots,p}"] \arrow[dl, "{p,\cdots,p,\id}"'] & \\
       F_1(a,b_1'),\cdots,F_n(b_{n-1}',c) \arrow[dr, "{\phi_{a,\vec{b'},c}}"'] & &
@@ -531,7 +530,9 @@ A $0$-ary multimorphism $\to G$ is an ordinary enriched natural transformation $
         & G(a,c) &
     \end{tikzcd}
   \end{mathpar}
-  \caption{The coherences we require on the multimorphisms between endoprofunctors are essentially the axioms for an extranatural transformation as in \cite{ExtranaturalTransformations}.}
+  \caption[Extranatural transformations between endoprofunctors.]
+  {Extranatural transformations between endoprofunctors.
+  The coherences we require on the multimorphisms between endoprofunctors are essentially the axioms for an extranatural transformation as in \cite{ExtranaturalTransformations}.}
   \label{FigExtranatural}
 \end{figure}
 
@@ -576,7 +577,7 @@ The following proposition shows that this is indeed a well-defined composition.
 
 \begin{SidewaysFigure}
   \[
-    \begin{tikzcd}[ampersand replacement=\&, row sep=80pt, column sep=30pt]
+    \begin{tikzcd}[ampersand replacement=\&, row sep=80pt, column sep=23pt]
       %
         \& F_1,\cdots,F_n \arrow[dr, "{\phi^{(1)},\cdots,\phi^{(m)}}"]
           \&
@@ -585,7 +586,7 @@ The following proposition shows that this is indeed a well-defined composition.
         \& F_1,\cdots,F_{k_1},\C,\cdots,\C,F_{k_{m-1}},\cdots,F_n \arrow[u, "{\id_{F_1},\cdots,\id_{F_{k_1}},p,\cdots,p,\id_{F_{k_{m-1}+1}},\cdots,\id_{F_n}}"' {description, near start, xshift=6ex}] \arrow[dr, "{\phi^{(1)},\id,\cdots,\id,\phi^{(n)}}" description]
           \& G_1,\cdots,G_m \arrow[dr, "\psi"]
             \& \\
-      F_1,\C_1,F_2,\cdots,F_{n-1},\C,F_n \arrow[uur, "{\id,p,\cdots,p}"] \arrow[ddr, "{p,\cdots,p,\id}"'] \arrow[ur, "{\id,p,\cdots,p,\id_{\C},\cdots,\id_{\C},\id,\cdots,p}"' {description, xshift=6ex}] \arrow[dr, "{p,\cdots,p,\id,\id_{\C},\cdots,\id_{\C},p,\cdots,p,\id}" {description, xshift=6ex}]
+      F_1,\C_1,F_2,\cdots,F_{n-1},\C,F_n \arrow[uur, "{\id,p,\cdots,p}", bend left=5] \arrow[ddr, "{p,\cdots,p,\id}"', bend right=5] \arrow[ur, "{\id,p,\cdots,p,\id_{\C},\cdots,\id_{\C},\id,\cdots,p}"' {description, xshift=6ex}] \arrow[dr, "{p,\cdots,p,\id,\id_{\C},\cdots,\id_{\C},p,\cdots,p,\id}" {description, xshift=6ex}]
         \&
           \& G_1,\C,G_2,\cdots,G_{m-1},\C,G_m \arrow[u, "{\id,p,\cdots,p}" description] \arrow[d, "{p,\cdots,p,\id}" description]
             \& H \\
@@ -599,7 +600,8 @@ The following proposition shows that this is indeed a well-defined composition.
             \&
     \end{tikzcd}
     \]
-  \caption{Proof that extranaturality is preserved by composition.  
+  \caption[Proof that extranaturality is preserved by composition.]
+  {Proof that extranaturality is preserved by composition.  
   Commutativity of the central square is by extranaturality of the $\phi^{(i)}$, while that of the four-cornered triangle at the right is by extranaturality of $\psi$.  
   The triangles on the left commute automatically, while the parallelograms at the top and the bottom commute by naturality of the $\phi^{(i)}$.}
   \label{FigExtranaturalityComposition}
@@ -745,7 +747,8 @@ Since a monad was defined to be a monoid in the category of endofunctors on a ca
             & \D(a,c)
       \end{tikzcd}
       \]
-    \caption{Proof that the identity-on-objects functor arising from a promonad is indeed a functor.  
+    \caption[Promonads are identity-on-objects functors.]
+    {Proof that the identity-on-objects functor arising from a promonad is indeed a functor.  
     The proof uses naturality of $e_{a,b}$ for commutativity of the large triangle at the top right.}
     \label{FigPromonadFunctorProof}
   \end{figure}
@@ -912,9 +915,9 @@ The important property of this particular multifunctor is as follows.
     {\omega_X}_*\C_1(a_1,b_1),\cdots,{\omega_X}_*\C_n(a_n,b_n),F(a_1,\cdots,a_n)\to F(b_1,\cdots,b_n)\,;
     \]
   i.e., a natural transformation
-  \[
+  \begin{mathpar}
     \left(\prod_i \X(I,x_i)\times\C(a_i,b_i)\right) \times F(a_1,\cdots,a_n)(y) \to F(b_1,\cdots,b_n)(x_1\tensor\cdots\tensor x_n\tensor y)\,.
-    \]
+  \end{mathpar}
   By the Yoneda lemma, such a natural transformation is the same thing as a natural transformation
   \[
     \prod_i \C(a_i,b_i) \times F(a_1,\cdots,a_n)(y) \to F(b_1,\cdots,b_n)(I \tensor \cdots \tensor I \tensor y)\,;
@@ -998,10 +1001,10 @@ The important property of this particular multifunctor is as follows.
 \end{proof}
 
 Now consider the case that we have a parametric monad $\blank.\blank\from\X \times \C \to \C$ on a category $\C$.  
-By considering functors as profunctors, we may identify this with a multifunctor $\X \to \Endoprof_\Set(\C)$; i.e., a monoid in $[\X,\Endoprof_\Set(\C)]$.
+By considering functors as profunctors, we may identify this with a multifunctor $\X \to \Endoprof_\Set(\C)$, which is the same thing as a monoid in $[\X,\Endoprof_\Set(\C)]$.
 Then, by Theorem \ref{StokessTheorem}, we may identify this multifunctor with a monoid in $\Endoprof_{[\X,\Set]}({\omega_\X}_*\C)$; i.e., an $[\X,\Set]$-enriched promonad on ${\omega_\X}_*\C$.
 
-But now, by Proposition \ref{PropPromonadsAreCategories}, this promonad is the same thing as an $[\X,\Set]$-enriched category with the same objects as $\C$ that admits an identity-on-objects $[\X,\Set]$-enriched functor out of ${\omega_X}_*(\C)$.  
+But now, by Proposition \ref{PropPromonadsAreCategories}, this promonad is the same thing as an $[\X,\Set]$-enriched category that has the same objects as $\C$ and admits an identity-on-objects $[\X,\Set]$-enriched functor out of ${\omega_X}_*(\C)$.  
 
 The objects of this $[\X,\Set]$-enriched category are the objects of $\C$.
 By working the definitions through the proofs of Proposition \ref{PropFunctorsIntoProfunctors} and Theorem \ref{StokessTheorem}, we see that the object of morphisms from $a$ to $b$ is
@@ -1028,8 +1031,3 @@ We get a new analogue of Slogan \ref{SlogKleisli}.
 \begin{slogan}
   The \Mellies category is precisely the $[\X,\Set]$-enriched category that we get by considering functors as profunctors.
 \end{slogan}
-
-\bibliographystyle{alpha}
-\bibliography{../common/phd_bibliography}
-
-\end{document}

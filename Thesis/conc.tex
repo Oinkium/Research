@@ -1,10 +1,3 @@
-\documentclass[11pt]{report}
-
-\let\FEWFONTS=1
-\input{../common/preamble}
-
-\begin{document}
-
 \chapter{Further Directions}
 \label{ChapFurtherDirections}
 
@@ -31,7 +24,7 @@ All is not lost, however, since we can still try and impose some condition on th
 One convenient way to do this is to ask that $\G$ should embed into some model $\G^{IA}$ of Idealized Algol.  
 An obvious case when this holds is when $\G$ is the (unquotiented) Hyland-Ong category of arenas and innocent strategies, and $\G^{IA}$ is the category of arenas and single-threaded strategies.
 
-For example, fix $X\in\{\bB,\bN\}$ and let \emph{Nondeterministic PCF} be the langauge PCF, together with a constant $\ask_X \from \bool$ that plays the role of a nondeterministic oracle.  
+For example, fix $X\in\{\bB,\bN\}$ and let \emph{Nondeterministic PCF} be the language PCF, together with a constant $\ask_X \from \bool$ that plays the role of a nondeterministic oracle.  
 I.e., it is the language with types given by the following inductive grammar.
 \[
   T \Coloneqq \bool \mid \nat \mid T \to T
@@ -114,7 +107,7 @@ We then define a relation $M \converges c$ (read `$M$ \emph{may converge to} $c$
     \and
     \inferrule*{ }{\ask_X \converges \false}
   \end{mathpar}
-  \caption{Big-step operational semantics for Nondeterministic PCF with may testing}
+  \caption{Big-step operational semantics for Nondeterministic PCF and may testing}
   \label{FigNDPCFOpSem}
 \end{figure}
 
@@ -356,7 +349,7 @@ where now the move $\true$ or $\false$ in the nondeterministic oracle game (on t
 
 There is a surprising and elegant definition of nondeterministic innocence (see Levy \cite{levy2014morphisms}, with the correction given by Tsukada and Ong in \cite[Proposition 46]{TsukadaSheaves}), which we shall not detail here.
 Tsukada and Ong have also demonstrated that it is instructive to consider strategies as presheaves over plays, where we assign to each individual play a set of possible branches that lead us to that play.  
-In this formalism, the innocent nondeterministic strategies are preciesly those presheaves that are sheaves with respect to a certain natural Grothendieck topology.
+In this formalism, the innocent nondeterministic strategies are precisely those presheaves that are sheaves with respect to a certain natural Grothendieck topology.
 
 What, then, can our Kleisli category model do for us?
 One answer is that it provides a general setting in which we can prove results such as adequacy without worrying about the specific details of a nondeterministic construction.  
@@ -506,14 +499,9 @@ Having given the definition of the order-enriched structure of $\G$, we may defi
 
 It is worth mentioning that although we can prove computational adequacy for our various Kleisli categories (and categories of the form $\G/\X$), it does not automatically follow that we can prove adequacy in the same way for the various quotiented categories.  
 An important example is our model of countable nondeterminism with must testing.  
-It is well known (see, e.g., \cite{Apt,PlotkinApt}) that countable nondeterminism is inextricably linked to dicontinuity of composition, which robs us of an important ingredient in the standard order-theoretic proof of adequacy.
+It is well known (see, e.g., \cite{Apt,PlotkinApt}) that countable nondeterminism is inextricably linked to discontinuity of composition, which robs us of an important ingredient in the standard order-theoretic proof of adequacy.
 
 The solution is to prove adequacy in the normal way for the semantics of IA${}_\bN$ in $\G_\bN$, and then to apply the argument from Corollary \ref{CorAdeqMust} to reduce this to a Computational Adequacy result for the semantics of Idealized Algol with countable nondeterminism and must testing.
 Here, we are using an idea due to Levy \cite{LevyGsInfinite}: that if we want to prove adequacy for countable nondeterminism, then we need a form of \emph{explicit forcing}, in which we uncover some information about the points at which we have made an infinite nondeterministic branch.  
 In our case, the explicit forcing is done through the language IA${}_\bN$, which creates a complete record of the nondeterministic values we have chosen along the way.  
 We have then applied the second part of Levy's technique -- \emph{hiding} -- to remove the explicit information and yield a pure, computationally adequate model of countable nondeterminism.
-
-\bibliographystyle{alpha2}
-\bibliography{../common/phd_bibliography}
-
-\end{document}

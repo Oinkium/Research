@@ -1,16 +1,3 @@
-\documentclass[11pt]{report}
-
-\let\FEWFONTS=1
-\let\THESIS=1
-\input{../common/preamble}
-
-\usepackage{lua-visual-debug}
-
-\begin{document}
-
-\tableofcontents
-\newpage
-
 \chapter{Monads and Kleisli categories}
 \label{ChapMonads}
 
@@ -134,7 +121,7 @@ Meanwhile, $J S $ is the functor $\Kl_M\to\Kl_M$ that sends an object $a$ to $Ma
   \label{prop:KleisliHasAdjunction}
 \end{proposition}
 
-Given a monad $M$ on a category $\C$ and a functor $F\from \C \to \D$, where $\D$ is another category, we say that a natural transormation $\psi_a \from FMa \to Fa$ is \emph{$M$-multiplicative} if it makes the following diagrams commute.
+Given a monad $M$ on a category $\C$ and a functor $F\from \C \to \D$, where $\D$ is another category, we say that a natural transformation $\psi_a \from FMa \to Fa$ is \emph{$M$-multiplicative} if it makes the following diagrams commute.
 \begin{mathpar}
   \begin{tikzcd}
     FMMa \arrow[r, "\psi_{Ma}"] \arrow[d, "Fm_a"']
@@ -165,7 +152,7 @@ A defining property of the Kleisli category is that it is initial among such tri
   \label{pKleisli}
 \end{proposition}
 
-Another way to characterize the Kleisli category $\Kl_M$ is to say that the the adjunction we described above is initial among all adjunctions giving rise to the monad $M$.  
+Another way to characterize the Kleisli category $\Kl_M$ is to say that the adjunction we described above is initial among all adjunctions giving rise to the monad $M$.  
 This can be deduced from Proposition \ref{pKleisli} using the following result.
 
 \begin{lemma}[\cite{StreetMonads}]
@@ -626,6 +613,7 @@ To prove our adequacy result for the operational semantics of \IAX, we first giv
       \label{FigTheOneForTheLemma}
     \end{subfigure}
     \normalsize
+    \caption{Some useful IA derivations}
   \end{SidewaysFigure}
 \end{proof}
 
@@ -677,7 +665,7 @@ We can now state and prove our soundness lemma.
     \Gamma,v\from\Var,(s\vert v\mapsto k) \ts M[v\gets \suc!v;\tr_w !v/\ask_v] \converges c,(s'\vert v\mapsto k + |u|)
     \]
   in Idealized Algol.
-  \label{LemSoundness}
+  \label{LemSoundnessMonads}
 \end{lemma}
 \begin{proof}
   Structural induction on the derivation.  
@@ -726,7 +714,7 @@ We can now state and prove our soundness lemma.
   This completes the induction.
 \end{proof}
 
-In light of Lemma \ref{LemSoundness}, we can state our soundness result.
+In light of Lemma \ref{LemSoundnessMonads}, we can state our soundness result.
 
 First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheComputationalAdequacyIA} if $\G$ is the category of games):
 
@@ -811,7 +799,7 @@ First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheC
     {
       \inferrule*[sep=0em]
       {
-        \inferrule*[left={Lem. \ref{LemSoundness}}]
+        \inferrule*[left={Lem. \ref{LemSoundnessMonads}}]
         {
         }
         {
@@ -915,7 +903,7 @@ Since complete plays in the game $\oc X \implies \bC$ are always of the form $q$
 \section{Computational Adequacy}
 
 Now we want to prove Computational Adequacy; i.e., the converse to Proposition \ref{PropKleisliSoundness}.
-To do this, we need to prove a converse to Lemma \ref{LemSoundness}.
+To do this, we need to prove a converse to Lemma \ref{LemSoundnessMonads}.
 
 First of all, we need to prove a reverse result to Lemma \ref{LemFirstSubstitution} that deals with substitution in the opposite direction; i.e., instead of telling us what happens when we substitute a term for $\ask_X$, we will look at what happens when we substitute a term for $v\gets \suc !v;\tr_u !v$.  
 
@@ -1002,7 +990,7 @@ Now we can state and prove our adequacy lemma.
     \Gamma,s \ts M[\ask_X/y] \converges_u c,s'
     \]
   in \IAX, where $u$ is the subsequence of $w$ consisting of all terms from $k+1$ up to $l$.
-  \label{LemAdequacy}
+  \label{LemAdequacyMonads}
 \end{lemma}
 \begin{proof}
   Induction on the derivation.
@@ -1088,7 +1076,7 @@ We have proved one direction already in Proposition \ref{PropKleisliSoundness}, 
     v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X] \converges \skipp,(v\mapsto |u|)
     \]
   Now $u$ is the subsequence of $u^\top$ going from position $1$ to position $|u|$.  
-  So Lemma \ref{LemAdequacy} tells us that we must have
+  So Lemma \ref{LemAdequacyMonads} tells us that we must have
   \[
     \blank,()\ts M \converges_u \skipp,()
     \]
@@ -1935,10 +1923,10 @@ Lastly, we observe that our innocent factorization result (Proposition \ref{Prop
 It follows, then, that any recursive \emph{visible} $\sigma\from \deno T$ is the denotation of some Idealized Algol term $M \from T$.
 Thus, the category $\G^{rec}$ of games and recursive visible strategies is universal for Idealized Algol, and thus its Kleisli category $\G^{rec}_X$ is fully abstract for \IAX.
 
-As an application of this fully abstract semantics, we clear up a loose end from the proof of Propostion \ref{PropNotFullyAbstract}.
+As an application of this fully abstract semantics, we clear up a loose end from the proof of Proposition \ref{PropNotFullyAbstract}.
 
 \begin{lemma}
-  The terms $M,N\from (\nat \to \nat) \to \com$, as defined in the proof of Propostion \ref{PropNotFullyAbstract}, are observationally equivalent in Idealized Algol with countable nondeterminism.
+  The terms $M,N\from (\nat \to \nat) \to \com$, as defined in the proof of Proposition \ref{PropNotFullyAbstract}, are observationally equivalent in Idealized Algol with countable nondeterminism.
 \end{lemma}
 \begin{proof}
   The denotations for $M$ and $N$ both have maximal plays that look like this:
@@ -2043,7 +2031,3 @@ What is more, we have
   \sigma \sim \tau \Rightarrow J\sigma \sim J\tau \Rightarrow J\sigma \smam J\tau \Rightarrow \sigma\sim\tau\,.
   \]
 This proves that the finite and countable nondeterministic variants of Idealized Algol are conservative extensions of Idealized Algol.
-\bibliographystyle{alpha}
-\bibliography{../common/phd_bibliography}
-
-\end{document}

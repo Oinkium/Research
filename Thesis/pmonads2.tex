@@ -1,11 +1,3 @@
-\documentclass{report}[11pt]
-\let\FEWFONTS=1
-
-\input{../common/preamble}
-\usepackage{lua-visual-debug}
-
-\begin{document}
-
 \chapter{Parametric Monads and Full Abstraction}
 \label{ChapParametricMonadsFullAbstraction}
 
@@ -25,7 +17,6 @@ We fix a model $\G$ of Idealized Algol as above, and suppose that the datatypes 
 Then we get an oplax monoidal functor $\X \to \G$, inducing a reader action of $\oppcat\X$ on $\G$ such that the category $\G/\oppcat\X$ is Cartesian closed.  
 We will define a language and an interpretation of this language in the category $\G/\oppcat\X$.
 
-\newcommand{\IAX}{{IA${}_{X}$}\xspace}
 \newcommand{\IAXX}{{IA${}_{\X}$}\xspace}
 \section{The language \IAXX}
 
@@ -43,9 +34,9 @@ We will define a language and an interpretation of this language in the category
 The interpretation of $\choose_p$ is that it requests an element $a$ of the set $j(p)$.
 
 Let $\G$ be a model of Idealized Algol as described above, and suppose that there is an oplax monoidal functor $\Set \to \G$ that is used to interpret datatypes.  
-We will use an underline to indicate thies functor; so, for example, the object of $\G$ that is used to denote the natural number type is written $\ul\bN$.
+We will use an underline to indicate this functor; so, for example, the object of $\G$ that is used to denote the natural number type is written $\ul\bN$.
 
-By our description of $\G/\oppcat \X$ as a lax colimit in $\Cat$ (i.e., Corollary \ref{CorTheConstructionUniversalProperty}), we have a natual functor $J\from \G\to\G/\oppcat \X$ and a natural transformation $\phi_{p,a}\from J(jp\to a) \to Ja$.  
+By our description of $\G/\oppcat \X$ as a lax colimit in $\Cat$ (i.e., Corollary \ref{CorTheConstructionUniversalProperty}), we have a natural functor $J\from \G\to\G/\oppcat \X$ and a natural transformation $\phi_{p,a}\from J(jp\to a) \to Ja$.  
 Our denotational semantics of \IAXX is then given in the category $\G/\oppcat X$ as follows.  
 The denotation of any type $T$ of Idealized Algol is given by $J(\deno{T}_\G)$, where $\deno{T}_\G$ is the original denotation in $\G$.
 The denotation of any sequent $\Gamma\ts M$ is given by $\deno{\Gamma\ts M} = J(\deno{\Gamma\ts M}_\G)$, where $\deno{-}_\G$ is the original denotation in $\G$.
@@ -150,7 +141,7 @@ The case we have in mind is when $jp$ is some finite set and $N$ is the natural 
   \label{DefCovers}
 \end{definition}
 
-Recall that, in the definition of the category $\G/\oppcat\X$, the \Mellies morphisms are left unchanged by precomposing with a morphism in the image of the functor $j$; therefore, if $M\from T$ is a closed term of \IAXX referring to $\choose_{p_1},\cdots,\choose_{p_n}$, then we may write the denotation of $M$ as the composite
+Recall that, in the definition of the category $\G/\oppcat\X$, the \Mellies morphisms are left unchanged by precomposing with a morphism in the image of the functor $j$; therefore, if $M\from T$ is a closed term of \IAXX referring to $\choose_{p_1}$, $\cdots$, $\choose_{p_n}$, then we may write the denotation of $M$ as the composite
 \[
   j(N) \xrightarrow{jf} j(p_1 \tensor \cdots \tensor p_n) \xrightarrow{m^j} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \deno T\,;
   \]
@@ -238,7 +229,7 @@ To prove the converse, we prove a lemma about substitution analogous to  Lemma \
     {\Gamma,s^{(0)} \ts M[\choose_{p_i}/\neww(\lambda v.v\gets \ask_{j(N)};\Pi_i\oc v)] \converges_{U_1\cat \cdots \cat U_n} c,s^{(n)}}
     \]
   is a valid inference of \IAXX.
-  \label{LemThirdSubstitution}
+  \label{LemFourthSubstitution}
 \end{lemma}
 \begin{proof}
   As in Lemma \ref{LemSecondSubstitution}, we can prove this by looking at cases.  
@@ -290,7 +281,7 @@ We now prove the converse to Lemma \ref{LemSoundnessIaxx}.
 \begin{proof}
   Induction on the derivation.
   Suppose that $M$ is not one of the $y_i$; then $M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v)/y_i]$ is not equal to $\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v)$.
-  Moreover, every instance of $\ask_{j(N)}$ in $M$ occurs as part of an expression of the form $\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v)$, and so we win by Lemma \ref{LemThirdSubstitution} and the inductive hypothesis.
+  Moreover, every instance of $\ask_{j(N)}$ in $M$ occurs as part of an expression of the form $\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v)$, and so we win by Lemma \ref{LemFourthSubstitution} and the inductive hypothesis.
 
   Otherwise, $M=\new\lambda v.v\gets \ask_{j(N)};\Pi_j\oc v)$ for some $j$.  
   Now, if we have
@@ -814,7 +805,7 @@ Similarly, given a Kleisli morphism $\sigma\from 1 \to \bC$ -- i.e., a morphism 
 \[
   \bP(\sigma\downarrow) = \sum_{u\in\Acc(\sigma)} 2^{-|u|}\,.
   \]
-Our Computational Adequacy result for IAX (Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy}) then gives us a Computational adequacy result for this model.
+Our Computational Adequacy result for \IAX (Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy}) then gives us a Computational adequacy result for this model.
 
 \begin{proposition}
   Let $M\from \com$ be a closed term of IA${}_\bB$.  
@@ -833,11 +824,11 @@ Then the same argument we used in Theorem \ref{TheFullAbstractionPa} proves Full
 \end{theorem}
 
 This model is much easier to realize.  
-What do we gain, then, from our more complicated model?  
+What do we gain, then, from our more complicated original model?  
 
 The most obvious answer is that our original model allowed us to work with arbitrary probabilities, rather than using a fixed coin with probability $\frac12$.  
 This is not such a great advantage as it might seem, since if $p\in[0,1]$ is any real number whose binary expansion is computable as a function $\bN \to \bB$, then we can simulate $\choose_p$ within the probabilistic version of IA${}_\bB$\footnote{Idea: build up a sequence of intervals $I_n$ of width $2^n$ by repeatedly flipping the coin and using the result to choose either the lower or the upper half of $I_{n-1}$.  
-If at any point the upper bound of $I_n$ is less than or equal to $p$ (which can be checked by computing the first $n$ terms of the binary expansion of $p$, then return $\true$.  
+If at any point the upper bound of $I_n$ is less than or equal to $p$ (which can be checked by computing the first $n$ terms of the binary expansion of $p$), then return $\true$.  
 If at any point the lower bound of $I_n$ is greater than or equal to $p$, return $\false$.}.
 
 Perhaps a better way of thinking about the difference between the two models, then, is to consider what the denotation of a term actually looks like.  
@@ -958,7 +949,7 @@ We now relate this definition to \Mellies composition of strategies.
 \end{definition}
 
 \begin{proposition}
-  Let $\sigma\from A \to B$, $\tau\from B \to C$ be morphisms in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
+  Let $\sigma\from A \to B$, $\tau\from B \to C$ be morphisms in the category $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
   Let $s$ be a legal play in $A \to C$.
   Then
   \[
@@ -975,13 +966,13 @@ We now relate this definition to \Mellies composition of strategies.
   \end{mathpar}
   where $V$ and $W$ are random variables and $\tilde \sigma,\tilde\tau$ are strategies in $\G$.
   Then the composition $\sigma;\tau$ in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$ is given by $V\tensor W\from\Omega \to X\times Y$, together with the \Mellies composition
-  \[
+  \begin{mathpar}
     A \xrightarrow{\tilde\sigma}
     (\ul{X} \to B) \xrightarrow{\ul{X} \to \tilde\tau}
     (\ul X \to (\ul Y \to C)) \to
     ((\ul X \times \ul Y) \to C) \xrightarrow{\mu\to C}
     (\ul{X\times Y} \to C)\,,
-    \]
+  \end{mathpar}
   where $\mu$ is $\langle\ul{\pr_X},\ul{\pr_Y}\rangle$.
 
   First suppose that $s$ is a sequence in $A \to C$, and let $\s\in\wit_B(s)$.  
@@ -1044,7 +1035,7 @@ We now relate this definition to \Mellies composition of strategies.
   Now consider $\t\vert_{\ul X,\ul Y}$, which has the same length as $S\vert_{\ul{X\times Y}}=t\vert_{\ul{X\times Y}}$.
   This sequence is made up of pairs of moves $qx$ for $x\in X$ or $qy$ for $y\in Y$.  
 
-  By the definition of $\mu$, we know that if the $i$-th pair of moves in $\t\vert_{\ul X,\ul Y}$ is $qx$ for $x\in X$, then the $i$-th pair of moves in $t\vert_{\ul{X\times Y}}$ is $q(x,y_0)$ for some $y_0$, and if the $i$-th pair of moves in $\t\vert_{\ul X,\ul Y}$ is $qy$ for $y\in Y$, then the $i$-th pair of mvoes in $t\vert_{\ul{X\times Y}}$ is $q(x_0,y)$ for some $x_0\in X$.
+  By the definition of $\mu$, we know that if the $i$-th pair of moves in $\t\vert_{\ul X,\ul Y}$ is $qx$ for $x\in X$, then the $i$-th pair of moves in $t\vert_{\ul{X\times Y}}$ is $q(x,y_0)$ for some $y_0$, and if the $i$-th pair of moves in $\t\vert_{\ul X,\ul Y}$ is $qy$ for $y\in Y$, then the $i$-th pair of moves in $t\vert_{\ul{X\times Y}}$ is $q(x_0,y)$ for some $x_0\in X$.
   Moreover, if $t'$ is some other sequence such that $t'/s$ and such that $t'$ differs only from $t$ in the choice of the `irrelevant' moves $x_0,y_0$, then there is some $S'\in\sigma\|(\ul X \to \tau)\|(\Lambda\inv;\mu)$ such that $S\vert_{A,\ul{X\times Y}\to C}=t'$ and $S\vert_{A,\ul X \to (\ul Y \to C)}=\t$.
   Then the combined probability of all such sequences is given by
   \[
@@ -1099,7 +1090,7 @@ such that for any even-length $s$, and any extension $sa$, we have
 \[
   \sigma(s) \ge \sum_{sab\in\L_A} \sigma(sab)\,.
   \]
-These quantites $\sigma(s)$ take the role of our $\bP(s\in\sigma)$, but now they are part of the \emph{definition} of the strategy $\sigma$, rather than being a calculated quantity.
+These quantities $\sigma(s)$ take the role of our $\bP(s\in\sigma)$, but now they are part of the \emph{definition} of the strategy $\sigma$, rather than being a calculated quantity.
 
 \begin{proposition}
   For any \Mellies strategy $\sigma\from A \to B$ given by a random variable $V$ taking values in a set $X$ and a strategy $\tilde\sigma \from A \to (\ul X \to B)$, we get a probabilistic strategy in the sense of Danos and Harmer by setting
@@ -1128,8 +1119,3 @@ Danos and Harmer then \emph{define} the composition of two probabilistic strateg
 \end{definition}
 By Proposition \ref{PropCompositionProb}, the composition of strategies in the quotiented category agrees with this composition of Danos and Harmer.
 Our proof above then gives an alternative proof of Full Abstraction for Danos and Harmer's probabilistic game semantics.
-
-\bibliographystyle{alpha2}
-\bibliography{../common/phd_bibliography}
-
-\end{document}

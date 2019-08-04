@@ -5,45 +5,45 @@ The style file: alpha2.bst
 Database file #1: ../common/phd_bibliography.bib
 Warning--I didn't find a database entry for "Moggi"
 Warning--empty institution in RusssThesis
-You've used 28 entries,
+You've used 31 entries,
             2549 wiz_defined-function locations,
-            763 strings with 8831 characters,
-and the built_in function-call counts, 11775 in all, are:
-= -- 1228
-> -- 407
-< -- 27
-+ -- 131
-- -- 124
-* -- 786
-:= -- 1816
-add.period$ -- 93
-call.type$ -- 28
-change.case$ -- 158
-chr.to.int$ -- 28
-cite$ -- 29
-duplicate$ -- 513
-empty$ -- 955
-format.name$ -- 167
-if$ -- 2550
+            785 strings with 9296 characters,
+and the built_in function-call counts, 12921 in all, are:
+= -- 1343
+> -- 450
+< -- 30
++ -- 145
+- -- 136
+* -- 853
+:= -- 1993
+add.period$ -- 103
+call.type$ -- 31
+change.case$ -- 174
+chr.to.int$ -- 31
+cite$ -- 32
+duplicate$ -- 566
+empty$ -- 1051
+format.name$ -- 184
+if$ -- 2800
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 24
-newline$ -- 143
-num.names$ -- 88
-pop$ -- 140
+missing$ -- 27
+newline$ -- 158
+num.names$ -- 99
+pop$ -- 163
 preamble$ -- 1
-purify$ -- 185
+purify$ -- 204
 quote$ -- 0
-skip$ -- 446
+skip$ -- 492
 stack$ -- 0
-substring$ -- 790
-swap$ -- 124
-text.length$ -- 27
-text.prefix$ -- 15
+substring$ -- 845
+swap$ -- 136
+text.length$ -- 30
+text.prefix$ -- 17
 top$ -- 0
-type$ -- 224
+type$ -- 244
 warning$ -- 1
-while$ -- 112
-width$ -- 33
-write$ -- 381
+while$ -- 123
+width$ -- 36
+write$ -- 422
 (There were 2 warnings)

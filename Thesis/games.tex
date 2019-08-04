@@ -1,12 +1,3 @@
-\documentclass[11pt]{report}
-
-\def\FEWFONTS{1}
-\def\THESIS{1}
-\input{../common/preamble}
-\usepackage{lua-visual-debug}
-
-\begin{document}
-
 \chapter{A Sequoidal Game Semantics for Idealized Algol}
 \label{ChapGames}
 
@@ -608,7 +599,7 @@ We then claim that:
   \end{itemize}
   Here, $i_*(s)$ means the function $i$ applied pointwise to the elements of the string $s$.
 
-  If $i$ is a subset incusion of $A$ into $B$, then we get an innocent strategy $\subs_i\from B \implies A$ defined by
+  If $i$ is a subset inclusion of $A$ into $B$, then we get an innocent strategy $\subs_i\from B \implies A$ defined by
   \[
     \subs_i = \{s\in P_{B\implies A}\suchthat\text{for all even-length $t\prefix s$, $t\vert_B=i_*(t\vert_A)$}\}\,.
     \]
@@ -663,7 +654,7 @@ Combining this with our result for associativity in the previous section, we get
 In this setting, Proposition \ref{PropCopycat} tells us that a structural isomorphism gives rise to an isomorphism in $\G$.
 \begin{proposition}
   Let $f$ be a structural isomorphism from a game $A$ to a game $B$.  
-  Then $\cc_f$ is an isomorphim in $\G$ from $A$ to $B$.
+  Then $\cc_f$ is an isomorphism in $\G$ from $A$ to $B$.
 \end{proposition}
 \begin{proof}
   The underlying partial injection $f\from M_A \hookrightarrow M_B$ has an inverse partial injection $f\inv\from M_B \to M_A$, inducing a structural isomorphism from $B$ to $A$.  
@@ -846,7 +837,7 @@ The most important thing we need to prove is that $\tensor$ is a functor.
   Suppose that $s\in\subs_i\tensor \subs_j$.  
   Then $s\vert_{A',A}\in\subs_i$ and $s\vert_{B',B}\in\subs_j$ -- so if $u\prefix s\vert_{A,A}$ has even length, then $u\vert_{A'}=i_*(u\vert_A)$, and if $v\prefix s\vert_{B,B}$ has even length, then $v\vert_{B'}=i_*(v\vert_B)$.  
   Suppose that $t\prefix s$ is of even length.  
-  Then, since only player $O$ swtiches between the $A',A$-component and the $B',B$-component, both $t\vert_{A',A}$ and $t\vert_{B',B}$ are of even length, it follows that $t\vert_{A',B'}=[i,j]_*(t\vert_{A,B})$.  
+  Then, since only player $O$ switches between the $A',A$-component and the $B',B$-component, both $t\vert_{A',A}$ and $t\vert_{B',B}$ are of even length, it follows that $t\vert_{A',B'}=[i,j]_*(t\vert_{A,B})$.  
   Since $t$ was arbitrary, this means that $s\in \subs_{[i,j]}$.
 
   Conversely, suppose that $s\in\subs_{[i,j]}$.  
@@ -1120,9 +1111,9 @@ More generally:
 
   Next, we claim that $\langle\sigma_i\rangle;\pr_j = \sigma_j$.  
   Indeed, we have
-  \begin{IEEEeqnarray*}{rCl?u}
+  \begin{IEEEeqnarray*}{rCl/u}
     \langle\sigma_i\rangle;\pr_j & = & \langle\sigma_i\rangle;\subs_{\inj_j} \\
-    & = & \{[\id_{M_B},\inj_j\inv]_*(s)\suchthat s\in\langle\sigma_i\rangle,\,s\vert_{\prod_iAi}\in(\inj_j)_*(P_{A_j})\} & \textit{Prop. \ref{PropCopycat}} \\
+    & = & \{[\id_{M_B},\inj_j\inv]_*(s)\suchthat s\in\langle\sigma_i\rangle,\,s\vert_{\prod_iAi}\in(\inj_j)_*(P_{A_j})\} & \textit{Prop.~\ref{PropCopycat}} \\
     & = & \sigma_j\,.
   \end{IEEEeqnarray*}
   Lastly, suppose $\tau\from B\implies\prod_iA_i$ is a strategy such that $\tau;\pr_j=\sigma_j$ for each $j$.
@@ -1359,8 +1350,8 @@ We formalize the structure we have uncovered so far in the concept of a \emph{se
   \label{DefSequoidalCategory}
 \end{definition}
 \begin{remark}
-  The definitions of \emph{lax action} can be found at the start of Chapter \ref{ChapParametricMonads}, whie that of an \emph{oplax morphism of actions} is found at Definition \ref{DefOplaxMorphismOfActions}.  
-  The definitions we have used are similar: a \emph{strong action} is a lax action in which the coherences (called $m$ and $e$ in Chapter \ref{ChapParametricMonads} and $\passoc$ and $\run$ here) are isomorphims.  
+  The definitions of \emph{lax action} can be found at the start of Chapter \ref{ChapParametricMonads}, while that of an \emph{oplax morphism of actions} is found at Definition \ref{DefOplaxMorphismOfActions}.  
+  The definitions we have used are similar: a \emph{strong action} is a lax action in which the coherences (called $m$ and $e$ in Chapter \ref{ChapParametricMonads} and $\passoc$ and $\run$ here) are isomorphisms.  
   A \emph{lax morphism of actions} is defined in the same way as an oplax morphism, except that the coherence (called $\mu$ in Definition \ref{DefOplaxMorphismOfActions} and $\wk$ here) goes in the opposite direction.
 \end{remark}
 
@@ -2038,7 +2029,7 @@ but that $A \tensor B$, $A\sequoid B$ and $\oc A$ are not in general well-opened
   Now we have $\sigma;\zz_{\phi_n}=\sigma_n$ for each $n$ by Proposition \ref{PropTree}.
 
   Suppose that $\tau$ is some other strategy for $C\implies \oc A$ such that $\tau;\zz_{\phi_n}=\sigma_n$ for each $n$.  
-  Cy Proposition \ref{PropTree}, we have
+  By Proposition \ref{PropTree}, we have
   \[
     \sigma_n = \tau;\zz_{\phi_n} = \{s\in P_{C\implies A^{\sequoid n}}\suchthat s^{\phi_n}\in\tau\}\,.
     \]
@@ -2131,7 +2122,7 @@ We have one thing left to prove.
   Let $F \from \C \to \C$ be a functor.  
   A \emph{coalgebra for $F$} or \emph{$F$-coalgebra} is an object $a$ of $\C$, together with a morphism $f\from a \to Fa$.
 
-  A \emph{coalgebra homomophism} from $(a,f)$ to $(b,g)$ is a morphism $h\from a \to b$ such that the following diagram commutes.
+  A \emph{coalgebra homomorphism} from $(a,f)$ to $(b,g)$ is a morphism $h\from a \to b$ such that the following diagram commutes.
   \[
     \begin{tikzcd}
       a \arrow[r, "f"] \arrow[d, "h"']
@@ -2166,7 +2157,7 @@ We use two standard pieces of theory about coalgebras.
   \[
     1 \leftarrow F1 \leftarrow F^2 1 \leftarrow F^31 \leftarrow \cdots\,.
     \]
-  If this sequence has a limit $F^{\omega}1$, and if the morphism $\beta\from F(F^{\omega}1) \to F^{\omega}1$ induced from the univeral property of the limit is an isomorphism, then $(F^{\omega}1,\beta\inv)$ is a final coalgebra for $F$.
+  If this sequence has a limit $F^{\omega}1$, and if the morphism $\beta\from F(F^{\omega}1) \to F^{\omega}1$ induced from the universal property of the limit is an isomorphism, then $(F^{\omega}1,\beta\inv)$ is a final coalgebra for $F$.
 \end{theorem}
 
 Now we have already shown that if $A$ is well-opened, then $\oc A$ is the limit of the sequence
@@ -2941,7 +2932,7 @@ This result captures the fact that the term filling the hole of an evaluation co
       By the inductive hypothesis, $\deno{\Gamma\ts\EE' M}$ factors as
       \small
       \[
-        \oc{\deno{\Gamma}} \xrightarrow{\mathmakebox[-1pt]{}\mu_{{\deno{\Gamma}}}\mathmakebox[-1pt]{}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{S'}\tensor A' \xrightarrow{\mathmakebox[-1pt]{}\wk_{\deno{S'},A'}} \deno{S'} \sequoid A' \xrightarrow{\mathmakebox[-1pt]{}\tau'\mathmakebox[-1pt]{}} (\oc\deno{S}\implies\deno{T}),
+        \oc{\deno{\Gamma}} \xrightarrow{\mathmakebox[-1pt]{}\mu_{{\deno{\Gamma}}}\mathmakebox[-1pt]{}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{S'}\tensor A' \xrightarrow{\mathmakebox[-1.2pt]{}\wk_{\deno{S'},A'}} \deno{S'} \sequoid A' \xrightarrow{\mathmakebox[-1.2pt]{}\tau'\mathmakebox[-1.4pt]{}} (\oc\deno{S}\implies\deno{T}),
         \]
       \normalsize
       for appropriate $A',\sigma',\tau'$.  
@@ -3142,7 +3133,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
 \end{definition}
 
 \begin{lemma}
-  The relation $\oopto$ betwen triples $\Gamma,s\ts M$ preserves the sequoidal denotation $\seqdeno{\Gamma,s\ts M}$.
+  The relation $\oopto$ between triples $\Gamma,s\ts M$ preserves the sequoidal denotation $\seqdeno{\Gamma,s\ts M}$.
 
   In other words, if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$, then the following diagram commutes.
   \[
@@ -3252,7 +3243,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
       \begin{mathpar}
         \oc\deno{s\vert_\Gamma};\cell^\Gamma;\lunit_{\oc\deno{\Gamma}};\\((\oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr})\tensor\oc\deno{\Gamma});\\\wk_{\deno T\sequoid \oc\Varr,\oc\deno{\Gamma}};\passoc_{\deno T,\oc\Varr,\oc\deno{\Gamma}};\cong
       \end{mathpar}
-      (where $\cong$ represents the natural isomorpism between the games $\deno T\sequoid(\oc\Varr\tensor\oc\deno{\Gamma})$ and $\deno T \sequoid\oc{\deno{x,\Gamma}}$),
+      (where $\cong$ represents the natural isomorphism between the games $\deno T\sequoid(\oc\Varr\tensor\oc\deno{\Gamma})$ and $\deno T \sequoid\oc{\deno{x,\Gamma}}$),
       and so is completely determined by the value of the composite
       \[
         \oc\deno{s\vert_x};\cell;\mu_{\Varr};(\deno{x\ts M}\tensor\oc\Varr);\wk_{\deno T,\oc\Varr}\,;
@@ -3622,7 +3613,7 @@ It is then easy to see the following.
 \end{definition}
 
 \begin{definition}
-  We inductively define a relation $\plot_T^\Gamma$, where $\Gamma$ is a $\Var$-store and $T$ a type, between strategies for $\oc\deno{\Gamma} \implies \deno T$ and terms $\Gamma\ts M\from T$ in context as follows.
+  We inductively define a relation $\plot_T^\Gamma$, where $\Gamma$ is a $\Var$-store and $T$ a type, between strategies $\sigma\from\oc\deno{\Gamma} \implies \deno T$ and terms $\Gamma\ts M\from T$ in context as follows.
   \begin{itemize}
     \item If $X\in\{\bC,\bB,\bN\}$ is a datatype, $M\from X$ and $\sigma\from \oc\deno{\Gamma}\implies X$, then we say that $\sigma \plot_X^\Gamma u$ if for all $\Gamma$-stores $s$, either $\seqdeno{s,\sigma}=\bot_{A\sequoid\oc\deno{\Gamma}}$ or $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ and some canonical form $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
 
@@ -3706,7 +3697,7 @@ It is then easy to see the following.
 
 \begin{lemma}
   Let $T$ be an idealized Algol type, and let $\Gamma\ts M\from T$ be a typing judgement, where $\Gamma$ is a $\Var$-context.
-  Suppose that $\sigma_1\subset\sigma_2\subset\cdots$ is a nested sequence of strategies for $\oc\deno{\Gamma}$ such that $\sigma_i\plot_T^\Gamma M$ for all $i$.  
+  Suppose that $\sigma_1\subset\sigma_2\subset\cdots$ is a nested sequence of strategies for $\oc\deno{\Gamma}\implies \deno{T}$ such that $\sigma_i\plot_T^\Gamma M$ for all $i$.  
   Let $\sigma=\bigcup_i \sigma_i$.  
   Then $\sigma\plot_T^\Gamma M$.
   \label{LemAdequacyLimits}
@@ -3717,6 +3708,23 @@ It is then easy to see the following.
   In that case, since $\seqdeno{\Gamma,s'\ts u}$ is a maximal strategy for $X\sequoid\oc\deno{\Gamma}$, we must have $\seqdeno{s,\sigma_j}=\seqdeno{\Gamma,s'\ts u}$ for all $j\ge i$, and therefore that $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$.
 
   By induction on $T$, this extends to higher types by continuity of composition.
+  For example, suppose that we have $\Gamma\ts M \from S \to T$, and that the $\sigma_i$ are strategies $\oc\deno{\Gamma} \implies (\oc\deno S \implies \deno T)$ such that $\sigma_i \plot_{S\to T}^\Gamma M$ for all $i$.
+  We claim that $\bigcup_i\sigma_i \plot_{S \to T}^\Gamma M$.  
+  
+  Indeed, suppose that $\tau\from \oc \deno \Gamma \implies \deno S$ is a strategy and $N \from S$ a term such that $\tau\plot_S^\Gamma N$.  
+  Then, by hypothesis, we have
+  \[
+    \left(\oc\deno{\Gamma} \xrightarrow{\ms\mu_{\deno{\Gamma}}\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\sigma_i\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N
+    \]
+  for each $i$, and so, by the inductive hypothesis applied to $T$, we know that we have
+  \[
+    \bigcup_i\left(\oc\deno{\Gamma} \xrightarrow{\ms\mu_{\deno{\Gamma}}\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\sigma_i\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,.
+    \]
+  But continuity of composition tells us that this composite is equal to
+  \[
+    \left(\oc\deno{\Gamma} \xrightarrow{\ms\mu_{\deno{\Gamma}}\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\bigcup_i\sigma_i\tensor\tau^\dag} (\oc\deno S \implies \deno T) \tensor \oc\deno S \xrightarrow{\ev} \deno T\right) \plot_T^\Gamma M\,N\,,
+    \]
+  and so the result follows.
 \end{proof}
 
 \begin{lemma}
@@ -4088,7 +4096,7 @@ In fact, we show something stronger.
   \label{LemTypeCharacterization}
 \end{lemma}
 \begin{proof}
-  This is obvious for the dataypes and for $\Var$.  
+  This is obvious for the datatypes and for $\Var$.  
   Let $S,T$ be types -- so $\deno{S \to T} = \oc\deno S \implies \deno T$ -- and let $s\in P_{\oc\deno S\implies \deno T}$.  
   An initial move in $\oc\deno S \implies \deno T$ is an initial move in $\deno T$; by induction, $s\vert_{\deno T}\in P_{\deno T}$ contains at most one initial move, and so $s$ contains at most one initial move.
 
@@ -4174,7 +4182,11 @@ We now link the combinatorial definition of single-threadedness to a definition 
 
 \begin{proposition}
   Let $A,B$ be well-opened games.
-  Given a strategy $\sigma\from \oc A \implies \oc B$, $\sigma$ is single-threaded if and only if it is a comonoid homomorphism with respect to the natural comonoid structures on $\oc A$ and $\oc B$; i.e., it makes the following diagrams commute.
+  Given a strategy
+  \[
+    \sigma\from \oc A \implies \oc B\,,
+    \]
+  $\sigma$ is single-threaded if and only if it is a comonoid homomorphism with respect to the natural comonoid structures on $\oc A$ and $\oc B$; i.e., it makes the following diagrams commute.
   \begin{mathpar}
     \begin{tikzcd}
       \oc A \arrow[r, "\sigma"] \arrow[d, "\mu_A"']
@@ -4202,7 +4214,7 @@ We now link the combinatorial definition of single-threadedness to a definition 
   Then $\tau$ is clearly a strategy, since it is a prefix-closed subset of $\sigma$.
   We claim that $\sigma=\tau^\dag$.  
   Indeed, suppose that $s\in\sigma$.  
-  ket $n$ be an occurrence of an initial move in $s$.  
+  Let $n$ be an occurrence of an initial move in $s$.  
   Then, by Lemma \ref{LemRuss1}, $s\vert_n\in\sigma$ and has a unique initial move, and is therefore contained in $\tau$.  
   Therefore, $\sigma=\tau^\dag$.
 \end{proof}
@@ -4264,6 +4276,7 @@ Then our factorization result (Proposition \ref{PropInnocentFactorization}) give
 \end{proof}
 
 \section{The Intrinsic Equivalence Relation}
+\label{SecIntrinsicEquivalence}
 
 We conclude by giving a more concrete description of the intrinsic equivalence relation on strategies.
 
@@ -4290,8 +4303,3 @@ We conclude by giving a more concrete description of the intrinsic equivalence r
   By the well bracketing condition, every one of these threads is itself a complete play in $\oc A \implies B$.  
   Every one of these sequences is contained in $\sigma$; if they were all contained in $\tau$, then we would have $\s\in\\tau^\dag\|\alpha$, which would be a contradiction, so we end up with a complete sequence contained in $\sigma\setminus\tau$.
 \end{proof}
-
-\bibliographystyle{alpha2}
-\bibliography{../common/phd_bibliography}
-
-\end{document}

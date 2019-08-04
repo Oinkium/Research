@@ -1,8 +1,3 @@
-\documentclass{report}[11pt]
-
-\input{../common/preamble}
-\usepackage{lua-visual-debug}
-\begin{document}
 \chapter{Parametric monads}
 \label{ChapParametricMonads}
 
@@ -110,7 +105,11 @@ Suppose that a monoidal category $\X$ acts on a category $\C$.
   \label{DefMelliesComposition}
 \end{definition}
 \begin{definition}[\cite{ThesisForDays}]
-  Let $\X$ be a monoidal category, and let $F,G\from \X \to \Set$ be functors.  
+  Let $\X$ be a monoidal category and let 
+  \[
+    F,G\from \X \to \Set
+    \]
+  be functors.  
   Then the \emph{Day convolution} of $F$ and $G$ is a functor
   \[
     F \tensor_{\text{Day}} G \from \X \to \Set
@@ -387,10 +386,20 @@ We will briefly return to the \Mellies category in chapter \ref{ChapPromonads}, 
   Let $\C,\D$ be bicategories.  
   A \emph{lax functor} $F\from\C \to \D$ is given by
   \begin{itemize}
-    \item a map $F$ from the objects of $\C$ to the objects of $\D$,
-    \item for each pair $a,b$ of objects of $\C$, a functor $F$ from $\C(a,b)$ to $\D(F(a),F(b))$,
-    \item for each triple $a,b,c$ of objects of $\C$, a transformation $m_{f,g}\from F(f);F(g) \to F(f;g)$ natural in $f\from a \to b$, $g\from b \to c$ and
-    \item for each object $a$ of $\C$, a $2$-cell $e_a\from \id_{Fa} \Rightarrow F(\id_a)\from Fa \to Fa$
+    \item a map $F$ from the objects of $\C$ to the objects of $\D$;
+    \item for each pair $a,b$ of objects of $\C$, a functor
+      \[
+        F \from \C(a,b) \to \D(F(a),F(b))\,;
+        \]
+    \item for each triple $a,b,c$ of objects of $\C$, a transformation 
+      \[
+        m_{f,g}\from F(f);F(g) \to F(f;g)
+        \]
+      natural in $f\from a \to b$, $g\from b \to c$; and
+    \item for each object $a$ of $\C$, a $2$-cell 
+      \[
+        e_a\from \id_{Fa} \Rightarrow F(\id_a)\from Fa \to Fa\,;
+        \]
   \end{itemize}
   such that for all tuples $a,b,c,d$ of objects and all morphisms $f\from a \to b$, $g\from b \to c$, $h \from c \to d$, the following diagrams commute.
   \begin{mathpar}
@@ -527,7 +536,7 @@ For the justification of the terminology we have used whereby a \emph{lax} limit
 As we would expect, the horizontal/vertical composition of two oplax natural transformations is also an oplax natural transformation, and there is an identity oplax natural transformation $F \Rightarrow F$ for any lax functor $F$ of bicategories.
 
 \begin{example}
-  An oplax natural transformation between lax functors $\BB\X \to \Cat$ is the same thing as an oplax morphism between the corresponding actions, as defined in Definition \ref{DefOplaxMorphismOfActions}.
+  An oplax natural transformation between two lax functors $\BB\X \to \Cat$ is the same thing as an oplax morphism between the corresponding actions, as defined in Definition \ref{DefOplaxMorphismOfActions}.
 \end{example}
 \begin{example}
   If $F\from \C \to \D$ is a lax functor of bicategories, then an oplax cocone under $F$ with tip $d\from \D$ is the same thing as an oplax natural transformation $F \to *_d$, where $*_d$ is the constant functor taking the value $d$.
@@ -669,9 +678,9 @@ The composite $k_a(f);k_a(g)$ is given by the pair $\left(\id_a;\id_a, {\begin{t
     \]
   which is related to $F(h)(f)$ via $\runit_h$, while the bottom left composite is given by
   \[
-    F(h)(m) \xrightarrow{(Fh)f}
-    F(h)(n) \xrightarrow{(e_{a'})_{(Fh)f}}
-    F(\id_{a'})(F(h)(n)) \xrightarrow{m_{\id_{a'},h}}
+    F(h)(m) \xrightarrow{\ms\ms(Fh)f\ms\ms}
+    F(h)(n) \xrightarrow{\ms\ms(e_{a'})_{(Fh)f}\ms\ms}
+    F(\id_{a'})(F(h)(n)) \xrightarrow{\ms\ms m_{\id_{a'},h}\ms\ms}
     F(\id_{a'};F(h))(n)\,,
     \]
   which is related to $F(h)(f)$ via $\lunit_h$.
@@ -756,7 +765,7 @@ The composite $k_a(f);k_a(g)$ is given by the pair $\left(\id_a;\id_a, {\begin{t
     (b,n) \xrightarrow{(k,g)}
     (c,p)\,.
     \]
-  Using the formula above for the composition of morphisms in the Grothendieck construction, we see that $\hat{l}((h,f);(k;g))$ is given by the thick dotted composite in Figure \ref{FigLHatFunctor}, while $\hat{l}(h,f);\hat{l}(k,g)$ is given by the thin composite.  
+  Using the formula for the composition of morphisms in the Grothendieck construction, we see that $\hat{l}((h,f);(k;g))$ is given by the thick dotted composite in Figure \ref{FigLHatFunctor}, while $\hat{l}(h,f);\hat{l}(k,g)$ is given by the thin composite.  
   Therefore, these two are equal.
   \begin{figure}
     \[
@@ -772,7 +781,8 @@ The composite $k_a(f);k_a(g)$ is given by the pair $\left(\id_a;\id_a, {\begin{t
             & l_c(p)
       \end{tikzcd}
       \]
-    \caption{Proof that $\hat{l}$ respects composition.  
+    \caption[Proof that $\hat{l}$ respects composition.]
+    {Proof that $\hat{l}$ respects composition.  
     The thick dotted line represents $\hat{l}((h,f);(k,g))$, while the thin solid line represents $\hat{l}(h,f);\hat{l}(k,g)$.  
     The top square commutes because $\mu_h$ is a natural transformation, while the bottom is one of the conditions on a cocone.}
     \label{FigLHatFunctor}
@@ -1052,7 +1062,7 @@ In the particular case of a bifunctor out of $\BB\X$, for $\X$ a monoidal catego
   It remains to show that they are still natural transformations in $\C/\X$, which we do in Figure \ref{FigAssocUnitorNaturalTransformations}.
   \begin{figure}
     \begin{mathpar}
-      \begin{tikzcd}[column sep=100pt]
+      \begin{tikzcd}[column sep=94pt]
         (a'\tensor b')\tensor c' \arrow[r, "{\assoc_{a',b',c'}}"] \arrow[d, "(f\tensor g)\tensor h"']
           & a' \tensor (b'\tensor c') \arrow[d, "f\tensor(g\tensor h)"] \\
         (x.a \tensor y.b) \tensor z.c \arrow[r, "{\assoc_{x.a,y.b,z.c}}"] \arrow[d, "{m_{x,y,a,b}\tensor z.c}"']
@@ -1111,7 +1121,6 @@ Then $(f'\tensor g');(f\tensor g)$ is given by the composite
   \xrightarrow{\makebox[100pt]{$m_{x'\tensor y',x\tensor y,a\tensor b}$}}
   & ((x'\tensor y')\tensor (x\tensor y)).(a\tensor b)\,,
 \end{IEEEeqnarray*}
-
 while $(f';f)\tensor (g';g)$ is given by
 \begin{IEEEeqnarray*}{Cl}
   & a'' \tensor b'' \\
@@ -1268,7 +1277,7 @@ Only $\C$ needs to be monoidal closed, but the action of $\X$ must preserve the 
 
 \section{Cartesianness of the monoidal structure}
 
-Suppose that a symmetric monoidal category $\X$ acts via a symmetric monoidal action on a Cartesian category $\C$.  
+Suppose that a symmetric monoidal category $\X$ acts on a Cartesian category $\C$ via a symmetric monoidal lax action.
 In this chapter we will consider what properties of the action we need in order to ensure that the induced monoidal structure on $\C/\X$ is Cartesian.
 
 Since $\C$ is Cartesian, the diagonal and terminal maps in $\C$ gives every object a natural comonoid structure:
@@ -1397,7 +1406,7 @@ For this, it will be sufficient to find, for each object $x$ of $\X$, morphisms 
 \begin{mathpar}
   \begin{tikzcd}
     jx \to a \arrow[rr, "jx \to \Delta_a"] \arrow[d, "\Delta_{jx \to a}"']
-      &[-10pt]
+      &[-15pt]
         &[+10pt] jx \to (a \times a) \\
     (jx \to a) \times (jx \to a) \arrow[r]
       & (jx \times jx) \to (a \times a) \arrow[r, "m^j_x \to (a\times a)"]
@@ -1470,9 +1479,9 @@ In the next chapter, we will investigate a class of reader actions, and give a m
     \begin{mathpar}
       \begin{tikzcd}[ampersand replacement=\&]
         %
-        \&[-20pt] \left(\colim_{x\from \X}\limits x.a \tensor \colim_{y\from \X}\limits y.b\right) \tensor \colim_{z \from \X}\limits z.c \arrow[r, "\assoc" yshift=5pt] \arrow[d]
-            \&[-20pt] \colim_{x \from \X}\limits x.a \tensor \left(\colim_{y\from \X}\limits y.b \tensor \colim_{z \from \X}\limits z.c \right) \arrow[d]
-              \&[-20pt] \\
+        \&[-37pt] \left(\colim_{x\from \X}\limits x.a \tensor \colim_{y\from \X}\limits y.b\right) \tensor \colim_{z \from \X}\limits z.c \arrow[r, bend left=15, yshift=-1em, "\assoc"] \arrow[d]
+            \&[-26pt] \colim_{x \from \X}\limits x.a \tensor \left(\colim_{y\from \X}\limits y.b \tensor \colim_{z \from \X}\limits z.c \right) \arrow[d]
+              \&[-37pt] \\
         %
           \& \left(\colim_{x,y\from \X}\limits x.a \tensor y.b\right) \tensor \colim_{z \from \X}\limits z.c \arrow[d]
             \& \colim_{x\from \X}\limits x.a \tensor \left(\colim_{y,z \from \X}\limits (y.b \tensor z.c)\right) \arrow[d]
@@ -1523,15 +1532,15 @@ In the next chapter, we will investigate a class of reader actions, and give a m
       \and
       \begin{tikzcd}
         %
-          & |[alias=Z]| \colim_{z\from \X}\limits z.(a \tensor 1)
+          &[-18pt] |[alias=Z]| \colim_{z\from \X}\limits z.(a \tensor 1)
             &[-20pt] \\
-        |[alias=Y]| \colim_{x\from \X}\limits x.a \arrow[r, "\Colim\runit.\runit" yshift=2pt] \arrow[ur, "\Colim \id.\runit", from=Y.north, to=Z.west, bend left=20] \arrow[d, "\Colim\runit" description] \arrow[dd, "\runit"', bend right=60]
+        |[alias=Y]| \colim_{x\from \X}\limits x.a \arrow[r, "\Colim\runit.\runit" yshift=4pt] \arrow[ur, "\Colim \id.\runit", from=Y.north, to=Z.west, bend left=20] \arrow[d, "\Colim\runit" description] \arrow[dd, "\runit"', bend right=60]
           & \colim_{x\from \X}\limits (x \tensor I).(a\tensor 1) \arrow[r, hookrightarrow] \arrow[u, hookrightarrow]
             & |[alias=X]| \colim_{x,y\from \X}\limits (x \tensor y).(a \tensor 1) \arrow[ul, hookrightarrow, from=X.north, to=Z.east, bend right=20] \\
-        \colim_{x\from \X}\limits x.a \tensor 1 \arrow[r, "\Colim \id \tensor e"]
+        \colim_{x\from \X}\limits x.a \tensor 1 \arrow[r, "\Colim \id \tensor e" yshift=2pt]
           & \colim_{x \from \X}\limits x.a \tensor I.1 \arrow[u, "{\Colim m_{x,I,a,1}}" description] \arrow[r, hookrightarrow]
             & \colim_{x,y\from\X}\limits x.a \tensor y.1 \arrow[u, "{\Colim m_{x,y,a,1}}"'] \\
-        \left(\colim_{x \from \X}\limits x.a\right) \tensor 1 \arrow[u, Sim] \arrow[r, "\id \tensor e"]
+        \left(\colim_{x \from \X}\limits x.a\right) \tensor 1 \arrow[u, Sim] \arrow[r, "\id \tensor e" yshift=2pt]
           & \left(\colim_{x \from \X}\limits x.a\right)\tensor I.a \arrow[u, Sim] \arrow[r, hookrightarrow]
             & \colim_{x\from \X}\limits x.a \tensor \colim_{y\from 1} y.1 \arrow[u]
       \end{tikzcd}
@@ -1573,7 +1582,7 @@ For our next result, we will go via the \Mellies category.
 First, we need a standard result about the Day convolution product.
 
 \begin{proposition}[\cite{Pisani}]
-  Let $\X,\YY$ be a monoidal category and let $[\YY,\Set]$ be equipped with the Day convolution product.  
+  Let $\X,\YY$ be a monoidal category and let the functor category $[\YY,\Set]$ be equipped with the Day convolution product.  
   Then a lax monoidal functor $\X \times \YY \to \Set$ is the same thing (via currying) as a lax monoidal functor $\X \to [\YY,\Set]$.
 \end{proposition}
 
@@ -1614,9 +1623,9 @@ In particular, if $\X$ acts on the category of sets via a monoidal action, then 
   where the first arrow is induced via the \Mellies composition, while composition in the base changed category is given by
   \begin{IEEEeqnarray*}{Cl}
     &\int^{y,z}[jy,[A,B]] \times [jz,[B,C]] \times \X(y\tensor z,x) \\
-    \xrightarrow{\makebox[144pt]{$\int^{y,z} m_{jy,jz,[A,B],[B,C]}\times \X(y\tensor z,x)$}} &
+    \xrightarrow{\makebox[141pt]{$\int^{y,z} m_{jy,jz,[A,B],[B,C]}\times \X(y\tensor z,x)$}} &
     \int^{y,z}[jy \times jz,[A,B]\times [B,C]] \times \X(y,\tensor z,x) \\
-    \xrightarrow{\makebox[144pt]{$\int^{y,z} [m^j_{y,z}, ;] \times \X(y\tensor z,x)$}} &
+    \xrightarrow{\makebox[141pt]{$\int^{y,z} [m^j_{y,z}, ;] \times \X(y\tensor z,x)$}} &
     \int^{y,z}[j(y \tensor z),[A,C]]\times \X(y\tensor z,x) \\
     \cong & 
     [jx,[A,C]]\,.
@@ -1649,7 +1658,7 @@ In particular, if $\X$ acts on the category of sets via a monoidal action, then 
             \&
       \end{tikzcd}
       \]
-      \caption[Proof that \Mellies composition agrees with base-changed composition in the case of a symmetric reader action on $\Set$.]%
+      \caption[\Mellies composition and base-changed composition agree for symmetric reader actions on $\Set$.]%
       {Proof that \Mellies composition agrees with base-changed composition in the case of a symmetric reader action on $\Set$.  
       The \Mellies composition is given by the thick dashed arrows, while the composition in the base-changed category is given by the thin arrows.
       The dotted lines at the top and at the bottom right -- given by the symmetry isomorphisms -- mediate between the two.
@@ -1741,7 +1750,10 @@ We can get a result in the other direction; i.e., a kind of converse to Proposit
     [X,A] & \to & FA \\
     f & \mapsto & F(f)(m)\,.
   \end{IEEEeqnarray*}
-  We claim that this defines a cocone under the functor $(X,m) \mapsto [X,A] \from \oppcat\X \to \Set$.  
+  We claim that this defines a cocone under the functor 
+  \[
+    (X,m) \mapsto [X,A] \from \oppcat\X \to \Set\,.
+    \]
   Indeed, if we have a morphism $h \from (Y,n) \to (X,m)$ then by definition we have
   \[
     F(h)(n) = m\,,
@@ -1904,7 +1916,15 @@ Let us see what this means in some examples.
     \]
   given by composing on the right with $f$.
 
-  Moreover, $\RV_\Omega$ is a lax monoidal functor: if $V,W$ are discrete random variables taking values in sets $A,B$, then we have a random variable $\langle V,W \rangle\from X \to A\times B$ given by pairing (and if $(a,b)\in A\times B$, then $(\langle V,W\rangle)\inv(\{(a,b)\}) = V\inv(\{a\})\cap W\inv(\{b\})$, so this is a measurable function).  
+  Moreover, $\RV_\Omega$ is a lax monoidal functor: if $V,W$ are discrete random variables taking values in sets $A,B$, then we have a random variable 
+  \[
+    \langle V,W \rangle\from X \to A\times B
+    \]
+  given by pairing (and if $(a,b)\in A\times B$, then 
+  \[
+    (\langle V,W\rangle)\inv(\{(a,b)\}) = V\inv(\{a\})\cap W\inv(\{b\})\,,
+    \]
+  so this is a measurable function).  
 
   Now if we apply the construction from Proposition \ref{PropMonoidalFunctorIsColimitOfReaderAction}, we get the category whose objects are pairs $(A,V)$, where $A$ is a set and $V$ a discrete random variable taking values in $A$ and where the morphisms $(A,V) \to (B,W)$ are functions $f \from A \to B$ such that $W=V;f$.
   This category, which we will call $\Rv_\Omega$, admits a strict monoidal forgetful functor into the category of sets, giving us a lax reader action of $\oppcat{\Rv_\Omega}$ on $\Set$.
@@ -2026,9 +2046,3 @@ We can use this natural transformation to model primitives in the language of th
 for each object $x$ of $\X$, where we use $jx$ to refer to the datatype corresponding to the set $jx$.
 
 The purpose of the final chapter will be to define a language with an operational semantics for which these primitives make sense, and prove a full abstraction result for it.
-
-\Urlmuskip=0mu plus 9mu\relax
-\bibliographystyle{alpha2}
-\bibliography{../common/phd_bibliography}
-
-\end{document}

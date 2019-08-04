@@ -1,0 +1,67 @@
+\documentclass[11pt]{report}
+
+\def\FEWFONTS{1}
+\def\THESIS{1}
+\input{../common/preamble}
+\usepackage{lua-visual-debug}
+
+\begin{document}
+\begin{titlepage}
+  \begin{center}
+    \Huge
+    \textbf{The Crossroads of Categorical Algebra and Game Semantics}
+ 
+    \vspace{0.2cm}
+    \LARGE
+    An investigation into the application of Kleisli categories and related constructions to the study of Full Abstraction for nondeterministic effects in Algol-like languages
+ 
+    \vspace{0.3cm}
+ 
+    \textbf{William John Gowers}
+ 
+    A thesis submitted for the degree of\\
+    Doctor of Philosophy
+ 
+    \vspace{0.1cm}
+ 
+    \Large
+    Department of Computer Science\\
+    University of Bath\\
+    United Kingdom\\
+    August 2019
+
+    \textbf{COPYRIGHT}
+    Attention is drawn to the fact that copyright of this thesis rests with the author. A copy of this thesis has
+    been supplied on condition that anyone who consults it is understood to recognise that its copyright rests
+    with the author and that they must not copy it or use material from it except as permitted by law or with
+    the consent of the author. 
+    
+    This thesis may be made available for consultation within
+    the University Library and may be photocopied or lent to other libraries
+    for the purposes of consultation. \ul{\hspace{64pt}}
+ 
+  \end{center}
+\end{titlepage}
+
+\let\OldClearpage\clearpage
+\let\clearpage\relax
+
+\tableofcontents
+\listoffigures
+
+\let\clearpage\OldClearpage
+\newpage
+
+\input{intro}
+\input{games}
+\input{thesis}
+\input{pmonads}
+\input{promonads}
+\input{pmonads2}
+\input{conc}
+
+\Urlmuskip=0mu plus 9mu\relax
+\bibliographystyle{alpha2}
+\bibliography{../common/phd_bibliography}
+
+\end{document}

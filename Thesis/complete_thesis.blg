@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/Arch Linux)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: complete_thesis.aux
+The style file: alpha2.bst
+Database file #1: ../common/phd_bibliography.bib
+Warning--empty institution in RusssThesis
+Warning--empty booktitle in Harmer2006InnocentGS
+Warning--empty year in LairdCofCommCom
+You've used 71 entries,
+            2549 wiz_defined-function locations,
+            1026 strings with 14781 characters,
+and the built_in function-call counts, 27349 in all, are:
+= -- 2772
+> -- 987
+< -- 63
++ -- 313
+- -- 296
+* -- 1807
+:= -- 4308
+add.period$ -- 231
+call.type$ -- 71
+change.case$ -- 387
+chr.to.int$ -- 70
+cite$ -- 74
+duplicate$ -- 1178
+empty$ -- 2244
+format.name$ -- 411
+if$ -- 5825
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 64
+newline$ -- 361
+num.names$ -- 225
+pop$ -- 394
+preamble$ -- 1
+purify$ -- 462
+quote$ -- 0
+skip$ -- 991
+stack$ -- 0
+substring$ -- 1673
+swap$ -- 216
+text.length$ -- 63
+text.prefix$ -- 44
+top$ -- 0
+type$ -- 540
+warning$ -- 3
+while$ -- 253
+width$ -- 75
+write$ -- 945
+(There were 3 warnings)

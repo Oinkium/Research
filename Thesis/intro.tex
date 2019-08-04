@@ -1,9 +1,3 @@
-\documentclass[11pt]{report}
-
-\input{../common/preamble}
-
-\begin{document}
-
 \chapter{Introduction}
 
 \section{Denotational Semantics and Program Equivalence}
@@ -27,20 +21,20 @@ However, if we introduce a non-terminating function
 diverge :: Int -> Int
 diverge x = diverge x
 \end{lstlisting}
-then it becomes clear that \lstinline[language=haskell]{f} and \lstinline[language=haskell]{g} are not interchangeable: since \lstinline[language=haskell]{f} always evaluates its argument \lstinline[language=haskell]{n}, \lstinline[language=haskell]{f (diverge 0)} will fail to terminate, whereas \lstinline[language=haskell]{g (diverge 0)} will give us \lstinline[language=haskell]{0}, since inputs to functions are evaluated lazily in Haskell.
+then it becomes clear that \lstinline[language=haskell]{f} and \lstinline[language=haskell]{g} are not interchangeable: indeed, since \lstinline[language=haskell]{f} always evaluates its argument \lstinline[language=haskell]{n}, \lstinline[language=haskell]{f (diverge 0)} will fail to terminate, whereas \lstinline[language=haskell]{g (diverge 0)} will give us \lstinline[language=haskell]{0}, since inputs to functions are evaluated lazily in Haskell.
 
-We can have another go at answering our original question, then, by adding the requirement that the two programs should behave in the same way if they are passed non-terminating inputs.
-Thus, we add to each datatype an extra distinguished value $\bot$ representing non-termination (so, for example, the type of integers is represented by the set $\bZ_\bot = \bZ + \{\bot\}$), and then function types are interpreted as functions between these sets -- so a term of type \lstinline[language=haskell]{Int -> Int} is reprepresented by a function $\bZ_\bot \to \bZ_\bot$.
+We can have another go at answering our original question, then, by adding the requirement that the two programs should behave in the same way when they are passed non-terminating inputs.
+Thus, we add to each datatype an extra distinguished value $\bot$ representing non-termination (so, for example, the type of integers is represented by the set $\bZ_\bot = \bZ + \{\bot\}$), and then function types are interpreted as functions between these sets -- so a term of type \lstinline[language=haskell]{Int -> Int} is represented by a function $\bZ_\bot \to \bZ_\bot$.
 
 We need to be careful, though, since not every such function arises from a program in this way.
-For example, we cannot write a program corresponding to the function $\chi\from\bZ_\bot \to \bZ_\bot$ that sends $\bot$ to $0$ and all other values to $1$since $\chi$ is not constant, such a program would have to evaluate its argument, and would consequently fail to terminate if that argument did not terminate.
+For example, we cannot write a program corresponding to the function $\chi\from\bZ_\bot \to \bZ_\bot$ that sends $\bot$ to $0$ and all other values to $1$: since $\chi$ is not constant, such a program would have to evaluate its argument, and would consequently fail to terminate if that argument did not terminate.
 
 If our language admits higher types, then it becomes especially important to exclude such `impossible' functions from our model.
 For example, if $F$ and $G$ are two programs of type \lstinline[language=haskell]{(Int -> Int) -> Int} -- i.e., functions that take in a function from integers to integers and return an integer -- then we do not want to declare that $F$ and $G$ are different on the basis that $F(\chi)\ne G(\chi)$.  
 
 In order to rule out these `impossible' functions, we define a partial order on the sets $T_\bot$ corresponding to types, defined by setting $x\le x$ and $\bot\le x$ for all $x$.
 We then require that functions should be monotonic and continuous with respect to this order. 
-For example, a monotonic function $\bZ_\bot \to \bZ_\bot$ is either constant (correponding to a function that does not evaluate its argument at all) or sends $\bot$ to $\bot$ and is otherwise unconstrained (corresponding to a function that evaluates its argument).
+For example, a monotonic function $\bZ_\bot \to \bZ_\bot$ is either constant (corresponding to a function that does not evaluate its argument at all) or sends $\bot$ to $\bot$ and is otherwise unconstrained (corresponding to a function that evaluates its argument).
 It turns out that if we order functions pointwise, then we get the correct constraints at higher types as well.
 
 Even if we get round the problems with divergence, there are other language features that we may need to consider if we want to determine whether two pieces of code are equivalent. 
@@ -51,7 +45,7 @@ If we have a random number generator, then we need to check that our functions r
 What we have been doing in all these examples is \emph{denotational semantics}: the art of using mathematical objects to study logic and programming languages.  
 In the first case, our denotational semantics was expressed through the mathematics of sets and functions, whereby we captured the behaviour of a (programming language) function via a (mathematical) function.
 
-Then, following Scott \cite{ScottDomains}, we refind this model to one based on partially-ordered sets -- more specifically, \emph{Scott domains} -- in which we modelled the behaviour or a program via an associated Scott-continuous functions between domains.
+Then, following Scott \cite{ScottDomains}, we refine this model to one based on partially-ordered sets -- more specifically, \emph{Scott domains} -- in which we modelled the behaviour or a program via an associated Scott-continuous functions between domains.
 
 In our other examples, we need to come up with further refinements to our model in order to incorporate the new computational effects. 
 For example, to handle nondeterminism, we might want to switch to using nondeterministic functions, or \emph{relations}, instead of ordinary functions.
@@ -64,12 +58,12 @@ Denotational takes this basic intuition further, and aims to capture features of
 A word of warning: the principal mode of denotational semantics which we shall be studying in this thesis is game semantics, which is much more complicated than the semantics of sets and functions. 
 However, it is still a very valuable tool for determining equivalence of programs.
 
-\section{Computational Adequacy and Full Abstraction}
+\section{Computational Adequacy \& Full Abstraction}
 \label{SecCAnFA}
 
 In order for a denotational semantics to tell us anything, we first need to prove some results that relate it to the language we are studying. 
 For example, if we are hoping to model a programming language with sets and functions, then we need to define a mapping $\deno{-}$ (the \emph{denotation}) that takes program types to sets and program functions to functions between those sets, and we also need to prove that this denotation respects the operational rules of the language: for example, we might want to prove that if $f \from \Int \to \Int$ is a function and $M \from \Int$ is a term that evaluates to the integer $n$, then the term $f M$ will evaluate to the integer $\deno{f}(n)$.
-This type of result is called \emph{Computational Adequacy}, and relates to programs of a ground or observable type (e.g., a program that returns an integer has ground type, and we can observe that it either returns an integer or fails to teminate, whereas a program that takes in an integer and returns an integer has a function type: it is not possible to `observe' its behaviour without substituting in values).
+This type of result is called \emph{Computational Adequacy}, and relates to programs of a ground or observable type (e.g., a program that returns an integer has ground type, and we can observe that it either returns an integer or fails to terminate, whereas a program that takes in an integer and returns an integer has a function type: it is not possible to `observe' its behaviour without substituting in values).
 
 Briefly speaking, a Computational Adequacy result tells us that the behaviour of a program of ground type may be deduced exactly from its denotation.
 For example, in a domain-theoretic semantics, we might want to say that a program $M$ evaluates to a value $v$ if and only if $\deno M=v$ and that $M$ fails to terminate if and only if $\deno M = \bot$.
@@ -85,7 +79,7 @@ The gold standard of denotational semantics -- \emph{Full Abstraction} -- assert
 An important early success in this direction came with Plotkin's introduction of the stateless sequential programming language PCF \cite{PlotkinPcf}.  
 Plotkin was unable to provide a fully abstract denotational semantics for PCF itself, but he showed that if we add a simple parallel construct\footnote{Specifically, `parallel or', which evaluates its two boolean arguments in parallel, and is thus able to return true if either the left or the right argument returns true, even if the other fails to terminate.} to PCF, then a denotational semantics based on Scott domains is fully abstract.  
 This astounding result presents us with a world in which we can practically and systematically check observational equivalence (for terms of this extended version of PCF) by computing denotations.  
-This vision is a little rosey-eyed -- deciding observational equivalence is stronger than the halting problem and is hence undecidable in general -- but if the programs in question are finitely presentable in some sense, then we really can use the denotational semantics to check observational equivalence.
+This vision is a little rosy-eyed -- deciding observational equivalence is stronger than the halting problem and is hence undecidable in general -- but if the programs in question are finitely presentable in some sense, then we really can use the denotational semantics to check observational equivalence.
 
 Unfortunately, this stop working for PCF itself.  
 PCF is a sub-language of the parallelized version, but this also means that the observational equivalence relation is coarser: there may be terms that can be distinguished by a context including the parallel construct that cannot be distinguished inside any purely sequential context.  
@@ -109,10 +103,13 @@ This is the approach taken by the fully abstract semantics that have been given 
 In this thesis, we shall skip the final step of passing to equivalence classes and declare a denotational semantics to be fully abstract for a language if we can prove that observational equivalence of terms is equivalent to intrinsic equivalence of their denotations.  
 Thus, the Full Abstraction results that we prove will have three main ingredients: compositionality, computational adequacy and definability.
 
+Lastly, we note that the conclusion of Loader's theorem does not necessarily hold for other languages.  
+For example, in Section \ref{SecIntrinsicEquivalence}, we shall demonstrate a denotational characterization of observational equivalence in Idealized Algol, due to Abramsky and McCusker \cite{SamsonGuyIAActive}, which can be adapted to give us an algorithm for deciding observational equivalence for a finitary version of Idealized Algol.
+
 \section{Categorical Semantics}
 \label{SecCatSem}
 
-There is a close link between (typed) programming langauges and categories.
+There is a close link between (typed) programming languages and categories.
 Programming languages have things called \emph{types}, and they have \emph{functions} that go from one type to another. 
 Typically, it will be possible to compose two functions together in the language in an associative way, giving us a category.
 It should come as no surprise, then, that a very important branch of denotational semantics is \emph{categorical semantics}, in which we take some existing category from mathematics, and use its objects and morphisms to represent the types and terms of a programming language.
@@ -141,7 +138,7 @@ These rules allow us to build up a model of the simply-typed $\lambda$-calculus 
 
 This alone would be a good justification for using category theory in denotational semantics, but the benefits go further.  
 The development of programming languages such as Haskell has been strongly influenced by category-theoretic concepts.  
-For example, Moggi's 19xx observation \cite{Moggi} that monads on categories provide us with a way of modelling computational effects influenced work that led directly to the introduction of support for monads in Haskell \cite{Haskell}, where they have become the primary tool for abstracting out effectful computation.
+For example, Moggi's 1991 observation \cite{Moggi} that monads on categories provide us with a way of modelling computational effects influenced work that led directly to the introduction of support for monads in Haskell \cite{Haskell}, where they have become the primary tool for abstracting out effectful computation.
 
 Monads will be particularly important in this thesis, so it is worth dwelling on them a little further.  
 A \emph{monad} on a category $\C$ is given by a functor $M\from \C \to \C$, together with natural transformations
@@ -208,7 +205,7 @@ Eventually, if she plays a move in $A$ or $C$, then that will be her reply in th
 See Figure \ref{FigComposition} for an illustration.
 \begin{figure}
   \[
-    \begin{tikzcd}[arrows={no head, dotted, shorten=-1mm}, row sep=0pt]
+    \begin{tikzcd}[arrows={no head, dotted, shorten=-1.5mm}, row sep=-1pt]
       A
         & B
           &[-20pt] B
@@ -279,11 +276,11 @@ The first triumph of Game Semantics was to solve the Full Abstraction problem fo
 By making changes to the definitions of game and strategy, Game Semantics has proved to be applicable to a wide variety of programming language effects, including exceptions \cite{LLi}, coroutines and continuations \cite{FunctionalProgramsAsCoroutines}, nondeterminism \cite{mcCHFiniteND}, probability \cite{DanosHarmer}, and general references \cite{HondaMcCusker}.
 
 The precise definition of a strategy that we use depends on the language that we are trying to model -- a language with less expressive power can realize fewer strategies.  
-For example, the denotations of terms in a stateless langauge such as PCF are \emph{history-free} or \emph{innocent}, in which the proponent's moves can only depend on a particular subsequence of the current sequence of moves -- the $P$-view -- rather than on the whole sequence.
+For example, the denotations of terms in a stateless language such as PCF are \emph{history-free} or \emph{innocent}, in which the proponent's moves can only depend on a particular subsequence of the current sequence of moves -- the $P$-view -- rather than on the whole sequence.
 So for a lot of computational effects, particularly ones that have something to do with state, adding that effect corresponds to a \emph{relaxing} of conditions on strategies.
 
 We model other types of effects by extending the definition of a strategy.  
-For example, if we want to provide a semantics for a language with nondeterminism, then we modify the definition of a strategy so that the propoonent can have multiple replies to each opponent move, as in the work of Harmer and McCusker \cite{mcCHFiniteND}.
+For example, if we want to provide a semantics for a language with nondeterminism, then we modify the definition of a strategy so that the proponent can have multiple replies to each opponent move, as in the work of Harmer and McCusker \cite{mcCHFiniteND}.
 If we want to model a probabilistic language, then we decorate these different moves with probabilities, as in the work of Danos and Harmer \cite{DanosHarmer}.
 
 When choosing a definition of a strategy, the aim is to prove a definability result, so that we can prove Full Abstraction.  
@@ -318,7 +315,7 @@ Such papers include Tsukada and Ong's sheaf-based models for nondeterministic PC
 
 One thing which these Full Abstraction results have in common is that they rely on some degree of human intuition to build the original model.  
 This process can often be very difficult.  
-For instance, it seems obvious that if we want to model a nondeterminstic programming language, then we need to relax the determinism constraint on strategies.  
+For instance, it seems obvious that if we want to model a nondeterministic programming language, then we need to relax the determinism constraint on strategies.  
 However, this turns out not to be enough on its own: recall that we model a nonterminating computation in game semantics by a strategy that has no $P$-reply to a particular $O$-move.  
 How then do we model a term which chooses between terminating at a value $v$ and not terminating, and how do we distinguish it from a term which always terminates at $v$?  
 In both cases, player $P$ has the reply $v$ to player $O$'s initial move, but now there is nothing to indicate the possibility of non-termination.  
@@ -363,6 +360,70 @@ This is not immediate either: $\Kl_M\C$ need not be Cartesian, even if $\C$ is.
 For the purposes of this thesis, we will be considering only monads of a very special form -- the \emph{reader monads} $R_z$ on Cartesian closed categories, given by $R_za = z \to a$.
 The Kleisli category for a reader monad on a Cartesian closed category is always Cartesian closed \cite{FunctionalCompleteness}.
 
+\section{Difficulties with Countable Nondeterminism}
+
+This thesis will focus on nondeterministic effects.  
+Of these, perhaps the trickiest to work with is countable nondeterminism, in which a program can nondeterministically choose between a possibly infinite number of different options, without the possibility of non-termination\footnote{If we have a source of finite nondeterminism, then we can get infinite branching if we accept the possibility that our program might never terminate -- for example, count the number of coin tosses it takes before we get the first head.}
+
+There are three main difficulties when dealing with countable nondeterminism in game semantics.  
+The first we have covered in the previous section: we cannot tell everything about a program's behaviour by looking at its possible finite traces, even when the traces are allowed to be arbitrarily long, as in the example where a program nondeterministically chooses a number $n$ and prints out a message $n$ times vs the program which may print out the message infinitely many times.  
+
+The fact that finite nondeterminism avoids this behaviour comes down to K\"{o}nig's Lemma, which asserts that any finitely branching tree without an infinite branch has bounded height.  
+
+This is related to the second problem, which is the failure of continuity of composition, as noticed by Dijkstra in \cite[Ch.~9]{DijkstraBook} and later studied by Plotkin and Apt in \cite{PlotkinApt}.
+In order to talk about continuity, we define the \emph{observational preorder} on terms of a language.  
+If $M,N\from T$, we write $M\lesssim N$ if for all ground-type contexts $C[-]$ with a hole of type $T$ we have
+\[
+  C[M]\text{ always terminates} \Rightarrow C[N]\text{ always terminates.}
+  \]
+In particular, $M$ and $N$ are observationally equivalent if and only if $M\lesssim N$ and $N \lesssim M$.
+
+Continuity of composition says that least upper bounds with respect to this order are preserved by function application.  
+Consider, for example, the terms $\le_m \from \bN \to \bN$ for $m=0,1,\dots$ that return $0$ if their argument is less than or equal to $m$ and go into an infinite loop otherwise.
+It is fairly clear (with a straightforward rigorous proof once we have introduced the denotational semantics) that a least upper bound for the $\le_m$ is the term $\le_\infty$ that evaluates its argument and then returns $0$ regardless of what value it finds\footnote{$\le_\infty$ differs slightly from $\lambda n.0$ -- also an upper bound for the $\le_m$, but not the least upper bound -- in that it will fail to terminate if its argument fails to terminate}.
+
+But now notice what happens if we have a countable nondeterminism primitive $?$ in our language which when evaluated returns an arbitrarily large natural number.
+Then the terms $\le_m ?$ are all observationally equivalent: they either return $0$ (when $?$ returns a number less than or equal to $m$), or fail to terminate (when $?$ returns a number greater than $m$).
+Therefore, $\le_m?$ is a constant sequence and its least upper bound is that constant value, which we can write as
+\[
+  0+\Omega\,.
+  \]
+Meanwhile, $\le_\infty?$ always returns $0$.  
+So application to $?$ does not preserve least upper bounds.
+
+The reason that this is a problem is that a typical strategy for proving computational adequacy is via an order-enriched category in which the observational preorder at a type matches up with the ordering of morphisms into the denotation of that type.  
+The standard adequacy proof uses continuity of composition in the model in an essential way -- see Lemma \ref{LemAdequacyLimits} for an example of such an argument being used to prove computational adequacy for a deterministic language.
+But if the ordering of morphisms in a denotational model of a language with countable nondeterminism faithfully respects the observational ordering of terms, then it will not have the continuity properties that we need for this proof.
+
+Our strategy for getting around this problem goes back to Levy's paper \emph{Infinite Trace Equivalence} \cite{LevyGsInfinite}, and essentially involves going via an auxiliary language, in which the nondeterministic oracle $?$, when it chooses a value, must print that value to a log.  
+Given a term $P$ of ground type, we write $P\converges_u$ if $P$ terminates whenever it prints the sequence $u$ to the log.  
+Then, if we modify our definition of observational equivalence to say that $M\lesssim N$ if for all suitable contexts $C[-]$ we have
+\[
+  C[M] \converges_u \mathrel{\Rightarrow C[N]} \converges_u\,,
+  \]
+then this ordering will be continuous.  
+For example, this extra requirement wrecks our previous example of failure of continuity of composition.  
+Indeed, the sequence $\le_m ?$ is no longer constant, since, for example, $\le_5 ?$ does not terminate if it prints $6$ to the log, whereas $\le_{1000} ?$ does.
+The least upper bound of the $\le_m?$ is then the term that terminates whenever it prints a single number to the log; i.e., $\le_\infty ?$.
+
+Having proved computational adequacy for this new language, we then use operational methods to find a way to identify terms that should be observationally equivalent in the original sense.  
+We form a model for the language with countable nondeterminism by taking our model for the new language and taking the quotient by an appropriate equivalence relation on morphisms.
+
+In order to introduce the last problem that we face with countable nondeterminism, we note that there are two different reasons why an element of a denotational model (e.g., a strategy) might not be definable in a particular reason.  
+One reason is structural: for example, a stateless language such as PCF cannot define a strategy whose behaviour depends on its entire history, since that would indicate stateful behaviour.  
+The other reason is purely computational.  
+Given a non-computable function $f\from \bN \to \bN$ (for example, the function that returns $0$ if its argument is source code for a terminating program an $1$ otherwise), we have a perfectly well-behaved history free strategy that represents $f$, but it is nevertheless still not definable in most programming languages.  
+Historically, the study of Full Abstraction has not been too concerned with non-definable elements of the second kind: the reason is that they are do not usually play a role in determining the intrinsic equivalence relation, since such a strategy is necessarily not compact.  
+However, in the presence of countable nondeterminism, there exist terms that can be distinguished in the model that cannot be distinguished by compact elements; indeed, we can use a diagonal argument to define two functions $(\bN \to \bN) \to \bN$ that are distinguished only by non-computable functions $\bN \to \bN$.  
+An example of such a function is found in Proposition \ref{PropNotFullyAbstract}; the general idea is due to Kleene and can be found in \cite{KleeneTree}.
+
+What this means is that if we want to model countable nondeterminism then, in addition to the usual structural constraints on strategies relating to the effectful behaviour available in our language, we also need to impose computability constraints that say that our strategies can in some sense be defined using a computable function.  
+Happily, such notions are well studied already, even appearing in the original Hyland-Ong and AJM papers \cite{hoPcf,ajmPcf}, in which the authors give a complete characterization of those strategies definable in PCF -- a \emph{universality} result for the model.
+Similar results can also be found in earlier work on Full Abstraction, such as Plotkin's original PCF paper \cite{PlotkinPcf}.
+
+The difficulties with countable nondeterminism that we have outlined are essentially domain-theoretic; indeed, the reason that compact strategies suffice to distinguish morphisms in models of finite nondeterminism is that the sets of morphisms in that case form \emph{algebraic domains}, in which every element is the least upper bound of the set of compact elements below it.  
+Algebraicity fails for models of countable nondeterminism.
+
 \section{Plan for this Thesis}
 
 This thesis will develop the theory of Full Abstraction from the point of view of techniques of categorical algebra such as Kleisli categories.
@@ -384,13 +445,8 @@ For the remainder of the thesis, we deal with a generalization of monads -- \emp
     It also introduces the \emph{\Mellies category} and the oplax $2$-limit $\C/\X$, which give us two related analogues of the Kleisli category in the parametric case.
     The \Mellies category is an enriched category, while $\C/\X$ is an ordinary category obtained from it by change of base.
     As with monads, we need to specialize to a small class of parametric monads -- the \emph{reader actions} -- in order to ensure that $\C/\X$ is a Cartesian closed category.
-  \item[Chapter \ref{ChapReaderActions}] uncovers a large source of these reader actions, proving that reader actions on the category $\Set$ of sets are equivalent to lax monoidal functors $\Set \to \Set$.
+  \item[Chapter \ref{ChapReaderActions}] uncovers a large source of these reader actions; in this chapter, we prove that reader actions on the category $\Set$ of sets are equivalent to lax monoidal functors $\Set \to \Set$.
   \item[Chapter \ref{ChapPromonads}] takes a small detour away from the main narrative to study the \Mellies category from the point of view of profunctors.
   \item[Chapter \ref{ChapParametricMonadsFullAbstraction}] completes our study of parametric monads by proving a Full Abstraction result for a probabilistic language for a category derived from a particular parametric monad, using similar techniques to Chapter \ref{ChapMonads}.
 \end{description}
 Lastly, our conclusion in {\bf Chapter \ref{ChapFurtherDirections}} provides a glimpse into several further directions that are left unexplored by the rest of the thesis.
-
-\bibliographystyle{alpha2}
-\bibliography{../common/phd_bibliography}
-
-\end{document}
