@@ -1746,7 +1746,7 @@ Now clearly this last result depends on finiteness of $\bB$, since we may have i
 The next result shows that if we replace $\bB$ with $\bN$, then we cannot hope to obtain such a full abstraction result.
 
 \begin{proposition}
-  Let $\C$ be a category that admits a computationally adequate denotational semantics of IA${}_\bN$.  
+  Let $\C$ be a category and suppose we have a computationally adequate denotational semantics of IA with countable nondeterminism in $\C$.
   Suppose that the natural number datatype is denoted by an object $\bN$ of $\C$ and that for all functions $f \from \bN \to \bN$ in $\Set$ there is a morphism
   \[
     \sigma_f \from \bN \to \bN
@@ -1755,7 +1755,7 @@ The next result shows that if we replace $\bB$ with $\bN$, then we cannot hope t
   \[
     \deno{n};\sigma_f = \deno{f(n)}\,.
     \]
-  Then $\C$ is not fully abstract for Idealized Algol with countable nondeterminism.
+  Then the denotational semantics in $\C$ is not fully abstract.
   \label{PropNotFullyAbstract}
 \end{proposition}
 \begin{example}
@@ -1819,7 +1819,7 @@ The next result shows that if we replace $\bB$ with $\bN$, then we cannot hope t
 
   After satisfying ourselves that $M$ and $N$ are observationally equivalent, we claim that they are distinguished by the semantics, which proves that the model is not fully abstract.
 
-  Indeed, let $\phi\from \bN \to \bN$ where $\phi(p)$ is $n+1$ if $p$ is the encoding of a term $P\from\nat \to \nat$ and $P\;p\converges n$ and $0$ otherwise (including the case that $P\;p\diverges$.
+  Indeed, let $\phi\from \bN \to \bN$ where $\phi(p)$ is $n+1$ if $p$ is the encoding of a term $P\from\nat \to \nat$ and $P\;p\converges n$ and $0$ otherwise (including the case that $P\;p\diverges$).
 
   We know that $\deno{N};\sigma\not\downarrow_{\must}$ for all $\sigma$, because $N$ essentially discards its argument.
   We claim that $\deno{M};\sigma_\phi\downarrow_{\must}$, proving that $N\not\sim_{\must} M$.

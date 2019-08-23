@@ -404,7 +404,7 @@ Since the state action above does not interact in any way with the Cartesian str
 One avenue that could shed some light on this issue is the sequoidal semantics which we developed for game semantics, in which the stateful behaviour is intimately connected to the Cartesian structure of the category, via the exponential.
 
 There is also a \emph{local state monad}, due to Plotkin and Power \cite{PlotkinPower} and based on a construction by Levy \cite{PaulsThesis}, which is defined on the category $[\Inj,\Set]$ of functors from $\Inj$, the category of natural numbers and injections, into the category of sets.  
-It is given by the following formula, where $V$ denotes a fixes set of values.
+It is given by the following formula, where $V$ denotes a fixed set of values.
 \[
   (TA)(n) = V^n \to \left( \int^{p\from\Inj} V^p \times A(p) \times \Inj(n, p) \right)
   \]

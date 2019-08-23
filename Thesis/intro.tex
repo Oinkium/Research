@@ -63,9 +63,13 @@ However, it is still a very valuable tool for determining equivalence of program
 
 In order for a denotational semantics to tell us anything, we first need to prove some results that relate it to the language we are studying. 
 For example, if we are hoping to model a programming language with sets and functions, then we need to define a mapping $\deno{-}$ (the \emph{denotation}) that takes program types to sets and program functions to functions between those sets, and we also need to prove that this denotation respects the operational rules of the language: for example, we might want to prove that if $f \from \Int \to \Int$ is a function and $M \from \Int$ is a term that evaluates to the integer $n$, then the term $f M$ will evaluate to the integer $\deno{f}(n)$.
-This type of result is called \emph{Computational Adequacy}, and relates to programs of a ground or observable type (e.g., a program that returns an integer has ground type, and we can observe that it either returns an integer or fails to terminate, whereas a program that takes in an integer and returns an integer has a function type: it is not possible to `observe' its behaviour without substituting in values).
+This type of result is called \emph{Computational Adequacy}, and relates to a program's \emph{observable behaviour}.  
+Some programs have an automatic notion of observable behaviour: if we run them, then they will return a concrete value or fail to terminate.  
+In a typed setting, these are the programs of ground type.
+Others -- for example, programs of function type -- require input before they can return a value.  
+These programs have no observable behaviour of their own, but if we insert them into a hole in a larger context, then they may influence the observable behaviour of the complete program.
 
-Briefly speaking, a Computational Adequacy result tells us that the behaviour of a program of ground type may be deduced exactly from its denotation.
+Briefly speaking, a Computational Adequacy result tells us that the observable behaviour of a program of ground type may be deduced exactly from its denotation.
 For example, in a domain-theoretic semantics, we might want to say that a program $M$ evaluates to a value $v$ if and only if $\deno M=v$ and that $M$ fails to terminate if and only if $\deno M = \bot$.
 
 Such a computational adequacy result extends readily to terms not of ground type.  
@@ -73,21 +77,22 @@ Given two programs $M$ and $N$ of the same type, we say that $M$ and $N$ are \em
 If our semantics is \emph{compositional} -- so that the denotation of $C[M]$ is obtained by `applying' the denotation of $C[-]$ to the denotation of $M$ -- and computationally adequate, then it follows that the semantics is \emph{equationally sound}: if two terms $M$ and $N$ have the same denotation, then they are observationally equivalent.
 
 If we have an effective way of computing denotations, then this can give us an easy way to prove observational equivalence of terms.  
-However, there is no guarantee that we are able to use such a trick: the terms $M$ and $N$ might be observationally equivalent despite having distinct denotations.  
+However, there is no guarantee that we are able to prove observational equivalence this way: the terms $M$ and $N$ might be observationally equivalent despite having distinct denotations.  
 The gold standard of denotational semantics -- \emph{Full Abstraction} -- asserts in addition that the converse of equational soundness holds, so that the denotational semantics completely captures the observational equivalence relation.  
+This means that if two terms are observationally equivalent, then we can always prove that they are by showing that they have the same denotation.
 
 An important early success in this direction came with Plotkin's introduction of the stateless sequential programming language PCF \cite{PlotkinPcf}.  
 Plotkin was unable to provide a fully abstract denotational semantics for PCF itself, but he showed that if we add a simple parallel construct\footnote{Specifically, `parallel or', which evaluates its two boolean arguments in parallel, and is thus able to return true if either the left or the right argument returns true, even if the other fails to terminate.} to PCF, then a denotational semantics based on Scott domains is fully abstract.  
 This astounding result presents us with a world in which we can practically and systematically check observational equivalence (for terms of this extended version of PCF) by computing denotations.  
 This vision is a little rosy-eyed -- deciding observational equivalence is stronger than the halting problem and is hence undecidable in general -- but if the programs in question are finitely presentable in some sense, then we really can use the denotational semantics to check observational equivalence.
 
-Unfortunately, this stop working for PCF itself.  
+Unfortunately, this stops working for PCF itself.  
 PCF is a sub-language of the parallelized version, but this also means that the observational equivalence relation is coarser: there may be terms that can be distinguished by a context including the parallel construct that cannot be distinguished inside any purely sequential context.  
 The enterprise was brought down to earth by Ralph Loader's 2001 theorem that observational equivalence for PCF is undecidable, even if we restrict ourselves to a finitary version of the language with no infinite datatypes or recursion beyond a simple non-termination primitive $\bot$.
 This in particular tells us that no concretely presentable denotational semantics for PCF can possibly be fully abstract, or it would give us an algorithm for deciding observational equivalence in this finite version.
 
 Nevertheless there were, roughly contemporaneous with Loader's result, several fully abstract models of PCF published, in a watershed moment for the subject.
-The models published by Nickau \cite{NickauPcf} and O'Hearn and Riecke \cite{OHearnRieckePcf} were more or less along domain-theoretic lines, while those of Abramsky, Jagadeesan and Malacaria \cite{ajmPcf} and Hyland and Ong \cite{hoPcf} used the relatively new Game Semantics.
+The model published by O'Hearn and Riecke \cite{OHearnRieckePcf} was more or less along domain-theoretic lines, while those of Abramsky, Jagadeesan and Malacaria \cite{ajmPcf}, Hyland and Ong \cite{hoPcf}, and Nickau \cite{NickauPcf} used the relatively new Game Semantics.
 
 These models took a slightly oblique approach to Full Abstraction.  
 First, they defined the notion of \emph{intrinsic equivalence} of terms of the same type $T$ in a denotational model, where two elements $\sigma$ and $\tau$ of the denotation of $T$ are intrinsically equivalent if $\alpha(\sigma)=\alpha(\tau)$ for all functions $\alpha\from\deno{T}\to\deno{o}$ from the denotation of $T$ to the denotation of some fixed ground type $o$.
@@ -95,7 +100,10 @@ This definition is very closely linked to that of observational equivalence; ind
 
 Proving the converse -- that intrinsic equivalence of denotations implies observational equivalence -- entails going in the opposite direction; i.e., starting with some element $\alpha$ in the model and coming up with a context $C[-]$ in the language whose denotation is $\alpha$.  
 Thus, proving this direction normally reduces to some kind of \emph{definability} result.  
-Typically, we only need to prove definability for a restricted class of elements $\alpha$ of the denotational model -- the \emph{compact} elements.
+Typically, we do not actually need to prove that every $\alpha$ is definable within the language -- and, indeed, this is often not the case.  
+Instead, we try to show that each element $\alpha$ in the language can be written as the least upper bound of elements $\alpha'$ living in some more restricted class whose members can all be defined in the language.  
+This class usually consists of those elements which are \emph{compact} or finitary in some sense, though McCusker's Fully Abstract relational semantics for SCI \cite{GuySci} is an important exception.
+Under mild continuity assumptions, this suffices to prove Full Abstraction, for we can then deduce that if $\alpha(\sigma)\ne \alpha(\tau)$ for some $\alpha$, then there is some definable $\alpha'$ such that $\alpha'(\sigma)\ne\alpha'(\tau)$.
 
 If we can prove, for some denotational model of a language, that observational equivalence of terms is equivalent to intrinsic equivalence of their denotations, then we can form a fully abstract model by passing to equivalence classes under the intrinsic equivalence relation.  
 This is the approach taken by the fully abstract semantics that have been given for PCF; there is no contradiction of Loader's theorem, because the intrinsic equivalence relation is itself undecidable.
@@ -110,7 +118,7 @@ For example, in Section \ref{SecIntrinsicEquivalence}, we shall demonstrate a de
 \label{SecCatSem}
 
 There is a close link between (typed) programming languages and categories.
-Programming languages have things called \emph{types}, and they have \emph{functions} that go from one type to another. 
+Most programming languages have things called \emph{types}, and many have \emph{functions} that go from one type to another. 
 Typically, it will be possible to compose two functions together in the language in an associative way, giving us a category.
 It should come as no surprise, then, that a very important branch of denotational semantics is \emph{categorical semantics}, in which we take some existing category from mathematics, and use its objects and morphisms to represent the types and terms of a programming language.
 
@@ -289,7 +297,7 @@ Subsequent work on languages that extend PCF tends to try to prove definability 
 Then, if we have a definability result for the original semantics, we can extend it to a definability result in the new category.
 
 For example, the language Idealized Algol is an extended version of PCF that adds some stateful primitives.
-For example, Abramsky and McCusker's proof of compact definability for Idealized Algol in \cite{SamsonGuyIAActive} first proves that each compact strategy in their model may be written as the composite of a compact innocent strategy with the (non-innocent) denotation of one of the new stateful constants.  
+Abramsky and McCusker's proof of compact definability for Idealized Algol in \cite{SamsonGuyIAActive} first proves that each compact strategy in their model may be written as the composite of a compact innocent strategy with the (non-innocent) denotation of one of the new stateful constants.  
 Thus, they can deduce compact definability for Idealized Algol from Hyland and Ong's result that every compact innocent strategy is the denotation of a term of PCF.  
 
 Harmer and McCusker develop in \cite{mcCHFiniteND} a model of game semantics in which strategies can be nondeterministic.  
@@ -301,7 +309,7 @@ We can now summarize the typical process of proving a Full Abstraction language 
   \item Starting with an existing computationally adequate model $\C$ of $\L$ that satisfies compact definability, define a categorical model $\C'$ that admits an identity-on-objects functor $J\from \C \to \C'$.  
     For example, if $\C$ is a category of games and strategies, $\C'$ might be a category whose objects are the same games as $\C$, but where the strategies are less rigidly constrained.
   \item Prove that the model $\C'$ is a Cartesian closed category and is computationally adequate for $\L'$.
-  \item Prove a factorization result that exhibits every morphism $g$ in $\C'$ as the composition of some morphism $Jf$ in the image of $J$ with one of some fixed collection of morphisms that are known to be definable in $\L'$ (for example, single terms from $\L'\setminus\L$.
+  \item Prove a factorization result that exhibits every morphism $g$ in $\C'$ as the composition of some morphism $Jf$ in the image of $J$ with one of some fixed collection of morphisms that are known to be definable in $\L'$ (for example, single terms from $\L'\setminus\L$).
     In addition, if $g$ is compact, then $f$ should be compact in $\C$.
 \end{itemize}
 The third bullet point allows us to deduce a compact definability result for $\L'$ in $\C'$ from the compact definability result of $\L$ in $\C$, and then Full Abstraction follows as we have outlined in Section \ref{SecCAnFA}.
@@ -326,7 +334,7 @@ So now we have to add extra information in about infinite sequences of moves (se
 
 Things get even more difficult when we consider nondeterministic versions of stateless languages such as PCF.  
 Naively relaxing the determinism constraint on the usual definition of an innocent strategy does not give the right notion of a nondeterministic innocent strategy \cite{TsukadaSheaves}.  
-There are definitions of nondeterministic innocence due to Levy \cite{levy2014morphisms}, and to Tsukada and Ong \cite{TsukadaSheaves} that use the concept of \emph{morphisms between plays}, but these are already some distance removed conceptually from Hyland and Ong's original paper on deterministic innocence.
+There are definitions of nondeterministic innocence due to Levy \cite{levy2014morphisms}, toTsukada and Ong \cite{TsukadaSheaves}, and, via concurrent games, to Castellan, Clairambault, Hayman and Winskel \cite{NonAngelic}, that use the concept of \emph{morphisms between plays}, but these are already some distance removed conceptually from Hyland and Ong's original paper on deterministic innocence.
 Tsukada and Ong's paper involves a complete recasting of strategies as sheaves in order to understand what happens when we add nondeterminism to innocence.
 
 Meanwhile, there is plenty of well-known theory that deals with computational effects in a purely systematic way.  
@@ -409,11 +417,11 @@ The least upper bound of the $\le_m?$ is then the term that terminates whenever 
 Having proved computational adequacy for this new language, we then use operational methods to find a way to identify terms that should be observationally equivalent in the original sense.  
 We form a model for the language with countable nondeterminism by taking our model for the new language and taking the quotient by an appropriate equivalence relation on morphisms.
 
-In order to introduce the last problem that we face with countable nondeterminism, we note that there are two different reasons why an element of a denotational model (e.g., a strategy) might not be definable in a particular reason.  
+In order to introduce the last problem that we face with countable nondeterminism, we note that there are two different reasons why an element of a denotational model (e.g., a strategy) might not be definable in a particular language.  
 One reason is structural: for example, a stateless language such as PCF cannot define a strategy whose behaviour depends on its entire history, since that would indicate stateful behaviour.  
 The other reason is purely computational.  
 Given a non-computable function $f\from \bN \to \bN$ (for example, the function that returns $0$ if its argument is source code for a terminating program an $1$ otherwise), we have a perfectly well-behaved history free strategy that represents $f$, but it is nevertheless still not definable in most programming languages.  
-Historically, the study of Full Abstraction has not been too concerned with non-definable elements of the second kind: the reason is that they are do not usually play a role in determining the intrinsic equivalence relation, since such a strategy is necessarily not compact.  
+Historically, the study of Full Abstraction has not been too concerned with non-definable elements of the second kind: the reason is that they do not usually play a role in determining the intrinsic equivalence relation, since such a strategy is necessarily not compact.  
 However, in the presence of countable nondeterminism, there exist terms that can be distinguished in the model that cannot be distinguished by compact elements; indeed, we can use a diagonal argument to define two functions $(\bN \to \bN) \to \bN$ that are distinguished only by non-computable functions $\bN \to \bN$.  
 An example of such a function is found in Proposition \ref{PropNotFullyAbstract}; the general idea is due to Kleene and can be found in \cite{KleeneTree}.
 
@@ -421,8 +429,7 @@ What this means is that if we want to model countable nondeterminism then, in ad
 Happily, such notions are well studied already, even appearing in the original Hyland-Ong and AJM papers \cite{hoPcf,ajmPcf}, in which the authors give a complete characterization of those strategies definable in PCF -- a \emph{universality} result for the model.
 Similar results can also be found in earlier work on Full Abstraction, such as Plotkin's original PCF paper \cite{PlotkinPcf}.
 
-The difficulties with countable nondeterminism that we have outlined are essentially domain-theoretic; indeed, the reason that compact strategies suffice to distinguish morphisms in models of finite nondeterminism is that the sets of morphisms in that case form \emph{algebraic domains}, in which every element is the least upper bound of the set of compact elements below it.  
-Algebraicity fails for models of countable nondeterminism.
+The difficulties with countable nondeterminism that we have outlined are essentially domain-theoretic, and can be summed up by saying that composition of countably nondeterministic functions is not continuous -- i.e., does not preserve least upper bounds -- with respect to the natural orderings on terms.
 
 \section{Plan for this Thesis}
 
