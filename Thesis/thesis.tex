@@ -7,7 +7,7 @@ Let $\C$ be a category.
 Then the category $[\C,\C]$ of functors $\C\to\C$ and natural transformations has a (strict) monoidal structure given by composition.  
 A \emph{monad} \cite[\sec VI]{WorkingMathematician} in $\C$ is a monoid in $[\C,\C]$.
 
-In other words, it is a functor $M\from \C\to\C$ together with natural  transformations $m_a \from MMa \to Ma$ and $u_a \from a \to Ma$ such that the following diagrams commute for all objects $a$ of $\C$.
+In other words, a monad is a functor $M\from \C\to\C$ together with natural  transformations $m_a \from MMa \to Ma$ and $u_a \from a \to Ma$ such that the following diagrams commute for all objects $a$ of $\C$.
 
 \begin{mathpar}
   \begin{tikzcd}
@@ -34,7 +34,7 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
 
 \begin{example}
   In the category of sets, the \emph{nonempty powerset functor} $\powerset_+$ sends a set $A$ to the set of nonempty subsets of $A$.  
-  This has the structure of a monad on $\Set$, since we have a natural transformation (union) from $\powerset_+\powerset_+A \to \powerset_+A$ and a natural transformation (singleton) from $A \to \powerset_+A$ that obey the diagrams given above.
+  This functor has the structure of a monad on $\Set$, since we have a natural transformation (union) from $\powerset_+\powerset_+A$ to $powerset_+A$ and a natural transformation (singleton) from $A$ to$ \powerset_+A$ that obey the diagrams given above.
 \end{example}
 \begin{example}
   Let $\M$ be a monoidal category and let $x$ be a monoid in $\M$.  
@@ -54,7 +54,9 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
     u_y \from y \to z \implies y
   \end{mathpar}
   are induced from the comonoid structure on $z$.
-  This second example is particularly important in Cartesian closed categories, in which every object has the structure of a comonoid.
+
+  If the monoidal structure on $\M$ is Cartesian, then a comonoid in $\M$ is the same thing as an object $a$ of $\M$ (with the diagonal $a \to a \times a$ and terminal $a \to 1$ morphisms).  
+  In such a case, every object $a$ of $\M$ gives rise to a reader monad on $\M$.
 \end{example}
 \begin{example}
   If $\adjunction{\C}{L}{R}{\D}$ is an adjunction with counit $\epsilon\from LR\to 1$ and unit $\eta\from 1 \to RL$, then the composite $RL\from \C \to \C$ has the structure of a monoid on $\C$, where the multiplication and unit are given by
@@ -65,13 +67,15 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
   \end{mathpar}
   We will see in the next chapter that every monad is induced by an adjunction in this way.
 
-  As an example, if $\M$ is a monoidal closed category and $w$ is an object of $\M$, then the \emph{state monad} $S_w$ on $\M$ is defined by
+  As an example, the definition of a monoidal closed category $\M$ is that it admits an adjunction between functors $\blank\tensor w$ and $w\implies\blank$ for any object $w$ of $M$.  
+  if $\M$ is a monoidal closed category and $w$ is an object of $\M$, then the functor $S_w$ on $\M$ defined by
   \[
-    S_w x = w \implies (x \tensor w)\,.
+    S_w x = w \implies (x \tensor w)
     \]
+  is the composition of these adjoint functors and therefore inherits the structure of a monad, known as the \emph{state monad}.
 \end{example}
 \begin{example}
-  Another example that arises from an adjunction is the \emph{list monad} on $\Set$ that arises from the adjunction between the category of sets and the category of (set-valued) monoids.  
+  Another example that arises from an adjunction is the \emph{list monad} on $\Set$ that arises from the adjunction between the $\Set$ and the category of monoids.
   The underlying set of the free monoid on a set $A$ is the set $A^*$ of finite lists of elements of $A$, and the functor $A\mapsto A^*$ inherits a monoid structure where the multiplication $m_A\from (A^*)^* \to A^*$ concatenates a list of lists into a single list and the unit $u_a \from A \to A^*$ forms a list with a single element.  
 \end{example}
 \begin{example}
@@ -90,7 +94,7 @@ In other words, it is a functor $M\from \C\to\C$ together with natural  transfor
 Let $\C$ be a category and let $M$ be a monad on $\C$.  
 Then \cite{Kleisli} there is a category $\Kl_M$, called the \emph{Kleisli category} of $M$, whose objects are the objects of $\C$ and where a morphism from an object $a$ to an object $b$ is a morphism $a \to Mb$ in $\C$.
 
-Identity arrows are given by the morphisms $u_c\from c \to M c$ (considered as a morphism $c\to c$ in $\Kl_M$) and the composition of arrows $f\from a \to Mb$ and $g \from b \to Mc$ is given by the following composite in $\C$.
+Identity arrows are given by the morphisms $u_c\from c \to M c$ (considered as morphisms $c\to c$ in $\Kl_M$) and the composition of arrows $f\from a \to Mb$ and $g \from b \to Mc$ is given by the following composite in $\C$.
 \[
   a \xrightarrow{f}
   Mb \xrightarrow{Mg}
@@ -113,13 +117,15 @@ In the other direction, we have a functor $ S \from \Kl_M \to \C$ that sends an 
   \]
 in $\C$.  
 Note that $ S J=M$, by one of our coherence conditions on $m$ and $u$.
-Meanwhile, $J S $ is the functor $\Kl_M\to\Kl_M$ that sends an object $a$ to $Ma$ and sends a morphism $f\from a \to Mb$ from $a$ to $b$ to the morphism $Mf\from Ma \to MMb$ from $Ma$ to $Mb$.
+Meanwhile, $J S $ is the functor $\Kl_M\to\Kl_M$ that sends an object $a$ to $Ma$ and sends a morphism $a\to b$ given by a morphism $f\from a \to Mb$ in $\C$ to the morphism $Mf\from Ma \to MMb$, considered as a morphism $Ma \to Mb$ in $\Kl_M$.
 \begin{proposition}[\cite{Kleisli}]
   $ S $ is a right adjoint to $J$.
   The unit of the adjunction is $u\from \id \Rightarrow M$.  
   The counit $e_a\from J( S  a) \to a$ is given by the identity morphism $Ma \to Ma$ in $\C$, considered as a morphism $Ma \to a$ in $\Kl_M$.
   \label{prop:KleisliHasAdjunction}
 \end{proposition}
+
+\subsection{Multiplicative natural transformations}
 
 Given a monad $M$ on a category $\C$ and a functor $F\from \C \to \D$, where $\D$ is another category, we say that a natural transformation $\psi_a \from FMa \to Fa$ is \emph{$M$-multiplicative} if it makes the following diagrams commute.
 \begin{mathpar}
@@ -141,11 +147,11 @@ Given a monad $M$ on a category $\C$ and a functor $F\from \C \to \D$, where $\D
 Given two triples $(\D, F,\psi), (\D', F',\psi')$, where $F\from \C \to \D, F'\from \C'\to\D'$ are functors and $\psi\from FM\Rightarrow F, \psi'\from F'M\Rightarrow F'$ are functors, we define a \emph{morphism} from $(\D', F',\psi')$ to $(\D, F, \psi)$ to be a functor $H\from \D' \to \D$ such that $F=HF'$ and $\psi=H\psi'$.  
 This gives us a category.
 
-A defining property of the Kleisli category is that it is initial among such triples $(\D,F,\psi)$:
+A defining property of the Kleisli category is that it is an initial object in the category of such triples $(\D,F,\psi)$:
 
 \begin{proposition}[\cite{StreetMonads}]
-  i) Given an object $a$ of $\C$, the identity morphism $Ma \to Ma$ may be considered as a morphism $\phi_a \from JMa \to Ja$ in $\Kl_M$.  
-  $\phi_a$ is an $M$-multiplicative natural transformation.
+  i) Given an object $a$ of $\C$, consider the identity morphism $Ma \to Ma$ as a morphism $\phi_a \from JMa \to Ja$ in $\Kl_M$.  
+  Then $\phi_a$ is an $M$-multiplicative natural transformation.
 
   ii) Let $\D$ be a category, let $F\from \C \to \D$ be a functor and suppose that $\psi_a\from FMa \to Ma$ is an $M$-multiplicative natural transformation.
   Then there is a unique functor $\hat{F}\from \Kl_M \to \D$ such that $F=\hat{F}J$ and $\psi = \hat{F}\phi$.
@@ -191,7 +197,7 @@ This means that the Kleisli category may be thought of as being freely generated
   Let $\C$ be a Cartesian closed category and let $z$ be some fixed object of $\C$.  
   Then the Kleisli category for the reader monad $R_z$ on $\C$ is generated over $\C$ by a natural transformation $\phi_y\from (z \to y) \to y$.  
   By the enriched Yoneda lemma, such a natural transformation is always given by precomposition with some fixed morphism $\ask_z\from 1 \to z$.  
-  This means that $\Kl_{R_z}$ is suitable for modelling any situation in which we are generally working in $\C$, but need the ability to request a value of type $z$ (for example, a config file, a piece of user input or something else that isn't being passed into the function in question).
+  This means that $\Kl_{R_z}$ is suitable for modelling any situation in which we are generally working in $\C$, but need the ability to request a value of type $z$ (for example, a config file, a piece of user input, a random number or something else that isn't being passed into the function in question).
   \label{ExReaderMonadKleisli}
 \end{example}
 
@@ -208,7 +214,7 @@ The \emph{functional completeness} theorem \cite{FunctionalCompleteness} can be 
 \section{Denotational Semantics}
 
 Having given an overview of the general theory of monads and Kleisli categories, we now examine the relationship between Kleisli categories and Full Abstraction.  From now till the end of the chapter, we fix an base Cartesian closed category $\G$ that admits a denotational semantics of Idealized Algol satisfying Computational Adequacy.  
-In addition, we require that $\G$ can be interpreted as being enriched in directed-complete partial orders, in such a way that any compact morphism between the denotation of IA types is the denotation of some IA term.
+In addition, we require that $\G$ can be interpreted as being enriched in algebraic partial orders, in such a way that any compact morphism between the denotation of IA types is the denotation of some IA term.
 The prototypical example, of course, will be the category of games and visible strategies, but we will not exploit any properties of this model beyond the ones we have already mentioned, mentioning it only in examples where appropriate.
 
 In addition, we will specialize to reader monads.  
@@ -218,7 +224,7 @@ Secondly, in order to get a compositional semantics for the $\lambda$-calculus, 
 Theorem \ref{FunctionalCompletenessCcc} tells us that this is the case for the Kleisli categories of reader monads on categories that are themselves Cartesian closed, but this may not be the case for other monads we can build from the Cartesian closed structure on our base category, such as state monads.
 
 Let $X\in \{\bB,\bN,\bC\}$ be a set that has an interpretation as an Idealized Algol type $X$, and write $X$ also for the corresponding object of $\G$.
-Write $\G_X$ as a shorthand for $\Kl_{R_X}\G$, the Kleisli category for the reader monad on $\G$ corresponding to the object $X$.  
+We shall write $\G_X$ as a shorthand for $\Kl_{R_X}\G$, the Kleisli category for the reader monad on $\G$ that corresponds to the object $X$.  
 The purpose of the rest of this chapter will be to define a new language, give it a denotational semantics in $\G_X$, and prove a full abstraction result for this denotational semantics.
 
 \newcommand{\IAX}{{IA${}_X$}\xspace}
@@ -235,9 +241,9 @@ The purpose of the rest of this chapter will be to define a new language, give i
 
 From Proposition \ref{pKleisli}, we know that there is a distinguished natural transformation $\phi_A \from (X \to A) \to A$ in $\G_X$; in particular, we have a morphism
 \[
-  \phi = \phi_X(\id_X) \from 1 \to X\,,
+  \phi = \Lambda(\lunit_X;\id_X);\phi_X
   \]
-which will be the denotation of the term $\choose_X$.
+(where $\Lambda(\lunit_X;\id_X)\from 1 \to (X \to X)$ is the interpretation of the $\lambda$-term $\lambda x.x$), which will be the denotation of the term $\choose_X$.
 Together with the existing denotational semantics of Idealized Algol within $\G$, this gives us an inductively defined denotational semantics of \IAX within $\G_X$.
 
 Clearly any term-in-context of \IAX is of the form
@@ -319,7 +325,7 @@ We now define the operational semantics of \IAX and prove a computational adequa
     \label{FigIaxOpSem}
   \end{figure}
 
-  We can define this semantics in an alternative, indirect way.  
+  Closer examination of the rules in Figure \ref{FigIaxOpSem} reveals an alternative, indirect definition of the operational semantics of \IAX.
   Note that each rule from ordinary Idealized Algol takes the form
   \[
     \inferrule{\Gamma,s^{(0)}\ts M_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges c_n,s^{(n)}}
@@ -341,20 +347,29 @@ We now define the operational semantics of \IAX and prove a computational adequa
 \end{definition}
 
 \begin{example}
-  If $X=\bC$, then, since $X$ has a single element, a sequence $n$ of elements of $X$ may be identified with its length $n$.
-  In this case, the language \IAX gives us a way to model time complexity, and the term $\ask_X$ may be considered as a constant $\sleep\from \com$ whose semantics is to wait for some fixed period of time before continuing.  
+  If $X=\bC$, then, since $X$ has a single element $a$, a sequence $u=\underbrace{a\cdots a}_n$ of elements of $X$ may be identified with its length $n$.
+  In this case, the language \IAX gives us a way to model time complexity, and the term $\ask_X$ may be considered as a subroutine $\sleep\from \com$ whose semantics is to wait for some fixed period of time before continuing.  
   In this case, 
   \[
     \Gamma,s\ts M \converges_n c,s'
     \]
-  is interpreted to say that `$M$ converges to $c$ in time $n$'.
+  is interpreted to say that `starting with the store $s$, $M$ converges to $c$ in time $n$, leaving store $s'$'.
+\end{example}
+\begin{example}
+  If $X=\bN$, we can interpret the language \IAX as giving us a way to model user input.  
+  When we call $\ask_\bN$, we are asking the user to provide us as a string of text (which we interpret as a binary string and hence as a natural number).  
+  Then we interpret the judgement
+  \[
+    \Gamma,s\ts M \converges_u c,s'
+    \]
+  as saying that `starting with the store $s$, and the sequence $u$ of user input, $M$ converges to $c$, leaving store $s'$'.
 \end{example}
 \begin{example}
   If $X\in\{\bB,\bN\}$, then the language \IAX gives us a way to model nondeterminism, where $\ask_X$ behaves as a \emph{nondeterministic oracle}; i.e., a device that nondeterministically returns an element of $X$.
 
   If $X=\bB$ then we have a model of binary (i.e., finite) nondeterminism, whereas if $X=\bN$ then we have a model of countable nondeterminism.
 
-  We interpret the relation
+  In these cases, we interpret the relation
   \[
     \Gamma,s\ts M \converges_u c,s'
     \]
@@ -374,6 +389,7 @@ To prove our adequacy result for the operational semantics of \IAX, we first giv
     \tr_{xu} = \lambda n.\neww (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u (\pred !v))
   \end{mathpar}
 \end{definition}
+In other words, $\tr_u$ is the function that will return the $i$-th term of the sequence $u$ when given $i$ as an input, or will fail to terminate if passed some index $k\ge|u|$.
 
 \begin{proposition}
   Let $u \in X^*$ and let $n<|u|$.  
@@ -617,7 +633,7 @@ To prove our adequacy result for the operational semantics of \IAX, we first giv
   \end{SidewaysFigure}
 \end{proof}
 
-We need a small lemma to help us deal with substitution.
+We start with a small lemma to help us deal with substitution.
 
 \begin{lemma}
   Let
@@ -630,20 +646,20 @@ We need a small lemma to help us deal with substitution.
   Then
   \[
     \inferrule{\Gamma,s^{(0)}\ts M_1[Q/\ask_X]\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n[Q/\ask_X]\converges c_n,s^{(n)}}
-    {\Gamma,s^{(0)} \ts M[Q/\ask_X] \converges c,s^{(n)}}\,,
+    {\Gamma,s^{(0)} \ts M[Q/\ask_X] \converges c,s^{(n)}}
     \]
   is a valid inference of Idealized Algol.
   \label{LemFirstSubstitution}
 \end{lemma}
 \begin{proof}
-  The real reason this is true is that the term $\ask_X$ is not mentioned anywhere in the IA rules, so substitution of the term $N$ for $\ask$ could not possibly break the pattern.  
+  Informally, this is true because the term $\ask_X$ is not mentioned anywhere in the IA rules, so substitution of the term $Q$ for $\ask_X$ could not possibly break the pattern.  
   Formally, we can show this by inspection on each of the different rules.  
   For instance, if the original rule is the one for sequencing:
   \[
     \inferrule{\Gamma,s\ts M \converges \skipp,s' \\ \Gamma,s'\ts N \converges c,s''}
     {\Gamma,s \ts M;N \converges c,s''}\,,
     \]
-  then we have $(M;N)[Q/\ask_X] = M[P/\ask_X];N[P/\ask_X]$ and the inference
+  then we have $(M;N)[Q/\ask_X] = M[Q/\ask_X];N[Q/\ask_X]$ and the inference
   \[
     \inferrule{\Gamma,s\ts M[Q/\ask_X] \converges \skipp,s' \\ \Gamma,s'\ts N[Q/\ask_X]\converges c,s''}
     {\Gamma,s \ts M[Q/\ask_X];N[P/\ask_X] \converges c,s''}
@@ -658,7 +674,7 @@ We can now state and prove our soundness lemma.
   \[
     \Gamma,s\ts M\converges_u c,s'
     \]
-  in \IAX.
+  is derivable in \IAX.
   Fix $k\in\bN$ and let $w\in X^*$ be a sequence such that $u$ is a subsequence of $w$ starting at position $k+1$ (i.e., $u^{(j)}=w^{(k+j+1)}$ for each $j=0,\cdots,|u|-1$).
   Then
   \[
@@ -743,7 +759,7 @@ First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheC
   \begin{mathpar}
     \test_0 = \lambda m.\IfO m \Then \skipp \Else \Omega
     \and
-    \test_{n+1} = \lambda m.\IfO m \Then \Omega \Else \test_n (\pred m)\,.
+    \test_{n+1} = \lambda m.\neww \lambda x.(x\gets m;\IfO \oc x \Then \Omega \Else \test_n (\pred \oc x))\,.
   \end{mathpar}
   So $\test_n$ converges if its input evaluates to $n$ and diverges otherwise.
 
@@ -761,6 +777,7 @@ First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheC
     \bC
     \]
   is not equal to $\bot$.
+  \label{DefDenotationalUConvergence}
 \end{definition}
 
 \begin{proposition}
@@ -792,46 +809,48 @@ First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheC
     \]
   converges to $|u|$ in IA.
   
-  We can prove this using the following derivation tree.
-  \tiny
-  \[
-    \inferrule*
-    {
-      \inferrule*[sep=0em]
+  We can prove this using the derivation tree in Figure \ref{FigKleisliSoundnessDerivation}.\qedhere
+  \begin{SidewaysFigure}
+    \[
+      \inferrule*
       {
-        \inferrule*[left={Lem. \ref{LemSoundnessMonads}}]
+        \inferrule*[sep=0em]
         {
-        }
-        {
-          v,(v\mapsto 0)\ts M[v\gets\suc!v;\tr_{u^\top} !v/\ask_x]\converges \skipp,(v\mapsto |u|)
-        }
-        \\
-        \inferrule*
-        {
+          \inferrule*[left={Lem. \ref{LemSoundnessMonads}}]
+          {
+          }
+          {
+            v,(v\mapsto 0)\ts M[v\gets\suc!v;\tr_{u^\top} !v/\ask_x]\converges \skipp,(v\mapsto |u|)
+          }
+          \\
           \inferrule*
           {
+            \inferrule*
+            {
+            }
+            {
+              v,(v\mapsto |u|) \ts v \converges v,(v\mapsto |u|)
+            }
           }
           {
-            v,(v\mapsto |u|) \ts v \converges v,(v\mapsto |u|)
+            v,(v\mapsto |u|)\ts !v \converges |u|,(v\mapsto |u|)
           }
         }
         {
-          v,(v\mapsto |u|)\ts !v \converges |u|,(v\mapsto |u|)
+          v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];v \converges |u|,(v\mapsto |u|)
         }
       }
       {
-        v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];v \converges |u|,(v\mapsto |u|)
-      }
-    }
-    {
-      \blank,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
-    }\qedhere
-    \]
-  \normalsize
+        \blank,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
+      }\qedhere
+      \]
+    \caption{IA derivation used in the proof of Proposition \ref{PropKleisliSoundness}.}
+    \label{FigKleisliSoundnessDerivation}
+  \end{SidewaysFigure}
 \end{proof}
 
-The statement of Proposition \ref{PropKleisliSoundness} looks a bit strange.  
-This is because the level of generality we are operating at (i.e., $\G$ being a fairly general model for Idealized Algol) does not give us much room to define things other than in terms of the denotations of Idealized Algol terms.
+Definition \ref{DefDenotationalUConvergence} looks a bit odd.  
+This is a result of working at such a high level of generality: since we have not assumed much about $\G$ beyond the fact that it is a suitable model of Idealized Algol, then we have to define everything in terms of Idealized Algol denotations.
 
 If $\G$ is the category of games and visible strategies, then the statements of Proposition \ref{PropKleisliSoundness} (and our later Adequacy and Full Abstraction results) become clearer.  
 Observe that if $\sigma \from 1 \to (X \to \bC)$ is a strategy in $\G$ (considered as a strategy for $\oc X \implies \bC$, then the maximal plays in the interaction
@@ -850,8 +869,8 @@ take the form
     q         &     &     \\
     u^{(k-1)} &     &     \\
               &  a  &     \\
-              &     &  k  \\
-  \end{array}\,,
+              &     &  {k\,,}  \\
+  \end{array}
   \]
 for $k\le |u|$, where the component in $X,\bC$ is a valid play of $\sigma$.
 Moreover, the strategy $t_n$ is the one with maximal plays of the form
@@ -880,7 +899,7 @@ This means that the composite
   1 \xrightarrow{\sigma}
   (X \to \bC) \xrightarrow{\eta_u}
   (\Var \to \bN) \xrightarrow{\deno{\neww}}
-  \bN \xrightarrow{t_n}
+  \bN \xrightarrow{t_|u|}
   \bC
   \]
 is not equal to $\bot$ if and only if $\sigma$ contains the sequence
@@ -898,14 +917,15 @@ is not equal to $\bot$ if and only if $\sigma$ contains the sequence
               &     \\
   \end{array}\,.
   \]
-Since complete plays in the game $\oc X \implies \bC$ are always of the form $q$, followed by some sequence of pairs of the form $qx_i$ for $x\in X$, followed by $a$, this is a very natural condition to consider when dealing with a strategy $\sigma\from \oc X \implies \bC$.
+Since complete plays in the game $\oc X \implies \bC$ are always of the form $q$, followed by some sequence of pairs of the form $qx_i$ for $x_i\in X$, followed by $a$, it is very natural to consider conditions on those $x_i$ when dealing with a strategy $\sigma\from \oc X \implies \bC$.
 
 \section{Computational Adequacy}
 
 Now we want to prove Computational Adequacy; i.e., the converse to Proposition \ref{PropKleisliSoundness}.
 To do this, we need to prove a converse to Lemma \ref{LemSoundnessMonads}.
 
-First of all, we need to prove a reverse result to Lemma \ref{LemFirstSubstitution} that deals with substitution in the opposite direction; i.e., instead of telling us what happens when we substitute a term for $\ask_X$, we will look at what happens when we substitute a term for $v\gets \suc !v;\tr_u !v$.  
+First of all, we need to prove a reverse result to Lemma \ref{LemFirstSubstitution} that deals with substitution in the opposite direction.  
+That is, instead of telling us what happens when we substitute a term for $\ask_X$, we will look at what happens when we substitute a term for $v\gets \suc !v;\tr_u !v$.  
 
 In most cases, this will not disrupt the structure of the IA rule.  
 For instance, we always have
@@ -1029,7 +1049,7 @@ Now we can state and prove our adequacy lemma.
   is derivable in Idealized Algol.
 
   Since IA is a deterministic language (so if $\Gamma,s\ts M\converges c,s'$ and $\Gamma,s\ts M \converges c',s''$ then $c=c'$ and $s'=s''$), then the derivation of this term must agree with the valid IA derivation given in Figure \ref{FigTheOneForTheLemma}.  
-  It follows that $l=k+1$ (so, in particular, $l\ge k$) and that $x$ is the $(k+1)$-th term of $w$, so the single-term sequence $x$ is the subsequence of $w$ going from $k+1$ to $l$.
+  It follows that $l=k+1$ and that $x$ is the $(k+1)$-th term of $w$, so the single-term sequence $x$ is the subsequence of $w$ going from $k+1$ to $l$.
   
   Then we have the derivation
   \[
@@ -1045,7 +1065,7 @@ We have proved one direction already in Proposition \ref{PropKleisliSoundness}, 
 \begin{proposition}[Computational adequacy]
   Let $M\from \com$ be a closed term of \IAX.  
   Consider the denotation $\deno M\from 1 \to \bC$ in $\G_X$ as a morphism $1 \to (X \to \bC)$ in $\G$.  
-  Let $u\in X^*$ be a sequence and suppose that the composite
+  Let $u\in X^*$ be a sequence and suppose that $\deno M \downarrow_u$; i.e., that the composite
   \[
     1 \xrightarrow{\deno{M}}
     (X \to \bC) \xrightarrow{\eta_u}
@@ -1063,7 +1083,7 @@ We have proved one direction already in Proposition \ref{PropKleisliSoundness}, 
 \begin{proof}
   As before, the composite given in the statement is the denotation of the term
   \[
-    \test_{|u|} (\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v))\\,.
+    \test_{|u|} (\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v))\,.
     \]
   By the adequacy result for Idealized Algol, the fact that this denotation is not equal to $\bot$ means that the term converges to $\skipp$, from which we can deduce that
   \[
@@ -1071,7 +1091,7 @@ We have proved one direction already in Proposition \ref{PropKleisliSoundness}, 
     \]
   converges to $|u|$.
 
-  It is easy to see that this is equivalent to derivability of the following relation in Idealized Algol.
+  It is easy to see that this is equivalent to asking whether we can derive the following relation in Idealized Algol.
   \[
     v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X] \converges \skipp,(v\mapsto |u|)
     \]
@@ -1083,6 +1103,25 @@ We have proved one direction already in Proposition \ref{PropKleisliSoundness}, 
   in \IAX.
 \end{proof}
 
+\begin{remark}
+  Recall that if $\G$ is the category of games, then we have $\sigma\downarrow_u$ if and only if $\sigma$ contains the play 
+  \[
+    \begin{array}{cc}
+      X         & \bC \\
+                &     \\
+                &  q  \\
+      q         &     \\
+      u^{(0)}   &     \\
+      \vdots    &     \\
+      q         &     \\
+      u^{(|u|-1)}&     \\
+                &  a  \\
+                &     \\
+    \end{array}\,.
+    \]
+  Therefore, we have now proved that we have $\blank,() \ts M \converges_u \skipp,()$ if and only if $\deno{M}$ contains that sequence.
+\end{remark}
+
 \section{Full Abstraction}
 
 To prove full abstraction of our semantics for \IAX, we introduce the usual intrinsic equivalence on terms.
@@ -1090,7 +1129,7 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
 \begin{definition}
   Let $\sigma,\tau\from A \to B$ be morphisms in $\G_X$.  
   By currying, we may consider $A$ and $B$ as morphisms $1 \to (A \to B)$ in $\G_X$.
-  We say that $\sigma\sim\tau$ if for all morphisms $\alpha\from (A \to B) \to \bC$ and for all sequences $u\in X^*$, if we regard $\sigma;\alpha,\tau;\alpha\from 1 \to \bC$ as morphisms $X \to \bC$ in $\G$, then the composites
+  We say that $\sigma\sim\tau$ if for all morphisms $\alpha\from (A \to B) \to \bC$ and for all sequences $u\in X^*$, if we regard $\sigma;\alpha,\tau;\alpha\from 1 \to \bC$ as morphisms $1 \to (X \to \bC)$ in $\G$, then the composites
   \begin{mathpar}
     1 \xrightarrow{\sigma;\alpha}
     (X \to \bC) \xrightarrow{\eta_u}
@@ -1120,7 +1159,7 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
   First, suppose that $\deno{M}\sim\deno{N}$.  
   Let $C[-]\from\com$ be a context with a hole of type $T$.  
   Then the denotation of $t\ts C[t]$ is a morphism $\alpha\from \deno{T} \to \bC$.
-  Moreover, the denotation of $C[M]$ is the composite $\deno{M};\alpha$ and that of $C[N]$ is the composite $\deno{N};\alpha$ by functional completeness.
+  Moreover, the denotation of $C[M]$ is the composite $\deno{M};\alpha$ and that of $C[N]$ is the composite $\deno{N};\alpha$ since we are working in a Cartesian closed category.
 
   Then the composites
   \begin{mathpar}
@@ -1180,19 +1219,21 @@ To prove full abstraction of our semantics for \IAX, we introduce the usual intr
 
 \section{Comparison with Ghica's slot games}
 
-Let us suppose now that $\G$ is the category of games and visible strategies, and that $X=\bC$.  
+For this section, let us suppose that $\G$ is the category of games and visible strategies, and that $X=\bC$.  
 As we remarked above, this means that \IAX can be interpreted as a language for modelling time complexity.
 
 We compare our approach to a different one, due to Dan Ghica \cite{SlotGames}.  
 Given a game $A$, Ghica defines a \emph{play with costs} in $A$ to be a justified sequence $s\in (M_A + \{\slot\})^*$ such that $s\vert_{M_A}\in P_A$.
 Here, $\slot$ is a special symbol called a \emph{slot} or \emph{token-action}, which can be interleaved throughout the play $s\vert_{M_A}$ from $A$.  
-We shall additionally impose the requirement that an occurrence of the special symbol $\slot$ must take place either after an $O$-move in $A$ or after another instance of $\slot$.
+We shall also impose the requirement (not found in \cite{SlotGames}) that an occurrence of the special symbol $\slot$ must take place either after an $O$-move in $A$ or after another instance of $\slot$.
 The token actions do not carry justification pointers.
 
 Following Ghica, we define a \emph{strategy with costs} to be a prefix-closed set $\sigma$ of plays with costs such that the set $\sigma\vert_{M_A} = \{s\vert_{M_A}\suchthat s\in \sigma\}$ is a valid visible strategy for $A$.
 
 The identity strategy with costs is the usual identity strategy, without any token actions.  
-Given an interleaving $\s\in(M_A+M_B+M_C+\{\slot\})^*$ of two justified plays with costs for $A \implies B$ and $B\implies C$, write $\s\vert_{A,B}$ for the subsequence consisting of all those moves in $A$ and $B$, together with all token actions such that the previous move was an $O$-move in $A\implies B$.  
+We can similarly define an \emph{interaction sequence with costs} to be a sequence $\s\in(M_A+M_B+M_C+\{\slot\})^*$ such that $\s\vert_{A,B,C}$ is an interaction sequence for $A,B,C$ and such that each occurrence of the token action $*$ occurs after a move that could be considered as an $O$-move in either $A\implies B$ or $B\implies C$.
+
+Given such an interaction sequence $\s\in(M_A+M_B+M_C+\{\slot\})^*$ between the games $A$, $B$ and $C$, write $\s\vert_{A,B}$ for the subsequence consisting of all those moves in $A$ and $B$, together with all token actions such that the previous move was an $O$-move in $A\implies B$.  
 Define $\s\vert_{B,C}$ similarly.  
 Then if $\sigma\from A \implies B$ and $\tau\from B \implies C$ are strategies with costs, we define $\sigma\|\tau$ to be the set of all such sequences $\s$ such that $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$.  
 Lastly, we define $\sigma;\tau$ to be the set of all sequences obtained by taking a sequence $\s\in\sigma\|\tau$ and removing all the moves in $B$ (but retaining all the token actions, including those that arise between moves in $B$).  
@@ -1218,13 +1259,13 @@ This seems like a purely combinatorial construction, but it can actually be subs
   Moreover, $c(\id_A)$ is the identity in the category of games and strategies with costs.
 \end{proposition}
 \begin{proof}
-  The map $c$ is the unique functor given by the functional completeness theorem that sends the canonical strategy $\id \from \oc\bC \to \bC$ to the strategy with costs for $\bC$ with maximal play
+  The map $c$ is the unique functor given by the functional completeness theorem (Proposition \ref{pKleisli}) that sends the canonical strategy $\phi \from 1 \to \bC$ to the strategy with costs for $\bC$ with maximal play
   \[
     q\slot a\,.
     \]
   More synthetically, we get from a strategy for $\sigma\from\oc \bC \implies A$ to a strategy with costs for $A$ by replacing each occurrence of the pair $qa$ occurring in the $\bC$ component with the token action $\slot$ in each play of $\sigma$.
 
-  This functor is the identity on objects, and it is fully faithful, since it has an obvious inverse, given by taking a strategy with costs and replacing each occurrence of the token action with a pair of moves $qa$ in $\oc\bC$.
+  This functor is the identity on objects, and it is fully faithful, since it has an obvious inverse, given by taking a strategy with costs and replacing each occurrence of the token action with a pair of moves $qa$ in $\oc\bC$, where $q$ justifies $a$ and is itself justified by the most recently occurring $O$-move in $A$.
   Since each token action must always occur after an opponent move or after another token action, and since player $O$ has no reply to the move $q$ other than the move $a$, this always gives us a legal strategy.
 \end{proof}
 
@@ -1234,7 +1275,7 @@ Therefore, we see that the category of games and strategies with costs is isomor
 \label{SecMayTesting}
 
 We remarked above that if $X\in\{\bB,\bN\}$, then \IAX is a model of nondeterminism, finite in the case of $\bB$ and countable in the case of $\bN$.  
-However, our operational semantics is not the usual one for these languages.
+However, we have given a rather strange operational semantics for these languages (the relation $\converges_u$) that does not accurately reflect how they are normally used.
 
 For example, the terms
 \begin{mathpar}
@@ -1260,7 +1301,7 @@ Indeed, this is sort of the point of nondeterminism: we should be able to make n
     \inferrule*[right=$x\in X$]{ }{\Gamma,s\ts \ask_X \converges x,s}
     \]
 \end{definition}
-It is clear that these rules are exactly the same as our original operational semantics for \IAX, but with the sequences $u$ removed.  
+These rules are exactly the same as our original operational semantics for \IAX, but with the sequences $u$ removed.  
 Moreover, if we have a valid derivation of $\Gamma,s\ts M\converges u,s'$, then it is clear (by induction) that we may annotate all the occurrences of $\converges$ with suitable sequences in order to obtain a derivation of $\Gamma,s\ts M\converges_u c,s'$ for some $u\in X^*$.
 So we get the following alternative definition of may convergence.
 \begin{definition}
@@ -1341,7 +1382,7 @@ Then exactly the same argument as before gives us a full abstraction result for 
     \bN \xrightarrow{t_{|v|}}
     \bC
     \]
-  Therefore, $\blank,()\ts C[N] \converges_v \skipp,()$ and so $\blank,()\ts C[N] \converges \skipp,()$.
+  Therefore, $\blank,()\ts C[N] \converges_v \skipp,()$, and so $\blank,()\ts C[N] \converges \skipp,()$.
   The reverse direction is identical.
 
   Conversely, suppose that $M,N$ are may-observationally equivalent.  
@@ -1359,7 +1400,18 @@ If $\sigma\from \oc X \implies \bC$ is a strategy, then, by our discussion at th
   \]
 is not equal to $\bot$ if and only if $\sigma$ contains the play
 \[
-  q (q u^{(i)})_{i=0}^{|u|-1} a\,.
+  \begin{array}{cc}
+    X         & \bC \\
+              &     \\
+              &  q  \\
+    q         &     \\
+    u^{(0)}   &     \\
+    \vdots    &     \\
+    q         &     \\
+    u^{(|u|-1)}&     \\
+              &  a  \\
+              &     \\
+  \end{array}\,.
   \]
 Moreover, since any complete play in $\oc X \implies \bC$ must take this form, we can see there exists such a $u$ making the composite above not equal to $\bot$ if and only if
 \[
@@ -1382,7 +1434,7 @@ We need to show that this respects composition, so that we get a category if we 
   Then $\sigma;\tau \approx_{\may} \sigma';\tau'$.
 \end{proposition}
 \begin{proof}
-  A complete play in $\sigma;\tau$ is given by a sequence $\s\vert_{X,A,C}$, where $\s\in (M_X + M_A + M_B + M_C)^*$ that is a legal interaction of a complete play in $\tau$ with a collection of complete plays in $\sigma$, with $B$-components being identified.
+  A complete play in $\sigma;\tau$ is given by a sequence $\s\vert_{X,A,C}$, where $\s\in (M_X + M_A + M_B + M_C)^*$ is a legal interaction of a complete play in $\tau$ with a collection of complete plays in $\sigma$, with $B$-components being identified.
   Then $\s\vert_{A,C}$ can alternatively be characterized as $\t\vert_{A,C}$, where $\t\in (M_A + M_B + M_C)^*$ is a legal interaction of a sequence from $\tau\vert_{B,C}$ with a collection of sequences from $\sigma\vert_{A,B}$.  
 
   It follows that if $\sigma\vert_{A,B}=\sigma'\vert_{A,B}$ and $\tau\vert_{B,C}=\tau'\vert_{B,C}$, then $\sigma;\tau\vert_{A,C} = \sigma';\tau'\vert_{A,C}$.
@@ -1419,6 +1471,7 @@ We interpret all the Idealized Algol terms in the usual way as deterministic str
 for every $x\in X$.
 
 It is already known (see \cite{mcCHFiniteND}) that this model is fully abstract for (finitely or countably) nondeterministic Idealized Algol with may-contextual equivalence.
+We have just provided an alternative proof of this fact.
 
 \section{Alternative Reduction Rules - Must Testing}
 
@@ -1427,7 +1480,7 @@ A more interesting, and more complicated, reduction rule for nondeterministic IA
 We shall define this indirectly via its negation.
 
 \begin{definition}
-  We shall define a relation
+  We define a relation
   \[
     \Gamma,s\ts M\diverges
     \]
@@ -1441,7 +1494,7 @@ We shall define this indirectly via its negation.
     \]
   is an IA rule, then for each $j=1,\cdots,n$ we have a rule
   \[
-    \inferrule*[sep=1.9em]{\Gamma,s^{(0)}\ts M_1 \converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges}
+    \inferrule*[sep=1.9em]{\Gamma,s^{(0)}\ts M_1 \converges c_1,s^{(1)} \and \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges c_{j-1},s^{(j-1)} \\ \Gamma,s^{(j-1)}\ts M_j\diverges}
     {\Gamma,s^{(0)} \ts M \diverges}\,.
     \]
   In other words, if the evaluation of the term $M$ diverges at any step, then the whole thing diverges.  
@@ -1490,8 +1543,11 @@ We shall define this indirectly via its negation.
     \]
 \end{example}
 
-It is possible to characterize the $\mustconverge$ directly via an inductive relation (see \cite{RusssThesis}, for instance).  
-We will give an alternative definition that will relate it to our existing rules $\converges_u$.
+\begin{remark}
+It is possible to characterize the $\mustconverge$ predicate directly via an inductive relation (see \cite{RusssThesis}, for instance).  
+\end{remark}
+
+We will give an alternative definition of $\mustconverge$ that will relate it to our existing rules $\converges_u$.
 
 \begin{definition}
   We say that $\Gamma,s\ts M\mustconverge$ if for every infinite sequence $w\in X^\omega$ there is some finite prefix $u\pprefix w$ such that $\Gamma,s\ts M\converges_u c,s'$ for some canonical form $c$ and some $\Gamma$-store $s'$.
@@ -1499,15 +1555,20 @@ We will give an alternative definition that will relate it to our existing rules
 \end{definition}
 
 Before we show that the two definitions are equivalent, we shall examine why this one makes sense.  
-Recall that we said that the statement $\Gamma,s\ts M\converges_u c,s'$ meant that $M$ will converge to $c$ in the case that the values we obtain by querying the nondeterministic oracle form the sequence $u$.  
-Our initial thought, then, might be to say that $\Gamma,s\ts M\mustconverge$ if for all $u\in X^*$, $\Gamma,s\ts M\converges_u c,s'$ for some $c,s'$, but this is not the case.  
+Recall that we said that the statement $\Gamma,s\ts M\converges_u c,s'$ meant `$M$ will converge to $c$ in the case that the values we obtain by querying the nondeterministic oracle form the sequence $u$'.  
+Our initial thought, then, might be to declare that $\Gamma,s\ts M\mustconverge$ if for all $u\in X^*$, $\Gamma,s\ts M\converges_u c,s'$ for some $c,s'$.  
+However, this is not the case even for terms that clearly have to converge.
 For example, if we have
 \[
   M = \If \ask_\bB \Then \true \Else \false\,,
   \]
-then $M\converges_\true \true$ and $M\converges_\false \false$.  
-However, it is not the case that $M\converges_\epsilon c$, nor that $M\converges_{\true\false\false\true\false}c$ for any $c$.
-Instead, we should think of the nondeterministic oracle as a promise to provide us with some infinite sequence of elements of $X$, only some of which we will use to converge.
+then $M\converges_\true \true$ and $M\converges_\false \false$, and it is certainly true that $M\mustconverge$.
+However, it is not the case that, for example, $M\converges_\epsilon c$; nor is it the case that $M\converges_{\false\false\true\false\true}c$ for any $c$.
+In the first case, the sequence is too short: we can extend it to the sequence $\true$ and then we get convergence.  
+In the second case, the sequence is too long: we have already converged after the first term $\false$, so we never get the chance to read any other terms.
+
+We could define $M\mustconverge$ by saying that any sequence $u$ is either a subsequence or a supersequence of some $v$ such that $M\converges_v$; our equivalent definition above is a little neater.  
+The idea is that if we fix beforehand an infinite sequence made up of all the values that the nondeterministic oracle could possibly give, then we know that the term will always end up reading some finite sequence of values from the beginning of the sequence and then terminating at a value.
 
 \begin{proposition}
   The two definitions of the $\mustconverge$ predicate given in Definitions \ref{DefMayDivergence} and \ref{DefMustConvergence} are equivalent.
@@ -1552,10 +1613,15 @@ Instead, we should think of the nondeterministic oracle as a promise to provide 
   By hypothesis, $u_1\cat \cdots \cat u_n$ is a finite prefix of $u_1 \cat \cdots \cat u_{j-1} \cat w$, and so $u_j$ is a finite prefix of $w$.  
   Therefore, by the inductive hypothesis applied to $M_j$, we cannot have $\Gamma,s^{(j-1)}\ts M_j\diverges$, leading to the desired contradiction.
 
-  For the converse, define an \emph{$n$-truncated} derivation tree to be a derivation tree of height $n$ such that the premises of the form $\Gamma,s\ts M\diverges^w$ may occur at the top level without proof.  
-  Then we define a family of functions $(F_i \suchthat i \ge 0)$ that take an infinite sequence $w\in X^\omega$ and a triple $\Gamma,s\ts M$ and returns either a proof of height $\le i$ of $\Gamma,s\ts M\converges_u c,s'$ for some $u\pprefix w$, or some $i$-truncated proof of $\Gamma,s\ts M\diverges^v$ for some (possibly infinite) $v\prefix w$.
+  For the converse, define an \emph{$n$-truncated} derivation tree to be a derivation tree of height $n$ such that premises of the form $\Gamma,s\ts M\diverges^w$ may occur at the top level without proof.  
+  We now define, for any infinite sequence $w\in X^\omega$, any triple $\Gamma,s\ts M$ and any $i\ge 0$, either
+  \begin{itemize}
+    \item a proof of height $\le i$ that $\Gamma,s\ts M\converges_u c,s'$ for some $u\pprefix w$ (and some $c,s'$); or
+    \item an $i$-truncated proof $F_i(w,\Gamma,s\ts M)$ of $\Gamma,s\ts M\diverges^v$ for some (possibly infinite) $v\prefix w$.
+  \end{itemize}
+  Moreover, the $F_i(w,\Gamma,s\ts M)$ will form an infinite sequence, so that if $i<j$ then $F_i(w,\Gamma,s\ts M)$ is the result of truncating $F_j(w,\Gamma,s\ts M)$ at the $i$-th level.
 
-  For $i=0$, $F(w,\Gamma,s\ts M)$ is the tree of the form
+  For $i=0$, $F_i(w,\Gamma,s\ts M)$ is the tree of the form
   \[
     \Gamma,s\ts M\diverges^w\,,
     \]
@@ -1603,7 +1669,7 @@ Instead, we should think of the nondeterministic oracle as a promise to provide 
   It follows that if there is some $w$ such that $\Gamma,s\ts M\not\converges_u c,s'$ for any finite prefix $u\pprefix w$, then there is an infinite derivation tree for $\Gamma,s\ts M\diverges$.
 \end{proof}
 
-We therefore get an adequacy result for must testing.
+We can now get an adequacy result for must testing.
 
 \begin{definition}
   Given a morphism $\sigma\from 1\to\bC$ in $\G_X$, considered as a morphism $X \to \bC$ in $\G$, we write $\sigma\downarrow_{\must}$ if whenever $w\in X^\omega$ is an infinite sequence, then $w$ has a finite prefix $u$ such that the composite
@@ -1615,6 +1681,7 @@ We therefore get an adequacy result for must testing.
     \bC
     \]
   is not equal to $\bot$.
+  \label{DefDenoMust}
 \end{definition}
 
 \begin{corollary}
@@ -1623,7 +1690,7 @@ We therefore get an adequacy result for must testing.
   \label{CorAdeqMust}
 \end{corollary}
 
-Once again, this slightly abstruse result becomes much more natural when $\G$ is the category of games, though in this case things are a bit more subtle.  
+Once again, this slightly abstruse Definition \ref{DefDenoMust} becomes much more natural when $\G$ is the category of games, though in this case things are a bit more subtle.  
 Let $\sigma$ be a strategy for $\oc X \implies \bC$.  
 We observed earlier that $\sigma;\eta_u;\deno{\new};t_{|u|}\neq\bot$ if and only if the sequence
 \[
@@ -1646,15 +1713,23 @@ Or, $\sigma$ contains an infinite increasing sequence of plays, whose limit is t
 We have shown the following adequacy result.
 \begin{corollary}
   Let $M\from \com$ be a closed term of \IAX and consider the denotation $\deno M \from 1 \to \bC$ in $\G_X$ as a morphism $X \to \bC$ in $\G$.
-  Then $\blank,()\ts M\mustconverge$ if and only if this strategy is winning.
+  Then 
+  \[
+    \blank,()\ts M\mustconverge
+    \]
+  if and only if this strategy is winning.
 \end{corollary}
 
-\section{Full Abstraction for Nondeterminism Under Must Testing}
+\section{Full Abstraction for Finite Nondeterminism Under Must Testing}
 
 We now extend our earlier definitions using the new $\mustconverge$ rule.
 
 \begin{definition}
-  Given closed terms $M,N\from T$ of \IAX, we write $M\equiv_{\must} N$, if for all contexts $-\from T\ts C[-]\from\com$, $C[M]\mustconverge$ if and only if $C[N]\mustconverge$.
+  Given closed terms $M,N\from T$ of \IAX, we write 
+  \[
+    M\equiv_{\must} N
+    \]
+  if for all contexts $-\from T\ts C[-]\from\com$, $C[M]\mustconverge$ if and only if $C[N]\mustconverge$.
 \end{definition}
 
 We write $M\emam N$ if $M\equiv_{\may} N$ and $M\equiv_{\must} N$.
@@ -1672,7 +1747,7 @@ We write $\sigma\amam \tau$ if $\sigma\approx_{\may}\tau$ and $\sigma\approx_{\m
 We write $\sigma\smam \tau$ if $\sigma\sim_{\may}\tau$ and $\sigma\sim_{\must} \tau$.
 
 \begin{remark}
-  In the category of games we can simplify this to saying that $\sigma;\alpha\approx_{\may}\tau;\alpha$ and that either $\sigma;\alpha$ and $\tau;\alpha$ are both winning, or neither is.
+  In the category of games we can simplify the definition of $\smam$ to saying that $\sigma\smam \tau$ if for all $\alpha\from (A \to B) \to \bC$, $\sigma;\alpha\approx_{\may}\tau;\alpha$ and either $\sigma;\alpha$ and $\tau;\alpha$ are both winning, or neither is.
 \end{remark}
 
 Now we might expect to be able to prove a full abstraction result as before, namely that $\deno M\smam \deno N$ if and only if $M\emam N$.  
@@ -1698,7 +1773,7 @@ In the case of finite nondeterminism, this is possible.
     \bC
     \]
   is not equal to $\bot$.  
-  Since $M\sim_{\must} N$, there is some finite prefix $v\pprefix w$ such that the composite
+  Since $M\sim_{\must} N$, there is some finite prefix $v\pprefix w$ and some compact $\alpha'\from \deno{T}\to\bC$ such that the composite
   \[
     1 \xrightarrow{\deno{C};\deno{N}}
     (X \to \bC) \xrightarrow{\eta_v}
@@ -1717,8 +1792,8 @@ In the case of finite nondeterminism, this is possible.
     \]
   is not equal to $\bot$.  
   Let $V$ be the set of all sequences $v\in \bB^*$ such that $v$ has no prefix $u$ with this property.  
-  Then by hypothesis $V$ is a finitely branching tree with no infinite path so, by K\"{o}nig's Lemma, it is finite.  
-  Therefore, there is some finite set of sequences $U\subset \bB^*$ such that for every sequence $w\in \bB^\omega$, $w$ has some prefix $u\in U$ satisfying the condition above.
+  Then $V$ is a finitely branching tree with no infinite path so, by K\"{o}nig's Lemma, it is finite.  
+  Therefore, there is some finite set of sequences $U\subset \bB^*$ such that for every sequence $w\in \bB^\omega$, $w$ has some prefix $u\in U$ such that $\deno{M};(X \to \alpha);\mu;\eta_u;\deno{\neww};t_{|u|}\ne\bot$.
 
   Since $\G$ is enriched in algebraic cpos, for each $u\in U$ there is some compact $\alpha^u\subset\alpha$ such that
   \[
@@ -1742,8 +1817,15 @@ In the case of finite nondeterminism, this is possible.
   By Corollary \ref{CorAdeqMust}, this means that $L M \mustconverge$, while $L N\diverges$, so $M\not\equiv_{\must}N$.
 \end{proof}
 
-Now clearly this last result depends on finiteness of $\bB$, since we may have infinite trees with no infinite path if the trees are allowed to be infinitely branching.
-The next result shows that if we replace $\bB$ with $\bN$, then we cannot hope to obtain such a full abstraction result.
+This last result makes crucial use of the finiteness of $\bB$ in order to apply K\"{o}nig's lemma.  
+In the case of IA${}_\bN$, the argument we have just used does not apply, since we can certainly have infinite bounded-height trees if we allow infinite branching.
+
+In fact, this point is essential: not only does this specific argument not work for our model of IA${}_\bN$, the model is not necessarily Fully Abstract at all! 
+In particular, if $\G$ is the category of games, then the semantics of must testing in $\G_{\bN}$ is not Fully Abstract.
+The next result will show that no model of countable nondeterminism can be Fully Abstract, subject to some rather mild assumptions.  
+We will then explore how we can come up with a model for which these assumptions do not hold, and eventually prove a Full Abstraction result.
+
+\subsection{Full Abstraction for Countable Nondeterminism under Must Testing}
 
 \begin{proposition}
   Let $\C$ be a category and suppose we have a computationally adequate denotational semantics of IA with countable nondeterminism in $\C$.
@@ -1777,8 +1859,11 @@ The next result shows that if we replace $\bB$ with $\bN$, then we cannot hope t
     \Int \from \bN \to \bN\,.
     \]
   $\Int n$ first checks whether its argument $n$ is the encoding of a valid IA term of type $\nat$; if it is not, then it returns the value $0$, which will take the place of an error value.
-  If it is, then $\Int n$ evaluates the program corresponding to $n$; if this evaluation terminates, then it adds $1$ to the value returned and returns that.  
+  If it is -- say, $n=\encode{P}$, then $\Int n$ evaluates the program $P$; if this evaluation terminates, then it adds $1$ to the value returned and returns that.  
   The reason we add $1$ to the value is primarily to avoid the error value $0$, though it will serve a purpose later too.
+
+  We now consider a slight variation $\Int'$ of the term $\Int$, which takes in an additional parameter called a \emph{timeout}.  
+  $\Int' n \encode{P}$ will evaluate the term $P$ for $n$ steps, returning $m+1$ as before if $P$ converges to $m$ in that time, and otherwise returning $0$ if $P$ has not yet terminated after $n$ steps.
 
   Now consider the term
   \setlength{\jot}{0pt}%
@@ -1803,23 +1888,28 @@ The next result shows that if we replace $\bB$ with $\bN$, then we cannot hope t
   We will save the formal proof of this until we have a working fully abstract semantics; for now, we shall give an informal argument.  
 
   First, note that $M$ and $N$ have the same behaviour in any applicative context; i.e., if $F\from \nat \to \nat$ is a term, then $MF\converges \skipp$ if and only if $NF\converges\skipp$ and $MF\mustconverge$ if and only if $NF\mustconverge$.  
-  Indeed, we certainly have $NF\converges\skipp$ and $NF\diverges$.
-  Moreover, $MF\converges\skipp$, so we need to show that $MF\diverges$.
+  Indeed, we certainly have $MF\converges\skipp$ and $NF\converges\skipp$.
+  Moreover, $NF\diverges$, so we need to show that $MF\diverges$.
 
-  Consider the evaluation path of $M$ in which the variable $p$ acquires the value $\encode F$ at the beginning.  
-  If $F (\encode F)$ diverges, then the whole term will diverge.  
-  Otherwise, there is some value $k$ such that $F (\encode F)$ converges to a value $n$ after $k$ steps.
-  Then $v$ acquires the value $n$.  
-  Consider the path where $\ask_\bN$ on the third line acquires the value $k$.  
-  Then $\Int' k (\app F !p \encode{!p})$ will carry out the computation of $F (\encode F)$, returning the value $n$, but will then add $1$ to that value before returning.  
-  The result is that $v$ holds the value $n$ and $x$ holds the value $n+1$.  
-  Therefore, the term diverges.
+  Consider the following evaluation path of $MF$.
+  \begin{enumerate}
+    \item The variable $p$ acquires the value $\encode F$.  
+      At this point, we apply $F$ to $\encode F$.  
+      If this computation diverges, then we win.  
+      Otherwise, suppose that $F\encode F$ converges to some value $n$.  
+      Then $v$ acquires the value $n$.
+      Let $k$ be the number of steps taken for $P$ to converge to $n$.
+    \item Now suppose that the next instance of $\ask_\bN$ acquires the value $k$.  
+      We already know that $\Int' k (\app \oc p \encode{\oc p})$ will converge to $n+1$, so $x$ acquires the value $n+1$.
+    \item Now $n+1 \ne n$, so the term diverges.
+  \end{enumerate}
+  Therefore, $MF\diverges$.
 
   The case for a non-applicative context is the same, after we have made the observation that any side-effects that occur when $f$ is evaluated will take place in both terms in the case that they converge, while they will have no effect if the terms diverge.
 
   After satisfying ourselves that $M$ and $N$ are observationally equivalent, we claim that they are distinguished by the semantics, which proves that the model is not fully abstract.
 
-  Indeed, let $\phi\from \bN \to \bN$ where $\phi(p)$ is $n+1$ if $p$ is the encoding of a term $P\from\nat \to \nat$ and $P\;p\converges n$ and $0$ otherwise (including the case that $P\;p\diverges$).
+  Indeed, let $\phi\from \bN \to \bN$ where $\phi(p)$ is $n+1$ if $p$ is the encoding of a term $P\from\nat \to \nat$ and $P\;p\converges n$ and $\phi(p)=0$ otherwise (including the case that $P\;p\diverges$).
 
   We know that $\deno{N};\sigma\not\downarrow_{\must}$ for all $\sigma$, because $N$ essentially discards its argument.
   We claim that $\deno{M};\sigma_\phi\downarrow_{\must}$, proving that $N\not\sim_{\must} M$.
@@ -1840,7 +1930,14 @@ The proof of Proposition \ref{PropNotFullyAbstract} makes it clear that the prob
 The presence of such morphisms is normally an orthogonal issue to full abstraction, since we can usually assume that the strategy $\alpha$ in the definition of intrinsic equivalence is compact.
 However, in our case, the presence of these noncomputable morphisms is a big problem.
 
-At the extreme, if the category $\G$ satisfies the property (universality) that every morphism between the denotations of IA types is the denotation of an IA term, then we can get the full abstraction result we desire.
+In order to get around this problem, then, we will clearly need to disallow noncomputable functions $\bN\to\bN$, which quickly entails that we should disallow all morphisms that are not computable.
+
+Such models were considered by Hyland and Ong \cite{hoPcf} and by Abramsky, Jagadeesan and Malacaria \cite{ajmPcf} in their original proofs of Full Abstraction for PCF.
+In these models, a game (or arena) $A$ comes equipped with an encoding function $M_A \to \bN$; a strategy is said to be \emph{recursive} if it can be defined by a recursive function $\bN \to \bN$.
+The remarkable thing about these models is that they satisfy a property called \emph{universality}: \emph{every} morphism into the denotation of one of the types of the language is definable.
+
+Suppose our model $\G$ of Idealized Algol satisfies universality.  
+Then it is relatively easy to pass from Computational Adequacy to Full Abstraction.
 
 \begin{theorem}
   Let $M,N\from T$ be terms of \IAX and suppose that our base semantics of IA in $\G$ satisfies universality.  
@@ -1854,7 +1951,8 @@ At the extreme, if the category $\G$ satisfies the property (universality) that 
   Therefore, the result follows from Corollary \ref{CorAdeqMust}.
 \end{proof}
 
-The next step is to find an example of such a $\G$, which we will do by cutting down the set of strategies in our category of games to those that are in some sense computable.  
+The next step is to find an example of such a $\G$.
+As we said earlier, we will do this by cutting our game semantics down so that it only contains \emph{computable} strategies.
 The first step is to fix an enumeration $e_A\from M_A \to \bN$ of the moves of each game $A$.  
 We do this for the ground type games and then extend to the connectives.  
 For example:
@@ -1921,7 +2019,7 @@ So we see that any recursive innocent $\sigma\from \deno T$ is the denotation of
 
 Lastly, we observe that our innocent factorization result (Proposition \ref{PropInnocentFactorization}) will always produce a recursive innocent strategy if the original strategy is recursive.  
 It follows, then, that any recursive \emph{visible} $\sigma\from \deno T$ is the denotation of some Idealized Algol term $M \from T$.
-Thus, the category $\G^{rec}$ of games and recursive visible strategies is universal for Idealized Algol, and thus its Kleisli category $\G^{rec}_X$ is fully abstract for \IAX.
+Thus, the category $\G^{rec}$ of games and recursive visible strategies is universal for Idealized Algol, and therefore its Kleisli category $\G^{rec}_X$ is fully abstract for \IAX.
 
 As an application of this fully abstract semantics, we clear up a loose end from the proof of Proposition \ref{PropNotFullyAbstract}.
 
@@ -1979,7 +2077,7 @@ As an application of this fully abstract semantics, we clear up a loose end from
   Since $\deno N \subseteq \deno M$, it must be the case that $\deno M;\alpha\downarrow_{\must}$ and $\deno N;\alpha\not\downarrow_{\must}$; i.e., that $\deno M;\alpha$ is a winning strategy, when considered as a strategy $\bN \to \bC$ in $\G$, but $\deno N;\alpha$ is not.
 
   Since $\deno M$ and $\deno N$ do not differ until the very last move, this means that $\alpha$ must respond to the initial move $q$ in the rightmost copy of $\bC$ with the move $q$ in the copy of $\bC$ on the left (otherwise, $\deno N;\alpha$ is winning), and that $\alpha$ must be total (otherwise, $\deno M;\alpha$ is not winning).
-  Then we see that for any value of $p$, $\alpha$ must reply to the move $p$ with the number $\phi(p)$, where $\phi$ is the number defined above.  
+  Then we see that for any value of $p$, $\alpha$ must reply to the move $p$ with the number $\phi(p)$, where $\phi$ is the function defined above.  
   Otherwise, $\deno M;\alpha$ is not winning.
 
   But if $\alpha$ is a recursively enumerable subset of $P_{\bN \to ((\bN \to \bN) \to \bC) \to \bC}$, then that would mean that the set of pairs $(p,\phi(p))$ were a recursively enumerable subset of $\bN \times \bN$, and this is not the case, since $\phi$ is not a recursive function.  
@@ -1991,6 +2089,7 @@ As an application of this fully abstract semantics, we clear up a loose end from
 Note that we certainly have $\sigma_\phi;\deno M\downarrow_{\must}$, while $\sigma_\phi;\deno N\not\downarrow_{\must}$, demonstrating that the recursivity requirement is essential to the full abstraction result in this case.
 
 \section{The Intrinsic Equivalence Relation}
+\label{SecIntrinsicEquivalenceRelationKleisli}
 
 We conclude this chapter by examining the intrinsic equivalence relation in $\G_X$.
 

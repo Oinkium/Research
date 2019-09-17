@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.7.21)  3 AUG 2019 17:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.7.21)  15 SEP 2019 21:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -843,17 +843,17 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
 l.11 ...the return value of a function $T \to \com
-                                                  $ will not convey any info...
+                                                  $ does not convey any info...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-Missing character: There is no w in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no l in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no t in font nullfont!
@@ -982,7 +982,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.13 T
-      he type $\Var$ is the type of a variable that holds elements of $\bN$.
+      he type $\Var$ is the type of a variable holding elements of $\bN$.
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -997,7 +997,7 @@ Missing character: There is no e in font nullfont!
 <recently read> \Var 
                      
 l.13 The type $\Var
-                   $ is the type of a variable that holds elements of $\bN$.
+                   $ is the type of a variable holding elements of $\bN$.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1024,15 +1024,13 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no b in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no t in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no d in font nullfont!
-Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -1046,7 +1044,7 @@ Missing character: There is no f in font nullfont!
 ! Undefined control sequence.
 <recently read> \bN 
                     
-l.13 ... of a variable that holds elements of $\bN
+l.13 ...ype of a variable holding elements of $\bN
                                                   $.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1263,7 +1261,267 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.26 T
+l.26 I
+      n other words, a given a term $M$ of type $\Var$, we can either insert...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no I in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no e in font nullfont!
+! Undefined control sequence.
+<recently read> \Var 
+                     
+l.26 ...er words, a given a term $M$ of type $\Var
+                                                  $, we can either insert a ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no , in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no q in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no . in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 26--28
+[]
+ []
+
+
+Overfull \hbox (10.79166pt too wide) in paragraph at lines 26--28
+\OML/cmm/m/it/10 M$
+ []
+
+
+Overfull \hbox (10.79166pt too wide) in paragraph at lines 26--28
+\OML/cmm/m/it/10 M$
+ []
+
+
+Overfull \hbox (10.79166pt too wide) in paragraph at lines 26--28
+\OML/cmm/m/it/10 M$
+ []
+
+
+Overfull \hbox (10.79166pt too wide) in paragraph at lines 26--28
+\OML/cmm/m/it/10 M$
+ []
+
+
+Overfull \hbox (10.79166pt too wide) in paragraph at lines 26--28
+\OML/cmm/m/it/10 M$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.29 T
       he types of Idealized Algol are then defined by the following inductiv...
 
 You're in trouble here.  Try typing  <return>  to proceed.
@@ -1339,7 +1597,7 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 26--27
+Overfull \hbox (20.0pt too wide) in paragraph at lines 29--30
 []
  []
 
@@ -1350,18 +1608,18 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.28 \[
+l.31 \[
        
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 28--28
+Overfull \hbox (20.0pt too wide) in paragraph at lines 31--31
 [][] 
  []
 
 ! Undefined control sequence.
-l.29   T \Coloneqq
+l.32   T \Coloneqq
                    \com \mid \bool \mid \nat \mid \Var \mid T \to T\,.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1370,7 +1628,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.29   T \Coloneqq \com
+l.32   T \Coloneqq \com
                         \mid \bool \mid \nat \mid \Var \mid T \to T\,.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1379,7 +1637,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.29   T \Coloneqq \com \mid \bool
+l.32   T \Coloneqq \com \mid \bool
                                    \mid \nat \mid \Var \mid T \to T\,.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1388,7 +1646,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.29   T \Coloneqq \com \mid \bool \mid \nat
+l.32   T \Coloneqq \com \mid \bool \mid \nat
                                              \mid \Var \mid T \to T\,.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1397,7 +1655,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.29 ...loneqq \com \mid \bool \mid \nat \mid \Var
+l.32 ...loneqq \com \mid \bool \mid \nat \mid \Var
                                                    \mid T \to T\,.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1406,7 +1664,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (58.36436pt too wide) detected at line 30
+Overfull \hbox (58.36436pt too wide) detected at line 33
 \OML/cmm/m/it/10 T \OMS/cmsy/m/n/10 jjjj \OML/cmm/m/it/10 T \OMS/cmsy/m/n/10 ! 
 \OML/cmm/m/it/10 T :
  []
@@ -1418,16 +1676,18 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.32 W
-      e now present the typing rules for the language.
+l.35 N
+      ext, we present the typing rules for the language.
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-Missing character: There is no W in font nullfont!
+Missing character: There is no N in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no o in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
 Missing character: There is no w in font nullfont!
+Missing character: There is no e in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -1494,7 +1754,7 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no t in font nullfont!
 ! Undefined control sequence.
-l.33 ...r a \emph{context}; i.e., a list $x_1\from
+l.36 ...r a \emph{context}; i.e., a list $x_1\from
                                                    T_1,\cdots,x_n\from T_n$ ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1503,7 +1763,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.33 ...i.e., a list $x_1\from T_1,\cdots,x_n\from
+l.36 ...i.e., a list $x_1\from T_1,\cdots,x_n\from
                                                    T_n$ of variable names to...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1550,27 +1810,27 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 32--34
+Overfull \hbox (20.0pt too wide) in paragraph at lines 35--37
 []
  []
 
 
-Overfull \hbox (6.25002pt too wide) in paragraph at lines 32--34
+Overfull \hbox (6.25002pt too wide) in paragraph at lines 35--37
 \OT1/cmr/m/n/10 ^^@$
  []
 
 
-Overfull \hbox (18.39986pt too wide) in paragraph at lines 32--34
+Overfull \hbox (18.39986pt too wide) in paragraph at lines 35--37
 \OT1/cmr/m/it/10 con-
  []
 
 
-Overfull \hbox (15.88321pt too wide) in paragraph at lines 32--34
+Overfull \hbox (15.88321pt too wide) in paragraph at lines 35--37
 \OT1/cmr/m/it/10 text
  []
 
 
-Overfull \hbox (65.19902pt too wide) in paragraph at lines 32--34
+Overfull \hbox (65.19902pt too wide) in paragraph at lines 35--37
 \OML/cmm/m/it/10 x[]T[]; [] ; x[]T[]$
  []
 
@@ -1581,7 +1841,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.35 F
+l.38 F
       irst, we have the usual rules for the simply typed lambda calculus.
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1644,7 +1904,7 @@ Missing character: There is no u in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 35--36
+Overfull \hbox (20.0pt too wide) in paragraph at lines 38--39
 []
  []
 
@@ -1655,14 +1915,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.37 \begin{mathpar}
+l.40 \begin{mathpar}
                     
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.38   \inferrule
+l.41   \inferrule
                  *{ }{\Gamma,x\from T \ts x \from T}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1677,7 +1937,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.38   \inferrule*
+l.41   \inferrule*
                   { }{\Gamma,x\from T \ts x \from T}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1686,13 +1946,13 @@ Missing character: There is no * in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.38   \inferrule*{ }{\Gamma
+l.41   \inferrule*{ }{\Gamma
                             ,x\from T \ts x \from T}
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.38   \inferrule*{ }{\Gamma,x\from
+l.41   \inferrule*{ }{\Gamma,x\from
                                     T \ts x \from T}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1701,7 +1961,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.38   \inferrule*{ }{\Gamma,x\from T \ts
+l.41   \inferrule*{ }{\Gamma,x\from T \ts
                                           x \from T}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1710,7 +1970,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.38   \inferrule*{ }{\Gamma,x\from T \ts x \from
+l.41   \inferrule*{ }{\Gamma,x\from T \ts x \from
                                                   T}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1719,7 +1979,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Extra }, or forgotten $.
-l.38 ...ferrule*{ }{\Gamma,x\from T \ts x \from T}
+l.41 ...ferrule*{ }{\Gamma,x\from T \ts x \from T}
                                                   
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1730,7 +1990,7 @@ deleted material, e.g., by typing `I$}'.
 ! Misplaced \crcr.
 \endtabular ->\crcr 
                     \egroup \egroup $\egroup 
-l.39   \and
+l.42   \and
            
 I can't figure out why you would want to use a tab mark
 or \cr or \span just now. If something like a right brace
@@ -1741,7 +2001,7 @@ might try typing `S' now just to see what is salvageable.
 ! Extra }, or forgotten $.
 \endtabular ->\crcr \egroup 
                             \egroup $\egroup 
-l.39   \and
+l.42   \and
            
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1752,7 +2012,7 @@ deleted material, e.g., by typing `I$}'.
 ! Extra }, or forgotten $.
 \endtabular ->\crcr \egroup \egroup 
                                     $\egroup 
-l.39   \and
+l.42   \and
            
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1767,14 +2027,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.39   \and
+l.42   \and
            
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.40   \inferrule
+l.43   \inferrule
                  *{\Gamma\ts M \from S \to T \\ \Gamma \ts N \from S}{\Gamma...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1786,13 +2046,13 @@ Missing character: There is no * in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.40   \inferrule*{\Gamma
+l.43   \inferrule*{\Gamma
                          \ts M \from S \to T \\ \Gamma \ts N \from S}{\Gamma...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.40   \inferrule*{\Gamma\ts
+l.43   \inferrule*{\Gamma\ts
                              M \from S \to T \\ \Gamma \ts N \from S}{\Gamma...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1801,7 +2061,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.40   \inferrule*{\Gamma\ts M \from
+l.43   \inferrule*{\Gamma\ts M \from
                                      S \to T \\ \Gamma \ts N \from S}{\Gamma...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1812,7 +2072,7 @@ and I'll forget about whatever was undefined.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1821,7 +2081,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1832,7 +2092,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1841,7 +2101,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1852,7 +2112,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1861,7 +2121,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1872,7 +2132,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1881,7 +2141,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1892,7 +2152,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1901,7 +2161,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1912,7 +2172,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1921,7 +2181,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1932,7 +2192,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1941,7 +2201,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1952,7 +2212,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1961,7 +2221,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1972,7 +2232,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -1981,7 +2241,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1992,7 +2252,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2001,7 +2261,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2012,7 +2272,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2021,7 +2281,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2032,7 +2292,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2041,7 +2301,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2052,7 +2312,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2061,7 +2321,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2072,7 +2332,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2081,7 +2341,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2092,7 +2352,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2101,7 +2361,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2112,7 +2372,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2121,7 +2381,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2132,7 +2392,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2141,7 +2401,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2152,7 +2412,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2161,7 +2421,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2172,7 +2432,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2181,7 +2441,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2192,7 +2452,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2201,7 +2461,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2212,7 +2472,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2221,7 +2481,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2232,7 +2492,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2241,7 +2501,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2252,7 +2512,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2261,7 +2521,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2272,7 +2532,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2281,7 +2541,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2292,7 +2552,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2301,7 +2561,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2312,7 +2572,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2321,7 +2581,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2332,7 +2592,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2341,7 +2601,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2352,7 +2612,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2361,7 +2621,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2372,7 +2632,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2381,7 +2641,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2392,7 +2652,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2401,7 +2661,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2412,7 +2672,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2421,7 +2681,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2432,7 +2692,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2441,7 +2701,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2452,7 +2712,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2461,7 +2721,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2472,7 +2732,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2481,7 +2741,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2492,7 +2752,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2501,7 +2761,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2512,7 +2772,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2521,7 +2781,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2532,7 +2792,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2541,7 +2801,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2552,7 +2812,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2561,7 +2821,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2572,7 +2832,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2581,7 +2841,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2592,7 +2852,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2601,7 +2861,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2612,7 +2872,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2621,7 +2881,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2632,7 +2892,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 I've put in what seems to be necessary to fix
 the current column of the current alignment.
@@ -2641,7 +2901,7 @@ Try to go on, since this might almost work.
 ! Extra }, or forgotten $.
 <inserted text> }
                  
-l.40 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
+l.43 ...rrule*{\Gamma\ts M \from S \to T \\ \Gamma
                                                    \ts N \from S}{\Gamma\ts ...
 (That makes 100 errors; please try again.) 
 Here is how much of TeX's memory you used:

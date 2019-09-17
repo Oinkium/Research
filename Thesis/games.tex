@@ -8,9 +8,9 @@ In keeping with the spirit of this thesis, we will aim to use category theoretic
 
 The ground types of Idealized Algol are called $\com$, $\bool$, $\nat$ and $\Var$.  
 The first three are data types corresponding to the sets $\bC = \{a\}$, $\bB = \{\true,\false\}$ and $\bN = \{0,1,2,\cdots\}$.
-$\com$ takes the role of a command or void type; typically, although the return value of a function $T \to \com$ will not convey any information, the function will have side effects that \emph{do} make a difference.
+$\com$ takes the role of a command or void type; typically, although the return value of a function $T \to \com$ does not convey any information, the function will have side effects that \emph{do} make a difference.
 
-The type $\Var$ is the type of a variable that holds elements of $\bN$.
+The type $\Var$ is the type of a variable holding elements of $\bN$.
 It is best understood as corresponding to the following pseudo-Java `interface'.
 
 \begin{minipage}{\linewidth}
@@ -23,13 +23,16 @@ public interface Var
 \end{lstlisting}
 \end{minipage}
 
+In other words, a given a term $M$ of type $\Var$, we can either insert a natural number into $M$ or we can request a natural number from $M$.  
+An example is when $M$ acts like a storage cell, returning the last number that was inserted into it, but $M$ could act in a different way.
+
 The types of Idealized Algol are then defined by the following inductive grammar.
 
 \[
   T \Coloneqq \com \mid \bool \mid \nat \mid \Var \mid T \to T\,.
   \]
 
-We now present the typing rules for the language.  
+Next, we present the typing rules for the language.  
 Here, $\Gamma$ will stand for a \emph{context}; i.e., a list $x_1\from T_1,\cdots,x_n\from T_n$ of variable names together with their types.
 
 First, we have the usual rules for the simply typed lambda calculus.
@@ -49,7 +52,7 @@ At type $\com$ we have:
   \and
   \inferrule*[right={$T\in\{\com,\bool,\nat\}$}]{\Gamma\ts M\from\com \\ \Gamma\ts N \from T}{\Gamma\ts M;N\from T}\,.
 \end{mathpar}
-Here, $\skipp$ is a generic command with no side-effects that returns the unique element of the singleton set $\bC$.  
+Here, $\skipp$ is a generic command with no side-effects that returns the unique element $a$ of the singleton set $\bC$.  
 $M;N$ represents the sequential composition of $M$ with $N$; i.e., the term that first evaluates $M$, performing any of its side-effects, and then evaluates $N$ and returns the result.
 
 At type $\bool$ we have true/false values and conditionals.
@@ -72,21 +75,23 @@ At type $\nat$ we have numerals, arithmetic operators and a conditional that tes
   \inferrule*[right={$T\in\{\com,\bool,\nat\}$}]{\Gamma\ts M \from \nat \\ \Gamma\ts N \from T \\ \Gamma \ts P \from T}{\Gamma \ts \IfO M \Then N \Else P \from T}
 \end{mathpar}
 
-At type $\Var$, we have terms that call the read and write `methods' to dereference the variable or to assign a new value to it.
+At type $\Var$, we have terms that call the read and write `methods' to assign a new value to the variable or to get its current value.
 \begin{mathpar}
   \inferrule*{\Gamma\ts V \from \Var \\ \Gamma \ts E \from \nat}{\Gamma \ts V\gets E \from \com}
   \and
   \inferrule*{\Gamma\ts V \from \Var}{\Gamma \ts \oc V \from \nat}
 \end{mathpar}
 
-We also have the ability to create a new variable.
+We have two ways to create tems of type $\Var$.  
+The first gives us the storage-cell behaviour.
 \begin{mathpar}
   \inferrule*[right={$T\in\{\com,\bool,\nat\}$}]{\Gamma,x\from \Var \ts M \from T}{\Gamma\ts \neww_T \lambda x.M\from T}
 \end{mathpar}
 The idea here is that if $M$ is a term that refers to some free variable $x$ of type $\Var$; then $\neww \lambda x.M$ makes $x$ behave like an actual storage cell (so, for instance, the result of the computation $\neww_\nat \lambda x.(x\gets 5);!x$ will be $5$).
 
-We have another way of creating variables, using the $\mkvar$ keyword.  
-If we think back to our illustration of the $\Var$ type as an interface, this becomes clearer.  
+The second way of creating terms of type $\Var$ is using the $\mkvar$ keyword.  
+$\mkvar$ can be used to create `bad variables': arbitrary pairs of read and write methods that do not necessarily actually behave like actual storage cells.
+If we think back to our earlier illustration of the $\Var$ type as an interface, this becomes clearer.  
 $\mkvar$ creates a new anonymous instance of the $\Var$ interface, using the `methods' supplied through its arguments.
 \begin{mathpar}
   \inferrule*{\Gamma \ts M \from \nat \\ \Gamma \ts N \from \nat \to \com}{\Gamma\ts \mkvar M N \from \Var}
@@ -99,7 +104,8 @@ Lastly, we have fixpoint combinators at all types that we use to implement recur
 
 \section{Games and Strategies}
 
-We adopt the game semantics from \cite{SamsonGuyIAActive}; these are based on the game semantics developed in \cite{hoPcf}, with a modification to make them into a linear category.
+We adopt the game semantics from \cite{SamsonGuyIAActive}.  
+For the most part, these are very similar to the \emph{arenas} defined by Hyland and Ong in \cite{hoPcf}; however, they are slightly modified (through the prescription of a set of \emph{legal plays}) in order to give us access to the substructural logic (in particular, linear logic) that we will use as the basis of the model of local state.
 
 \begin{definition}
   An \emph{arena} is a tuple $A=(M_A,\lambda_A,\ts_A)$, where
@@ -120,7 +126,7 @@ We adopt the game semantics from \cite{SamsonGuyIAActive}; these are based on th
 As a shorthand, we write $\lambda_A^{OP}\from M_A \to \OP$ for $\pr_1\circ\lambda_A$ and $\lambda_A^{QA}\from M_A \to \QA$ for $\pr_2\circ\lambda_A$.
 
 \begin{definition}
-  A \emph{justified sequence} in an arena $A$ is a finite sequence $s$ of moves together with, for each non-initial move $a$ occurring in $s$, a pointer back to some move $b$ occurring earlier in $s$ such that $b\ts_A a$.
+  A \emph{justified sequence} in an arena $A$ is a finite sequence $s$ of moves together with, for each non-initial move $a$ occurring in $s$, a pointer from $a$ back to some move $b$ occurring earlier in $s$ such that $b\ts_A a$.
   We say that \emph{$b$ justifies $a$} or that $b$ is the \emph{justifier} of $a$.
 
   Given such a justified sequence, we define the \emph{$P$-view} $\pv s$ and \emph{$O$-view} $\ov s$ of $s$ inductively as follows.
@@ -135,7 +141,18 @@ As a shorthand, we write $\lambda_A^{OP}\from M_A \to \OP$ for $\pr_1\circ\lambd
     \ov{sbta} & = & \ov{s}ba & if $a$ is a $P$-move justified by $b$
   \end{IEEEeqnarray*}
   
-  A justified sequence $s$ is \emph{well-bracketed} if whenever a question $q$ justifies some answer $a$, then any question $q'$ occurring after $q$ and before $a$ must justify some answer $a'$ occurring between $q'$ and $a$, and moreover $a$ is the only answer justified by $q$.
+  A justified sequence $s$ is \emph{well-bracketed} if whenever a question $q$ justifies some answer $a$, then any question $q'$ occurring after $q$ and before $a$ must justify some answer $a'$ occurring between $q'$ and $a$, and if $a$ is, moreover, the only answer justified by $q$:
+  \[
+    \begin{tikzcd}[row sep=0pt]
+      q \arrow[dddddd, bend right] \\
+      \vdots \\
+      q' \arrow[dd, bend right] \\
+      \vdots \\
+      a' \\
+      \vdots \\
+      a
+    \end{tikzcd}
+    \]
   We say that a justified sequence $s$ is \emph{alternating} if it alternates between $O$-moves and $P$-moves, and that it is \emph{well-formed} if it is both well-bracketed and alternating.
 
   We say that a well-formed justified sequence is \emph{visible} if whenever $ta\prefix s$, and $a$ is a $P$-move, then the justifier of $a$ occurs in the $P$-view of $t$, and if whenever $tb\prefix s$, and $b$ is a non-initial $O$-move, then the justifier of $b$ occurs in the $O$-view of $t$.
@@ -152,10 +169,10 @@ If $s$ is alternating, this means that $s$ ends with an $O$-move if it has odd l
   We write $s\vert_b$ for the subsequence of $s$ given by all moves in $s$ that are hereditarily justified by $b$.
   Given a set $I$ of initial moves, we write $s\vert_I$ for the subsequence of $s$ given by all moves that are hereditarily justified by some $b\in I$.
 
-  A \emph{game} is given by a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$ where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed subset of $\L_A$ such that if $s\in P_A$ and $I$ is a set of initial moves, then $s\vert_I\in P_A$.
+  A \emph{game} is a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$ where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed subset of $\L_A$ such that if $s\in P_A$ and $I$ is a set of initial moves, then $s\vert_I\in P_A$.
 \end{definition}
 
-We shall call an odd-length sequence $s\in P_A$ an \emph{$O$-position} and an even-length sequence a \emph{$P$-position}
+We shall call an odd-length sequence $s\in P_A$ an \emph{$O$-position} and an even-length sequence a \emph{$P$-position}.
 
 \begin{example}[Empty game]
   The \emph{empty game} $I$ is given by the tuple
@@ -170,14 +187,17 @@ We shall call an odd-length sequence $s\in P_A$ an \emph{$O$-position} and an ev
   Let $X$ be some set.  
   Then we have a game, which we shall also call $X$, given by:
   \begin{itemize}
-    \item $M_X = \{q\} + X$, 
-    \item $\lambda_X(q)=(O,Q)$ and $\lambda_X(x)=(P,A)$ for all $x\in X$, 
-    \item $q\ts_X x$ for each $x\in X$, and
+    \item $M_X = \{q\} + X$;
+    \item $\lambda_X(q)=(O,Q)$ and $\lambda_X(x)=(P,A)$ for all $x\in X$;
+    \item $q\ts_X x$ for each $x\in X$; and
     \item $P_X = \{\epsilon,q\}\cup\{qx\suchthat x\in X\}$, where the $x$ in $qx$ is justified by $q$.
   \end{itemize}
 
   In particular, we have games $\bC$, $\bB$ and $\bN$, which we shall use to model the datatypes $\com$, $\bool$ and $\nat$ of Idealized Algol.
 \end{example}
+
+Given a game $A$, there are several ways to capture the natural notion of a strategy for $A$ for player $P$.  
+The most convenient way is to identify a strategy with the set of $P$-positions that may occur if $P$ plays according to that strategy.
 
 \begin{definition}
   Let $A$ be a game.  
@@ -200,28 +220,30 @@ We write $\sigma\from A$ to denote that $\sigma$ is a strategy for the game $A$.
 In the \emph{product} $A\times B$ of games $A$ and $B$, player $O$ chooses either $A$ or $B$ on the first move and subsequent play is that game.
 
 \begin{definition}
-  Given games $A$,$B$, define a game $A\times B$ by
+  Given games $A,B$, define a game $A\times B$ by
   \begin{itemize}
-    \item $M_{A\times B} = M_A + M_B$,
-    \item $\lambda_{A\times B} = [\lambda_A,\lambda_B]$,
-    \item $* \ts_{A\times B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\times B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, and
+    \item $M_{A\times B} = M_A + M_B$;
+    \item $\lambda_{A\times B} = [\lambda_A,\lambda_B]$;
+    \item $* \ts_{A\times B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\times B} b$ if and only if $a \ts_A b$ or $a\ts_B b$; and
     \item $P_{A\times B} = \{s\in \L_{A\times B} \suchthat \text{$s\vert_A\in P_A$ \& $s\vert_B=\epsilon$ or $s\vert_A=\epsilon$ \& $s\vert_B\in P_B$}\}$.
   \end{itemize}
+  Here, we have written $s\vert_A$ for the subsequence of $s$ consisting of all moves from $M_A$ and $s\vert_B$ for the subsequence consisting of all moves from $M_B$.
+
   We extend this to arbitrary products $\prod_i A_i$ in the obvious way.
   In particular, the product $1$ of the empty collection is the same as the empty game $I$ defined in Example \ref{ExEmptyGame}.
   \label{DefProduct}
 \end{definition}
 
-Here, we have written $s\vert_A$ for the subsequence of $s$ consisting of all moves from $M_A$ and $s\vert_B$ for the subsequence consisting of all moves from $M_B$.
+Our interpretation of the type $\Var$ will be given by a particular infinite product; namely, the product of countably many copies of the game $\bC$, each one corresponding to the action of writing a particular natural number into the variable, together with a copy of the game $\bN$, corresponding to requesting the current value of the variable.
 
 In the \emph{tensor product} $A\tensor B$ of games $A$ and $B$, the games $A$ and $B$ are played in parallel, and player $O$ may switch between games when it is his turn.
 
 \begin{definition}
   Given games $A$,$B$, define a game $A\tensor B$ by
   \begin{itemize}
-    \item $M_{A\tensor B} = M_A + M_B$,
-    \item $\lambda_{A\tensor B} = [\lambda_A,\lambda_B]$,
-    \item $* \ts_{A\tensor B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\tensor B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, and
+    \item $M_{A\tensor B} = M_A + M_B$;
+    \item $\lambda_{A\tensor B} = [\lambda_A,\lambda_B]$;
+    \item $* \ts_{A\tensor B} a$ if and only if $*\ts_A a$ or $*\ts_B a$ and $a \ts_{A\tensor B} b$ if and only if $a \ts_A b$ or $a\ts_B b$; and
     \item $P_{A\tensor B} = \{s\in \L_{A\tensor B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
   \end{itemize}
 \end{definition}
@@ -231,9 +253,9 @@ In the \emph{linear implication} $A\implies B$, the game $B$ is played in parall
 \begin{definition}
   Given games $A$,$B$, define a game $A\implies B$ by
   \begin{itemize}
-    \item $M_{A\implies B} = M_A + M_B$,
-    \item $\lambda_{A\implies B} = [\neg\circ\lambda_A,\lambda_B]$,
-    \item $* \ts_{A\implies B} a$ if and only if $*\ts_B a$, and $a \ts_{A\implies B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, or if $a$ is initial in $B$ and $b$ is initial in $a$, and
+    \item $M_{A\implies B} = M_A + M_B$;
+    \item $\lambda_{A\implies B} = [\neg\circ\lambda_A,\lambda_B]$;
+    \item $* \ts_{A\implies B} a$ if and only if $*\ts_B a$, and $a \ts_{A\implies B} b$ if and only if $a \ts_A b$ or $a\ts_B b$, or if $a$ is initial in $B$ and $b$ is initial in $a$; and
     \item $P_{A\implies B} = \{s\in \L_{A\implies B} \suchthat \text{$s\vert_A\in P_A$ and $s\vert_B\in P_B$}\}$.
   \end{itemize}
 \end{definition}
@@ -245,9 +267,9 @@ In the \emph{exponential} of a game $A$, infinitely many copies of $A$ are playe
 \begin{definition}
   Given a game $A$, define a game $\oc A$ by
   \begin{itemize}
-    \item $M_{\oc A}=M_A$,
-    \item $\lambda_{\oc A} = \lambda_A$,
-    \item $\ts_{\oc A} = \ts_A$ and
+    \item $M_{\oc A}=M_A$;
+    \item $\lambda_{\oc A} = \lambda_A$;
+    \item $\ts_{\oc A} = \ts_A$; and
     \item $P_{\oc A} = \{s\in \L_{\oc A} \suchthat \text{$s\vert_b\in P_A$ for each initial move $b$ occurring in $s$}\}$.
   \end{itemize}
 \end{definition}
@@ -257,9 +279,9 @@ Lastly, the \emph{sequoid} $A\sequoid B$ of two games $A$ and $B$ behaves like t
 \begin{definition}
   Given games $A,B$, define a game $A\sequoid B$ by
   \begin{itemize}
-    \item $M_{A\sequoid B} = M_{A\tensor B}$, 
-    \item $\lambda_{A\sequoid B} = \lambda_{A\tensor B}$, 
-    \item $\ts_{A\sequoid B} = \ts_{A \tensor B}$ and
+    \item $M_{A\sequoid B} = M_{A\tensor B}$;
+    \item $\lambda_{A\sequoid B} = \lambda_{A\tensor B}$;
+    \item $\ts_{A\sequoid B} = \ts_{A \tensor B}$; and
     \item $P_{A\sequoid B} = \{s\in P_{A\tensor B}\suchthat\text{$s=\epsilon$ or $s$ begins with a move from $A$}\}$.
   \end{itemize}
 \end{definition}
@@ -273,7 +295,7 @@ Lastly, the \emph{sequoid} $A\sequoid B$ of two games $A$ and $B$ behaves like t
 
   We write $\Int(A,B,C)$ for the set of all interaction sequences between $A,B,C$.
 
-  Given $\s\in\Int(A,B,C)$, we write $\s\vert_{A,C}$ for the subsequence of $\s$ consisting of those moves from $\s$ that occur in $A$ or $B$.  
+  Given $\s\in\Int(A,B,C)$, we write $\s\vert_{A,C}$ for the subsequence of $\s$ consisting of those moves from $\s$ that occur in $A$ or $C$.  
   A move $b$ in $\s\vert_{A,C}$ justifies a move $a$ either if $b$ justifies $a$ in either the $A$ or the $C$ components, or if $b$ justifies in $\s$ some initial move $c$ in $B$, which itself justifies $a$.
 \end{definition}
 
@@ -289,7 +311,8 @@ Lastly, the \emph{sequoid} $A\sequoid B$ of two games $A$ and $B$ behaves like t
     \]
 \end{definition}
 
-We need some small lemmata and definitions to help us show that this is a strategy.
+We have not yet shown that this is indeed a well-formed strategy; the proof of this fact will take us a few pages.  
+We start by proving some lemmata and making some definitions.
 
 \begin{lemma}
   We extend the function $\lambda_A^{OP}$ to sequences of moves by
@@ -310,18 +333,40 @@ We need some small lemmata and definitions to help us show that this is a strate
     \end{array}\,.
     \]
   Moreover, if $\lambda_A^{OP}(s\vert_A)=O$ then $\lambda_A^{OP}(s\vert_B)=O$.
+  In other words, the second row of the table above never occurs.
   \label{LemCompositionLemma}
 \end{lemma}
 \begin{proof}
   Induction on the length of $s$.
-  If $s=\epsilon$, then $s\vert_A=s\vert_B=\epsilon$, and so $(\lambda_A^{OP}(s\vert_A)\Rightarrow \lambda_B^{OP}(s\vert_B)) = (P\Rightarrow P) = P = \lambda_{A\implies B}^{OP}(s)$.  
+  If $s=\epsilon$, then $s\vert_A=s\vert_B=\epsilon$, and so 
+  \[
+    (\lambda_A^{OP}(s\vert_A)\Rightarrow \lambda_B^{OP}(s\vert_B)) = (P\Rightarrow P) = P = \lambda_{A\implies B}^{OP}(s)\,.
+    \]
 
   Suppose then that $s=ta$, and that $\lambda_{A\implies B}^{OP}(t)=O$.  
-  This means that $\lambda_A^{OP}(t\vert_A)=P$ and $\lambda_B^{OP}(t\vert_B)=O$.
-  Then, whether $a$ is a move in $A$ or a move in $B$, adding it will flip exactly one of these components -- so $\lambda_{A\implies B}(s\vert_A)=O$ and $\lambda_{A\implies B}^{OP}(s\vert_B)=O$ if $a$ is a move in $A$ and $\lambda_{A\implies B}(s\vert_A)=P$ and $\lambda_{A\implies B}^{OP}(s\vert_B)=P$ if $a$ is a move in $C$.
+  This means that
+  \begin{mathpar}
+    \lambda_A^{OP}(t\vert_A)=P \and \lambda_B^{OP}(t\vert_B)=O\,.
+  \end{mathpar}
+  Then, whether $a$ is a move in $A$ or a move in $B$, adding it will flip exactly one of these components -- so 
+  \begin{mathpar}
+    \lambda_{A\implies B}(s\vert_A)=O \and \lambda_{A\implies B}^{OP}(s\vert_B)=O
+  \end{mathpar}
+  if $a$ is a move in $A$, and 
+  \begin{mathpar}
+    \lambda_{A\implies B}(s\vert_A)=P \and \lambda_{A\implies B}^{OP}(s\vert_B)=P
+  \end{mathpar}
+  if $a$ is a move in $C$.
 
   Suppose instead that $\lambda_{A\implies B}^{OP}(t)=P$.  
-  By induction, this means that either $\lambda_A^{OP}(t\vert_A)=P$ and $\lambda_B^{OP}(t\vert_B)=P$ or that $\lambda_A^{OP}(t\vert_A)=O$ and $\lambda_B^{OP}(t\vert_B)=O$.
+  By induction, this means that either 
+  \begin{mathpar}
+    \lambda_A^{OP}(t\vert_A)=P \and \lambda_B^{OP}(t\vert_B)=P
+  \end{mathpar}
+  or that 
+  \begin{mathpar}
+    \lambda_A^{OP}(t\vert_A)=O \and \lambda_B^{OP}(t\vert_B)=O\,.
+  \end{mathpar}
   In the first case, this means that either $t\vert_A$ is empty or its last move is a $P$-move in $A$ (and therefore an $O$-move in $A\implies B$), and so the move $a$ must take place in $C$, meaning that $\lambda_A^{OP}(s\vert_A)=P$ and $\lambda_B^{OP}(s\vert_B)=O$.  
 
   Similarly, in the second case, the last move in $t\vert_C$ must be an $O$-move in $B$ (and therefore an $O$-move in $A\implies B$, and so the move $a$ must take place in $A$, meaning that $\lambda_A^{OP}(s\vert_A)=P$ and $\lambda_B^{OP}(s\vert_B)=O$.  
@@ -336,7 +381,7 @@ It follows that
 \begin{proof}
   Otherwise, $\lambda_{A\implies B}(t)=O$, so $\lambda_A(t\vert_A)=P$ and $\lambda_B(t\vert_B)=O$.  
   But we must also have $\lambda_{A\implies B}(tab)=O$, so $\lambda_A(tab\vert_A)=P$ and $\lambda_B(tab\vert_B)=O$.  
-  But this is a contradiction, since $tab\vert_A$ and $tab\vert_B$ are both one move longer than the plays $t\vert_A$ and $t\vert_B$.
+  But this is a contradiction, since $tab\vert_A$ and $tab\vert_B$ are both one move longer than the plays $t\vert_A$ and $t\vert_B$, so $\lambda_A(tab\vert_A) \ne \lambda_A(t\vert_A)$ and $\lambda_B(tab\vert_B)\ne \lambda_B(t\vert_B)$.
 \end{proof}
 
 \begin{definition}[{\cite[\sec 3.1]{Harmer2006InnocentGS}}]
@@ -359,13 +404,21 @@ It follows that
   
   If $a$ is an $O$-move in $A$ or a $P$-move in $C$, then $a$ is a $P$-move in $A\implies C$.  
   We have $\pv{\s a}\vert_{A,C}=\pv{\s}\vert_{A,C}a$, which by the inductive hypothesis is equal to $\pv{\s\vert_{A,C}}a$, which is the same as $\pv{\s a\vert_{A,C}}$.
-  If $b$ is a move in $B$, then $\pv{\s b}\vert_{A,C}=\pv{\s}b\vert_{A,C}=\pv{\s}\vert_{A,C}=\pv{\s\vert_{A,C}}=\pv{\s b\vert_{A,C}}$, by the inductive hypothesis.
+  If $b$ is a move in $B$, then 
+  \[
+    \pv{\s b}\vert_{A,C}=\pv{\s}b\vert_{A,C}=\pv{\s}\vert_{A,C}=\pv{\s\vert_{A,C}}=\pv{\s b\vert_{A,C}}\,,
+    \]
+  by the inductive hypothesis.
 
   If $c$ is initial in $C$, then $\pv{\s c}\vert_{A,C}=c=\pv{\s c\vert_{A,C}}$.
 
   Suppose $a$ is a $P$-move of $A$ or an $O$-move of $C$ -- so $a$ is an $O$-move in $A\implies C$ -- and suppose that $a$ is justified by $b$ in the sequence $\s b\t a$.  
   Since $a$ cannot be an initial move in $A$, $b$ must occur in the same game as $a$, and in particular must not occur in $B$.
-  Then we have $\pv{\s b\t a}\vert_{A,C}=\pv{\s} ba\vert_{A,C}=\pv{\s}\vert_{A,C}ba$, which by the inductive hypothesis is equal to $\pv{\s\vert_{A,C}}ba=\pv{\s ba\vert_{A,C}}$.
+  Then we have 
+  \[
+    \pv{\s b\t a}\vert_{A,C}=\pv{\s} ba\vert_{A,C}=\pv{\s}\vert_{A,C}ba\,,
+    \]
+  which by the inductive hypothesis is equal to $\pv{\s\vert_{A,C}}ba=\pv{\s ba\vert_{A,C}}$.
 \end{proof}
 
 \begin{lemma}[{\cite[\sec 3.1]{Harmer2006InnocentGS}}]
@@ -445,7 +498,7 @@ It follows that
   In the configuration $PPP$, the move $a$ cannot be a move in $A$, since that would leave $ta\vert_{A\implies B}$ in the configuration $OP$, which is impossible by Lemma \ref{LemCompositionLemma}.  
   Therefore, it must be a move in $C$, and must therefore be an $O$-move in $C$ and hence an $O$-move in $A\implies C$.
 
-  In the configuration $PPO$, once again the move $a$ cannot take place in $A$, since this would leave $ta\vert_{A\implies B}$ in an illegal configuration.  
+  In the configuration $PPO$, once again the move $a$ cannot take place in $A$, since this would leave $ta\vert_{A\implies B}$ in the illegal configuration $OP$.
   Therefore, it must occur in $C$, and must be a $P$-move in $C$ and hence a $P$-move in $A\implies C$.
 
   In the configuration $POO$, the move $a$ cannot take place in $C$, or it would leave $ta\vert_{B,C}$ in the illegal configuration $OP$, so the move $a$ takes place in $A$.  
@@ -560,11 +613,12 @@ Given such a sequence $\u$, we define $\u\vert_{A,D}$ as before; i.e., we take a
 Given strategies $\sigma,\tau,\upsilon$ as above, we define $\sigma\|\tau\|\upsilon$ to be the set of all $\u\in\Int(A,B,C,D)$ such that $\u\vert_{A,B}\in\sigma$, $\u\vert_{B,C}\in\tau$ and $\u\vert_{C,D}\in\upsilon$.
 We then claim that:
 
-\begin{lemma}
+\begin{proposition}
   \[
     (\sigma;\tau);\upsilon = \{\u\vert_{A,C}\suchthat \u\in\sigma\|\tau\|\upsilon\} = \sigma;(\tau;\upsilon)\,.
     \]
-\end{lemma}
+  \label{PropAssociativityOfComposition}
+\end{proposition}
 \begin{proof}
   Firstly, if $\u\in\sigma\|\tau\|\upsilon$, then it is clear to see that $\u\vert_{A,B,C}\in\sigma\|\tau$ and that $\u\vert_{B,C,D}\in\tau\|\upsilon$, and therefore that $\{\u\vert_{A,C}\suchthat \u\in\sigma\|\tau\|\upsilon\}\subset (\sigma;\tau);\upsilon$ and $\{\u\vert_{A,C}\suchthat \u\in\sigma\|\tau\|\upsilon\}\subset \sigma;(\tau;\upsilon)$. 
 
@@ -597,13 +651,13 @@ We then claim that:
     \item $i(a)$ is defined for every move $a$ occurring in a play in $P_A$; and
     \item $i_*(s)\in P_B$ for every $s\in P_A$.
   \end{itemize}
-  Here, $i_*(s)$ means the function $i$ applied pointwise to the elements of the string $s$.
+  Here, $i_*(s)$ means the function $i$ applied pointwise to the elements of the string $s$, leaving justification indices as they are in $s$.
 
   If $i$ is a subset inclusion of $A$ into $B$, then we get an innocent strategy $\subs_i\from B \implies A$ defined by
   \[
     \subs_i = \{s\in P_{B\implies A}\suchthat\text{for all even-length $t\prefix s$, $t\vert_B=i_*(t\vert_A)$}\}\,.
     \]
-  If $P_B=\{i_*(s)\suchthat s\in P_A\}$, then we call it a \emph{structural isomorphism}, and we write $\cc_i$ (`copycat') for $\subs_i$.
+  If $P_B=\{i_*(s)\suchthat s\in P_A\}$, then we call it a \emph{structural isomorphism}, and we write $\cc_i$ (`copycat') instead of $\subs_i$.
 \end{definition}
 
 \begin{proposition}
@@ -629,7 +683,15 @@ We then claim that:
 
   Now let $\sigma \from C \implies B$ be a strategy.  
   Suppose that $\s\in\sigma\|\subs_i$.  
-  Then $\s\vert_{C,B}\in\sigma$ and $\s\vert_B=i_*(\s\vert_A)$; i.e., $\s\vert_{C,B}=[\id_{M_C},i]_*(\s\vert_{C,A})$, and therefore $\s\vert_{C,A}=[\id_{M_C},i]_*(\s\vert_{C,B})$, where $\s\vert_B\in i_*(P_A)$.
+  Then $\s\vert_{C,B}\in\sigma$ and $\s\vert_B=i_*(\s\vert_A)$; i.e., 
+  \[
+    \s\vert_{C,B}=[\id_{M_C},i]_*(\s\vert_{C,A})\,,
+    \]
+  and therefore 
+  \[
+    \s\vert_{C,A}=[\id_{M_C},i]_*(\s\vert_{C,B})\,,
+    \]
+  where $\s\vert_B\in i_*(P_A)$.
 
   Conversely, given $s\in\sigma$, where $s\vert_B\in i_*(P_A)$, for each $P$-move $b=i(a)$ in $s$ occurring in the component $B$, insert the move $a$ immediately after it, and for each $O$-move $b'=i(a')$ in $s$ occurring in the component $B$, insert the move $a'$ immediately before it.
   Let these extra moves in $B$ be justified according to the original moves in $A$, and let all initial moves in $B$ be justified by the initial moves in $A$ that occur immediately before them.
@@ -646,7 +708,7 @@ An easy corollary of this fact is that composition of copycat strategies respect
 \end{corollary}
 
 It is also easy to see from Proposition \ref{PropCopycat} that the identity function $\id\from M_A \to M_A$ is a structural isomorphism from $A$ to itself, and that the resulting copycat strategy $\cc_{\id}$ is an identity for composition.  
-Combining this with our result for associativity in the previous section, we get that
+Combining this with our result for associativity in the previous section (Proposition \ref{PropAssociativityOfComposition}), we get that
 \begin{theorem}
   The collection of games forms a category $\G$, where the morphisms $A \to B$ are strategies for $A\implies B$, composition is as above and the identity morphisms are the copycat strategies induced from the identity functions on moves.
 \end{theorem}
@@ -693,6 +755,7 @@ General subset inclusions are not, of course, isomorphisms, but we can still say
 \section{$\G$ as a Symmetric Monoidal Category}
 
 We now claim that the tensor product connective $\tensor$ makes $\G$ into a symmetric monoidal closed category, with internal hom given by $\implies$.  
+We shall prove this result over the next two sections.
 
 \begin{definition}
   Let $\sigma\from A \implies B$ and $\tau\from C \implies D$ be strategies.  
@@ -764,7 +827,7 @@ The above proof gives us the following result, which is analogous to Corollary \
     \end{array}
     \]
   \normalsize
-  Now, if $s\in\sigma\tensor\tau$, or an odd-length sequence formed by adding an $O$-move to the end of a sequence in $\sigma\tensor\tau$, then we also know that $s\vert_{A,B}\in\sigma\subset P_{A\implies B}$ and that $s\vert_{C,D}\in\tau\subset P_{C\implies D}$.  
+  If $s\in\sigma\tensor\tau$, or an odd-length sequence formed by adding an $O$-move to the end of a sequence in $\sigma\tensor\tau$, then we also know that $s\vert_{A,B}\in\sigma\subset P_{A\implies B}$ and that $s\vert_{C,D}\in\tau\subset P_{C\implies D}$.  
   This means that we can discount the last two configurations in the table above, since one contains the illegal configuration $OP$ in $C\implies D$ and the other contains the illegal configuration $OP$ in $A \implies B$.
 
   Now suppose that $sab,sac\in\sigma\tensor\tau$.  
@@ -875,23 +938,24 @@ We claim that these are natural transformations.
   Let $\sigma\from A' \implies A$, $\tau\from B' \implies B$, $\upsilon\from C' \implies C$ be strategies.  
   By Proposition \ref{PropCopycat}, we have
   \begin{IEEEeqnarray*}{Cl}
-    & ((\sigma\tensor\tau)\tensor\upsilon);\cc_{\assoc_{M_{A},M_{B},M_{C}}} \\
-    = & \{[\id_{M_{(A'\tensor B')\tensor C'}},\assoc_{M_A,M_B,M_C}]_*(s)\suchthat s\in (\sigma\tensor\tau)\tensor\upsilon\} \\
+    & ((\sigma\tensor\tau)\tensor\upsilon);\cc_{\assoc_{M_{A},M_{B},M_{C}}} \\[10pt]
+    = & \{[\id_{M_{(A'\tensor B')\tensor C'}},\assoc_{M_A,M_B,M_C}]_*(s)\suchthat s\in (\sigma\tensor\tau)\tensor\upsilon\} \\[10pt]
     = & \left\{[\id_{M_{(A'\tensor B')\tensor C'}},\assoc_{M_A,M_B,M_C}]_*(s) \,\middle|\,\mbox{\pbox{\textwidth}{
       $s\in P_{((A'\tensor B')\tensor C')\implies ((A \tensor B) \tensor C)}$\\
       $s\vert_{A',A}\in\sigma$, $s\vert_{B',B}\in\tau$, $s\vert_{C',C}\in\upsilon$
-    }}\right\} \\
-    = & \{s\in P_{((A'\tensor B') \tensor C') \implies (A \tensor (B \tensor C))} \suchthat s\vert_{A',A}\in\sigma,s\vert_{B',B}\in\tau,s\vert_{C',C}\in\upsilon\} \\
+    }}\right\} \\[10pt]
+    = & \{s\in P_{((A'\tensor B') \tensor C') \implies (A \tensor (B \tensor C))} \suchthat s\vert_{A',A}\in\sigma,s\vert_{B',B}\in\tau,s\vert_{C',C}\in\upsilon\} \\[10pt]
     = & \left\{[\assoc_{M_{A'},M_{B'},M_{C'}},\id_{M_{A\tensor (B\tensor C)}}]_*(s) \,\middle|\,\mbox{\pbox{\textwidth}{
       $s\in P_{(A'\tensor (B'\tensor C'))\implies (A \tensor (B \tensor C))}$\\
       $s\vert_{A',A}\in\sigma$, $s\vert_{B',B}\in\tau$, $s\vert_{C',C}\in\upsilon$
-    }}\right\} \\
-    = & \{[\assoc_{M_{A'},M_{B'},M_{C'}},\id_{M_{A\tensor (B\tensor C)}}]_*(s)\suchthat s\in \sigma\tensor (\tau\tensor \upsilon)\} \\
+    }}\right\} \\[10pt]
+    = & \{[\assoc_{M_{A'},M_{B'},M_{C'}},\id_{M_{A\tensor (B\tensor C)}}]_*(s)\suchthat s\in \sigma\tensor (\tau\tensor \upsilon)\} \\[10pt]
     = & \cc_{\assoc_{M_{A'},M_{B'},M_{C'}}};(\sigma\tensor(\tau\tensor\upsilon))\,.\hspace{1pt plus 1fill} \qedhere
   \end{IEEEeqnarray*}
 \end{proof}
 
-Then, by Proposition \ref{PropCopycat} again, these natural transformations satisfy the same coherence diagrams (pentagon, triangles, hexagon etc.) satisfied by the original associators, unitors and symmetry in $(\Set,+)$.  
+This proves that the coherences we have defined are natural transformations.  
+By Proposition \ref{PropCopycat} again, these natural transformations satisfy the same coherence diagrams (pentagon, triangles, hexagon etc.) satisfied by the original associators, unitors and symmetry in $(\Set,+)$.  
 
 It follows that $\tensor$ makes $\G$ into a symmetric monoidal category.
 
@@ -899,7 +963,11 @@ It follows that $\tensor$ makes $\G$ into a symmetric monoidal category.
 
 \begin{definition}
   Let $A,B,C,D$ be games, let $\sigma$ be a strategy for $A\implies B$ and let $\tau$ be a strategy for $C\implies D$.  
-  Then we define a strategy $\sigma\implies \tau\from (B\implies C) \implies (A\implies D)$ by
+  Then we define a strategy 
+  \[
+    \sigma\implies \tau\from (B\implies C) \implies (A\implies D)
+    \]
+  by
   \[
     \sigma\implies \tau = \{s\in P_{(B\implies C) \implies (A \implies D)}\suchthat \text{$s\vert_{A,B}\in\sigma$, $s\vert_{C,D}\in\tau$}\}\,.
     \]
@@ -993,9 +1061,8 @@ We have proved the following.
 \section{Tree Immersions and Zigzag Strategies}
 
 So far, the strategies we have been considering have all been innocent.  
-We now start considering some non-innocent strategies.
-
-We can generalize the subset inclusions of the previous section to \emph{tree immersions}.  
+For our model of state, we are going to need to start using some non-innocent strategies as well.  
+We begin with a generalization of the idea of a subset inclusion to that of a \emph{tree immersion}, which gives us a similar recipe for constructing strategies.  
 Tree immersions are similar to subset inclusions, but generated by a function between plays, rather than between moves.  
 A consequence of this is that while tree immersions do give rise to strategies, these strategies are not in general innocent.
 
@@ -1032,7 +1099,8 @@ A consequence of this is that while tree immersions do give rise to strategies, 
 We want an analogue of Proposition \ref{PropCopycat}.
 
 \begin{definition}
-  Given a tree immersion from $A$ to $B$, and a play $s\in P_{C\implies A}$ for some $C$, we write $s^\phi$ for the play obtained by replacing the moves of $s\vert_A$ wholesale with the moves of $\phi(s\vert_A)$ (using the fact that $\phi$ preserves length and justification indices).
+  Given a tree immersion from $A$ to $B$, and a play $s\in P_{C\implies A}$ for some $C$, we write $s^\phi$ for the play obtained by replacing the moves of $s\vert_A$ wholesale with the moves of $\phi(s\vert_A)$.  
+  Since $\phi$ preserves length and justification indices, the resulting play is a legal play of $C\implies A$.
 \end{definition}
 
 \begin{proposition}
@@ -1150,14 +1218,16 @@ An examination of the definitions tells us that
   Then $sb,sc$ must start with the same move, so if $\phi(sb)=\phi(sc)$ then we have $\phi_i(sb)=\phi_i(sc)$ for some $i$ and therefore $b=c$.
 \end{proof}
 
-Note that $\langle\sigma_i\rangle$ is not in general innocent, even if all the $\sigma_i$ are, and there is no version of Proposition \ref{PropProductOfTreeEmbeddings} that works for subset inclusion strategies.
-Of course, since a subset inclusion is a special case of a tree immersion, then $\langle \subs_i\rangle$ is always a tree immersion strategy.
+Note that $\langle\sigma_i\rangle$ is not in general innocent, even if all the $\sigma_i$ are, and Proposition \ref{PropProductOfTreeEmbeddings} cannot be adapted to use subset inclusions rather than tree immersions.
+Of course, since a subset inclusion is a special case of a tree immersion, then $\langle \subs_i\suchthat i \in \mathcal I\rangle$ is always a tree immersion strategy for any set $\mathcal I$ of subset inclusions.
 
 \section{Sequoidal categories}
 
-We have now given the category-theoretic properties of all the connectives from section \ref{SecConnectives}, with the exception of the sequoid $\sequoid$ and the exponential $\oc$.
+We have given the category-theoretic properties of all the connectives from section \ref{SecConnectives}, with the exception of the sequoid $\sequoid$ and the exponential $\oc$.
+In this section, we will introduce the categorical semantics of the sequoid operator $\blank\sequoid\blank$.  
+The sequoid is a non-standard operator and does not fall into any of the established patterns of categorical algebra; rather, it gives rise to the new notion of a \emph{sequoidal category} introduced by Laird in \cite{laird02}.
 
-We would like to say that $\blank\sequoid\blank$ is a functor from $\G \times \G \to \G$, as is the case with the tensor product $\blank\tensor\blank$.  
+To start with, we would like to be able to say that $\blank\sequoid\blank$ is a functor from $\G \times \G \to \G$, as is the case with the tensor product $\blank\tensor\blank$.  
 However, this does not quite work: given strategies $\sigma\from A \implies B$ and $\tau\from C \implies D$, we may not get a well-formed strategy for $(A \sequoid C) \implies (B \sequoid D)$ by `playing according to $\sigma$ in $A$ and $B$ and according to $\tau$ in $C$ and $D$'.  
 The reason is that the constraint that player $O$ plays in $B$ before $D$ is not strong enough to force player $P$ to play in $A$ before $C$; indeed, suppose that $\sigma$ tells player $P$ to respond to an initial move in $B$ with another move in $B$.  
 Suppose that player $O$ then decides to make a move in $D$.  
@@ -1174,7 +1244,7 @@ Moreover, this strategy $\sigma\sequoid\tau$ will inherit this property that the
 
 We will call such a $\sigma$ a \emph{strict strategy} for $A\implies B$, although this is a slight abuse of language, since the definition depends on the constituent games $A$ and $B$, which may not be recoverable from $A\implies B$.
 
-It is clear that the composition of strict morphisms is again a strict morphism , as is any morphism of the form $\subs_i$, and so we get a wide subcategory $\G_s$ of $\G$ whose objects are games and where the morphisms are the strict strategies.
+It is clear that the composition of strict morphisms is again a strict morphism, and that any morphism of the form $\subs_i$ is a strict morphism, and so we get a wide subcategory $\G_s$ of $\G$ whose objects are games and where the morphisms are the strict strategies.
 We then have a natural inclusion functor $J\from \G_s\to \G$.  
 
 \begin{definition}
@@ -1224,11 +1294,14 @@ Of course, $P_{A\sequoid B}$ is a subset of $P_{A\tensor B}$, which means that t
   Since we also have $s\vert_{A,C}\in P_{A\tensor C}$, we must have that $s\vert_{A,C}\in P_{A\sequoid C}$.
 \end{proof}
 \begin{remark}
-  This is the main place where we have used the assumption that $\sigma$ is a strict strategy: if we drop the strictness requirement from Definition \ref{DefSequoidOfStrategies}, then we get a valid (if nonsensical) strategy that has a partiality (`gives up') if playing according to $\sigma$ and $\tau$ would lead to it creating an invalid play.  
-  But such a strategy would not satisfy the conclusion of Proposition \ref{PropWkCommutativeDiagram}, since $\sigma\tensor\tau;\wk_{B,D}$ would contain these extra plays where $\wk_{A,C};\sigma\sequoid\tau$ had `given up'.
+  If $\sigma$ is not a strict strategy, then the set 
+  \[
+    \{s\in\sigma\tensor\tau \suchthat s\in P_{(A\sequoid C)\implies (B\sequoid D)}\}
+    \]
+  is still a valid strategy for $P_{(A\sequoid C)\implies (B \sequoid D)}$, but now the conclusion of Proposition \ref{PropWkCommutativeDiagram} no longer holds.
 \end{remark}
 \begin{remark}
-  Of course, we would \emph{like} to restate Proposition \ref{PropWkCommutativeDiagram} by saying that $\wk$ is some sort of natural transformation, but that doesn't make sense until we've shown that $\blank\sequoid\blank$ is a functor.
+  Of course, we would \emph{like} to restate Proposition \ref{PropWkCommutativeDiagram} by saying that $\wk$ is a natural transformation, but it doesn't make sense to do so, because we don't yet know that $\blank\sequoid\blank$ is a functor.
 \end{remark}
 
 \begin{proposition}
@@ -1277,12 +1350,15 @@ As before, write $J$ for the inclusion functor $\G_s\hookrightarrow\G$.
 Then we can restate Proposition \ref{PropWkCommutativeDiagram} in a more \emph{natural} way.
 
 \begin{proposition}
-  $\wk_{A,B}$ is a natural transformation $JA \tensor B \to J(A \sequoid B)$.
+  $\wk_{A,B}$ is a natural transformation
+  \[
+    JA \tensor B \to J(A \sequoid B)\,.
+    \]
   \label{PropWkNatural}
 \end{proposition}
 
 We have some additional structure on the $\tensor$ and $\sequoid$ operators.  
-By inspecting the definitions that if $A,X,Y$ are games then the associator $\assoc_{M_A,M_X,M_Y}$ and unitor $\runit_{M_A}$ in $(\Set,+)$ give rise to structural isomorphisms
+By inspecting the definitions, we can see that if $A,X,Y$ are games then the associator $\assoc_{M_A,M_X,M_Y}$ and unitor $\runit_{M_A}$ in $(\Set,+)$ give rise to structural isomorphisms
 \begin{mathpar}
   (A \sequoid X) \sequoid Y \cong A \sequoid (X \tensor Y)
   \and
@@ -1351,7 +1427,7 @@ We formalize the structure we have uncovered so far in the concept of a \emph{se
 \end{definition}
 \begin{remark}
   The definitions of \emph{lax action} can be found at the start of Chapter \ref{ChapParametricMonads}, while that of an \emph{oplax morphism of actions} is found at Definition \ref{DefOplaxMorphismOfActions}.  
-  The definitions we have used are similar: a \emph{strong action} is a lax action in which the coherences (called $m$ and $e$ in Chapter \ref{ChapParametricMonads} and $\passoc$ and $\run$ here) are isomorphisms.  
+  The definitions we have used here are not quite the same as the ones from Chapter \ref{ChapParametricMonads}, but they are similar: a \emph{strong action} is a lax action in which the coherences (called $m$ and $e$ in Chapter \ref{ChapParametricMonads} and $\passoc$ and $\run$ here) are isomorphisms.  
   A \emph{lax morphism of actions} is defined in the same way as an oplax morphism, except that the coherence (called $\mu$ in Definition \ref{DefOplaxMorphismOfActions} and $\wk$ here) goes in the opposite direction.
 \end{remark}
 
@@ -1407,7 +1483,7 @@ We formalize the structure we have uncovered so far in the concept of a \emph{se
         & A \sequoid (X \tensor Y)
     \end{tikzcd}
     \]
-  Indeed, we have
+  We have
   \begin{IEEEeqnarray*}{rCl?u}
     && (\wk_{A',X'}\tensor Y');\wk_{A'\sequoid X',Y'};\passoc_{A',X',Y'};(\sigma\sequoid(\tau\tensor\upsilon)) \\
     & = & \assoc_{A',X',Y'};\wk_{A',X'\tensor Y'};(\sigma\sequoid(\tau\tensor\upsilon)) & (see above) \\
@@ -1450,13 +1526,14 @@ We formalize the structure we have uncovered so far in the concept of a \emph{se
 
 \section{Sequoidally decomposable categories}
 
-We will now consider some important additional category-theoretic properties of the sequoid operator on games that do not follow from the fact that $\G$ is a sequoidal category.
+The definition of a sequoidal category captures some of the important properties of the sequoid operator $\sequoid$ in the category of games, but not all of them.  
+In this section, we will consider some further category-theoretic properties of the sequoid operator.
 
 \begin{definition}[\cite{martinsthesis}]
   Let $\C$ be a sequoidal category such that $C_s$ has arbitrary products (including a terminal object $1$).
   We say that $\C$ is \emph{distributive} if whenever $a_i$ is a collection of objects of $\C'$ and $x$ is an object of $\C$, the morphism
   \[
-    \dec_{(a_i),x} = \langle \pr_i\sequoid x \rangle \from \prod_ia_i \sequoid x \to \prod_i (a_i \sequoid x)
+    \dec_{(a_i),x} = \langle \pr_i\sequoid x \rangle \from \left(\prod_ia_i\right) \sequoid x \to \prod_i (a_i \sequoid x)
     \]
   is an isomorphism.
 \end{definition}
@@ -1489,20 +1566,22 @@ We will now consider some important additional category-theoretic properties of 
 We can get a distributivity result in the other direction, but this one is not as strong, since the morphism we get is only a monomorphism, not an isomorphism.
 \begin{definition}
   Let $\C$ be a distributive sequoidal category.  
-  We say that $\C$ is \emph{strongly distributive} if whenever $(A_i),(B_i)$ are objects of $\C_s$, where $(B_i)$ is a non-empty collection, then the morphism
+  We say that $\C$ is \emph{strongly distributive} if whenever $(A_i),(B_i),C$ are objects of $\C_s$, where $(B_i)$ is a non-empty collection, then the morphism
   \[
-    \langle A_1 \sequoid(\cdots \sequoid (A_n \sequoid J(\pr_i))\cdots)\rangle
+    \langle JC \tensor J(A_1 \sequoid(\cdots \sequoid (A_n \sequoid J(\pr_i))\cdots))\rangle
     \]
   is a monomorphism
-  \[
-    A_1 \sequoid\left(\cdots\sequoid\left(A_n \sequoid J\left(\prod_iB_i\right)\right)\cdots\right) \to \prod_i (A_1 \sequoid (\cdots \sequoid (A_n \sequoid J(B_i))\cdots))\,.
-    \]
+  \begin{mathpar}
+    JC \tensor J\left(A_1 \sequoid\left(\cdots\sequoid\left(A_n \sequoid J\left(\prod_iB_i\right)\right)\cdots\right)\right) \to \prod_i (JC \tensor J(A_1 \sequoid (\cdots \sequoid (A_n \sequoid J(B_i))\cdots)))\,.
+  \end{mathpar}
 \end{definition}
 
 \begin{proposition}
   $\G$ is a strongly distributive sequoidal category.
 \end{proposition}
 \begin{proof}
+  We first ignore the $JC \tensor \blank$ part.
+
   By Proposition \ref{PropProductOfTreeEmbeddings}, the morphism $\langle (A_1\sequoid(\cdots\sequoid(A_n \sequoid\pr_i)\cdots))\rangle$ is given by the tree immersion 
   \[
     \phi\from P_{\prod_i (A_1 \sequoid(\cdots\sequoid(A_n\sequoid B_i)\cdots))} \to P_{A_1\sequoid(\cdots\sequoid(A_n\sequoid \prod_iB_i))}
@@ -1522,13 +1601,9 @@ We can get a distributivity result in the other direction, but this one is not a
   If $t$ only contains moves in the $A_i$, then pick some fixed index $0$; then we have $t=\phi([\inj_{A_i^0}]_*(t))$, where we have considered $t$ as a sequence in $(M_{A_1} + \cdots + M_{A_n})^*$.
 
   Therefore, $\phi$ is a monomorphism by Proposition \ref{PropZigzagMono}.
-\end{proof}
 
-Note that if $\C$ is decomposable, this property of being a monomorphism is automatically preserved by the tensor product; i.e., for any objects $A,(B_i),C$ of $\C_s$ (for $B_i$ a non-empty collection), the morphism
-\[
-  \langle JC \tensor J(A \sequoid J(\pr_i))\rangle \from JC \tensor J\left(A \sequoid J\left(\prod_iB_i\right)\right) \to \prod_i JC \tensor J(A \sequoid J(B_i))
-  \]
-is a monomorphism.
+  Now, if we take the tensor product on the left by $JC$, we still get a surjective tree immersion and hence a monomorphism.
+\end{proof}
 
 \begin{definition}
   A sequoidal category $\C$ is \emph{inclusive} if $\C_s$ is a full-on-objects subcategory of $\C$ containing $\wk$ and all isomorphisms of $\G$, and the functor $J$ is the inclusion functor.
@@ -1540,14 +1615,14 @@ In such a situation, we will sometimes drop the mention of the functor $J$.
 \end{proposition}
 \begin{proof}
   The only thing we really need to check is that isomorphisms in $\G$ are always strict strategies.  
-  Indeed, if $\sigma$ is a strategy for $A \implies B$ and $\tau$ a strategy for $B \implies A$ such that $\sigma;\tau=\id_A$, then for any opening move $a$ in $A$ on the right of $\tau$ there is some $\s\in\int(A,B,A)$ such that $\s\vert_{A,A}=aa$, and therefore the reply to $a$ in $\tau$ must take place in $B$.
+  Indeed, if $\sigma$ is a strategy for $A \implies B$ and $\tau$ a strategy for $B \implies A$ such that $\sigma;\tau=\id_A$, then for any opening move $a$ in $A$ on the right of $\tau$ there is some $\s\in\Int(A,B,A)$ such that $\s\vert_{A,A}=aa$, and therefore the reply to $a$ in $\tau$ must take place in $B$.
 \end{proof}
 
 An important fact about the sequoid operator for games is that it gives us a way to decompose the tensor product as
 \[
   A \tensor B \cong (A \sequoid B) \times (B \sequoid A)\,.
   \]
-Informally, this is because both sides allow player $O$ to start either in $A$ or in $B$, and thereafter to continue in that game.
+Informally, this is because both sides allow player $O$ to start either in $A$ or in $B$ on the first move, and thereafter switch between $A$ and $B$ as he chooses.
 
 \begin{definition}
   Let $\C$ be a distributive inclusive sequoidal category, where $\C$ is a symmetric monoidal category.
@@ -1585,7 +1660,8 @@ Informally, this is because both sides allow player $O$ to start either in $A$ o
   where each of the arrows is an isomorphism.
 \end{proof}
 
-The specific isomorphism in Proposition \ref{PropDecSeq} is rather complicated at the moment, but we can simplify it.
+The formula for the isomorphism given in the proof of Proposition \ref{PropDecSeq} is rather complicated.  
+Our next task will be to give an equivalent formulation that will be simpler to work with later.
 
 \begin{definition}
   Given objects $a_1,\cdots,a_n$ of a monoidal category, we write $\sym_i^n$ for the unique symmetric coherence isomorphism
@@ -1895,7 +1971,11 @@ Since the equalizers $A^m$ and $A^n$ are preserved by the tensor product, then w
   \[
     I \leftarrow A \leftarrow A^2 \leftarrow A^3 \leftarrow \cdots\,.
     \]
-  Suppose that this sequence has a limit $\oc A$, and that $B\tensor \oc A$ is the limit of the first sequence for all $B$.  
+  Suppose that this sequence has a limit $\oc A$, and suppose moreover that tensoring this limiting cone with $B$ exhibits $B\tensor \oc A$ as the limit of
+  \[
+    B \leftarrow B\tensor A \leftarrow B\tensor A^2 \leftarrow B \tensor A^3 \leftarrow \cdots\,.
+    \]
+  for any $B$.
 
   For each $m$, we can define morphisms
   \[
@@ -1906,7 +1986,7 @@ Since the equalizers $A^m$ and $A^n$ are preserved by the tensor product, then w
   
   The morphisms $\mu_A\from \oc A \to \oc A \tensor \oc A$ and $()\from A \to I$ give $\oc A$ the structure of a commutative comonoid in $\C$.  
   In fact, this is the \emph{cofree commutative comonoid} over $A$ in $\C$.  
-  The counit $\der_A\from \oc A \to A$ of the adjunction is the map in the limiting cone.
+  The counit $\der_A\from \oc A \to A$ of the adjunction is the morphism in the limiting cone.
   \label{TheMtt}
 \end{theorem}
 
@@ -1972,7 +2052,7 @@ It is immediate from the definitions that:
   \item if $A_i$ are well-opened games, then so is $\prod_iA_i$; and
   \item if $B$ is a well-opened game, then so is $A \implies B$;
 \end{itemize}
-but that $A \tensor B$, $A\sequoid B$ and $\oc A$ are not in general well-opened, even if $A$ and $B$ are.
+but that $A \tensor B$, $A\sequoid B$ and $\oc A$ are not in general well-opened, even if both $A$ and $B$ are.
 
 \begin{proposition}
   Let $A$ be a well-opened game.  
@@ -2072,10 +2152,11 @@ In particular, we have a natural isomorphism
 \[
   \oc A \tensor \oc B \cong \oc (A \times B)\,.
   \]
-We define a category $\G_{wo}^{\oc}$ to be the image of the functor $\G_{wo}\to \CCom(\G)$ inside $\CCom(\G)$.  
+We define a category $\G_{wo}^{\oc}$ to be the span of the functor $\G_{wo}\to \CCom(\G)$ inside $\CCom(\G)$.  
 By our discussion above, $\G_{wo}^{\oc}$ is a Cartesian category.  
 
-A more convenient description of $\G_{wo}^{\oc}$ is that it is the category where the objects are well-opened games and where the morphisms
+This gives us a category in which the objects are commutative comonoids over well-opened games.
+A more convenient description of this category is that it is the category where the objects are well-opened games and where the morphisms
 \[
   A \to B
   \]
@@ -2084,7 +2165,7 @@ We compose two such morphisms $\sigma \from \oc A \implies B$ and $\tau \from \o
 \[
   \oc A \xrightarrow{\sigma^\dag} \oc B \xrightarrow{\tau} C\,,
   \]
-where the \emph{promotion} $\sigma^\dag$ of $\sigma$ comes from the description of $\oc A$ as the cofree commutative comonoid on $A$.
+where the \emph{promotion} operator $blank^\dag$ from strategies $\sigma\from \oc A \to B$ to strategies $\sigma^\dag\from \oc A \to \oc B$ is the right half of the adjunction between $\G$ and $\CCom(\G)$.
 
 Since the functor $\G_{wo}\to \CCom(\G)$ preserves products, $\G_{wo}^{\oc}$ obtains a Cartesian structure given by the category-theoretic product $\times$.  
 We claim that it is Cartesian closed, with the function object from $A$ to $B$ given by $\oc A \implies B$.  
@@ -2113,7 +2194,7 @@ We have one thing left to prove.
   $\oc \sigma$ is innocent for the same reasons as in Proposition \ref{PropTensorInnocent}, so it suffices to show that $m$ is innocent.  
 
   Indeed, it is clear from our definitions that $\oc\oc A = \oc A$ as games.  
-  Then, $m$ is in fact the identity strategy between these two games, so is innocent.
+  Then, $m$ is in fact the identity strategy between these two games.
 \end{proof}
 
 \section{The Exponential as a Final Coalgebra}
@@ -2167,7 +2248,7 @@ Now we have already shown that if $A$ is well-opened, then $\oc A$ is the limit 
 and this sequence is precisely the sequence from Ad{\'a}mek's Theorem, when $F=J(A\sequoid\blank) \from \G \to \G$.
 Moreover, this limit is preserved when taking the sequoid with $A$ on the left, and so we get that
 \begin{corollary}
-  If $A$ is a well-opened game, then $\oc A$ is the final coalgebra for the functor $A \sequoid \blank$.
+  If $A$ is a well-opened game, then $\oc A$ is a final coalgebra for the functor $A \sequoid \blank$.
 \end{corollary}
 In this case, the morphism $\oc A \to A \sequoid \oc A$ is the zigzag strategy that plays copycat between the different copies of $A$; i.e., $\zz_\phi$, where $\phi\from P_{A\sequoid \oc A} \to P_{\oc A}$ is the tree isomorphism given by
 \[
@@ -2183,7 +2264,7 @@ One small thing we need to do is to relate the two structures on the exponential
     \]
   is given by the composite
   \[
-    \oc A \xrightarrow{\mu_A} \oc A \tensor \oc A \xrightarrow{\der_A\tensor \oc A} A \tensor \oc A \xrightarrow{\wk_A,\oc A} A \sequoid \oc A\,.
+    \oc A \xrightarrow{\mu_A} \oc A \tensor \oc A \xrightarrow{\der_A\tensor \oc A} A \tensor \oc A \xrightarrow{\wk_{A,\oc A}} A \sequoid \oc A\,.
     \]
   \label{PropFormulaForAlpha}
 \end{proposition}
@@ -2194,12 +2275,12 @@ One small thing we need to do is to relate the two structures on the exponential
 
 \section{Denotational Semantics of Idealized Algol}
 
-We now come to interpret Idealized Algol within our category $\G_{wo}^{\oc}$.  
+At last we are in a position to interpret Idealized Algol within our category $\G_{wo}^{\oc}$.  
 The base types $\com$, $\bool$ and $\nat$ are interpreted by the games $\bC$, $\bB$ and $\bN$, while the type $\Var$ is interpreted by the game
 \[
   \Varr = \bC^{\bN} \times \bN\,,
   \]
-where $\bC^{\bN}$ is the product of $\bN$-many copies of $\bC$.
+where $\bC^{\bN}$ is the product of countably many copies of $\bC$ (so we have used the symbol $\bN$ to denote both the set $\bN$ and the game $\bN$ in the same formula).
 Given types $S,T$, the denotation $\deno{S\to T}$ of the type of functions from $S$ to $T$ is given by
 \[
   \deno{S}\to\deno{T} \coloneqq \oc\deno{S}\implies\deno{T}\,.
@@ -2256,7 +2337,7 @@ In order to form the denotation of the next lot of terms, we need a new definiti
   So if $*sab\in\sigma_y$, then $*t'ab\in\sigma_y$ and therefore $tab\in(\sigma_x)$.
 \end{proof}
 
-The most important feature of strategies of the form $(\sigma_x)$ is the most obvious one: given $X$, and $y\in X$, we have a strategy $y$ for the game $X$ with maximal play $qx$.  
+The most important feature of strategies of the form $(\sigma_x)$ is the most obvious one: given $X$, and $y\in X$, we have a strategy $y$ for the game $X$ with maximal play $qy$.  
 Then $y;(\sigma_x) = \sigma_y$.
 
 Now we define morphisms
@@ -2270,7 +2351,9 @@ Now we define morphisms
   \item $\dereff = \pr_\bN \from \Varr \to \bN$;
   \item $\mkvar = \lambda w.\lambda r.\langle (w\,n)_{n\in\bN},r\rangle \from (\bN \to \bC) \to \bN \to \Varr$.
 \end{itemize}
-These give us an obvious way to interpret most of the rest of the terms of Idealized Algol.  
+Here, $\pr_n$ and $\pr_\bN$ are the natural projections on to $\bC$ and $\bN$ from $\Var = (\bC)^n \times \bN$.
+
+These morphisms give us an obvious way to interpret most of the rest of the terms of Idealized Algol.  
 For example, if we have strategies
 \begin{mathpar}
   \deno{\Gamma\ts V\from \Varr}
@@ -2279,8 +2362,12 @@ For example, if we have strategies
 \end{mathpar}
 then we get a strategy
 \[
-  \deno{\Gamma\ts V\gets E \from \bC} = \deno{\Gamma} \xrightarrow{\Delta} \deno{\Gamma}\times\deno{\Gamma} \xrightarrow{\deno{\Gamma\ts E}\times\deno{\Gamma\ts V}} \bN \times \Varr \xrightarrow{\assign} \bC\,.
+  \deno{\Gamma\ts V\gets E \from \bC} = \deno{\Gamma} \xrightarrow{\Delta} \deno{\Gamma}\times\deno{\Gamma} \xrightarrow{\deno{\Gamma\ts E}\times\deno{\Gamma\ts V}} \bN \times \Varr \xrightarrow{\assign} \bC
   \]
+that we can use as the denotation of the term $\Gamma \ts V \gets E$.
+
+We use $\seq_X$ for the denotation of $M;N$ and $\deref$ for the denotation of $\oc V$.  
+The role played by the remaining morphisms can easily be deduced from their names.
 
 \section{Order-Enrichment of $\G$}
 
@@ -2289,7 +2376,7 @@ The remaining parts of Idealized Algol that we have yet to define are the fixpoi
 To define $\Y_T$, we use order-enriched properties of $\G$.  
 
 Note that if $A$ is a game, then we can order the strategies for $A$ by subset inclusion.  
-Then this order is clearly preserved by composition.  
+This order is clearly preserved by composition.  
 
 \begin{proposition}
   The partial order of strategies for $A$, ordered by inclusion, is directed-complete.  
@@ -2298,7 +2385,7 @@ Then this order is clearly preserved by composition.
 \begin{proof}
   Let $\Sigma$ be a directed set of strategies for $A$; so if $\sigma,\tau\in\Sigma$ then there is some $\upsilon\in\Sigma$ such that $\sigma\subset\upsilon$ and $\tau\subset\upsilon$.  
   We claim that $\bigcup\Sigma$ is a strategy for $A$.  
-  Indeed, it is certainly even-prefix-closed, and if $sab,sac\in\Sigma$, then $sab\in\sigma$ and $sac\in\tau$ for $\sigma,\tau\in\Sigma$, and therefore $sab,sac\in\upsilon$ for some $\upsilon\in\Sigma$ and so $b=c$.
+  Indeed, it is certainly even-prefix-closed, and if $sab,sac\in\bigcup\Sigma$, then $sab\in\sigma$ and $sac\in\tau$ for $\sigma,\tau\in\Sigma$, and therefore $sab,sac\in\upsilon$ for some $\upsilon\in\Sigma$ and so $b=c$.
 
   Now suppose that all $\sigma\in\Sigma$ are innocent.
   Let $sab\in\bigcup\Sigma$ and suppose that $t\in \bigcup\Sigma$ is such that $\pv{ta}=\pv{sa}$.  
@@ -2340,11 +2427,13 @@ Recall that a directed-complete partial order $P$ is said to be \emph{algebraic}
     \]
 \end{proof}
 
+It is possible to prove an innocent version of this (see \cite{hoPcf}), but we will not need this to prove Full Abstraction for Idealized Algol.
+
 \section{The Strategy $\cell$}
 \label{SecCell}
 
 Now we come to the denotation of $\neww$.  
-For this, we shall define a strategy $\cell\from \oc\bN \implies \oc \Varr$ by using the property of $\oc \Varr$ as a final coalgebra.
+For this, we shall define a strategy $\cell\from \oc\bN \implies \oc \Varr$ by using the universal property of $\oc \Varr$ that arises from the fact that it is a final coalgebra for $\Var \sequoid\blank$.
 
 Given $n\in\bN$, we define a strategy $\wwrite_n\from \oc\bN \implies \bC \sequoid\oc\bN$ by
 \[
@@ -2361,7 +2450,7 @@ Then we get a coalgebra $\cell_0\from \oc \bN \implies \Varr \sequoid \oc \bN$ g
   (\bC \sequoid \oc\bN)^{\bN} \times (\bN \sequoid \oc\bN) \xrightarrow{\dist_{(\bC)_{\bN},\bN,\oc\bN}\inv}
   (\bC^\bN \times \bN) \sequoid \oc\bN = \Varr \sequoid \oc \bN\,.
   \]
-We then take the anamorphism $\cell=\fcoal{\cell_0}\from \oc\bN \implies \oc\Varr$; i.e., $\cell$ is the unique morphism making the following diagram commute.
+We then define the strategy $\cell$ to be the anamorphism $\fcoal{\cell_0}\from \oc\bN \implies \oc\Varr$; i.e., $\cell$ is the unique morphism making the following diagram commute.
 \[
   \begin{tikzcd}
     \oc\bN \arrow[r, "\cell_0"] \arrow[d, "\cell"']
@@ -2418,7 +2507,7 @@ We use this to provide the denotation of the term $\neww$.
   \end{IEEEeqnarray*}
 \end{proof}
 
-This coalgebraic definition of the $\cell$ strategy will be sufficient for most of our purposes, it will also be convenient to have a more direct definition.
+While this coalgebraic definition of the $\cell$ strategy will be sufficient for most of our purposes, it will also be convenient to have a more direct definition.
 
 \begin{proposition}
   The strategy $\cell$ is the strategy on $\oc\bN \implies \oc\Varr$ that behaves as follows.  
@@ -2436,7 +2525,18 @@ This coalgebraic definition of the $\cell$ strategy will be sufficient for most 
     \end{tikzcd}
     \]
   commute.
-  Since $\dist_{(\bC)_\bN,\bN}$ is an isomorphism, it will suffice to show commutativity of the diagram formed by composing by it on the right; i.e.:
+  Since $\dist_{(\bC)_\bN,\bN}$ is a natural isomorphism, it will suffice to show commutativity of the diagram formed by composing by $\dist_{(\bC)_\bN,\bN}$ on the right to give us the diagram
+  \[
+    \begin{tikzcd}[column sep=60pt]
+      \oc\bN \arrow[r, "\cell_0"] \arrow[d, "\cell"']
+        & \Varr \sequoid \oc\bN \arrow[r, "\dist_{(\bC)_\bN,\bN}"]
+          & (\bC \sequoid \oc\bN)^\bN \times (\oc\bN \sequoid \oc\bN) \arrow[d, "(\bC \sequoid \cell)^\bN \times (\bN \sequoid \cell)"] \\
+      \oc\Varr \arrow[r, "\alpha_{\Varr}"]
+        & \Varr \sequoid \oc\Varr \arrow[r, "\dist_{(\bC)_\bN,\bN}"]
+          & {(\bC \sequoid \oc\Varr)^\bN \times (\bN \sequoid \oc\Varr)\,,}
+    \end{tikzcd}
+    \]
+  which, by the definition of $\cell_0$, is the same as the diagram
   \[
     \begin{tikzcd}[column sep=60pt]
       \oc\bN \arrow[rr, "{\langle (\wwrite_n)_{n\in\bN},\rread \rangle}"] \arrow[d, "\cell"']
@@ -2489,19 +2589,21 @@ This coalgebraic definition of the $\cell$ strategy will be sufficient for most 
 
 \section{Big-Step Operational Semantics}
 
-We now introduce the operational semantics of Idealized Algol, so that we can prove soundness and adequacy of our semantics for it.
+We now introduce the operational semantics of Idealized Algol.  
+When we have done so, we will link it to our denotational semantics by proving Computational Adequacy and Full Abstraction.
 
 We first define a \emph{canonical form} of the language to be
 \begin{itemize}
   \item at type $\com$, the term $\skipp$;
   \item at type $\bool$, the terms $\true$ and $\false$;
   \item at type $\nat$, the numerals $n$; 
-  \item at type $\Var$, variable names $x$ of type $\Var$ and expressions of the form $\mkvar W\,R$; and
+  \item at type $\Var$, variable names $x\from\Var$ and expressions taking the form $\mkvar W\,R$; and
   \item at type $S\to T$, expressions of the form $\lambda x^S.M$.
 \end{itemize}
+These are the terms that cannot be evaluated any further.
 
 We define a \emph{$\Var$-context} to be a context $\Gamma$ of the form $x_1\from \Var,\cdots,x_n\from \Var$.
-Given a $\Var$-context $\Gamma$, we define a \emph{$\Gamma$-store} to be a function $s$ from the variable names occurring in $\Gamma$ to the natural numbers.  
+Given a $\Var$-context $\Gamma$, we define a \emph{$\Gamma$-store} to be a function $s$ from the set of variable names occurring in $\Gamma$ to the set of natural numbers.  
 Given such a store $s$, we write $(s\vert x \mapsto n)$ for the store given by
 \[
   (s\vert x\mapsto n)(y) = \begin{cases}
@@ -2516,6 +2618,7 @@ We now inductively define a relation $\Gamma,s\ts M\converges c,s'$, where
   \item $\Gamma\ts M$, $\Gamma\ts c$ are Idealized Algol terms-in-context, where $c$ is a canonical form.
 \end{itemize}
 The definition of this relation is shown in Figure \ref{FigIaOpSem}.
+The idea behind it is that the predicate $\Gamma,s\ts M\converges c,s'$ should represent the assertion that, given initial state $s$, the term $M$ will evaluate to the canonical form $c$, leaving the state $s'$.
 
 \begin{figure}
   \vspace{-27pt}
@@ -2559,7 +2662,8 @@ The definition of this relation is shown in Figure \ref{FigIaOpSem}.
 
 \section{Small-Step Operational Semantics}
 
-We also give a small-step operational semantics for Idealized Algol, which will sometimes be easier to work with.  
+We also give an equivalent small-step operational semantics for Idealized Algol.  
+For a lot of our purposes, the small-step semantics will be easier to work with.
 
 This time, instead of defining a relation $\Gamma,s\ts M\converges c,s'$, we define a relation $\Gamma,s\ts M\opto \Gamma,\Delta,s'\ts M'$, where
 \begin{itemize}
@@ -2568,8 +2672,8 @@ This time, instead of defining a relation $\Gamma,s\ts M\converges c,s'$, we def
   \item $\Gamma\ts M$, $\Gamma,\Delta\ts M'$ are Idealized Algol terms-in-context.
 \end{itemize}
 
-As an auxiliary definition, we need the notion of an \emph{evaluation context} (see \cite{Felleisen}).
-This is a single-holed context defined inductively by the following BNF formula, where $M$ ranges over IA terms (subject to typing rules).
+As an auxiliary definition, we need the notion of an \emph{evaluation context}, as introduced by Felleisen in \cite{Felleisen}.
+An evaluation context is a single-holed context defined inductively by the following BNF formula, where $M$ ranges over IA terms (subject to typing rules).
 \begin{center}
 \parbox{0.8\textwidth}{
 \begin{mathpar}
@@ -2577,13 +2681,17 @@ This is a single-holed context defined inductively by the following BNF formula,
 \end{mathpar}}
 \end{center}
 
-Next, we define a relation $\Gamma,s,M\oopto\Gamma,\Delta,s',M'$ as in Figure \ref{FigIaSsOpSem}.
+The idea behind the evaluation contexts is that they tell us about the order of evaluation of a term: if we want to evaluate the term $\EE[M]$ for one step, then we first evaluate $M$ for one step, yielding another term $M'$, and then replace $\EE[M]$ with $\EE[M']$.
 
-We then define the relation $\opto$ as
+Next, we define a relation $\Gamma,s,M\oopto\Gamma,\Delta,s',M'$.  
+The definition of this relation is in Figure \ref{FigIaSsOpSem}; we interpret the judgement $\Gamma,s,M \oopto \Gamma,\Delta,s',M'$ as saying that if we start in state $s$ and evaluate the term $M$ for a single step, then we get the term $M'$ in the state $s'$, possibly adding some new free variables through the $\Var$-context $\Delta$.
+
+Lastly, we define the relation $\opto$ as
 \[
   \inferrule*{ \Gamma,s\ts M\oopto \Gamma,\Delta,s'\ts M'}{\Gamma,s\ts \EE[M] \opto \Gamma,\Delta,s'\ts\EE[M']}
   \]
 for each evaluation context $\EE$.
+Note that $\EE$ may itself contain free variables of type $\Var$: we assume that these are all contained in the $\Var$-context $\Gamma$.
 
 \begin{figure}
   \begin{mathpar}
@@ -2622,8 +2730,8 @@ for each evaluation context $\EE$.
 \end{figure}
 
 We need to prove that this is equivalent to our original semantics.
-Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction of $s$ to $\Gamma$.
 
+Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction of $s$ to $\Gamma$.
 \begin{lemma}
   Suppose that $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts M'$ and that $\Gamma,\Delta,s'\ts \EE[M'] \converges c,s''$.  
   Then $\Gamma,s\ts \EE[M]\converges c,s''\vert_\Gamma$.
@@ -2631,8 +2739,8 @@ Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction o
 \end{lemma}
 \begin{proof}
   Structural induction on $\EE$.
-  The base case, when $\EE$ is a hole, covers the interesting cases, so we shall leave it to last.
-  The remaining cases are quite similar, so we will show the proof for one of them for illustration.
+  The base case, when $\EE=-$e, covers the interesting cases, so we shall leave it to last.
+  The remaining cases are quite similar, so we will show the proof for the case where $\EE = \EE'\,N$ for illustration.
 
   If $\EE=\EE'\,N$, for some term $N$, then we have $\Gamma,\Delta,s'\ts \EE'[M']\,N\converges c,s''$.  
   By inspection of the rules in Figure \ref{FigIaOpSem}, the derivation of this must end with a rule of the form
@@ -2651,12 +2759,13 @@ Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction o
   \[
     \Gamma,s\ts \EE'[M]\,N\converges c,s''\vert_\Gamma\,.
     \]
-  Now, let us suppose that $\EE$ is a hole, so that $\EE[M']=M'$.  
+  The remaining cases when $\EE\ne-$ are quite similar.
+  Now, let us suppose that $\EE=-$, so that $\EE[M']=M'$.  
 
   Then there are a number of cases, depending on the particular $\oopto$ rule we are using.  
   Many of these cases are similar, so we will cover a few of them for the purposes of illustration.
   \begin{itemize}
-    \item Suppose that $\Gamma,s\ts M[N/x]\converges c,s'$.  
+    \item For function application, suppose that $\Gamma,s\ts M[N/x]\converges c,s'$.  
       Then we have a derivation
       \[
         \inferrule*
@@ -2674,7 +2783,7 @@ Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction o
           \Gamma,s\ts (\lambda x.M)N \converges c,s'
         }\,.
         \]
-    \item We have a derivation
+    \item For variable assignment, we have a derivation
       \[
         \inferrule*
         {
@@ -2696,7 +2805,7 @@ Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction o
           \Gamma,s\ts x\gets n\converges \skipp,(s\vert x\mapsto n)
         }\,.
         \]
-    \item We have a derivation
+    \item For variable dereference, we have a derivation
       \[
         \inferrule*
         {
@@ -2711,7 +2820,7 @@ Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction o
           \Gamma,s\ts \oc x\converges s(x),s
         }\,.
         \]
-    \item Suppose that $\Gamma,x,(s\vert x\mapsto 0) \ts M\converges c,s'$.  
+    \item For $\neww$, suppose that $\Gamma,x,(s\vert x\mapsto 0) \ts M\converges c,s'$.  
       Then we have a derivation
       \[
         \inferrule*
@@ -2750,7 +2859,7 @@ We can also prove the converse.
 
 \begin{proposition}
   Suppose that $\Gamma,s\ts M\converges c,s'$.  
-  Then there are sequences $\Gamma=\Gamma_1,\cdots,\Gamma_n=\Gamma,\Delta$, $s=s^{(1)},\cdots,s^{(n)}$, $M=M_1,\cdots,M_n=c$ such that
+  Then there are sequences $\Gamma=\Gamma_1,\cdots,\Gamma_n=\Gamma,\Delta$ of $\Var$-contexts, $s=s^{(1)},\cdots,s^{(n)}$ of $\Gamma_n$-stores and $M=M_1,\cdots,M_n=c$ of terms such that
   \[
     \Gamma_1,s^{(1)}\ts M_1 \opto \cdots \opto \Gamma_n,s^{(n)}\ts M_n\,,
     \]
@@ -2785,8 +2894,12 @@ We can also prove the converse.
         \Gamma,s' \ts M'[N/x]\opto \cdots \opto \Gamma,\Delta',t'',c\,,
       \end{mathpar}
       where $t'\vert_\Gamma=s'$ and $t''\vert_\Gamma=s''$.
+      Note that we can easily enlarge $\Gamma$ to make sure that it contains all the free variables in $N$.
 
-      If we apply the evaluation context $-N$ pointwise to the first small-step derivation, then we have another valid small-step derivation.  
+      If we apply the evaluation context $-N$ pointwise to the first small-step derivation, then we have another valid small-step derivation
+      \[
+        \Gamma,s \ts M\,N \opto \cdots \opto \Gamma,\Delta,t',\lambda x.M'\,N\,.
+        \]
       Then we can join the two together to get the derivation
       \begin{center}
         \parbox{0.8\textwidth}{
@@ -2842,7 +2955,7 @@ We can also prove the converse.
         \Gamma,s\ts \oc V \opto \cdots \opto \Gamma,\Delta,t'\ts \oc x \opto \Gamma,\Delta,t'\ts t'(x)\,,
         \]
       where $t'(x)=s'(x)$.
-    \item Lastly, suppose that the last step in the derivation is
+    \item Suppose that the last step in the derivation is
       \[
         \inferrule*
         {
@@ -2910,11 +3023,12 @@ Given $\Gamma$, we have a morphism $\cell^\Gamma\from \oc S_\Gamma \implies \oc 
 
 Given a $\Gamma$-store $s$, we will write $\deno{s}$ for the corresponding morphism $I \to S_\Gamma$.
 
-We start our proof of soundness with a result about evaluation contexts.
-This result captures the fact that the term filling the hole of an evaluation context is the first thing to be computed, using the sequoid operator to capture this notion of precedence.
+We start our proof of soundness with a structural result about evaluation contexts.
+Recall that the most important property of an evaluation context $\EE$ is that if a term $M$ fits into the hole in $\EE$, then $M$ is the first part of $\EE[M]$ to be evaluated.
+Using the sequoid operator, we can capture in category-theoretic terms an analogous property for the denotation of $\EE$.
 \begin{lemma}
   Let $\Gamma\ts M\from T$ be an Idealized Algol term-in-context (where $\Gamma$ is an arbitrary context), and let $\EE$ be an evaluation context with a hole of type $T$, where $\EE[M]\from U$.  
-  Then there is a game $A$ and strategies $\sigma\from \oc{\deno{\Gamma}} \implies A$, $\tau\from\deno{T}\sequoid A \implies \deno{S}$, where $\tau$ is a strict strategy, such that the denotation $\deno{\Gamma\ts\EE[M]}$ factors as
+  Then there are (independent of $M$) a game $A$, a strategy $\sigma\from \oc{\deno{\Gamma}} \implies A$ and a strict strategy $\tau\from\deno{T}\sequoid A \implies \deno{S}$, such that the denotation $\deno{\Gamma\ts\EE[M]}$ factors as
   \[
     \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma} \deno{T}\tensor A \xrightarrow{\wk_{\deno{T},A}} \deno{T} \sequoid A \xrightarrow{\tau} \deno{U}\,.
     \]
@@ -2980,7 +3094,7 @@ This result captures the fact that the term filling the hole of an evaluation co
         \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} \bN\,,
         \]
       for appropriate $A',\sigma',\tau'$.  
-      Then we can compose on the right by $\theta$, and we are already in the required form, for
+      When we compose on the right by $\theta$, we are already in the required form, for
       \begin{mathpar}
         A = A' \and \sigma = \sigma' \and \tau = \tau';\theta\,.
       \end{mathpar}
@@ -2993,7 +3107,7 @@ This result captures the fact that the term filling the hole of an evaluation co
         \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} \Varr\,,
         \]
       for appropriate $A',\sigma',\tau'$.  
-      Then we can compose on the right by $\dereff$, and we are already in the required form, for
+      When we compose on the right by $\dereff$, we are already in the required form, for
       \begin{mathpar}
         A = A' \and \sigma = \sigma' \and \tau = \tau';\dereff\,.
       \end{mathpar}
@@ -3006,7 +3120,7 @@ This result captures the fact that the term filling the hole of an evaluation co
         \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bN \times \Var \xrightarrow{\Lambda\inv(\assign)} \bC\,.
         \]
       Write $Y=\bC$, $X'=X$, $Z=X$ and $\upsilon=\seq_X$ in the sequencing case, and $Y=\bN$, $X'=\Var$, $Z=\bC$ and $\upsilon=\assign$ in the variable assignment case.
-      Then, by the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ factors as
+      By the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ factors as
       \[
         \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}} \deno{T} \sequoid A' \xrightarrow{\tau'} Y\,,
         \]
@@ -3062,7 +3176,7 @@ This result captures the fact that the term filling the hole of an evaluation co
         A = (A' \tensor X)\tensor X
         \and
         \sigma = \mu_{{\deno{\Gamma}}};(\mu_{{\deno{\Gamma}}}\tensor\oc{\deno{\Gamma}});((\sigma'\tensor\deno{\Gamma\ts N})\tensor \deno{\Gamma\ts P})
-        \and
+        \\
         \tau = \passoc_{\deno T,A'\tensor X,X}\inv;(\passoc_{\deno T,A',X}\inv\sequoid X);((\tau'\sequoid X)\sequoid X);\Lambda_s\inv(\Lambda_s\inv(\eta))\,.
       \end{mathpar}
       \begin{SidewaysFigure}
@@ -3114,7 +3228,7 @@ This result captures the fact that the term filling the hole of an evaluation co
         \Varr\,,
         \]
       for suitable $A',\sigma',\tau'$.  
-      Then, if we compose on the right by the morphism $\lunit_{\Varr};(n\tensor\Varr);\assign$, in order to give us the denotation $\deno{\Gamma\ts \EE'[M]\gets n} = \deno{\Gamma\ts\EE[M]}$, then we are already in the required form, with
+      When we compose on the right by the morphism $\lunit_{\Varr};(n\tensor\Varr);\assign$, in order to give us the denotation $\deno{\Gamma\ts \EE'[M]\gets n} = \deno{\Gamma\ts\EE[M]}$, then we are already in the required form, with
       \begin{mathpar}
         A = A' \and \sigma = \sigma' \and \tau = \tau';\lunit_{\Varr};(n\tensor\Varr);\assign\,.\hspace{1em plus 1fill}\qedhere
       \end{mathpar}
@@ -3124,9 +3238,12 @@ This result captures the fact that the term filling the hole of an evaluation co
 Our next lemma will help us deal with the base $\oopto$ rules.  
 We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ relation.
 
+First, note that the denotation $\deno{\Gamma\ts M}\from \oc\deno{\Gamma} \implies \deno{M}$ tells us what result we get out if we substitute in some initial $\Gamma$-store $s$ to $M$, but it does not tell us what state we are left in at the end.  
+The next definition will give us an alternative version of the denotation that will convey this information.
+
 \begin{definition}
   Let $\Gamma,s\ts M\from T$ be a term with store.  
-  Then the \emph{sequoidal denotation} $\seqdeno{\Gamma,s\ts M}$ is the composite
+  Then we define the \emph{sequoidal denotation} $\seqdeno{\Gamma,s\ts M}$ to be the composite
   \[
     I \xrightarrow{\ms\ms\ms\oc\deno s\ms\ms} \oc S_\Gamma \xrightarrow{\ms\ms\ms\cell^\Gamma\ms\ms} \oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\mu_{\deno{\Gamma}}\ms\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\ms\ms\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma}\ms\ms} \deno T \tensor\oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\ms\ms\wk_{\deno T,\oc\deno{\Gamma}}\ms\ms} \deno T \sequoid \oc\deno{\Gamma}.
     \]
@@ -3162,7 +3279,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
 \begin{proof}
   We prove this on a case-by-case basis.
   \begin{itemize}
-    \item For most of the rules, $\Delta=\_$ and $s=s'$; i.e., the rule is of the form
+    \item For most of the rules, $\Delta=\blank$ and $s=s'$; i.e., the rule is of the form
       \[
         \Gamma,s\ts M \oopto \Gamma,s \ts N
         \]
@@ -3192,7 +3309,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
       \[
         \oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\ms\runit_{\oc\deno{\Gamma}}\ms\ms\ms} \oc\deno{\Gamma} \tensor I \xrightarrow{\ms\ms\ms\ms\oc\deno{\Gamma}\tensor (0;\cell)\ms\ms\ms\ms} \oc\deno{\Gamma} \tensor \oc\Varr \to \oc{\deno{\Gamma,x}} \xrightarrow{\ms\ms\ms\ms\Lambda\inv(\deno{\Gamma \ts \lambda x.M})\ms\ms\ms} \deno{T},
         \]
-      where, of course $\Lambda\inv(\deno{\Gamma\ts\lambda x.M})=\deno{\Gamma,x\ts M}$, and that the projection $\pr_\Gamma \from \oc{\deno{\Gamma,x}}$ is a right inverse for the composite $\runit_{\oc\deno{\Gamma}};(\oc{\deno{\Gamma}}\tensor(0;\cell));\cong$, since we have a commutative diagram
+      where, of course, $\Lambda\inv(\deno{\Gamma\ts\lambda x.M})=\deno{\Gamma,x\ts M}$, and that the projection $\pr_\Gamma \from \oc{\deno{\Gamma,x}}$ is a right inverse for the composite $\runit_{\oc\deno{\Gamma}};(\oc{\deno{\Gamma}}\tensor(0;\cell));\cong$, since we have a commutative diagram
       \[
         \begin{tikzcd}[column sep=50pt]
           \oc\deno{\Gamma} \arrow[r, "\runit_{\oc\deno{\Gamma}}"] \arrow[d, Rightarrow, no head]
@@ -3235,7 +3352,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
         x,\Gamma,s\ts \oc x\oopto x,\Gamma,s\ts s(x)\,.
       \end{mathpar}
       In each of these cases, the outer context $\Gamma$ is unchanged by the rule; moreover, each term ignores the variables in $\Gamma$.
-      So the denotations terms-in-context $x,\Gamma\ts M\from T$ on either side of each rule are of the form
+      So the denotations of the terms-in-context $x,\Gamma\ts M\from T$ on either side of each rule are of the form
       \[
         \oc{\deno{x,\Gamma}} \xrightarrow{\oc\pr_1} \oc \Varr \xrightarrow{\deno{x\ts M}} \deno{T}\,.
         \]
@@ -3358,7 +3475,7 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
         \end{mathpar}
         \caption[Diagrams to prove that the conclusion of Lemma \ref{LemSoundnessOopto} holds for the storage cell rules.]{Diagrams to prove that the conclusion of Lemma \ref{LemSoundnessOopto} holds for the storage cell rules.  
         References in the middle of a shape refer to Lemma \ref{LemCellProjections} and Proposition \ref{PropFormulaForAlpha} above.  
-        Note the prominent role played in both diagrams by the anamorphism square for $\cell$ as in Section \ref{SecCell}.}
+        Note the prominent role played in both diagrams by the anamorphism square for $\cell$ given in Section \ref{SecCell}.}
         \label{FigSoundnessOoptoStorage}
       \end{figure}
   \end{itemize}
@@ -3367,9 +3484,9 @@ We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ rela
 Now that we have dealt with the base rules, we can move on to the full relation $\opto$.
 
 \begin{lemma}
-  The relation $\opto$ between triples $\Gamma,s\ts M$ preserves the composite
+  The relation $\opto$ between triples $\Gamma,s\ts M$ preserves the sequoidal denotation
   \[
-    \oc\deno s;\cell^\Gamma;\mu_{\deno{\Gamma}};(\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma});\wk_{\deno T,\oc\deno{\Gamma}}\,.
+    \seqdeno{\Gamma,s\ts M} = \oc\deno s;\cell^\Gamma;\mu_{\deno{\Gamma}};(\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma});\wk_{\deno T,\oc\deno{\Gamma}}\,.
     \]
   I.e., if $\Gamma,s\ts M \oopto \Gamma,\Delta,s'\ts N$, where $M,N$ have type $T$, and $\EE$ is a context of type $U$ with a hole of type $T$, then the following diagram commutes.
   \[
@@ -3395,8 +3512,8 @@ Now that we have dealt with the base rules, we can move on to the full relation 
   \label{LemSoundnessOpto}
 \end{lemma}
 \begin{proof}
-  We use Lemma \ref{LemEvContexLemma} to reduce this to Lemma \ref{LemSoundnessOpto}.  
-  Indeed, Lemma \ref{LemEvContexLemma} tells us that for any $\Gamma,s\ts M$, $\deno{\Gamma\ts \EE[M]}$ may be written as
+  We use Lemma \ref{LemEvContexLemma} and Lemma \ref{LemSoundnessOpto}.  
+  Lemma \ref{LemEvContexLemma} tells us that for any $\Gamma,s\ts M$, $\deno{\Gamma\ts \EE[M]}$ may be written as
   \[
     \oc\deno{\Gamma} \xrightarrow{\mu_{\deno{\Gamma}}} \oc\deno{\Gamma}\tensor\oc\deno{\Gamma} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma} \deno T \tensor A \xrightarrow{\wk_{\deno T,A}} \deno T \sequoid A \xrightarrow{\tau} \deno U
     \]
@@ -3458,7 +3575,7 @@ Now that we have dealt with the base rules, we can move on to the full relation 
   as desired.
 \end{proof}
 
-It is now a simple induction to show that we can extend this to the $\converges$ relation.
+It is now a simple induction to lift this result from the small-step $\opto$ relation to the big-step $\converges$ relation.
 
 \begin{lemma}
   Suppose that $\Gamma,s\ts M \converges c,s'$, where $M,c\from T$.
@@ -3528,6 +3645,13 @@ It is now a simple induction to show that we can extend this to the $\converges$
     \]
   which, together with the diagram above, gives us the commutative diagram in the statement.
 \end{proof}
+So we have now proved that if $\Gamma,s\ts M \converges c,s'$, then the sequoidal denotations
+\begin{mathpar}
+  \seqdeno{\Gamma,s\ts M}
+  \and
+  \seqdeno{\Gamma,s'\ts c}
+\end{mathpar}
+are equal.
 
 It is then an easy corollary to show the sense in which our semantics is sound.
 
@@ -3543,8 +3667,8 @@ It is then an easy corollary to show the sense in which our semantics is sound.
   Lemma \ref{LemSoundness}, plus the fact that if $\Gamma,s\ts P\from T$, then we have a commutative diagram
   \[
     \begin{tikzcd}[column sep=10.8pt]
-      I \arrow[r, "\deno{s}", thick]
-        & \oc S_\Gamma \arrow[r, "\cell^\Gamma", thick]
+      I \arrow[r, "\deno{s}" yshift=3pt, thick]
+        & \oc S_\Gamma \arrow[r, "\cell^\Gamma" yshift=3pt, thick]
           & \oc\deno{\Gamma} \arrow[rr, "\mu_{\deno{\Gamma}}", thick, dashed] \arrow[ddd, "\deno{\Gamma\ts P}"', thick] \arrow[drr, "\runit_{\oc\deno{\Gamma}}" description, dotted]
             &
               & \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \arrow[rr, "\deno{\Gamma\ts P}\tensor\oc\deno{\Gamma}", thick, dashed] \arrow[d, "\oc\deno{\Gamma}\tensor()" description, dotted]
@@ -3615,7 +3739,7 @@ It is then easy to see the following.
 \begin{definition}
   We inductively define a relation $\plot_T^\Gamma$, where $\Gamma$ is a $\Var$-store and $T$ a type, between strategies $\sigma\from\oc\deno{\Gamma} \implies \deno T$ and terms $\Gamma\ts M\from T$ in context as follows.
   \begin{itemize}
-    \item If $X\in\{\bC,\bB,\bN\}$ is a datatype, $M\from X$ and $\sigma\from \oc\deno{\Gamma}\implies X$, then we say that $\sigma \plot_X^\Gamma u$ if for all $\Gamma$-stores $s$, either $\seqdeno{s,\sigma}=\bot_{A\sequoid\oc\deno{\Gamma}}$ or $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ and some canonical form $u\in X$ such that $\Gamma,s\ts M \converges u,s'$.
+    \item If $X\in\{\bC,\bB,\bN\}$ is a datatype, $M\from X$, $u\in X$ and $\sigma\from \oc\deno{\Gamma}\implies X$, then we say that $\sigma \plot_X^\Gamma u$ if for all $\Gamma$-stores $s$, either $\seqdeno{s,\sigma}=\bot_{A\sequoid\oc\deno{\Gamma}}$ or $\seqdeno{s,\sigma}=\seqdeno{\Gamma,s'\ts u}$ for some $\Gamma$-store $s'$ such that $\Gamma,s\ts M \converges u,s'$.
 
     \item If $\sigma\from \oc\deno{\Gamma} \implies \Varr$ and $\Gamma\ts M\from \Var$, we say that $\sigma\plot_{\Var}^\Gamma M$ if
       \[
@@ -3632,6 +3756,8 @@ It is then easy to see the following.
         \]
   \end{itemize}
 \end{definition}
+
+We now prove some lemmata about this new relation.
 
 \begin{lemma}
   Let $\Gamma\ts M,N\from T$ be terms in context of Idealized Algol such that
@@ -3727,6 +3853,8 @@ It is then easy to see the following.
   and so the result follows.
 \end{proof}
 
+Now we are ready to prove our main adequacy Lemma.
+
 \begin{lemma}
   Let $\Gamma$ be a $\Var$-context, let $\Delta$ be an arbitrary context and let $T$ be an Idealized Algol type.
   Write $\Delta=x_1\from T_1,\cdots,x_n\from T_n$.  
@@ -3762,15 +3890,15 @@ It is then easy to see the following.
         (\sigma_i)\semicom\deno{\Gamma,\Delta\ts x} = \deno{\Gamma\ts x}\,.
         \]
       Now we have $\deno{\Gamma\ts x};\pr_n = \deno{\Gamma\ts x\gets n}$ and $\deno{\Gamma\ts x};\pr_{\bN} = \deno{\Gamma \ts \oc\bN}$.  
-      From Lemma \ref{LemSoundnessOpto} (in particular, Figures \ref{FigSoundnessOoptoContext} and \ref{FigSoundnessOoptoStorage}), we know that if $s$ is a $\Gamma$-store, then
+      From the proof of Lemma \ref{LemSoundnessOpto} (in particular, Figures \ref{FigSoundnessOoptoContext} and \ref{FigSoundnessOoptoStorage}), we know that if $s$ is a $\Gamma$-store, then
       \[
         \seqdeno{s,\deno{\Gamma\ts x\gets n}} = \seqdeno{\Gamma,s\ts x\gets n} = \seqdeno{\Gamma, (s\vert x\mapsto n)\ts \skipp}\,,
         \]
-      where we have that $\Gamma,s\ts x\gets n\converges \skipp,(s\vert x\mapsto n)$, and that
+      where $\Gamma,s\ts x\gets n\converges \skipp,(s\vert x\mapsto n)$, and that
       \[
         \seqdeno{s,\deno{\Gamma\ts \oc x}} = \seqdeno{\Gamma,s\ts \oc x} = \seqdeno{\Gamma,s\ts s(x)}\,,
         \]
-      where we have that $\Gamma,s\ts \oc x \converges s(x),s$.
+      where $\Gamma,s\ts \oc x \converges s(x),s$.
 
     \item Next, suppose that $\Gamma,\Delta\ts M\from S\to T$ and $\Gamma,\Delta\ts N\from S$, where we already know that
       \[
@@ -3831,7 +3959,7 @@ It is then easy to see the following.
   \[
     \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \EE[M]})} = \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \EE[N]}}\,.
     \]
-  We can see this by precomposing both directions of the diagram in Figure \ref{FigSoundnessOpto} (with $\Gamma$ in that diagram standing for $\Gamma,\Delta$) with the composite
+  We can prove this by precomposing both directions of the diagram in Figure \ref{FigSoundnessOpto} (with $\Gamma$ in that diagram standing for $\Gamma,\Delta$) with the composite
   \[
     I \xrightarrow{\oc\deno{s}}
     \oc S_\Gamma \xrightarrow{\cell^\Gamma}
@@ -3853,7 +3981,15 @@ It is then easy to see the following.
       \[
         (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M} = (\sigma_i)\semicom\deno{\Gamma,\Delta\ts M};(\suc\tensor\oc\deno{\Gamma})\,;
         \]
-      since $\suc\from\bN \implies \bN$ is a strict strategy, we know that either $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \suc M})} = \bot_{\bN\sequoid\oc\deno{\Gamma}}$ or it is equal to $\seqdeno{\Gamma,s'\ts n};(\suc\tensor\oc\deno{\Gamma}) = \seqdeno{\Gamma,s'\ts n+1}$, and we have $\Gamma,s\ts \suc M[N_i/x_i]\converges n+1$.
+      since $\suc\from\bN \implies \bN$ is a strict strategy, we know that either 
+      \[
+        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \suc M})} = \bot_{\bN\sequoid\oc\deno{\Gamma}}
+        \]
+      or
+      \[
+        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M})} = \seqdeno{\Gamma,s'\ts n};(\suc\tensor\oc\deno{\Gamma}) = \seqdeno{\Gamma,s'\ts n+1}\,,
+        \]
+      and we have $\Gamma,s\ts \suc M[N_i/x_i]\converges n+1$.
       Therefore, 
       \[
         (\sigma_i)\semicom\deno{\Gamma,\Delta\ts\suc M} \plot_{\nat}^\Gamma \suc M[N_o/x_i]\,.
@@ -3941,7 +4077,7 @@ It is then easy to see the following.
       \[
         (\sigma_i)\semicom\deno{\Gamma,x\from\Var,\Delta\ts M} \plot_X^{\Gamma,x} M\,,
         \]
-      where $x$ is considered as belonging to the `$Gamma$-component'.
+      where $x$ is considered as belonging to the `$\Gamma$-component'.
       Let $s$ be a $\Gamma$-store -- then we get a $\Gamma,x$-store $(s\vert x\mapsto 0)$.
       So either $\seqdeno{(s\vert x\mapsto 0),((\sigma_i)\semicom\deno{\Gamma,x,\Delta\ts M})}=\bot_{X\sequoid\oc\deno\Gamma}$, or it is equal to $\seqdeno{\Gamma,x,(s'\vert x\mapsto n),u}$ for some $s',n,u$ such that $\Gamma,(s\vert x\mapsto 0)\ts M[N_i/x_i] \converges u,(s'\vert x\mapsto n)$.
 
@@ -4013,7 +4149,7 @@ If $\sigma\from 1 \implies \bC$ is a strategy, we say that $\sigma\downarrow$ if
   Since $\deno{M}\ne\bot_{\com}$, the only possibility is that $\blank,()\ts M\converges\skipp,()$.
 \end{proof}
 
-We can then prove an \emph{equational soundness} result.
+We can now prove an \emph{equational soundness} result.
 First, we recall the definition of \emph{observational equivalence} of terms.
 
 \begin{definition}[Observational Equivalence]
@@ -4034,7 +4170,7 @@ Next, we create a definition that mirrors this one within the denotational seman
 \end{definition}
 
 \begin{proposition}
-  Any semantics satisfying Computational Adequacy satisfies Equational Soundness.
+  Any compositional semantics satisfying Computational Adequacy satisfies Equational Soundness.
   \label{PropEquationalSoundness}
 \end{proposition}
 \begin{proof}
@@ -4090,7 +4226,7 @@ Again, we follow the proof from \cite{SamsonGuyIAActive} very closely.
 We want to apply this result in the case that $A$ is the denotation of an IA type, so we need to show that for any IA type $T$, the game $\deno T$ satisfies the hypotheses of Proposition \ref{PropInnocentFactorization}.
 In fact, we show something stronger.
 
-\begin{lemma}
+\begin{lemma}[{\cite[Lemma 15]{SamsonGuyIAActive}}]
   Let $T$ be a type of Idealized Algol.  
   Then $P_{\deno T}$ is the set of all sequences in $\L_{\deno T}$ that contain at most a single initial move.
   \label{LemTypeCharacterization}
@@ -4122,7 +4258,7 @@ In fact, we show something stronger.
 \section{Arena-only Semantics}
 \label{SecArenaOnly}
 
-Before we complete our Full Abstraction result, we take a detour to consider a variation of our game semantics in which we do away with the sets of plays $P_A$.  
+Before we complete our definability proof, and hence our proof of Full Abstraction, we take a detour to consider a variation of our game semantics in which we do away with the sets of plays $P_A$.  
 We call this an \emph{arena-only semantics}, since the objects of our category are plain arenas.
 Since the semantics given in \cite{hoPcf} are of this form, and since we want to quote definability results from this work, it makes sense to cast our own work in this form.
 
@@ -4135,7 +4271,7 @@ Let $A$ be a game.
 Since the underlying arena of $\oc A$ is the same as that of $A$, and since we have $P_A \subset P_{\oc A}$, we have the following result.
 
 \begin{proposition}
-  If $A$ is full, then we have $A=\oc A$.
+  If $A$ is full, then $A=\oc A$.
 \end{proposition}
 
 Note that the definition of the $\oc$ connective, together with Lemma \ref{LemTypeCharacterization}, implies the following.
@@ -4145,9 +4281,10 @@ Note that the definition of the $\oc$ connective, together with Lemma \ref{LemTy
   Then $\oc\deno{T}$ is full.
 \end{proposition}
 
-This Proposition on its own does not seem to be much use, since we want to consider the game $\deno T$ without the $\oc$ in front of it.  
+This Proposition on its own does not seem to be much use, since it relates to the exponential of the denotation of $T$, while all our results have been proved about the denotation $\deno T$ itself.
 But recall that the `co-Kleisli'-style morphisms in our category, which are strategies for $\oc A \implies B$, may alternatively be regarded as comonoid homomorphisms from the comonoid on $\oc A$ to the comonoid on $\oc B$.  
 Thus, if $S,T$ are Idealized Algol types, then the set of morphisms $\oc\deno S \implies \deno T$ in our original category is precisely the same as the set of morphisms $\oc\deno S \implies \oc\deno T$ that are comonoid homomorphisms.
+We will take up the rest of this section giving a combinatorial characterization of these morphisms.
 
 \begin{definition}
   Let $A$ be a game and let $sa$ be a play in $A$.  
@@ -4157,7 +4294,7 @@ Thus, if $S,T$ are Idealized Algol types, then the set of morphisms $\oc\deno S 
   We say that $\sigma$ is \emph{single-threaded} if player $P$'s moves only depend on the current thread; i.e., if whenever $sab\in\sigma$, $t\in\sigma$ and $ta\in P_A$ such that $\ct{sa}=\ct{ta}$, then we have $tab\in\sigma$.
 \end{definition}
 
-Note the similarity with the definition of innocence, where the only difference is that we use the $P$-views $\pv{sa}$ and $\pv{ta}$ rather than the current threads $\ct{sa}$ and $\ct{ta}$.
+Note that this definition is identical to the definition of an innocent strategy, except with the current thread $\ct{-}$ taking the role of the $P$-view $\pv{-}$.
 Since $\pv{s}$ is a subsequence of $\ct{s}$ for any sequence $s$, we get:
 \begin{proposition}
   Any innocent strategy is single-threaded.
@@ -4178,7 +4315,7 @@ Since $\pv{s}$ is a subsequence of $\ct{s}$ for any sequence $s$, we get:
   Then, since we have $\ct{sa}=\ct{s\vert_I a}$, we must have $s\vert_Iab\in\sigma$ by single-threadedness of $\sigma$.
 \end{proof}
 
-We now link the combinatorial definition of single-threadedness to a definition about comonoid homomorphisms.
+We now link this definition to the idea of a comonoid homomorphism.
 
 \begin{proposition}
   Let $A,B$ be well-opened games.
@@ -4221,9 +4358,10 @@ We now link the combinatorial definition of single-threadedness to a definition 
 
 Now consider the category whose objects are arenas and where the morphisms from $A$ to $B$ are single-threaded strategies for $A\implies B$, where we identify $A$ and $B$ with their corresponding full games.  
 Then, if $T$ is any Idealized Algol type, there is some corresponding arena such that the full game on that arena is isomorphic to $\oc\deno T$.  
-We will call this arena $\deno T$ as well, relying on context to distinguish them.
+We shall write $\deno T$ for this arena, relying on context to distinguish the two notions of denotation.
 This means that our semantics of Idealized Algol lives within the new category, since a single-threaded strategy for $\deno S \to \deno T$ is the same thing as a strategy for $\oc \deno S \implies \deno T$ in the original semantics.
 
+We end up with a game semantics entirely based around arenas, without having to talk about distinguished sets of legal plays.
 This semantics is much closer to the game semantics of PCF developed by Hyland and Ong in \cite{hoPcf}; the difference there is that they use innocent rather than single-threaded strategies.
 
 Note that it is impossible to define the tensor product of games, let alone the sequoid, in the arena-only semantics, so our Computational Adequacy proof would not have worked had we adopted this approach from the start.
@@ -4268,7 +4406,7 @@ Then our factorization result (Proposition \ref{PropInnocentFactorization}) give
   Now suppose instead that $\deno M\not\sim\deno N$.
   Without loss of generality, suppose there is $\alpha\from \deno T\to \bC$ such that $\deno{M}^\dag;\alpha\ne\bot_{\bC}$ and $\deno{N}^\dag;\alpha=\bot_{\bC}$.
 
-  Since $\deno{M}^\dag$ is the supremum of all its compact sub-strategies, if $\deno{M}^\dag;\alpha'=\bot_{\bC}$ for all compact $\alpha'\subset \alpha$, then $\deno{M}^\dag;\alpha=\bot_{\bC}$ by continuity of composition.  
+  Since $\alpha$ is the supremum of all its compact sub-strategies, if $\deno{M}^\dag;\alpha'=\bot_{\bC}$ for all compact $\alpha'\subset \alpha$, then $\deno{M}^\dag;\alpha=\bot_{\bC}$ by continuity of composition.  
   Therefore, there is some compact $\alpha'\subset\alpha$ such that $\deno M^\dag;\alpha\ne\bot_{\bC}$; moreover, we have that $\deno{N}^\dag;\alpha'=\bot_{\bC}$ by monotonicity of composition.  
 
   Then $\alpha'$ is the denotation of some term $P\from T \to \com$, and we have $P\,M\converges$ and $P\,N\not\converges$ by Computational Adequacy.  
@@ -4279,6 +4417,7 @@ Then our factorization result (Proposition \ref{PropInnocentFactorization}) give
 \label{SecIntrinsicEquivalence}
 
 We conclude by giving a more concrete description of the intrinsic equivalence relation on strategies.
+This will give us a concrete representation of a morphism in the quotiented category, and hence an algorithm for deciding observational equivalence of (finitary) terms of Idealized Algol.
 
 \begin{definition}
   We say that a justified sequence $s$ is \emph{complete} if every question move $q$ occurring in $s$ has some answer move $a$ justified by $q$.
@@ -4299,7 +4438,10 @@ We conclude by giving a more concrete description of the intrinsic equivalence r
 
   Conversely, suppose that $\sigma\not\sim\tau$.  
   Then, without loss of generality, there is some $\alpha \from \oc(\oc A\implies B) \implies \bC$ such that $\sigma^\dag;\alpha=\skipp$ and $\tau^\dag;\alpha=\bot_{\bC}$.  
-  Then we have some $\s\in\sigma^\dag\|\alpha$ such that $\s\vert_{\bC}=qa$, and $\s\vert_{\oc A \implies B}$ decomposes into `threads' which are plays of $\oc A \implies B$, one for each initial move occurring in that sequence.  
+  Therefore we must have some $\s\in\sigma^\dag\|\alpha$ such that $\s\vert_{\bC}=qa$, and $\s\vert_{\oc A \implies B}$ decomposes into `threads' which are plays of $\oc A \implies B$, one for each initial move occurring in that sequence.  
   By the well bracketing condition, every one of these threads is itself a complete play in $\oc A \implies B$.  
-  Every one of these sequences is contained in $\sigma$; if they were all contained in $\tau$, then we would have $\s\in\\tau^\dag\|\alpha$, which would be a contradiction, so we end up with a complete sequence contained in $\sigma\setminus\tau$.
+  Every one of these sequences is contained in $\sigma$; if they were all contained in $\tau$, then we would have $\s\in\tau^\dag\|\alpha$, which would be a contradiction, so we end up with a complete sequence contained in $\sigma\setminus\tau$.
 \end{proof}
+
+The significance of this result is that it gives us an algorithm for deciding whether two IA terms are observationally equivalent, at least if we pass to a finitary version of IA with only finite datatypes and no recursion other than a primitive for divergence).  
+Recall from Section \ref{SecCAnFA} that this was impossible for PCF.
