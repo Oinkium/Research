@@ -516,3 +516,16 @@ The solution is to prove adequacy in the normal way for the semantics of IA${}_\
 Here, we are using an idea due to Levy \cite{LevyGsInfinite}: that if we want to prove adequacy for countable nondeterminism, then we need a form of \emph{explicit forcing}, in which we uncover some information about the points at which we have made an infinite nondeterministic branch.  
 In our case, the explicit forcing is done through the language IA${}_\bN$, which creates a complete record of the nondeterministic values we have chosen along the way.  
 We have then applied the second part of Levy's technique -- \emph{hiding} -- to remove the explicit information and yield a pure, computationally adequate model of countable nondeterminism.
+
+\section{Afterword}
+
+The aim of this thesis was to demonstrate how techniques of categorical algebra can be applied to the study of Full Abstraction for programming languages.
+I can think of two main benefits of this combination.
+The first is a technical one: the results that we have proved are very generally applicable, and it would not be unreasonable to hope that they could be applied in the future to help construct new Fully Abstract models of programming languages.  
+The second reason is less precise, but equally important: throughout this thesis, we have endeavoured to clear up some of the mystery surrounding Full Abstraction, particularly in Game Semantics.  
+The idea of using monads and Kleisli categories to model computational effects has a long history, but work in Full Abstraction, though it sometimes uses category-theoretic techniques, has often seemed fairly \emph{ad hoc}.  
+My hope is that the work presented here -- including both the sequoidal-exponential semantics for Idealized Algol and the work on Kleisli categories and parametric monads -- has gone some way towards explaining where some of the constructions used in Game Semantics come from.
+
+One of the themes in this thesis has been an attempt to push results as far as they can go: thus, we have tried as far as possible to use, for example, Computational Adequacy results for a base language in order to prove Computational Adequacy for an extended language, rather than writing on a stand-alone proof.
+To an extent, we have been forced to do this by the level of generality we have been working at, but I hope that our focus on syntactic rather than semantic results has helped shift the focus away from the properties of any particular model.
+

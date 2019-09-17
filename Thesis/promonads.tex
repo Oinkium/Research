@@ -123,7 +123,13 @@ The next theorem gives a criterion for a multicategory to be representable.
   \[
     \pi_{\vec a} \from a_1,\cdots,a_n \to \tensor \vec a\,.
     \]
-  Suppose that the $\pi_{\vec a}$ are \emph{strongly universal} in the sense that if $b_1,\cdots b_k, c_1,\cdots,c_l$ are two (possibly empty) lists of objects, and $d$ is an object, then any multimorphism
+  Suppose that the $\pi_{\vec a}$ are \emph{strongly universal} in the sense that if 
+  \begin{mathpar}
+    b_1,\cdots b_k, c_1
+    \and
+    \cdots,c_l
+  \end{mathpar}
+  are two (possibly empty) lists of objects, and $d$ is an object, then any multimorphism
   \[
     f \from b_1,\cdots,b_k,a_1,\cdots,a_n,c_1,\cdots,c_l \to d
     \]
@@ -136,7 +142,7 @@ The next theorem gives a criterion for a multicategory to be representable.
     f=(\id_{b_1},\cdots,\id_{b_k},\pi_{\vec a},\id_{c_1},\cdots,\id_{c_l});\hat{f}\,.
     \]
   Given objects $a,b$ of $\M$, define $a\tensor b = \tensor a,b$, and let $I$ be the object $\tensor\epsilon$, where $\epsilon$ is the empty list.  
-  Then the operation $\blank\tensor\blank$ and $I$ give rise to the multicategory structure on $\M$:
+  Then the operation $\blank\tensor\blank$ and $I$ make $\M$ into a monoidal category $\overline{\M}$ such that $\tilde{\overline{\M}}$ and $\M$ are isomorphic multicategories.
   \begin{itemize}
     \item $\blank\tensor\blank$ and $I$ are the monoidal product and unit of a monoidal category on $\M_1$, the underlying category of $\M$.
     \item For any sequence $a_1,\cdots a_n$ of objects of $\M$ there is a canonical isomorphism
@@ -263,9 +269,9 @@ The next theorem gives a criterion for a multicategory to be representable.
     \]
   commutes, where $\sigma$ is the map
   \begin{mathpar}
-    \{(1,1),\cdots,(n,1),\cdots,(1,m),\cdots,(n,m)\} \to \{(1,1),\cdots,(1,m),\cdots,(n,1),\cdots,(n,m)\}
+    (1,1),\cdots,(n,1),\cdots,(1,m),\cdots,(n,m) \to (1,1),\cdots,(1,m),\cdots,(n,1),\cdots,(n,m)
   \end{mathpar}
-  that sends $(i,j)$ to $(j,i)$, considered as a permutation of $\{1,\cdots,mn\}$.
+  sending $(i,j)$ to $(i,j)$, considered as a permutation of $\{1,\cdots,mn\}$.
 \end{definition}
 
 \section{Monoids in multicategories}
@@ -646,10 +652,10 @@ It follows that in this case (and more generally, if $\V$ is a cocomplete monoid
   F\tensor G(a, c) = \int_{b\from \C} F(a,b) \times G(b,c)\,.
   \]
 This is the usual notion of composition for $\Set$-enriched profunctors.  
-However, if $\V$ is not cocomplete, then the multicategory of endoprofunctors on $\C$ need not be representable, even if $\V$ is representable.
+However, it relies on the appropriate coends existing in $\Set$; for more generally $\V$-enriched profunctors, the multicategory of endoprofunctors on $\C$ need not be representable, even if $\V$ is a monoidal category.
 
 We have only considered profunctors going from a category into itself.  
-Profunctors in general form a structure called an \emph{fc-multicategory} \cite{Multicategories}, though we shall not be using this notion.
+Profunctors in general form a structure called an \emph{fc-multicategory} \cite{Multicategories}, but we shall not be using this notion.
 
 \section{Functors are a special case of profunctors}
 
@@ -829,7 +835,7 @@ and where multimorphisms $F_1,\cdots,F_n\to G$ are natural transformations
   \[
     (F\tensor_{\text{Day}} G)(z) = \int^{x,y} F(x) \times G(y)\times \X(x\tensor y,z)\,.
     \]
-  However, this multicategory is not representable in general, particularly in the cases when we are working with enriched multicategories (not defined here), where the enriching multicategory is not cocomplete, or when the category $\M$ is not the enriching category.
+  However, this multicategory is not representable in general, particularly in the cases when we are working with enriched multicategories (not defined here), where the enriching multicategory is not cocomplete, or when the category $\M$ is not the enriching multicategory.
 \end{remark}
 
 \section{Monoids on functors are multifunctors}
@@ -894,7 +900,7 @@ This is the same thing as an $[\X,\Set]$-enriched category with a single object,
 for some monoidal category $\X$ and some $[\X,\Set]$-enriched category $\C$.
 
 This generalizes categories in the case that $\X=1$.  
-It generalizes monoidal functors $\X \to \Set$ in the case that $\C$ is the enriched category $*_{[\X,\Set]}$ with a single object $()$, where the morphisms $() \to ()$ are given by the functor $[I,\blank]$, for $I$ the monoidal unit in $\X$, this being the initial object in $[\X,\Set]$.
+It generalizes monoidal functors $\X \to \Set$ in the case that $\C$ is the $[\X,\Set]$-enriched category $*_{[\X,\Set]}$ with a single object $()$, where the morphisms $() \to ()$ are given by the functor $[I,\blank]$, for $I$ the monoidal unit in $\X$, this being the initial object in $[\X,\Set]$.
 
 Our main result will tell us that it doesn't actually matter which way round we choose: these two ways of unifying the two generalization of a monoid in fact give the same result.  
 The only ingredient we are missing is an appropriate change of base to move from ordinary $\Set$-enriched categories to $[\M,\Set]$-enriched categories.
@@ -1031,9 +1037,9 @@ Then, by Theorem \ref{StokessTheorem}, we may identify this multifunctor with a 
 But now, by Proposition \ref{PropPromonadsAreCategories}, this promonad is the same thing as an $[\X,\Set]$-enriched category that has the same objects as $\C$ and admits an identity-on-objects $[\X,\Set]$-enriched functor out of ${\partial_X}_*(\C)$.  
 
 The objects of this $[\X,\Set]$-enriched category are the objects of $\C$.
-By working the definitions through the proofs of Proposition \ref{PropFunctorsIntoProfunctors} and Theorem \ref{StokessTheorem}, we see that the object of morphisms from $a$ to $b$ is
+By working the definitions through the proofs of Proposition \ref{PropFunctorsIntoProfunctors} and Theorem \ref{StokessTheorem}, we see that the object of morphisms from $a$ to $b$ is the functor
 \[
-  x \mapsto \C(a,x.b)\,,
+  x \mapsto \C(a,x.b)\from \X \to \Set\,,
   \]
 and that composition of morphisms is the multimorphism
 \[

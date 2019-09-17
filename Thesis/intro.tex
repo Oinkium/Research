@@ -23,7 +23,7 @@ However, if we introduce a non-terminating function
 diverge :: Int -> Int
 diverge x = diverge x
 \end{lstlisting}
-then it becomes clear that \lstinline[language=haskell]{f} and \lstinline[language=haskell]{g} are not interchangeable: indeed, since Haskell evaluates inputs to functions lazily, evaluating \lstinline[language=haskell]{g (diverge 0)} will not evaluate the non-terminating term \lstinline[language=haskell]{(diverge 0)} and will terminate at the value \listinline[language=haskell]{0}, while \lstinline[language=haskell]{f (diverge 0)} \emph{will} evaluate \lstinline[language=haskell]{(diverge 0)} and will itself fail to converge.
+then it becomes clear that \lstinline[language=haskell]{f} and \lstinline[language=haskell]{g} are not interchangeable: indeed, since Haskell evaluates inputs to functions lazily, evaluating \lstinline[language=haskell]{g (diverge 0)} will not evaluate the non-terminating term \lstinline[language=haskell]{(diverge 0)} and will terminate at the value \lstinline[language=haskell]{0}, while \lstinline[language=haskell]{f (diverge 0)} \emph{will} evaluate \lstinline[language=haskell]{(diverge 0)} and will itself fail to converge.
 
 This is not itself a difficult problem to get around: all we have to do is treat non-termination as a separate input value in itself.
 Thus, we add to each datatype an extra distinguished value $\bot$ representing non-termination (so, for example, the type of integers is represented by the set $\bZ_\bot = \bZ + \{\bot\}$), and then function types are interpreted as functions between these sets -- so a term of type \lstinline[language=haskell]{Int -> Int} is represented by a function $\bZ_\bot \to \bZ_\bot$.
@@ -48,7 +48,7 @@ If we have a random number generator, then we need to check that our functions r
 What we have been doing in all these examples is \emph{denotational semantics}: the art of using mathematical objects to study logic and programming languages.  
 In the first case, our denotational semantics was expressed through the mathematics of sets and functions, where we captured the behaviour of a (programming language) function via a (mathematical) function.
 
-Then, following Scott \cite{ScottDomains}, we refined this model to one based on partially-ordered sets -- more specifically, \emph{Scott domains} -- in which we modelled the behaviour or a program via an associated Scott-continuous functions between domains.
+Then, following Scott \cite{ScottDomains}, we refined this model to one based on partially ordered sets -- more specifically, \emph{Scott domains} -- in which we modelled the behaviour or a program via an associated Scott-continuous functions between domains.
 
 In our other examples, we need to come up with further refinements to our model in order to incorporate the new computational effects. 
 For example, to handle nondeterminism, we might want to switch to using nondeterministic functions, or \emph{relations}, instead of ordinary functions.

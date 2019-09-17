@@ -1,4 +1,4 @@
-\begin{thebibliography}{CCPW18}
+\begin{thebibliography}{CCHW18}
 
 \bibitem[Ad{\'a}03]{Adamek}
 Ji{\v r}{\'i} Ad{\'a}mek.
@@ -49,6 +49,13 @@ Andrej Bauer.
 Andreas Blass.
 \newblock A game semantics for linear logic.
 \newblock {\em Annals of Pure and Applied Logic}, 56(1–3):183 -- 220, 1992.
+
+\bibitem[CCHW18]{NonAngelic}
+Simon Castellan, Pierre Clairambault, Jonathan Hayman, and Glynn Winskel.
+\newblock Non-angelic concurrent game semantics.
+\newblock In Christel Baier and Ugo Dal~Lago, editors, {\em Foundations of
+  Software Science and Computation Structures}, pages 3--19, Cham, 2018.
+  Springer International Publishing.
 
 \bibitem[CCPW18]{PPCF}
 Simon Castellan, Pierre Clairambault, Hugo Paquet, and Glynn Winskel.
@@ -275,6 +282,13 @@ Saunders MacLane.
 \bibitem[Man09]{ClosedMulticategories}
 Oleksandr Manzyuk.
 \newblock Closed categories vs. closed multicategories, 2009.
+
+\bibitem[McC02]{GuySci}
+Guy McCusker.
+\newblock A fully abstract relational model of syntactic control of
+  interference.
+\newblock In Julian Bradfield, editor, {\em Computer Science Logic}, pages
+  247--261, Berlin, Heidelberg, 2002. Springer Berlin Heidelberg.
 
 \bibitem[Mel12]{MelliesCategory}
 Paul-Andr\'{e} Melli\`{e}s.

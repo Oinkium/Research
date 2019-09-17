@@ -52,13 +52,55 @@
 \let\clearpage\OldClearpage
 \newpage
 
-%\input{intro}
-%\input{games}
-%\input{thesis}
-%\input{pmonads}
+\section*{Acknowledgements}
+
+There are many people and organizations to whom I owe a debt of gratitude, and without whom this thesis would not have been written.  
+My first thanks go to EPSRC research grant EP/K018868/1 for funding my PhD, keeping me fed and housed for three and a half years, and sponsoring several trips to conferences and schools at home and abroad.  
+I am also indebted to the organizers of those conferences and schools, including but not limited to 
+\begin{itemize}
+  \item Paul Blain Levy, Juha Kontinen, Marina Lenisa, Ugo dal Lago and Gabriel Sandu, chairs of various iterations of GaLoP (and, in Paul's case, organizer of the Midlands Graduate School 2016);
+  \item Filippo Bonchi and Barbara K\"{o}nig, organizers of CALCO 2017;
+  \item Matthias Felleisen, Robby Findler, Matthew Flatt, Shriram Krishnamurthi, Jay McCarthy, and Justin Pombrio, teachers at the Racket Summer School 2017;
+  \item Moshe Vardi, Daniel Kroening and Marta Kwiatkowska, co-chairs of FloC 2018; and
+  \item Dan Ghica and Achim Jung, co-chairs of CSL 2018.
+\end{itemize}
+I would also like to express gratitude to those people whom I have had productive discussions with at conferences and during departmental visits: in particular, Martin Hyland, Paul-Andr\'{e} \Mellies, Paul Levy and Pierre Clairambault.
+
+Thank you to the anonymous reviewers from CALCO 2017, LICS 2018, CSL 2018 and FoSSaCS 2019 for your careful comments, all of which have shaped this thesis in some way.
+
+Thank you to the whole Computer Science Department at the University of Bath, particularly the Mathematical Foundations team, for all your help over the years.  
+Congratulations to John Power on the conclusion of a momentous career, and thanks for helping me with my category theory.  
+Thank you too to Ben, David and Alessio for organizing the Departmental Seminar at Bath and for being such good colleagues.
+
+Thank you to my family for all your support during my PhD.  
+Thank you to Ellie for your patience and love, and for enduring a three-year long-distance relationship while I was in Bath.  
+This thesis is dedicated to you.
+
+Lastly, there would be no thesis at all without my PhD supervisor, Jim Laird, who took me on when I had little to no knowledge of the subject and has carefully guided me throughout.  
+That I am able to submit this now is testament to Jim's compendious knowledge of the subject and his patience in imparting some of it to me.  
+At all stages of my PhD, I have been able to rely on our weekly meetings for insight when I was stuck or unsure about the correct direction to investigate.  
+In addition, Jim often encouraged me to submit papers to workshops and conferences, even in the early stages of my PhD, and the experience of doing so has shaped the direction of my research, and helped me form valuable relationships with other researchers.
+
+\begin{abstract}
+  Starting with a Fully Abstract denotational semantics for an Algol-like programming language, we investigate how we can use techniques of categorical algebra to adapt the semantics when the original language is extended with various nondeterministic effects.  
+  Our running example for the base denotational semantics is Abramsky and McCusker's game semantics for Idealized Algol \cite{SamsonGuyIAActive}.  
+  We give a full presentation of this game semantics, including an alternative proof of Computational Adequacy that uses Laird's concept of a sequoidal category \cite{laird02} rather than the combinatorial proof from Abramsky and McCusker's original paper.
+
+  We introduce the familiar concepts of monads and Kleisli categories, and prove a Full Abstraction result that shows how the process of passing to certain Kleisli categories corresponds to particular language extensions.  
+  We link these language extensions to may- and must-testing for finite and countable nondeterminism, showing how we can construct Fully Abstract models of these effects using Kleisli categories.
+
+  We introduce a generalization of monads: lax actions, also known as parametric monads.
+  We investigate various corresponding generalizations of Kleisli categories, and prove a Full Abstraction result for one such generalization, showing how it too can be used to construct a model of an extended version of our original Algol-like language.
+  We show how a special case of this construction can be adapted to model a probabilistic language.
+\end{abstract}
+
+\input{intro}
+\input{games}
+\input{thesis}
+\input{pmonads}
 \input{promonads}
-%\input{pmonads2}
-%\input{conc}
+\input{pmonads2}
+\input{conc}
 
 \Urlmuskip=0mu plus 9mu\relax
 \bibliographystyle{alpha2}

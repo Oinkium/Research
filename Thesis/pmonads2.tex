@@ -14,7 +14,7 @@ We fix a symmetric monoidal category $\X$ and an oplax monoidal functor $j\from 
   \]
 is equal to the diagonal on $j(p)$.
 
-We fix a model $\G$ of Idealized Algol as above, and suppose that the datatypes in $\G$ are interpreted via an oplax monoidal functor $\Set \to \G$.  
+Having fix a model $\G$ of Idealized Algol as above, suppose that the datatypes in $\G$ are interpreted via an oplax monoidal functor $\Set \to \G$.  
 Then we get an oplax monoidal functor $\X \to \G$, inducing a reader action of $\oppcat\X$ on $\G$ such that the category $\G/\oppcat\X$ is Cartesian closed.  
 We will define a language and an interpretation of this language in the category $\G/\oppcat\X$.
 
@@ -123,9 +123,25 @@ The one major difference is the rule for $\choose_p$.
 
 \section{Translation into \IAX}
 
-We make the connection between the languages \IAX and \IAXX more explicit in the following series of lemmas.
-In this section, we will make use of an encoding between an object of the form $jp$ and an Idealized Algol datatype $N$.  
-The case we have in mind is when $jp$ is some finite set and $N$ is the natural number object, so that we can choose some way of representing elements of $jp$ as elements of $N$.
+Having noted the connection between the operational semantics of \IAX and \IAXX, we now link the denotational semantics of the two languages.  
+Recall that a morphism $A \to B$ in our model of \IAX was a Kleisli morphism; i.e., a morphism of the form
+\[
+  A \to (X \to B)
+  \]
+in the original category, while a morphism $A \to B$ in the category $\G/\oppcat\X$ is a \Mellies morphism; i.e., a morphism
+\[
+  A \to (j(x) \to B)
+  \]
+for some object $x$ of $\X$.  
+Now, if we can ensure that $j(x)$ is a set corresponding to an IA datatype, then we can treat this \Mellies morphism as a Kleisli morphism and start to pull results from Chapter \ref{ChapMonads} over to the parametric monad case.  
+
+We have already required that the terms $\choose_{p}$ are such that $j(p)$ is always an IA datatype.  
+However, when we compose two \Mellies morphisms together, we take the tensor product of the corresponding objects of $\X$.  
+Therefore, we need to ensure that we can represent $j(p_1 \tensor \cdots \tensor p_n)$ using an IA datatype, for any finite collection $p_i$ of objects of $\X$ such that $j(p_i)$ is an IA datatype for all $i$.
+
+We shall therefore assume that, whenever $p_1,\cdots,p_n$ is a finite collection of objects of $\X$ such that the set $j(p_i)$ is an IA datatype for all $i$.
+
+The case we have in mind is when the $j(p_i)=\bB$ for all $i$ and $N$ is the natural number object, so that we can choose some way of representing elements of $jp$ as elements of $N$.
 
 \begin{definition}
   Let $p_1,\cdots,p_n$ be a sequence of objects of $\X$ and let $N$ be an object of $\X$ such that $j(N)$ is a datatype of Idealized Algol (i.e., $j(N)\in\{\bC,\bB,\bN\}$).  
@@ -224,7 +240,7 @@ To prove the converse, we prove a lemma about substitution analogous to  Lemma \
     \inferrule{\Gamma,s^{(0)}\ts M_1\converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges_{u_n} c_n,s^{(n)}}
     {\Gamma,s^{(0)} \ts M \converges_{u_1\cat \cdots \cat u_n} c,s^{(n)}}
     \]
-  be an inference of IA${}_{j(N)}$, where every instance of $\ask_{j(N)}$ occurs as part of some term $\neww (\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)$, and suppose that $M\ne \neww(\lambda v.v\gets\ask_{j(N)};\Pi_j\oc v)$ for any $j$.  
+  be an inference of IA${}_{j(N)}$, where every instance of $\ask_{j(N)}$ occurs as part of some term of the form $\neww (\lambda v.v\gets \ask_{j(N)};\Pi_i \oc v)$, and suppose that $M\ne \neww(\lambda v.v\gets\ask_{j(N)};\Pi_j\oc v)$ for any $j$.  
   Suppose we have sequences $U_1,\cdots,U_n$ such that $u_k$ covers $U_k$ for $k=1,\cdots,n$.
   Then
   \[
@@ -306,11 +322,11 @@ Lemmas \ref{LemSoundnessIaxx} and \ref{LemAdequacyIaxx} together prove the follo
   Let $\Gamma,x_1,\cdots,x_n\ts M$ be a term-in-context of Idealized Algol, where $\Gamma$ is a $\Var$-context.
   Then the following are equivalent.
 
-  i) $\Gamma,s\ts M[\choose_{p_i/x_i}]\converges_U c,s'$.
+  i) $\Gamma,s\ts M[\choose_{p_i/x_i}]\converges_U c,s'$ in \IAXX.
   
-  ii) $\Gamma,s\ts M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v/x_i]\converges_u c,s'$ for all $u$ covering $U$.
+  ii) $\Gamma,s\ts M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v/x_i]\converges_u c,s'$ in IA${}_N$ for all $u$ covering $U$.
 
-  iii) $\Gamma,s\ts M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v/x_i]\converges_u c,s'$ for some $u$ covering $U$.
+  iii) $\Gamma,s\ts M[\neww(\lambda v.v\gets\ask_{j(N)};\Pi_i \oc v/x_i]\converges_u c,s'$ in IA${}_N$ for some $u$ covering $U$.
   \label{LemComputationalAdequacyIaxx}
 \end{lemma}
 \begin{proof}
@@ -342,17 +358,17 @@ Firstly, the morphisms in $\G/\oppcat \X$ are equivalence classes of \Mellies mo
 Secondly, a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an (equivalence class of) morphisms $1 \to (j(p) \to \bC)$ in $\G$, and the object $j(p)$ need not be an Idealized Algol datatype.
 
 To solve the second problem, we make an additional small assumption on our category $\G$.  
-We require that there exist morphisms
+We require that our category $\G$ contains morphisms
 \[
   \xi_u \from (X \to \bC) \to \bC
   \]
-for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f \from X \to Y$, we have $(f\to \bC);\xi_u = \xi_{f_*u}$, where $f_*u$ is the sequence formed by applying $f$ pointwise to $u$, and such that if $X$ is an IA datatype, then
+for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f \from X \to Y$, we have $(f\to \bC);\xi_u = \xi_{f_*u}$ (where $f_*u$ is the sequence formed by applying $f$ pointwise to $u$), and such that if $X$ is an IA datatype, then
 \[
   \xi_u = (X \to \bC) \xrightarrow{\eta_u} (\Varr \to \bN) \xrightarrow{\neww} \bN \xrightarrow{t_{|u|}} \bC\,.
   \]
 
 \begin{example}
-  In the category of games, the morphisms $\xi_u$ are the strategies containing the plays $\epsilon$, $qq$ and plays of the form
+  In the category of games, the morphisms $\xi_u$ can be taken to be the strategies containing the plays $\epsilon$, $qq$ and plays of the form
   \begin{mathpar}
     \begin{array}{ccc}
       X           & \bC & \bC \\
@@ -378,7 +394,7 @@ for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f
                   &     &  a  
     \end{array}
   \end{mathpar}
-  (so the strategy has no reply if player $O$ asks the question in $X$ fewer than $|u|$ times, or tries to ask it more than $|u|$ times).
+  (so the strategy has no reply if player $O$ asks the question in $X$ fewer than $|u|$ times before returning, or tries to ask it more than $|u|$ times).
 \end{example}
 
 \begin{definition}
@@ -387,7 +403,7 @@ for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f
   \label{DefAcc}
 \end{definition}
 
-Recall that a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an equivalence class of \Mellies morphisms $1 \to (j(p) \to \bC)$ in $\G$, where $p$ ranges over the objects of $\X$, and where the equivalence relation is generated by identifying all pairs of morphisms $\sigma \from 1 \to (j(p) \to \bC)$ and $\tau \from 1 \to (j(q) \to \bC)$ such that there is a morphism $f \from p \to q$ such that $\tau;(j(f)\to\bC)=\sigma$.
+Recall that a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an equivalence class of \Mellies morphisms $1 \to (j(p) \to \bC)$ in $\G$, where $p$ ranges over the objects of $\X$, and where the equivalence relation is generated by identifying all pairs of morphisms $\sigma \from 1 \to (j(p) \to \bC)$ and $\tau \from 1 \to (j(q) \to \bC)$ such that there is a morphism $f \from p \to q$ such that $\tau;(j(f)\to A)=\sigma$.
 
 \begin{definition}
   We define an equivalence relation on pairs $(p,\U)$, where $p$ is an object of $\X$ and $\U\subset j(p)^*$ is a set of finite sequences drawn from $j(p)$ to be the equivalence relation generated by identifying $(p,\U)$ and $(q,\V)$ whenever there is a morphism $f\from p \to q$ in $\X$ such that for all $u\in j(p)^*$, we have $u\in\U$ if and only if $j(f)_*u\in\V$.
@@ -423,6 +439,8 @@ So, in this case, the equivalence relation on sets of sequences is subsumed into
 
 We can now state and prove our Computational Adequacy result.
 For this result, given a term $M\from \com$ mentioning objects $p_1,\cdots,p_n$, we shall assume the existence of some IA datatype $N$ admitting a morphism $f \from N \to p_1 \tensor \cdots \tensor p_n$ such that the corresponding projections $\pi_i$ on to the objects $j(p_i)$ are IA-definable.
+
+For example, if $j(p_i) = \bB$ for all $i$, then we can take $N=\bN$ and use the binary encoding.
 
 \begin{definition}
   Let $M$ be a closed term of \IAXX of type $\com$ mentioning $p_1,\cdots,p_n$.
@@ -489,8 +507,9 @@ We then make definitions that will mirror this equivalence in the denotational s
 Now we can prove Equational Soundness as we did in Proposition \ref{PropEquationalSoundness}.
 
 \begin{theorem}[Equational Soundness for \IAXX]
-  Let $M,M'\from T$ be closed terms of \IAXX such that $\deno{M}\sim\deno{N}$.
+  Let $M,M'\from T$ be closed terms of \IAXX such that $\deno{M}\sim\deno{M'}$.
   Then $M$ and $M'$ are observationally equivalent.
+  \label{TheEquationalSoundnessIAXX}
 \end{theorem}
 \begin{proof}
   First suppose that $M$ and $M'$ are not observationally equivalent -- so there is some context $C$ such that $B(C[M])$ and $B(C[M'])$ are inequivalent.
@@ -498,11 +517,71 @@ Now we can prove Equational Soundness as we did in Proposition \ref{PropEquation
 
   Let $\alpha$ be the denotation of the term-in-context $f\from T \ts C[f]$.  
   Then $\Lambda(\deno{M});\alpha$ is the denotation of $C[M]$ and $\Lambda(\deno{M'});\alpha$ the denotation of $C[M']$.  
-  By Theorem \ref{TheComputationalAdequacyIAXX}, the sets $(N,\Acc(\Lambda(\deno{M});\alpha))$ and $(N,\Acc(\Lambda(\deno{M'})))$ are inequivalent, and so $\deno M \not\sim\deno{M'}$.
+  By Theorem \ref{TheComputationalAdequacyIAXX}, the sets $(N,\Acc(\Lambda(\deno{M});\alpha))$ and $(N,\Acc(\Lambda(\deno{M'};\alpha)))$ are inequivalent, and so $\deno M \not\sim\deno{M'}$.
 \end{proof}
 
-Unfortunately, compact definability does not hold for this setup in general.  
-In the next section we will develop an important special case -- a semantics of Probabilistic Algol -- for which we will be able to prove Full Abstraction.
+\subsection{Full Abstraction for \IAXX}
+
+In order to prove Full Abstraction, we first prove a compact definability result.
+
+\begin{definition}
+  Let $\sigma\from A \to B$ be a morphism in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
+  We say that $\sigma$ is \emph{compact} if it is compact when considered as a morphism in $\G$.
+\end{definition}
+
+\begin{remark}
+  When we say `considered as a morphism in $\G$' in the above definition, we mean `in at least one of its possible interpretations as a morphism in $\G$'.  
+  Note, however, that the continuous image of a compact element is compact, and so if we pass to a new representative of $\sigma$ by composing on the left by the image of some morphism in $\Rv_{\Omega}^{FS}$, then the resulting representative of $\sigma$ will also be compact.
+
+  Lastly, if $\G$ is the category of games, this compactness property is invariant under the choice of representative for $\sigma$.
+\end{remark}
+
+In order to prove compact definability, we need to make a further assumption.
+
+\begin{proposition}[{Compact Definability for \IAXX}]
+  Suppose the functor $j \from \X \to \Set$ is strong monoidal and that for any object $x$ of $\X$ there is a finite collection $p_1,\cdots,p_n$ such that $j(p_i)$ is an IA datatype for each $i$ and such that there is a morphism
+  \[
+    h \from j(p_1) \times \cdots \times j(p_n) \to x\,.
+    \]
+  Then any compact morphism in $\G/\oppcat \X$ between denotations of IA types is definable.
+  \label{PropIAXXCompactDefinability}
+\end{proposition}
+\begin{proof}
+  Let $\sigma \from \deno S \to \deno T$ be a morphism in $\G/\oppcat \X$, where $S$ and $T$ are IA types.  
+  After composing with some suitable $h$ as above, we may assume that $\sigma$ is given by a compact morphism
+  \[
+    \deno S \to j(p_1 \tensor \cdots \tensor p_n) \to \deno T
+    \]
+  in $\G$.  
+  After precomposing with the multiplicative coherence for $j$ on the $p_i$, we get a compact morphism
+  \[
+    \deno S \to (j(p_1) \times \cdots \times j(p_n) \to \deno T)\,,
+    \]
+  which is the denotation of some term-in-context
+  \[
+    x \from S,a_1 \from p_1,\cdots,a_n\from p_n \ts M \from T
+    \]
+  by compact definability for $\G$.
+  Then, by our earlier work, we know that $\sigma$ itself is the denotation of the term
+  \[
+    x\from S \ts M[\choose_{p_i}/a_i] \from T\,.\qedhere
+    \]
+\end{proof}
+
+We can now prove Full Abstraction.
+
+\begin{theorem}[{Full Abstraction for \IAXX}]
+  Suppose that our action satisfies the conditions of Proposition \ref{PropIAXXCompactDefinability}.
+  Let $M,M'\from T$ be closed terms of \IAXX.  
+  Then $M$ and $M'$ are observationally equivalent if and only if $\deno M\sim \deno M'$.
+\end{theorem}
+\begin{proof}
+  The right-to-left direction is Theorem \ref{TheEquationalSoundnessIAXX}.  
+  For the other direction, suppose that $\deno M \not\sim \deno M'$.  
+  Then, without loss of generality there is some $\alpha$ such that the sets $(N,\Acc(\Lambda(\deno M);\alpha))$ and $(N,\Acc(\Lambda(\deno{M'};\alpha))$ are inequivalent.  
+  Since $\G$ is enriched in algebraic domains, $\alpha$ may be taken to be compact, and is therefore the denotation of some term-in-context $L \from T \to \com$.
+  Then, by our Computational Adequacy result, we have that $B(L M)$ and $B(L M')$ are inequivalent; i.e., that $M$ is not observationally equivalent to $N$.
+\end{proof}
 
 \section{Probability}
 
@@ -725,21 +804,9 @@ It will suffice to prove the following.
 
 Then if we have an arbitrary morphism $\sigma \from A \to B$ (given by a morphism $\tilde\sigma \from A \to (j(X) \to B)$ in the base category), Proposition \ref{PropFiniteSupport} gives us the morphism $f$ mediating between $\tilde\sigma$ and a morphism of the form specified at the start of this section.
 
-\begin{definition}
-  Let $\sigma\from A \to B$ be a morphism in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
-  We say that $\sigma$ is \emph{compact} if it is compact when considered as a morphism in $\G$.
-\end{definition}
-
-\begin{remark}
-  When we say `considered as a morphism in $\G$' in the above definition, we mean `in at least one of its possible interpretations as a morphism in $\G$'.  
-  Note, however, that the continuous image of a compact element is compact, and so if we pass to a new representative of $\sigma$ by composing on the left by the image of some morphism in $\Rv_{\Omega}^{FS}$, then the resulting representative of $\sigma$ will also be compact.
-
-  If $\G$ is the category of games, this compactness property is invariant under the choice of representative for $\sigma$.
-\end{remark}
-
 We can now prove our compact definability result.
 
-\begin{proposition}[Compact definability]
+\begin{proposition}[Compact definability for PA]
   Let $T$ be an Idealized Algol type and let $\sigma \from 1 \to \deno{T}$ be a compact morphism in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$.  
   Then there is some closed term $M\from T$ such that $\sigma = \deno{M}$.
   \label{PropProbabilityCompactDefinability}
@@ -1090,7 +1157,7 @@ Then next proposition shows that we do not lose anything by doing this, since th
 \section{The Probabilistic Game Semantics of Danos and Harmer}
 
 The work in the previous section shows that two strategies that are related by the probabilistic equivalence relation $\approx_\bP$ are automatically observationally equivalent.  
-This suggests that the realy content of a probabilistic strategy consists in the quantities $\bP(s\in\sigma)$.  
+This suggests that the real content of a probabilistic strategy consists in the quantities $\bP(s\in\sigma)$.  
 An idea, then, is to take the quantities $\bP(s\in\sigma)$ as primitives, rather than defining them indirectly.
 
 That is the approach taken by Danos and Harmer in \cite{DanosHarmer} -- the original game semantics for a probabilistic variant of Algol.  

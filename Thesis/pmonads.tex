@@ -34,7 +34,7 @@ such that the following diagrams commute.
       & (x\tensor I) . a
   \end{tikzcd}
 \end{mathpar}
-Since lax actions generalize monads, we shall sometimes follow \Mellies \cite{ParametricMonads} and refer to them as \emph{parametric monads}.
+Since lax actions are a generalization of monads, we shall sometimes follow \Mellies \cite{ParametricMonads} and refer to them as \emph{parametric monads}.
 We shall not be considering strong actions (for which $m,e$ are required to be isomorphisms), so we shall sometimes say `action' to mean `lax action'.
 
 \begin{example}
@@ -1611,6 +1611,7 @@ First, we need a standard result about the Day convolution product.
 
 \begin{proposition}[\cite{Pisani}]
   Let $\X,\YY$ be a monoidal category and let the functor category $[\YY,\Set]$ be equipped with the Day convolution product.  
+
   Given a functor $F \from \X \times \YY \to \Set$, we have an associated functor $\Lambda(F) \from \X \to [\YY,\Set]$.
   Then $F$ is lax monoidal if and only if $\Lambda(F)$ is lax monoidal.
 \end{proposition}
