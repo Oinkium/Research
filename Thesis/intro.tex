@@ -341,7 +341,7 @@ So now we have to add extra information in about infinite sequences of moves (se
 
 Things get even more difficult when we consider nondeterministic versions of stateless languages such as PCF.  
 Naively relaxing the determinism constraint on the usual definition of an innocent strategy does not give the right notion of a nondeterministic innocent strategy \cite{TsukadaSheaves}.  
-There are definitions of nondeterministic innocence due to Levy \cite{levy2014morphisms}, toTsukada and Ong \cite{TsukadaSheaves}, and, via concurrent games, to Castellan, Clairambault, Hayman and Winskel \cite{NonAngelic}, that use the concept of \emph{morphisms between plays}, but these are already some distance removed conceptually from Hyland and Ong's original paper that introduced deterministic innocent strategies.
+There are definitions of nondeterministic innocence due to Levy \cite{levy2014morphisms}, to Tsukada and Ong \cite{TsukadaSheaves}, and, via concurrent games, to Castellan, Clairambault, Hayman and Winskel \cite{NonAngelic}, that use the concept of \emph{morphisms between plays}, but these are already some distance removed conceptually from Hyland and Ong's original paper that introduced deterministic innocent strategies.
 Tsukada and Ong's paper involves a complete recasting of strategies as sheaves in order to understand what happens when we try to mix nondeterminism and innocence.
 
 This is just one example that shows that the process of adding different computational effects into a game semantics can be very hard and can require some ingenuity.
@@ -427,7 +427,7 @@ For example, the extra requirement wrecks our previous example of failure of con
 Indeed, the sequence $\le_m ?$ is no longer constant, since, for example, $\le_5 ?$ does not terminate if it prints $6$ to the log, whereas $\le_{1000} ?$ does.
 The least upper bound of the $\le_m?$ is then the term that terminates whenever it prints a single number to the log; i.e., $\le_\infty ?$.
 
-We can prove continuoity of composition in general for the new language, which allows us to prove computational adequacy in the usual way.
+We can prove continuity of composition in general for the new language, which allows us to prove computational adequacy in the usual way.
 Having done this, we then use operational methods to find a way to identify terms that should be observationally equivalent in the original sense.  
 This allows us to quotient out our model for the new language to get one that is computationally adequate for the ordinary nondeterministic version.
 

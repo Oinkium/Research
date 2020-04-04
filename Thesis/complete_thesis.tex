@@ -1,4 +1,4 @@
-\documentclass[11pt]{report}
+\documentclass[11pt, a4paper, notitlepage]{report}
 
 \def\FEWFONTS{1}
 \def\THESIS{1}
@@ -41,16 +41,14 @@
     for the purposes of consultation. \ul{\hspace{64pt}}
  
   \end{center}
+\input{pictures}
 \end{titlepage}
 
-\let\OldClearpage\clearpage
-\let\clearpage\relax
+\addtocounter{page}{2}
 
 \tableofcontents
 \listoffigures
-
-\let\clearpage\OldClearpage
-\newpage
+\clearpage
 
 \section*{Acknowledgements}
 
@@ -68,6 +66,8 @@ I would also like to express gratitude to those people whom I have had productiv
 
 Thank you to the anonymous reviewers from CALCO 2017, LICS 2018, CSL 2018 and FoSSaCS 2019 for your careful comments, all of which have shaped this thesis in some way.
 
+Thank you to my PhD examiners, Paul Blain Levy and Guy McCusker, for undertaking to read the first draft of this thesis (no small feat!), and for your many helpful comments and corrections.  
+
 Thank you to the whole Computer Science Department at the University of Bath, particularly the Mathematical Foundations team, for all your help over the years.  
 Congratulations to John Power on the conclusion of a momentous career, and thanks for helping me with my category theory.  
 Thank you too to Ben, David and Alessio for organizing the Departmental Seminar at Bath and for being such good colleagues.
@@ -81,6 +81,8 @@ That I am able to submit this now is testament to Jim's compendious knowledge of
 At all stages of my PhD, I have been able to rely on our weekly meetings for insight when I was stuck or unsure about the correct direction to investigate.  
 In addition, Jim often encouraged me to submit papers to workshops and conferences, even in the early stages of my PhD, and the experience of doing so has shaped the direction of my research, and helped me form valuable relationships with other researchers.
 
+\newpage
+\null\vspace{60pt}
 \begin{abstract}
   Starting with a Fully Abstract denotational semantics for an Algol-like programming language, we investigate how we can use techniques of categorical algebra to adapt the semantics when the original language is extended with various nondeterministic effects.  
   Our running example for the base denotational semantics is Abramsky and McCusker's game semantics for Idealized Algol \cite{SamsonGuyIAActive}.  

@@ -1,0 +1,49 @@
+\begin{figure}[p]
+  \begin{mathpar}
+    \begin{tikzcd}[column sep=41pt, row sep=30pt]
+      I \arrow[r, "\oc s(x)"] \arrow[d, "\oc n" description] \arrow[dr, Rightarrow, no head]
+        & \oc \bN \arrow[r, "\cell"] \arrow[d, "()" description] \arrow[dr, "\cell_0" description]
+          & \oc\Varr \arrow[r, "\mu_{\Varr}"] \arrow[dd, "\alpha_{\Varr}" description, controls={+(1,-0.25) and +(0.8,0.75)}, start anchor={[yshift=-1pt]}, end anchor = {[xshift=25pt]}]
+            & \oc \Varr \tensor \oc \Varr \arrow[d, "\der_{\Varr} \tensor \oc\Varr" {description, near start}]  \\
+      \oc\bN \arrow[dd, "\cell" description] \arrow[ddr, "\lunit_{\oc\bN}" description, end anchor={[xshift=-3pt, yshift=-2pt]}]
+        & I \arrow[l, "\oc n" description]
+          & \Varr \sequoid \oc\bN \arrow[d, "\Varr\sequoid\cell" description] \arrow[dd, "\pr_n\sequoid\oc\bN" {description, pos=0.44}, controls={+(-2.5,-0.2) and (-0.5,0.5)}]
+            & \Varr \tensor \oc\Varr \arrow[dl, "{\wk_{\Varr,\oc\Varr}}" description] \arrow[dd, "\pr_n\tensor\oc\Varr" description] \\
+      %
+        & \bC \tensor \oc\bN \arrow[dr, "{\wk_{\bC,\oc\bN}}" description] \arrow[ddr, "\bC \tensor \cell" description]
+          & \Varr \sequoid\oc\Varr \arrow[ddr, "\pr_n\sequoid\oc\Varr" description]
+            & \\
+      \oc\Varr \arrow[d, "\mu_{\Varr}" description] \arrow[dr, "\lunit_{\oc\Varr}" description]
+        & I \tensor \oc\bN \arrow[u, "\skipp\tensor\oc\bN" {description, pos=0.44}] \arrow[d, "I\tensor \cell" description]
+          & \bC \sequoid \oc\bN \arrow[dr, "\bC \sequoid \cell" description]
+            & \bC \tensor \oc\Varr \arrow[d, "{\wk_{\bC,\oc\Varr}}" {description, pos=0.44}] \\
+      \oc\Varr \tensor \oc\Varr \arrow[r, "()\tensor\oc\Varr"']
+        & I \tensor \oc\Varr \arrow[r, "\skipp \tensor \oc\Varr"']
+          & \oc\bC \tensor \oc\Varr \arrow[r, "{\wk_{\bC,\oc\Varr}}"']
+            & \bC \sequoid \oc\Varr
+    \end{tikzcd}
+    \vspace{48pt}\and
+    \begin{tikzcd}[row sep=30pt]
+      I \arrow[r, "\oc s(x)"] \arrow[d, "\oc s(x)" description] \arrow[dr]
+        &[-31pt] \oc\bN \arrow[r, "\cell"] \arrow[dr, "\mu_\bN" description] \arrow[ddr, "\cell_0" {description, near end}, bend left=50, end anchor={[xshift=4pt]}]
+          &[-100pt] \oc\Varr \arrow[r, "\mu_{\Varr}"] \arrow[ddd, "\alpha_{\Varr}" description]
+            &[-21pt] \oc\Varr \tensor \oc\Varr \arrow[d, "\der_{\Varr}\tensor\oc\Varr" {description, near start}] \\
+      |[alias=Z]| \oc\bN \arrow[d, "\lunit_{\oc\bN}" description] \arrow[dd, "\cell" description]
+        & |[left=40pt of Z.east]| I \tensor I \arrow[dl, "I \tensor \oc s(x)" description] \arrow[r, "\oc s(x) \tensor \oc s(x)"] \arrow[d, "s(x)\tensor \oc s(x)" description]
+          & |[left=50pt of Z.west]| \oc \bN \tensor \oc\bN \arrow[dl, "\der_\bN \tensor \oc\bN" {description, near start}, bend right=10]
+            & \Varr \tensor \oc\Varr \arrow[ddl, "{\wk_{\Varr,\oc\Varr}}" {description, pos=0.65}] \arrow[dd, "\pr_{\bN}\tensor\oc\Varr" description] \\
+      |[right=of Z.west]| I \tensor \oc\bN \arrow[r, "s(x)\tensor\oc\bN"'] \arrow[ddr, "I \tensor \cell" description]
+        & \bN \tensor \oc\bN \arrow[d, "{\wk_{\bN,\oc\bN}}" description] \arrow[ddr, "\bN \tensor\cell" {description, pos=0.4, xshift=-5pt}, bend right=30]
+          & |[left=of Z]| \Varr \sequoid \oc\bN \arrow[dl, "\pr_\bN \sequoid \oc\bN" {description, pos=0.65}, bend left=30] \arrow[d, "\Varr\sequoid\cell" {description, xshift=-5pt}, bend left=30]
+            & \\
+      \oc\Varr \arrow[d, "\mu_{\Varr}" description] \arrow[dr, "\lunit_{\Varr}" description]
+        & |[right=of Z]| \bN \sequoid \oc\bN \arrow[drr, "\bN \sequoid \cell" {description, pos=0.4}, controls={+(0.2,-1.2) and +(-0.3,0.2)}, to=Y.north west, end anchor={[yshift=-2pt]}]
+          & \Varr \sequoid\oc\Varr \arrow[dr, "\pr_\bN \sequoid \oc\Varr" {description, pos=0.35}]
+            & \bN \tensor \oc\Varr \arrow[d, "{\wk_{\bN},\oc\Varr}" description] \\
+      \oc\Varr \tensor \oc\Varr \arrow[r, "()\tensor\oc\Varr"']
+        & I \tensor \oc\Varr \arrow[r, "s(x)\tensor\oc\Varr"']
+          & \bN \tensor \oc\Varr \arrow[r, "{\wk_{\bN,\oc\Varr}}"']
+            & |[alias=Y]| \bN \sequoid \oc\Varr
+    \end{tikzcd}
+  \end{mathpar}
+\end{figure}

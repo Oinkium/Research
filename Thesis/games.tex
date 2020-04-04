@@ -23,8 +23,8 @@ public interface Var
 \end{lstlisting}
 \end{minipage}
 
-In other words, a given a term $M$ of type $\Var$, we can either insert a natural number into $M$ or we can request a natural number from $M$.  
-An example is when $M$ acts like a storage cell, returning the last number that was inserted into it, but $M$ could act in a different way.
+In other words, any term $M$ of type $\Var$ supports two operations: one `read' operation that returns a natural number and one `write' operation that accepts a natural number.
+The most natural case to consider is when $M$ actually corresponds to a storage cell, with `write' updating the value and `read' returning it, but our language will permit any other implementation of the $\Var$ interface, including, for example, a term of type $\Var$ that ignores any values `written' to it and always returns $0$ when read: such terms, which fulfil the type-theoretic contract of a storage cell without replicating its behaviour, are sometimes called `bad variables' (e.g., in \cite[\sec 2]{SamsonGuyIAPassive}).
 
 The types of Idealized Algol are then defined by the following inductive grammar.
 
@@ -82,12 +82,17 @@ At type $\Var$, we have terms that call the read and write `methods' to assign a
   \inferrule*{\Gamma\ts V \from \Var}{\Gamma \ts \oc V \from \nat}
 \end{mathpar}
 
-We have two ways to create tems of type $\Var$.  
+We have the $\lett$ keyword that allows us to evaluate an expression and bind the result to a variable name.
+\begin{mathpar}
+  \inferrule*[right={$S\in\{\bool,\nat\}$; $T\in\{\com,\bool,\nat\}$}]{\Gamma \ts M \from S \\ \Gamma,x\from S \ts N \from T}{\Gamma \ts \lett_{S,T} x = M \inn N \from T}
+\end{mathpar}
+
+We have two ways to create terms of type $\Var$.  
 The first gives us the storage-cell behaviour.
 \begin{mathpar}
   \inferrule*[right={$T\in\{\com,\bool,\nat\}$}]{\Gamma,x\from \Var \ts M \from T}{\Gamma\ts \neww_T \lambda x.M\from T}
 \end{mathpar}
-The idea here is that if $M$ is a term that refers to some free variable $x$ of type $\Var$; then $\neww \lambda x.M$ makes $x$ behave like an actual storage cell (so, for instance, the result of the computation $\neww_\nat \lambda x.(x\gets 5);!x$ will be $5$).
+The idea here is that if $M$ is a term that refers to some free variable $x$ of type $\Var$; then $\neww \lambda x.M$ makes $x$ behave like an actual (zero-initialized) storage cell (so, for instance, the result of the computation $\neww_\nat \lambda x.(x\gets 5);!x$ will be $5$).
 
 The second way of creating terms of type $\Var$ is using the $\mkvar$ keyword.  
 $\mkvar$ can be used to create `bad variables': arbitrary pairs of read and write methods that do not necessarily actually behave like actual storage cells.
@@ -163,16 +168,15 @@ As a shorthand, we write $\lambda_A^{OP}\from M_A \to \OP$ for $\pr_1\circ\lambd
 Note that since every non-initial move in a justified sequence $s$ must be justified by some previous move, then the first move in the sequence must be initial and therefore an $O$-question.  
 If $s$ is alternating, this means that $s$ ends with an $O$-move if it has odd length and with a $P$-move if it has even length.  
 
-\begin{definition}
-  Given a legal sequence $s\in \L_A$, and a move $b$ in $s$, we say that a move $a$ in $s$ is \emph{hereditarily justified by $b$} if there is a chain of justification pointers going back from $a$ to $b$.
-
-  We write $s\vert_b$ for the subsequence of $s$ given by all moves in $s$ that are hereditarily justified by $b$.
-  Given a set $I$ of initial moves, we write $s\vert_I$ for the subsequence of $s$ given by all moves that are hereditarily justified by some $b\in I$.
-
-  A \emph{game} is a tuple $A=(M_A,\lambda_A,\ts_A,P_A)$ where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed subset of $\L_A$ such that if $s\in P_A$ and $I$ is a set of initial moves, then $s\vert_I\in P_A$.
-\end{definition}
-
 We shall call an odd-length sequence $s\in P_A$ an \emph{$O$-position} and an even-length sequence a \emph{$P$-position}.
+
+\begin{definition}
+  A \emph{game} is a tuple
+  \[
+    A=(M_A,\lambda_A,\ts_A,P_A)
+    \]
+  where $(M_A,\lambda_A,\ts_A)$ is an arena and $P_A$ is a non-empty prefix-closed subset of $\L_A$.
+\end{definition}
 
 \begin{example}[Empty game]
   The \emph{empty game} $I$ is given by the tuple
@@ -220,7 +224,7 @@ We write $\sigma\from A$ to denote that $\sigma$ is a strategy for the game $A$.
 In the \emph{product} $A\times B$ of games $A$ and $B$, player $O$ chooses either $A$ or $B$ on the first move and subsequent play is that game.
 
 \begin{definition}
-  Given games $A,B$, define a game $A\times B$ by
+  Given games $A,B$, define the \emph{product} of $A$ and $B$ to be the game $A\times B$ given by
   \begin{itemize}
     \item $M_{A\times B} = M_A + M_B$;
     \item $\lambda_{A\times B} = [\lambda_A,\lambda_B]$;
@@ -315,7 +319,7 @@ We have not yet shown that this is indeed a well-formed strategy; the proof of t
 We start by proving some lemmata and making some definitions.
 
 \begin{lemma}
-  We extend the function $\lambda_A^{OP}$ to sequences of moves by
+  We extend the function $\lambda_A^{OP}$ to alternating sequences of moves by
   \begin{itemize}
     \item $\lambda_A^{OP}(\epsilon)=P$ and
     \item $\lambda_A^{OP}(sa)=\lambda_A(a)$.
@@ -657,8 +661,23 @@ We then claim that:
   \[
     \subs_i = \{s\in P_{B\implies A}\suchthat\text{for all even-length $t\prefix s$, $t\vert_B=i_*(t\vert_A)$}\}\,.
     \]
-  If $P_B=\{i_*(s)\suchthat s\in P_A\}$, then we call it a \emph{structural isomorphism}, and we write $\cc_i$ (`copycat') instead of $\subs_i$.
+  If $P_B=\{i_*(s)\suchthat s\in P_A\}$, then we call $i$ a \emph{structural isomorphism}, and we write $\cc_i$ (`copycat') instead of $\subs_i$.
 \end{definition}
+
+\begin{example}
+  If, in particular, $A = B$ and $i$ is the identity, then the resulting strategy is sometimes called \emph{the} copycat strategy on $A \implies A$.  
+  It will take the role of the identity in our categorical semantics.
+\end{example}
+
+\begin{example}
+  If $A$ and $B$ are games, then the set of plays of $A \sequoid B$ is a subset of the set of plays of $A \tensor B$.  
+  This will give us a subset inclusion morphism $A \tensor B \implies A \sequoid B$.
+\end{example}
+
+\begin{example}
+  If $(A_i)$ is a collection of games, then there is a natural injection from the set of plays for $A_j$ into the set of plays for $\prod_i A_i$.  
+  This gives us projection morphisms $\prod_i A_i \implies A_j$ for each $j$.
+\end{example}
 
 \begin{proposition}
   $\subs_i$ is an innocent strategy.
@@ -679,7 +698,7 @@ We then claim that:
   It follows that $ab\vert_A=i_*(ab\vert_B)$, so either $a$ is a move in $A$ and $b=i(a)$ or $a$ is a move in $B$ and $a=i(b)$.  
   Since the same applies to $c$, and since $i$ is injective, we have $b=c$.
 
-  This argument also shows that $\subs_i$ is \emph{history-free} -- i.e., that its reply to an $O$-position is entirely determined by the last $O$-move -- and therefore it is certainly innocent.
+  This argument also shows that $\subs_i$ is \emph{history-free} -- i.e., that its reply to an $O$-position is entirely determined by the last $O$-move -- and therefore that it is certainly innocent.
 
   Now let $\sigma \from C \implies B$ be a strategy.  
   Suppose that $\s\in\sigma\|\subs_i$.  
@@ -704,7 +723,7 @@ An easy corollary of this fact is that composition of copycat strategies respect
 
 \begin{corollary}
   Let $i$ be a subset inclusion from $A$ to $B$ and let $j$ be a subset inclusion from $B$ to $C$.  
-  Then $j\circ i$ is a subset inclusion from $A$ to $C$ and $\cc_{j\circ i}=\subs_j;\subs_i\from C \implies A$.
+  Then $j\circ i$ is a subset inclusion from $A$ to $C$ and $\subs_{j\circ i}=\subs_j;\subs_i\from C \implies A$.
 \end{corollary}
 
 It is also easy to see from Proposition \ref{PropCopycat} that the identity function $\id\from M_A \to M_A$ is a structural isomorphism from $A$ to itself, and that the resulting copycat strategy $\cc_{\id}$ is an identity for composition.  
@@ -780,7 +799,7 @@ To prove that this is a strategy, we prove a lemma analogous to our Lemma \ref{L
       O & O & O
     \end{array}\,.
     \]
-  Moreover, either $\lambda_A^{OP}(s\vert_A)=P$ or $\lambda_B^{OP}(s\vert_B)=P$.
+  Moreover, either $\lambda_A^{OP}(s\vert_A)=P$ or $\lambda_B^{OP}(s\vert_B)=P$; i.e., the bottom row of the table above does not occur.
   \label{LemTensorAnalogue}
 \end{lemma}
 \begin{proof}
@@ -1079,9 +1098,18 @@ A consequence of this is that while tree immersions do give rise to strategies, 
   \[
     \zz_\phi = \{s\in P_{B\implies A}\suchthat\text{for all even-length $t\prefix s$, $t\vert_B=\phi(t\vert_A)$}\}\,.
     \]
+  We shall refer to strategies of the form $\zz_\phi$ as \emph{zigzag strategies}.
 \end{definition}
 \begin{example}
   If $i$ is a subset inclusion from $A$ to $B$, then $i_*$ is a tree immersion from $A$ to $B$ and $\zz_{i_*}=\subs_i$.
+\end{example}
+\begin{example}
+  If $A,B,C$ are games, then we have a natural morphism
+  \[
+    (A \sequoid C) \times (B \sequoid C) \implies (A \times B) \sequoid C\,,
+    \]
+  given by a tree immersion from the set of plays of $(A \times B) \sequoid C$ to the set of plays of $(A \sequoid C) \times (B \sequoid C)$.  
+  Note that this is not a subset inclusion: if $s$ is a play  of $(A \times B) \sequoid C$ ending in a move in $C$, then the copy of $C$ that that move ends up in is determined by whether $s$ begins with a move in $A$ or in $B$.
 \end{example}
 
 \begin{proposition}
@@ -1118,7 +1146,7 @@ We want an analogue of Proposition \ref{PropCopycat}.
   Then it is clear that $(\s\vert_{C,A})^\phi=\s\vert_{C,B}$.  
 
   Conversely, suppose that $s\in P_{C\implies A}$ and that $s^\phi\in\sigma$.  
-  We construct a sequence $\s\in\sigma\|\zz_phi$ such that $\s\vert_{C,B}=s^\phi$ and $\s\vert_{C,A}=s$ by taking the sequence $s$ and inserting, in order, the elements of the sequence $\phi(s\vert_A)$ immediately after each $O$-move in $s\vert_C$ and immediately before each $P$-move in $C$, leaving the rest of $s$ intact.  
+  We construct a sequence $\s\in\sigma\|\zz_\phi$ such that $\s\vert_{C,B}=s^\phi$ and $\s\vert_{C,A}=s$ by taking the sequence $s$ and inserting, in order, the elements of the sequence $\phi(s\vert_A)$ immediately after each $O$-move in $s\vert_C$ and immediately before each $P$-move in $C$, leaving the rest of $s$ intact.  
   Then $\s\vert_{C,B}=s^\phi\in\sigma$ and $\s\vert_{B,A}\in\zz_\phi$, by construction.  
   So $s=\s\vert_{C,A}\in \sigma;\zz_\phi$.
 \end{proof}
@@ -1154,6 +1182,8 @@ More generally:
   
   Similarly, $\tau\subset\sigma$, and so $\sigma$ and $\tau$ are equal.
 \end{proof}
+
+Applying this to subset inclusions using Proposition \ref{PropSubsetInclusionEpic}, we see that a surjective subset inclusion is both a monomorphism and a split epimorphism, and hence an isomorphism.
 
 \section{Products in $\G$}
 
@@ -1228,10 +1258,10 @@ In this section, we will introduce the categorical semantics of the sequoid oper
 The sequoid is a non-standard operator and does not fall into any of the established patterns of categorical algebra; rather, it gives rise to the new notion of a \emph{sequoidal category} introduced by Laird in \cite{laird02}.
 
 To start with, we would like to be able to say that $\blank\sequoid\blank$ is a functor from $\G \times \G \to \G$, as is the case with the tensor product $\blank\tensor\blank$.  
-However, this does not quite work: given strategies $\sigma\from A \implies B$ and $\tau\from C \implies D$, we may not get a well-formed strategy for $(A \sequoid C) \implies (B \sequoid D)$ by `playing according to $\sigma$ in $A$ and $B$ and according to $\tau$ in $C$ and $D$'.  
-The reason is that the constraint that player $O$ plays in $B$ before $D$ is not strong enough to force player $P$ to play in $A$ before $C$; indeed, suppose that $\sigma$ tells player $P$ to respond to an initial move in $B$ with another move in $B$.  
-Suppose that player $O$ then decides to make a move in $D$.  
-If $\tau$ tells player $P$ to respond to this move in $D$ with a move in $C$, then she will be stuck, unable to play this move because no move has yet been played in $A$.
+However, this does not quite work: given strategies $\sigma\from A \implies B$ and $\tau\from C \implies D$, we would \emph{like} to say that we get a strategy $\sigma\sequoid\tau \from A \sequoid C \implies B \sequoid D$.  
+However, this does not quite work as we might expect: suppose player $O$ begins (as he must) with some move $b$ in $B$, and suppose that $\sigma$'s reply to $b$ is another move $b'$ in $B$.  
+Suppose then that player $O$ switches and plays a move $d$ in $D$, and suppose that $\tau$'s reply to $d$ is a move $c$ in $C$.  
+Then player $P$ is unable to play according to $\tau$, because $d$ is not yet a legal move in $(A\sequoid C) \implies (B \sequoid D)$ since no move has yet been played in $A$.
 
 We can fix this problem by imposing some constraints on the strategies $\sigma$ and $\tau$.  
 The problem occurs when player $O$'s initial move in $B$ is not reflected by an initial move by player $P$ in $A$; therefore, if $\sigma$ is such that player $P$ always responds to the initial move in $B$ with a move in $A$, then we can form a strategy $\sigma\sequoid\tau$ for $(A\sequoid C)\implies (B\sequoid D)$.  
@@ -1440,7 +1470,7 @@ We formalize the structure we have uncovered so far in the concept of a \emph{se
   \end{mathpar}
   the inclusion functor $J\from \G_s \to G$ and the natural transformation
   \begin{mathpar}
-    \wk_{A,X}=\subs_{j} \from JA \tensor X = A \tensor X \to A \sequoid X = J(A \sequoid X)
+    \wk_{A,X}\from JA \tensor X = A \tensor X \to A \sequoid X = J(A \sequoid X)
   \end{mathpar}
   form a sequoidal category.
 \end{proposition}
@@ -1450,19 +1480,16 @@ We formalize the structure we have uncovered so far in the concept of a \emph{se
   Let us start with the diagrams.  
   By Proposition \ref{PropCopycat}, commutativity of these diagrams follows from commutativity of the diagrams formed from the corresponding subset inclusion functions in $\Set$.  
   For example, to show that the first diagram commutes in $\G$, we must show that the following diagram commutes in $\Set$.
-  \scriptsize
   \[
     \begin{tikzcd}[column sep=16pt, row sep=30pt]
-      ((M_A + M_X) + M_Y) + M_Z \arrow[r, "{[\assoc_{M_A,M_X,M_Y},\id_{M_Z}]}" yshift=3pt] \arrow[d, "{\assoc_{M_A+M_X,M_Y,Z}}" description]
-        & (M_A + (M_X + M_Y)) + M_Z \arrow[r, "{\assoc_{M_A,M_X+M_Y,M_Z}}" yshift=3pt]
-          & M_A + ((M_X + M_Y) + M_Z) \arrow[dl, "{[\id_{M_A},\assoc_{M_X,M_Y,M_Z}]}"] \\
-      (M_A + M_X) + (M_Y + M_Z) \arrow[r, "{\assoc_{M_A,M_X,M_Y+M_Z}}" yshift=3pt]
+      ((M_A + M_X) + M_Y) + M_Z \arrow[r, "{[\assoc_{M_A,M_X,M_Y},\id_{M_Z}]}" yshift=6pt] \arrow[d, "{\assoc_{M_A+M_X,M_Y,Z}}"']
+        & (M_A + (M_X + M_Y)) + M_Z \arrow[d, "{\assoc_{M_A,M_X+M_Y,M_Z}}" yshift=3pt] \\
+      (M_A + M_X) + (M_Y + M_Z) \arrow[dr, "{\assoc_{M_A,M_X,M_Y+M_Z}}"' yshift=3pt]
+        & M_A + ((M_X + M_Y) + M_Z) \arrow[d, "{[\id_{M_A},\assoc_{M_X,M_Y,M_Z}]}"] \\
         & M_A + (M_X + (M_Y + M_Z))
-          &
     \end{tikzcd}
     \]
-  \normalsize
-  This diagram is, of course, none other than the pentagram diagram for the coproduct $+$ in $\Set$.  
+  This diagram is, of course, none other than the pentagon diagram for the coproduct $+$ in $\Set$.  
   Similarly, the second and third diagrams in Definition \ref{DefSequoidalCategory} reduce in this case to the triangle diagrams for the coproduct $+$ in $\Set$.
 
   For the fourth diagram in Definition \ref{DefSequoidalCategory}, since $\wk$ is a subset inclusion strategy induced from an identity map, Proposition \ref{PropCopycat} tells us that both arms of the diagram are the strategy induced by the subset inclusion 
@@ -1533,7 +1560,7 @@ In this section, we will consider some further category-theoretic properties of 
   Let $\C$ be a sequoidal category such that $C_s$ has arbitrary products (including a terminal object $1$).
   We say that $\C$ is \emph{distributive} if whenever $a_i$ is a collection of objects of $\C'$ and $x$ is an object of $\C$, the morphism
   \[
-    \dec_{(a_i),x} = \langle \pr_i\sequoid x \rangle \from \left(\prod_ia_i\right) \sequoid x \to \prod_i (a_i \sequoid x)
+    \dist_{(a_i),x} = \langle \pr_i\sequoid x \rangle \from \left(\prod_ia_i\right) \sequoid x \to \prod_i (a_i \sequoid x)
     \]
   is an isomorphism.
 \end{definition}
@@ -1560,7 +1587,7 @@ In this section, we will consider some further category-theoretic properties of 
   Then, if we have a non-empty sequence $s\in P_{\prod_iA_i \sequoid X)}$, then $s$ must start with a move in some $A_j$, and must thereafter take place in the games $A_j$ and $X$.  
   Then $s=\phi([\inj_{A_j},\inj_{X^j}]_*(s))$, where we have considered $s$ as a sequence in $(M_{A_j} + M_{X^j})^*$.
 
-  Therefore, $\phi$ is a tree isomorphism, so $\dec_{(A_i),X} = \zz_\phi$ is an isomorphism by Proposition \ref{PropTree}.
+  Therefore, $\phi$ is a tree isomorphism, so $\dist_{(A_i),X} = \zz_\phi$ is an isomorphism by Proposition \ref{PropTree}.
 \end{proof}
 
 We can get a distributivity result in the other direction, but this one is not as strong, since the morphism we get is only a monomorphism, not an isomorphism.
@@ -1766,11 +1793,16 @@ Our next task will be to give an equivalent formulation that will be simpler to 
 
 \section{A Formula for the Exponential}
 
+We now move on to the categorical semantics of the exponential operator $\oc\blank$.  
+As the name suggests, this operator gives us a way to model the exponential connective from linear logic.  
+More specifically, we shall show that, for a certain class of games $A$ (the \emph{well-opened games}), $\oc A$ is the carrier for a \emph{cofree commutative comonoid} over $A$.  
+We use a result of \Mellies, Tabareau and Tasson to show why this is the case.
+
 \begin{definition}
   Let $\C$ be a symmetric monoidal category.  
   Given objects $A_1,\cdots,A_n$ of $\C$ and a permutation $\pi\in \S_n$, there is a unique canonical symmetry isomorphism
   \[
-    \sym^\pi \from A_1 \tensor \cdots \tensor A_n \toisom A_{\pi(1)} \tensor \cdots \tensor A_{\pi(n)}\,.
+    \sym_\pi \from A_1 \tensor \cdots \tensor A_n \toisom A_{\pi(1)} \tensor \cdots \tensor A_{\pi(n)}\,.
     \]
   Given an object $A$ of $\C$, an \emph{$n$-th symmetrized tensor power} of $A$ is an equalizer $(A^n,\eq^n)$ for the diagram given by all morphisms of the form
   \[
@@ -1784,7 +1816,7 @@ Our next task will be to give an equivalent formulation that will be simpler to 
 
 \begin{proposition}[\cite{CalcoPaper}]
   Let $\C$ be an inclusive, strongly distributive, decomposable sequoidal category.  
-  Then $\C$ has all symmetrized tensor powers.
+  Then $\C$ has all symmetrized tensor powers and they commute with the tensor product.
   \label{PropSequoidPower}
 \end{proposition}
 \begin{proof}
@@ -1804,30 +1836,32 @@ Our next task will be to give an equivalent formulation that will be simpler to 
   \scriptsize
   \begin{mathpar}
     B\tensor (A \sequoid\blank)^kA^{\tensor n}
-    \xrightarrow{\langle B\tensor(A \sequoid\blank)^k \sym^\pi \rangle}
+    \xrightarrow{\langle B\tensor(A \sequoid\blank)^k \sym_\pi \rangle}
     (B\tensor(A \sequoid\blank)^kA^{\tensor n})^{n!}
     \xrightarrow{(B\tensor(A\sequoid\blank)^k\wk^n)^{n!}}
     (B\tensor A^{\sequoid (k+n)})^{n!}
   \end{mathpar}
   \normalsize
-  (i.e., the morphism $\langle B\tensor(A\sequoid\blank)^k(\sym^\pi;\wk^n)\rangle$) is a monomorphism.
-  In particular, taking $k=0$, we will have shown that $\langle B\tensor (\sym^\pi;\wk^n)\rangle$ is a monomorphism.
+  (i.e., the morphism $\langle B\tensor(A\sequoid\blank)^k(\sym_\pi;\wk^n)\rangle$) is a monomorphism.
+  In particular, taking $k=0$, we will have shown that $\langle B\tensor (\sym_\pi;\wk^n)\rangle$ is a monomorphism.
 
   The hypothesis is clearly true for $n=0$; in the general case, we have a composite
+  \begin{IEEEeqnarray*}{Cl}
+    &B\tensor (A\sequoid\blank)^kA^{\tensor (n+1)}\\
+    \xrightarrow{\mathmakebox[120pt]{B\tensor (A\sequoid\blank)^k\langle \sym^{n+1}_i;\wk_{A,A^{\tensor n}}\rangle}}
+    &B\tensor (A \sequoid\blank)^k(A\sequoid A^{\tensor n})^{n+1}\\
+    \xrightarrow{\mathmakebox[120pt]{\langle B\tensor (A\sequoid\blank)^k;\pr_i\rangle}}
+    &(B\tensor(A \sequoid\blank)^{k+1} A^{\tensor n})^{n+1}\\
+    \xrightarrow{\mathmakebox[120pt]{}}
+    &(B\tensor A ^{\sequoid (k + n + 1)})^{(n+1)!}\,,
+  \end{IEEEeqnarray*}
   \begin{mathpar}
-    B\tensor (A\sequoid\blank)^kA^{\tensor (n+1)}
-    \xrightarrow{B\tensor (A\sequoid\blank)^k\langle \sym^{n+1}_i;\wk_{A,A^{\tensor n}}\rangle}
-    B\tensor (A \sequoid\blank)^k(A\sequoid A^{\tensor n})^{n+1}
-    \xrightarrow{\langle B\tensor (A\sequoid\blank)^k;\pr_i\rangle}
-    (B\tensor(A \sequoid\blank)^{k+1} A^{\tensor n})^{n+1}
-    \to
-    (B\tensor A ^{\sequoid (k + n + 1)})^{(n+1)!}\,,
   \end{mathpar}
   where the last arrow is the tensor product of $B$ with the $(n+1)$-th power of the composite given by
   \footnotesize
   \[
     (A \sequoid\blank)^{k+1}A^{\tensor n}
-    \xrightarrow{\langle (A \sequoid \blank)^{k+1}\sym^\sigma\rangle}
+    \xrightarrow{\langle (A \sequoid \blank)^{k+1}\sym_\sigma\rangle}
     ((A \sequoid\blank)^{k+1}A^{\tensor n})^{n!}
     \xrightarrow{((A \sequoid\blank)^{k+1}\wk^n)^{n!}}
     (A^{\sequoid (k+n+1)})^{n!}\,,
@@ -1837,24 +1871,24 @@ Our next task will be to give an equivalent formulation that will be simpler to 
   Then the previous composite is the composite of monomorphisms (by our assumptions on $\C$), and is therefore itself a monomorphism.  
   Now this composite may be written as
   \[
-    \langle B\tensor(A\sequoid\blank)^k(\sym_i^{n+1};\wk_{A,A^{\tensor n}};(A\sequoid\sym^\sigma);(A\sequoid\wk^n)) \rangle\,,
+    \langle B\tensor(A\sequoid\blank)^k(\sym_i^{n+1};\wk_{A,A^{\tensor n}};(A\sequoid\sym_\sigma);(A\sequoid\wk^n)) \rangle\,,
     \]
   which, since $\wk$ is a natural transformation, is equal to
   \[
-    \langle B\tensor(A \sequoid\blank)^k(\sym_i^{n+1};(A\tensor\sym^\sigma);(A\tensor\wk^n);\wk_{A,A^{\sequoid n}})\rangle\,,
+    \langle B\tensor(A \sequoid\blank)^k(\sym_i^{n+1};(A\tensor\sym_\sigma);(A\tensor\wk^n);\wk_{A,A^{\sequoid n}})\rangle\,,
     \]
   where $\sigma$ ranges over the permutations in $\S_n$.
   Moreover, by the definition of $\wk^n$, this is equal to
   \[
-    \langle B\tensor(A \sequoid\blank)^k(\sym_i^{n+1};(A \tensor \sym^\sigma);\wk^{n+1}\rangle\,.
+    \langle B\tensor(A \sequoid\blank)^k(\sym_i^{n+1};(A \tensor \sym_\sigma);\wk^{n+1}\rangle\,.
     \]
 
-  Now, given $i\in\{1,\cdots n+1\}$ and $\sigma\in\S_n$, there is a unique permutation $\pi\in\S_{n+1}$ such that $\sym_i^{n+1};(A\tensor\sym^\sigma=\sym^\pi)$; moreover, this defines a bijection from $\{1,\cdots,n+1\}\times\S_n \to \S_{n+1}$.  
+  Now, given $i\in\{1,\cdots n+1\}$ and $\sigma\in\S_n$, there is a unique permutation $\pi\in\S_{n+1}$ such that $\sym_i^{n+1};(A\tensor\sym_\sigma=\sym_\pi)$; moreover, the map $(i,\sigma)\mapsto\pi$ defines a bijection from $\{1,\cdots,n+1\}\times\S_n \to \S_{n+1}$.  
   Therefore (after choosing an appropriate enumeration of our permutations), we see that this composite is in fact equal to
   \[
-    \langle B\tensor(A \sequoid\blank)^k (\sym^\pi;\wk^{n+1})\rangle\,.
+    \langle B\tensor(A \sequoid\blank)^k (\sym_\pi;\wk^{n+1})\rangle\,.
     \]
-  Therefore, $\langle B\tensor(A \sequoid\blank)^k(\sym^\pi;\wk^{n+1})\rangle$ is a monomorphism as desired, completing the induction.
+  Therefore, $\langle B\tensor(A \sequoid\blank)^k(\sym_\pi;\wk^{n+1})\rangle$ is a monomorphism as desired, completing the induction.
 
   Next, we define morphisms $\eq_n\from A^{\sequoid n} \to A^{\tensor n}$ inductively, where $\eq_0=\id$ and $\eq_{n+1}$ is defined by the following composite
   \[
@@ -1862,50 +1896,50 @@ Our next task will be to give an equivalent formulation that will be simpler to 
     \]
   where the final isomorphism is as in Propositions \ref{PropDecSeq} and \ref{PropDecSeqFormula}.
 
-  First, we show inductively that $\eq_n;\sym^\pi;\wk^n=\id_{A^{\sequoid n}}$ for all permutations $\pi$ of $S_n$.
+  First, we show inductively that $\eq_n;\sym_\pi;\wk^n=\id_{A^{\sequoid n}}$ for all permutations $\pi$ of $S_n$.
   This is certainly true for $n=0$; in the general case, let $\pi\in \S_{n+1}$ be a permutation.  
   Let $j=\pi\inv(1)$ be the element sent to $1$ by $\pi$ and let $\sigma$ be the permutation of $1,\cdots,n$ such that applying $\sigma$ to the elements $2,\cdots,n+1$ and composing with $\pi$ gives us the $j$-cycle $(1\,\dots\,j)$.  
   Then we have
   \[
-    \sym_j^{n+1};(A\tensor\sym^\sigma) = \sym^\pi\,.
+    \sym_j^{n+1};(A\tensor\sym_\sigma) = \sym_\pi\,.
     \]
   Now we get
   \begin{IEEEeqnarray*}{Cl}
-    & \eq_{n+1};\sym^\pi;\wk^{n+1} \\
-    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym^\pi;(A \tensor \wk^n);\wk_{A,A^{\sequoid n}} \\
-    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym_j^{n+1};(A\tensor\sym^\sigma);(A \tensor \wk^n);\wk_{A,A^{\sequoid n}} \\
-    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym_j^{n+1};\wk_{A,A^{\tensor n}};(A \sequoid \sym^\sigma);(A \sequoid \wk^n) \\
-    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\langle \sym_i^{n+1};\wk_{A,A^{\tensor n}}\rangle;\pr_j;(A \sequoid \sym^\sigma);(A \sequoid \wk^n) \\
-    = & A \sequoid (\eq_n;\sym^\sigma;\wk^n)\,,
+    & \eq_{n+1};\sym_\pi;\wk^{n+1} \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym_\pi;(A \tensor \wk^n);\wk_{A,A^{\sequoid n}} \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym_j^{n+1};(A\tensor\sym_\sigma);(A \tensor \wk^n);\wk_{A,A^{\sequoid n}} \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\sym_j^{n+1};\wk_{A,A^{\tensor n}};(A \sequoid \sym_\sigma);(A \sequoid \wk^n) \\
+    = & \langle (A \sequoid \eq_n)_1^n\rangle;(\dec_{\vec A}^{n+1})\inv;\langle \sym_i^{n+1};\wk_{A,A^{\tensor n}}\rangle;\pr_j;(A \sequoid \sym_\sigma);(A \sequoid \wk^n) \\
+    = & A \sequoid (\eq_n;\sym_\sigma;\wk^n)\,,
   \end{IEEEeqnarray*}
   which is equal to the identity on $A^{\sequoid (n+1)}$ by the induction hypothesis.
 
   Now let $\rho$ be a permutation in $\S_n$.  
-  We claim that $\eq_n=\eq_n;\sym^{\rho}$.  
+  We claim that $\eq_n=\eq_n;\sym_{\rho}$.  
 
   Indeed, we have
   \begin{IEEEeqnarray*}{rCl}
-    \eq_n;\langle \sym^{\pi} ; \wk^n \rangle
-    & = & \langle \eq_n;\sym^{\pi};\wk^n \rangle \\
+    \eq_n;\langle \sym_{\pi} ; \wk^n \rangle
+    & = & \langle \eq_n;\sym_{\pi};\wk^n \rangle \\
     & = & \langle \id \rangle \\
-    & = & \langle \eq_n;\sym^{\rho\pi};\wk^n \rangle \\
-    & = & \eq_n;\sym^{\rho};\langle \sym^\pi ; \wk^n \rangle\,.
+    & = & \langle \eq_n;\sym_{\rho\pi};\wk^n \rangle \\
+    & = & \eq_n;\sym_{\rho};\langle \sym_\pi ; \wk^n \rangle\,.
   \end{IEEEeqnarray*}
-  Since $\langle \sym^\pi;\wk^n\rangle$ is a monomorphism, this means that $\eq_n=\eq_n;\sym^{\rho}$, as desired.
+  Since $\langle \sym_\pi;\wk^n\rangle$ is a monomorphism, this means that $\eq_n=\eq_n;\sym_{\rho}$, as desired.
   Therefore, $\eq_n$ equalizes the morphisms $\eq_n$.  
   We claim that it is an equalizer, and that this equalizer is preserved by the tensor product.
 
-  Indeed, let $B,C$ be objects of $\C$, and let $f \from C \to B \tensor A^{\tensor n}$ be a morphism such that $f=f;(B\tensor\sym^{\pi})$ for all $\pi\in\S_n$.
+  Indeed, let $B,C$ be objects of $\C$, and let $f \from C \to B \tensor A^{\tensor n}$ be a morphism such that $f=f;(B\tensor\sym_{\pi})$ for all $\pi\in\S_n$.
 
   Let $\tilde f = f;(B \tensor \wk^n)\from C \to B \tensor A^{\sequoid n}$.  
   We claim that $\tilde f;(B\tensor\eq_n)=f$; indeed, we have
   \begin{IEEEeqnarray*}{rCl}
-    \tilde f;(B \tensor\eq_n);\langle B\tensor(\sym^\pi;\wk^n)\rangle 
-    & = & \langle f;(B \tensor (\wk^n;\eq_n;\sym^\pi;\wk^n)) \rangle \\
+    \tilde f;(B \tensor\eq_n);\langle B\tensor(\sym_\pi;\wk^n)\rangle 
+    & = & \langle f;(B \tensor (\wk^n;\eq_n;\sym_\pi;\wk^n)) \rangle \\
     & = & \langle f;(B\tensor \wk^n)\rangle \\
-    & = & f;\langle B \tensor (\sym^\pi;\wk^n)\rangle\,.
+    & = & f;\langle B \tensor (\sym_\pi;\wk^n)\rangle\,.
   \end{IEEEeqnarray*}
-  Therefore, since $\langle B \tensor (\sym^\pi;\wk^n)\rangle$ is a monomorphism, we know that $\tilde f;(B\tensor \eq_n)=f$.
+  Therefore, since $\langle B \tensor (\sym_\pi;\wk^n)\rangle$ is a monomorphism, we know that $\tilde f;(B\tensor \eq_n)=f$.
 
   Now suppose that $h\from C \to B \tensor A^{\sequoid n}$ is such that $h;(B\tensor eq_n)=f$.  
   We claim that $h=\tilde f$.  
@@ -1913,11 +1947,11 @@ Our next task will be to give an equivalent formulation that will be simpler to 
   \[
     \tilde f = f;(B \tensor \wk^n) = h;(B \tensor \eq_n);(B \tensor \wk^n) = h\,.
     \]
-  Therefore, $(B\tensor A^{\sequoid n},B\tensor \eq_n)$ is an equalizer of the arrows $B\tensor \sym^\pi\from B \tensor A^{\tensor n} \to B \tensor A^{\tensor n}$, as desired.
+  Therefore, $(B\tensor A^{\sequoid n},B\tensor \eq_n)$ is an equalizer of the arrows $B\tensor \sym_\pi\from B \tensor A^{\tensor n} \to B \tensor A^{\tensor n}$, as desired.
 \end{proof}
 
 We are interested in symmetrized tensor powers because of an important result of \Mellies, Tabareau and Tasson.
-Suppose $\C$ is a monoidal category, and that $\C$ has symmetrized tensor powers that commute with the tensor product.  
+Suppose $\C$ is a monoidal category with a terminal unit object, and that $\C$ has symmetrized tensor powers that commute with the tensor product.  
 Given $n$, we have a morphism
 \[
   A^{\tensor n}\tensor() \from A^{\tensor (n+1)} \to A^{\tensor n}\,,
@@ -1927,8 +1961,8 @@ Then, if $A^n$ and $A^{n+1}$ are the $n$-th and $n+1$-th symmetrized tensor powe
 \[
   \begin{tikzcd}[column sep=50pt]
     B \tensor A^{n+1} \arrow[r, "B\tensor\eq_{n+1}"]
-      & B \tensor A^{\tensor (n+1)} \arrow[r, "B\tensor A^{\tensor n}\tensor()"] \arrow[d, "\sym^{\pi'}"']
-        & B \tensor A^{\tensor n} \arrow[d, "\sym^\pi"] \\
+      & B \tensor A^{\tensor (n+1)} \arrow[r, "B\tensor A^{\tensor n}\tensor()"] \arrow[d, "\sym_{\pi'}"']
+        & B \tensor A^{\tensor n} \arrow[d, "\sym_\pi"] \\
     %
       & B \tensor A^{\tensor (n+1)} \arrow[r, "B\tensor A^{\tensor n} \tensor()"]
         & B \tensor A^{\tensor n}
@@ -1939,8 +1973,8 @@ where $\pi'$ is the permutation of $1,\cdots,n+1$ that fixes $1$ and applies $\p
 This means that for each $\pi\in \S_n$ we have
 \begin{IEEEeqnarray*}{rCl}
   (B\tensor\eq_{n+1});(B\tensor A^{\tensor n}\tensor ())
-  & = & (B \tensor\eq_{n+1});(B\tensor \sym^{\pi'});(B\tensor A^{\tensor n}\tensor ()) \\
-  & = & (B\tensor\eq_{n+1});(B\tensor A^{\tensor n}\tensor());(B\tensor \sym^\pi)\,,
+  & = & (B \tensor\eq_{n+1});(B\tensor \sym_{\pi'});(B\tensor A^{\tensor n}\tensor ()) \\
+  & = & (B\tensor\eq_{n+1});(B\tensor A^{\tensor n}\tensor());(B\tensor \sym_\pi)\,,
 \end{IEEEeqnarray*}
 and that there is therefore an induced morphism
 \[
@@ -1986,7 +2020,7 @@ Since the equalizers $A^m$ and $A^n$ are preserved by the tensor product, then w
   
   The morphisms $\mu_A\from \oc A \to \oc A \tensor \oc A$ and $()\from A \to I$ give $\oc A$ the structure of a commutative comonoid in $\C$.  
   In fact, this is the \emph{cofree commutative comonoid} over $A$ in $\C$.  
-  The counit $\der_A\from \oc A \to A$ of the adjunction is the morphism in the limiting cone.
+  The corresponding counit $\der_A\from \oc A \to A$ is the morphism in the limiting cone.
   \label{TheMtt}
 \end{theorem}
 
@@ -2064,7 +2098,7 @@ but that $A \tensor B$, $A\sequoid B$ and $\oc A$ are not in general well-opened
   \[
     I \leftarrow A \leftarrow A^{\sequoid 2} \leftarrow A^{\sequoid 3}\leftarrow\cdots\,.
     \]
-  Moreover, $B\tensor\oc A$ is the limit of the sequence
+  Moreover, if $B$ is any game, then $B\tensor\oc A$ is the limit of the sequence
   \[
     B \leftarrow B \tensor A \leftarrow B \tensor A^{\sequoid 2} \leftarrow B \tensor A^{\sequoid 3}\leftarrow \cdots\,.
     \]
@@ -2146,14 +2180,18 @@ Now note that we have defined a functor
 \[
   \G_{wo} \to \CCom(\G)
   \]
-which is a right adjoint on to its image, and therefore preserves products.  
+We define a category $\G_{wo}^{\oc}$ to be the span of this functor inside $\CCom(\G)$.  
+Then the corresponding functor
+\[
+  \G_{wo} \to \G_{wo}^{\oc}
+  \]
+is a right adjoint, and therefore preserves products.  
 So if $A,B$ are well-opened games, then we get a natural isomorphism of comonoids between the tensor product of the comonoids on $\oc A$ and $\oc B$ and the comonoid on $\oc(A\times B)$.
 In particular, we have a natural isomorphism
 \[
   \oc A \tensor \oc B \cong \oc (A \times B)\,.
   \]
-We define a category $\G_{wo}^{\oc}$ to be the span of the functor $\G_{wo}\to \CCom(\G)$ inside $\CCom(\G)$.  
-By our discussion above, $\G_{wo}^{\oc}$ is a Cartesian category.  
+$\G_{wo}^{\oc}$ therefore inherits the structure of a Cartesian category.
 
 This gives us a category in which the objects are commutative comonoids over well-opened games.
 A more convenient description of this category is that it is the category where the objects are well-opened games and where the morphisms
@@ -2165,7 +2203,7 @@ We compose two such morphisms $\sigma \from \oc A \implies B$ and $\tau \from \o
 \[
   \oc A \xrightarrow{\sigma^\dag} \oc B \xrightarrow{\tau} C\,,
   \]
-where the \emph{promotion} operator $blank^\dag$ from strategies $\sigma\from \oc A \to B$ to strategies $\sigma^\dag\from \oc A \to \oc B$ is the right half of the adjunction between $\G$ and $\CCom(\G)$.
+where the \emph{promotion} operator $\blank^\dag$ from strategies $\sigma\from \oc A \to B$ to strategies $\sigma^\dag\from \oc A \to \oc B$ is the right half of the adjunction between $\G_{wo}$ and $\G_{wo}^{\oc}$.
 
 Since the functor $\G_{wo}\to \CCom(\G)$ preserves products, $\G_{wo}^{\oc}$ obtains a Cartesian structure given by the category-theoretic product $\times$.  
 We claim that it is Cartesian closed, with the function object from $A$ to $B$ given by $\oc A \implies B$.  
@@ -2184,20 +2222,13 @@ We have one thing left to prove.
   Then the composite of $\sigma$ and $\tau$ in $\G_{wo}^{\oc}$ is an innocent strategy.
 \end{proposition}
 \begin{proof}
-  We may write this composite as
-  \[
-    \oc A \xrightarrow{m}
-    \oc \oc A \xrightarrow{\oc\sigma}
-    \oc B \xrightarrow{\tau}\,,
-    \]
-  where $\oc\sigma$ is the strategy formed by playing $\sigma$ in parallel with itself, whereas $m\from \oc A \to \oc \oc A$ comes from the fact that $\oc A$ is the cofree commutative comonoid on $A$.
-  $\oc \sigma$ is innocent for the same reasons as in Proposition \ref{PropTensorInnocent}, so it suffices to show that $m$ is innocent.  
-
-  Indeed, it is clear from our definitions that $\oc\oc A = \oc A$ as games.  
-  Then, $m$ is in fact the identity strategy between these two games.
+  It suffices to show that $\sigma^\dag$ is innocent, which follows by an argument similar to that in Proposition \ref{PropTensorInnocent}.
 \end{proof}
 
 \section{The Exponential as a Final Coalgebra}
+
+Our proof in the previous section that $\oc A$ is the cofree commutative comonoid over $A$ (if $A$ is well-opened) leads us towards another category-theoretic property enjoyed by $\oc A$, one that is more closely tied to the sequoid operator.  
+This property will be key to our treatment of the semantics of state.
 
 \begin{definition}
   Let $F \from \C \to \C$ be a functor.  
@@ -2248,7 +2279,7 @@ Now we have already shown that if $A$ is well-opened, then $\oc A$ is the limit 
 and this sequence is precisely the sequence from Ad{\'a}mek's Theorem, when $F=J(A\sequoid\blank) \from \G \to \G$.
 Moreover, this limit is preserved when taking the sequoid with $A$ on the left, and so we get that
 \begin{corollary}
-  If $A$ is a well-opened game, then $\oc A$ is a final coalgebra for the functor $A \sequoid \blank$.
+  If $A$ is a well-opened game, then $\oc A$ is a final coalgebra for the functor $J(A \sequoid \blank) \from \G \to \G$.
 \end{corollary}
 In this case, the morphism $\oc A \to A \sequoid \oc A$ is the zigzag strategy that plays copycat between the different copies of $A$; i.e., $\zz_\phi$, where $\phi\from P_{A\sequoid \oc A} \to P_{\oc A}$ is the tree isomorphism given by
 \[
@@ -2274,6 +2305,7 @@ One small thing we need to do is to relate the two structures on the exponential
 \end{proof}
 
 \section{Denotational Semantics of Idealized Algol}
+\label{DenotationalSemanticsOfIdealizedAlgol}
 
 At last we are in a position to interpret Idealized Algol within our category $\G_{wo}^{\oc}$.  
 The base types $\com$, $\bool$ and $\nat$ are interpreted by the games $\bC$, $\bB$ and $\bN$, while the type $\Var$ is interpreted by the game
@@ -2326,6 +2358,7 @@ In order to form the denotation of the next lot of terms, we need a new definiti
     (\sigma_x) = \{\epsilon\}\cup\{*q\suchthat {*}\in P_A\}\cup \{*qys\suchthat {*}s\in\sigma_y\}\,.
     \]
   In other words, after the initial move in $A$, $(\sigma_x)$ requests some element $y\in X$, and thereafter plays according to $\sigma_y$ in $A$.
+  \label{DefBrackets}
 \end{definition}
 
 \begin{proposition}
@@ -2342,14 +2375,16 @@ Then $y;(\sigma_x) = \sigma_y$.
 
 Now we define morphisms
 \begin{itemize}
-  \item $\seq_X = (\id_X) \from \bC \to (X \to X)$;
-  \item $\If_X = (\lambda x.\lambda y.x,\lambda x.\lambda y.y) \from \bB \to (X \to X \to X)$;
-  \item $\suc = (1, 2, 3, 4,\cdots) \from \bN \to \bN$;
-  \item $\pred = (0,0,1,2,\cdots)\from \bN \to \bN$;
-  \item $\IfO_X = (\lambda x.\lambda y.x,\lambda x.\lambda y.y,\lambda x.\lambda y.y,\cdots)\from \bN \to (X \to X \to X)$;
-  \item $\assign = (\pr_0,\pr_1,\cdots) \from \bN \to (\Varr \to \bC)$; and
-  \item $\dereff = \pr_\bN \from \Varr \to \bN$;
-  \item $\mkvar = \lambda w.\lambda r.\langle (w\,n)_{n\in\bN},r\rangle \from (\bN \to \bC) \to \bN \to \Varr$.
+  \item $\seq_X = (\id_X) \from \bC \implies (X \to X)$;
+  \item $\If_X = (\lambda x.\lambda y.x,\lambda x.\lambda y.y) \from \bB \implies (X \to X \to X)$;
+  \item $\suc = (1, 2, 3, 4,\cdots) \from \bN \implies \bN$;
+  \item $\pred = (0,0,1,2,\cdots)\from \bN \implies \bN$;
+  \item $\IfO_X = (\lambda x.\lambda y.x,\lambda x.\lambda y.y,\lambda x.\lambda y.y,\cdots)\from \bN \implies (X \to X \to X)$;
+  \item $\assign = (\pr_0,\pr_1,\cdots) \from \bN \implies (\Varr \to \bC)$;
+  \item $\dereff = \pr_\bN \from \Varr \implies \bN$;
+  \item $\lett_{\bB,X} = (\lambda f. f\true,\lambda f.f\false) \from \bB \implies (\bB \to X) \to X$;
+  \item $\lett_{\bN,X} = (\lambda f.f0,\lambda f.f1,\cdots) \from \bN \implies (\bN \to X) \to X$; and
+  \item $\mkvar = \lambda w.\lambda r.\langle (w\,n)_{n\in\bN},r\rangle \from (\bN \to \bC) \to \bN \implies \Varr$.
 \end{itemize}
 Here, $\pr_n$ and $\pr_\bN$ are the natural projections on to $\bC$ and $\bN$ from $\Var = (\bC)^n \times \bN$.
 
@@ -2366,7 +2401,7 @@ then we get a strategy
   \]
 that we can use as the denotation of the term $\Gamma \ts V \gets E$.
 
-We use $\seq_X$ for the denotation of $M;N$ and $\deref$ for the denotation of $\oc V$.  
+We use $\seq_X$ for the denotation of $M;N$ and $\dereff$ for the denotation of $\oc V$.  
 The role played by the remaining morphisms can easily be deduced from their names.
 
 \section{Order-Enrichment of $\G$}
@@ -2437,7 +2472,7 @@ For this, we shall define a strategy $\cell\from \oc\bN \implies \oc \Varr$ by u
 
 Given $n\in\bN$, we define a strategy $\wwrite_n\from \oc\bN \implies \bC \sequoid\oc\bN$ by
 \[
-  \wwrite_n = \oc\bN \xrightarrow{()} I \xrightarrow{\skipp\tensor \oc n} \bC \tensor \oc\bN \xrightarrow{\wk} \bC \sequoid\oc\bN\,.
+  \wwrite_n = \oc\bN \xrightarrow{()} I \xrightarrow{\oc n} \oc\bN \xrightarrow{\lunit_{\oc\bN}} I \tensor \oc \bN \xrightarrow{\skipp \tensor \oc\bN} \bC \tensor \oc\bN \xrightarrow{\wk} \bC \sequoid\oc\bN\,.
   \]
 Let $\rread \from \oc\bN \implies \bN \sequoid \oc\bN$ be the morphism part $\alpha$ of the limiting coalgebra.  
 In other words, by Proposition \ref{PropFormulaForAlpha}, $\rread$ is the composite
@@ -2465,7 +2500,7 @@ If he plays the initial move $q_n$ in the $n$-th copy of $\bC$, player $P$ updat
 If he plays the initial move $q$ in $\bN$, then player $P$ replies with this stored value.  
 Lastly, if he plays this initial move $q$ without having played in any of the copies of $\bC$, then player $P$ interrogates the argument in order to find out which value to play.
 
-This strategy $\cell$ now gives us a morphism $\neww_A \from \oc(\oc\Varr \implies A) \implies A$ given by
+This strategy $\cell$ now gives us a morphism $\neww_A \from \oc(\oc\Varr \implies A) \implies A$ (for $A$ well-opened), given by
 \begin{IEEEeqnarray*}{rCl}
   \oc(\oc\Varr\implies A) & \xrightarrow{\mathmakebox[50pt]{\der}} & (\oc\Varr\implies A) \\
   & \xrightarrow{\mathmakebox[50pt]{\lunit}} & I \tensor (\oc\Varr\implies A) \\
@@ -2603,7 +2638,7 @@ We first define a \emph{canonical form} of the language to be
 These are the terms that cannot be evaluated any further.
 
 We define a \emph{$\Var$-context} to be a context $\Gamma$ of the form $x_1\from \Var,\cdots,x_n\from \Var$.
-Given a $\Var$-context $\Gamma$, we define a \emph{$\Gamma$-store} to be a function $s$ from the set of variable names occurring in $\Gamma$ to the set of natural numbers.  
+Given a $\Var$-context $\Gamma$, we define a \emph{$\Gamma$-store} to be a function $s$ from the set of variable names occurring in $\Gamma$ (i.e., the $x_i$) to the set of natural numbers.  
 Given such a store $s$, we write $(s\vert x \mapsto n)$ for the store given by
 \[
   (s\vert x\mapsto n)(y) = \begin{cases}
@@ -2645,6 +2680,8 @@ The idea behind it is that the predicate $\Gamma,s\ts M\converges c,s'$ should r
     \and
     \inferrule*{\Gamma,s\ts M \converges n+1,s' \\ \Gamma,s' \ts P \converges c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges c,s''}
     \and
+    \inferrule*{\Gamma,s \ts M \converges c,s' \\ \Gamma,s' \ts N[c/x] \converges c',s''}{\Gamma,s\ts \lett x = M \inn N \converges c',s''}
+    \and
     \inferrule*[right=$x\in\Gamma$]{\Gamma,s\ts E \converges n,s' \\ \Gamma,s' \ts V \converges x,s''}{\Gamma,s\ts V \gets E \converges \skipp,(s''\vert x \mapsto n)}
     \and
     \inferrule*[right={$s'(x)=n$}]{\Gamma,s\ts V \converges x,s'}{\Gamma,s\ts !V \converges n,s'}
@@ -2677,7 +2714,7 @@ An evaluation context is a single-holed context defined inductively by the follo
 \begin{center}
 \parbox{0.8\textwidth}{
 \begin{mathpar}
-  \EE \Coloneqq - \mid \EE\,M \mid \suc \EE \mid \pred \EE \mid \EE;M \mid \If \EE\Then M \Else M \mid \IfO \EE \Then M \Else M \mid !\EE \mid M \gets \EE \mid \EE \gets n
+  \EE \Coloneqq - \mid \EE\,M \mid \suc \EE \mid \pred \EE \mid \EE;M \mid \If \EE\Then M \Else M \mid \IfO \EE \Then M \Else M \mid !\EE \mid M \gets \EE \mid \EE \gets n \mid \lett x = \EE \inn M
 \end{mathpar}}
 \end{center}
 
@@ -2690,8 +2727,7 @@ Lastly, we define the relation $\opto$ as
 \[
   \inferrule*{ \Gamma,s\ts M\oopto \Gamma,\Delta,s'\ts M'}{\Gamma,s\ts \EE[M] \opto \Gamma,\Delta,s'\ts\EE[M']}
   \]
-for each evaluation context $\EE$.
-Note that $\EE$ may itself contain free variables of type $\Var$: we assume that these are all contained in the $\Var$-context $\Gamma$.
+for each evaluation context $\EE$ whose free variables lie in $\Gamma$.
 
 \begin{figure}
   \begin{mathpar}
@@ -2724,6 +2760,12 @@ Note that $\EE$ may itself contain free variables of type $\Var$: we assume that
     \Gamma,s \ts (\mkvar W\,R) \gets n \oopto \Gamma,s\ts Wn
     \and
     \Gamma,s \ts \oc(\mkvar W\,R) \oopto \Gamma,s\ts R
+    \\
+    \Gamma,s \ts \lett x = \true \inn M \oopto \Gamma,s\ts M[\true/x]
+    \and
+    \Gamma,s\ts \lett x = \false \inn M \oopto \Gamma,s\ts M[\false/x]
+    \and
+    \Gamma,s\ts \lett x = n \inn M \oopto \Gamma,s\ts M[n/x]
   \end{mathpar}
   \caption{Felleisen-style small-step operational semantics for Idealized Algol.}
   \label{FigIaSsOpSem}
@@ -2739,7 +2781,7 @@ Given a $\Gamma,\Delta$-store $s$, write $s\vert_{\Gamma}$ for the restriction o
 \end{lemma}
 \begin{proof}
   Structural induction on $\EE$.
-  The base case, when $\EE=-$e, covers the interesting cases, so we shall leave it to last.
+  The base case, when $\EE=-$, covers the interesting cases, so we shall leave it to last.
   The remaining cases are quite similar, so we will show the proof for the case where $\EE = \EE'\,N$ for illustration.
 
   If $\EE=\EE'\,N$, for some term $N$, then we have $\Gamma,\Delta,s'\ts \EE'[M']\,N\converges c,s''$.  
@@ -3043,7 +3085,7 @@ Using the sequoid operator, we can capture in category-theoretic terms an analog
       \[
         \oc{\deno{\Gamma}} \xrightarrow{\mathmakebox[9pt]{\mu_{{\deno{\Gamma}}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma \ts \EE'[M]}\tensor \deno{\Gamma \ts N}} (\oc\deno{S} \implies \deno{T}) \tensor \oc\deno{S} \xrightarrow{\mathmakebox[-4pt]{}\ev_{\oc\deno{S},\deno{T}}} \deno{T}.
         \]
-      By the inductive hypothesis, $\deno{\Gamma\ts\EE' M}$ factors as
+      By the inductive hypothesis, $\deno{\Gamma\ts\EE' [M]}$ factors as
       \small
       \[
         \oc{\deno{\Gamma}} \xrightarrow{\mathmakebox[-1pt]{}\mu_{{\deno{\Gamma}}}\mathmakebox[-1pt]{}} \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'} \deno{S'}\tensor A' \xrightarrow{\mathmakebox[-1.2pt]{}\wk_{\deno{S'},A'}} \deno{S'} \sequoid A' \xrightarrow{\mathmakebox[-1.2pt]{}\tau'\mathmakebox[-1.4pt]{}} (\oc\deno{S}\implies\deno{T}),
@@ -3067,7 +3109,7 @@ Using the sequoid operator, we can capture in category-theoretic terms an analog
               & \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \arrow[d, "\oc{\deno{\Gamma}}\tensor\mu_{{\deno{\Gamma}}}"] \\
             \oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}} \arrow[d, "\mu_{{\deno{\Gamma}}}\tensor \oc{\deno{\Gamma}}"' yshift=3pt, thick, dashed]
               & \oc {\deno{\Gamma}} \tensor (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \arrow[d, "\deno{\Gamma \ts M}\tensor (\sigma' \tensor \deno{\Gamma\ts N}^\dag)"] \\
-            (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \tensor \oc {\deno{\Gamma}} \arrow[d, "(\deno{\Gamma\ts M} \tensor \sigma')\tensor\deno{\Gamma\ts N}^\dag"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{{\deno{\Gamma}},{\deno{\Gamma}},{\deno{\Gamma}}}" description, dotted]
+            (\oc {\deno{\Gamma}} \tensor \oc {\deno{\Gamma}}) \tensor \oc {\deno{\Gamma}} \arrow[d, "(\deno{\Gamma\ts M} \tensor \sigma')\tensor\deno{\Gamma\ts N}^\dag"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{\oc{\deno{\Gamma}},\oc{\deno{\Gamma}},\oc{\deno{\Gamma}}}" description, dotted]
               & \deno{S'} \tensor (A' \tensor \oc\deno{S}) \arrow[d, "{\wk_{\deno{S'},A' \tensor \oc \deno{S}}}"] \\
             (\deno{S'} \tensor A') \tensor \oc\deno{S} \arrow[d, "{\wk_{\deno{S'},A'}\tensor \oc\deno{S}}"' yshift=3pt, thick, dashed] \arrow[ur, "\assoc_{\deno{S'},A',\oc\deno{S}}" description, dotted]
               & \deno{S'} \sequoid (A' \tensor \oc\deno{S}) \arrow[d, "{\passoc_{\deno{S'},A',\oc\deno{S}}\inv}"] \\
@@ -3113,11 +3155,11 @@ Using the sequoid operator, we can capture in category-theoretic terms an analog
       \end{mathpar}
     \item If $\EE=\EE';N$ for some term $N$ of type $X\in\{\com,\bool,\nat\}$, where $\EE'$ is an evaluation context of type $\com$, and if $M\from T$ fits into the hole in $\EE'$, then the denotation $\deno{\Gamma\ts\EE[M]}$ is given by the composite
       \[
-        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bC \times X \xrightarrow{\Lambda\inv(\seq_X)} X\,.
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bC \tensor X \xrightarrow{\Lambda\inv(\seq_X)} X\,.
         \]
       If $\EE = N\gets\EE'$, for some term $N$ of type $\Var$, where $\EE'$ is an evaluation context of type $\com$, and if $M\from T$ fits into the hole in $\EE'$, then the denotation $\deno{\Gamma\ts\EE[M]}$ is given by the composite
       \[
-        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bN \times \Var \xrightarrow{\Lambda\inv(\assign)} \bC\,.
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}} \oc{\deno{\Gamma}} \tensor \oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts\EE'[M]}\tensor\deno{\Gamma\tensor N}} \bN \tensor \Var \xrightarrow{\Lambda\inv(\assign)} \bC\,.
         \]
       Write $Y=\bC$, $X'=X$, $Z=X$ and $\upsilon=\seq_X$ in the sequencing case, and $Y=\bN$, $X'=\Var$, $Z=\bC$ and $\upsilon=\assign$ in the variable assignment case.
       By the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ factors as
@@ -3211,9 +3253,53 @@ Using the sequoid operator, we can capture in category-theoretic terms an analog
           \]
           \normalsize
         \caption[The property in Lemma \ref{LemEvContexLemma} is preserved by conditionals.]{The property in Lemma \ref{LemEvContexLemma} is preserved by conditionals.
-        We use the fact that $\eta\in\{\If_X,\IfO_X\}$ is a strict strategy, and that the $\Lambda_s\inv$ is a function from strict strategies to strict strategies, so that $\Lambda_s\inv(\Lambda_s\inv(\eta))$ is well-defined.}
+        We use the fact that $\eta\in\{\If_X,\IfO_X\}$ is a strict strategy, and that the $\Lambda_s\inv$ is a function from strict strategies to strict strategies, so that $\Lambda_s\inv(\Lambda_s\inv(\eta))$ is well-defined and strict.}
         \label{FigEvContextCond}
       \end{SidewaysFigure}
+    \item If $\EE = \lett_{Y,X} x = \EE' \inn N$, for $X\in\{\bC,\bB,\bN\}$ and $Y\in\{\bB,\bN\}$, then the denotation $\deno{\Gamma\ts \EE[M]}$ is given by
+      \[
+        \oc {\deno{\Gamma}} \xrightarrow{\mu_{V_\Gamma}} \oc \deno \Gamma \tensor \oc \deno \Gamma \xrightarrow{\deno{\Gamma\ts \EE'[M]}\tensor \deno{\Gamma\ts \lambda x.N}} Y \tensor (\oc Y \implies X) \xrightarrow{\Lambda\inv(\lett)} X\,.
+        \]
+      By the inductive hypothesis, $\deno{\Gamma\ts\EE'[M]}$ can be written as
+      \[
+        \oc{\deno{\Gamma}} \xrightarrow{\mu_{{\deno{\Gamma}}}}
+        \oc{\deno{\Gamma}}\tensor\oc{\deno{\Gamma}} \xrightarrow{\deno{\Gamma\ts M}\tensor\sigma'}
+        \deno{T}\tensor A' \xrightarrow{\wk_{\deno{T},A'}}
+        \deno T\sequoid A' \xrightarrow{\tau'}
+        Y\,,
+        \]
+      for suitable $A,\sigma,\tau$.
+      This means that $\deno{\Gamma\ts \EE[M]}$ is given by the thick dashed arrows in the diagram in Figure \ref{FigEvContextLet}.  
+      But this composite is equal to that given by the thin solid arrows in the diagram, which is of the required form with
+      \begin{mathpar}
+        A = A' \tensor (\oc Y \implies X)
+        \and
+        \sigma = \mu_{\deno{\Gamma}};(\sigma'\tensor\deno{\Gamma\ts \lambda x.N})
+        \and
+        \tau = \passoc_{\deno{T},A',(\oc Y\implies X)}\inv;(\tau'\sequoid(\oc Y\implies \deno{T}));\Lambda_s\inv(\lett)\,.
+      \end{mathpar}
+      \begin{figure}
+        \[
+          \begin{tikzcd}[column sep=49pt, row sep=30pt]
+            \oc\deno{\Gamma} \arrow[d, "\mu_{\deno \Gamma}"', thick, dashed] \arrow[r, "\mu_{\deno\Gamma}"]
+              & \oc \deno \Gamma \tensor \oc \deno \Gamma \arrow[d, "\oc \deno \Gamma \tensor \mu_{\deno \Gamma}"] \\
+            \oc \deno \Gamma \tensor \oc \deno \Gamma \arrow[d, "{\mu_{\deno \Gamma} \tensor \oc \deno \Gamma}"', thick, dashed]
+              & \oc \deno \Gamma \tensor ( \oc \deno \Gamma \tensor \oc \deno \Gamma ) \arrow[d, "\deno{\Gamma \ts M} \tensor (\sigma' \tensor \deno{\Gamma\ts \lambda x.N})"] \\
+            ( \oc \deno \Gamma \tensor \oc \deno \Gamma ) \tensor \oc \deno \Gamma \arrow[ur, "{\assoc_{\oc\deno\Gamma,\oc\deno\Gamma,\oc\deno\Gamma}}" description, dotted] \arrow[d, "(\deno{\Gamma\ts M} \tensor \sigma) \tensor \deno{\Gamma \ts \lambda x.N}"', thick, dashed]
+              & \deno T \tensor ( A' \tensor ( \oc Y \implies X ) ) \arrow[d, "{\wk_{\deno T,A' \tensor (\oc Y \implies X)}}"] \\
+            (\deno T \tensor A') \tensor (\oc Y \implies X) \arrow[ur, "{\assoc_{\deno T,A',\oc Y \implies X}}" description, dotted] \arrow[d, "{\wk_{\deno T\tensor A',\oc Y\implies X}}"', thick, dashed]
+              & \deno T \sequoid (A' \tensor (\oc Y \implies X) \arrow[d, "{\passoc_{\deno T,A,\oc Y \implies X}\inv}"] \\
+            (\deno T \sequoid A') \tensor (\oc Y \implies X) \arrow[r, "{\wk_{\deno T \sequoid A',\oc Y \implies X}}", dotted] \arrow[d, "\tau' \tensor (\oc Y \implies X)"', thick, dashed]
+              & (\deno T \sequoid A) \sequoid (\oc Y \implies X) \arrow[d, "\tau' \sequoid (\oc Y \implies X)"] \\
+            Y \tensor (\oc Y \implies X) \arrow[r, "{\wk_{Y, \oc Y \implies X}}" description, dotted] \arrow[d, "{\Lambda\inv(\lett)}"', thick, dashed]
+              & Y \sequoid (\oc Y \implies X) \arrow[dl, "\Lambda_s\inv(\lett)"] \\
+            X
+          \end{tikzcd}
+          \]
+        \caption[The property in Lemma \ref{LemEvContexLemma} is preserved by the $\lett$ keyword.]{The property in Lemma \ref{LemEvContexLemma} is preserved by the $\lett$ keyword.
+        We use the fact that $\lett_{Y,X}$ is a strict strategy, and that the $\Lambda_s\inv$ is a function from strict strategies to strict strategies.}
+        \label{FigEvContextLet}
+      \end{figure}
     \item Lastly, suppose that $\EE = \EE' \gets n$ for some numeral $n$, where $\EE'$ is a context of type $\Var$, and suppose that $M\from T$ fits into the hole.  
       The denotation $\deno{\Gamma\ts \EE[M]}$ is given by
       \[
@@ -3235,11 +3321,19 @@ Using the sequoid operator, we can capture in category-theoretic terms an analog
   \end{itemize}
 \end{proof}
 
-Our next lemma will help us deal with the base $\oopto$ rules.  
-We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ relation.
+Having proved this result about evaluation contexts, we now give an outline of the general soundness proof.
+We would like to represent a term-with-store $\Gamma,s\ts M\from T$ by its denotation
+\[
+  I \xrightarrow{\oc\deno{s}} \oc S_\Gamma \xrightarrow{\cell^\Gamma} \oc \deno{\Gamma} \xrightarrow{\deno{\Gamma \ts M}} \deno{T} \,.
+  \]
+This composite tells us what the behaviour of $M$ is when we evaluate it with state $s$.  
+However, it tells us nothing about the state that $M$ leaves after it has evaluated, and is therefore inadequate for inductive proofs along a derivation.
 
-First, note that the denotation $\deno{\Gamma\ts M}\from \oc\deno{\Gamma} \implies \deno{M}$ tells us what result we get out if we substitute in some initial $\Gamma$-store $s$ to $M$, but it does not tell us what state we are left in at the end.  
-The next definition will give us an alternative version of the denotation that will convey this information.
+Instead, we want to capture information about the state that $M$ leaves, which we do using the following derivation.  
+\begin{itemize}
+  \item We use the comonoid structure of $\oc\deno{\Gamma}$ to create two separate references to the storage cells -- one for the use of $M$ and one for the use of any code that will run after $M$ has finished.
+  \item We then use the sequoid operator to indicate the temporal relationship -- namely, that $M$ runs first and all other accesses to the storage cells will receive the state that $M$ left behind.
+\end{itemize}
 
 \begin{definition}
   Let $\Gamma,s\ts M\from T$ be a term with store.  
@@ -3248,6 +3342,9 @@ The next definition will give us an alternative version of the denotation that w
     I \xrightarrow{\ms\ms\ms\oc\deno s\ms\ms} \oc S_\Gamma \xrightarrow{\ms\ms\ms\cell^\Gamma\ms\ms} \oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\mu_{\deno{\Gamma}}\ms\ms} \oc\deno{\Gamma} \tensor \oc\deno{\Gamma} \xrightarrow{\ms\ms\deno{\Gamma\ts M}\tensor\oc\deno{\Gamma}\ms\ms} \deno T \tensor\oc\deno{\Gamma} \xrightarrow{\ms\ms\ms\ms\ms\wk_{\deno T,\oc\deno{\Gamma}}\ms\ms} \deno T \sequoid \oc\deno{\Gamma}.
     \]
 \end{definition}
+
+Our next lemma will help us deal with the base $\oopto$ rules.  
+We will then use Lemma \ref{LemEvContexLemma} to extend this to the $\opto$ relation.
 
 \begin{lemma}
   The relation $\oopto$ between triples $\Gamma,s\ts M$ preserves the sequoidal denotation $\seqdeno{\Gamma,s\ts M}$.
@@ -3297,6 +3394,9 @@ The next definition will give us an alternative version of the denotation that w
         \item $\deno{\Gamma\ts\If \false \Then N \Else P} = \deno{\Gamma\ts (\lambda x.\lambda y.y)NP} = \deno{\Gamma\ts P}$;
         \item $\deno{\Gamma\ts\IfO 0 \Then N \Else P} = \deno{\Gamma\ts (\lambda x.\lambda y.x)NP} = \deno{\Gamma\ts N}$;
         \item $\deno{\Gamma\ts\IfO (n+1) \Then N \Else P} = \deno{\Gamma\ts (\lambda x.\lambda y.y)NP} = \deno{\Gamma\ts P}$;
+        \item $\deno{\Gamma\ts\lett x = \true \inn M} = \deno{(\lambda x.M) \true} = \deno{M[\true/x]}$;
+        \item $\deno{\Gamma\ts\lett x = \false \inn M} = \deno{(\lambda x.M) \false} = \deno{M[\false/x]}$;
+        \item $\deno{\Gamma\ts\lett x = n \inn M} = \deno{(\lambda x.M) n} = \deno{M[n/x]}$;
         \item \parbox[t][][t]{0.8\textwidth}{$\deno{\Gamma\ts(\mkvar W\,R)\gets n} = \langle \deno{\Gamma\ts Wn}_{n\in\bN},\deno{\Gamma\ts R}\rangle;\pr_n = \deno{\Gamma\ts Wn}$; and}
         \item $\deno{\Gamma\ts\oc(\mkvar W\,R)} = \langle \deno{\Gamma\ts Wn}_{n\in\bN},\deno{\Gamma\ts R}\rangle;\pr_{\bN} = \deno{\Gamma\ts R}$.
       \end{itemize}
@@ -4003,9 +4103,9 @@ Now we are ready to prove our main adequacy Lemma.
     \item Now we move on to the conditional.  
       Suppose that we have $\Gamma,\Delta\ts M\from \nat$ and $\Gamma,\Delta\ts N,P\from X$ for some datatype $X$.  
       Let $s$ be a $\Gamma$-store.  
-      Since $\IfO$ is a strict strategy, if $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})}=\bot_{\oc\deno{\Gamma}\ts \bN}$, then
+      Since $\IfO$ is a strict strategy, if $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})}=\bot_{\bN\sequoid\oc\deno{\Gamma}}$, then
       \[
-        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO M \Then N \Else P}} = \bot_{\oc\deno{\Gamma} \ts X}\,.
+        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \IfO M \Then N \Else P}} = \bot_{X\sequoid\oc\deno{\Gamma}}\,.
         \]
       Otherwise, by induction we know that $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}}=\seqdeno{\Gamma,s'\ts n}$ for some numeral $n$ such that $\Gamma,s\ts M[N_i/x_i]\converges n,s'$.
       Without loss of generality, suppose that $n=0$.  
@@ -4018,6 +4118,32 @@ Now we are ready to prove our main adequacy Lemma.
       where the first equality is by our observation above (since $\IfO - \Then N \Else P$ is an evaluation context), and the second is by the definition of $\IfO$.
       Then, by induction, this last term is either equal to $\bot_{X\sequoid\deno{\Gamma}}$,or is equal to $\seqdeno{\Gamma,s''\ts u}$ for some $u\in X$ such that $\Gamma,s'\ts N[N_i/x_i]\converges u,s''$.
       In this second case, we have $\Gamma,s\ts \IfO M[N_i/x_i] \Then N[N_i/x_i] \Else P[N_i/x_i] \converges u,s''$.
+  \end{itemize}
+  The argument for $\lett$ is similar.
+  \begin{itemize}
+    \item Suppose that $\Gamma,\Delta\ts M \from Y$ and $\Gamma,\Delta,x\from Y \ts N\from X$, where $Y$ is either $\bool$ or $\nat$ and $X$ is either $\bool$, $\nat$ or $\com$.  
+      Let $s$ be a $\Gamma$-store.  
+      Since $\lett\from Y \implies ((Y \to X) \to X)$ is a strict strategy, if $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M})} = \bot_{Y\sequoid\oc\deno\Gamma}$, then
+      \[
+        \seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta \ts \lett x=M \inn N}} = \bot_{X\sequoid \oc\deno\Gamma}\,.
+        \]
+      Otherwise, by induction we must have $\seqdeno{s,((\sigma_i)\semicom\deno{\Gamma,\Delta\ts M}} = \seqdeno{\Gamma,s'\ts y}$ for some $y\in Y$ such that $\Gamma,s\ts M[N_i/x_i]\ts y,s'$.  
+      Then we have
+      \begin{IEEEeqnarray*}{Cl}
+        & \seqdeno{s,((\sigma_i)\semicom \deno{\Gamma,\Delta\ts \lett x=M \inn N})} \\
+        = & \seqdeno{s',((\sigma_i)\semicom\deno{\Gamma,\Delta\ts \lett x=y \inn N}} \\
+        = & \seqdeno{s',((\sigma_i)\semicom \deno{\Gamma,\Delta\ts (\lambda x.N)y}}\,, \\
+        = & \seqdeno{s',((\sigma_i)\semicom \deno{\Gamma,\Delta\ts N[y/x]}}\,, \\
+      \end{IEEEeqnarray*}
+      where the first inequality holds because $\lett x=- \inn N$ is an evaluation context, and the second holds by the definition of $\lett$.  
+      Then, by induction, this last term is either equal to $\bot_{X\sequoid\oc\deno\Gamma}$ or it is equal to $\seqdeno{\Gamma,s''\ts u}$ for some $u\in X$ such that 
+      \[
+        \Gamma,s'\ts N[y/x,N_i/x_i]\ts u,s''\,.
+        \]
+      In this second case, we have
+      \[
+        \Gamma,s\ts \lett x=M[N_i/x_i] \inn N[N_i/x_i] \converges u,s''\,.
+        \]
   \end{itemize}
   Next, we deal with the rules for variables.
   \begin{itemize}
@@ -4281,8 +4407,8 @@ Note that the definition of the $\oc$ connective, together with Lemma \ref{LemTy
   Then $\oc\deno{T}$ is full.
 \end{proposition}
 
-This Proposition on its own does not seem to be much use, since it relates to the exponential of the denotation of $T$, while all our results have been proved about the denotation $\deno T$ itself.
-But recall that the `co-Kleisli'-style morphisms in our category, which are strategies for $\oc A \implies B$, may alternatively be regarded as comonoid homomorphisms from the comonoid on $\oc A$ to the comonoid on $\oc B$.  
+This does not immediately seem very useful: $\oc\deno{T}$ may be full, but $\deno T$ itself is not, and $\deno T$ is the game that we are using to model the type $T$ in our semantics.
+Recall, however, that the `co-Kleisli'-style morphisms in our category, which are strategies for $\oc A \implies B$, may alternatively be regarded as comonoid homomorphisms from the comonoid on $\oc A$ to the comonoid on $\oc B$.  
 Thus, if $S,T$ are Idealized Algol types, then the set of morphisms $\oc\deno S \implies \deno T$ in our original category is precisely the same as the set of morphisms $\oc\deno S \implies \oc\deno T$ that are comonoid homomorphisms.
 We will take up the rest of this section giving a combinatorial characterization of these morphisms.
 
@@ -4300,8 +4426,23 @@ Since $\pv{s}$ is a subsequence of $\ct{s}$ for any sequence $s$, we get:
   Any innocent strategy is single-threaded.
 \end{proposition}
 
+We now make a new definition.
+
+\begin{definition}
+  Given a legal sequence $s\in \L_A$, and a move $b$ in $s$, we say that a move $a$ in $s$ is \emph{hereditarily justified by $b$} if there is a chain of justification pointers going back from $a$ to $b$.
+
+  We write $s\vert_b$ for the subsequence of $s$ given by all moves in $s$ that are hereditarily justified by $b$.
+  Given a set $I$ of initial moves, we write $s\vert_I$ for the subsequence of $s$ given by all moves that are hereditarily justified by some $b\in I$.
+
+  We say that a game $A$ is \emph{thread-closed} if $s\vert_I\in P_A$ whenever $s\in P_A$ and $I$ is some collection of occurrences of initial moves in $s$.
+\end{definition}
+
+If $A$ and $B$ are non-empty games, then the sequoid $A \sequoid B$ is never thread-closed: if we take some play $s$ with moves in both $A$ and $B$, then $s\vert_B$ is not a play of $A \sequoid B$.
+
+However, if $A$ is a well-opened game, then $\oc A$ is always thread-closed.
+
 \begin{lemma}[{\cite[3.5.1]{RusssThesis}}]
-  Let $\sigma \from A$ be a single-threaded strategy.  
+  Let $A$ be a thread-closed game and let $\sigma \from A$ be a single-threaded strategy.  
   Suppose $s\in \sigma$, and let $I$ be a set of occurrences of initial moves in $s$.  
   Then $s\vert_I\in\sigma$.
   \label{LemRuss1}
@@ -4315,7 +4456,7 @@ Since $\pv{s}$ is a subsequence of $\ct{s}$ for any sequence $s$, we get:
   Then, since we have $\ct{sa}=\ct{s\vert_I a}$, we must have $s\vert_Iab\in\sigma$ by single-threadedness of $\sigma$.
 \end{proof}
 
-We now link this definition to the idea of a comonoid homomorphism.
+We now link the concept of single-threadedness to the idea of a comonoid homomorphism.
 
 \begin{proposition}
   Let $A,B$ be well-opened games.
@@ -4364,7 +4505,8 @@ This means that our semantics of Idealized Algol lives within the new category, 
 We end up with a game semantics entirely based around arenas, without having to talk about distinguished sets of legal plays.
 This semantics is much closer to the game semantics of PCF developed by Hyland and Ong in \cite{hoPcf}; the difference there is that they use innocent rather than single-threaded strategies.
 
-Note that it is impossible to define the tensor product of games, let alone the sequoid, in the arena-only semantics, so our Computational Adequacy proof would not have worked had we adopted this approach from the start.
+We might ask why we did not try to work with this arena-only semantics from the start (as has been done in other work -- see \cite{RusssThesis} and \cite{Harmer2006InnocentGS}, for example).  
+The reason is that this semantics is unable to accommodate the tensor and sequoid operators, which -- although not involved in the denotation of any Idealized Algol type -- have been essential to our proof of Computational Adequacy.
 
 \section{Full Abstraction}
 
@@ -4376,7 +4518,9 @@ We now quote a definability result from \cite{hoPcf}.
   \label{ThePcfDefinability}
 \end{theorem}
 
-Here, PCF is the sub-language of PCF generated by the types $\nat$ and $\bool$, together with their structural constants.  
+Here, PCF is the sub-language of Idealized Algol generated by the types $\nat$ and $\bool$, together with their structural constants.  
+Notably, it does not contain $\lett$ or any of the explicit stateful structure of Idealized Algol.
+
 We will take it as read that this result may be extended to the types $\com$ and $\Varr$, so that we can say that if $T$ is an Idealized Algol type, then any compact innocent strategy for $\deno T$ is the denotation of some IA term.
 Then our factorization result (Proposition \ref{PropInnocentFactorization}) gives us the following definability result.
 
@@ -4442,6 +4586,3 @@ This will give us a concrete representation of a morphism in the quotiented cate
   By the well bracketing condition, every one of these threads is itself a complete play in $\oc A \implies B$.  
   Every one of these sequences is contained in $\sigma$; if they were all contained in $\tau$, then we would have $\s\in\tau^\dag\|\alpha$, which would be a contradiction, so we end up with a complete sequence contained in $\sigma\setminus\tau$.
 \end{proof}
-
-The significance of this result is that it gives us an algorithm for deciding whether two IA terms are observationally equivalent, at least if we pass to a finitary version of IA with only finite datatypes and no recursion other than a primitive for divergence).  
-Recall from Section \ref{SecCAnFA} that this was impossible for PCF.

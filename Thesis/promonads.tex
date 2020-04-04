@@ -7,11 +7,11 @@ As a technical tool to prove the results we want, we shall introduce multicatego
 The main purpose of this generalization is to allow us to do without coends wherever possible: for example, while we need coends to make $[\X,\Set]$ into a monoidal category, we do not need them to make it into a multicategory.  
 
 The first half of this chapter is, in the interests of completeness, fairly technical, and may be skimmed over on a first reading.  
-In chapter \ref{SecEndoprofunctors}, we introduce the multicategory of endoprofunctors on a category $\C$, which generalizes the monoidal category of endofunctors on $\C$.  
+In Section \ref{SecEndoprofunctors}, we introduce the multicategory of endoprofunctors on a category $\C$, which generalizes the monoidal category of endofunctors on $\C$.  
 As monoids in $\End(\C)$ are called monads on $\C$, so we will call monoids in $\Endoprof(\C)$ \emph{promonads} on $\C$.  
-We will observe that a promonad may be regarded as a sort of category, and that the Kleisli category may be characterized as the embedding of monads on $\C$ into promonads on $\C$.  
+We will observe that a promonad may be regarded as a sort of category, and that the Kleisli category for a monad $M$ is precisely the category we get by considering $M$ as a promonad.
 
-The main result will then be to show that an $\X$-parametric promonad on a category $\C$ -- i.e., a multifunctor $\X \to \Endoprof(\C)$ -- may be regarded as a sort of $[\X,\Set]$-enriched category, and that the \Mellies category may similarly be regarded as an embedding of $\X$-parametric monads on $\C$ into $\X$-parametric promonads on $\C$.
+The main result will then be to show that an $\X$-parametric promonad on a category $\C$ -- i.e., a multifunctor $\X \to \Endoprof(\C)$ -- may be regarded as a sort of $[\X,\Set]$-enriched category, and that the \Mellies category for a parametric monad may similarly be regarded as the $[\X,\Set]$-enriched category that we get by regarding that parametric monad as a parametric promonad.
 
 \section{Multicategories}
 
@@ -94,8 +94,8 @@ The main result will then be to show that an $\X$-parametric promonad on a categ
     \and
     \tilde{\M}_0(;b) = \M(I, b)
   \end{mathpar}
-  If we're being careful, then we should note that the expression $a_1 \tensor \cdots \tensor a_n$ does not define a single object of $\M$, since the tensor product is not in general strictly associative.
-  Since the tensor product is not necessarily strictly associative, it is not obvious exactly what we mean by $a_1 \tensor \cdots \tensor a_n$.
+  If we're being careful, then we should note that the expression $a_1 \tensor \cdots \tensor a_n$ does not define a single object of $\M$.
+  Since the tensor product is not necessarily strictly associative, the choice of bracketing in the expression $a_1 \tensor \cdots \tensor a_n$ affects which object we end up with.
   It is enough to fix any one of the possible bracketings (e.g., to make $\blank\tensor\blank$ always associate to the right).  
 
   Composition is then given by
@@ -659,10 +659,10 @@ Profunctors in general form a structure called an \emph{fc-multicategory} \cite{
 
 \section{Functors are a special case of profunctors}
 
-The reason why we refer to a functors $F\from \oppcat\C,\D \to \V$ as a \emph{profunctors} $\C \pto \D$ is that they generalize ordinary functors $\C \to \D$.  
-Specifically, if $F \from \C \to \D$ is a functor, then we can identify it with the profunctor
+The reason why we refer to a functors $F\from \oppcat\C,\D \to \V$ as a \emph{profunctors} $\C \pto \D$ is that they generalize ordinary functors.
+Specifically, if $F \from \D \to \C$ is a functor, then we can identify it with the profunctor
 \[
-  \tilde{F}(d,c) = \D(d, F(c)) \from \oppcat \D, \C \to \V\,.
+  \tilde{F}(c,d) = \C(c, F(d)) \from \oppcat \C, \D \to \V\,.
   \]
 This gives us an embedding of the monoidal category of endofunctors $\C \to \C$ into the multicategory of endoprofunctors $\C \pto \C$:
 
@@ -671,7 +671,7 @@ This gives us an embedding of the monoidal category of endofunctors $\C \to \C$ 
   Let $F_1,\cdots,F_n, G\from \C \to \C$ be functors.  
   Then the set of natural transformations $F_1\circ\cdots\circ F_n \to G$ is naturally in bijection with the set of extranatural transformations
   \[
-    \hat{F_1},\cdots,\hat{F_n} \to \hat{G}\,.
+    \tilde{F_1},\cdots,\tilde{F_n} \to \tilde{G}\,.
     \]
   \label{PropFunctorsIntoProfunctors}
 \end{proposition}
@@ -810,7 +810,7 @@ and where multimorphisms $F_1,\cdots,F_n\to G$ are natural transformations
   \phi_{x_1,\cdots,x_n} \from F_1(x_1),\cdots,F_n(x_n)\to G(x_1\tensor\cdots\tensor x_n)\,.
   \]
 \begin{remark}
-  Suppose that $\M$ is the category of sets, regarded as a multicategory through its Cartesian structure.  
+  Suppose that $\X$ is small and suppose that $\M$ is the category of sets, regarded as a multicategory through its Cartesian structure.  
   Let $x_1,\cdots,x_n,y_1,\cdots,y_p$ be objects of $\X$.  
   Then for any collection of functors
   \[
@@ -835,7 +835,7 @@ and where multimorphisms $F_1,\cdots,F_n\to G$ are natural transformations
   \[
     (F\tensor_{\text{Day}} G)(z) = \int^{x,y} F(x) \times G(y)\times \X(x\tensor y,z)\,.
     \]
-  However, this multicategory is not representable in general, particularly in the cases when we are working with enriched multicategories (not defined here), where the enriching multicategory is not cocomplete, or when the category $\M$ is not the enriching multicategory.
+  However, this multicategory is not representable in general, particularly in the cases when we are working with enriched multicategories (not defined here), where the enriching multicategory is not cocomplete, if $\X$ is large, or when the category $\M$ is not the enriching multicategory.
 \end{remark}
 
 \section{Monoids on functors are multifunctors}
@@ -906,7 +906,7 @@ Our main result will tell us that it doesn't actually matter which way round we 
 The only ingredient we are missing is an appropriate change of base to move from ordinary $\Set$-enriched categories to $[\M,\Set]$-enriched categories.
 
 \begin{definition}
-  Let $\X$ be a monoidal category.  
+  Let $\X$ be a small monoidal category.  
   We have a multifunctor
   \[
     \X \to [\Set,\Set]
@@ -964,7 +964,7 @@ The important property of this particular multifunctor is as follows.
 
 \begin{theorem}[`Stokes's Theorem']
   \label{StokessTheorem}
-  Let $\X$ be a monoidal category and let $\C$ be a category.  
+  Let $\X$ be a small monoidal category and let $\C$ be a category.  
   Then we have an isomorphism of multicategories
   \[
     [\X,\Endoprof_{\Set}(\C)] \cong \Endoprof_{[X,\Set]}({\partial_\X}_*\C)\,.
