@@ -1,105 +1,107 @@
-\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}% 
-\contentsline {section}{\numberline {1.1}Denotational Semantics and Program Equivalence}{1}{section.1.1}% 
-\contentsline {section}{\numberline {1.2}Computational Adequacy \& Full Abstraction}{3}{section.1.2}% 
-\contentsline {section}{\numberline {1.3}Categorical Semantics}{7}{section.1.3}% 
-\contentsline {section}{\numberline {1.4}Game Semantics}{9}{section.1.4}% 
-\contentsline {section}{\numberline {1.5}Game Semantics for Programming Languages}{11}{section.1.5}% 
-\contentsline {section}{\numberline {1.6}Full Abstraction for Kleisli Categories}{13}{section.1.6}% 
-\contentsline {section}{\numberline {1.7}Difficulties with Countable Nondeterminism}{16}{section.1.7}% 
-\contentsline {section}{\numberline {1.8}Plan for this Thesis}{19}{section.1.8}% 
-\contentsline {chapter}{\numberline {2}A Sequoidal Game Semantics for Idealized Algol}{21}{chapter.2}% 
-\contentsline {section}{\numberline {2.1}Idealized Algol}{21}{section.2.1}% 
-\contentsline {section}{\numberline {2.2}Games and Strategies}{24}{section.2.2}% 
-\contentsline {section}{\numberline {2.3}Connectives on Games}{27}{section.2.3}% 
-\contentsline {section}{\numberline {2.4}Composition of strategies}{29}{section.2.4}% 
-\contentsline {section}{\numberline {2.5}Associativity of composition}{36}{section.2.5}% 
-\contentsline {section}{\numberline {2.6}Copycat strategies}{37}{section.2.6}% 
-\contentsline {section}{\numberline {2.7}$\mathcal G$ as a Symmetric Monoidal Category}{40}{section.2.7}% 
-\contentsline {section}{\numberline {2.8}$\mathcal G$ as a Symmetric Monoidal Closed Category}{45}{section.2.8}% 
-\contentsline {section}{\numberline {2.9}Tree Immersions and Zigzag Strategies}{47}{section.2.9}% 
-\contentsline {section}{\numberline {2.10}Products in $\mathcal G$}{49}{section.2.10}% 
-\contentsline {section}{\numberline {2.11}Sequoidal categories}{51}{section.2.11}% 
-\contentsline {section}{\numberline {2.12}Sequoidally decomposable categories}{58}{section.2.12}% 
-\contentsline {section}{\numberline {2.13}A Formula for the Exponential}{64}{section.2.13}% 
-\contentsline {section}{\numberline {2.14}The Exponential as a Final Coalgebra}{74}{section.2.14}% 
-\contentsline {section}{\numberline {2.15}Denotational Semantics of Idealized Algol}{75}{section.2.15}% 
-\contentsline {section}{\numberline {2.16}Order-Enrichment of $\mathcal G$}{78}{section.2.16}% 
-\contentsline {section}{\numberline {2.17}The Strategy ${\mathsf {cell}}$}{79}{section.2.17}% 
-\contentsline {chapter}{\numberline {3}Operational Semantics, Computational Adequacy and Full Abstraction}{84}{chapter.3}% 
-\contentsline {section}{\numberline {3.1}Big-Step Operational Semantics}{84}{section.3.1}% 
-\contentsline {section}{\numberline {3.2}Small-Step Operational Semantics}{85}{section.3.2}% 
-\contentsline {section}{\numberline {3.3}Soundness}{92}{section.3.3}% 
-\contentsline {section}{\numberline {3.4}Computational Adequacy}{109}{section.3.4}% 
-\contentsline {section}{\numberline {3.5}Innocent Factorization}{121}{section.3.5}% 
-\contentsline {section}{\numberline {3.6}Arena-only Semantics}{123}{section.3.6}% 
-\contentsline {section}{\numberline {3.7}Full Abstraction}{125}{section.3.7}% 
-\contentsline {section}{\numberline {3.8}The Intrinsic Equivalence Relation}{126}{section.3.8}% 
-\contentsline {chapter}{\numberline {4}Monads and Kleisli categories}{128}{chapter.4}% 
-\contentsline {section}{\numberline {4.1}Monads}{128}{section.4.1}% 
-\contentsline {section}{\numberline {4.2}Kleisli Categories}{130}{section.4.2}% 
-\contentsline {subsection}{\numberline {4.2.1}Multiplicative natural transformations}{131}{subsection.4.2.1}% 
-\contentsline {section}{\numberline {4.3}Denotational Semantics}{133}{section.4.3}% 
-\contentsline {section}{\numberline {4.4}Operational Semantics}{134}{section.4.4}% 
-\contentsline {section}{\numberline {4.5}Soundness}{137}{section.4.5}% 
-\contentsline {section}{\numberline {4.6}Computational Adequacy}{145}{section.4.6}% 
-\contentsline {section}{\numberline {4.7}Full Abstraction}{150}{section.4.7}% 
-\contentsline {section}{\numberline {4.8}Comparison with Ghica's slot games}{152}{section.4.8}% 
-\contentsline {section}{\numberline {4.9}Alternative Reduction Rules - May Testing}{153}{section.4.9}% 
-\contentsline {section}{\numberline {4.10}Alternative Reduction Rules - Must Testing}{158}{section.4.10}% 
-\contentsline {section}{\numberline {4.11}Full Abstraction for Finite Nondeterminism Under Must Testing}{164}{section.4.11}% 
-\contentsline {subsection}{\numberline {4.11.1}Full Abstraction for Countable Nondeterminism under Must Testing}{166}{subsection.4.11.1}% 
-\contentsline {section}{\numberline {4.12}The Intrinsic Equivalence Relation}{173}{section.4.12}% 
-\contentsline {chapter}{\numberline {5}Parametric monads}{175}{chapter.5}% 
-\contentsline {section}{\numberline {5.1}The Melli\`{e}s\xspace category}{176}{section.5.1}% 
-\contentsline {section}{\numberline {5.2}The category ${\mathcal {C}}/\mathcal X$}{178}{section.5.2}% 
-\contentsline {section}{\numberline {5.3}Lax $2$-colimits}{183}{section.5.3}% 
-\contentsline {section}{\numberline {5.4}Lax natural transformations and functoriality of lax colimits}{185}{section.5.4}% 
-\contentsline {section}{\numberline {5.5}Lax $2$-colimits in ${\normalfont \textbf {Cat}}$}{187}{section.5.5}% 
-\contentsline {section}{\numberline {5.6}Examples of lax $2$-colimits in ${\normalfont \textbf {Cat}}$}{193}{section.5.6}% 
-\contentsline {section}{\numberline {5.7}Finite products distribute over lax colimits in ${\normalfont \textbf {Cat}}$}{195}{section.5.7}% 
-\contentsline {section}{\numberline {5.8}Monoidal structure of ${\mathcal {C}}/\mathcal X$}{197}{section.5.8}% 
-\contentsline {section}{\numberline {5.9}Symmetric monoidal structure of ${\mathcal {C}}/\mathcal X$}{201}{section.5.9}% 
-\contentsline {section}{\numberline {5.10}Monoidal closed structure of ${\mathcal {C}}/\mathcal X$}{202}{section.5.10}% 
-\contentsline {section}{\numberline {5.11}Cartesianness of the monoidal structure}{205}{section.5.11}% 
-\contentsline {chapter}{\numberline {6}Reader actions on ${\normalfont \textbf {Set}}$}{209}{chapter.6}% 
-\contentsline {section}{\numberline {6.1}Colimits of actions are monoidal functors}{209}{section.6.1}% 
-\contentsline {section}{\numberline {6.2}Reader actions on ${\normalfont \textbf {Set}}$ vs change of base}{212}{section.6.2}% 
-\contentsline {section}{\numberline {6.3}From monoidal endofunctors to reader actions}{214}{section.6.3}% 
-\contentsline {section}{\numberline {6.4}Actions of categories with terminal objects}{222}{section.6.4}% 
-\contentsline {section}{\numberline {6.5}Reader actions and denotational semantics}{224}{section.6.5}% 
-\contentsline {chapter}{\numberline {7}Promonads and parametric promonads}{225}{chapter.7}% 
-\contentsline {section}{\numberline {7.1}Multicategories}{226}{section.7.1}% 
-\contentsline {section}{\numberline {7.2}Representable multicategories}{228}{section.7.2}% 
-\contentsline {section}{\numberline {7.3}Product and unit multicategories}{229}{section.7.3}% 
-\contentsline {section}{\numberline {7.4}Multifunctors \& multinatural transformations}{230}{section.7.4}% 
-\contentsline {section}{\numberline {7.5}Monoids in multicategories}{231}{section.7.5}% 
-\contentsline {section}{\numberline {7.6}Categories enriched over multicategories}{232}{section.7.6}% 
-\contentsline {section}{\numberline {7.7}Multicategory-enriched functors and natural transformations}{233}{section.7.7}% 
-\contentsline {section}{\numberline {7.8}The categories enriched over a symmetric multicategory form a multicategory}{233}{section.7.8}% 
-\contentsline {section}{\numberline {7.9}Change of base}{234}{section.7.9}% 
-\contentsline {section}{\numberline {7.10}Closed multicategories}{234}{section.7.10}% 
-\contentsline {section}{\numberline {7.11}The multicategory of endoprofunctors}{236}{section.7.11}% 
-\contentsline {section}{\numberline {7.12}Functors are a special case of profunctors}{240}{section.7.12}% 
-\contentsline {section}{\numberline {7.13}Promonads are categories}{241}{section.7.13}% 
-\contentsline {section}{\numberline {7.14}The multicategory of functors}{243}{section.7.14}% 
-\contentsline {section}{\numberline {7.15}Monoids on functors are multifunctors}{244}{section.7.15}% 
+\contentsline {chapter}{\numberline {1}Introduction}{11}{chapter.1}% 
+\contentsline {section}{\numberline {1.1}Denotational Semantics and Program Equivalence}{11}{section.1.1}% 
+\contentsline {section}{\numberline {1.2}Computational Adequacy \& Full Abstraction}{13}{section.1.2}% 
+\contentsline {section}{\numberline {1.3}Categorical Semantics}{16}{section.1.3}% 
+\contentsline {section}{\numberline {1.4}Game Semantics}{18}{section.1.4}% 
+\contentsline {section}{\numberline {1.5}Game Semantics for Programming Languages}{20}{section.1.5}% 
+\contentsline {section}{\numberline {1.6}Full Abstraction for Kleisli Categories}{22}{section.1.6}% 
+\contentsline {section}{\numberline {1.7}Difficulties with Countable Nondeterminism}{24}{section.1.7}% 
+\contentsline {section}{\numberline {1.8}Plan for this Thesis}{27}{section.1.8}% 
+\contentsline {chapter}{\numberline {2}A Sequoidal Game Semantics for Idealized Algol}{29}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Idealized Algol}{29}{section.2.1}% 
+\contentsline {section}{\numberline {2.2}Games and Strategies}{31}{section.2.2}% 
+\contentsline {section}{\numberline {2.3}Connectives on Games}{34}{section.2.3}% 
+\contentsline {section}{\numberline {2.4}Composition of strategies}{36}{section.2.4}% 
+\contentsline {section}{\numberline {2.5}Associativity of composition}{43}{section.2.5}% 
+\contentsline {section}{\numberline {2.6}Copycat strategies}{44}{section.2.6}% 
+\contentsline {section}{\numberline {2.7}$\mathcal G$ as a Symmetric Monoidal Category}{46}{section.2.7}% 
+\contentsline {section}{\numberline {2.8}$\mathcal G$ as a Symmetric Monoidal Closed Category}{51}{section.2.8}% 
+\contentsline {section}{\numberline {2.9}Tree Immersions and Zigzag Strategies}{53}{section.2.9}% 
+\contentsline {section}{\numberline {2.10}Products in $\mathcal G$}{55}{section.2.10}% 
+\contentsline {section}{\numberline {2.11}Sequoidal categories}{56}{section.2.11}% 
+\contentsline {section}{\numberline {2.12}Sequoidally decomposable categories}{63}{section.2.12}% 
+\contentsline {section}{\numberline {2.13}A Formula for the Exponential}{69}{section.2.13}% 
+\contentsline {section}{\numberline {2.14}The Exponential as a Final Coalgebra}{78}{section.2.14}% 
+\contentsline {section}{\numberline {2.15}Denotational Semantics of Idealized Algol}{79}{section.2.15}% 
+\contentsline {section}{\numberline {2.16}Order-Enrichment of $\mathcal G$}{82}{section.2.16}% 
+\contentsline {section}{\numberline {2.17}The Strategy ${\mathsf {cell}}$}{83}{section.2.17}% 
+\contentsline {chapter}{\numberline {3}Operational Semantics, Computational Adequacy and Full Abstraction}{87}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Big-Step Operational Semantics}{87}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}Small-Step Operational Semantics}{88}{section.3.2}% 
+\contentsline {section}{\numberline {3.3}Soundness}{94}{section.3.3}% 
+\contentsline {section}{\numberline {3.4}Computational Adequacy}{112}{section.3.4}% 
+\contentsline {section}{\numberline {3.5}Innocent Factorization}{123}{section.3.5}% 
+\contentsline {section}{\numberline {3.6}Arena-only Semantics}{125}{section.3.6}% 
+\contentsline {section}{\numberline {3.7}Full Abstraction}{128}{section.3.7}% 
+\contentsline {section}{\numberline {3.8}The Intrinsic Equivalence Relation}{129}{section.3.8}% 
+\contentsline {chapter}{\numberline {4}Monads and Kleisli categories}{131}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Monads}{131}{section.4.1}% 
+\contentsline {section}{\numberline {4.2}Kleisli Categories}{133}{section.4.2}% 
+\contentsline {section}{\numberline {4.3}Multiplicative natural transformations}{134}{section.4.3}% 
+\contentsline {section}{\numberline {4.4}Denotational Semantics}{135}{section.4.4}% 
+\contentsline {section}{\numberline {4.5}Operational Semantics}{137}{section.4.5}% 
+\contentsline {section}{\numberline {4.6}Soundness}{140}{section.4.6}% 
+\contentsline {section}{\numberline {4.7}Computational Adequacy}{146}{section.4.7}% 
+\contentsline {section}{\numberline {4.8}Full Abstraction}{150}{section.4.8}% 
+\contentsline {section}{\numberline {4.9}Comparison with Ghica's slot games}{152}{section.4.9}% 
+\contentsline {section}{\numberline {4.10}Alternative Reduction Rules - May Testing}{153}{section.4.10}% 
+\contentsline {section}{\numberline {4.11}Alternative Reduction Rules - Must Testing}{157}{section.4.11}% 
+\contentsline {section}{\numberline {4.12}Full Abstraction for Finite Nondeterminism Under Must Testing}{163}{section.4.12}% 
+\contentsline {section}{\numberline {4.13}The Kleene Tree}{165}{section.4.13}% 
+\contentsline {section}{\numberline {4.14}Non-computable functions and Observational Equivalence}{167}{section.4.14}% 
+\contentsline {section}{\numberline {4.15}Full Abstraction for Countable Nondeterminism under Must Testing}{170}{section.4.15}% 
+\contentsline {section}{\numberline {4.16}The Intrinsic Equivalence Relation}{174}{section.4.16}% 
+\contentsline {chapter}{\numberline {5}Parametric monads}{176}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}The Melli\`{e}s\xspace category}{177}{section.5.1}% 
+\contentsline {section}{\numberline {5.2}The category ${\mathcal {C}}/\mathcal X$}{181}{section.5.2}% 
+\contentsline {section}{\numberline {5.3}Lax $2$-colimits}{185}{section.5.3}% 
+\contentsline {section}{\numberline {5.4}Lax natural transformations and functoriality of lax colimits}{188}{section.5.4}% 
+\contentsline {section}{\numberline {5.5}Lax $2$-colimits in ${\normalfont \textbf {Cat}}$}{190}{section.5.5}% 
+\contentsline {section}{\numberline {5.6}Examples of lax $2$-colimits in ${\normalfont \textbf {Cat}}$}{196}{section.5.6}% 
+\contentsline {section}{\numberline {5.7}Finite products distribute over lax colimits in ${\normalfont \textbf {Cat}}$}{197}{section.5.7}% 
+\contentsline {section}{\numberline {5.8}Monoidal structure of ${\mathcal {C}}/\mathcal X$}{199}{section.5.8}% 
+\contentsline {section}{\numberline {5.9}Symmetric monoidal structure of ${\mathcal {C}}/\mathcal X$}{203}{section.5.9}% 
+\contentsline {section}{\numberline {5.10}Monoidal closed structure of ${\mathcal {C}}/\mathcal X$}{204}{section.5.10}% 
+\contentsline {section}{\numberline {5.11}Cartesianness of the monoidal structure}{207}{section.5.11}% 
+\contentsline {chapter}{\numberline {6}Reader actions on ${\normalfont \textbf {Set}}$}{211}{chapter.6}% 
+\contentsline {section}{\numberline {6.1}Colimits of actions are monoidal functors}{211}{section.6.1}% 
+\contentsline {section}{\numberline {6.2}Reader actions on ${\normalfont \textbf {Set}}$ vs change of base}{214}{section.6.2}% 
+\contentsline {section}{\numberline {6.3}From monoidal endofunctors to reader actions}{217}{section.6.3}% 
+\contentsline {section}{\numberline {6.4}Actions of categories with terminal objects}{223}{section.6.4}% 
+\contentsline {section}{\numberline {6.5}Reader actions and denotational semantics}{225}{section.6.5}% 
+\contentsline {chapter}{\numberline {7}Promonads and parametric promonads}{227}{chapter.7}% 
+\contentsline {section}{\numberline {7.1}Multicategories}{228}{section.7.1}% 
+\contentsline {section}{\numberline {7.2}Representable multicategories}{229}{section.7.2}% 
+\contentsline {section}{\numberline {7.3}Product and unit multicategories}{231}{section.7.3}% 
+\contentsline {section}{\numberline {7.4}Multifunctors \& multinatural transformations}{232}{section.7.4}% 
+\contentsline {section}{\numberline {7.5}Monoids in multicategories}{233}{section.7.5}% 
+\contentsline {section}{\numberline {7.6}Categories enriched over multicategories}{233}{section.7.6}% 
+\contentsline {section}{\numberline {7.7}Multicategory-enriched functors and natural transformations}{234}{section.7.7}% 
+\contentsline {section}{\numberline {7.8}The categories enriched over a symmetric multicategory form a multicategory}{235}{section.7.8}% 
+\contentsline {section}{\numberline {7.9}Change of base}{235}{section.7.9}% 
+\contentsline {section}{\numberline {7.10}Closed multicategories}{237}{section.7.10}% 
+\contentsline {section}{\numberline {7.11}The multicategory of endoprofunctors}{238}{section.7.11}% 
+\contentsline {section}{\numberline {7.12}Functors are a special case of profunctors}{241}{section.7.12}% 
+\contentsline {section}{\numberline {7.13}Promonads are categories}{242}{section.7.13}% 
+\contentsline {section}{\numberline {7.14}The multicategory of functors}{244}{section.7.14}% 
+\contentsline {section}{\numberline {7.15}Monoids on functors are multifunctors}{245}{section.7.15}% 
 \contentsline {section}{\numberline {7.16}Two perspectives on monoids in ${\normalfont \textbf {Set}}$}{245}{section.7.16}% 
 \contentsline {chapter}{\numberline {8}Parametric Monads and Full Abstraction}{250}{chapter.8}% 
 \contentsline {section}{\numberline {8.1}The language {IA${}_{\mathcal X}$}\xspace }{251}{section.8.1}% 
 \contentsline {section}{\numberline {8.2}Operational Semantics}{252}{section.8.2}% 
-\contentsline {section}{\numberline {8.3}Translation into {IA${}_X$}\xspace }{254}{section.8.3}% 
-\contentsline {section}{\numberline {8.4}Computational Adequacy}{259}{section.8.4}% 
-\contentsline {section}{\numberline {8.5}Equational Soundness}{262}{section.8.5}% 
-\contentsline {subsection}{\numberline {8.5.1}Full Abstraction for {IA${}_{\mathcal X}$}\xspace }{263}{subsection.8.5.1}% 
-\contentsline {section}{\numberline {8.6}Probability}{265}{section.8.6}% 
-\contentsline {section}{\numberline {8.7}Full Abstraction for Probabilistic Algol}{270}{section.8.7}% 
-\contentsline {section}{\numberline {8.8}Comparison with a Kleisli Category Model}{272}{section.8.8}% 
-\contentsline {section}{\numberline {8.9}Game Semantics and Probability}{274}{section.8.9}% 
+\contentsline {section}{\numberline {8.3}Translation into {IA${}_X$}\xspace }{252}{section.8.3}% 
+\contentsline {section}{\numberline {8.4}Computational Adequacy}{258}{section.8.4}% 
+\contentsline {section}{\numberline {8.5}Equational Soundness}{261}{section.8.5}% 
+\contentsline {subsection}{\numberline {8.5.1}Full Abstraction for {IA${}_{\mathcal X}$}\xspace }{262}{subsection.8.5.1}% 
+\contentsline {section}{\numberline {8.6}Probability}{264}{section.8.6}% 
+\contentsline {section}{\numberline {8.7}Full Abstraction for Probabilistic Algol}{268}{section.8.7}% 
+\contentsline {section}{\numberline {8.8}Comparison with a Kleisli Category Model}{270}{section.8.8}% 
+\contentsline {section}{\numberline {8.9}Game Semantics and Probability}{273}{section.8.9}% 
 \contentsline {section}{\numberline {8.10}The Probabilistic Game Semantics of Danos and Harmer}{279}{section.8.10}% 
-\contentsline {chapter}{\numberline {9}Further Directions}{282}{chapter.9}% 
-\contentsline {section}{\numberline {9.1}Stateless Languages}{282}{section.9.1}% 
-\contentsline {section}{\numberline {9.2}Stateful Effects}{290}{section.9.2}% 
-\contentsline {section}{\numberline {9.3}Relational Models}{291}{section.9.3}% 
-\contentsline {section}{\numberline {9.4}Adequacy Proofs}{293}{section.9.4}% 
-\contentsline {section}{\numberline {9.5}Afterword}{295}{section.9.5}% 
-\contentsline {chapter}{Bibliography}{296}{chapter*.31}% 
+\contentsline {chapter}{\numberline {9}Further Directions}{281}{chapter.9}% 
+\contentsline {section}{\numberline {9.1}Stateless Languages}{281}{section.9.1}% 
+\contentsline {section}{\numberline {9.2}Stateful Effects}{288}{section.9.2}% 
+\contentsline {section}{\numberline {9.3}Relational Models}{290}{section.9.3}% 
+\contentsline {section}{\numberline {9.4}Adequacy Proofs}{291}{section.9.4}% 
+\contentsline {section}{\numberline {9.5}Afterword}{293}{section.9.5}% 
+\contentsline {chapter}{Bibliography}{294}{chapter*.33}% 

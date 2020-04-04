@@ -6,45 +6,45 @@ Database file #1: ../common/phd_bibliography.bib
 Warning--empty institution in RusssThesis
 Warning--empty booktitle in Harmer2006InnocentGS
 Warning--empty year in LairdCofCommCom
-You've used 73 entries,
+You've used 76 entries,
             2549 wiz_defined-function locations,
-            1041 strings with 15136 characters,
-and the built_in function-call counts, 28468 in all, are:
-= -- 2888
-> -- 1038
-< -- 66
-+ -- 331
-- -- 313
-* -- 1883
-:= -- 4482
-add.period$ -- 239
-call.type$ -- 73
-change.case$ -- 400
-chr.to.int$ -- 72
-cite$ -- 76
-duplicate$ -- 1227
-empty$ -- 2327
-format.name$ -- 431
-if$ -- 6070
+            1063 strings with 15559 characters,
+and the built_in function-call counts, 29559 in all, are:
+= -- 2996
+> -- 1084
+< -- 67
++ -- 346
+- -- 327
+* -- 1963
+:= -- 4662
+add.period$ -- 248
+call.type$ -- 76
+change.case$ -- 416
+chr.to.int$ -- 75
+cite$ -- 79
+duplicate$ -- 1271
+empty$ -- 2414
+format.name$ -- 449
+if$ -- 6293
 int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 66
-newline$ -- 371
-num.names$ -- 235
-pop$ -- 410
+missing$ -- 70
+newline$ -- 386
+num.names$ -- 244
+pop$ -- 424
 preamble$ -- 1
-purify$ -- 477
+purify$ -- 497
 quote$ -- 0
-skip$ -- 1030
+skip$ -- 1066
 stack$ -- 0
-substring$ -- 1739
-swap$ -- 232
-text.length$ -- 66
-text.prefix$ -- 45
+substring$ -- 1804
+swap$ -- 235
+text.length$ -- 67
+text.prefix$ -- 46
 top$ -- 0
-type$ -- 556
+type$ -- 576
 warning$ -- 3
-while$ -- 266
-width$ -- 78
-write$ -- 975
+while$ -- 277
+width$ -- 81
+write$ -- 1014
 (There were 3 warnings)
