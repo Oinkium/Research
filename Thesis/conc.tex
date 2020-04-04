@@ -58,6 +58,8 @@ and with a type theory as shown in Figure \ref{FigNDPcfTypeTheory}.
     \\
     \inferrule*[right={$T\in\{\bool,\nat\}$}]{\Gamma\ts M \from \nat \\ \Gamma\ts N \from T \\ \Gamma \ts P \from T}{\Gamma \ts \IfO M \Then N \Else P \from T}
     \and
+    \inferrule*[right={$S,T\in\{\bool,\nat\}$}]{\Gamma\ts M \from S \\ \Gamma,x\from S\ts N \from T}{\Gamma\ts \lett x=M\inn N\from T}
+    \and
     \inferrule*{\Gamma \ts M \from T \to T}{\Gamma \ts \Y_T M \from T}
     \and
     \inferrule*{ }
@@ -65,18 +67,11 @@ and with a type theory as shown in Figure \ref{FigNDPcfTypeTheory}.
   \end{mathpar}
   \caption[Type theory for a variant of PCF with nondeterminism.]
   {Type theory for a variant of PCF with nondeterminism.
-  Note that if the nondeterminism is infinite (i.e., $X=\bN$), then it is common (see \cite{LairdOrdinalGames} for nondeterminism and \cite{ProbabilisicPcf} for the probabilistic case) to modify the conditional construct $\IfO M\Then N \Else P$ so that the value of $M$ is passed into $P$ (so that the typing rule for $\IfO$ becomes
-  \[
-    \inferrule*[right={$T\in\{\bool,\nat\}$}]{\Gamma\ts M \from \nat \\ \Gamma \ts N \from T \\ \Gamma \ts P \from \nat \to T}
-    {\Gamma \ts \IfO M \Then N \Else P \from T}\,.
-    \]
-  The idea behind this is that if $M$ evaluates to $0$ then $N$ will be evaluated, and if it evaluates to $n+1$ then $P\,n$ will be evaluated.
-  In ordinary deterministic PCF, this does not change the expressive power of the language, since we could always write
-  \[
-    \IfO M \Then N \Else (P\,M)\,.
-    \]
-  However, this does not work if $M$ may exhibit nondeterministic behaviour, since $M$ may evaluate to two different values the two times it is called.
-  We will stick with the variant shown above for the sake of simplicity, but nothing changes in our proofs if we choose the other version.}
+  Note that although ordinary deterministic PCF does not include the $\lett$ construct, it has to be included in the nondeterministic (see \cite{LairdOrdinalGames}) and probabilistic (see \cite{ProbabilisicPcf}) versions.  
+
+  In ordinary PCF, we may simulate the term $\lett x=M \inn N$ by the term $(\lambda x.N) M$, which is less efficient than the version with $\lett$ (If $N$ contains multiple occurrences of the variable $x$, then we end up compute $M$ multiple times), but which still gives the same result.
+
+  In nondeterministic variants of PCF, however, evaluating $M$ multiple times may give a different answer each time, in contrast to the version with $\lett$, in which we get a single answer and use it multiple times.}
   \label{FigNDPcfTypeTheory}
 \end{figure}
 We endow this language with an operational semantics of may testing.  

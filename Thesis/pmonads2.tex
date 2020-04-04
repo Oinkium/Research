@@ -1,20 +1,20 @@
 \chapter{Parametric Monads and Full Abstraction}
 \label{ChapParametricMonadsFullAbstraction}
 
-Let a monoidal category $\X$ act on a category $\G$, where $\G$ is a suitable model of some programming language.  
+Let a monoidal category $\YY$ with a small descendent set act on a category $\G$, where $\G$ is a suitable model of some programming language.  
 In this chapter we will investigate the adequacy and full abstraction properties of the resulting category $\G/\X$, as we did with Kleisli categories in Chapter \ref{ChapMonads}.  
 
 As in Chapter \ref{ChapMonads}, we shall generally require $\G$ to be a Cartesian closed category that admits a computationally adequate denotational semantics of Idealized Algol, and we shall require that $\G$ may be regarded as being enriched in algebraic directed-complete partial orders in such a way that every compact morphism between the denotations of types is the denotation of some term.
 
-As hinted at in Chapter \ref{ChapParametricMonads}, we shall also require the action of $\X$ on $\G$ to be a reader action corresponding to an oplax symmetric monoidal functor that satisfies the condition in Theorem \ref{TheCartesianClosedCx}, so that the category $\G/\X$ is Cartesian closed.
+As hinted at in Chapter \ref{ChapParametricMonads}, we shall also require the action of $\YY$ on $\G$ to be a reader action corresponding to an oplax symmetric monoidal functor $\oppcat Y \to \G$ that satisfies the condition in Theorem \ref{TheCartesianClosedCx}, so that the category $\G/\X$ is Cartesian closed.
 
-We fix a symmetric monoidal category $\X$ and an oplax monoidal functor $j\from \X \to \Set$ such that for any object $p$ of $\X$ there are morphisms $h\from p \to p \tensor p$ and $h_0 \from p \to I$ such that the composite
+We fix a symmetric monoidal category $\X$ (corresponding to $\oppcat \YY$ above) with a small ancestral set and an oplax monoidal functor $j\from \X \to \Set$ such that for any object $p$ of $\X$ there are morphisms $h\from p \to p \tensor p$ and $h_0 \from p \to I$ such that the composite
 \[
   j(p) \xrightarrow{jh} j(p\tensor p) \xrightarrow{m^j_{p,p}} j(p) \times j(p)
   \]
 is equal to the diagonal on $j(p)$.
 
-Having fix a model $\G$ of Idealized Algol as above, suppose that the datatypes in $\G$ are interpreted via an oplax monoidal functor $\Set \to \G$.  
+Fix a model $\G$ of Idealized Algol as above and suppose that the datatypes in $\G$ are interpreted via an oplax monoidal functor $\Set \to \G$.  
 Then we get an oplax monoidal functor $\X \to \G$, inducing a reader action of $\oppcat\X$ on $\G$ such that the category $\G/\oppcat\X$ is Cartesian closed.  
 We will define a language and an interpretation of this language in the category $\G/\oppcat\X$.
 
@@ -37,13 +37,13 @@ The interpretation of $\choose_p$ is that it requests an element $a$ of the set 
 Let $\G$ be a model of Idealized Algol as described above, and suppose that there is an oplax monoidal functor $\Set \to \G$ that is used to interpret datatypes.  
 We will use an underline to indicate this functor; so, for example, the object of $\G$ that is used to denote the natural number type is written $\ul\bN$.
 
-By our description of $\G/\oppcat \X$ as a lax colimit in $\Cat$ (i.e., Corollary \ref{CorTheConstructionUniversalProperty}), we have a natural functor $J\from \G\to\G/\oppcat \X$ and a natural transformation $\phi_{p,a}\from J(jp\to a) \to Ja$.  
+By our description of $\G/\oppcat \X$ as a lax colimit in $\Cat$ (i.e., Corollary \ref{CorTheConstructionUniversalProperty}), we have a natural functor $J\from \G\to\G/\oppcat \X$ and a natural transformation $\phi_{p,a}\from J(\ul{jp}\to a) \to Ja$.  
 We define our denotational semantics of \IAXX in the category $\G/\oppcat X$ as follows.  
 The denotation of any type $T$ of Idealized Algol is the object $J(\deno{T}_\G)$, where $\deno{T}_\G$ is the original denotation in $\G$.
 The denotation of any sequent $\Gamma\ts M$ the morphism $\deno{\Gamma\ts M} = J(\deno{\Gamma\ts M}_\G)$, where $\deno{-}_\G$ is the original denotation in $\G$.
-The denotation of $\choose_p$ is the morphism $\omega_p \from 1 \to j(p)$ given by the composite
+The denotation of $\choose_p$ is the morphism $\omega_p \from 1 \to \ul{j(p)}$ given by the composite
 \[
-  I \xrightarrow{\Lambda(\id_{Jjp})} (Jjp \to Jjp)  \to J(jp \to jp) \xrightarrow{\phi_{p,jp}} Jjp\,.
+  1 \xrightarrow{\Lambda(\id_{J\ul{jp}})} (J\ul{jp} \to J\ul{jp})  \to J(\ul{jp} \to \ul{jp}) \xrightarrow{\phi_{p,\ul{jp}}} J\ul{jp}\,.
   \]
 
 This denotation may alternatively be defined in a non-compositional way: given a term $\Gamma\ts M\from T$ in context of \IAXX, we can write
@@ -61,7 +61,7 @@ where the denotation at the right is that of ordinary Idealized Algol.
 This is a morphism in $\G/\oppcat\X$.  
 If we consider it as a morphism in $\G$, we see that it is given by the curried form of the composite
 \[
-  \deno{\Gamma}\times j\left(\Tensor_p p\right) \xrightarrow{\deno{\Gamma}\times m^j} \deno \Gamma \times \prod_p j(p) \xrightarrow{\deno{\Gamma,(x_p)\ts N[x_p/\choose_p]}} \deno T\,.
+  \deno{\Gamma}\times \ul{j\left(\Tensor_p p\right)} \xrightarrow{\deno{\Gamma}\times m^j} \deno \Gamma \times \prod_p \ul{j(p)} \xrightarrow{\deno{\Gamma,(x_p)\ts N[x_p/\choose_p]}} \deno T\,.
   \]
 
 The example to have in mind is that of probability; here, the objects $p$ of our category $\X$ are discrete random variables, with $j(p)$ giving the codomain of the random variable, and the term $\choose_p\from j(p)$ can be thought of as randomly sampling a single element of that set with the probability distribution coming from that random variable.
@@ -100,6 +100,8 @@ The definition of this rule is shown in Figure \ref{FigIaxxOpSem}.
     \and
     \inferrule*{\Gamma,s\ts M \converges_U n+1,s' \\ \Gamma,s' \ts P \converges_V c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges_{U \cat V} c,s''}
     \and
+    \inferrule*{\Gamma,s\ts M \converges c',s' \\ \Gamma,s' \ts N[c'/x] \converges c,s''}{\Gamma,s\ts \lett x=M \inn N \converges c,s''}
+    \and
     \inferrule*[right=$x\in\Gamma$]{\Gamma,s\ts E \converges_U n,s' \\ \Gamma,s' \ts V \converges_V x,s''}{\Gamma,s\ts V \gets E \converges_{U \cat V} \skipp,(s''\vert x \mapsto n)}
     \\
     \inferrule*[right={$s'(x)=n$}]{\Gamma,s\ts V \converges_U x,s'}{\Gamma,s\ts !V \converges_U n,s'}
@@ -130,7 +132,7 @@ Recall that a morphism $A \to B$ in our model of \IAX was a Kleisli morphism; i.
   \]
 in the original category, while a morphism $A \to B$ in the category $\G/\oppcat\X$ is a \Mellies morphism; i.e., a morphism
 \[
-  A \to (j(x) \to B)
+  A \to (\ul{j(x)} \to B)
   \]
 for some object $x$ of $\X$.  
 Now, if we can ensure that $j(x)$ is a set corresponding to an IA datatype, then we can treat this \Mellies morphism as a Kleisli morphism and start to pull results from Chapter \ref{ChapMonads} over to the parametric monad case.  
@@ -162,11 +164,11 @@ The case we have in mind is when the $j(p_i)=\bB$ for all $i$ and $N$ is the nat
 
 Recall that, in the definition of the category $\G/\oppcat\X$, the \Mellies morphisms are left unchanged by precomposing with a morphism in the image of the functor $j$; therefore, if $M\from T$ is a closed term of \IAXX referring to $\choose_{p_1}$, $\cdots$, $\choose_{p_n}$, then we may write the denotation of $M$ as the composite
 \[
-  j(N) \xrightarrow{jf} j(p_1 \tensor \cdots \tensor p_n) \xrightarrow{m^j} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \deno T\,;
+  \ul{jN} \xrightarrow{\ul{jf}} \ul{j(p_1 \tensor \cdots \tensor p_n)} \xrightarrow{m^j} \ul{jp_1} \times \cdots \times \ul{jp_n} \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \deno T\,;
   \]
 i.e., as
 \[
-  j(N) \xrightarrow{\langle \pi_1,\cdots,\pi_n\rangle} j(p_1) \times \cdots \times j(p_n) \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \deno T\,.
+  \ul{jN} \xrightarrow{\langle \pi_1,\cdots,\pi_n\rangle} \ul{jp_1} \times \cdots \times \ul{jp_n} \xrightarrow{\deno{x_1,\cdots,x_n\ts M[x_i/\choose_{p_i}]}_\G} \deno T\,.
   \]
 
 \begin{lemma}
@@ -355,14 +357,14 @@ There are a couple of problems here.
 
 Firstly, the morphisms in $\G/\oppcat \X$ are equivalence classes of \Mellies morphisms, and the equivalence relation does not respect this predicate $\downarrow_u$ -- especially since the $X$ in the above formula could change when we choose a different representative of the equivalence class.
 
-Secondly, a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an (equivalence class of) morphisms $1 \to (j(p) \to \bC)$ in $\G$, and the object $j(p)$ need not be an Idealized Algol datatype.
+Secondly, a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an (equivalence class of) morphisms $1 \to (\ul{j(p)} \to \bC)$ in $\G$, and the object $\ul{j(p)}$ need not be an Idealized Algol datatype.
 
 To solve the second problem, we make an additional small assumption on our category $\G$.  
 We require that our category $\G$ contains morphisms
 \[
   \xi_u \from (X \to \bC) \to \bC
   \]
-for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f \from X \to Y$, we have $(f\to \bC);\xi_u = \xi_{f_*u}$ (where $f_*u$ is the sequence formed by applying $f$ pointwise to $u$), and such that if $X$ is an IA datatype, then
+for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f \from X \to Y$, we have $(\ul{f}\to \bC);\xi_u = \xi_{f_*u}$ (where $f_*u$ is the sequence formed by applying $f$ pointwise to $u$), and such that if $X$ is an IA datatype, then
 \[
   \xi_u = (X \to \bC) \xrightarrow{\eta_u} (\Varr \to \bN) \xrightarrow{\neww} \bN \xrightarrow{t_{|u|}} \bC\,.
   \]
@@ -398,12 +400,12 @@ for any set $X$ and any finite sequence $u\in X^*$ such that for any function $f
 \end{example}
 
 \begin{definition}
-  Given a set $X$ and a \Mellies morphism $\sigma \from 1 \to (X \to \bC)$, we say that $\sigma$ \emph{accepts} a sequence $u\in X^*$ if $\sigma;\xi_u\ne\bot$.
+  Given a set $X$ and a morphism $\sigma \from 1 \to (X \to \bC)$, we say that $\sigma$ \emph{accepts} a sequence $u\in X^*$ if $\sigma;\xi_u\ne\bot$.
   We write $\Acc(\sigma)$ for the set of all sequences accepted by $\sigma$.
   \label{DefAcc}
 \end{definition}
 
-Recall that a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an equivalence class of \Mellies morphisms $1 \to (j(p) \to \bC)$ in $\G$, where $p$ ranges over the objects of $\X$, and where the equivalence relation is generated by identifying all pairs of morphisms $\sigma \from 1 \to (j(p) \to \bC)$ and $\tau \from 1 \to (j(q) \to \bC)$ such that there is a morphism $f \from p \to q$ such that $\tau;(j(f)\to A)=\sigma$.
+Recall that a morphism $1 \to \bC$ in $\G/\oppcat\X$ is given by an equivalence class of \Mellies morphisms $1 \to (\ul{j(p)} \to \bC)$ in $\G$, where $p$ ranges over the objects of $\X$, and where the equivalence relation is generated by identifying all pairs of morphisms $\sigma \from 1 \to (\ul{j(p)} \to \bC)$ and $\tau \from 1 \to (\ul{j(q)} \to \bC)$ such that there is a morphism $f \from p \to q$ such that $\tau;(\ul{j(f)}\to A)=\sigma$.
 
 \begin{definition}
   We define an equivalence relation on pairs $(p,\U)$, where $p$ is an object of $\X$ and $\U\subset j(p)^*$ is a set of finite sequences drawn from $j(p)$ to be the equivalence relation generated by identifying $(p,\U)$ and $(q,\V)$ whenever there is a morphism $f\from p \to q$ in $\X$ such that for all $u\in j(p)^*$, we have $u\in\U$ if and only if $j(f)_*u\in\V$.
@@ -419,7 +421,7 @@ If we have a random variable $W$ on a set $Y$ and a function $f\from X \to Y$ su
 So, in this case, the equivalence relation on sets of sequences is subsumed into the very natural equivalence relation of having the same probability.
 
 \begin{proposition}
-  Let $\sigma\from 1 \to (j(p) \to A)$, $\tau\from 1 \to (j(q) \to A)$ be two representatives of the same morphism $1 \to A$ in $\G/\oppcat\X$.  
+  Let $\sigma\from 1 \to (\ul{j(p)} \to A)$, $\tau\from 1 \to (\ul{j(q)} \to A)$ be two representatives of the same morphism $1 \to A$ in $\G/\oppcat\X$.  
   Then $(p,\Acc(\sigma))$ and $(q,\Acc(\tau))$ are equivalent.
   \label{PropAccEquivalent}
 \end{proposition}
@@ -495,7 +497,7 @@ First, we make a definition of observational equivalence of \IAXX terms.
 We then make definitions that will mirror this equivalence in the denotational semantics.
 
 \begin{definition}[Equivalence of morphisms $1 \to \bC$]
-  Let $\sigma,\tau\from 1 \to \bC$ be morphisms in $\G/\oppcat\X$, considered as morphisms $\sigma\from j(p) \to \bC$ and $\tau \from j(q) \to \bC$ in $\G$.  
+  Let $\sigma,\tau\from 1 \to \bC$ be morphisms in $\G/\oppcat\X$, considered as morphisms $\sigma\from \ul{j(p)} \to \bC$ and $\tau \from \ul{j(q)} \to \bC$ in $\G$.  
   We say that $\sigma\approx\tau$ if $(p,\Acc(\sigma))$ is equivalent to $(q,\Acc(\tau))$.
 \end{definition}
 
@@ -541,7 +543,7 @@ In order to prove compact definability, we need to make a further assumption.
 \begin{proposition}[{Compact Definability for \IAXX}]
   Suppose the functor $j \from \X \to \Set$ is strong monoidal and that for any object $x$ of $\X$ there is a finite collection $p_1,\cdots,p_n$ such that $j(p_i)$ is an IA datatype for each $i$ and such that there is a morphism
   \[
-    h \from j(p_1) \times \cdots \times j(p_n) \to x\,.
+    h \from p_1 \tensor \cdots \tensor p_n \to x\,.
     \]
   Then any compact morphism in $\G/\oppcat \X$ between denotations of IA types is definable.
   \label{PropIAXXCompactDefinability}
@@ -550,21 +552,21 @@ In order to prove compact definability, we need to make a further assumption.
   Let $\sigma \from \deno S \to \deno T$ be a morphism in $\G/\oppcat \X$, where $S$ and $T$ are IA types.  
   After composing with some suitable $h$ as above, we may assume that $\sigma$ is given by a compact morphism
   \[
-    \deno S \to j(p_1 \tensor \cdots \tensor p_n) \to \deno T
+    \deno S \to \ul{j(p_1 \tensor \cdots \tensor p_n)} \to \deno T
     \]
   in $\G$.  
   After precomposing with the multiplicative coherence for $j$ on the $p_i$, we get a compact morphism
   \[
-    \deno S \to (j(p_1) \times \cdots \times j(p_n) \to \deno T)\,,
+    \deno S \to (\ul{j(p_1) \times \cdots \times j(p_n)} \to \deno T)\,,
     \]
   which is the denotation of some term-in-context
   \[
-    x \from S,a_1 \from p_1,\cdots,a_n\from p_n \ts M \from T
+    v \from S,a_1 \from p_1,\cdots,a_n\from p_n \ts M \from T
     \]
   by compact definability for $\G$.
   Then, by our earlier work, we know that $\sigma$ itself is the denotation of the term
   \[
-    x\from S \ts M[\choose_{p_i}/a_i] \from T\,.\qedhere
+    v\from S \ts M[\choose_{p_i}/a_i] \from T\,.\qedhere
     \]
 \end{proof}
 
@@ -586,11 +588,13 @@ We can now prove Full Abstraction.
 \section{Probability}
 
 We now specialize to the case where $\X$ is a category of random variables on some fixed probability space $(\Omega,\F,\bP)$, in order to model a probabilistic language.
-For our purposes, it will suffice to take $\Omega$ to be the real interval $(0,1)$ with its Borel $\sigma$-algebra and measure.
+For our purposes, it will suffice to take $\Omega$ to be the real interval $(0,1)$ with its Lebesgue $\sigma$-algebra and measure.
+Note that the Lebesgue measure satisfies the conditions from Example \ref{ExRandomVariable} and Proposition \ref{PropRandomVariablePairing} -- every countable set is measurable and every subset of a measure-zero set is measurable.
+
 A \emph{random variable} on $\Omega$ is a measurable function $V \from \Omega \to X$.  
 Given such a random variable, and $A\subset X$, we write $\bP(V \in A)$ for $\bP(V\inv(A))$, and $\bP(V = x)$ for $\bP(V \in \{x\})$.
 
-The category $\X = \Rv_\Omega^{FS}$ will then be the category whose objects are random variables of \emph{finite support}; that is, measurable functions $V\from\Omega \to X$, where $X$ is a discrete space, such that there is some finite subset $Y\subset X$ satisfying $\bP(V\in Y) = 1$.
+The category $\X = \Rv_\Omega^{FS}$ will then be the category whose objects are random variables of \emph{finite support}; that is, discrete spaces $X$ together with measurable functions $V\from\Omega \to X$, such that there is some finite subset $Y\subset X$ satisfying $\bP(V\in Y) = 1$.
 
 The morphisms in $\Rv_\Omega^{FS}$ from $V\from \Omega \to X$ to $W \from \Omega \to Y$ are probability-preserving functions $X \to Y$; i.e., functions $X \to Y$ such that for all $A \subset Y$, we have $\bP(f(V) \in A) = \bP(W \in A)$.
 
@@ -609,12 +613,22 @@ where $p\in [0,1]$, and where we have identified $V_p$ is the Bernoulli random v
   \]
 that returns $\true$ if its input is less than $p$ and $\false$ if it is greater than or equal to $p$.
 
-The denotation of any term of PA, then, will be an (equivalence class of) morphisms
+The denotation of a base term of PA of type $S$ is a \Mellies morphism taking the form
+\[
+  \ul(1) \to \deno{S}
+  \]
+(for the IA terms) or the form
+\[
+  \ul(\bB) \to \deno{S}
+  \]
+for the term $\choose_p$.  
+When we compose or tensor these together, we take the tensor products of the objects on the left in $\X$, which corresponds, after application of the oplax monoidal functor $j$, to taking Cartesian products in $\Set$, and thence to taking Cartesian products in $\G$.  
+
+The denotation of any term of PA of type $T$, then, will be an (equivalence class of) morphisms
 \[
   \ul{\bB^n} \xrightarrow{m} \ul{\bB}^n \to \deno{T}\,,
   \]
-together with some random variable taking values in $\bB^n$.
-We have used an underline to distinguish between the object $\ul{\bB^n}$ of $\G$ corresponding to the set $\bB^n$ of $n$-tuples of booleans and the $n$-fold Cartesian power $\ul{\bB}^n$ in $\G$ of the object $\bB$ corresponding to the set of booleans.
+together with some random variable taking values in $\bB^n$ (formed by taking the tensor product of Bernoulli random variables).
 
 Lastly, given such a random variable $V\from\Omega \to \bB^n$, there is a random variable $\tilde{V} \from \Omega \to \bN$ such that for each $\vec{v}\in\bB^n$, we have
 \[
@@ -762,7 +776,7 @@ In order to prove a definability result, we would like to know that any morphism
 for appropriately chosen $p_1,\cdots,p_n$.
 
 This is because every morphism definable in PA takes this form.
-It will suffice to prove the following.
+By Proposition \ref{PropIAXXCompactDefinability}, it will suffice to prove the following.
 
 \begin{proposition}
   Let $V\from \Omega \to X$ be a finitely supported random variable.  
@@ -801,6 +815,10 @@ It will suffice to prove the following.
     \]
   It follows that $f$ is probability preserving in the sense required.
 \end{proof}
+
+\begin{remark}
+  This also proves that $\Rv_{\Omega}^{FS}$ has a small ancestral set.
+\end{remark}
 
 Then if we have an arbitrary morphism $\sigma \from A \to B$ (given by a morphism $\tilde\sigma \from A \to (j(X) \to B)$ in the base category), Proposition \ref{PropFiniteSupport} gives us the morphism $f$ mediating between $\tilde\sigma$ and a morphism of the form specified at the start of this section.
 
@@ -866,7 +884,7 @@ We can now prove our compact definability result.
 \section{Comparison with a Kleisli Category Model}
 
 The probabilistic language is our main example of an application of the theory of parametric monads that we have developed.
-However, it is worth noting that it is possible to model a probabilistic language within the langauge IA${}_\bB$ from Chapter \ref{ChapMonads}.
+However, it is worth noting that it is possible to model a probabilistic language within the language IA${}_\bB$ from Chapter \ref{ChapMonads}.
 Specifically, we can consider the language IA${}_\bB$ as a probabilistic Algol variant, by treating the term $\ask_\bB$ as a coin flip that returns $\true$ or $\false$ each with probability $\frac12$.
 
 Given a closed term $M\from\com$ of IA${}_\bB$, we define
@@ -926,14 +944,57 @@ If $\G$ is the category of games, then this morphism is the strategy with maxima
 \end{mathpar}
 In other words, it is not at all clear from the denotation that the term should give $\true$ with probability $\frac23$ and $\false$ with probability $\frac13$.
 
-In $\G/\Rv_{\Omega}^{FS}$, however, we can model a term that has the same behaviour using the morphism
+In $\G/\oppcat{(\Rv_{\Omega}^{FS})}$, however, we can model a term that has the same behaviour using the morphism
 \[
   \left(V_{\frac23}, \id_\bB\right)\,,
   \]
 which makes it much clearer what the probabilistic behaviour is.
 
+Let us now examine two more models based on Kleisli categories.  
+
+One idea we might have is to use the datatype game $(0,1)$ (corresponding to the open unit interval of reals) as our reader object.  
+That way, we could model the term $\choose_p$ as the morphism
+\[
+  (0,1) \to \bB
+  \]
+that returns $\true$ if its input is less than $p$ and $\false$ if its input is greater than or equal to $p$.  
+Unfortunately, however, this model allows us to construct too many strategies, including some that have no probabilistic interpretation.  
+If $X \subset (0,1)$ is a non-measurable set, for instance, then there is a perfectly valid morphism\footnote{At least, in the category of games and any other model satisfying the condition from Definition \ref{DefBrackets}.}
+\[
+  \chi_X \from (0,1) \to \bB
+  \]
+corresponding to the indicator function of $X$, but there is now no sensible answer to the question `What is the probability that $\chi_X$ returns $\true$?'\footnote{Recall also from Section \ref{SecActionsOfCategoriesWithTerminalObjects} that this Kleisli category is precisely what we end up with if we relax the discreteness condition on random variables -- so we are left trying to model continuous probability distributions (such as the uniform distribution on $(0,1)$) with games that are very much discrete.}
+Fixing this problem would require us to impose further measurability conditions on strategies, taking us away from our core idea of sticking to the category-theoretic constructions as closely as possible.
+
+A more successful approach is to replace the datatype $(0,1)$ with the (game-theoretic) product of a countably infinite collection of copies of $\bB$, indexed by $(0,1)$, each corresponding to one of the $\choose_p$.  
+Computationally, this corresponds to `encapsulating' the chosen value in $(0,1)$ behind a countably infinite family of `methods', each of which will only tell you whether the value is less than some fixed number.  
+Since any program can call only finitely many of these `methods', we avoid introducing any non-measurable behaviour.  
+
+There is then, at least in the category of games, some clear idea about how to define the probability of a particular play occurring in a strategy.  
+Since any play must make at most countably many appeals to the product-of-booleans oracle, and since each such appeal has an associated probability, we can associate a probability to each such play by multiplying these probabilities together.
+
+It is less clear, however, how to prove Adequacy and Full Abstraction for this model.  
+The approach that we have adopted in this chapter -- a translation into \IAX -- does not work for a strategy of the form
+\[
+  \sigma\from\prod_{p\in (0,1)} \bB \to A\,,
+  \]
+where the left-hand side is an uncountable product of booleans and certainly cannot be embedded inside any IA datatype game.  
+
+We could reason about such a strategy by asking whether it factored through any finite product of booleans; i.e., whether there was any $\hat\sigma$ such that $\sigma$ factors as
+\[
+  \prod_{p\in(0,1)} \bB \xrightarrow{\langle \pr_{p_1},\cdots,\pr_{p_n}\rangle} \bB^n \xrightarrow{\hat\sigma} A\,,
+  \]
+for some finite collection $p_1,\cdots,p_n$ of probabilities.  
+We could then reason about the strategy $\hat\sigma$.  
+But if we are doing that, then why not reason about the strategy $\hat\sigma$ from the start?
+And if we have two possible choices for this $\hat\sigma$, why not make it explicit in the model that they are equal?
+This is exactly what our $\G/\oppcat{(\Rv_{\Omega}^{FS})}$ model is doing.
+Rather than try and rely on some global probabilistic oracle, our strategies can form their own mini (i.e., finite/countable) oracles that give them what they need.  
+Composition of morphisms automatically groups these mini oracles together into one, and the equivalence relation on morphisms ensures that we can always enlarge our mini oracle if we need to (for example, by converting from a product of finitely many booleans to a natural number to help the translation into \IAX).
+
 \section{Game Semantics and Probability}
 
+So far, we have considered things in the abstract.
 We now specialize to the case that $\G$ is the category of arenas and single-threaded strategies that we developed in Chapters \ref{ChapGames} and \ref{ChapFullAbstraction}.
 This will allow us to capture the close relationship between the sequences $u$ that we have been considering and the plays in a strategy.
 
@@ -967,22 +1028,22 @@ We would like use this definition to define $\bP(s\in\sigma)$ for $\sigma$ a mor
 \begin{proposition}
   Let
   \begin{mathpar}
-    (V\from \Omega \to X, \sigma \from \ul X \to A)
+    (V\from \Omega \to X, \sigma \from \ul X \to (A\to B))
     \and
-    (W\from \Omega \to Y, \sigma \from \ul Y \to A)
+    (W\from \Omega \to Y, \sigma \from \ul Y \to (A\to B))
   \end{mathpar}
   be representatives of the same morphism $A \to B$ in $\G/\oppcat{(\Rv_{\Omega}^{FS})}$, where $X$ and $Y$ are sets.  
-  Let $s$ be a legal play of $A$.
+  Let $s$ be a legal play of $A\to B$.
   Then $(V,\Acc_s(\sigma))$ and $(W,\Acc_s(\sigma'))$ are equivalent as pairs in the sense of Definition \ref{DefEquivalenceOfPairs}.
 \end{proposition}
 \begin{proof}
-  It suffices by induction to prove this in the case that the two representatives are related by the relation that generates the equivalence relation on morphisms; i.e., that there is a probability-preserving function $f\from X \to Y$ such that $\sigma=\sigma';(j(f) \to A)$.
+  It suffices by induction to prove this in the case that the two representatives are related by the relation that generates the equivalence relation on morphisms; i.e., that there is a probability-preserving function $f\from X \to Y$ such that $\sigma=\sigma';(\ul{j(f)} \to A)$.
 
   Let $u\in X^*$.  
   Then we have
   \begin{IEEEeqnarray*}{rCl}
     u \in \Acc_s(\sigma) & \Leftrightarrow & \exists t\in \sigma \esuchthat t/s,\,t\vert_{\ul X}=qu \\
-    & \Leftrightarrow & \exists t \in \sigma';(j(f) \to A) \esuchthat t/s,\,t\vert_{\ul X}=qu \\
+    & \Leftrightarrow & \exists t \in \sigma';(\ul{j(f)} \to A) \esuchthat t/s,\,t\vert_{\ul X}=qu \\
     & \Leftrightarrow & \exists t' \in \sigma' \esuchthat t/s,\,t\vert_{\ul Y} = q(f_*u) \\
     & \Leftrightarrow & f_*u \in \Acc_s(\sigma')\,.
   \end{IEEEeqnarray*}

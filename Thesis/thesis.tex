@@ -34,7 +34,7 @@ In other words, a monad is a functor $M\from \C\to\C$ together with natural  tra
 
 \begin{example}
   In the category of sets, the \emph{nonempty powerset functor} $\powerset_+$ sends a set $A$ to the set of nonempty subsets of $A$.  
-  This functor has the structure of a monad on $\Set$, since we have a natural transformation (union) from $\powerset_+\powerset_+A$ to $powerset_+A$ and a natural transformation (singleton) from $A$ to$ \powerset_+A$ that obey the diagrams given above.
+  This functor has the structure of a monad on $\Set$, since we have a natural transformation (union) from $\powerset_+\powerset_+A$ to $\powerset_+A$ and a natural transformation (singleton) from $A$ to$ \powerset_+A$ that obey the diagrams given above.
 \end{example}
 \begin{example}
   Let $\M$ be a monoidal category and let $x$ be a monoid in $\M$.  
@@ -67,15 +67,16 @@ In other words, a monad is a functor $M\from \C\to\C$ together with natural  tra
   \end{mathpar}
   We will see in the next chapter that every monad is induced by an adjunction in this way.
 
-  As an example, the definition of a monoidal closed category $\M$ is that it admits an adjunction between functors $\blank\tensor w$ and $w\implies\blank$ for any object $w$ of $M$.  
-  if $\M$ is a monoidal closed category and $w$ is an object of $\M$, then the functor $S_w$ on $\M$ defined by
+  Let us look at an example of a monad that arises from an adjunction in this way.  
+  Recall that the definition of a monoidal closed category $\M$ is that it admits an adjunction between functors $\blank\tensor w$ and $w\implies\blank$ for any object $w$ of $M$.  
+  If $\M$ is a monoidal closed category and $w$ is an object of $\M$, then the functor $S_w$ on $\M$ defined by
   \[
     S_w x = w \implies (x \tensor w)
     \]
   is the composition of these adjoint functors and therefore inherits the structure of a monad, known as the \emph{state monad}.
 \end{example}
 \begin{example}
-  Another example that arises from an adjunction is the \emph{list monad} on $\Set$ that arises from the adjunction between the $\Set$ and the category of monoids.
+  Another example that arises from an adjunction is the \emph{list monad} on $\Set$ that arises from the adjunction between the category $\Set$ of sets and the category of monoids.
   The underlying set of the free monoid on a set $A$ is the set $A^*$ of finite lists of elements of $A$, and the functor $A\mapsto A^*$ inherits a monoid structure where the multiplication $m_A\from (A^*)^* \to A^*$ concatenates a list of lists into a single list and the unit $u_a \from A \to A^*$ forms a list with a single element.  
 \end{example}
 \begin{example}
@@ -85,7 +86,7 @@ In other words, a monad is a functor $M\from \C\to\C$ together with natural  tra
   An adjunction $\adjunction\C LR\D$ gives rise to a comonad structure on $LR$ in much the same way as it gives rise to a monad structure on $RL$.  
   So, for example, we have the \emph{store comonad} $S_r'$ for any object $r$ of a monoidal closed category $\M$, given by
   \[
-    S_r'x = (r \implies x) \tensor x\,.
+    S_r'x = (r \implies x) \tensor r\,.
     \]
 \end{example}
 
@@ -125,7 +126,7 @@ Meanwhile, $J S $ is the functor $\Kl_M\to\Kl_M$ that sends an object $a$ to $Ma
   \label{prop:KleisliHasAdjunction}
 \end{proposition}
 
-\subsection{Multiplicative natural transformations}
+\section{Multiplicative natural transformations}
 
 Given a monad $M$ on a category $\C$ and a functor $F\from \C \to \D$, where $\D$ is another category, we say that a natural transformation $\psi_a \from FMa \to Fa$ is \emph{$M$-multiplicative} if it makes the following diagrams commute.
 \begin{mathpar}
@@ -186,7 +187,7 @@ Indeed, if we compute this composite inside $\C$, we get
   Mb\,,
   \]
 which is equal to $f$ by the coherence conditions on $m$ and $u$.
-This means that the Kleisli category may be thought of as being freely generated from the original category $\C$ and a multiplicative natural transformation $\phi$.
+This means that the Kleisli category may be thought of as being freely generated from the original category $\C$ and an $M$-multiplicative natural transformation $\phi$.
 
 \begin{example}
   The morphisms in the Kleisli category for the nonempty powerset monad $\powerset_+$ on $\Set$ are functions $A \to \powerset_+B$, which can be thought of as nondeterministic functional programs.  
@@ -196,7 +197,8 @@ This means that the Kleisli category may be thought of as being freely generated
 \begin{example}
   Let $\C$ be a Cartesian closed category and let $z$ be some fixed object of $\C$.  
   Then the Kleisli category for the reader monad $R_z$ on $\C$ is generated over $\C$ by a natural transformation $\phi_y\from (z \to y) \to y$.  
-  By the enriched Yoneda lemma, such a natural transformation is always given by precomposition with some fixed morphism $\ask_z\from 1 \to z$.  
+  As a Cartesian closed category, $\C$ may be regarded as being enriched over itself.
+  By the enriched Yoneda lemma, then, such a natural transformation is always given by precomposition with some fixed morphism $\ask_z\from 1 \to z$.  
   This means that $\Kl_{R_z}$ is suitable for modelling any situation in which we are generally working in $\C$, but need the ability to request a value of type $z$ (for example, a config file, a piece of user input, a random number or something else that isn't being passed into the function in question).
   \label{ExReaderMonadKleisli}
 \end{example}
@@ -215,7 +217,7 @@ The \emph{functional completeness} theorem \cite{FunctionalCompleteness} can be 
 
 Having given an overview of the general theory of monads and Kleisli categories, we now examine the relationship between Kleisli categories and Full Abstraction.  From now till the end of the chapter, we fix an base Cartesian closed category $\G$ that admits a denotational semantics of Idealized Algol satisfying Computational Adequacy.  
 In addition, we require that $\G$ can be interpreted as being enriched in algebraic partial orders, in such a way that any compact morphism between the denotation of IA types is the denotation of some IA term.
-The prototypical example, of course, will be the category of games and visible strategies, but we will not exploit any properties of this model beyond the ones we have already mentioned, mentioning it only in examples where appropriate.
+The prototypical example, of course, will be the category of games and visible strategies that we met in Chapter \ref{ChapGames}, but we will not exploit any properties of this model beyond the ones we have already mentioned, mentioning it only in examples where appropriate.
 
 In addition, we will specialize to reader monads.  
 The rationale behind this is twofold: firstly, we do not wish to assume too much about the underlying category $\G$ beyond the fact that it gives us a good model of Idealized Algol.  
@@ -243,7 +245,7 @@ From Proposition \ref{pKleisli}, we know that there is a distinguished natural t
 \[
   \phi = \Lambda(\lunit_X;\id_X);\phi_X
   \]
-(where $\Lambda(\lunit_X;\id_X)\from 1 \to (X \to X)$ is the interpretation of the $\lambda$-term $\lambda x.x$), which will be the denotation of the term $\choose_X$.
+(where $\Lambda(\lunit_X;\id_X)\from 1 \to (X \to X)$ is the interpretation of the $\lambda$-term $\lambda x.x$), which will be the denotation of the term $\ask_X$.
 Together with the existing denotational semantics of Idealized Algol within $\G$, this gives us an inductively defined denotational semantics of \IAX within $\G_X$.
 
 Clearly any term-in-context of \IAX is of the form
@@ -284,6 +286,7 @@ We now define the operational semantics of \IAX and prove a computational adequa
   The definition of this relation is shown in Figure \ref{FigIaxOpSem}.
 
   \begin{figure}
+    \small
     \begin{mathpar}
       \inferrule*{ }{\Gamma,s\ts c \converges_\epsilon c,s}
       \and
@@ -306,7 +309,9 @@ We now define the operational semantics of \IAX and prove a computational adequa
       \inferrule*{\Gamma,s\ts M \converges_u 0,s' \\ \Gamma,s' \ts N \converges_v c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges_{u\cat v} c,s''}
       \and
       \inferrule*{\Gamma,s\ts M \converges_u n+1,s' \\ \Gamma,s' \ts P \converges_v c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges_{u\cat v} c,s''}
-      \and
+      \\
+      \inferrule{\Gamma,s\ts M\converges c',s' \\ \Gamma,s' \ts N[c'/x]\converges c,s''}{\Gamma,s\ts \lett x=M \inn N \converges c,s''}
+      \\
       \inferrule*[right=$x\in\Gamma$]{\Gamma,s\ts E \converges_u n,s' \\ \Gamma,s' \ts V \converges_v x,s''}{\Gamma,s\ts V \gets E \converges_{u\cat v} \skipp,(s''\vert x \mapsto n)}
       \and
       \inferrule*[right={$s'(x)=n$}]{\Gamma,s\ts V \converges_u x,s'}{\Gamma,s\ts !V \converges_u n,s'}
@@ -332,7 +337,7 @@ We now define the operational semantics of \IAX and prove a computational adequa
     {\Gamma,s^{(0)} \ts M \converges c,s^{(n)}}\,,
     \]
   Here, we have interpreted each IA rule as an infinite scheme of rules ranging over the different terms $M_i,M$ that the rule can apply to.
-  We first extend this rule to a rule for \IAX, by allowing the $M_i,M$ to range over terms of \IAX.
+  We first extend this scheme of rules to a scheme of rules for \IAX, by allowing the $M_i,M$ to range over terms of \IAX.
   We then replace the rule with the new rule
   \[
     \inferrule{\Gamma,s^{(0)}\ts M_1 \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n \converges_{u_n} c_n,s^{(n)}}
@@ -362,7 +367,7 @@ We now define the operational semantics of \IAX and prove a computational adequa
   \[
     \Gamma,s\ts M \converges_u c,s'
     \]
-  as saying that `starting with the store $s$, and the sequence $u$ of user input, $M$ converges to $c$, leaving store $s'$'.
+  as saying that `starting with the store $s$, and the sequence $u$ of pieces of user input, $M$ converges to $c$, leaving store $s'$'.
 \end{example}
 \begin{example}
   If $X\in\{\bB,\bN\}$, then the language \IAX gives us a way to model nondeterminism, where $\ask_X$ behaves as a \emph{nondeterministic oracle}; i.e., a device that nondeterministically returns an element of $X$.
@@ -386,7 +391,7 @@ To prove our adequacy result for the operational semantics of \IAX, we first giv
   \begin{mathpar}
     \tr_\epsilon = \lambda n.\Omega
     \and
-    \tr_{xu} = \lambda n.\neww (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u (\pred !v))
+    \tr_{xu} = \lambda n.\lett y=n \inn \IfO y \Then x \Else \tr_u(\pred y)
   \end{mathpar}
 \end{definition}
 In other words, $\tr_u$ is the function that will return the $i$-th term of the sequence $u$ when given $i$ as an input, or will fail to terminate if passed some index $k\ge|u|$.
@@ -400,240 +405,8 @@ In other words, $\tr_u$ is the function that will return the $i$-th term of the 
   in Idealized Algol.
   \label{PropTr}
 \end{proposition}
-\begin{proof}
-  Induction on $|u|$ and on $n$.
-  Since $n<u$, $u$ must be non-empty, of the form $xu'$.
 
-  Suppose $n=0$.  
-  Then $u^{(n)}=x$, and we have a derivation of $\Gamma,s\ts \tr_{xu} M\converges x,s'$ from $\Gamma,s\ts M\converges n,s'$ as shown in Figure \ref{FigFirstTermOfSequence}.
-
-  Now suppose that $n=m+1$.  
-  Then $(xu)^{(m+1)}=u^{(m)}$.  
-  Then we have a derivation of $\Gamma,s\ts \tr_{xu} M \converges u^{(m)},s'$ from $\Gamma,s\ts M\converges n,s'$ in Figure \ref{FigGeneralTermOOfSequence}, using the inductive hypothesis to tell us that we may derive
-  \[
-    \inferrule*{\Gamma,v,(s'\vert v\mapsto m+1) \ts \pred !v \converges m,(s'\vert v \mapsto m+1)}
-    {\Gamma,v,(s'\vert v \mapsto m+1) \ts \tr_u(\pred !v) \mapsto u^{(m)},(s'\vert v\mapsto m+1)}\,.\qedhere
-    \]
-  \begin{SidewaysFigure}
-    \tiny
-    \begin{subfigure}{\textheight}
-      \centering
-      \[
-        \inferrule*
-        {
-          \inferrule*
-          {
-            \inferrule*
-            {
-              \inferrule*
-              {
-                \Gamma,v,(s\vert v \mapsto 0) \ts M \converges 0,(s'\vert v\mapsto 0)
-                \\
-                \inferrule*
-                {
-                }
-                {
-                  \Gamma,v,(s'\vert v \mapsto 0)\ts v \converges v,(s'\vert v\mapsto 0)
-                }
-              }
-              {
-                \Gamma,v,(s\vert v\mapsto 0) \ts v \gets M \converges \skipp,(s'\vert v\mapsto 0)
-              }
-              \\
-              \inferrule*
-              {
-                \inferrule*
-                {
-                  \inferrule*
-                  {
-                  }
-                  {
-                    \Gamma,v,(s'\vert v\mapsto 0) \ts v \converges v,(s'\vert v\mapsto 0)
-                  }
-                }
-                {
-                  \Gamma,v,(s'\vert v\mapsto 0) \ts !v \converges 0,(s'\vert v\mapsto 0)
-                }
-                \\
-                \inferrule*
-                {
-                }
-                {
-                  \Gamma,v,(s'\vert v\mapsto 0) \ts x \converges x,(s'\vert v\mapsto 0)
-                }
-              }
-              {
-                \Gamma,v,(s'\vert v\mapsto 0) \ts \IfO !v \Then x \Else \tr_u(\pred !v) \converges x,(s'\vert v\mapsto 0)
-              }
-            }
-            {
-              \Gamma,v,(s\vert v\mapsto 0) \ts v\gets M;\IfO !v \Then x \Else \tr_u(\pred !v) \converges x,(s'\vert v\mapsto 0)
-            }
-          }
-          {
-            \Gamma,s\ts \neww (\lambda v.v\gets M;\IfO !v \Then x \Else \tr_u(\pred !v)) \converges x,s'
-          }
-        }
-        {
-          \Gamma,s\ts \lambda n.\neww (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u(\pred !v)) M \converges x,s'
-        }
-        \]
-      \caption{IA derivation that if $M\converges 0$ then $\tr_u M$ converges to the first element of the sequence $u$.}
-      \label{FigFirstTermOfSequence}
-    \end{subfigure}
-    \par\vspace{24pt}
-    \begin{subfigure}{\textheight}
-    \centering
-      \[
-        \inferrule*
-        {
-          \inferrule*
-          {
-            \inferrule*[sep=5pt]
-            {
-              \inferrule*
-              {
-                \inferrule*[rightskip=30pt]
-                {
-                }
-                {
-                  \Gamma,v,(s'\vert v\mapsto 0) \ts v \converges v,(s'\vert v\mapsto 0)
-                }
-                \\\\
-                \inferrule*[leftskip=15pt]{}{\Gamma,v,(s\vert v\mapsto 0) \ts M \converges m+1, (s'\vert v\mapsto 0)}
-              }
-              {
-                \Gamma,v,(s\vert v\mapsto 0) \ts v \gets M \converges \skipp,(s'\vert v\mapsto m+1)
-              }
-              \\
-              \inferrule*[sep=5pt]
-              {
-                \inferrule*
-                {
-                  \inferrule*
-                  {
-                  }
-                  {
-                    \Gamma,v,(s'\vert v\mapsto m+1) \ts v \converges v,(s'\vert v\mapsto m+1)
-                  }
-                }
-                {
-                  \Gamma,v,(s'\vert v\mapsto m+1) \ts !v \converges m+1,(s'\vert v\mapsto m+1)
-                }
-                \\
-                \inferrule*
-                {
-                  \inferrule*
-                  {
-                    \inferrule*
-                    {
-                      \inferrule*
-                      {
-                      }
-                      {
-                        \Gamma,v,(s'\vert v\mapsto m+1) \ts v \converges v,(s'\vert v\mapsto m+1)
-                      }
-                    }
-                    {
-                      \Gamma,v,(s'\vert v\mapsto m+1) \ts !v \converges m+1,(s'\vert v\mapsto m+1)
-                    }
-                  }
-                  {
-                    \Gamma,v,(s'\vert v\mapsto m+1) \ts \pred !v \converges m,(s'\vert v\mapsto m+1)
-                  }
-                }
-                {
-                  \Gamma,v,(s'\vert v\mapsto m+1) \ts \tr_u(\pred !v) \converges u^{(m)}, (s'\vert v \mapsto m+1)
-                }
-              }
-              {
-                \Gamma,v,(s'\vert v\mapsto m+1) \ts \IfO !v \Then x \Else \tr_u(\pred !v) \converges u^{(m)}, (s'\vert v\mapsto m+1)
-              }
-            }
-            {
-              \Gamma,v,(s\vert v\mapsto 0) \ts v \gets M;\IfO !v \Then x \Else \tr_u(\pred !v) \converges u^{(m)}, (s'\vert v \mapsto m+1)
-            }
-          }
-          {
-            \Gamma,s \ts \neww (\lambda v.v\gets M;\IfO !v \Then x \Else \tr_u(\pred !v)) \converges u^{(m)},s'
-          }
-        }
-        {
-          \Gamma,s\ts \lambda n.\new (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u(\pred !v)) M \converges u^{(m)},s'
-        }
-        \]
-        \caption{IA derivation that if $M\converges m+1$ then $\tr_{u}M$ converges to the $m+1$-th element of the sequence $u$.}
-        \label{FigGeneralTermOOfSequence}
-    \end{subfigure}
-    \par\vspace{24pt}
-    \begin{subfigure}{\textheight}
-      \[
-        \inferrule*
-        {
-          \inferrule*
-          {
-            \inferrule*
-            {
-              \inferrule*
-              {
-                \inferrule*
-                {
-                }
-                {
-                  \Gamma,v,(s\vert v\mapsto k) \ts v \converges v,(s\vert v\mapsto k)
-                }
-              }
-              {
-                \Gamma,v,(s\vert v\mapsto k) \ts !v \converges k,(s\vert v\mapsto k)
-              }
-            }
-            {
-              \Gamma,v,(s\vert v\mapsto k) \ts \suc !v \converges k+1,(s\vert v\mapsto k)
-            }
-            \\
-            \inferrule*
-            {
-            }
-            {
-              \Gamma,v,(s\vert v\mapsto k) \ts v\converges v,(s\vert v\mapsto k)
-            }
-          }
-          {
-            \Gamma,v,(s\vert v\mapsto k) \ts v\gets \suc !v \converges \skipp,(s\vert v\mapsto k+1)
-          }
-          \\
-            \inferrule*[right={Prop. \ref{PropTr}}]
-            {
-              \inferrule*
-              {
-                \inferrule*
-                {
-                }
-                {
-                  \Gamma,v,(s\vert v\mapsto k+1) \ts v\converges v,(s\vert v\mapsto k+1)
-                }
-              }
-              {
-                \Gamma,v,(s\vert v\mapsto k+1) \ts !v \converges k+1,(s\vert v\mapsto k+1)
-              }
-            }
-            {
-              \Gamma,v,(s\vert v\mapsto k+1) \ts \tr_w !v \converges x,(s\vert v\mapsto k+1)
-            }
-          }
-        {
-          \Gamma,v,(s\vert v\mapsto k) \ts v\gets \suc !v;\tr_w !v \converges x,(s\vert v\mapsto k+1)
-        }
-        \]
-      \caption{IA derivation that $(x\mapsto k),v \gets \suc !v;\tr_w !v$ converges to the $k+1$-th term of $w$.}
-      \label{FigTheOneForTheLemma}
-    \end{subfigure}
-    \normalsize
-    \caption{Some useful IA derivations}
-  \end{SidewaysFigure}
-\end{proof}
-
-We start with a small lemma to help us deal with substitution.
+We start our soundness proof with a small lemma to help us deal with substitution.
 
 \begin{lemma}
   Let
@@ -668,6 +441,16 @@ We start with a small lemma to help us deal with substitution.
 \end{proof}
 
 We can now state and prove our soundness lemma.
+As suggested by the substitution lemmas we have just proved, we will be taking a term $M$ of nondeterministic IA and replacing all instances of $\ask_X$ in $M$ with some particular term $Q$.  
+The $Q$ that we will use is
+\[
+  \Gamma,v\from\Var \ts v \gets \succ \oc v;\tr_w \oc v\from X\,,
+  \]
+where $w$ is some sequence of elements of $X$.  
+The idea is that this term will trace the effect of a particular evaluation path of $\ask_X$, similarly to how we sometimes `mock' a random number generator when writing unit tests.  
+
+Each time we call the term above, we increment the value of $v$, and successive invocations will end up spelling out a particular substring $u$ of $w$ -- depending on the initial value of $v$ and assuming that $w$ is long enough.  
+This will allow us to study one particular evaluation path of the original term $M$ -- namely, the one where the successive values returned by $\ask_X$ spell out the sequence $u$.
 
 \begin{lemma}
   Suppose that
@@ -675,7 +458,7 @@ We can now state and prove our soundness lemma.
     \Gamma,s\ts M\converges_u c,s'
     \]
   is derivable in \IAX.
-  Fix $k\in\bN$ and let $w\in X^*$ be a sequence such that $u$ is a subsequence of $w$ starting at position $k+1$ (i.e., $u^{(j)}=w^{(k+j+1)}$ for each $j=0,\cdots,|u|-1$).
+  Fix $k\in\bN$ and let $w\in X^*$ be a sequence such that $u$ is the substring of $w$ starting at position $k+1$ (i.e., $u^{(j)}=w^{(k+j+1)}$ for each $j=0,\cdots,|u|-1$).
   Then
   \[
     \Gamma,v\from\Var,(s\vert v\mapsto k) \ts M[v\gets \suc!v;\tr_w !v/\ask_v] \converges c,(s'\vert v\mapsto k + |u|)
@@ -730,6 +513,112 @@ We can now state and prove our soundness lemma.
   This completes the induction.
 \end{proof}
 
+\begin{SidewaysFigure}
+  \small
+  \begin{subfigure}{\textheight}
+    \[
+      \inferrule*
+      {
+        \inferrule*
+        {
+          \inferrule*
+          {
+            \inferrule*
+            {
+              \inferrule*
+              {
+              }
+              {
+                \Gamma,v,(s\vert v\mapsto k) \ts v \converges v,(s\vert v\mapsto k)
+              }
+            }
+            {
+              \Gamma,v,(s\vert v\mapsto k) \ts !v \converges k,(s\vert v\mapsto k)
+            }
+          }
+          {
+            \Gamma,v,(s\vert v\mapsto k) \ts \suc !v \converges k+1,(s\vert v\mapsto k)
+          }
+          \\
+          \inferrule*
+          {
+          }
+          {
+            \Gamma,v,(s\vert v\mapsto k) \ts v\converges v,(s\vert v\mapsto k)
+          }
+        }
+        {
+          \Gamma,v,(s\vert v\mapsto k) \ts v\gets \suc !v \converges \skipp,(s\vert v\mapsto k+1)
+        }
+        \\
+          \inferrule*
+          {
+            \inferrule*
+            {
+              \inferrule*
+              {
+              }
+              {
+                \Gamma,v,(s\vert v\mapsto k+1) \ts v\converges v,(s\vert v\mapsto k+1)
+              }
+            }
+            {
+              \Gamma,v,(s\vert v\mapsto k+1) \ts !v \converges k+1,(s\vert v\mapsto k+1)
+            }
+          }
+          {
+            \Gamma,v,(s\vert v\mapsto k+1) \ts \tr_w !v \converges x,(s\vert v\mapsto k+1)
+          }
+        }
+      {
+        \Gamma,v,(s\vert v\mapsto k) \ts v\gets \suc !v;\tr_w !v \converges x,(s\vert v\mapsto k+1)
+      }
+      \]
+    \normalsize
+    \caption{IA derivation that if $s(v)=k$, then $\Gamma,s\ts v \gets \suc !v;\tr_w !v$ converges to the $k+1$-th term of $w$, leaving state $v\mapsto k+1$.}
+    \label{FigTheOneForTheLemma}
+  \end{subfigure}
+  \vspace{48pt}\\
+  \begin{subfigure}{\textheight}
+    \[
+      \inferrule*
+      {
+        \inferrule*[sep=0em]
+        {
+          \inferrule*[left={Lem. \ref{LemSoundnessMonads}}]
+          {
+          }
+          {
+            v,(v\mapsto 0)\ts M[v\gets\suc!v;\tr_{u^\top} !v/\ask_x]\converges \skipp,(v\mapsto |u|)
+          }
+          \\
+          \inferrule*
+          {
+            \inferrule*
+            {
+            }
+            {
+              v,(v\mapsto |u|) \ts v \converges v,(v\mapsto |u|)
+            }
+          }
+          {
+            v,(v\mapsto |u|)\ts !v \converges |u|,(v\mapsto |u|)
+          }
+        }
+        {
+          v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];v \converges |u|,(v\mapsto |u|)
+        }
+      }
+      {
+        \blank,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
+      }\qedhere
+      \]
+    \caption{IA derivation used in the proof of Proposition \ref{PropKleisliSoundness}.}
+    \label{FigKleisliSoundnessDerivation}
+  \end{subfigure}
+  \caption{Some useful IA derivations}
+\end{SidewaysFigure}
+
 In light of Lemma \ref{LemSoundnessMonads}, we can state our soundness result.
 
 First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheComputationalAdequacyIA} if $\G$ is the category of games):
@@ -759,7 +648,7 @@ First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheC
   \begin{mathpar}
     \test_0 = \lambda m.\IfO m \Then \skipp \Else \Omega
     \and
-    \test_{n+1} = \lambda m.\neww \lambda x.(x\gets m;\IfO \oc x \Then \Omega \Else \test_n (\pred \oc x))\,.
+    \test_{n+1} = \lambda m.\lett x=m \inn \IfO x \Then \Omega \Else \test_n(\pred x)
   \end{mathpar}
   So $\test_n$ converges if its input evaluates to $n$ and diverges otherwise.
 
@@ -811,113 +700,80 @@ First recall the statement of Computational Adequacy for $\G$ (Theorem \ref{TheC
   
   We can prove this using the derivation tree in Figure \ref{FigKleisliSoundnessDerivation}.\qedhere
   \begin{SidewaysFigure}
-    \[
-      \inferrule*
-      {
-        \inferrule*[sep=0em]
-        {
-          \inferrule*[left={Lem. \ref{LemSoundnessMonads}}]
-          {
-          }
-          {
-            v,(v\mapsto 0)\ts M[v\gets\suc!v;\tr_{u^\top} !v/\ask_x]\converges \skipp,(v\mapsto |u|)
-          }
-          \\
-          \inferrule*
-          {
-            \inferrule*
-            {
-            }
-            {
-              v,(v\mapsto |u|) \ts v \converges v,(v\mapsto |u|)
-            }
-          }
-          {
-            v,(v\mapsto |u|)\ts !v \converges |u|,(v\mapsto |u|)
-          }
-        }
-        {
-          v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];v \converges |u|,(v\mapsto |u|)
-        }
-      }
-      {
-        \blank,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
-      }\qedhere
-      \]
-    \caption{IA derivation used in the proof of Proposition \ref{PropKleisliSoundness}.}
-    \label{FigKleisliSoundnessDerivation}
   \end{SidewaysFigure}
 \end{proof}
 
-Definition \ref{DefDenotationalUConvergence} looks a bit odd.  
-This is a result of working at such a high level of generality: since we have not assumed much about $\G$ beyond the fact that it is a suitable model of Idealized Algol, then we have to define everything in terms of Idealized Algol denotations.
+\begin{remark}
+  Definition \ref{DefDenotationalUConvergence} looks a bit odd.  
+  This is a result of working at such a high level of generality: since we have not assumed much about $\G$ beyond the fact that it is a suitable model of Idealized Algol, then we have to define everything in terms of Idealized Algol denotations.
 
-If $\G$ is the category of games and visible strategies, then the statements of Proposition \ref{PropKleisliSoundness} (and our later Adequacy and Full Abstraction results) become clearer.  
-Observe that if $\sigma \from 1 \to (X \to \bC)$ is a strategy in $\G$ (considered as a strategy for $\oc X \implies \bC$, then the maximal plays in the interaction
-\[
-  \sigma || (\eta_u;\deno{\neww})
-  \]
-take the form
-\[
-  \begin{array}{ccc}
-    X         & \bC & \bN \\
-              &     &  q  \\
-              &  q  &     \\
-    q         &     &     \\
-    u^{(0)}   &     &     \\
-    \vdots    &     &     \\
-    q         &     &     \\
-    u^{(k-1)} &     &     \\
-              &  a  &     \\
-              &     &  {k\,,}  \\
-  \end{array}
-  \]
-for $k\le |u|$, where the component in $X,\bC$ is a valid play of $\sigma$.
-Moreover, the strategy $t_n$ is the one with maximal plays of the form
-\[
-  \begin{array}{cc}
-    \bN & \bC \\
-        &  q  \\
-    q   &     \\
-    n   &     \\
-        &  a
-  \end{array}
-  \]
-or
-\[
-  \begin{array}{cc}
-    \bN & \bC \\
-        &  q  \\
-    q   &     \\
-    m   &
-  \end{array}
-  \]
-for $m\ne n$.
+  If $\G$ is the category of games and visible strategies, then the statements of Proposition \ref{PropKleisliSoundness} (and our later Adequacy and Full Abstraction results) become clearer.  
+  Observe that if $\sigma \from 1 \to (X \to \bC)$ is a strategy in $\G$ (considered as a strategy for $\oc X \implies \bC$, then the maximal plays in the interaction
+  \[
+    \sigma || (\eta_u;\deno{\neww})
+    \]
+  take the form
+  \[
+    \begin{array}{ccc}
+      X         & \bC & \bN \\
+                &     &  q  \\
+                &  q  &     \\
+      q         &     &     \\
+      u^{(0)}   &     &     \\
+      \vdots    &     &     \\
+      q         &     &     \\
+      u^{(k-1)} &     &     \\
+                &  a  &     \\
+                &     &  {k\,,}  \\
+    \end{array}
+    \]
+  for $k\le |u|$, where the component in $X,\bC$ is a valid play of $\sigma$.
+  Moreover, the strategy $t_n$ is the one with maximal plays of the form
+  \[
+    \begin{array}{cc}
+      \bN & \bC \\
+          &  q  \\
+      q   &     \\
+      n   &     \\
+          &  a
+    \end{array}
+    \]
+  or
+  \[
+    \begin{array}{cc}
+      \bN & \bC \\
+          &  q  \\
+      q   &     \\
+      m   &
+    \end{array}
+    \]
+  for $m\ne n$.
 
-This means that the composite
-\[
-  1 \xrightarrow{\sigma}
-  (X \to \bC) \xrightarrow{\eta_u}
-  (\Var \to \bN) \xrightarrow{\deno{\neww}}
-  \bN \xrightarrow{t_|u|}
-  \bC
-  \]
-is not equal to $\bot$ if and only if $\sigma$ contains the sequence
-\[
-  \begin{array}{cc}
-    X         & \bC \\
-              &     \\
-              &  q  \\
-    q         &     \\
-    u^{(0)}   &     \\
-    \vdots    &     \\
-    q         &     \\
-    u^{(|u|-1)}&     \\
-              &  a  \\
-              &     \\
-  \end{array}\,.
-  \]
-Since complete plays in the game $\oc X \implies \bC$ are always of the form $q$, followed by some sequence of pairs of the form $qx_i$ for $x_i\in X$, followed by $a$, it is very natural to consider conditions on those $x_i$ when dealing with a strategy $\sigma\from \oc X \implies \bC$.
+  This means that the composite
+  \[
+    1 \xrightarrow{\sigma}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_|u|}
+    \bC
+    \]
+  is not equal to $\bot$ if and only if $\sigma$ contains the sequence
+  \[
+    \begin{array}{cc}
+      X         & \bC \\
+                &     \\
+                &  q  \\
+      q         &     \\
+      u^{(0)}   &     \\
+      \vdots    &     \\
+      q         &     \\
+      u^{(|u|-1)}&     \\
+                &  a  \\
+                &     \\
+    \end{array}\,.
+    \]
+  Since complete plays in the game $\oc X \implies \bC$ are always of the form $q$, followed by some sequence of pairs of the form $qx_i$ for $x_i\in X$, followed by $a$, it is very natural to consider conditions on those $x_i$ when dealing with a strategy $\sigma\from \oc X \implies \bC$.
+\end{remark}
 
 \section{Computational Adequacy}
 
@@ -1228,7 +1084,7 @@ Here, $\slot$ is a special symbol called a \emph{slot} or \emph{token-action}, w
 We shall also impose the requirement (not found in \cite{SlotGames}) that an occurrence of the special symbol $\slot$ must take place either after an $O$-move in $A$ or after another instance of $\slot$.
 The token actions do not carry justification pointers.
 
-Following Ghica, we define a \emph{strategy with costs} to be a prefix-closed set $\sigma$ of plays with costs such that the set $\sigma\vert_{M_A} = \{s\vert_{M_A}\suchthat s\in \sigma\}$ is a valid visible strategy for $A$.
+Following Ghica, we define a \emph{strategy with costs} to be a prefix-closed set $\sigma$ of plays with costs such that the set $\sigma\vert_{M_A} = \{s\vert_{M_A}\suchthat s\in \sigma\}$ is a valid visible strategy for $A$ and such that determinism applies to token actions as well as ordinary moves -- i.e., if $s$ is an $O$-play with costs in $A$ such that $s\slot a\in\sigma$ for some ordinary move $a$, then $sb\not\in\sigma$ for all ordinary moves $b$.
 
 The identity strategy with costs is the usual identity strategy, without any token actions.  
 We can similarly define an \emph{interaction sequence with costs} to be a sequence $\s\in(M_A+M_B+M_C+\{\slot\})^*$ such that $\s\vert_{A,B,C}$ is an interaction sequence for $A,B,C$ and such that each occurrence of the token action $*$ occurs after a move that could be considered as an $O$-move in either $A\implies B$ or $B\implies C$.
@@ -1247,7 +1103,7 @@ This seems like a purely combinatorial construction, but it can actually be subs
   \[
     c \from \{\text{normal strategies for $\oc\bC \implies A$}\}\leftrightarrow\{\text{strategies with costs for $A$}\}
     \]
-  Moreover, this bijection respects composition: let $\sigma \from\oc\bC \implies (A \to B)$ and $\tau \from \oc\bC \implies (B \to C)$ be strategies.  
+  Moreover, this bijection respects composition and identity in the Kleisli category: let $\sigma \from\oc\bC \implies (A \to B)$ and $\tau \from \oc\bC \implies (B \to C)$ be strategies.  
   Write $\sigma;\tau$ for the Kleisli composition of $\sigma$ and $\tau$ in $\G_{\bC}$; i.e., the composite
   \[
     \oc\bC \xrightarrow{\mu}
@@ -1374,7 +1230,7 @@ Then exactly the same argument as before gives us a full abstraction result for 
     \bC
     \]
   is not equal to $\bot$.  
-  Therefore, there exists some $v\in X^*$ such that the composite
+  This means that there exists some $v\in X^*$ such that the composite
   \[
     1 \xrightarrow{\deno N;\alpha}
     (X \to \bC) \xrightarrow{\eta_v}
@@ -1417,7 +1273,7 @@ Moreover, since any complete play in $\oc X \implies \bC$ must take this form, w
 \[
   qa \in \{s\vert_\bC \suchthat s\in\sigma\text{ is complete}\}\,.
   \]
-This suggests a general equivalence relation on Kleisli morphisms in $\G_X$: given a strategy $\sigma\from \oc X \implies A$, we write $\sigma\vert A$ for the set
+This suggests a general equivalence relation on Kleisli morphisms in $\G_X$: given a strategy $\sigma\from \oc X \implies A$, we write $\sigma\vert_A$ for the set
 \[
   \{s\vert_A \suchthat s\in \sigma\text{ is complete}\}\,.
   \]
@@ -1434,7 +1290,7 @@ We need to show that this respects composition, so that we get a category if we 
   Then $\sigma;\tau \approx_{\may} \sigma';\tau'$.
 \end{proposition}
 \begin{proof}
-  A complete play in $\sigma;\tau$ is given by a sequence $\s\vert_{X,A,C}$, where $\s\in (M_X + M_A + M_B + M_C)^*$ is a legal interaction of a complete play in $\tau$ with a collection of complete plays in $\sigma$, with $B$-components being identified.
+  A complete play in $\sigma;\tau$ is given by a sequence $\s\vert_{X,A,C}$, where $\s\in (M_X + M_A + M_B + M_C)^*$ is a legal interaction of a complete play in $\tau$ with a collection of complete plays in $\sigma$, $B$-components being identified.
   Then $\s\vert_{A,C}$ can alternatively be characterized as $\t\vert_{A,C}$, where $\t\in (M_A + M_B + M_C)^*$ is a legal interaction of a sequence from $\tau\vert_{B,C}$ with a collection of sequences from $\sigma\vert_{A,B}$.  
 
   It follows that if $\sigma\vert_{A,B}=\sigma'\vert_{A,B}$ and $\tau\vert_{B,C}=\tau'\vert_{B,C}$, then $\sigma;\tau\vert_{A,C} = \sigma';\tau'\vert_{A,C}$.
@@ -1469,6 +1325,9 @@ We interpret all the Idealized Algol terms in the usual way as deterministic str
   qx
   \]
 for every $x\in X$.
+
+Now, if we have a Kleisli morphism $\sigma\from \oc X \implies A$, then $\sigma\vert_A$ is a nondeterministic strategy for $A$.  
+The composition of nondeterministic strategies respects the composition and identity in the Kleisli category; moreover, any two Kleisli morphisms that give rise to the same nondeterministic strategy are intrinsically equivalent.
 
 It is already known (see \cite{mcCHFiniteND}) that this model is fully abstract for (finitely or countably) nondeterministic Idealized Algol with may-contextual equivalence.
 We have just provided an alternative proof of this fact.
@@ -1547,7 +1406,7 @@ We shall define this indirectly via its negation.
 It is possible to characterize the $\mustconverge$ predicate directly via an inductive relation (see \cite{RusssThesis}, for instance).  
 \end{remark}
 
-We will give an alternative definition of $\mustconverge$ that will relate it to our existing rules $\converges_u$.
+We will next give an alternative definition of $\mustconverge$ that will relate it to our existing rules $\converges_u$.
 
 \begin{definition}
   We say that $\Gamma,s\ts M\mustconverge$ if for every infinite sequence $w\in X^\omega$ there is some finite prefix $u\pprefix w$ such that $\Gamma,s\ts M\converges_u c,s'$ for some canonical form $c$ and some $\Gamma$-store $s'$.
@@ -1567,7 +1426,6 @@ However, it is not the case that, for example, $M\converges_\epsilon c$; nor is 
 In the first case, the sequence is too short: we can extend it to the sequence $\true$ and then we get convergence.  
 In the second case, the sequence is too long: we have already converged after the first term $\false$, so we never get the chance to read any other terms.
 
-We could define $M\mustconverge$ by saying that any sequence $u$ is either a subsequence or a supersequence of some $v$ such that $M\converges_v$; our equivalent definition above is a little neater.  
 The idea is that if we fix beforehand an infinite sequence made up of all the values that the nondeterministic oracle could possibly give, then we know that the term will always end up reading some finite sequence of values from the beginning of the sequence and then terminating at a value.
 
 \begin{proposition}
@@ -1694,20 +1552,47 @@ Once again, this slightly abstruse Definition \ref{DefDenoMust} becomes much mor
 Let $\sigma$ be a strategy for $\oc X \implies \bC$.  
 We observed earlier that $\sigma;\eta_u;\deno{\new};t_{|u|}\neq\bot$ if and only if the sequence
 \[
-  q(qu^{(i)})_{i=0}^{|u|-1} a
+  \begin{array}{ccc}
+    \oc X       & \implies & \bC \\
+                &          &  q  \\
+      q         &          &     \\
+    u^{(0)}     &          &     \\
+    \vdots      &          &     \\
+      q         &          &     \\
+   u^{(|u|-1}   &          &     \\
+                &          &  a
+  \end{array}
   \]
-is contained in $\sigma$, so consider what it means if we say that such a sequence is not contained in $\sigma$ for any $u\pprefix w$.  
+is contained in $\sigma$.  
+Now fix some infinite sequence $w\in X^\omega$ and consider what it means if we say that such a sequence is not contained in $\sigma$ for any $u\pprefix w$.  
 By the definition of a strategy, there are two reasons why this might happen.  
 Either there is a partiality in the strategy, so that for some finite $v\pprefix w$, player $P$ has no reply at all to the $O$-position
 \[
-  q(qv^{(i)})_{i=0}^{|v|-1}\,.
+  \begin{array}{ccc}
+    \oc X       & \implies & \bC \\
+                &          &  q  \\
+      q         &          &     \\
+    v^{(0)}     &          &     \\
+    \vdots      &          &     \\
+      q         &          &     \\
+   v^{(|v|-1}   &          &     \\
+                &          & {a\,.}
+  \end{array}
   \]
 Or, $\sigma$ contains an infinite increasing sequence of plays, whose limit is the infinite sequence
 \[
-  q(qw^{(i)})_{i=0}^\infty\,.
+  \begin{array}{ccc}
+    \oc X       & \implies & \bC \\
+                &          &  q  \\
+      q         &          &     \\
+    v^{(0)}     &          &     \\
+      q         &          &     \\
+    v^{(1)}     &          &     \\
+    \vdots      &          &     
+  \end{array}
   \]
 \begin{definition}
-  We say that a strategy $\sigma\from \oc X \implies \bC$ is \emph{winning} if every finite play in $\sigma$ is contained inside some complete play; i.e., if $\sigma$ is total and contains no infinite plays.
+  We say that a strategy $\sigma\from \oc X \implies \bC$ is \emph{winning} if $\sigma$ is total and contains no infinite plays.
 \end{definition}
 
 We have shown the following adequacy result.
@@ -1825,23 +1710,102 @@ In particular, if $\G$ is the category of games, then the semantics of must test
 The next result will show that no model of countable nondeterminism can be Fully Abstract, subject to some rather mild assumptions.  
 We will then explore how we can come up with a model for which these assumptions do not hold, and eventually prove a Full Abstraction result.
 
-\subsection{Full Abstraction for Countable Nondeterminism under Must Testing}
+\section{The Kleene Tree}
+\label{SecKleene}
+
+In order to show that our model is not Fully Abstract, we start by introducing the Kleene tree.
+
+We define a \emph{binary tree} to be a prefix-closed subset of $\bB^*$.  
+Using the binary representation, we can identify $\bB^*$ with $\bN$, meaning that every such tree can be specified by its characteristic function $\chi \from \bN \to \bB$.
+
+We say that the tree is \emph{computable} if there is some IA term $M\from \nat \to \bool$ such that $M n$ converges to $\chi(n)$ for all $n\in\bN$.
+
+In this section, we will show the construction of the \emph{Kleene tree} (see \cite[4.5]{Joshua} and \cite{KleeneTree}).  
+This is a tree $K$ that has the following seemingly paradoxical properties.
+\begin{itemize}
+  \item It is computable.
+  \item It has an infinite path; that is, there are $b_0,b_1,\cdots\in\bB$ such that for all $k$, the string $b_0\cdots b_{k-1}$ is contained in $K$.
+  \item It has no computable infinite path.  
+    I.e., if $M \from \bool \to \nat$ is a term of IA such that $M i$ converges to some $a_i\in \bB$ for each $i\in \bN$, then there is some $k$ such that the string $a_0 \cdots a_{k-1}$ is not contained in $K$.
+\end{itemize}
+
+In order to construct $K$, we are first going to assume that we have fixed some sensible encoding of IA terms as binary strings and hence as natural numbers.  
+We shall further assume the existence of an \emph{interpreter} for IA terms of type $\bool$; that is, a term $\Int \from \nat \to \nat$ such that:
+\begin{itemize}
+  \item if $n$ is the encoding of some $M \from \bool$ such that $M \converges \true$, then $\Int n \converges 0$;
+  \item if $n$ is the encoding of some $M \from \bool$ such that $M \converges \false$, then $\Int n \converges 1$; 
+  \item if $n$ is the encoding of some $M \from \bool$ such that $M$ diverges, then $\Int n$ diverges; and
+  \item if $n$ is not the encoding of a term of type $\bool$, then $\Int n\converges 255$.
+\end{itemize}
+
+The construction of $\Int$ is more a matter of software engineering than anything else.  
+The idea is to use pattern matching and recursion to implement the small-step semantics of Idealized Algol within the encoding we have fixed.
+
+In fact, we shall need a slightly modified version of $\Int$ that accepts an extra \emph{timeout} parameter.  
+That is, we require some $\Int'\from \nat \to \nat \to \nat$ such that
+\begin{itemize}
+  \item if $n$ is the encoding of some $M \from \bool$ such that $M\converges\true$ in under $k$ steps, then $\Int' k\,n \converges 0$;
+  \item if $n$ is the encoding of some $M \from \bool$ such that $M\converges\false$ in under $k$ steps, then $\Int' k\,n \converges 1$; and
+  \item if $n$ is the encoding of some $M \from \bool$ such that $M$ does not converge after $k$ steps, or if $n$ is not the encoding of a term of type $\bool$, then $\Int' k\,n \converges 255$.
+\end{itemize}
+
+This modification to the original $\Int$ is not too hard to make, but now we can be assured that $\Int'$ will always converge, even if fed the encoding of a divergent program.  
+This will be important later.
+
+\begin{definition}[Kleene tree]
+  We construct the tree $K$ as follows.  
+  Suppose $b=b_0,\cdots,b_{k-1}$ is a finite sequence of binary digits.  
+  Then $b$ is contained in $K$ if and only if for all $n=0,\cdots,k-1$, if $n$ is the encoding of a program $M\from \nat \to \bool$ such that $M n$ converges in under $k$ steps, then $M n$ converges to a value different from $b_n$.  
+\end{definition}
+
+\begin{remark}
+  We can use $\Int'$ to construct an IA term $\nat \to \bool$ that computes the characteristic function of $K$.  
+  Since the syntax of IA is not very transparent, we shall describe the operation of the term informally.  
+  Given an input $n$, treated as a sequence $b_0 \cdots \b_{k-1}$, we iterate from $0$ up to $k-1$.  
+  For each number $p$, if $p$ is the encoding of a term $M \from \nat \to \bool$, we pass the encoding of $M p$ to $\Int'$, giving $k$ as the timeout parameter.  
+  If we get $0$ (true) or $1$ (false) back, then we compare against $b_p$, returning $\false$ if the values are equal and $\true$ if they are different.  
+  If we get the error value $255$ back, then we return $\true$.
+
+  Lastly, if we have got $\true$ back for each $p$, we return $\true$; otherwise, we return $\false$.
+\end{remark}
 
 \begin{proposition}
-  Let $\C$ be a category and suppose we have a computationally adequate denotational semantics of IA with countable nondeterminism in $\C$.
-  Suppose that the natural number datatype is denoted by an object $\bN$ of $\C$ and that for all functions $f \from \bN \to \bN$ in $\Set$ there is a morphism
-  \[
-    \sigma_f \from \bN \to \bN
-    \]
-  in $\C$ such that for all $n\in \bN$, 
-  \[
-    \deno{n};\sigma_f = \deno{f(n)}\,.
-    \]
-  Then the denotational semantics in $\C$ is not fully abstract.
-  \label{PropNotFullyAbstract}
+  i) $K$ has an infinite path.
+
+  ii) $K$ has no computable infinite path.
 \end{proposition}
-\begin{example}
-  In the category $\G$ of games (and hence in its Kleisli categories), we have strategies $\sigma_f$ with maximal plays of the form
+\begin{proof}
+  (i): For each $p$ such that $p$ is the encoding of some $M \from \nat \to \bool$ such that $M p$ converges, let $a_p$ be $\true$ if $M p \converges \false$ and $\false$ if $M p \converges \true$.  
+  Otherwise -- i.e., if $M p$ does not converge or if $p$ is not the encoding of a term $\nat \to \bool$ -- then return any value -- $\false$, say.
+  Then any sequence $a_0 \cdots a_{k-1}$ must be contained in $K$.
+
+  (ii): Let $M \from \nat \to \bool$ be such that there are $b_i\in\bB$ for which $M i \converges b_i$ for all $i$, let $p$ be the encoding of $M$ and suppose that $M p$ converges in $k$ steps.  
+  Let $N=\max\{k-1,p\}$.
+  We claim that $b_0\cdots b_{N}$ is not contained in $K$.  
+  Indeed, $p$ is the encoding of $M$ and $M p$ converges to $b_p$ in under $N$ steps.
+\end{proof}
+
+\section{Non-computable functions and Observational Equivalence}
+\label{SecNonComputable}
+
+The presence of non-computable functions in the semantics for a language does not normally present a problem for Full Abstraction.  
+In previous sections, we have been able to appeal to continuity results that tell us that the intrinsic equivalence relation in our model is determined entirely by some collection of \emph{compact} (and hence computable) morphisms.  
+In the presence of countable nondeterminism, these continuity results no longer hold, and the intrinsic equivalence becomes sensitive to noncomputable elements in the semantics.
+
+To investigate this, we define a language IA+Functions by extending IA with, for each (set-theoretic) function $f\from \bN \to \bB$, a primitive $\Phi_f \from \nat \to \bool$ with the following operational semantics.
+\[
+  \inferrule*{\Gamma,s\ts N \converges n,s'}{\Gamma,s \ts \mathop{\Phi_f}N \converges f(n),s'}
+  \]
+
+We make some new claims.
+
+\begin{proposition}
+  i) The Game Semantics model from Sections \ref{ChapGames} and \ref{ChapFullAbstraction} is Computationally Adequate and Fully Abstract for IA+Functions.
+
+  ii) Two terms of IA are observationally equivalent within IA if and only if they are observationally equivalent when we consider them as terms of IA+Functions.
+\end{proposition}
+\begin{proof}
+  (i): The denotation of $\Phi_f$ is the strategy with maximal plays of the form
   \[
     \begin{array}{cc}
       \bN & \bN \\
@@ -1851,82 +1815,61 @@ We will then explore how we can come up with a model for which these assumptions
           & f(n)
     \end{array}\,,
     \]
-  which have the property stated above.
-\end{example}
-\begin{proof}[Sketch proof of \ref{PropNotFullyAbstract}]
-  We fix an inductive encoding $\encode -$ of IA terms and assume the existence of an \emph{interpreter}
+  for $n\in \bN$.  
+  In the notation of Section \ref{DenotationalSemanticsOfIdealizedAlgol}, this is the strategy given by the formula
   \[
-    \Int \from \bN \to \bN\,.
+    ( f(0), f(1), f(2), \cdots )\,.
     \]
-  $\Int n$ first checks whether its argument $n$ is the encoding of a valid IA term of type $\nat$; if it is not, then it returns the value $0$, which will take the place of an error value.
-  If it is -- say, $n=\encode{P}$, then $\Int n$ evaluates the program $P$; if this evaluation terminates, then it adds $1$ to the value returned and returns that.  
-  The reason we add $1$ to the value is primarily to avoid the error value $0$, though it will serve a purpose later too.
+  Computational adequacy for this function follows by exactly the same arguments as for the functions $\suc$ and $\pred$; note that we used no special properties of the successor or predecessor functions in Chapter \ref{ChapFullAbstraction}, so exactly the same arguments go through for any function $\bN \to \bN$.  
+  Full Abstraction also goes through without modification.
 
-  We now consider a slight variation $\Int'$ of the term $\Int$, which takes in an additional parameter called a \emph{timeout}.  
-  $\Int' n \encode{P}$ will evaluate the term $P$ for $n$ steps, returning $m+1$ as before if $P$ converges to $m$ in that time, and otherwise returning $0$ if $P$ has not yet terminated after $n$ steps.
-
-  Now consider the term
-  \setlength{\jot}{0pt}%
-  \begin{align*}
-    M=&\lambda f^{\nat \to \nat} .\neww(\lambda p.p\gets\ask_\bN;\\
-      &\hspace{82pt}\new(\lambda v.v\gets f(\oc p);\\
-        &\hspace{116pt}\new(\lambda x.x\gets \Int' \ask_\bN (\app \oc p \encode {\oc p});\\
-          &\hspace{148pt}\IfO \oc x \Then \skipp \Else\\
-            &\hspace{168pt}(\If \oc v = \oc x \Then \skipp \Else \Omega))))
-  \end{align*}
-  of type $(\nat\to \nat) \to \com$.
-  Here, $\app$ is the constructor used in the encoding to apply one term to another: so if $p$ is the encoding of an IA $P\from \nat \to \nat$, then $\app p \encode p$ will be the encoding of the term $P\,p$; i.e., $P$ applied to its own encoding.
-
-  Consider also the term
-  \[
-    N = \lambda f^{\nat \to \nat}.f(\ask_\bN);\IfO \ask_\bN \Then \skipp \Else \Omega\,.
-    \]
-  of type $(\nat \to \nat) \to \com$.  
-  Here, we have used the notation $P;Q$ to mean $\IfO P \Then Q \Else Q$ for $P\from \nat$; i.e., the program that evaluates $P$, forgets the result and then evaluates $Q$.
-
-  We claim that $M$ and $N$ are may-and-must-observationally equivalent.  
-  We will save the formal proof of this until we have a working fully abstract semantics; for now, we shall give an informal argument.  
-
-  First, note that $M$ and $N$ have the same behaviour in any applicative context; i.e., if $F\from \nat \to \nat$ is a term, then $MF\converges \skipp$ if and only if $NF\converges\skipp$ and $MF\mustconverge$ if and only if $NF\mustconverge$.  
-  Indeed, we certainly have $MF\converges\skipp$ and $NF\converges\skipp$.
-  Moreover, $NF\diverges$, so we need to show that $MF\diverges$.
-
-  Consider the following evaluation path of $MF$.
-  \begin{enumerate}
-    \item The variable $p$ acquires the value $\encode F$.  
-      At this point, we apply $F$ to $\encode F$.  
-      If this computation diverges, then we win.  
-      Otherwise, suppose that $F\encode F$ converges to some value $n$.  
-      Then $v$ acquires the value $n$.
-      Let $k$ be the number of steps taken for $P$ to converge to $n$.
-    \item Now suppose that the next instance of $\ask_\bN$ acquires the value $k$.  
-      We already know that $\Int' k (\app \oc p \encode{\oc p})$ will converge to $n+1$, so $x$ acquires the value $n+1$.
-    \item Now $n+1 \ne n$, so the term diverges.
-  \end{enumerate}
-  Therefore, $MF\diverges$.
-
-  The case for a non-applicative context is the same, after we have made the observation that any side-effects that occur when $f$ is evaluated will take place in both terms in the case that they converge, while they will have no effect if the terms diverge.
-
-  After satisfying ourselves that $M$ and $N$ are observationally equivalent, we claim that they are distinguished by the semantics, which proves that the model is not fully abstract.
-
-  Indeed, let $\phi\from \bN \to \bN$ where $\phi(p)$ is $n+1$ if $p$ is the encoding of a term $P\from\nat \to \nat$ and $P\;p\converges n$ and $\phi(p)=0$ otherwise (including the case that $P\;p\diverges$).
-
-  We know that $\deno{N};\sigma\not\downarrow_{\must}$ for all $\sigma$, because $N$ essentially discards its argument.
-  We claim that $\deno{M};\sigma_\phi\downarrow_{\must}$, proving that $N\not\sim_{\must} M$.
-
-  Indeed, by compositionality and adequacy of the semantics, we may consider $\sigma_\phi$ to behave as a term $\Phi\from\nat \to \nat$ with the operational behaviour that
-  \[
-    \inferrule*{\Gamma,s\ts N \converges n,s'}{\Gamma,s\ts \Phi N \converges \phi(n),s'}\,.
-    \]
-  Then, whatever the value of $p$, either $\Int' \ask_{\bN} (\app \oc p \encode{\oc p})$ will return $0$ or it will return the value of $\phi(\oc p)$.  
-  In either case, the term will not diverge.
+  (ii): This follows from (i), since the two languages share a Fully Abstract model.
+  \label{PropPlusFunctions}
 \end{proof}
 
-\begin{remark}
-  The term $M$ that we have constructed in this proof is an instance of the \emph{Kleene tree} (see, for example, \cite{KleeneTree}), a computable tree with an infinite path but no computable infinite path.
-\end{remark}
+In the presence of countable nondeterminism, however, we shall show that the equivalent of (ii) does not hold; i.e., that there are observationally equivalent terms of nondeterministic IA that are observationally distinguishable within IA+Functions+Countable nondeterminism.
 
-The proof of Proposition \ref{PropNotFullyAbstract} makes it clear that the problem is the existence in the semantics of morphisms that behave like certain noncomputable functions.  
+This will then give the reason why our proposed semantics cannot be fully abstract: our starting model is fully abstract for both IA and IA+Functions and we have already proved that the nondeterministic version is Equationally Sound for nondeterministic IA (and, by a similar argument, for IA+Functions+Countable nondeterminism).  
+Equational Soundness tells us that any observationally distinguishable terms of IA+Functions+Countable nondeterminism must therefore be distinguished by the model, proving that it cannot be fully abstract for IA+Countable nondeterminism.
+
+Let us now examine the two terms that we shall be considering.  
+First, we define $M \from (\nat \to \bool) \to \com$ by the formula
+\begin{align*}
+  M=& \lambda f.\Let k=?\In \\
+  & \hspace{10pt} \If K((f\,0)\cdots(f\,(k-1))) \Then (\skipp\Or\skipp) \Else (\skipp \Or \Omega)\,,
+\end{align*}
+where
+\[
+  ((f\,0)\cdots(f\,(k-1)))
+  \]
+is shorthand for the natural number corresponding to the binary sequence given by $(f\,0)$ up to $(f\,(k-1))$, $\Or$ is binary choice and $K$ is the Kleene tree from the previous section.
+Now define $N \from (\nat \to \bool) \to \com$ by the formula
+\begin{align*}
+  N=& \lambda f.\Let k=?\In (f\,0);\cdots;(f\,(k-1));\\
+  &\hspace{10pt}\skipp \Or \Omega\,,
+\end{align*}
+where we have used the notation $P;Q$ (for $P \from \nat$) as a shorthand for
+\[
+  \IfO P \Then Q \Else Q\,;
+  \]
+i.e., the program that evaluates $P$, forgets the result and then evaluates $Q$.
+The reason for evaluating $(f\,0), \cdots, (f\,(k-1))$ before either returning or diverging is to make sure that any side effects of the evaluation of $f$ are the same for both programs (we shall assume that $K$ operates in such a way that it evaluates each of the $(f\,i)$ exactly once).
+
+We now claim that $M$ and $N$ are observationally equivalent in nondeterministic IA.  
+We will postpone the formal proof of this fact until we have a working Fully Abstract semantics for that language, but a rough argument is as follows.  
+$M$ and $N$ can only be distinguished by an $f$ such that
+\[
+  K((f\,0)\cdots(f\,(k-1)))
+  \]
+evaluates to $\true$ for all $k$.  
+Otherwise, both terms may diverge.  
+But we have shown in the previous section that there is no computable $f$ with this property.
+
+Meanwhile, $M$ and $N$ are not observationally equivalent in nondeterministic IA+Functions; indeed, if $\kappa\from \bN \to \bB$ is an infinite path in the Kleene tree, then $M$ and $N$ are distinguished by $\Phi_\kappa$.
+
+\section{Full Abstraction for Countable Nondeterminism under Must Testing}
+
+The previous two sections make it clear that the problem is the existence in the semantics of morphisms that behave like certain noncomputable functions.  
 The presence of such morphisms is normally an orthogonal issue to full abstraction, since we can usually assume that the strategy $\alpha$ in the definition of intrinsic equivalence is compact.
 However, in our case, the presence of these noncomputable morphisms is a big problem.
 
@@ -1998,22 +1941,13 @@ For example, the following was proved in \cite{hoPcf}.
 \end{theorem}
 
 This result is not quite enough for us, since the innocent intrinsic equivalent is coarser than that for visible strategies.  
-Instead, we appeal to the following result, which gives us definability \emph{on the nose}.  
-For this result, we need to extend PCF with a new constant $\lett$ or $\byval$ where the semantics of $\lett x = M\inn N$ is to evaluate the term $M$ and bind the result to the free variable $x$ in $N$.
+However, if we add the constant $\lett$ to PCF, then we can get a stronger result that gives us definability \emph{on the nose}.
 
 \begin{theorem}[{Unpublished, but see \cite[\sec 7.1.5]{LongleyBook}}]
   Let $A$ be the denotation of a PCF type $T$.
   Then every recursive innocent strategy for $A$ is the denotation of a term $M\from T$ of PCF+$\lett$.
 \end{theorem}
 
-We can interpret $\lett$ in Idealized Algol by defining
-\[
-  \lett x = M \inn N
-  \]
-to be the term
-\[
-  \neww (\lambda x. x\gets M;N[\oc x/x])\,.
-  \]
 Moreover, these results are all easily extended to the IA ground types that are not present in PCF.  
 So we see that any recursive innocent $\sigma\from \deno T$ is the denotation of some Idealized Algol term $M \from T$.
 
@@ -2021,23 +1955,28 @@ Lastly, we observe that our innocent factorization result (Proposition \ref{Prop
 It follows, then, that any recursive \emph{visible} $\sigma\from \deno T$ is the denotation of some Idealized Algol term $M \from T$.
 Thus, the category $\G^{rec}$ of games and recursive visible strategies is universal for Idealized Algol, and therefore its Kleisli category $\G^{rec}_X$ is fully abstract for \IAX.
 
-As an application of this fully abstract semantics, we clear up a loose end from the proof of Proposition \ref{PropNotFullyAbstract}.
+As an application of this fully abstract semantics, we clear up a loose end from Section \ref{SecNonComputable}.
 
 \begin{lemma}
-  The terms $M,N\from (\nat \to \nat) \to \com$, as defined in the proof of Proposition \ref{PropNotFullyAbstract}, are observationally equivalent in Idealized Algol with countable nondeterminism.
+  The terms $M,N\from (\nat \to \bool) \to \com$, as defined in Section \ref{SecNonComputable}, are observationally equivalent in Idealized Algol with countable nondeterminism.
 \end{lemma}
 \begin{proof}
   The denotations for $M$ and $N$ both have maximal plays that look like this:
   \[
     \begin{array}{cccc}
-      \bN & \bN & \bN & \bC \\
+      \bN & \bN & \bB & \bC \\
           &     &     &  q  \\
        q  &     &     &     \\
-       p  &     &     &     \\
+       k  &     &     &     \\
           &     &  q  &     \\
           &  q  &     &     \\
-          &  p  &     &     \\
-          &     &  c  &     \\
+          &  0  &     &     \\
+          &     & a_0 &     \\
+          &\vdots&    &     \\
+          &     &  q  &     \\
+          &  q  &     &     \\
+          &(k-1)&     &     \\
+          &     &a_{k-1}&   \\
        q  &     &     &     \\
        n  &     &     &     \\
           &     &     & (a)
@@ -2046,41 +1985,48 @@ As an application of this fully abstract semantics, we clear up a loose end from
   Here, the copy of $\bN$ on the left denotes the nondeterministic oracle given by the Kleisli category.  
   The final move $a$ is in brackets to indicate that it does not always occur, depending on the moves that have gone before.
 
-  More specifically, in $\deno M$, the final move $a$ always occurs unless the number $p$ is the encoding of a term $P\from\nat \to \nat$ of Idealized Algol such that the evaluation $P\;p$ converges in fewer than $n$ steps to a number different from $c+1$.
+  More specifically, in $\deno M$, the final move $a$ always occurs if $a_0\cdots a_{k-1}$ is a finite path in the Kleene tree; otherwise, it may or may not occur, depending on whether $n$ is $0$ or not.
 
   Meanwhile, the final move $a$ is present in $\deno N$ if and only if the number $n$ is equal to $0$.
-  Since an evaluation $P\;p$ will never converge in fewer than $0$ steps, this means that $\deno N$ is a subset of $\deno M$.
+  This means that $\deno N$ is a subset of $\deno M$.
 
-  Fix some strategy $\alpha\from ((\bN \to \bN)\to\bC) \to \bC$ in $\G_X$ and suppose that
+  Fix some strategy $\alpha\from ((\bN \to \bC)\to\bC) \to \bC$ in $\G_X$ and suppose that
   \[
     \deno M;\alpha\not\amam \deno N;\alpha\,.
     \]
-  To show that $M$ and $N$ are observationally equivalent, it will be sufficient to prove that $\alpha$ is not recursive.
-
   First note that we always have $\deno M;\alpha\approx_{\may}\deno N;\alpha$ for arbitrary $\alpha$, which we can deduce by ignoring the copy of $\bN$ on the left and considering $\deno M$ and $\deno N$ as nondeterministic strategies.  
   In this setting, $\deno M$ and $\deno N$ are equal, since both have maximal plays of the form
   \[
     \begin{array}{ccc}
-      \bN & \bN & \bC \\
-          &     &  q  \\
-          &  q  &     \\
-       q  &     &     \\
-       p  &     &     \\
-          &  c  &     \\
-          &     & a
+       \bN & \bB & \bC \\
+           &     &  q  \\
+           &     &     \\
+           &     &     \\
+           &  q  &     \\
+        q  &     &     \\
+        0  &     &     \\
+           & a_0 &     \\
+     \vdots&\vdots&   \\
+           &  q  &     \\
+        q  &     &     \\
+      (k-1)&     &     \\
+           &a_{k-1}&   \\
+           &     &     \\
+           &     &     \\
+           &     & (a)
     \end{array}\,,
     \]
-  where $p$ is arbitrary.  
+  where $k$ is arbitrary.  
 
   Therefore, we must have $\deno M;\alpha \not\approx_{\must}\deno N;\alpha$.
 
   Since $\deno N \subseteq \deno M$, it must be the case that $\deno M;\alpha\downarrow_{\must}$ and $\deno N;\alpha\not\downarrow_{\must}$; i.e., that $\deno M;\alpha$ is a winning strategy, when considered as a strategy $\bN \to \bC$ in $\G$, but $\deno N;\alpha$ is not.
 
   Since $\deno M$ and $\deno N$ do not differ until the very last move, this means that $\alpha$ must respond to the initial move $q$ in the rightmost copy of $\bC$ with the move $q$ in the copy of $\bC$ on the left (otherwise, $\deno N;\alpha$ is winning), and that $\alpha$ must be total (otherwise, $\deno M;\alpha$ is not winning).
-  Then we see that for any value of $p$, $\alpha$ must reply to the move $p$ with the number $\phi(p)$, where $\phi$ is the function defined above.  
-  Otherwise, $\deno M;\alpha$ is not winning.
+  $\alpha$ replies to each move $i$ in $\bN$ with some move in $\bB$, and this defines a function $\bN \to \bB$.  
+  Since $\alpha$ is total, this function must trace out an infinite path in the Kleene tree.
 
-  But if $\alpha$ is a recursively enumerable subset of $P_{\bN \to ((\bN \to \bN) \to \bC) \to \bC}$, then that would mean that the set of pairs $(p,\phi(p))$ were a recursively enumerable subset of $\bN \times \bN$, and this is not the case, since $\phi$ is not a recursive function.  
+  But if $\alpha$ were recursive, then we would be able to recover this infinite path from $\alpha$ via a recursive algorithm, and we know that this is not possible
   Therefore, $\alpha$ is not recursive.  
 
   It follows that $M$ and $N$ are observationally equivalent in Idealized Algol with countable nondeterminism under may-and-must testing.
@@ -2098,7 +2044,7 @@ We conclude this chapter by examining the intrinsic equivalence relation in $\G_
   If $\sigma\sim\tau$ when considered as morphisms $X \to (A \to B)$ in $\G$, then $\sigma\sim\tau$ in $\G_X$.
 \end{proposition}
 \begin{proof}
-  Suppose that $\alpha$ separates $\sigma$ and $\tau$ in $\G_X$, so without loss of generality, we have
+  Suppose that $\alpha \from (A \to B) \to \bC$ separates $\sigma$ and $\tau$ in $\G_X$, so without loss of generality, we have
   \begin{mathpar}
     1 \xrightarrow{(\sigma;\alpha)}
     (X \to \bC) \xrightarrow{\eta_u}

@@ -21,7 +21,7 @@
 \fi
 \fi
 \usepackage{mathtools} % for the all important \coloneqq symbol
-\usepackage{hyperref} % for hyperreferences
+\usepackage[pdfpagelabels]{hyperref} % for hyperreferences
 \usepackage{IEEEtrantools} % for \IEEEeqnarray
 \usepackage{pbox} % for \pbox
 \usepackage{multirow,bigdelim} % for \multirow
@@ -493,6 +493,9 @@
 \DeclareMathOperator{\assign}{\mathsf{assign}}
 \newcommand{\ia}[2]{\langle #1 , #2 \rangle}
 \newcommand{\stup}[3]{\langle #1 \mid #2 \mapsto #3 \rangle}
+\DeclareMathOperator{\Let}{\mathsf{let}}
+\newcommand{\In}{\mathrel{\mathsf{in}}}
+\newcommand{\Or}{\mathop{\mathsf{or}}}
 
 %% Hyland-Ong games things
 

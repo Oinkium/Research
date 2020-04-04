@@ -37,69 +37,71 @@
 \BOOKMARK [0][-]{chapter.4}{Monads and Kleisli categories}{}% 37
 \BOOKMARK [1][-]{section.4.1}{Monads}{chapter.4}% 38
 \BOOKMARK [1][-]{section.4.2}{Kleisli Categories}{chapter.4}% 39
-\BOOKMARK [2][-]{subsection.4.2.1}{Multiplicative natural transformations}{section.4.2}% 40
-\BOOKMARK [1][-]{section.4.3}{Denotational Semantics}{chapter.4}% 41
-\BOOKMARK [1][-]{section.4.4}{Operational Semantics}{chapter.4}% 42
-\BOOKMARK [1][-]{section.4.5}{Soundness}{chapter.4}% 43
-\BOOKMARK [1][-]{section.4.6}{Computational Adequacy}{chapter.4}% 44
-\BOOKMARK [1][-]{section.4.7}{Full Abstraction}{chapter.4}% 45
-\BOOKMARK [1][-]{section.4.8}{Comparison with Ghica's slot games}{chapter.4}% 46
-\BOOKMARK [1][-]{section.4.9}{Alternative Reduction Rules - May Testing}{chapter.4}% 47
-\BOOKMARK [1][-]{section.4.10}{Alternative Reduction Rules - Must Testing}{chapter.4}% 48
-\BOOKMARK [1][-]{section.4.11}{Full Abstraction for Finite Nondeterminism Under Must Testing}{chapter.4}% 49
-\BOOKMARK [2][-]{subsection.4.11.1}{Full Abstraction for Countable Nondeterminism under Must Testing}{section.4.11}% 50
-\BOOKMARK [1][-]{section.4.12}{The Intrinsic Equivalence Relation}{chapter.4}% 51
-\BOOKMARK [0][-]{chapter.5}{Parametric monads}{}% 52
-\BOOKMARK [1][-]{section.5.1}{The Melli\350s category}{chapter.5}% 53
-\BOOKMARK [1][-]{section.5.2}{The category C/X}{chapter.5}% 54
-\BOOKMARK [1][-]{section.5.3}{Lax 2-colimits}{chapter.5}% 55
-\BOOKMARK [1][-]{section.5.4}{Lax natural transformations and functoriality of lax colimits}{chapter.5}% 56
-\BOOKMARK [1][-]{section.5.5}{Lax 2-colimits in Cat}{chapter.5}% 57
-\BOOKMARK [1][-]{section.5.6}{Examples of lax 2-colimits in Cat}{chapter.5}% 58
-\BOOKMARK [1][-]{section.5.7}{Finite products distribute over lax colimits in Cat}{chapter.5}% 59
-\BOOKMARK [1][-]{section.5.8}{Monoidal structure of C/X}{chapter.5}% 60
-\BOOKMARK [1][-]{section.5.9}{Symmetric monoidal structure of C/X}{chapter.5}% 61
-\BOOKMARK [1][-]{section.5.10}{Monoidal closed structure of C/X}{chapter.5}% 62
-\BOOKMARK [1][-]{section.5.11}{Cartesianness of the monoidal structure}{chapter.5}% 63
-\BOOKMARK [0][-]{chapter.6}{Reader actions on Set}{}% 64
-\BOOKMARK [1][-]{section.6.1}{Colimits of actions are monoidal functors}{chapter.6}% 65
-\BOOKMARK [1][-]{section.6.2}{Reader actions on Set vs change of base}{chapter.6}% 66
-\BOOKMARK [1][-]{section.6.3}{From monoidal endofunctors to reader actions}{chapter.6}% 67
-\BOOKMARK [1][-]{section.6.4}{Actions of categories with terminal objects}{chapter.6}% 68
-\BOOKMARK [1][-]{section.6.5}{Reader actions and denotational semantics}{chapter.6}% 69
-\BOOKMARK [0][-]{chapter.7}{Promonads and parametric promonads}{}% 70
-\BOOKMARK [1][-]{section.7.1}{Multicategories}{chapter.7}% 71
-\BOOKMARK [1][-]{section.7.2}{Representable multicategories}{chapter.7}% 72
-\BOOKMARK [1][-]{section.7.3}{Product and unit multicategories}{chapter.7}% 73
-\BOOKMARK [1][-]{section.7.4}{Multifunctors \046 multinatural transformations}{chapter.7}% 74
-\BOOKMARK [1][-]{section.7.5}{Monoids in multicategories}{chapter.7}% 75
-\BOOKMARK [1][-]{section.7.6}{Categories enriched over multicategories}{chapter.7}% 76
-\BOOKMARK [1][-]{section.7.7}{Multicategory-enriched functors and natural transformations}{chapter.7}% 77
-\BOOKMARK [1][-]{section.7.8}{The categories enriched over a symmetric multicategory form a multicategory}{chapter.7}% 78
-\BOOKMARK [1][-]{section.7.9}{Change of base}{chapter.7}% 79
-\BOOKMARK [1][-]{section.7.10}{Closed multicategories}{chapter.7}% 80
-\BOOKMARK [1][-]{section.7.11}{The multicategory of endoprofunctors}{chapter.7}% 81
-\BOOKMARK [1][-]{section.7.12}{Functors are a special case of profunctors}{chapter.7}% 82
-\BOOKMARK [1][-]{section.7.13}{Promonads are categories}{chapter.7}% 83
-\BOOKMARK [1][-]{section.7.14}{The multicategory of functors}{chapter.7}% 84
-\BOOKMARK [1][-]{section.7.15}{Monoids on functors are multifunctors}{chapter.7}% 85
-\BOOKMARK [1][-]{section.7.16}{Two perspectives on monoids in Set}{chapter.7}% 86
-\BOOKMARK [0][-]{chapter.8}{Parametric Monads and Full Abstraction}{}% 87
-\BOOKMARK [1][-]{section.8.1}{The language IAX}{chapter.8}% 88
-\BOOKMARK [1][-]{section.8.2}{Operational Semantics}{chapter.8}% 89
-\BOOKMARK [1][-]{section.8.3}{Translation into IAX}{chapter.8}% 90
-\BOOKMARK [1][-]{section.8.4}{Computational Adequacy}{chapter.8}% 91
-\BOOKMARK [1][-]{section.8.5}{Equational Soundness}{chapter.8}% 92
-\BOOKMARK [2][-]{subsection.8.5.1}{Full Abstraction for IAX}{section.8.5}% 93
-\BOOKMARK [1][-]{section.8.6}{Probability}{chapter.8}% 94
-\BOOKMARK [1][-]{section.8.7}{Full Abstraction for Probabilistic Algol}{chapter.8}% 95
-\BOOKMARK [1][-]{section.8.8}{Comparison with a Kleisli Category Model}{chapter.8}% 96
-\BOOKMARK [1][-]{section.8.9}{Game Semantics and Probability}{chapter.8}% 97
-\BOOKMARK [1][-]{section.8.10}{The Probabilistic Game Semantics of Danos and Harmer}{chapter.8}% 98
-\BOOKMARK [0][-]{chapter.9}{Further Directions}{}% 99
-\BOOKMARK [1][-]{section.9.1}{Stateless Languages}{chapter.9}% 100
-\BOOKMARK [1][-]{section.9.2}{Stateful Effects}{chapter.9}% 101
-\BOOKMARK [1][-]{section.9.3}{Relational Models}{chapter.9}% 102
-\BOOKMARK [1][-]{section.9.4}{Adequacy Proofs}{chapter.9}% 103
-\BOOKMARK [1][-]{section.9.5}{Afterword}{chapter.9}% 104
-\BOOKMARK [0][-]{chapter*.31}{Bibliography}{}% 105
+\BOOKMARK [1][-]{section.4.3}{Multiplicative natural transformations}{chapter.4}% 40
+\BOOKMARK [1][-]{section.4.4}{Denotational Semantics}{chapter.4}% 41
+\BOOKMARK [1][-]{section.4.5}{Operational Semantics}{chapter.4}% 42
+\BOOKMARK [1][-]{section.4.6}{Soundness}{chapter.4}% 43
+\BOOKMARK [1][-]{section.4.7}{Computational Adequacy}{chapter.4}% 44
+\BOOKMARK [1][-]{section.4.8}{Full Abstraction}{chapter.4}% 45
+\BOOKMARK [1][-]{section.4.9}{Comparison with Ghica's slot games}{chapter.4}% 46
+\BOOKMARK [1][-]{section.4.10}{Alternative Reduction Rules - May Testing}{chapter.4}% 47
+\BOOKMARK [1][-]{section.4.11}{Alternative Reduction Rules - Must Testing}{chapter.4}% 48
+\BOOKMARK [1][-]{section.4.12}{Full Abstraction for Finite Nondeterminism Under Must Testing}{chapter.4}% 49
+\BOOKMARK [1][-]{section.4.13}{The Kleene Tree}{chapter.4}% 50
+\BOOKMARK [1][-]{section.4.14}{Non-computable functions and Observational Equivalence}{chapter.4}% 51
+\BOOKMARK [1][-]{section.4.15}{Full Abstraction for Countable Nondeterminism under Must Testing}{chapter.4}% 52
+\BOOKMARK [1][-]{section.4.16}{The Intrinsic Equivalence Relation}{chapter.4}% 53
+\BOOKMARK [0][-]{chapter.5}{Parametric monads}{}% 54
+\BOOKMARK [1][-]{section.5.1}{The Melli\350s category}{chapter.5}% 55
+\BOOKMARK [1][-]{section.5.2}{The category C/X}{chapter.5}% 56
+\BOOKMARK [1][-]{section.5.3}{Lax 2-colimits}{chapter.5}% 57
+\BOOKMARK [1][-]{section.5.4}{Lax natural transformations and functoriality of lax colimits}{chapter.5}% 58
+\BOOKMARK [1][-]{section.5.5}{Lax 2-colimits in Cat}{chapter.5}% 59
+\BOOKMARK [1][-]{section.5.6}{Examples of lax 2-colimits in Cat}{chapter.5}% 60
+\BOOKMARK [1][-]{section.5.7}{Finite products distribute over lax colimits in Cat}{chapter.5}% 61
+\BOOKMARK [1][-]{section.5.8}{Monoidal structure of C/X}{chapter.5}% 62
+\BOOKMARK [1][-]{section.5.9}{Symmetric monoidal structure of C/X}{chapter.5}% 63
+\BOOKMARK [1][-]{section.5.10}{Monoidal closed structure of C/X}{chapter.5}% 64
+\BOOKMARK [1][-]{section.5.11}{Cartesianness of the monoidal structure}{chapter.5}% 65
+\BOOKMARK [0][-]{chapter.6}{Reader actions on Set}{}% 66
+\BOOKMARK [1][-]{section.6.1}{Colimits of actions are monoidal functors}{chapter.6}% 67
+\BOOKMARK [1][-]{section.6.2}{Reader actions on Set vs change of base}{chapter.6}% 68
+\BOOKMARK [1][-]{section.6.3}{From monoidal endofunctors to reader actions}{chapter.6}% 69
+\BOOKMARK [1][-]{section.6.4}{Actions of categories with terminal objects}{chapter.6}% 70
+\BOOKMARK [1][-]{section.6.5}{Reader actions and denotational semantics}{chapter.6}% 71
+\BOOKMARK [0][-]{chapter.7}{Promonads and parametric promonads}{}% 72
+\BOOKMARK [1][-]{section.7.1}{Multicategories}{chapter.7}% 73
+\BOOKMARK [1][-]{section.7.2}{Representable multicategories}{chapter.7}% 74
+\BOOKMARK [1][-]{section.7.3}{Product and unit multicategories}{chapter.7}% 75
+\BOOKMARK [1][-]{section.7.4}{Multifunctors \046 multinatural transformations}{chapter.7}% 76
+\BOOKMARK [1][-]{section.7.5}{Monoids in multicategories}{chapter.7}% 77
+\BOOKMARK [1][-]{section.7.6}{Categories enriched over multicategories}{chapter.7}% 78
+\BOOKMARK [1][-]{section.7.7}{Multicategory-enriched functors and natural transformations}{chapter.7}% 79
+\BOOKMARK [1][-]{section.7.8}{The categories enriched over a symmetric multicategory form a multicategory}{chapter.7}% 80
+\BOOKMARK [1][-]{section.7.9}{Change of base}{chapter.7}% 81
+\BOOKMARK [1][-]{section.7.10}{Closed multicategories}{chapter.7}% 82
+\BOOKMARK [1][-]{section.7.11}{The multicategory of endoprofunctors}{chapter.7}% 83
+\BOOKMARK [1][-]{section.7.12}{Functors are a special case of profunctors}{chapter.7}% 84
+\BOOKMARK [1][-]{section.7.13}{Promonads are categories}{chapter.7}% 85
+\BOOKMARK [1][-]{section.7.14}{The multicategory of functors}{chapter.7}% 86
+\BOOKMARK [1][-]{section.7.15}{Monoids on functors are multifunctors}{chapter.7}% 87
+\BOOKMARK [1][-]{section.7.16}{Two perspectives on monoids in Set}{chapter.7}% 88
+\BOOKMARK [0][-]{chapter.8}{Parametric Monads and Full Abstraction}{}% 89
+\BOOKMARK [1][-]{section.8.1}{The language IAX}{chapter.8}% 90
+\BOOKMARK [1][-]{section.8.2}{Operational Semantics}{chapter.8}% 91
+\BOOKMARK [1][-]{section.8.3}{Translation into IAX}{chapter.8}% 92
+\BOOKMARK [1][-]{section.8.4}{Computational Adequacy}{chapter.8}% 93
+\BOOKMARK [1][-]{section.8.5}{Equational Soundness}{chapter.8}% 94
+\BOOKMARK [2][-]{subsection.8.5.1}{Full Abstraction for IAX}{section.8.5}% 95
+\BOOKMARK [1][-]{section.8.6}{Probability}{chapter.8}% 96
+\BOOKMARK [1][-]{section.8.7}{Full Abstraction for Probabilistic Algol}{chapter.8}% 97
+\BOOKMARK [1][-]{section.8.8}{Comparison with a Kleisli Category Model}{chapter.8}% 98
+\BOOKMARK [1][-]{section.8.9}{Game Semantics and Probability}{chapter.8}% 99
+\BOOKMARK [1][-]{section.8.10}{The Probabilistic Game Semantics of Danos and Harmer}{chapter.8}% 100
+\BOOKMARK [0][-]{chapter.9}{Further Directions}{}% 101
+\BOOKMARK [1][-]{section.9.1}{Stateless Languages}{chapter.9}% 102
+\BOOKMARK [1][-]{section.9.2}{Stateful Effects}{chapter.9}% 103
+\BOOKMARK [1][-]{section.9.3}{Relational Models}{chapter.9}% 104
+\BOOKMARK [1][-]{section.9.4}{Adequacy Proofs}{chapter.9}% 105
+\BOOKMARK [1][-]{section.9.5}{Afterword}{chapter.9}% 106
+\BOOKMARK [0][-]{chapter*.33}{Bibliography}{}% 107
