@@ -1,0 +1,1729 @@
+\documentclass{article}
+
+\let\FEWFONTS=1
+\let\THESIS=1
+\input{../common/preamble}
+
+\usepackage{lua-visual-debug}
+
+\begin{document}
+
+\section{Monads and Kleisli categories}
+\label{SecMonads}
+
+\subsection{Monads}
+
+Let $\C$ be a category.  
+Then the category $[\C,\C]$ of functors $\C\to\C$ and natural transformations has a (strict) monoidal structure given by composition.  
+A \emph{monad} \cite[\sec VI]{WorkingMathematician} in $\C$ is a monoid in $[\C,\C]$.
+
+In other words, it is a functor $M\from \C\to\C$ together with natural  transformations $m_a \from MMa \to Ma$ and $u_a \from a \to Ma$ such that the following diagrams commute for all objects $a$ of $\C$.
+
+\begin{mathpar}
+  \begin{tikzcd}
+    MMM a \arrow[r, "Mm_a"] \arrow[d, "m_{Ma}"]
+      & MM a \arrow[d, "m_a"] \\
+    MM a \arrow[r, "m_a"]
+      & M a
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    M a \arrow[r, "M u_a"] \arrow[dr, "id"']
+      & M M a \arrow[d, "m_a"] \\
+    %
+      & M a
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    M a \arrow[r, "u_{M a}"] \arrow[dr, "id"']
+      & M M a \arrow[d, "m_a"] \\
+    %
+      & M a
+  \end{tikzcd}
+\end{mathpar}
+
+\begin{example}
+  In the category of sets, the \emph{nonempty powerset functor} $\powerset_+$ sends a set $A$ to the set of nonempty subsets of $A$.  
+  This has the structure of a monad on $\Set$, since we have a natural transformation (union) from $\powerset_+\powerset_+A \to \powerset_+A$ and a natural transformation (singleton) from $A \to \powerset_+A$ that obey the diagrams given above.
+\end{example}
+\begin{example}
+  Let $\M$ be a monoidal category and let $x$ be a monoid in $\M$.  
+  The \emph{writer monad} $W_x$ on $\M$ is defined by $W_x y = y \tensor x$, with natural transformations
+  \begin{mathpar}
+    m_y \from y \tensor x \tensor x \to y \tensor x
+    \and
+    u_y \from y \to y \tensor x
+  \end{mathpar}
+  given by the monoid structure on $x$.
+
+  Going the other way, if $\M$ is monoidal closed with inner hom $\implies$, and if $z$ is a comonoid in $\M$, then the \emph{reader monad} $R_z$ is given by $R_z y = z \implies y$.  
+  Then the monadic coherences
+  \begin{mathpar}
+    m_y \from z \implies z \implies y \to z \implies y
+    \and
+    u_y \from y \to z \implies y
+  \end{mathpar}
+  are induced from the comonoid structure on $z$.
+  This second example is particularly important in Cartesian closed categories, in which every object has the structure of a comonoid.
+\end{example}
+\begin{example}
+  If $\adjunction{\C}{L}{R}{\D}$ is an adjunction with counit $\epsilon\from LR\to 1$ and unit $\eta\from 1 \to RL$, then the composite $RL\from \C \to \C$ has the structure of a monoid on $\C$, where the multiplication and unit are given by
+  \begin{mathpar}
+    R\epsilon L \from RLRL \to RL
+    \and
+    \eta \from 1 \to RL\,.
+  \end{mathpar}
+  We will see in the next section that every monad is induced by an adjunction in this way.
+
+  As an example, if $\M$ is a monoidal closed category and $w$ is an object of $\M$, then the \emph{state monad} $S_w$ on $\M$ is defined by
+  \[
+    S_w x = w \implies (x \tensor w)\,.
+    \]
+\end{example}
+\begin{example}
+  Another example that arises from an adjunction is the \emph{list monad} on $\Set$ that arises from the adjunction between the category of sets and the category of (set-valued) monoids.  
+  The underlying set of the free monoid on a set $A$ is the set $A^*$ of finite lists of elements of $A$, and the functor $A\mapsto A^*$ inherits a monoid structure where the multiplication $m_A\from (A^*)^* \to A^*$ concatenates a list of lists into a single list and the unit $u_a \from A \to A^*$ forms a list with a single element.  
+\end{example}
+\begin{example}
+  A monad on $\oppcat\C$ is called a \emph{comonad} on $\C$.  
+  The carrier of a comonad is still a functor $M\from \C\to\C$, but now the multiplication and unit are natural transformations $M\Rightarrow MM$ and $M\Rightarrow 1$, rather than the other way round.  
+
+  An adjunction $\adjunction\C LR\D$ gives rise to a comonad structure on $LR$ in much the same way as it gives rise to a monad structure on $RL$.  
+  So, for example, we have the \emph{store comonad} $S_r'$ for any object $r$ of a monoidal closed category $\M$, given by
+  \[
+    S_r'x = (r \implies x) \tensor x\,.
+    \]
+\end{example}
+
+\subsection{Kleisli Categories}
+
+Let $\C$ be a category and let $M$ be a monad on $\C$.  
+Then \cite{Kleisli} there is a category $\Kl_M$, called the \emph{Kleisli category} of $M$, whose objects are the objects of $\C$ and where a morphism from an object $a$ to an object $b$ is a morphism $a \to Mb$ in $\C$.
+
+Identity arrows are given by the morphisms $u_c\from c \to M c$ (considered as a morphism $c\to c$ in $\Kl_M$) and the composition of arrows $f\from a \to Mb$ and $g \from b \to Mc$ is given by the following composite in $\C$.
+\[
+  a \xrightarrow{f}
+  Mb \xrightarrow{Mg}
+  MMc \xrightarrow{m_c}
+  M c
+  \]
+There is a natural identity-on-objects functor $J\from \C \to \Kl_M$ that sends a morphism $f\from a \to b$ in $\C$ to the composite
+\[
+  a \xrightarrow{f}
+  b \xrightarrow{u_b}
+  M b\,,
+  \]
+considered as a morphism $a\to b$ in $\Kl_M$.
+
+In the other direction, we have a functor $ S \from \Kl_M \to \C$ that sends an object $a$ of $\Kl_M$ to the object $Ma$ of $\C$ and sends a morphism $f\from a \to M b$ from $a$ to $b$ in $\Kl_M$ to the composite
+\[
+  Ma \xrightarrow{M f}
+  MMb \xrightarrow{m_b}
+  Mb
+  \]
+in $\C$.  
+Note that $ S J=M$, by one of our coherence conditions on $m$ and $u$.
+Meanwhile, $J S $ is the functor $\Kl_M\to\Kl_M$ that sends an object $a$ to $Ma$ and sends a morphism $f\from a \to Mb$ from $a$ to $b$ to the morphism $Mf\from Ma \to MMb$ from $Ma$ to $Mb$.
+\begin{proposition}[\cite{Kleisli}]
+  $ S $ is a right adjoint to $J$.
+  The unit of the adjunction is $u\from \id \Rightarrow M$.  
+  The counit $e_a\from J( S  a) \to a$ is given by the identity morphism $Ma \to Ma$ in $\C$, considered as a morphism $Ma \to a$ in $\Kl_M$.
+  \label{prop:KleisliHasAdjunction}
+\end{proposition}
+
+Given a monad $M$ on a category $\C$ and a functor $F\from \C \to \D$, where $\D$ is another category, we say that a natural transormation $\psi_a \from FMa \to Fa$ is \emph{$M$-multiplicative} if it makes the following diagrams commute.
+\begin{mathpar}
+  \begin{tikzcd}
+    FMMa \arrow[r, "\psi_{Ma}"] \arrow[d, "Fm_a"']
+      & FMa \arrow[d, "\psi_a"] \\
+    FMa \arrow[r, "\psi_a"]
+      & Fa
+  \end{tikzcd}
+  \and
+  \begin{tikzcd}
+    Fa \arrow[r, "F u_a"] \arrow[dr, "\id"']
+      & FMa \arrow[d, "\psi_a"] \\
+    %
+      & Fa
+  \end{tikzcd}
+\end{mathpar}
+
+Given two triples $(\D, F,\psi), (\D', F',\psi')$, where $F\from \C \to \D, F'\from \C'\to\D'$ are functors and $\psi\from FM\Rightarrow F, \psi'\from F'M\Rightarrow F'$ are functors, we define a \emph{morphism} from $(\D', F',\psi')$ to $(\D, F, \psi)$ to be a functor $H\from \D' \to \D$ such that $F=HF'$ and $\psi=H\psi'$.  
+This gives us a category.
+
+A defining property of the Kleisli category is that it is initial among such triples $(\D,F,\psi)$:
+
+\begin{proposition}[\cite{StreetMonads}]
+  i) Given an object $a$ of $\C$, the identity morphism $Ma \to Ma$ may be considered as a morphism $\phi_a \from JMa \to Ja$ in $\Kl_M$.  
+  $\phi_a$ is an $M$-multiplicative natural transformation.
+
+  ii) Let $\D$ be a category, let $F\from \C \to \D$ be a functor and suppose that $\psi_a\from FMa \to Ma$ is an $M$-multiplicative natural transformation.
+  Then there is a unique functor $\hat{F}\from \Kl_M \to \D$ such that $F=\hat{F}J$ and $\psi = \hat{F}\phi$.
+  \label{pKleisli}
+\end{proposition}
+
+Another way to characterize the Kleisli category $\Kl_M$ is to say that the the adjunction we described above is initial among all adjunctions giving rise to the monad $M$.  
+This can be deduced from Proposition \ref{pKleisli} using the following result.
+
+\begin{lemma}[\cite{StreetMonads}]
+  Let $\C$ be a category and let $M$ be a monad on $\C$.  
+  If $\adjunction{\C}{L}{R}{\D}$ is an adjunction (with counit $\epsilon$ and unit $\eta$), we say it \emph{gives rise to $M$} if $M=RL$, $m=R\epsilon L$ and $u=\eta$.
+
+  Any such adjunction gives rise to an $M$-multiplicative natural transformation $\psi\from LM \Rightarrow L$.  
+  This gives us a fully faithful functor from the category of adjunctions giving rise to $M$ to the category of triples $(\D,F,\psi)$ where $\psi$ is $M$-multiplicative.
+\end{lemma}
+
+The proof of Proposition \ref{pKleisli} essentially comes down to the following factorization result.  
+If $f\from a \to b$ is a morphism in $\Kl_M$, then $f$ may be factorized as
+\[
+  f = a \xrightarrow{Jf}
+  Mb \xrightarrow{\phi_b}
+  b\,,
+  \]
+where we use `$f$' to refer both to the morphism $a\to b$ in $\Kl_M$ and to the underlying morphism $a \to Mb$ in $\C$.
+Indeed, if we compute this composite inside $\C$, we get
+\[
+  a \xrightarrow{f}
+  Mb \xrightarrow{u_{Mb}}
+  MMb \xrightarrow{M\id}
+  MMb \xrightarrow{m_b}
+  Mb\,,
+  \]
+which is equal to $f$ by the coherence conditions on $m$ and $u$.
+This means that the Kleisli category may be thought of as being freely generated from the original category $\C$ and a multiplicative natural transformation $\phi$.
+
+\begin{example}
+  The morphisms in the Kleisli category for the nonempty powerset monad $\powerset_+$ on $\Set$ are functions $A \to \powerset_+B$, which can be thought of as nondeterministic functional programs.  
+  Given a set $A$, the morphism $\phi_A\from \powerset_+A \to A$ in $\Kl_{\powerset_+}$ can be interpreted as a `nondeterministic choice' function that accepts a nonempty set of elements of $A$ and nondeterministically chooses one of them.
+  The factorization then means that the category is freely generated over $\C$ by these nondeterministic choice morphisms.
+\end{example}
+\begin{example}
+  Let $\C$ be a Cartesian closed category and let $z$ be some fixed object of $\C$.  
+  Then the Kleisli category for the reader monad $R_z$ on $\C$ is generated over $\C$ by a natural transformation $\phi_y\from (z \to y) \to y$.  
+  By the enriched Yoneda lemma, such a natural transformation is always given by precomposition with some fixed morphism $\ask_z\from 1 \to z$.  
+  This means that $\Kl_{R_z}$ is suitable for modelling any situation in which we are generally working in $\C$, but need the ability to request a value of type $z$ (for example, a config file, a piece of user input or something else that isn't being passed into the function in question).
+  \label{ExReaderMonadKleisli}
+\end{example}
+
+A particularly important fact about the reader monad in Cartesian closed categories is the following.
+
+\begin{theorem}[\cite{FunctionalCompleteness}]
+  Let $\C$ be a Cartesian closed category and let $z$ be an object of $\C$.  
+  Then the Kleisli category $\Kl_{R_z}$ for the reader monad over $z$ on $\C$ is Cartesian closed.
+  \label{FunctionalCompletenessCcc}
+\end{theorem}
+
+The \emph{functional completeness} theorem \cite{FunctionalCompleteness} can be thought of as a special case of our remarks above.
+
+\subsection{Denotational Semantics}
+
+From now till the end of the chapter, we fix an (order-enriched) Cartesian closed category $\G$ that admits a denotational semantics of Idealized Algol satisfying Computational Adequacy and in which every compact element is definable.
+The prototypical example, of course, will be the category of games and visible strategies, but we will not exploit any properties of this model beyond the ones we have already mentioned, mentioning it only in examples where appropriate.
+
+Let $X\in \{\bB,\bN,\bC\}$ be a set that has an interpretation as an Idealized Algol type $X$, and write $X$ also for the corresponding object of $\G$.
+Write $\G_X$ as a shorthand for $\Kl_{R_X}\G$, the Kleisli category for the reader monad on $\G$ corresponding to the object $X$.  
+The purpose of the rest of this chapter will be to define a new language, give it a denotational semantics in $\G_X$, and prove a full abstraction result for this denotational semantics.
+
+\newcommand{\IAX}{{IA${}_X$}\xspace}
+\begin{definition}[{The language \IAX}]
+  The language \IAX is formed by taking Idealized Algol, and adding to it a new constant
+  \[
+    \ask_X
+    \]
+  with typing rule
+  \[
+    \inferrule{ }{\Gamma \ts \ask_X \from X}\,.
+    \]
+\end{definition}
+
+From Proposition \ref{pKleisli}, we know that there is a distinguished natural transformation $\phi_A \from (X \to A) \to A$ in $\G_X$; in particular, we have a morphism
+\[
+  \phi = \phi_X(\id_X) \from 1 \to X\,,
+  \]
+which will be the denotation of the term $\choose_X$.
+Together with the existing denotational semantics of Idealized Algol within $\G$, this gives us an inductively defined denotational semantics of \IAX within $\G_X$.
+
+Clearly any term-in-context of \IAX is of the form
+\[
+  \Gamma \ts M[\ask_X/x]\from T\,,
+  \]
+where
+\[
+  \Gamma,x\from X \ts M \from T
+  \]
+is a judgement of Idealized Algol.
+Given such a term-in-context, we know that the denotation of
+\[
+  \Gamma\ts (\lambda x.M) \ask_X \from T
+  \]
+is given by the composite
+\[
+  1 \xrightarrow{\phi}
+  X \xrightarrow{\deno{\Gamma,x \ts M}}
+  \deno{T}\,.
+  \]
+Now this last term is $\beta$-equivalent to our original term-in-context $\Gamma\ts M$.  
+Since $\G_X$ is Cartesian closed (by Theorem \ref{FunctionalCompletenessCcc}), the $\beta$ rule is valid in $\G_X$, and this means that the composite above is an alternative definition of the denotation of $\Gamma\ts M$.
+
+\subsection{Operational Semantics}
+
+We now define the operational semantics of \IAX and prove a computational adequacy result for our denotational semantics.
+
+\begin{definition}[Operational semantics of \IAX]
+  Let $X^*$ be the free monoid on the set $X$; i.e., the set of all finite strings of elements of $X$.
+  Given $u,v\in X^*$ we shall write $u\cat v$ for their product in $X^*$; i.e., the concatenation of the two strings.
+  We shall write $\epsilon$ for the unit in $X^*$; i.e., the empty string.
+
+  If $u\in X^*$,we write $|u|$ for the length of $u$.
+  If $0\le n < |u|$, then we write $u^{(n)}$ for the corresponding element of $u$, numbering from $0$.
+
+  We inductively define a relation $\Gamma,s\ts M\converges_u c,s'$, where $\Gamma$ is a $\Var$-context, $M,c$ are terms of \IAX with all free variables in $\Gamma$, where $c$ is an IA canonical form, $s,s'$ are $\Gamma$-stores and $u\in X^*$.
+  The definition of this relation is shown in Figure \ref{FigIaxOpSem}.
+
+  \begin{figure}
+    \begin{mathpar}
+      \inferrule*{ }{\Gamma,s\ts c \converges_\epsilon c,s}
+      \and
+      \inferrule*{\Gamma,s \ts M \converges_u \lambda x.M',s' \\ \Gamma,s' \ts M'[N/x] \converges_v c,s''}{\Gamma,s \ts MN \converges_{u\cat v} c,s''}
+      \and
+      \inferrule*{\Gamma,s \ts M(\Y M) \converges_u c,s'}{\Gamma,s \ts \Y M \converges_u c,s'}
+      \and
+      \inferrule*{\Gamma,s\ts M \converges_u n,s'}{\Gamma,s\ts \suc M \converges_u n+1,s'}
+      \\\and
+      \inferrule*{\Gamma,s\ts M \converges_u n+1,s'}{\Gamma,s\ts \pred M \converges_u n,s'}
+      \and
+      \inferrule*{\Gamma,s\ts M \converges_u 0,s'}{\Gamma,s\ts \pred M \converges_u 0,s'}
+      \and
+      \inferrule*{\Gamma,s\ts M \converges_u \skipp,s' \\ \Gamma,s'\ts N \converges_v c,s''}{\Gamma,s \ts M;N \converges_{u\cat v} c,s''}
+      \and
+      \inferrule*{\Gamma,s\ts M \converges_u \true,s' \\ \Gamma,s' \ts N \converges_v c,s''}{\Gamma,s \ts \If M \Then N \Else P \converges_{u\cat v} c,s''}
+      \and
+      \inferrule*{\Gamma,s\ts M \converges_u \false,s' \\ \Gamma,s' \ts P \converges_v c,s''}{\Gamma,s \ts \If M \Then N \Else P \converges_{u\cat v} c,s''}
+      \and
+      \inferrule*{\Gamma,s\ts M \converges_u 0,s' \\ \Gamma,s' \ts N \converges_v c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges_{u\cat v} c,s''}
+      \and
+      \inferrule*{\Gamma,s\ts M \converges_u n+1,s' \\ \Gamma,s' \ts P \converges_v c,s''}{\Gamma,s \ts \IfO M \Then N \Else P \converges_{u\cat v} c,s''}
+      \and
+      \inferrule*[right=$x\in\Gamma$]{\Gamma,s\ts E \converges_u n,s' \\ \Gamma,s' \ts V \converges_v x,s''}{\Gamma,s\ts V \gets E \converges_{u\cat v} \skipp,(s''\vert x \mapsto n)}
+      \and
+      \inferrule*[right={$s'(x)=n$}]{\Gamma,s\ts V \converges_u x,s'}{\Gamma,s\ts !V \converges_u n,s'}
+      \and
+      \inferrule*{\Gamma,x\from\Var,(s\vert x\mapsto 0)\ts M \converges_u c,(s'\vert x\mapsto n)}{\Gamma,s\ts \neww \lambda x.M \converges_u c,s'}
+      \and
+      \inferrule*{\Gamma,s\ts E \converges_u n,s' \\ \Gamma,s'\ts V \converges_v \mkvar W R,s'' \\ \Gamma,s'' \ts Wn \converges_w \skipp,s'''}
+      {\Gamma,s \ts V\gets E \converges_{u\cat v\cat w} \skipp,s'''}
+      \and
+      \inferrule*{\Gamma,s\ts V \converges_u \mkvar W R,s' \\ \Gamma,s'\ts R \converges_v n,s''}{\Gamma,s\ts !V \converges_{u\cat v} n,s''}
+      \\\and
+      \inferrule*[right=$x\in X$]{ }{\Gamma,s\ts \ask_X \converges_x x,s}
+    \end{mathpar}
+    \caption[Operational semantics for \IAX]{Operational semantics for \IAX.  
+    All the rules except the last one are deterministic and may be obtained from the corresponding rules of Idealized Algol by suitably annotating the $\converges$ relation with sequences from $X^*$.}
+    \label{FigIaxOpSem}
+  \end{figure}
+
+  We can define this semantics in an alternative, indirect way.  
+  Note that each rule from ordinary Idealized Algol takes the form
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges c,s^{(n)}}\,,
+    \]
+  Here, we have interpreted each IA rule as an infinite scheme of rules ranging over the different terms $M_i,M$ that the rule can apply to.
+  We first extend this rule to a rule for \IAX, by allowing the $M_i,M$ to range over terms of \IAX.
+  We then replace the rule with the new rule
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1 \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n \converges_{u_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges_{u_1 \cat \cdots \cat u_n} c,s^{(n)}}\,,
+    \]
+  to give us an operational rule for \IAX (if $n=0$, then we treat the empty string $\epsilon$ as the empty concatenation).
+  Lastly, we add the rule for the new constant $\ask_X$:
+  \[
+    \inferrule*[right=$x\in X$]{ }{\Gamma,s \ts \ask_X \converges_x x,s}\,.
+    \]
+  This rule is the only nondeterministic one in our language, as well as being the only one in which the sequence annotating the $\converges$ symbol at the bottom is not formed from concatenating together the sequences on the top.
+\end{definition}
+
+\begin{example}
+  If $X=\bC$, then, since $X$ has a single element, a sequence $n$ of elements of $X$ may be identified with its length $n$.
+  In this case, the language \IAX gives us a way to model time complexity, and the term $\ask_X$ may be considered as a constant $\sleep\from \com$ whose semantics is to wait for some fixed period of time before continuing.  
+  In this case, 
+  \[
+    \Gamma,s\ts M \converges_n c,s'
+    \]
+  is interpreted to say that `$M$ converges to $c$ in time $n$'.
+\end{example}
+\begin{example}
+  If $X\in\{\bB,\bN\}$, then the language \IAX gives us a way to model nondeterminism, where $\ask_X$ behaves as a \emph{nondeterministic oracle}; i.e., a device that nondeterministically returns an element of $X$.
+
+  If $X=\bB$ then we have a model of binary (i.e., finite) nondeterminism, whereas if $X=\bN$ then we have a model of countable nondeterminism.
+
+  We interpret the relation
+  \[
+    \Gamma,s\ts M \converges_u c,s'
+    \]
+  as saying that $M$ converges to $c$ in the case that the sequence of values returned by the nondeterministic oracle is given by the sequence $u$.
+\end{example}
+
+\subsection{Soundness}
+\label{SecSoundness}
+
+To prove our adequacy result for the operational semantics of \IAX, we first give some definitions.
+
+\begin{definition}
+  Fix some constant value $\top \in X$ (the precise value does not matter).
+  We inductively define terms in context $\tr_u\from \nat \to X$ of \emph{ordinary deterministic} Idealized Algol for each $u\in X^*$ as follows.
+  \begin{mathpar}
+    \tr_\epsilon = \lambda n.\top
+    \and
+    \tr_{xu} = \lambda n.\neww (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u (\pred !v))
+  \end{mathpar}
+\end{definition}
+
+\begin{proposition}
+  Let $u \in X^*$ and let $n<|u|$.  
+  Then it is possible to deduce that
+  \[
+    \inferrule{\Gamma,s \ts M \converges n,s'}{\Gamma,s \ts \tr_u M \converges u^{(n)},s'}
+    \]
+  in Idealized Algol.
+  \label{PropTr}
+\end{proposition}
+\begin{proof}
+  Induction on $|u|$ and on $n$.
+  Since $n<u$, $u$ must be non-empty, of the form $xu'$.
+
+  Suppose $n=0$.  
+  Then $u^{(n)}=x$, and we have a derivation of $\Gamma,s\ts \tr_{xu} M\converges x,s'$ from $\Gamma,s\ts M\converges n,s'$ as shown in Figure \ref{FigFirstTermOfSequence}.
+
+  Now suppose that $n=m+1$.  
+  Then $(xu)^{(m+1)}=u^{(m)}$.  
+  Then we have a derivation of $\Gamma,s\ts \tr_{xu} M \converges u^{(m)},s'$ from $\Gamma,s\ts M\converges n,s'$ in Figure \ref{FigGeneralTermOOfSequence}, using the inductive hypothesis to tell us that we may derive
+  \[
+    \inferrule*{\Gamma,v,(s'\vert v\mapsto m+1) \ts \pred !v \converges m,(s'\vert v \mapsto m+1)}
+    {\Gamma,v,(s'\vert v \mapsto m+1) \ts \tr_u(\pred !v) \mapsto u^{(m)},(s'\vert v\mapsto m+1)}\,.\qedhere
+    \]
+  \begin{SidewaysFigure}
+    \tiny
+    \begin{subfigure}{\textheight}
+      \centering
+      \[
+        \inferrule*
+        {
+          \inferrule*
+          {
+            \inferrule*
+            {
+              \inferrule*
+              {
+                \Gamma,v,(s\vert v \mapsto 0) \ts M \converges 0,(s'\vert v\mapsto 0)
+                \\
+                \inferrule*
+                {
+                }
+                {
+                  \Gamma,v,(s'\vert v \mapsto 0)\ts v \converges v,(s'\vert v\mapsto 0)
+                }
+              }
+              {
+                \Gamma,v,(s\vert v\mapsto 0) \ts v \gets M \converges \skipp,(s'\vert v\mapsto 0)
+              }
+              \\
+              \inferrule*
+              {
+                \inferrule*
+                {
+                  \inferrule*
+                  {
+                  }
+                  {
+                    \Gamma,v,(s'\vert v\mapsto 0) \ts v \converges v,(s'\vert v\mapsto 0)
+                  }
+                }
+                {
+                  \Gamma,v,(s'\vert v\mapsto 0) \ts !v \converges 0,(s'\vert v\mapsto 0)
+                }
+                \\
+                \inferrule*
+                {
+                }
+                {
+                  \Gamma,v,(s'\vert v\mapsto 0) \ts x \converges x,(s'\vert v\mapsto 0)
+                }
+              }
+              {
+                \Gamma,v,(s'\vert v\mapsto 0) \ts \IfO !v \Then x \Else \tr_u(\pred !v) \converges x,(s'\vert v\mapsto 0)
+              }
+            }
+            {
+              \Gamma,v,(s\vert v\mapsto 0) \ts v\gets M;\IfO !v \Then x \Else \tr_u(\pred !v) \converges x,(s'\vert v\mapsto 0)
+            }
+          }
+          {
+            \Gamma,s\ts \neww (\lambda v.v\gets M;\IfO !v \Then x \Else \tr_u(\pred !v)) \converges x,s'
+          }
+        }
+        {
+          \Gamma,s\ts \lambda n.\neww (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u(\pred !v)) M \converges x,s'
+        }
+        \]
+      \caption{IA derivation that if $M\converges 0$ then $\tr_u M$ converges to the first element of the sequence $u$.}
+      \label{FigFirstTermOfSequence}
+    \end{subfigure}
+    \par\vspace{24pt}
+    \begin{subfigure}{\textheight}
+    \centering
+      \[
+        \inferrule*
+        {
+          \inferrule*
+          {
+            \inferrule*
+            {
+              \inferrule*
+              {
+                \inferrule*[rightskip=30pt]
+                {
+                }
+                {
+                  \Gamma,v,(s'\vert v\mapsto 0) \ts v \converges v,(s'\vert v\mapsto 0)
+                }
+                \\\\
+                \inferrule*[leftskip=15pt]{}{\Gamma,v,(s\vert v\mapsto 0) \ts M \converges m+1, (s'\vert v\mapsto 0)}
+              }
+              {
+                \Gamma,v,(s\vert v\mapsto 0) \ts v \gets M \converges \skipp,(s'\vert v\mapsto m+1)
+              }
+              \\
+              \inferrule*
+              {
+                \inferrule*
+                {
+                  \inferrule*
+                  {
+                  }
+                  {
+                    \Gamma,v,(s'\vert v\mapsto m+1) \ts v \converges v,(s'\vert v\mapsto m+1)
+                  }
+                }
+                {
+                  \Gamma,v,(s'\vert v\mapsto m+1) \ts !v \converges m+1,(s'\vert v\mapsto m+1)
+                }
+                \\
+                \inferrule*
+                {
+                  \inferrule*
+                  {
+                    \inferrule*
+                    {
+                      \inferrule*
+                      {
+                      }
+                      {
+                        \Gamma,v,(s'\vert v\mapsto m+1) \ts v \converges v,(s'\vert v\mapsto m+1)
+                      }
+                    }
+                    {
+                      \Gamma,v,(s'\vert v\mapsto m+1) \ts !v \converges m+1,(s'\vert v\mapsto m+1)
+                    }
+                  }
+                  {
+                    \Gamma,v,(s'\vert v\mapsto m+1) \ts \pred !v \converges m,(s'\vert v\mapsto m+1)
+                  }
+                }
+                {
+                  \Gamma,v,(s'\vert v\mapsto m+1) \ts \tr_u(\pred !v) \converges u^{(m)}, (s'\vert v \mapsto m+1)
+                }
+              }
+              {
+                \Gamma,v,(s'\vert v\mapsto m+1) \ts \IfO !v \Then x \Else \tr_u(\pred !v) \converges u^{(m)}, (s'\vert v\mapsto m+1)
+              }
+            }
+            {
+              \Gamma,v,(s\vert v\mapsto 0) \ts v \gets M;\IfO !v \Then x \Else \tr_u(\pred !v) \converges u^{(m)}, (s'\vert v \mapsto m+1)
+            }
+          }
+          {
+            \Gamma,s \ts \neww (\lambda v.v\gets M;\IfO !v \Then x \Else \tr_u(\pred !v)) \converges u^{(m)},s'
+          }
+        }
+        {
+          \Gamma,s\ts \lambda n.\new (\lambda v.v\gets n;\IfO !v \Then x \Else \tr_u(\pred !v)) M \converges u^{(m)},s'
+        }
+        \]
+        \caption{IA derivation that if $M\converges m+1$ then $\tr_{u}M$ converges to the $m+1$-th element of the sequence $u$.}
+        \label{FigGeneralTermOOfSequence}
+    \end{subfigure}
+    \par\vspace{24pt}
+    \begin{subfigure}{\textheight}
+      \[
+        \inferrule*
+        {
+          \inferrule*
+          {
+            \inferrule*
+            {
+              \inferrule*
+              {
+                \inferrule*
+                {
+                }
+                {
+                  \Gamma,v,(s\vert v\mapsto k) \ts v \converges v,(s\vert v\mapsto k)
+                }
+              }
+              {
+                \Gamma,v,(s\vert v\mapsto k) \ts !v \converges k,(s\vert v\mapsto k)
+              }
+            }
+            {
+              \Gamma,v,(s\vert v\mapsto k) \ts \suc !v \converges k+1,(s\vert v\mapsto k)
+            }
+            \\
+            \inferrule*
+            {
+            }
+            {
+              \Gamma,v,(s\vert v\mapsto k) \ts v\converges v,(s\vert v\mapsto k)
+            }
+          }
+          {
+            \Gamma,v,(s\vert v\mapsto k) \ts v\gets \suc !v \converges \skipp,(s\vert v\mapsto k+1)
+          }
+          \\
+            \inferrule*[right={Prop. \ref{PropTr}}]
+            {
+              \inferrule*
+              {
+                \inferrule*
+                {
+                }
+                {
+                  \Gamma,v,(s\vert v\mapsto k+1) \ts v\converges v,(s\vert v\mapsto k+1)
+                }
+              }
+              {
+                \Gamma,v,(s\vert v\mapsto k+1) \ts !v \converges k+1,(s\vert v\mapsto k+1)
+              }
+            }
+            {
+              \Gamma,v,(s\vert v\mapsto k+1) \ts \tr_w !v \converges x,(s\vert v\mapsto k+1)
+            }
+          }
+        {
+          \Gamma,v,(s\vert v\mapsto k) \ts v\gets \suc !v;\tr_w !v \converges x,(s\vert v\mapsto k+1)
+        }
+        \]
+      \caption{IA derivation that $(x\mapsto k),v \gets \suc !v;\tr_w !v$ converges to the $k+1$-th term of $w$.}
+      \label{FigTheOneForTheLemma}
+    \end{subfigure}
+    \normalsize
+  \end{SidewaysFigure}
+\end{proof}
+
+We need a small lemma to help us deal with substitution.
+
+\begin{lemma}
+  Let
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges c,s^{(n)}}
+    \]
+  be an inference, where the $M_i$,$M$ are terms of \IAX and the whole inference satisfies one of the patterns of the Idealized Algol rules.  
+  Let $Q$ be a fixed term of type $X$.  
+  Then
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1[Q/\ask_X]\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n[Q/\ask_X]\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M[Q/\ask_X] \converges c,s^{(n)}}\,,
+    \]
+  is a valid inference of Idealized Algol.
+  \label{LemFirstSubstitution}
+\end{lemma}
+\begin{proof}
+  The real reason this is true is that the term $\ask_X$ is not mentioned anywhere in the IA rules, so substitution of the term $N$ for $\ask$ could not possibly break the pattern.  
+  Formally, we can show this by inspection on each of the different rules.  
+  For instance, if the original rule is the one for sequencing:
+  \[
+    \inferrule{\Gamma,s\ts M \converges \skipp,s' \\ \Gamma,s'\ts N \converges c,s''}
+    {\Gamma,s \ts M;N \converges c,s''}\,,
+    \]
+  then we have $(M;N)[Q/\ask_X] = M[P/\ask_X];N[P/\ask_X]$ and the inference
+  \[
+    \inferrule{\Gamma,s\ts M[Q/\ask_X] \converges \skipp,s' \\ \Gamma,s'\ts N[Q/\ask_X]\converges c,s''}
+    {\Gamma,s \ts M[Q/\ask_X];N[P/\ask_X] \converges c,s''}
+    \]
+  is still a valid instance of the sequencing rule.
+\end{proof}
+
+We can now state and prove our soundness lemma.
+
+\begin{lemma}
+  Suppose that
+  \[
+    \Gamma,s\ts M\converges_u c,s'
+    \]
+  in \IAX.
+  Fix $k\in\bN$ and let $w\in X^*$ be a sequence such that $u$ is a subsequence of $w$ starting at position $k+1$ (i.e., $u^{(j)}=w^{(k+j+1)}$ for each $j=0,\cdots,|u|-1$).
+  Then
+  \[
+    \Gamma,v\from\Var,(s\vert v\mapsto k) \ts M[v\gets \suc!v;\tr_w !v/\ask_v] \converges c,(s'\vert v\mapsto k + |u|)
+    \]
+  in Idealized Algol.
+  \label{LemSoundness}
+\end{lemma}
+\begin{proof}
+  Structural induction on the derivation.  
+
+  Suppose that the last rule we use comes from one of the Idealized Algol rules.
+  That is, there is an inference
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges c,s^{(n)}}\,,
+    \]
+  derived from one of the Idealized Algol schemas, and we have replaced it with the rule
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1 \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n \converges_{u_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges_{u_1 \cat \cdots \cat u_n} c,s^{(n)}}\,,
+    \]
+  where each of the relations $\Gamma,s^{(i-1)} \ts M_i \converges_{u_i} c_i,s^{(i)}$ is derivable in \IAX.
+
+  Fix $k\in \bN$ and a sequence $w$ such that $u_1\cat \cdots \cat u_n$ is a subsequence of $w$ starting at position $k+1$.  
+  In particular, for each $i=1,\cdots,n$, $u_i$ is a subsequence of $w$ starting at position $k+\sum_{j=1}^{i-1}|u_j|+1$.
+
+  Then by the inductive hypothesis, we know that for each $i=1,\cdots,n$, the relation
+  \small
+  \[
+    \Gamma,v,(s^{(i-1)}\vert v \mapsto k+\sum_{j=1}^{i-1}|u_j|) \ts M_i[v\gets \suc !v;\tr_w !v/\ask_v] \converges c,(s^{(i)}\vert v\mapsto k + \sum_{j=1}^i |u_j|)
+    \]
+  \normalsize
+  is derivable in Idealized Algol.  
+  Then we may apply the Idealized Algol inference and Lemma \ref{LemFirstSubstitution} to deduce that
+  \[
+    \Gamma,v,(s^{(0)}\vert v\mapsto k) \ts M[v\gets \suc !v;\tr_w !v/\ask_v] \converges c, (s^{(n)} \vert v\mapsto k + \sum_{i=1}^{n} |u_n|)\,,
+    \]
+  as desired.
+
+  Now suppose instead that the last rule was the new one for $\ask_X$; i.e., 
+  \[
+    \inferrule{ }{\Gamma,s\ts \ask_X \converges_x x,s}\,,
+    \]
+  where $x\in X$.  
+  Fix some $k\in \bN$ and some $w$ such that the single term $x$ is a subsequence of $w$ starting at position $k+1$; i.e., that $x=w^{(k+1)}$.
+  Then we would like to derive that
+  \[
+    \Gamma,v,(s\vert v\mapsto k) \ts v \gets \suc !v;\tr_w !v \converges x,(s\vert v\mapsto k+1)\,,
+    \]
+  which we can do using the derivation in Figure \ref{FigTheOneForTheLemma}, where we have used Proposition \ref{PropTr} to deal with the $\tr_w$ term.
+
+  This completes the induction.
+\end{proof}
+
+In light of Lemma \ref{LemSoundness}, we can state our soundness result.
+
+First recall the statement of Computational Adequacy for $\G$:
+
+\begin{proposition}
+  Let $M\from \com$ be a closed term of Idealized Algol and suppose that
+  \[
+    ,()\ts M\converges \skipp,()\,.
+    \]
+  Then $\deno{M} \ne \bot$.
+\end{proposition}
+
+\begin{definition}
+  Let $u\in X^*$.
+  Let $u^\top$ be the sequence formed by appending some fixed value $\top\in X$ to the start of $u$, so that $u$ is the subsequence of $u^\top$ running from position $1$ up to position $|u|$.
+  Define a morphism
+  \[
+    \eta_u = \deno{f\from X \to \com \ts \lambda v.f(v\gets \suc !v;\tr_{u^\top} !v);!v} \from (X \to \bC) \to (\Var \to \bN)
+    \]
+  in $\G$.
+\end{definition}
+
+\begin{definition}
+  Let $n$ be a natural number.  
+  We define terms $\test_n\from \nat \to \com$ inductively by
+  \begin{mathpar}
+    \test_0 = \lambda m.\IfO m \Then \skipp \Else \Omega
+    \and
+    \test_{n+1} = \lambda m.\IfO m \Then \Omega \Else \test_n (\pred m)\,.
+  \end{mathpar}
+  So $\test_n$ converges if its input evaluates to $n$ and diverges otherwise.
+
+  We then define $t_n\from \bN \to \bC$ to be the denotation of $\test_n$ in $\G$.
+\end{definition}
+
+\begin{proposition}[Soundness]
+  Let $M\from\com$ be a closed term of \IAX, let $u\in X^*$ be a sequence and suppose that
+  \[
+    ,()\ts M\converges_u\skipp,()\,.
+    \]
+  Let the denotation $\deno{M} \from 1 \to \com$ in $\G_X$ be considered as a morphism $1 \to (X \to \bC)$ in $\G$.
+  Then the composite
+  \[
+    1 \xrightarrow{\deno{M}}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.
+  \label{PropKleisliSoundness}
+\end{proposition}
+\begin{proof}
+  Since the $\beta$ rule is valid in $\G_X$, this composite is equal to the denotation of the term
+  \[
+    \test_{|u|}(\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v))
+    \]
+  in IA.
+  By the adequacy result for Idealized Algol, it suffices to show that this term converges to $\skipp$; i.e., that the term
+  \[
+    \new (\lambda v.M[v\gets\suc !v;\tr_{u^\top} !v/\ask_X];!v)
+    \]
+  converges to $|u|$ in IA.
+  
+  We can prove this using the following derivation tree.
+  \tiny
+  \[
+    \inferrule*
+    {
+      \inferrule*[sep=1.7em]
+      {
+        \inferrule*[left={Lem. \ref{LemSoundness}}]
+        {
+        }
+        {
+          v,(v\mapsto 0)\ts M[v\gets\suc!v;\tr_{u^\top} !v/\ask_x]\converges \skipp,(v\mapsto |u|)
+        }
+        \\
+        \inferrule*
+        {
+          \inferrule*
+          {
+          }
+          {
+            v,(v\mapsto |u|) \ts v \converges v,(v\mapsto |u|)
+          }
+        }
+        {
+          v,(v\mapsto |u|)\ts !v \converges |u|,(v\mapsto |u|)
+        }
+      }
+      {
+        v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];v \converges |u|,(v\mapsto |u|)
+      }
+    }
+    {
+      ,()\ts\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v) \converges |u|,()
+    }\qedhere
+    \]
+  \normalsize
+\end{proof}
+
+The statement of Proposition \ref{PropKleisliSoundness} looks a bit strange.  
+This is because the level of generality we are operating at (i.e., $\G$ being a fairly general model for Idealized Algol) does not give us much room to define things other than in terms of the denotations of Idealized Algol terms.
+
+If $\G$ is the category of games and visible strategies, then the statements of Proposition \ref{PropKleisliSoundness} (and our later Adequacy and Full Abstraction results) become clearer.  
+Observe that if $\sigma \from 1 \to (X \to \bC)$ is a strategy in $\G$ (considered as a strategy for $\oc X \implies \bC$, then the maximal plays in the interaction
+\[
+  \sigma || (\eta_u;\deno{\neww})
+  \]
+take the form
+\[
+  \begin{array}{ccc}
+    X         & \bC & \bN \\
+              &     &  q  \\
+              &  q  &     \\
+    q         &     &     \\
+    u^{(0)}   &     &     \\
+    \vdots    &     &     \\
+    q         &     &     \\
+    u^{(k-1)} &     &     \\
+              &  a  &     \\
+              &     &  k  \\
+  \end{array}\,,
+  \]
+for $k\le |u|$ or
+\[
+  \begin{array}{ccc}
+    X         & \bC & \bN \\
+              &     &  q  \\
+              &  q  &     \\
+    q         &     &     \\
+    u^{(0)}   &     &     \\
+    \vdots    &     &     \\
+    q         &     &     \\
+    u^{(|u|-1)}&     &     \\
+    q         &     &     \\
+    \top      &     &     \\
+    \vdots    &     &     \\
+    q         &     &     \\
+    \top      &     &     \\
+              &  a  &     \\
+              &     &  k  \\
+  \end{array}\,,
+  \]
+for $k>|u|$, where the component in $X,\bC$ is a valid play of $\sigma$.
+Moreover, the strategy $t_n$ is the one with maximal plays of the form
+\[
+  \begin{array}{cc}
+    \bN & \bC \\
+        &  q  \\
+    q   &     \\
+    n   &     \\
+        &  a
+  \end{array}
+  \]
+or
+\[
+  \begin{array}{cc}
+    \bN & \bC \\
+        &  q  \\
+    q   &     \\
+    m   &
+  \end{array}
+  \]
+for $m\ne n$.
+
+This means that the composite
+\[
+  1 \xrightarrow{\sigma}
+  (X \to \bC) \xrightarrow{\eta_u}
+  (\Var \to \bN) \xrightarrow{\deno{\neww}}
+  \bN \xrightarrow{t_n}
+  \bC
+  \]
+is not equal to $\bot$ if and only if $\sigma$ contains the sequence
+\[
+  \begin{array}{cc}
+    X         & \bC \\
+              &     \\
+              &  q  \\
+    q         &     \\
+    u^{(0)}   &     \\
+    \vdots    &     \\
+    q         &     \\
+    u^{(|u|-1)}&     \\
+              &  a  \\
+              &     \\
+  \end{array}\,.
+  \]
+Since complete plays in the game $\oc X \implies \bC$ are always of the form $q$, followed by some sequence of pairs of the form $qx_i$ for $x\in X$, followed by $a$, this is a very natural condition to consider when dealing with a strategy $\sigma\from \oc X \implies \bC$.
+
+\subsection{Computational Adequacy}
+
+Now we want to prove Computational Adequacy; i.e., the converse to Proposition \ref{PropKleisliSoundness}.
+To do this, we need to prove a converse to Lemma \ref{LemSoundness}.
+
+First of all, we need to prove a reverse result to Lemma \ref{LemFirstSubstitution} that deals with substitution in the opposite direction; i.e., instead of telling us what happens when we substitute a term for $\ask_X$, we will look at what happens when we substitute a term for $v\gets \suc !v;\tr_u !v$.  
+
+In most cases, this will not disrupt the structure of the IA rule.  
+For instance, we always have
+\begin{mathpar}
+  (!V)[Q/v\gets \suc !v;\tr_u !v] = !(V[Q/v\gets \suc !v;\tr_u !v])\,,
+\end{mathpar}
+and so the derivation
+\[
+  \inferrule*[right={$s'(v)=n$}]{\Gamma,s\ts V[Q/v\gets \suc !v;\tr_u !v] \converges v,s'}
+  {\Gamma,s \ts !V[Q/v\gets \suc !v;\tr_u !v] \converges n,s'}
+  \]
+still follows the pattern of the Idealized Algol rule for variable dereference.
+
+There is only one case where this breaks down.  
+Consider the following instance of the sequencing rule.
+\[
+  \inferrule
+  {\Gamma,v,s\ts v\gets \suc !v\converges \skipp,s' \\ \Gamma,v,s'\ts \tr_u !v \converges x,s''}
+  {\Gamma,v,s\ts v\gets \suc !v;\tr_u !v \converges x,s''}
+  \]
+In this case, substituting some term $Q$ for $v\gets \suc !v;\tr_u !v$ in the top two terms will have no effect, whereas it will replace the whole of the bottom with $Q$, invalidating the whole inference.
+
+We have proved the following.
+
+\begin{lemma}
+  Let 
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges c,s^{(n)}}
+    \]
+  be an inference of Idealized Algol.  
+  Let $u\in X^*$ and let $Q\from X$ be a term of \IAX.
+  Fix an unused variable name $v$ and suppose that $M \ne v\gets \suc !v;\tr_u !v$.
+  Then
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1[Q/v\gets \suc!v;\tr_u !v]\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n[Q/v\gets\suc !v;\tr_u !v]\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M[Q/v\gets\suc !v;\tr_u !v] \converges c,s^{(n)}}
+    \]
+  conforms to the same Idealized Algol pattern.
+  In particular, if $w_1,\cdots,w_n\in X^*$, then
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1[Q/v\gets \suc!v;\tr_u !v]\converges_{w_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n[Q/v\gets\suc !v;\tr_u !v]\converges_{w_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M[Q/v\gets\suc !v;\tr_u !v] \converges_{w_1\cat\cdots\cat w_n} c,s^{(n)}}
+    \]
+  is a valid inference of \IAX.
+  \label{LemSecondSubstitution}
+\end{lemma}
+
+We need one more lemma to help us deal with substitution.
+
+\begin{lemma}
+  Suppose that $\Gamma,y\ts M\from T$ is a typing judgement of Idealized Algol, where $\Gamma$ is a $\Var$-context and $y$ is a free variable of type $X$.  
+  Fix $u\in X^*$.  
+  Suppose that $M\ne y$ and that we have some inference
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts N_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts N_n\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M[v\gets\suc !v;\tr_u !v/y] \converges c,s^{(n)}}\,.
+    \]
+  of Idealized Algol.
+  Then each $N_i$ may be written as $M_i[v\gets \suc !v;\tr_u !v/y]$ for some $\Gamma,y \ts M_i$.
+  \label{LemThirdSubstitution}
+\end{lemma}
+\begin{proof}
+  This can be checked case-by-case.  
+  The most interesting is the case for sequencing: if $M[v\gets \suc !v;\tr_u !v/y] \ne v\gets \suc !v;\tr_u !v$, then we must have
+  \[
+    M[v\gets \suc !v;\tr_u !v/y] = N[v\gets \suc !v;\tr_u !v/y];P[v\gets \suc !v;\tr_u !v/y]\,,
+    \]
+  which is deduced from $N[v\gets \suc !v;\tr_u !v/y]$ and $P[v\gets \suc !v;\tr_u !v/y]$.
+\end{proof}
+
+Now we can state and prove our adequacy lemma.
+
+\begin{lemma}
+  Suppose that $w\in X^*$ is a sequence of length greater than or equal to $k,l$ and that
+  \[
+    \Gamma,v,(s|v\mapsto k) \ts M[v\gets\suc !v;\tr_w !v/y] \converges c,(s'|v\mapsto l)
+    \]
+  is derivable in Idealized Algol, where $v$ is not free in $M$ and $y$ is a variable name of type $X$.
+  Then $l\ge k$ and
+  \[
+    \Gamma,s \ts M[\ask_X/y] \converges_u c,s'
+    \]
+  in \IAX, where $u$ is the subsequence of $w$ consisting of all terms from $k+1$ up to $l$.
+  \label{LemAdequacy}
+\end{lemma}
+\begin{proof}
+  Induction on the derivation.
+
+  Suppose that $M\ne y$.  
+  Then, by Lemma \ref{LemThirdSubstitution}, the last step in the derivation of $M[v\gets \suc !v;\tr_w !v/y]$ must be of the form
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1[v\gets \suc!v;\tr_w !v/y]\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n[v\gets\suc !v;\tr_w !v/y]\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M[v\gets\suc !v;\tr_w !v/y] \converges c,s^{(n)}}\,,
+    \]
+  where each $M_i[v\gets \suc !v;\tr_w !v/y]$ is derivable in Idealized Algol.
+
+  By the inductive hypothesis, $s^{(i-1)}(v) \le s^{(i)}(v)$ for each $i$ and so $s^{(0)}(v) \le s^{(n)}(v)$, as desired (in the case that there are no premises -- i.e., the case of the rule for canonical forms -- we have $s^{(0)}(v)=s^{(0)}(v)$).
+  Moreover, by the inductive hypothesis, it is derivable that
+  \[
+    \Gamma,s^{(i-1)} \ts M_i[\ask_X/y] \converges_{u_i} c_i,s^{(i)}\,,
+    \]
+  where $u_i$ is the subsequence of $w$ going from term $s^{(i-1)}(v)+1$ up to $s^{(i)}(v)$.
+
+  Now for any term $\Gamma,y\ts P$, we have
+  \[
+    P[\ask_X/y] = P[v\gets \suc !v;\tr_u !v/y][\ask_X/v\gets \suc !v;\tr_u !v]\,,
+    \]
+  and so by Lemma \ref{LemSecondSubstitution} we may derive
+  \[
+    \Gamma,s^{(0)} \ts M[\ask_X/y]\converges_{u_1\cat \cdots \cat u_n} c,s^{(n)}\,.
+    \]
+  But $u_1\cat \cdots \cat u_n$ is precisely the subsequence of $w$ going from term $s^{(0)}(v)+1$ up to $s^{(n)}(v)$!
+
+  This completes the first case.  
+  The second case is where $M=y$.  
+  Suppose, then, that
+  \[
+    \Gamma,v,(s\vert v\mapsto k) \ts v\gets \suc !v;\tr_w !v \converges x,(s'\vert v\mapsto l)
+    \]
+  is derivable in Idealized Algol.
+
+  Since IA is a deterministic language (so if $\Gamma,s\ts M\converges c,s'$ and $\Gamma,s\ts M \converges c',s''$ then $c=c'$ and $s'=s''$), then the derivation of this term must agree with the valid IA derivation given in Figure \ref{FigTheOneForTheLemma}.  
+  It follows that $l=k+1$ (so, in particular, $l\ge k$) and that $x$ is the $(k+1)$-th term of $w$, so the single-term sequence $x$ is the subsequence of $w$ going from $k+1$ to $l$.
+  
+  Then we have the derivation
+  \[
+    \inferrule{ }{\Gamma,s \ts \ask_X \converges_x x,s'}
+    \]
+  in \IAX.
+  This completes the induction.
+\end{proof}
+
+We can now prove computational adequacy for our model.
+
+\begin{proposition}[Computational adequacy]
+  Let $M\from \com$ be a closed term of \IAX.  
+  Consider the denotation $\deno M\from 1 \to \bC$ in $\G_X$ as a morphism $1 \to (X \to \bC)$ in $\G$.  
+  Let $u\in X^*$ be a sequence and suppose that the composite
+  \[
+    1 \xrightarrow{\deno{M}}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.  
+  Then
+  \[
+    ,()\ts M\converges_u \skipp,()\,.
+    \]
+  \label{PropKleisliAdequacy}
+\end{proposition}
+\begin{proof}
+  As before, the composite given in the statement is the denotation of the term
+  \[
+    \test_{|u|} (\new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v))\\,.
+    \]
+  By the adequacy result for Idealized Algol, the fact that this denotation is not equal to $\bot$ means that the term converges to $\skipp$, from which we can deduce that
+  \[
+    \new (\lambda v.M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X];!v
+    \]
+  converges to $|u|$.
+
+  It is easy to see that this is equivalent to derivability of the following relation in Idealized Algol.
+  \[
+    v,(v\mapsto 0) \ts M[v\gets \suc !v;\tr_{u^\top} !v/\ask_X] \converges \skipp,(v\mapsto |u|)
+    \]
+  Now $u$ is the subsequence of $u^\top$ going from position $1$ to position $|u|$.  
+  So Lemma \ref{LemAdequacy} tells us that we must have
+  \[
+    ,()\ts M \converges_u \skipp,()
+    \]
+  in \IAX.
+\end{proof}
+
+\subsection{Full abstraction}
+
+To prove full abstraction of our semantics for \IAX, we introduce the usual intrinsic equivalence on terms.
+
+\begin{definition}
+  Let $\sigma,\tau\from A \to B$ be morphisms in $\G_X$.  
+  By currying, we may consider $A$ and $B$ as morphisms $1 \to (A \to B)$ in $\G_X$.
+  We say that $\sigma\sim\tau$ if for all morphisms $\alpha\from (A \to B) \to \bC$ and for all sequences $u\in X^*$, if we regard the $\alpha;\sigma,\alpha;\tau\from 1 \to \bC$ as morphisms $X \to \bC$ in $\G$, then the composites
+  \begin{mathpar}
+    1 \xrightarrow{\alpha;\sigma}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \and
+    1 \xrightarrow{\alpha;\tau}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+  \end{mathpar}
+  are equal.
+\end{definition}
+
+\begin{theorem}[Full abstraction]
+  Let $M,N\from T$ be closed terms of \IAX.  
+  Then $M,N$ are observationally equivalent -- i.e., for all contexts $C[-]\from\com$ of \IAX with a hole of type $T$ and for all sequences $u\in X^*$, 
+  \[
+    ,()\ts C[M] \converges_u \skipp,() \Longleftrightarrow ,()\ts C[N] \converges_u \skipp,()\,\text{--}
+    \]
+  if and only if $\deno{M}\sim\deno{N}$.
+  \label{TheKleisliFullAbstraction}
+\end{theorem}
+\begin{proof}
+  First, suppose that $\deno{M}\sim\deno{N}$.  
+  Let $C[-]\from\com$ be a context with a hole of type $T$.  
+  Then the denotation of $t\ts C[t]$ is a morphism $\alpha\from \deno{T} \to \bC$.
+  Moreover, the denotation of $C[M]$ is the composite $\alpha;\deno{M}$ and that of $C[N]$ is the composite $\alpha;\deno{N}$, by functional completeness.
+
+  Then the composites
+  \begin{mathpar}
+    1 \xrightarrow{\alpha;\sigma}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \and
+    1 \xrightarrow{\alpha;\tau}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+  \end{mathpar}
+  are equal, so $C[M]\converges_u\skipp$ if and only if $C[N]\converges_u\skipp$ by Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy}.
+
+  Conversely, suppose that $M\not\sim N$.  
+  So there is some $\alpha\from \deno T \to \bC$ in $\G_X$ and some sequence $u$ such that (without loss of generality),
+  \begin{mathpar}
+    (\alpha;\deno M);\eta_u;\deno{\neww};t_{|u|} \ne \bot
+    \and
+    (\alpha;\deno N);\eta_u;\deno{\neww};t_{|u|} = \bot\,.
+  \end{mathpar}
+  Here, we have enclosed $\alpha;\deno M$ and $\alpha;\deno N$ in brackets to indicate that the composition is taken in the Kleisli category $\G_X$, and then the whole thing is considered as a morphism $1 \to (X \to \bC)$ in $\G$.
+
+  More specifically, these composites are given by the composites
+  \begin{mathpar}
+    1 \xrightarrow{\deno M}
+    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
+    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
+    (\bC \to \bC)
+    \and
+    1 \xrightarrow{\deno N}
+    (\bC \to \deno T) \xrightarrow{\bC \to \alpha}
+    (\bC \to (\bC \to \bC)) \xrightarrow{\mu}
+    (\bC \to \bC)
+  \end{mathpar} 
+  in $\G$, where $\mu$ indicates precomposition with the diagonal.
+
+  Now $\alpha$ is the least upper bound of its compact approximans, so it follows that there is some compact $\alpha'\subseteq \alpha$ such that
+  \begin{mathpar}
+    \deno M;(\bC \to \alpha');\mu;\eta_u;\deno{\neww};t_{|u|} \ne \bot
+    \and
+    \deno N;(\bC \to \alpha');\mu;\eta_u;\deno{\neww};t_{|u|} = \bot\,.
+  \end{mathpar}
+  Then, by compact definability in $\G$, $\alpha'$ is the denotation of some IA term $x\from T \ts C[x]\from X \to \com$, which is therefore the denotation of the term $x\from T \ts C[x]\,\ask_X \from \com$ in $\G_X$.
+  So we get
+  \begin{mathpar}
+    \deno{C[M]};\eta_u;\deno{\neww};t_{|u|} \ne \bot
+    \and
+    \deno{C[N]};\eta_u;\deno{\neww};t_{|u|} = \bot\,,
+  \end{mathpar}
+  and so $C[M]\converges_u\skipp$ by Proposition \ref{PropKleisliAdequacy}, while $C[N] \not\converges_u \skipp$ by Proposition \ref{PropKleisliSoundness}.
+  Therefore, $M$ and $N$ are observationally inequivalent in \IAX.
+\end{proof}
+
+\subsection{Comparison with Ghica's slot games}
+
+Let us suppose now that $\G$ is the category of games and visible strategies, and that $X=\bC$.  
+As we remarked above, this means that \IAX can be interpreted as a language for modelling time complexity.
+
+We compare our approach to a different one, due to Dan Ghica \cite{SlotGames}.  
+Given a game $A$, Ghica defines a \emph{play with costs} in $A$ to be a justified sequence $s\in (M_A + \{\slot\})^*$ such that $s\vert_{M_A}\in P_A$.
+Here, $\slot$ is a special symbol called a \emph{slot} or \emph{token-action}, which can be interleaved throughout the play $s\vert_{M_A}$ from $A$.  
+We shall additionally impose the requirement that an occurrence of the special symbol $\slot$ must take place either after an $O$-move in $A$ or after another instance of $\slot$.
+The token actions do not carry justification pointers.
+
+Following Ghica, we define a \emph{strategy with costs} to be a prefix-closed set $\sigma$ of plays with costs such that the set $\sigma\vert_{M_A} = \{s\vert_{M_A}\suchthat s\in \sigma\}$ is a valid visible strategy for $A$.
+
+The identity strategy with costs is the usual identity strategy, without any token actions.  
+Given an interleaving $\s\in(M_A+M_B+M_C+\{\slot\})^*$ of two justified plays with costs for $A \implies B$ and $B\implies C$, write $\s\vert_{A,B}$ for the subsequence consisting of all those moves in $A$ and $B$, together with all token actions such that the previous move was an $O$-move in $A\implies B$.  
+Define $\s\vert_{B,C}$ similarly.  
+Then if $\sigma\from A \implies B$ and $\tau\from B \implies C$ are strategies with costs, we define $\sigma\|\tau$ to be the set of all such sequences $\s$ such that $\s\vert_{A,B}\in\sigma$ and $\s\vert_{B,C}\in\tau$.  
+Lastly, we define $\sigma;\tau$ to be the set of all sequences obtained by taking a sequence $\s\in\sigma\|\tau$ and removing all the moves in $B$ (but retaining all the token actions, including those that arise between moves in $B$).  
+The usual arguments apply to show that this is indeed a category.
+
+This seems like a purely combinatorial construction, but it can actually be subsumed into our category-theoretic apparatus.
+
+\begin{proposition}
+  Let $A$ be a game.  
+  Then there is a bijection
+  \[
+    c \from \{\text{normal strategies for $\oc\bC \implies A$}\}\leftrightarrow\{\text{strategies with costs for $A$}\}
+    \]
+  Moreover, this bijection respects composition: let $\sigma \from\oc\bC \implies (A \to B)$ and $\tau \from \oc\bC \implies (B \to C)$ be strategies.  
+  Write $\sigma;\tau$ for the Kleisli composition of $\sigma$ and $\tau$ in $\G_{\bC}$; i.e., the composite
+  \[
+    \oc\bC \xrightarrow{\mu}
+    \oc\bC \tensor \oc\bC \xrightarrow{\sigma\tensor\tau}
+    (A \implies B) \tensor (B \implies C) \xrightarrow{;}
+    (A \implies C)\,.
+    \]
+  Then $c(\sigma;\tau)=c(\sigma);c(\tau)$.  
+  Moreover, $c(\id_A)$ is the identity in the category of games and strategies with costs.
+\end{proposition}
+\begin{proof}
+  The map $c$ is the unique functor given by the functional completeness theorem that sends the canonical strategy $\id \from \oc\bC \to \bC$ to the strategy with costs for $\bC$ with maximal play
+  \[
+    q\slot a\,.
+    \]
+  More synthetically, we get from a strategy for $\sigma\from\oc \bC \implies A$ to a strategy with costs for $A$ by replacing each occurrence of the pair $qa$ occurring in the $\bC$ component with the token action $\slot$ in each play of $\sigma$.
+
+  This functor is the identity on objects, and it is fully faithful, since it has an obvious inverse, given by taking a strategy with costs and replacing each occurrence of the token action with a pair of moves $qa$ in $\oc\bC$.
+  Since each token action must always occur after an opponent move or after another token action, and since player $O$ has no reply to the move $q$ other than the move $a$, this always gives us a legal strategy.
+\end{proof}
+
+Therefore, we see that the category of games and strategies with costs is isomorphic to the Kleisli category $\G_\bC$, which we have already shown to be fully abstract for a language with time complexity.
+
+\subsection{Alternative reduction rules - may testing}
+
+We remarked above that if $X\in\{\bB,\bN\}$, then \IAX is a model of nondeterminism, finite in the case of $\bB$ and countable in the case of $\bN$.  
+However, our operational semantics is not the usual one for these languages.
+
+For example, the terms
+\begin{mathpar}
+  \If \ask_\bB \Then \true \Else \false\from \bool
+  \and
+  \If \ask_\bB \Then \false \Else \true\from \bool
+\end{mathpar}
+are not observationally equivalent in our operational semantics; indeed, we have
+\begin{mathpar}
+  \If \ask_\bB \Then \true \Else \false \converges_{\true} \true
+  \and
+  \If \ask_\bB \Then \false \Else \true \converges_{\true} \false\,.
+\end{mathpar}
+
+However, these terms (which both nondeterministically choose either the true or the false value), \emph{should} be observationally equivalent in any sensible nondeterministic semantics.  
+The issue is the labelling on the reduction relations, which is saving too much information about the reduction of the term.
+Indeed, this is sort of the point of nondeterminism: we should be able to make nondeterministic choices without recording which value we used for that choice.
+
+\begin{definition}[\cite{mcCHFiniteND}]
+  If $X\in\{\bB,\bN\}$, we define an operational relation $\converges$ (`may converge') on the language \IAX as follows.  
+  The rules for $\converges$ are identical to the operational rules for Idealized Algol, with the addition of the following rule for the primitive $\ask_X$.
+  \[
+    \inferrule*[right=$x\in X$]{ }{\Gamma,s\ts \ask_X \converges x,s}
+    \]
+\end{definition}
+It is clear that these rules are exactly the same as our original operational semantics for \IAX, but with the sequences $u$ removed.  
+Moreover, if we have a valid derivation of $\Gamma,s\ts M\converges u,s'$, then it is clear (by induction) that we may annotate all the occurrences of $\converges$ with suitable sequences in order to obtain a derivation of $\Gamma,s\ts M\converges_u c,s'$ for some $u\in X^*$.
+So we get the following alternative definition of may convergence.
+\begin{definition}
+  We say that $\Gamma,s\ts M\converges c,s'$ if there is some $u\in X^*$ such that $\Gamma,s\ts M\converges_u c,s'$.
+\end{definition}
+
+We can reflect this operational relation in the semantics by modifying the definition of intrinsic equivalence.  
+
+Firstly, an obvious consequence of Propositions \ref{PropKleisliSoundness} and \ref{PropKleisliAdequacy} is that
+
+\begin{corollary}
+  Let $M\from\com$ be a closed term of \IAX.  
+  Consider the denotation $\deno M\from 1 \to \bC$ in $\G_X$ as a morphism $1 \to (X \to \bC)$ in $\G$.  
+  Then there exists some sequence $u\in X^*$ such that the composite
+  \[
+    1 \xrightarrow{\deno M}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$, if and only if
+  \[
+    ,()\ts M \converges \skipp,()\,.
+    \]
+  \label{CorMayAdequacy}
+\end{corollary}
+
+In light of this result, we can define a new intrinsic equivalence on morphisms in $\G_X$:
+
+\begin{definition}
+  Let $\sigma,\tau\from A \to B$ be morphisms in $\G_X$, considered as morphisms $1 \to (A \to B)$ in $\G_X$.  
+  We say that $\sigma \sim_{\may} \tau$ if for all $u\in X^*$ there exists $v\in X^*$ such that the composites
+  \begin{mathpar}
+    1 \xrightarrow{\alpha;\sigma}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \and
+    1 \xrightarrow{\alpha;\tau}
+    (X \to \bC) \xrightarrow{\eta_v}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|v|}}
+    \bC
+  \end{mathpar}
+  are equal, and vice versa.
+  \label{DefMayIntrinsicEquivalence}
+\end{definition}
+
+Then exactly the same argument as before gives us a full abstraction result for may-equivalence.
+
+\begin{theorem}
+  Let $M,N\from T$ be closed terms of \IAX. Then $M,N$ are may-observationally equivalent -- i.e., for all contexts $C[-]\from \com$ of \IAX with a hole of type $T$, \[
+    ,()\ts C[M] \converges \skipp,() \Leftrightarrow ,()\ts C[N] \converges \skipp,()\,\text{--}
+    \]
+  if and only if $\deno M \sim_{\may} \deno N$.
+\end{theorem}
+\begin{proof}
+  Suppose that $\deno M\sim_{\may}\deno N$.  
+  Let $C[-]$ be a context of \IAX, interpreted as a morphism $\alpha \from \deno T \to \bC$.
+
+  Suppose that $,()\ts C[M] \converges \skipp,()$.  
+  So there is some sequence $u\in X^*$ such that $,()\ts C[M] \converges_u \skipp,()$ and therefore the composite
+  \[
+    1 \xrightarrow{\alpha;\deno{M}}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.  
+  Therefore, there exists some $v\in X^*$ such that the composite
+  \[
+    1 \xrightarrow{\alpha;\deno{N}}
+    (X \to \bC) \xrightarrow{\eta_v}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|v|}}
+    \bC
+    \]
+  Therefore, $,()\ts C[N] \converges_v \skipp,()$ and so $,()\ts C[N] \converges \skipp,()$.
+  The reverse direction is identical.
+
+  Conversely, suppose that $M,N$ are may-observationally equivalent.  
+  Then, as before, we can take $\alpha$ to be compact, whence definable, in Definition \ref{DefMayIntrinsicEquivalence}, and the proof continues as in the first part, but in reverse.
+\end{proof}
+
+Let us examine what this means in the category of games.
+If $\sigma\from \oc X \implies \bC$ is a strategy, then, by our discussion at the end of \sec\ref{SecSoundness}, we know that, for any sequence $u$, the composite
+\[
+  1 \xrightarrow{\sigma}
+  (X \to \bC) \xrightarrow{\eta_u}
+  (\Var \to \bN) \xrightarrow{\deno\neww}
+  \bN \xrightarrow{t_{|u|}}
+  \bC
+  \]
+is not equal to $\bot$ if and only if $\sigma$ contains the play
+\[
+  q (q u^{(i)})_{i=0}^{|u|-1} a\,.
+  \]
+Moreover, since any complete play in $\oc X \implies \bC$ must take this form, we can see there exists such a $u$ making the composite above not equal to $\bot$ if and only if
+\[
+  qa \in \{s\vert_\bC \suchthat s\in\sigma\text{ is complete}\}\,.
+  \]
+This suggests a general equivalence relation on Kleisli morphisms in $\G_X$: given a strategy $\sigma\from \oc X \implies A$, we write $\sigma\vert A$ for the set
+\[
+  \{s\vert_A \suchthat s\in \sigma\text{ is complete}\}\,.
+  \]
+We say that two strategies $\sigma,\tau\from \oc X \implies A$ are may-equivalent, and write $\sigma\approx_{\may}\tau$, if
+\[
+  \sigma\vert_A = \tau\vert_A\,.
+  \]
+In this case, Corollary \ref{CorMayAdequacy} tells us that $M\converges \skipp$ if and only if $\sigma\approx_{\may}\tau$.
+
+We need to show that this respects composition, so that we get a category if we take the quotient by this equivalence relation.
+\begin{proposition}
+  Let $\sigma,\sigma' \from A \to B$, $\tau,\tau'\from B \to C$ be morphisms in $\G_X$.
+  Suppose that $\sigma\approx_{\may}\sigma'$ and $\tau\approx_{\may}\tau'$.  
+  Then $\sigma;\tau \approx_{\may} \sigma';\tau'$.
+\end{proposition}
+\begin{proof}
+  A complete play in $\sigma;\tau$ is given by a sequence $\s\vert_{X,A,C}$, where $\s\in (M_X + M_A + M_B + M_C)^*$ that is a legal interaction of a complete play in $\tau$ with a collection of complete plays in $\sigma$, with $B$-components being identified.
+  Then $\s\vert_{A,C}$ can alternatively be characterized as $\t\vert_{A,C}$, where $\t\in (M_A + M_B + M_C)^*$ is a legal interaction of a sequence from $\tau\vert_{B,C}$ with a collection of sequences from $\sigma\vert_{A,B}$.  
+
+  It follows that if $\sigma\vert_{A,B}=\sigma'\vert_{A,B}$ and $\tau\vert_{B,C}=\tau'\vert_{B,C}$, then $\sigma;\tau\vert_{A,C} = \sigma';\tau'\vert_{A,C}$.
+\end{proof}
+
+Now we can also see that this equivalence we have just defined is subsumed into the intrinsic equivalence.
+\begin{proposition}
+  Let $\sigma,\tau\from \oc X \implies A$ be strategies.  
+  If $\sigma\approx_{\may}\tau$ then $\sigma\sim_{\may} \tau$.
+\end{proposition}
+\begin{proof}
+  Given strategies $\sigma,\tau\from A$ in $\G_X$, we have $\sigma \sim_{\may} \tau$ if and only if $\alpha;\sigma\approx_{\may}\alpha;\tau$ for any morphism $\alpha\from \oc A \implies \bC$ in $\G_X$.
+  If $\sigma\approx_{\may}\tau$, we have
+  \[
+    \alpha;\sigma\vert_{\bC} = \alpha;(\sigma\vert_{\bC}) = \alpha;(\tau\vert_{\bC}) = \alpha;\tau\vert_{\bC}\,.\qedhere
+    \]
+\end{proof}
+
+Note that it is also the case that if $\alpha\approx_{\may}\alpha'$ and $\sigma\approx_{\may}\tau$ then $\alpha;\sigma \approx_{\may} \alpha';\tau$.  
+Therefore, the Full Abstraction result we have just proved applies to the quotiented category.
+
+The definition of the relation $\approx_{\may}$ suggests that we might forget about the $\oc X$ component of a strategy $\sigma\from\oc X \implies A$ altogether, and consider only the set $\sigma\vert_A$.  
+This set is not a strategy, since it does not satisfy the determinism requirement, but it satisfies every other requirement.
+
+\begin{definition}
+  Given a game $A$, a \emph{nondeterministic strategy} is a prefix-closed set of even-length legal plays from $A$.
+\end{definition}
+
+We can compose nondeterministic strategies using `parallel composition plus hiding', just as for deterministic ones, and we get a Cartesian closed category in the same way.  
+We interpret all the Idealized Algol terms in the usual way as deterministic strategies, interpreting the nondeterministic primitive $\ask_X$ as the nondeterministic strategy for $X$ with maximal plays
+\[
+  qx
+  \]
+for every $x\in X$.
+
+It is already known (see \cite{mcCHFiniteND}) that this model is fully abstract for (finitely or countably) nondeterministic Idealized Algol with may-contextual equivalence.
+
+\subsection{Alternative reduction rules - must testing}
+
+A more interesting, and more complicated, reduction rule for nondeterministic IA is the \emph{must-convergence} relation.
+
+We shall define this indirectly via its negation.
+
+\begin{definition}
+  We shall define a relation
+  \[
+    \Gamma,s\ts M\diverges
+    \]
+  ($M$ `may diverge') between $\Var$-contexts $\Gamma$, $\Gamma$-stores $s$ and terms $\Gamma\ts M\from T$ of Idealized Algol.
+
+  The rules for this relation may be deduced from the rules for Idealized Algol.  
+  If
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1\converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges c,s^{(n)}}\,,
+    \]
+  is an IA rule, then for each $j=1,\cdots,n$ we have a rule
+  \[
+    \inferrule*[sep=1.9em]{\Gamma,s^{(0)}\ts M_1 \converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges}
+    {\Gamma,s^{(0)} \ts M \diverges}\,.
+    \]
+  In other words, if the evaluation of the term $M$ diverges at any step, then the whole thing diverges.  
+  Note that since the rules for the canonical forms have no premises, there are no rules relating them to the $\diverges$ predicate.
+
+  Crucially, these rules are interpreted not inductively but coinductively; in other words, the derivation trees for $\diverges$ are allowed to have infinite height.
+  Indeed, since every rule for $\diverges$ has at least one premise, any valid tree must be infinitely tall.
+
+  If there is no such derivation tree, then we say that $M$ \emph{must converge}, and write $\Gamma,s\ts M\mustconverge$.
+  \label{DefMayDivergence}
+\end{definition}
+
+\begin{example}
+  If $\Gamma\ts c$ is a canonical form, then $\Gamma\ts c\mustconverge$, since there is no inference that we can apply that will yield the term $\Gamma\ts c\diverges$ on the bottom.
+\end{example}
+
+\begin{example}
+  $,()\ts \Y(\lambda x.x)\diverges$ because it has the following infinite derivation tree.
+  \[
+    \inferrule*
+    {
+      \inferrule*
+      {
+        \inferrule*
+        {
+        }
+        {
+          ,()\ts (\lambda x.x) \converges (\lambda x.x),()
+        }
+        \\
+        \inferrule*
+        {
+          \vdots
+        }
+        {
+          ,() \ts \Y(\lambda x.x)\diverges
+        }
+      }
+      {
+        ,()\ts (\lambda x.x)(\Y(\lambda x.x)) \diverges
+      }
+    }
+    {
+      ,()\ts \Y(\lambda x.x)\diverges
+    }
+    \]
+\end{example}
+
+It is possible to characterize the $\mustconverge$ directly via an inductive relation (see \cite{RusssThesis}, for instance).  
+We will give an alternative definition that will relate it to our existing rules $\converges_u$.
+
+\begin{definition}
+  We say that $\Gamma,s\ts M\mustconverge$ if for every infinite sequence $w\in X^\omega$ there is some finite prefix $u\pprefix w$ such that $\Gamma,s\ts M\converges_u c,s'$ for some canonical form $c$ and some $\Gamma$-store $s'$.
+  \label{DefMustConvergence}
+\end{definition}
+
+Before we show that the two definitions are equivalent, we shall examine why this one makes sense.  
+Recall that we said that the statement $\Gamma,s\ts M\converges_u c,s'$ meant that $M$ will converge to $c$ in the case that the values we obtain by querying the nondeterministic oracle form the sequence $u$.  
+Our initial thought, then, might be to say that $\Gamma,s\ts M\mustconverge$ if for all $u\in X^*$, $\Gamma,s\ts M\converges_u c,s'$ for some $c,s'$, but this is not the case.  
+For example, if we have
+\[
+  M = \If \ask_\bB \Then \true \Else \false\,,
+  \]
+then $M\converges_\true \true$ and $M\converges_\false \false$.  
+However, it is not the case that $M\converges_\epsilon c$, nor that $M\converges_{\true\false\false\true\false}c$ for any $c$.
+Instead, we should think of the nondeterministic oracle as a promise to provide us with some infinite sequence of elements of $X$, only some of which we will use to converge.
+
+\begin{proposition}
+  The two definitions of the $\mustconverge$ predicate given in Definitions \ref{DefMayDivergence} and \ref{DefMustConvergence} are equivalent.
+\end{proposition}
+\begin{proof}
+  Suppose that $\Gamma,s\ts M\diverges$.  
+  We coinductively construct a sequence $w\in X^\omega$ such that $\Gamma,s\ts M\not\converges_u c,s'$ for any finite prefix $u\pprefix w$ and any $c,s'$.
+  We shall use the notation $\Gamma,s\ts M\diverges^w$ to indicate this $w$.
+
+  Given any rule
+  \[
+    \inferrule{\Gamma,s^{(0)}\ts M_1 \converges c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges}
+    {\Gamma,s^{(0)} \ts M \diverges}\,,
+    \]
+  by our definition of $\converges$, there are $u_1,\cdots,u_{j-1}\in X^*$ such that $\Gamma,s^{(i-1)}\ts M_i\converges_{u_i}c_i,s^{(i)}$ for each $i=1,\cdots,j-1$.  
+
+  The corresponding coinductive rule is then
+  \[
+    \inferrule*[sep=8pt]{\Gamma,s^{(0)}\ts M_1 \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges_{u_{j-1}} c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges^w}
+    {\Gamma,s^{(0)} \ts M \diverges^{u_1\cat \cdots \cat u_{j-1}\cat w}}\,.
+    \]
+  In other words, the sequence $w$ at the bottom of the tree may be characterized as the concatenation of all the sequences $u$ constructed for the $\converges$ relation in the tree, working bottom to top and left to right.
+  If the $w$ so formed is a finite sequence, then pad it with arbitrary values so that it becomes infinite.
+
+  Now suppose that $u\pprefix w$ is some finite prefix such that $\Gamma,s\ts M\converges_u c,s'$ for some $c,s'$.  
+  We claim that $\Gamma,s\ts M\not\diverges$, giving us a contradiction.  
+
+  The proof of the claim is via induction on the derivation of $\Gamma,s\ts M\converges_u c,s'$.  
+
+  Suppose that the last rule takes the form
+  \[
+    \inferrule*{\Gamma,s^{(0)}\ts M_1\converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(n-1)}\ts M_n\converges_{u_n} c_n,s^{(n)}}
+    {\Gamma,s^{(0)} \ts M \converges_{u_1\cat \cdots\cat u_n} c,s^{(n)}}\,.
+    \]
+  Then inspection of the IA rules tells us that the last step in our derivation of $\Gamma,s^{(0)} \ts M\diverges$ must look like
+  \[
+    \inferrule*[sep=8pt]{\Gamma,s^{(0)}\ts M_1 \converges_{u_1} c_1,s^{(1)} \\ \cdots \\ \Gamma,s^{(j-2)} \ts M_{j-1} \converges_{u_{j-1}} c_{j-1} \\ \Gamma,s^{(j-1)}\ts M_j\diverges^w}
+    {\Gamma,s^{(0)} \ts M \diverges^{u_1\cat \cdots \cat u_{j-1}\cat w}}
+    \]
+  \emph{for the same $M_i$ and $c_i$}.
+  But we had $\Gamma,s^{(j-1)}\ts M_j\converges_{u_j} c_j,s^{(j)}$.  
+  By hypothesis, $u_1\cat \cdots \cat u_n$ is a finite prefix of $u_1 \cat \cdots \cat u_{j-1} \cat w$, and so $u_j$ is a finite prefix of $w$.  
+  Therefore, by the inductive hypothesis applied to $M_j$, we cannot have $\Gamma,s^{(j-1)}\ts M_j\diverges$, leading to the desired contradiction.
+
+  For the converse, define an \emph{$n$-truncated} derivation tree to be a derivation tree of height $n$ such that the premises of the form $\Gamma,s\ts M\diverges^w$ may occur at the top level without proof.  
+  Then we define a family of functions $(F_i \suchthat i \ge 0)$ that take an infinite sequence $w\in X^\omega$ and a triple $\Gamma,s\ts M$ and returns either a proof of height $\le i$ of $\Gamma,s\ts M\converges_u c,s'$ for some $u\pprefix w$, or some $i$-truncated proof of $\Gamma,s\ts M\diverges^v$ for some (possibly infinite) $v\prefix w$.
+
+  For $i=0$, $F(w,\Gamma,s\ts M)$ is the tree of the form
+  \[
+    \Gamma,s\ts M\diverges^w\,,
+    \]
+  where this statement is treated as an unproven (and in many cases untrue) hypothesis.
+
+  Now we define $F_{i+1}(w,\Gamma,s\ts M)$ as follows.  
+  If $M$ is a canonical form, then $F_{i+1}(w,\Gamma,s\ts M)$ is the derivation.
+  \[
+    \inferrule*{ }{\Gamma,s\ts M\converges_\epsilon M,s}\,.
+    \]
+  If $M=\ask_X$, then $F_{i+1}(w,\Gamma,s\ts M)$ is the derivation
+  \[
+    \inferrule*{ }{\Gamma,s\ts M\converges_{w^{(0)}} w^{(0)},s}\,.
+    \]
+  Otherwise, based on the structure of $M$, we choose a first premise $M_1$ for $M$.  
+  In most cases, there is a unique \IAX rule that applies to $M$, but sometimes (i.e., if $M$ is $\pred M'$, $\If M' \Then N' \Else P'$, $\IfO M' \Then N' \Else P'$, $!V$ or $V\gets E$) there may be more than one possible rule.  
+  However, in all of these cases, the first premise of each rule is the same.  
+  For instance, if $M=\If M' \Then N' \Else P'$ then the first premise of both the possible IA rules is $M'$, and the value that this converges to then determines which instance of the $\If$ rule we use.
+
+  We evaluate $F_i(w,\Gamma,s\ts M_1)$.  
+  If $F_i(w,\Gamma,s\ts M_1)$ is a complete proof that $\Gamma,s\ts M_1 \converges_{u_1} c_1,s^{(1)}$ for $u\pprefix w$, then write $w=u_1w_2$ and move on to the next premise, computing $F_i(w_2,\Gamma,s\ts M_2)$.  
+  Note that now the value of $c_1$ completely determines the \IAX rule we are using; for example, if $M=\If M' \Then N' \Else P'$, and $\Gamma,s\ts M' \converges_{u} c,s'$, then $c$ is either $\true$ or $\false$, and there is a unique \IAX rule that applies in each case.
+
+  We keep going through the premises of $M$ in order.  
+  If we satisfy them all, so that $F_i(w_i,\Gamma,s^{(i-1)} \ts M_i)$ is a proof that $\Gamma,s^{(i-1)} \ts M_i \converges_{u_i} c_i,s^{(i)}$ for each $M_i$, then we can put these together to get a derivation of
+  \[
+    \Gamma,s \ts M\converges_{u_1\cat \cdots \cat u_n} c,s^{(n)}\,,
+    \]
+  of height $\le i+1$, where $u_1\cat \cdots \cat u_n$ is a finite prefix of $w$.
+  
+  Otherwise, at some point $F_i(w,\Gamma,s^{(j-1)}\ts M_j)$ must be an $i$-truncated proof that
+  \[
+    \Gamma,s^{(j-1)}\ts M_j\diverges^v
+    \]
+  for some $v\prefix w$.
+  In that case, since we have a proof of height $\le i$ for $\Gamma,s^{(k-1)}\ts M_k \converges_{u_k} c_k,s^{(k)}$ for each $k<j$, we can apply the appropriate rule for $\diverges^v$ to get an $(i+1)$-truncated proof that
+  \[
+    \Gamma,s\ts M\diverges^{u_1\cat \cdots \cat u_{j-1} \cat v}\,,
+    \]
+  where $u_1\cat \cdots \cat u^{j-1} \cat v$ is a prefix of $w$.
+
+  Now, given $w$ and $\Gamma,s\ts M$, either $F_m(\Gamma,s\ts M)$ is a proof that $\Gamma,s\ts M\converges_u c,s'$ for $u\pprefix w$ and $m$ sufficiently large, or the $F_i(w,\Gamma,s\ts M)$ form an infinite sequence of trees of increasing height that all extend one another.  
+  In the second case, we can stitch the trees together to form an infinite derivation tree for $\Gamma,s\ts M\diverges$.
+
+  It follows that if there is some $w$ such that $\Gamma,s\ts M\not\converges_u c,s'$ for any finite prefix $u\pprefix w$, then there is an infinite derivation tree for $\Gamma,s\ts M\diverges$.
+\end{proof}
+
+We therefore get an adequacy result for must testing.
+
+\begin{corollary}
+  Let $M\from \com$ be a closed term of \IAX and consider the denotation $\deno M \from 1 \to \bC$ in $\G_X$ as a morphism $1 \to (X \to \bC)$ in $\G$.
+  Then $,()\ts M\mustconverge$ if and only if for every infinite sequence $w\in X^\omega$ there is some finite prefix $u\pprefix w$ such that the composite
+  \[
+    1 \xrightarrow{\deno M}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.
+\end{corollary}
+
+Once again, this slightly abstruse result becomes much more natural when $\G$ is the category of games, though in this case things are a bit more subtle.  
+Let $\sigma$ be a strategy for $\oc X \implies \bC$.  
+We observed earlier that $\sigma;\eta_u;\deno{\new};t_{|u|}\neq\bot$ if and only if the sequence
+\[
+  q(qu^{(i)})_{i=0}^{|u|-1} a
+  \]
+is contained in $\sigma$, so consider what it means if we say that such a sequence is not contained in $\sigma$ for any $u\pprefix w$.  
+By the definition of a strategy, there are two reasons why this might happen.  
+Either there is a partiality in the strategy, so that for some finite $v\pprefix w$, player $P$ has no reply at all to the $O$-position
+\[
+  q(qv^{(i)})_{i=0}^{|v|-1}\,.
+  \]
+Or, $\sigma$ contains an infinite increasing sequence of plays, whose limit is the infinite sequence
+\[
+  q(qw^{(i)})_{i=0}^\infty\,.
+  \]
+\begin{definition}
+  We say that a strategy $\sigma\from \oc X \implies \bC$ is \emph{winning} if every finite play in $\sigma$ is contained inside some complete play; i.e., if $\sigma$ is total and contains no infinite plays.
+\end{definition}
+
+We have shown the following adequacy result.
+\begin{corollary}
+  Let $M\from \com$ be a closed term of \IAX and consider the denotation $\deno M \from 1 \to \bC$ in $\G_X$ as a morphism $X \to \bC$ in $\G$.
+  Then $,()\ts M\mustconverge$ if and only if this strategy is winning.
+\end{corollary}
+
+\subsection{Full Abstraction for Countable Nondeterminism and Must Testing}
+
+We now extend our earlier definitions using the new $\mustconverge$ rule.
+
+\begin{definition}
+  Given closed terms $M,N\from T$ of \IAX, we write $M\equiv_{\must} N$, if for all contexts $-\from T\ts C[-]\from\com$, $C[M]\mustconverge$ if and only if $C[N]\mustconverge$.
+\end{definition}
+
+We write $M\emam N$ if $M\equiv_{\may} N$ and $M\equiv_{\must} N$.
+
+\begin{definition}
+  Given morphisms $\sigma,\tau\from A \to B$ in $\G_X$, considered as morphisms $1 \to (A \to B)$, we write $\sigma\sim_{\must}\tau$ if whenever $\alpha\from (A \to B) \to \bC$ is a morphism in $\G_X$ and $w\in X^\omega$ is an infinite sequence, then $w$ has a finite prefix $u$ such that
+  \[
+    1 \xrightarrow{\alpha;\sigma}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$ if and only if it has a finite prefix $v$ such that
+  \[
+    1 \xrightarrow{\alpha;\tau}
+    (X \to \bC) \xrightarrow{\eta_v}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|v|}}
+    \bC
+    \]
+  is not equal to $\bot$.
+\end{definition}
+
+We write $M\smam N$ if $M\sim_{\may}N$ and $M\sim_{\must} N$.
+
+\begin{remark}
+  In the category of games we can simplify this to saying that $\alpha;\sigma\approx_{\may}\alpha;\tau$ and that either $\alpha;\sigma$ and $\alpha;\tau$ are both winning, or neither is.
+\end{remark}
+
+Now we might expect to be able to prove a full abstraction result as before, namely that $M\smam N$ if and only if $M\emam N$.  
+In the case of finite nondeterminism, this is possible.
+
+\begin{theorem}
+  Let $M,N\from T$ be closed terms of IA${}_{\bB}$.
+\end{theorem}
+\begin{proof}
+  We already know that $M\sim_{\may}N$ if and only if $M$ and $N$ are may-contextually equivalent, so it is sufficient to prove that $M\sim_{\must}N$ if and only if $M\equiv_{\must}N$.
+
+  One direction is easy, as usual.  
+  Suppose that $M\sim_{\must} N$, and let $C[-]$ be a context.  
+  Suppose that $C[M]\mustconverge$, and fix $w\in X^\omega$.
+  Then $\deno{C[M]} = \deno{C};\deno{M}$, so there is some finite prefix $u\pprefix w$ such that the composite
+  \[
+    1 \xrightarrow{\deno{C};\deno{M}}
+    (X \to \bC) \xrightarrow{\eta_u}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|u|}}
+    \bC
+    \]
+  is not equal to $\bot$.  
+  Since $M\sim_{\must} N$, there is some finite prefix $v\pprefix w$ such that the composite
+  \[
+    1 \xrightarrow{\deno{C};\deno{N}}
+    (X \to \bC) \xrightarrow{\eta_v}
+    (\Var \to \bN) \xrightarrow{\deno{\neww}}
+    \bN \xrightarrow{t_{|v|}}
+    \bC
+    \]
+  is not equal to $\bot$, and therefore $C[N]\mustconverge$.  
+  The other direction is completely symmetric.
+
+  The converse is harder.  
+  Suppose that $M\equiv_{\must} N$ and let $\alpha \from \deno{T} \to \bC$ be an arbitrary morphism.
+\end{proof}
+
+\bibliographystyle{alpha}
+\bibliography{../common/phd_bibliography}
+
+\end{document}

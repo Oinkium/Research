@@ -438,7 +438,7 @@ The other reason is purely computational.
 Given a non-computable function $f\from \bN \to \bN$ (for example, the function that returns $0$ if its argument is source code for a terminating program and $1$ otherwise), we have a perfectly well-behaved history free strategy that represents $f$, but $f$ is nevertheless still not definable in most programming languages.  
 Historically, the study of Full Abstraction has not been too concerned with non-definable elements of the second kind: the reason is that they do not usually play a role in determining the intrinsic equivalence relation.
 However, in the presence of countable nondeterminism, there exist definable terms that can be distinguished in the model that cannot be distinguished by definable elements, but can be distinguished by non-computable functions.
-An example of such a function is found in Proposition \ref{PropNotFullyAbstract}; the general idea is due to Kleene and can be found in \cite{KleeneTree}.
+An example of such a function is found in Section \ref{SecNonComputable}; the general idea is due to Kleene and can be found in \cite{KleeneTree}.
 
 What this means is that if we want to model countable nondeterminism then structural constraints are not enough: we need to impose computability constraints on strategies as well.
 Happily, such notions are well studied already, even appearing in the original Hyland-Ong and AJM papers \cite{hoPcf,ajmPcf}, in which the authors give a complete characterization of those strategies definable in PCF -- a \emph{universality} result for the model.  

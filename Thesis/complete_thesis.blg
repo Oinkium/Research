@@ -3,48 +3,46 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: complete_thesis.aux
 The style file: alpha2.bst
 Database file #1: ../common/phd_bibliography.bib
-Warning--empty institution in RusssThesis
 Warning--empty booktitle in Harmer2006InnocentGS
-Warning--empty year in LairdCofCommCom
-You've used 76 entries,
+You've used 75 entries,
             2549 wiz_defined-function locations,
-            1063 strings with 15559 characters,
-and the built_in function-call counts, 29559 in all, are:
-= -- 2996
+            1076 strings with 16242 characters,
+and the built_in function-call counts, 30126 in all, are:
+= -- 3087
 > -- 1084
-< -- 67
+< -- 70
 + -- 346
 - -- 327
-* -- 1963
-:= -- 4662
-add.period$ -- 248
-call.type$ -- 76
-change.case$ -- 416
-chr.to.int$ -- 75
-cite$ -- 79
-duplicate$ -- 1271
-empty$ -- 2414
-format.name$ -- 449
-if$ -- 6293
+* -- 2008
+:= -- 4716
+add.period$ -- 251
+call.type$ -- 75
+change.case$ -- 410
+chr.to.int$ -- 74
+cite$ -- 76
+duplicate$ -- 1316
+empty$ -- 2450
+format.name$ -- 447
+if$ -- 6463
 int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 70
-newline$ -- 386
-num.names$ -- 244
-pop$ -- 424
+missing$ -- 73
+newline$ -- 382
+num.names$ -- 243
+pop$ -- 398
 preamble$ -- 1
-purify$ -- 497
+purify$ -- 491
 quote$ -- 0
-skip$ -- 1066
+skip$ -- 1104
 stack$ -- 0
-substring$ -- 1804
-swap$ -- 235
-text.length$ -- 67
-text.prefix$ -- 46
+substring$ -- 1895
+swap$ -- 274
+text.length$ -- 70
+text.prefix$ -- 45
 top$ -- 0
-type$ -- 576
-warning$ -- 3
-while$ -- 277
-width$ -- 81
-write$ -- 1014
-(There were 3 warnings)
+type$ -- 564
+warning$ -- 1
+while$ -- 283
+width$ -- 80
+write$ -- 1020
+(There was 1 warning)

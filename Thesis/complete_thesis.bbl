@@ -41,7 +41,7 @@ K.~R. Apt and G.~D. Plotkin.
 \bibitem[AP86]{Apt}
 K.~R. Apt and G.~D. Plotkin.
 \newblock Countable nondeterminism and random assignment.
-\newblock {\em J. ACM}, 33(4):724--767, August 1986.
+\newblock {\em Journal of the ACM}, 33(4):724--767, August 1986.
 
 \bibitem[Bau06]{KleeneTree}
 Andrej Bauer.
@@ -64,14 +64,16 @@ Simon Castellan, Pierre Clairambault, Jonathan Hayman, and Glynn Winskel.
 
 \bibitem[CCPW18]{PPCF}
 Simon Castellan, Pierre Clairambault, Hugo Paquet, and Glynn Winskel.
-\newblock The concurrent game semantics of probabilistic pcf.
+\newblock The concurrent game semantics of probabilistic {PCF}.
 \newblock In {\em Proceedings of the 33rd Annual ACM/IEEE Symposium on Logic in
   Computer Science}, LICS '18, pages 215--224, New York, NY, USA, 2018. ACM.
 
-\bibitem[CLM13]{martinsthesis}
-Martin Churchill, Jim Laird, and Guy McCusker.
+\bibitem[CLM11]{martinsthesis}
+Martin Churchill, James Laird, and Guy McCusker.
 \newblock Imperative programs as proofs via game semantics.
-\newblock {\em CoRR}, abs/1307.2004, 2013.
+\newblock In {\em Proceedings of the 2011 IEEE 26th Annual Symposium on Logic
+  in Computer Science}, LICS ’11, page 65–74, USA, 2011. IEEE Computer
+  Society.
 
 \bibitem[Day70]{ThesisForDays}
 Brian Day.
@@ -88,10 +90,11 @@ Vincent Danos and Thomas Ehrhard.
 \newblock {\em Information and Computation}, 209(6):966 -- 991, 2011.
 
 \bibitem[DH00]{DanosHarmer}
-V.~Danos and R.~Harmer.
+Vincent Danos and Russell~S. Harmer.
 \newblock Probabilistic game semantics.
 \newblock In {\em Proceedings Fifteenth Annual IEEE Symposium on Logic in
-  Computer Science (Cat. No.99CB36332)}, pages 204--213, June 2000.
+  Computer Science (Cat. No.99CB36332)}, LICS ’00, pages 204--213. IEEE
+  Computer Society, June 2000.
 
 \bibitem[Dij97]{DijkstraBook}
 Edsger~Wybe Dijkstra.
@@ -105,8 +108,8 @@ Samuel Eilenberg and G.M Kelly.
 
 \bibitem[EPT18]{ProbabilisicPcf}
 Thomas Ehrhard, Michele Pagani, and Christine Tasson.
-\newblock Full abstraction for probabilistic pcf.
-\newblock {\em J. ACM}, 65(4):23:1--23:44, April 2018.
+\newblock Full abstraction for probabilistic {PCF}.
+\newblock {\em Journal of the ACM}, 65(4):23:1--23:44, April 2018.
 
 \bibitem[FH92]{Felleisen}
 Matthias Felleisen and Robert Hieb.
@@ -133,15 +136,19 @@ Dan~R. Ghica.
   Principles of Programming Languages}, POPL '05, pages 85--97, New York, NY,
   USA, 2005. ACM.
 
-\bibitem[GHN15]{Gepner}
+\bibitem[GHN17]{Gepner}
 David Gepner, Rune Haugseng, and Thomas Nikolaus.
-\newblock Lax colimits and free fibrations in $\infty$-categories, 2015.
+\newblock {Lax colimits and free fibrations in $\infty$-categories}.
+\newblock {\em {Documenta Mathematica}}, 22:1255--1266, 2017.
 
 \bibitem[GL17]{CalcoPaper}
 William~John Gowers and James Laird.
-\newblock Sequoidal categories and transfinite games: A coalgebraic approach to
-  stateful objects in game semantics.
-\newblock In {\em CALCO}, 2017.
+\newblock Sequoidal categories and transfinite games: {A} coalgebraic approach
+  to stateful objects in game semantics.
+\newblock In Filippo Bonchi and Barbara K{\"{o}}nig, editors, {\em 7th
+  Conference on Algebra and Coalgebra in Computer Science, {CALCO} 2017, June
+  12-16, 2017, Ljubljana, Slovenia}, volume~72 of {\em LIPIcs}, pages
+  13:1--13:17. Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik, 2017.
 
 \bibitem[GL18]{CslPaper}
 W.~John Gowers and James~D. Laird.
@@ -160,10 +167,11 @@ Alexander Grothendieck.
 \bibitem[Har99]{RusssThesis}
 Russell~S. Harmer.
 \newblock Games and full abstraction for nondeterministic languages.
-\newblock Technical report, 1999.
+\newblock Technical report, Imperial College London (University of London),
+  1999.
 
 \bibitem[Har06]{Harmer2006InnocentGS}
-Russell Harmer.
+Russell~S. Harmer.
 \newblock Innocent game semantics.
 \newblock 2006.
 
@@ -173,10 +181,11 @@ Claudio Hermida.
 \newblock {\em Advances in tics}, 151(2):164 -- 225, 2000.
 
 \bibitem[HM99]{mcCHFiniteND}
-R.~Harmer and G.~McCusker.
+Russel~S. Harmer and G.~McCusker.
 \newblock A fully abstract game semantics for finite nondeterminism.
-\newblock In {\em Proceedings. 14th Symposium on Logic in Computer Science
-  (Cat. No. PR00158)}, pages 422--430, 1999.
+\newblock In {\em Proceedings. 14th Annual IEEE Symposium on Logic in Computer
+  Science (Cat. No. PR00158)}, LICS '99, pages 422--430. IEEE Computer Society,
+  1999.
 
 \bibitem[HO00]{hoPcf}
 J.M.E. Hyland and C.-H.L. Ong.
@@ -217,25 +226,19 @@ H.~Kleisli.
 \newblock {\em Proceedings of the American Mathematical Society},
   16(3):544--546, 1965.
 
-\bibitem[Lai]{LairdCofCommCom}
-James Laird.
-\newblock Functional programs as coroutines: A semantic analysis.
-\newblock {\em Logical methods in computer science}.
-\newblock To appear.
-
 \bibitem[Lai01]{LLi}
-J.~Laird.
+James Laird.
 \newblock A fully abstract game semantics of local exceptions.
-\newblock In {\em Proceedings of LICS '01}, pages 105--114. IEEE Computer
-  Society Press, 2001.
+\newblock In {\em Proceedings of the 16th Annual IEEE Symposium on Logic in
+  Computer Science}, LICS '01, pages 105--114. IEEE Computer Society, 2001.
 
 \bibitem[Lai02]{laird02}
-J.~Laird.
+James Laird.
 \newblock A categorical semantics of higher-order store.
 \newblock In {\em Proceedings of CTCS '02}, number~69 in ENTCS. Elsevier, 2002.
 
 \bibitem[Lai15]{LairdOrdinalGames}
-J.~Laird.
+James Laird.
 \newblock Sequential algorithms for unbounded nondeterminism.
 \newblock {\em Electronic Notes in Theoretical Computer Science}, 319:271 --
   287, 2015.
@@ -251,17 +254,20 @@ Joachim Lambek.
 \newblock {\em Mathematische Zeitschrift}, 103(2):151--161, 1968.
 
 \bibitem[Lam74]{FunctionalCompleteness}
-J.~Lambek.
+Joachim Lambek.
 \newblock Functional completeness of cartesian categories.
 \newblock {\em Annals of Mathematical Logic}, 6(3):259 -- 292, 1974.
 
 \bibitem[Lei98]{BasicBicategories}
 Tom Leinster.
-\newblock Basic bicategories, 1998.
+\newblock Basic bicategories.
+\newblock In {\em E-print math.CT/9810017}, 1998.
 
-\bibitem[Lei03]{Multicategories}
+\bibitem[Lei04]{Multicategories}
 Tom Leinster.
-\newblock Higher operads, higher categories, 2003.
+\newblock {\em Introduction}, page 1–6.
+\newblock London Mathematical Society Lecture Note Series. Cambridge University
+  Press, 2004.
 
 \bibitem[Lev01]{PaulsThesis}
 Paul~Blain Levy.
@@ -276,7 +282,8 @@ Paul~Blain Levy.
 \bibitem[Lev14]{levy2014morphisms}
 Paul~Blain Levy.
 \newblock Morphisms between plays.
-\newblock Lecture slides, GaLoP, 2014.
+\newblock Lecture slides, GaLoP
+  \url{https://www.cs.bham.ac.uk/~pbl/papers/morphismplaytalk.pdf}, 2014.
 
 \bibitem[LN15]{LongleyBook}
 John Longley and Dag Normann.
@@ -289,9 +296,9 @@ Saunders MacLane.
 \newblock Springer-Verlag, New York, 1971.
 \newblock Graduate Texts in Mathematics, Vol. 5.
 
-\bibitem[Man09]{ClosedMulticategories}
+\bibitem[Man12]{ClosedMulticategories}
 Oleksandr Manzyuk.
-\newblock Closed categories vs. closed multicategories, 2009.
+\newblock Closed categories vs. closed multicategories, 2012.
 
 \bibitem[McC02]{GuySci}
 Guy McCusker.
@@ -306,7 +313,6 @@ Paul-Andr\'{e} Melli\`{e}s.
 \newblock
   \url{https://www.irif.fr/~mellies/tensorial-logic/8-parametric-monads-and-enriched-adjunctions.pdf},
   2012.
-\newblock {Preprint on webpage}.
 
 \bibitem[Mel14]{MelliesCoherence}
 Paul-Andr\'{e} Melli\`{e}s.
@@ -314,7 +320,6 @@ Paul-Andr\'{e} Melli\`{e}s.
 \newblock
   \url{https://www.irif.fr/~mellies/mpri/mpri-m2/mpri-mellies-lecture-notes-2.pdf},
   2014.
-\newblock {Preprint on webpage}.
 
 \bibitem[Mel17]{ParametricMonads}
 Paul-Andr\'{e} Melli\`{e}s.
@@ -334,7 +339,8 @@ J.~Meseguer.
 Eugenio Moggi.
 \newblock Notions of computation and monads.
 \newblock {\em Information and Computation}, 93(1):55 -- 92, 1991.
-\newblock Selections from 1989 IEEE Symposium on Logic in Computer Science.
+\newblock Selections from Fourth Annual IEEE Symposium on Logic in Computer
+  Science.
 
 \bibitem[MT16]{NGS}
 Andrzej~S. Murawski and Nikos Tzevelekos.
@@ -360,8 +366,8 @@ Hanno Nickau.
 \newblock \href{http://ncatlab.org/nlab/revision/2-limit/52}{Revision 52}.
 
 \bibitem[OR95]{OHearnRieckePcf}
-P.W. Ohearn and J.G. Riecke.
-\newblock Kripke logical relations and pcf.
+P.W. O'Hearn and J.G. Riecke.
+\newblock Kripke logical relations and {PCF}.
 \newblock {\em Information and Computation}, 120(1):107 -- 116, 1995.
 
 \bibitem[Pis14]{Pisani}
@@ -383,7 +389,9 @@ Gordon Plotkin and John Power.
 
 \bibitem[Sch04]{SchalkWhatIs}
 Andrea Schalk.
-\newblock What is a categorical model for linear logic?, October 2004.
+\newblock What is a categorical model for linear logic?
+\newblock \url{http://www.cs.man.ac.uk/~schalk/notes/llmodel.pdf}, October
+  2004.
 
 \bibitem[Sco76]{ScottDomains}
 D.~Scott.
